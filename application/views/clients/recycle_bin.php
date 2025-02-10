@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Klien</title>
+    <title>Recycle Bin Klien</title>
     <link href="<?php echo base_url()?>assets/backend/style.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -33,21 +33,11 @@
         <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-              <h2 class="text-2xl font-bold mb-4">Daftar Klien</h2>
-                <button class="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none">
-                  <a href="<?= site_url('clients/create') ?>">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m7-7H5"></path>
-                    </svg>
-                  </a>
-                </button>
-                <button class="bg-red-500 text-white p-3 rounded-md hover:bg-red-700 focus:outline-none">
-                  <a href="<?= site_url('clients/recycle_bin') ?>">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-2 14H7L5 7M12 4v-2m4 2h-8m5 2l1-1m3 1l-1-1m0 0h6l-1 2m-7-5h2m6 5H5"></path>
-                    </svg>
-                    </a>
-                </button>
+              <h2 class="text-2xl font-bold mb-4">Recycle Bin Klien</h2>
+
+              <!-- Tombol Kembali -->
+              <a href="<?= site_url('clients') ?>" class="bg-blue-500 text-white px-4 py-2 rounded mb-4 inline-block">Kembali</a>
+
               <table class="mt-4 w-full border-collapse border border-gray-300">
                 <thead>
                   <tr class="bg-gray-200">
@@ -66,8 +56,8 @@
                     <td class="border px-4 py-2"><?= $client->phone ?></td>
                     <td class="border px-4 py-2"><?= $client->wedding_date ?></td>
                     <td class="border px-4 py-2">
-                      <a href="<?= site_url('clients/edit/' . $client->id_session) ?>" class="bg-yellow-500 text-white px-2 py-1 rounded">Edit</a>
-                      <a href="<?= site_url('clients/delete/' . $client->id_session) ?>" class="bg-red-500 text-white px-2 py-1 rounded" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                      <a href="<?= site_url('clients/restore/' . $client->id_session) ?>" class="bg-green-500 text-white px-2 py-1 rounded">Restore</a>
+                      <a href="<?= site_url('clients/permanent_delete/' . $client->id_session) ?>" class="bg-red-500 text-white px-2 py-1 rounded" onclick="return confirm('Yakin ingin menghapus permanen?')">Delete Permanen</a>
                     </td>
                   </tr>
                   <?php endforeach; ?>
