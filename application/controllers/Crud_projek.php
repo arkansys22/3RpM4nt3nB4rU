@@ -20,8 +20,9 @@ class Crud_projek extends CI_Controller {
 
     public function store() {
         $data = array(
-            'id_session' => uniqid(),
+            'id_session' => sha1(uniqid()),
             'nama_projek' => $this->input->post('nama_projek'),
+            'status' => 'create',
             'author' => $this->input->post('author'),
             'author_last_update' => $this->input->post('author')
         );
@@ -46,7 +47,26 @@ class Crud_projek extends CI_Controller {
     }
 
     public function delete($id) {
-        $this->Projek_model->delete_projek($id);
+        $data = ['status' => 'delete'];
+        $this->Projek_model->update_projek($id, $data);
         redirect('projek');
+    }
+
+    public function recycle_bin() {
+        $data['projek'] = $this->Projek_model->get_deleted_projek();  // Get projects with status 'delete'
+        $this->load->view('projek/recycle_bin', $data);
+    }    
+
+    public function restore($id) {
+        $data = ['status' => 'create'];
+        $this->Projek_model->update_projek($id, $data);
+        $this->session->set_flashdata('success', 'Projek berhasil dipulihkan');
+        redirect('Crud_projek/recycle_bin');
+    }
+
+    public function permanent_delete($id) {
+        $this->Projek_model->delete_projek_permanent($id);
+        $this->session->set_flashdata('success', 'Projek berhasil dihapus permanen');
+        redirect('Crud_projek/recycle_bin');
     }
 }

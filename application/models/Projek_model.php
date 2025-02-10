@@ -2,7 +2,7 @@
 class Projek_model extends CI_Model {
 
     public function get_all_projek() {
-        return $this->db->get('projek')->result();
+        return $this->db->get_where('projek',['status' => 'create'])->result();
     }
 
     public function insert_projek($data) {
@@ -18,7 +18,17 @@ class Projek_model extends CI_Model {
         return $this->db->update('projek', $data);
     }
 
-    public function delete_projek($id) {
-        return $this->db->delete('projek', array('id' => $id));
+    public function delete_projek($id, $data) {
+        $this->db->where('id', $id);
+        return $this->db->update('projek', $data);
+    }
+
+    public function delete_projek_permanent($id) {
+        $this->db->where('id', $id);
+        return $this->db->delete('projek');
+    }
+
+    public function get_deleted_projek() {
+        return $this->db->get_where('projek', ['status' => 'delete'])->result();
     }
 }
