@@ -17,9 +17,10 @@ class Crud_clients extends CI_Controller {
 
     public function store() {
         $data = [
-            'id_session' => uniqid(),
+            'id_session' => sha1(uniqid()),
             'name' => $this->input->post('name'),
             'email' => $this->input->post('email'),
+            'status' => 'create',
             'phone' => $this->input->post('phone'),
             'wedding_date' => $this->input->post('wedding_date'),
         ];
@@ -44,7 +45,11 @@ class Crud_clients extends CI_Controller {
     }
 
     public function delete($id_session) {
-        $this->Clients_model->delete_client($id_session); // Ubah pemanggilan model
+
+        $data = [
+            'status' => 'delete',           
+        ];
+        $this->Clients_model->delete_client($id_session, $data); // Ubah pemanggilan model
         redirect('clients');
     }
 }
