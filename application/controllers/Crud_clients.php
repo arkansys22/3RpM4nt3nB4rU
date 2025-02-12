@@ -7,8 +7,13 @@ class Crud_clients extends CI_Controller {
     }
 
     public function index() {
+        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
+                cek_session_akses('home',$this->session->id_session);
         $data['clients'] = $this->Clients_model->get_all_clients(); // Ubah pemanggilan model
         $this->load->view('clients/index', $data);
+        }else{
+                redirect(base_url());
+                }
     }
 
     public function create() {
@@ -22,6 +27,7 @@ class Crud_clients extends CI_Controller {
             'email' => $this->input->post('email'),
             'status' => 'create',
             'phone' => $this->input->post('phone'),
+            'create_by' => $this->session->id_session,
             'wedding_date' => $this->input->post('wedding_date'),
             'location' => $this->input->post('location'),
         ];
