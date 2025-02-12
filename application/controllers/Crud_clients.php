@@ -23,6 +23,7 @@ class Crud_clients extends CI_Controller {
             'status' => 'create',
             'phone' => $this->input->post('phone'),
             'wedding_date' => $this->input->post('wedding_date'),
+            'location' => $this->input->post('location'),
         ];
         $this->Clients_model->insert_client($data); // Ubah pemanggilan model
         redirect('clients');
@@ -39,16 +40,14 @@ class Crud_clients extends CI_Controller {
             'email' => $this->input->post('email'),
             'phone' => $this->input->post('phone'),
             'wedding_date' => $this->input->post('wedding_date'),
+            'location' => $this->input->post('location'),
         ];
         $this->Clients_model->update_client($id_session, $data); // Ubah pemanggilan model
         redirect('clients');
     }
 
     public function delete($id_session) {
-
-        $data = [
-            'status' => 'delete',           
-        ];
+        $data = ['status' => 'delete'];
         $this->Clients_model->delete_client($id_session, $data); // Ubah pemanggilan model
         redirect('clients');
     }
@@ -70,5 +69,4 @@ class Crud_clients extends CI_Controller {
         $this->session->set_flashdata('success', 'Client berhasil dihapus permanen');
         redirect('clients/recycle_bin');
     }
-    
 }

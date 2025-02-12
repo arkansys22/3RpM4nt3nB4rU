@@ -8,7 +8,11 @@ class Clients_model extends CI_Model {
     }
 
     public function get_all_clients() {     
-        return $this->db->get_where('clients',['status' => 'create'])->result();
+        return $this->db->get_where('clients', ['status' => 'create'])->result();
+    }
+
+    public function get_deleted_clients() {
+        return $this->db->get_where('clients', ['status' => 'delete'])->result();
     }
 
     public function insert_client($data) {
@@ -29,14 +33,13 @@ class Clients_model extends CI_Model {
         return $this->db->update('clients', $data);
     }
 
+    public function restore_client($id_session) {
+        $this->db->where('id_session', $id_session);
+        return $this->db->update('clients', ['status' => 'create']);
+    }
 
     public function delete_client_permanent($id_session) {
         $this->db->where('id_session', $id_session);
         return $this->db->delete('clients');
     }
-
-    public function get_deleted_clients() {
-        return $this->db->get_where('clients', ['status' => 'delete'])->result();
-    }
-    
 }
