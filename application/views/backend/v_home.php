@@ -26,6 +26,7 @@
 
   		<script data-cfasync="false" nonce="b305daaa-d375-4b11-b0cc-8a54017bb2e4">try{(function(w,d){!function(a,b,c,d){if(a.zaraz)console.error("zaraz is loaded twice");else{a[c]=a[c]||{};a[c].executed=[];a.zaraz={deferred:[],listeners:[]};a.zaraz._v="5848";a.zaraz._n="b305daaa-d375-4b11-b0cc-8a54017bb2e4";a.zaraz.q=[];a.zaraz._f=function(e){return async function(){var f=Array.prototype.slice.call(arguments);a.zaraz.q.push({m:e,a:f})}};for(const g of["track","set","debug"])a.zaraz[g]=a.zaraz._f(g);a.zaraz.init=()=>{var h=b.getElementsByTagName(d)[0],i=b.createElement(d),j=b.getElementsByTagName("title")[0];j&&(a[c].t=b.getElementsByTagName("title")[0].text);a[c].x=Math.random();a[c].w=a.screen.width;a[c].h=a.screen.height;a[c].j=a.innerHeight;a[c].e=a.innerWidth;a[c].l=a.location.href;a[c].r=b.referrer;a[c].k=a.screen.colorDepth;a[c].n=b.characterSet;a[c].o=(new Date).getTimezoneOffset();if(a.dataLayer)for(const k of Object.entries(Object.entries(dataLayer).reduce(((l,m)=>({...l[1],...m[1]})),{})))zaraz.set(k[0],k[1],{scope:"page"});a[c].q=[];for(;a.zaraz.q.length;){const n=a.zaraz.q.shift();a[c].q.push(n)}i.defer=!0;for(const o of[localStorage,sessionStorage])Object.keys(o||{}).filter((q=>q.startsWith("_zaraz_"))).forEach((p=>{try{a[c]["z_"+p.slice(7)]=JSON.parse(o.getItem(p))}catch{a[c]["z_"+p.slice(7)]=o.getItem(p)}}));i.referrerPolicy="origin";i.src="cdn-cgi/zaraz/sd0d9.js?z="+btoa(encodeURIComponent(JSON.stringify(a[c])));h.parentNode.insertBefore(i,h)};["complete","interactive"].includes(b.readyState)?zaraz.init():a.addEventListener("DOMContentLoaded",zaraz.init)}}(w,d,"zarazData","script");window.zaraz._p=async bs=>new Promise((bt=>{if(bs){bs.e&&bs.e.forEach((bu=>{try{const bv=d.querySelector("script[nonce]"),bw=bv?.nonce||bv?.getAttribute("nonce"),bx=d.createElement("script");bw&&(bx.nonce=bw);bx.innerHTML=bu;bx.onload=()=>{d.head.removeChild(bx)};d.head.appendChild(bx)}catch(by){console.error(`Error executing script: ${bu}\n`,by)}}));Promise.allSettled((bs.f||[]).map((bz=>fetch(bz[0],bz[1]))))}bt()}));zaraz._p({"e":["(function(w,d){})(window,document)"]});})(window,document)}catch(e){throw fetch("/cdn-cgi/zaraz/t"),e;};
   		</script>
+		<script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body
@@ -230,92 +231,104 @@
 	            </div>
 	            <!-- ====== Data Stats End -->
 
-	            <!-- ====== Chart Thirteen Start -->
-	            <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-7">
-					<div class="mb-5.5 flex flex-wrap items-center justify-between gap-2">
-					    <div>
-					      <h4 class="text-title-sm2 font-bold text-black dark:text-white">
-					        Clients Interaction
-					      </h4>
-					    </div>
-					    <div class="relative z-20 inline-block rounded">
-					      <select
-					        class="relative z-20 inline-flex appearance-none rounded border border-stroke bg-transparent py-[5px] pl-3 pr-8 text-sm font-medium outline-none dark:border-strokedark"
-					      >
-					        <option value="" class="dark:bg-boxdark">Last 7 days</option>
-					        <option value="" class="dark:bg-boxdark">Last 15 days</option>
-					      </select>
-					      <span class="absolute right-3 top-1/2 z-10 -translate-y-1/2">
-					        <svg
-					          width="17"
-					          height="17"
-					          viewBox="0 0 17 17"
-					          fill="none"
-					          xmlns="http://www.w3.org/2000/svg"
-					        >
-					          <path
-					            d="M8.61025 11.8872C8.46025 11.8872 8.33525 11.8372 8.21025 11.7372L2.46025 6.08723C2.23525 5.86223 2.23525 5.51223 2.46025 5.28723C2.68525 5.06223 3.03525 5.06223 3.26025 5.28723L8.61025 10.5122L13.9603 5.23723C14.1853 5.01223 14.5353 5.01223 14.7603 5.23723C14.9853 5.46223 14.9853 5.81223 14.7603 6.03723L9.01025 11.6872C8.88525 11.8122 8.76025 11.8872 8.61025 11.8872Z"
-					            fill="#64748B"
-					          />
-					        </svg>
-					      </span>
-					    </div>
-					</div>
+				<div class="col-span-12">
+				    <div class="flex flex-wrap justify-center gap-4">
+				        <!-- Tombol 1 -->
+				        <button class="w-40 h-40 bg-fuchsia-700 text-white font-semibold rounded-none hover:bg-fuchsia-500 focus:outline-none">
+				            Button 1
+				        </button>
+				        <!-- Tombol 2 -->
+				        <button class="w-40 h-40 bg-fuchsia-700 text-white font-semibold rounded-none hover:bg-fuchsia-500 focus:outline-none">
+				            Button 2
+				        </button>
+				        <!-- Tombol 3 -->
+				        <button class="w-40 h-40 bg-fuchsia-700 text-white font-semibold rounded-none hover:bg-fuchsia-500 focus:outline-none">
+				            Button 3
+				        </button>
+				        <!-- Tombol 4 -->
+				        <button class="w-40 h-40 bg-fuchsia-700 text-white font-semibold rounded-none hover:bg-fuchsia-500 focus:outline-none">
+				            Button 4
+				        </button>
+				        <!-- Tombol 5 -->
+				        <button class="w-40 h-40 bg-fuchsia-700 text-white font-semibold rounded-none hover:bg-fuchsia-500 focus:outline-none">
+				            Button 5
+				        </button>
+						<!-- Tombol 6 -->
+				        <button class="w-40 h-40 bg-fuchsia-700 text-white font-semibold rounded-none hover:bg-fuchsia-500 focus:outline-none">
+				            Button 6
+				        </button>
+				        <!-- Tombol 7 -->
+				        <button class="w-40 h-40 bg-fuchsia-700 text-white font-semibold rounded-none hover:bg-fuchsia-500 focus:outline-none">
+				            Button 7
+				        </button>
+				        <!-- Tombol 8 -->
+				        <button class="w-40 h-40 bg-fuchsia-700 text-white font-semibold rounded-none hover:bg-fuchsia-500 focus:outline-none">
+				            Button 8
+				        </button>
+				        <!-- Tombol 9 -->
+				        <button class="w-40 h-40 bg-fuchsia-700 text-white font-semibold rounded-none hover:bg-fuchsia-500 focus:outline-none">
+				            Button 9
+				        </button>
+				        <!-- Tombol 10 -->
+				        <button class="w-40 h-40 bg-fuchsia-700 text-white font-semibold rounded-none hover:bg-fuchsia-500 focus:outline-none">
+				            Button 10
+				        </button>
+				    </div><br>
 
-					<div class="mb-3 flex flex-wrap gap-6">
-					    <div>
-					      <p class="mb-1.5 text-sm font-medium">Invested Value</p>
-					      <div class="flex items-center gap-2.5">
-					        <p class="font-medium text-black dark:text-white">$1,279.95</p>
-					        <p class="flex items-center gap-1 font-medium text-meta-3">
-					          1,22%
+				    <!-- ====== Chart Thirteen Start -->
+				    <div class="rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-7">
+				        <div class="mb-5.5 flex flex-wrap items-center justify-between gap-2">
+				            <div>
+				                <h4 class="text-title-sm2 font-bold text-black dark:text-white">
+				                    Clients Interaction
+				                </h4>
+				            </div>
+				            <div class="relative z-20 inline-block rounded">
+				                <select class="relative z-20 inline-flex appearance-none rounded border border-stroke bg-transparent py-[5px] pl-3 pr-8 text-sm font-medium outline-none dark:border-strokedark">
+				                    <option value="" class="dark:bg-boxdark">Last 7 days</option>
+				                    <option value="" class="dark:bg-boxdark">Last 15 days</option>
+				                </select>
+				                <span class="absolute right-3 top-1/2 z-10 -translate-y-1/2">
+				                    <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+				                        <path d="M8.61025 11.8872C8.46025 11.8872 8.33525 11.8372 8.21025 11.7372L2.46025 6.08723C2.23525 5.86223 2.23525 5.51223 2.46025 5.28723C2.68525 5.06223 3.03525 5.06223 3.26025 5.28723L8.61025 10.5122L13.9603 5.23723C14.1853 5.01223 14.5353 5.01223 14.7603 5.23723C14.9853 5.46223 14.9853 5.81223 14.7603 6.03723L9.01025 11.6872C8.88525 11.8122 8.76025 11.8872 8.61025 11.8872Z" fill="#64748B"/>
+				                    </svg>
+				                </span>
+				            </div>
+				        </div>
 
-					          <svg
-					            class="fill-current"
-					            width="11"
-					            height="8"
-					            viewBox="0 0 11 8"
-					            fill="none"
-					            xmlns="http://www.w3.org/2000/svg"
-					          >
-					            <path
-					              d="M5.77105 0.0465078L10.7749 7.54651L0.767256 7.54651L5.77105 0.0465078Z"
-					              fill=""
-					            />
-					          </svg>
-					        </p>
-					      </div>
-					    </div>
+				        <div class="mb-3 flex flex-wrap gap-6">
+				            <div>
+				                <p class="mb-1.5 text-sm font-medium">Invested Value</p>
+				                <div class="flex items-center gap-2.5">
+				                    <p class="font-medium text-black dark:text-white">$1,279.95</p>
+				                    <p class="flex items-center gap-1 font-medium text-meta-3">
+				                        1,22%
+				                        <svg class="fill-current" width="11" height="8" viewBox="0 0 11 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+				                            <path d="M5.77105 0.0465078L10.7749 7.54651L0.767256 7.54651L5.77105 0.0465078Z" fill=""/>
+				                        </svg>
+				                    </p>
+				                </div>
+				            </div>
 
-					    <div>
-					      <p class="mb-1.5 text-sm font-medium">Total Returns</p>
-					      <div class="flex items-center gap-2.5">
-					        <p class="font-medium text-black dark:text-white">$22,543.87</p>
-					        <p class="flex items-center gap-1 font-medium text-meta-3">
-					          10.14%
-
-					          <svg
-					            class="fill-current"
-					            width="11"
-					            height="8"
-					            viewBox="0 0 11 8"
-					            fill="none"
-					            xmlns="http://www.w3.org/2000/svg"
-					          >
-					            <path
-					              d="M5.77105 0.0465078L10.7749 7.54651L0.767256 7.54651L5.77105 0.0465078Z"
-					              fill=""
-					            />
-					          </svg>
-					        </p>
-					      </div>
-					    </div>
-					</div>
-					<div>
-					    <div id="chartThirteen" class="-ml-5"></div>
-					</div>
+				            <div>
+				                <p class="mb-1.5 text-sm font-medium">Total Returns</p>
+				                <div class="flex items-center gap-2.5">
+				                    <p class="font-medium text-black dark:text-white">$22,543.87</p>
+				                    <p class="flex items-center gap-1 font-medium text-meta-3">
+				                        10.14%
+				                        <svg class="fill-current" width="11" height="8" viewBox="0 0 11 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+				                            <path d="M5.77105 0.0465078L10.7749 7.54651L0.767256 7.54651L5.77105 0.0465078Z" fill=""/>
+				                        </svg>
+				                    </p>
+				                </div>
+				            </div>
+				        </div>
+				        <div>
+				            <div id="chartThirteen" class="-ml-5"></div>
+				        </div>
+				    </div>
+				    <!-- ====== Chart Thirteen End -->
 				</div>
-	            <!-- ====== Chart Thirteen End -->
 
 	            <!-- ====== Latest Transaction End -->
 				<div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-8">
