@@ -51,21 +51,21 @@
               <table class="mt-4 w-full border-collapse border border-gray-300">
                 <thead>
                   <tr class="bg-gray-200">
-                    <th class="border px-4 py-2">ID</th>
                     <th class="border px-4 py-2">Nama Projek</th>
-                    <th class="border px-4 py-2">Author</th>
+                    <th class="border px-4 py-2">Tanggal Pernikahan</th>
+                    <th class="border px-4 py-2">Lokasi</th>
                     <th class="border px-4 py-2">Tindakan</th>
                   </tr>
                 </thead>
                 <tbody>
                   <?php foreach ($projek as $p): ?>
                   <tr class="text-center">
-                    <td class="border px-4 py-2"><?= $p->id ?></td>
                     <td class="border px-4 py-2"><?= $p->nama_projek ?></td>
-                    <td class="border px-4 py-2"><?= $p->author ?></td>
+                    <td class="border px-4 py-2"><?= $p->wedding_date ?></td>
+                    <td class="border px-4 py-2"><?= $p->location ?></td>
                     <td class="border px-4 py-2">
-                      <a href="<?= site_url('projek/edit/'.$p->id) ?>" class="bg-yellow-500 text-white px-2 py-1 rounded">Edit</a>
-                      <a href="<?= site_url('projek/delete/'.$p->id) ?>" class="bg-red-500 text-white px-2 py-1 rounded" onclick="return confirm('Hapus projek ini?')">Hapus</a>
+                      <a href="<?= site_url('projek/edit/'.$p->id_session) ?>" class="bg-yellow-500 text-white px-2 py-1 rounded">Edit</a>
+                      <a href="<?= site_url('projek/delete/'.$p->id_session) ?>" class="bg-red-500 text-white px-2 py-1 rounded" onclick="return confirm('Hapus projek ini?')">Hapus</a>
                     </td>
                   </tr>
                   <?php endforeach; ?>
