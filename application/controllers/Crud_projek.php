@@ -10,8 +10,13 @@ class Crud_projek extends CI_Controller {
     }
 
     public function index() {
-        $data['projek'] = $this->Projek_model->get_all_projek();
+        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
+                cek_session_akses('home',$this->session->id_session);
+        $data['projek'] = $this->Projek_model->get_all_projek(); // Ubah pemanggilan model
         $this->load->view('projek/index', $data);
+        }else{
+                redirect(base_url());
+                }
     }
 
     public function create() {
@@ -23,7 +28,7 @@ class Crud_projek extends CI_Controller {
             'id_session' => sha1(uniqid()),
             'nama_projek' => $this->input->post('nama_projek'),
             'status' => 'create',
-            'author' => $this->input->post('author'),
+            'create_by' => $this->session->id_session,
             'wedding_date' => $this->input->post('wedding_date'),
             'location' => $this->input->post('location'),
         );

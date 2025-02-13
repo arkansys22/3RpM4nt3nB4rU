@@ -38,9 +38,6 @@
                 <label class="block mb-2">Nama Projek</label>
                 <input type="text" name="nama_projek" class="w-full px-4 py-2 border rounded mb-4" required>
 
-                <label class="block mb-2">Author</label>
-                <input type="text" name="author" class="w-full px-4 py-2 border rounded mb-4" required>
-
                 <label class="block mb-2">Tanggal Pernikahan</label>
                 <input type="date" name="wedding_date" class="w-full px-4 py-2 border rounded mb-4" required>
 
