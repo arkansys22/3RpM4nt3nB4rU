@@ -349,8 +349,34 @@ document.addEventListener('DOMContentLoaded', function () {
     link.addEventListener('click', function (event) {
       if (event.ctrlKey) {
         event.preventDefault();
+        event.stopPropagation();
       }
     });
+  });
+
+  // Reset sidebar selection to base URL on sidebar close
+  const sidebar = document.querySelector('aside');
+  sidebar.addEventListener('click.outside', function () {
+    const baseUrl = '<?= base_url('panel'); ?>';
+    const links = document.querySelectorAll('a');
+    links.forEach(function (link) {
+      if (link.getAttribute('href') === baseUrl) {
+        link.click();
+      }
+    });
+  });
+
+  // Set sidebar selection to current URL on page load
+  const currentUrl = window.location.href;
+  const links = document.querySelectorAll('a');
+  links.forEach(function (link) {
+    if (currentUrl.includes(link.getAttribute('href'))) {
+      link.classList.add('bg-graydark', 'dark:bg-meta-4');
+      link.setAttribute('selected', true);
+    } else {
+      link.classList.remove('bg-graydark', 'dark:bg-meta-4');
+      link.removeAttribute('selected');
+    }
   });
 });
 </script>
