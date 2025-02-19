@@ -178,6 +178,7 @@
               <input type="text" name="wedding_speech" placeholder="Sambutan Pernikahan" class="w-full px-4 py-2 border rounded mb-4">
 
                 <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">Simpan</button>
+                <a href="<?= site_url('clients') ?>" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded">Batal</a>
               </form>
             </div>
           </div>
