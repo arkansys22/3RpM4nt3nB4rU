@@ -74,7 +74,7 @@
 					            </a>
 					        </li>
 					        <!-- Menu Item Dashboard -->
-					        <!-- Menu Item Klien -->
+					        <!-- Menu Item clients -->
 					        <li>
 					            <a
 						              class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
@@ -110,12 +110,12 @@
 							             Clients
 					            </a>					            
 					        </li>
-					        <!-- Menu Item Klien -->
-							<!-- Menu Item Projek -->
+					        <!-- Menu Item clients -->
+							<!-- Menu Item projects -->
 					        <li>
 					            <a
 						              class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
-						              href="<?= base_url('projek'); ?>"
+						              href="<?= base_url('projects'); ?>"
 						              @click="selected = 'Projects'"
 						              :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Projects') }"
 						            >
@@ -147,7 +147,7 @@
 							             Projects
 					            </a>					            
 					        </li>
-					        <!-- Menu Item Projek -->
+					        <!-- Menu Item projects -->
 					        <!-- Menu Item Settings -->
 					        <li>
 					            <a
