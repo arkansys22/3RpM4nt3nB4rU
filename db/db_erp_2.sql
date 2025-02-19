@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 12 Feb 2025 pada 11.20
+-- Waktu pembuatan: 19 Feb 2025 pada 08.42
 -- Versi server: 10.1.37-MariaDB
 -- Versi PHP: 7.0.33
 
@@ -31,13 +31,52 @@ SET time_zone = "+00:00";
 CREATE TABLE `clients` (
   `id` int(11) NOT NULL,
   `id_session` varchar(100) NOT NULL,
-  `name` varchar(100) NOT NULL,
+  `client_name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `phone` varchar(20) NOT NULL,
+  `f_bride_fname` varchar(100) NOT NULL,
+  `f_bride_cname` varchar(100) NOT NULL,
+  `f_bride_nchild` int(2) NOT NULL,
+  `f_bride_hsibling` int(2) NOT NULL,
+  `f_bride_fathername` varchar(100) NOT NULL,
+  `f_bride_fathercname` varchar(100) NOT NULL,
+  `f_bride_mothername` varchar(100) NOT NULL,
+  `f_bride_mothercname` varchar(100) NOT NULL,
+  `f_bride_sibling` varchar(100) NOT NULL,
+  `m_bride_fname` varchar(100) NOT NULL,
+  `m_bride_cname` varchar(100) NOT NULL,
+  `m_bride_nchild` int(2) NOT NULL,
+  `m_bride_hsibling` int(2) NOT NULL,
+  `m_bride_fathername` varchar(100) NOT NULL,
+  `m_bride_fathercname` varchar(100) NOT NULL,
+  `m_bride_mothername` varchar(100) NOT NULL,
+  `m_bride_mothercname` varchar(100) NOT NULL,
+  `m_bride_sibling` varchar(100) NOT NULL,
+  `mahr` varchar(100) NOT NULL,
+  `handover` varchar(100) NOT NULL,
+  `female_coor` varchar(100) NOT NULL,
+  `male_coor` varchar(100) NOT NULL,
+  `f_spokesman` varchar(100) NOT NULL,
+  `m_spokesman` varchar(100) NOT NULL,
+  `wedding_officiant` varchar(100) NOT NULL,
+  `guardian` varchar(100) NOT NULL,
+  `f_witness` varchar(100) NOT NULL,
+  `m_witness` varchar(100) NOT NULL,
+  `qori` varchar(100) NOT NULL,
+  `advice_doa` varchar(100) NOT NULL,
+  `clamp` varchar(100) NOT NULL,
+  `jasmine_carrier` varchar(100) NOT NULL,
+  `mahr_carrier` varchar(100) NOT NULL,
+  `ring_carrier` varchar(100) NOT NULL,
+  `pastor` varchar(100) NOT NULL,
+  `church` varchar(100) NOT NULL,
+  `prayer` varchar(100) NOT NULL,
+  `wedding_speech` varchar(100) NOT NULL,
   `wedding_date` date NOT NULL,
   `location` varchar(100) NOT NULL,
+  `create_by` varchar(100) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `create_day` varchar(10) NOT NULL,
   `status` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -45,12 +84,9 @@ CREATE TABLE `clients` (
 -- Dumping data untuk tabel `clients`
 --
 
-INSERT INTO `clients` (`id`, `id_session`, `name`, `email`, `phone`, `wedding_date`, `location`, `created_at`, `updated_at`, `status`) VALUES
-(5, '67a9b61a8898d', 'asg', 'bbo@nagos', '10252', '2025-05-12', '', '2025-02-10 08:17:30', '2025-02-10 09:24:11', 'delete'),
-(6, '1c788cb58bc869336bce1b56c3644057a7f52e3e', 'sag', 'agsioh2@gmail.com', '10259102', '2025-05-07', 'asgnioasg', '2025-02-10 08:20:20', '2025-02-12 09:16:11', 'create'),
-(9, '64df26e2957d2adaf8371e1f2e62049079d63732', 'ahiogsho', '1nosa@gap.com', '1258', '2025-02-03', 'asgg', '2025-02-12 03:48:43', '2025-02-12 03:48:43', 'create'),
-(10, 'c0b663389de1be17b025790467fcfbdc955f9061', 'bajsgjbag', '1nosa@gap.com', '1257', '2025-02-05', 'asgbgoa', '2025-02-12 03:50:20', '2025-02-12 03:50:20', 'create'),
-(11, '2c333b7082f6818698a5c3ac046c4c0c8c114c8c', 'nasogboas', 'aaa@gmail.com', '12950', '2025-02-03', 'bagsjg', '2025-02-12 09:16:06', '2025-02-12 09:16:06', 'create');
+INSERT INTO `clients` (`id`, `id_session`, `client_name`, `email`, `phone`, `f_bride_fname`, `f_bride_cname`, `f_bride_nchild`, `f_bride_hsibling`, `f_bride_fathername`, `f_bride_fathercname`, `f_bride_mothername`, `f_bride_mothercname`, `f_bride_sibling`, `m_bride_fname`, `m_bride_cname`, `m_bride_nchild`, `m_bride_hsibling`, `m_bride_fathername`, `m_bride_fathercname`, `m_bride_mothername`, `m_bride_mothercname`, `m_bride_sibling`, `mahr`, `handover`, `female_coor`, `male_coor`, `f_spokesman`, `m_spokesman`, `wedding_officiant`, `guardian`, `f_witness`, `m_witness`, `qori`, `advice_doa`, `clamp`, `jasmine_carrier`, `mahr_carrier`, `ring_carrier`, `pastor`, `church`, `prayer`, `wedding_speech`, `wedding_date`, `location`, `create_by`, `created_at`, `create_day`, `status`) VALUES
+(50, 'ce1f8cfa140582c795212e5af0667e8619f93877', 'bbb', 'gggg@g', '01824012840', '', '', 0, 0, '', '', '', '', '', '', '', 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '2025-01-02', 'bbb', '1d3ee28b20064eb055ea2315493770bf-20220408132300', '2025-02-18 08:34:05', 'Tuesday', 'delete'),
+(51, '4fe7eb389179cd5f168eee04018d7a86c0f324d5', 'kkk', 'kkk@kk', '1111', '', '', 0, 0, '', '', '', '', '', '', '', 0, 0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '2025-04-02', 'kkk', '1d3ee28b20064eb055ea2315493770bf-20220408132300', '2025-02-19 04:13:06', 'Wednesday', 'create');
 
 -- --------------------------------------------------------
 
@@ -62,11 +98,14 @@ CREATE TABLE `projects` (
   `id` int(11) NOT NULL,
   `id_session` varchar(255) NOT NULL,
   `project_name` varchar(255) NOT NULL,
-  `author` varchar(255) NOT NULL,
-  `wedding_date` date NOT NULL,
+  `client_name` varchar(100) NOT NULL,
+  `event_date` date NOT NULL,
+  `value` decimal(15,0) NOT NULL,
+  `detail` varchar(255) NOT NULL,
+  `religion` varchar(20) NOT NULL,
   `location` varchar(255) NOT NULL,
-  `date_create` datetime DEFAULT CURRENT_TIMESTAMP,
-  `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `create_by` varchar(100) NOT NULL,
+  `create_date` datetime DEFAULT CURRENT_TIMESTAMP,
   `status` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -74,9 +113,9 @@ CREATE TABLE `projects` (
 -- Dumping data untuk tabel `projects`
 --
 
-INSERT INTO `projects` (`id`, `id_session`, `project_name`, `author`, `wedding_date`, `location`, `date_create`, `date_update`, `status`) VALUES
-(14, '8049d5ac41856655dffbe8d4917b557762883426', 'asnfonso', 'naiosgnoasg', '2025-02-06', 'sagboagsbo', '2025-02-12 11:58:39', '2025-02-12 09:17:08', 'create'),
-(15, '70fe635d781a4f1ec9511f00aaa479fd53a1b110', 'nkasfnsifao', 'asnionf', '2025-02-07', 'sagniognsaio', '2025-02-12 14:07:31', '2025-02-12 09:17:17', 'delete');
+INSERT INTO `projects` (`id`, `id_session`, `project_name`, `client_name`, `event_date`, `value`, `detail`, `religion`, `location`, `create_by`, `create_date`, `status`) VALUES
+(50, 'ce1f8cfa140582c795212e5af0667e8619f93877', 'abc', 'bbb', '2025-01-02', '12412746', 'cab', 'Lainnya', 'bbb', '1d3ee28b20064eb055ea2315493770bf-20220408132300', '2025-02-18 15:34:05', 'delete'),
+(51, '4fe7eb389179cd5f168eee04018d7a86c0f324d5', 'kkk', 'kkk', '2025-04-02', '1000000', 'kkk', 'Hindu', 'kkk', '1d3ee28b20064eb055ea2315493770bf-20220408132300', '2025-02-19 11:13:06', 'create');
 
 --
 -- Indexes for dumped tables
@@ -104,13 +143,13 @@ ALTER TABLE `projects`
 -- AUTO_INCREMENT untuk tabel `clients`
 --
 ALTER TABLE `clients`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT untuk tabel `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
