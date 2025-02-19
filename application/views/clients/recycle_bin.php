@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recycle Bin Klien</title>
+    <title>Recycle Bin Clients</title>
     <link href="<?php echo base_url()?>assets/backend/style.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -33,10 +33,10 @@
         <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-              <h2 class="text-2xl font-bold mb-4">Recycle Bin Klien</h2>
+              <h2 class="text-2xl font-bold mb-4">Recycle Bin Clients</h2>
 
               <!-- Tombol Kembali -->
-              <a href="<?= site_url('clients') ?>" class="bg-blue-500 text-white px-4 py-2 rounded mb-4 inline-block">Kembali</a>
+              <a href="<?= site_url('clients') ?>" class="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none">Kembali</a>
 
               <table class="mt-4 w-full border-collapse border border-gray-300">
                 <thead>
@@ -52,7 +52,7 @@
                 <tbody>
                   <?php foreach ($clients as $client): ?>
                   <tr class="text-center">
-                    <td class="border px-4 py-2"><?= $client->name ?></td>
+                    <td class="border px-4 py-2"><?= $client->client_name ?></td>
                     <td class="border px-4 py-2"><?= $client->email ?></td>
                     <td class="border px-4 py-2"><?= $client->phone ?></td>
                     <td class="border px-4 py-2"><?= $client->wedding_date ?></td>

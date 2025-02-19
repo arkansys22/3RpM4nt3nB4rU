@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Klien</title>
+    <title>Daftar Clients</title>
     <link href="<?php echo base_url()?>assets/backend/style.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -33,14 +33,14 @@
         <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-              <h2 class="text-2xl font-bold mb-4">Daftar Klien</h2>
-                <button class="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none">
+              <h2 class="text-2xl font-bold mb-4">Daftar Clients</h2>
+                <!-- <button class="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none">
                   <a href="<?= site_url('clients/create') ?>">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m7-7H5"></path>
                     </svg>
                   </a>
-                </button>
+                </button> -->
                 <button class="bg-red-500 text-white p-3 rounded-md hover:bg-red-700 focus:outline-none">
                   <a href="<?= site_url('clients/recycle_bin') ?>">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
@@ -62,7 +62,7 @@
                 <tbody>
                   <?php foreach ($clients as $client): ?>
                   <tr class="text-center">
-                    <td class="border px-4 py-2"><?= $client->name ?></td>
+                    <td class="border px-4 py-2"><?= $client->client_name ?></td>
                     <td class="border px-4 py-2"><?= $client->email ?></td>
                     <td class="border px-4 py-2"><?= $client->phone ?></td>
                     <td class="border px-4 py-2"><?= $client->wedding_date ?></td>

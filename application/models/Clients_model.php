@@ -16,7 +16,32 @@ class Clients_model extends CI_Model {
     }
 
     public function insert_client($data) {
-        return $this->db->insert('clients', $data);
+        // Insert data ke tabel clients
+        $insert = $this->db->insert('clients', $data);
+
+        if ($insert) {
+            // Ambil id yang baru disimpan di tabel clients
+            $client_id = $this->db->insert_id();  // Mendapatkan id auto-increment dari clients
+
+            // Ambil hari dari created_at (format: Senin, Selasa, dst.)
+            $create_day = date('l', strtotime($data['created_at'])); 
+
+            // Data untuk tabel projects
+            $project_data = [
+                'id_session'         => $data['id_session'],
+                'project_name'       => $data['client_name'],  // client_name → project_name
+                'event_date'         => $data['wedding_date'], // wedding_date → event_date
+                'create_date'        => $data['created_at'],   // created_at → create_date
+                'create_day'         => $create_day,           // Otomatis ambil hari dari created_at
+                'location'           => $data['location'],     // Sama dengan clients
+                'status'             => 'create'
+            ];
+
+            // Insert ke tabel projects
+            $this->db->insert('projects', $project_data);
+        }
+
+        return $insert;
     }
 
     public function get_client_by_session($id_session) {
