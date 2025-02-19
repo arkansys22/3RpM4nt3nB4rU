@@ -55,13 +55,13 @@ INSERT INTO `clients` (`id`, `id_session`, `name`, `email`, `phone`, `wedding_da
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `projek`
+-- Struktur dari tabel `projects`
 --
 
-CREATE TABLE `projek` (
+CREATE TABLE `projects` (
   `id` int(11) NOT NULL,
   `id_session` varchar(255) NOT NULL,
-  `nama_projek` varchar(255) NOT NULL,
+  `project_name` varchar(255) NOT NULL,
   `author` varchar(255) NOT NULL,
   `wedding_date` date NOT NULL,
   `location` varchar(255) NOT NULL,
@@ -71,10 +71,10 @@ CREATE TABLE `projek` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `projek`
+-- Dumping data untuk tabel `projects`
 --
 
-INSERT INTO `projek` (`id`, `id_session`, `nama_projek`, `author`, `wedding_date`, `location`, `date_create`, `date_update`, `status`) VALUES
+INSERT INTO `projects` (`id`, `id_session`, `project_name`, `author`, `wedding_date`, `location`, `date_create`, `date_update`, `status`) VALUES
 (14, '8049d5ac41856655dffbe8d4917b557762883426', 'asnfonso', 'naiosgnoasg', '2025-02-06', 'sagboagsbo', '2025-02-12 11:58:39', '2025-02-12 09:17:08', 'create'),
 (15, '70fe635d781a4f1ec9511f00aaa479fd53a1b110', 'nkasfnsifao', 'asnionf', '2025-02-07', 'sagniognsaio', '2025-02-12 14:07:31', '2025-02-12 09:17:17', 'delete');
 
@@ -90,9 +90,9 @@ ALTER TABLE `clients`
   ADD UNIQUE KEY `id_session` (`id_session`);
 
 --
--- Indeks untuk tabel `projek`
+-- Indeks untuk tabel `projects`
 --
-ALTER TABLE `projek`
+ALTER TABLE `projects`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_session` (`id_session`);
 
@@ -107,9 +107,9 @@ ALTER TABLE `clients`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT untuk tabel `projek`
+-- AUTO_INCREMENT untuk tabel `projects`
 --
-ALTER TABLE `projek`
+ALTER TABLE `projects`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 COMMIT;
 

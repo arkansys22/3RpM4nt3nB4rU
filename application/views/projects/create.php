@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Projek</title>
+    <title>Tambah Projects</title>
     <link href="<?php echo base_url()?>assets/backend/style.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body
-    x-data="{ page: 'projek', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-data="{ page: 'projects', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
     x-init="
          darkMode = JSON.parse(localStorage.getItem('darkMode'));
          $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
@@ -33,14 +33,34 @@
         <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-              <h1 class="text-2xl font-bold mb-4">Tambah Projek</h1>
-              <form action="<?= site_url('projek/store') ?>" method="post" class="bg-white p-6 shadow-md rounded">
-                <label class="block mb-2">Nama Projek</label>
-                <input type="text" name="nama_projek" class="w-full px-4 py-2 border rounded mb-4" required>
+              <h1 class="text-2xl font-bold mb-4">Tambah Projects</h1>
+              <form action="<?= site_url('projects/store') ?>" method="post" class="bg-white p-6 shadow-md rounded">
+                <label class="block mb-2">Nama Projects</label>
+                <input type="text" name="project_name" class="w-full px-4 py-2 border rounded mb-4" required>
+
+                <label class="block mb-2">Nama Clients</label>
+                <input type="text" name="client_name" class="w-full px-4 py-2 border rounded mb-4" required>
 
                 <label class="block mb-2">Tanggal Pernikahan</label>
-                <input type="date" name="wedding_date" class="w-full px-4 py-2 border rounded mb-4" required>
+                <input type="date" name="event_date" class="w-full px-4 py-2 border rounded mb-4" required>
 
+                <label class="block mb-2">Value</label>
+                <input type="number" name="value" class="w-full px-4 py-2 border rounded mb-4" required>
+
+                <label class="block mb-2">Detail</label>
+                <textarea name="detail" class="w-full px-4 py-2 border rounded mb-4" required></textarea>
+
+                <label class="block mb-2">Agama</label>
+                <select name="religion" class="w-full px-4 py-2 border rounded mb-4" required>
+                    <option value="">Pilih Agama</option>
+                    <option value="Islam" <?= set_select('religion', 'Islam') ?>>Islam</option>
+                    <option value="Kristen" <?= set_select('religion', 'Kristen') ?>>Kristen</option>
+                    <option value="Katolik" <?= set_select('religion', 'Katolik') ?>>Katolik</option>
+                    <option value="Hindu" <?= set_select('religion', 'Hindu') ?>>Hindu</option>
+                    <option value="Buddha" <?= set_select('religion', 'Buddha') ?>>Buddha</option>
+                    <option value="Lainnya" <?= set_select('religion', 'Lainnya') ?>>Lainnya</option>
+                  </select>
+                
                 <label class="block mb-2">Lokasi</label>
                 <input type="text" name="location" class="w-full px-4 py-2 border rounded mb-4" required>
 

@@ -19,7 +19,7 @@ class Crud_m extends CI_model{
   public $kabupaten = 'kabupaten';
   public $table_users_bisnis = 'user_bisnis';
   public $id_bisnis = 'id_bisnis';
-  public $id_projek = 'id_projek';
+  public $id_projects = 'id_projects';
   public $id_harga = 'id_harga';
   public $table_bisnis = 'user_bisnis';
   public $table_harga = 'harga';
@@ -28,7 +28,7 @@ class Crud_m extends CI_model{
   public $id_kategori='user_company_account';
   public $kecamatan ='kecamatan';
   public $table_user='user';
-  public $table_projek='projek';
+  public $table_projects='projects';
 
   function get_by_id_harga($id)
   {
@@ -64,7 +64,7 @@ class Crud_m extends CI_model{
   }
   public function view_where4($table,$data,$data2){
       $this->db->where('username',$data);
-      $this->db->where('projek_status',$data2);
+      $this->db->where('projects_status',$data2);
       return $this->db->get($table);
   }
 
