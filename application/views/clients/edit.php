@@ -1,3 +1,11 @@
+<?php
+// Ambil agama dari tabel projects berdasarkan id_session klien
+$project = $this->db->get_where('projects', ['id_session' => $client->id_session])->row();
+$religion = $project->religion ?? ''; // Pastikan tidak error jika religion kosong
+
+$islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -43,8 +51,8 @@
               <label class="block mb-2">Email</label>
               <input type="email" name="email" value="<?= $client->email ?>" placeholder="Email" class="w-full px-4 py-2 border rounded mb-4" required>
 
-              <label class="block mb-2">Nomor Handphone</label>
-              <input type="number" name="phone" value="<?= $client->phone ?>" placeholder="No HP" class="w-full px-4 py-2 border rounded mb-4" required>
+              <label class="block mb-2">No HP</label>
+              <input type="text" name="phone" value="<?= $client->phone ?>" placeholder="No HP" class="w-full px-4 py-2 border rounded mb-4" required>
 
               <!-- Data Mempelai Wanita -->
               <h3 class="text-lg font-bold mt-6 mb-2">Data Mempelai Wanita</h3>
@@ -73,7 +81,7 @@
               <input type="text" name="f_bride_mothercname" value="<?= $client->f_bride_mothercname ?>" placeholder="Nama Panggilan Ibu" class="w-full px-4 py-2 border rounded mb-4">
 
               <label class="block mb-2">Nama Saudara Kandung</label>
-              <textarea name="f_bride_sibling" value="<?= $client->f_bride_sibling ?>" placeholder="1. A&#10;2. B&#10;3. ..." class="w-full px-4 py-2 border rounded mb-4"></textarea>
+              <textarea name="f_bride_sibling" placeholder="1. A&#10;2. B&#10;3. ..." class="w-full px-4 py-2 border rounded mb-4"><?= $client->f_bride_sibling ?></textarea>
 
               <!-- Data Mempelai Pria -->
               <h3 class="text-lg font-bold mt-6 mb-2">Data Mempelai Pria</h3>
@@ -102,79 +110,82 @@
               <input type="text" name="m_bride_mothercname" value="<?= $client->m_bride_mothercname ?>" placeholder="Nama Panggilan Ibu" class="w-full px-4 py-2 border rounded mb-4">
               
               <label class="block mb-2">Nama Saudara Kandung</label>
-              <textarea name="m_bride_sibling" value="<?= $client->f_bride_nchild ?>" placeholder="1. A&#10;2. B&#10;3. ..." class="w-full px-4 py-2 border rounded mb-4"></textarea>
+              <textarea name="m_bride_sibling" placeholder="1. A&#10;2. B&#10;3. ..." class="w-full px-4 py-2 border rounded mb-4"><?= $client->m_bride_sibling ?></textarea>
 
               <!-- Detail Pernikahan -->
               <h3 class="text-lg font-bold mt-6 mb-2">Detail Pernikahan</h3>
               <label class="block mb-2">Tanggal Pernikahan</label>
-              <input type="date" name="wedding_date" value="<?= $client->f_bride_nchild ?>" placeholder="Tanggal Pernikahan" class="w-full px-4 py-2 border rounded mb-4" required>
+              <input type="date" name="wedding_date" value="<?= $client->wedding_date ?>" placeholder="Tanggal Pernikahan" class="w-full px-4 py-2 border rounded mb-4" required>
 
               <label class="block mb-2">Lokasi</label>
-              <input type="text" name="location" value="<?= $client->f_bride_nchild ?>" placeholder="Lokasi" class="w-full px-4 py-2 border rounded mb-4" required>
+              <input type="text" name="location" value="<?= $client->location ?>" placeholder="Lokasi" class="w-full px-4 py-2 border rounded mb-4" required>
 
+              <?php if ($islam) : ?>
               <label class="block mb-2">Mahar</label>
-              <input type="text" name="mahr" value="<?= $client->f_bride_nchild ?>" placeholder="Mahar" class="w-full px-4 py-2 border rounded mb-4">
+              <input type="text" name="mahr" value="<?= $client->mahr ?>" placeholder="Mahar" class="w-full px-4 py-2 border rounded mb-4">
 
               <label class="block mb-2">Simbolis</label>
-              <input type="text" name="handover" value="<?= $client->f_bride_nchild ?>" placeholder="Simbolis" class="w-full px-4 py-2 border rounded mb-4">
+              <input type="text" name="handover" value="<?= $client->handover ?>" placeholder="Simbolis" class="w-full px-4 py-2 border rounded mb-4">
 
               <!-- Petugas dan Koordinator Akad Nikah -->
               <h3 class="text-lg font-bold mt-6 mb-2">Petugas dan Koordinator</h3>
               <label class="block mb-2">Koordinator Keluarga Wanita</label>
-              <input type="text" name="female_coor" value="<?= $client->f_bride_nchild ?>" placeholder="Koordinator Keluarga Wanita" class="w-full px-4 py-2 border rounded mb-4">
+              <input type="text" name="female_coor" value="<?= $client->female_coor ?>" placeholder="Koordinator Keluarga Wanita" class="w-full px-4 py-2 border rounded mb-4">
               
               <label class="block mb-2">Koordinator Keluarga Pria</label>
-              <input type="text" name="male_coor" value="<?= $client->f_bride_nchild ?>" placeholder="Koordinator Keluarga Pria" class="w-full px-4 py-2 border rounded mb-4">
+              <input type="text" name="male_coor" value="<?= $client->male_coor ?>" placeholder="Koordinator Keluarga Pria" class="w-full px-4 py-2 border rounded mb-4">
               
               <label class="block mb-2">Jubir Keluarga Wanita</label>
-              <input type="text" name="f_spokesman" value="<?= $client->f_bride_nchild ?>" placeholder="Jubir Keluarga Wanita" class="w-full px-4 py-2 border rounded mb-4">
+              <input type="text" name="f_spokesman" value="<?= $client->f_spokesman ?>" placeholder="Jubir Keluarga Wanita" class="w-full px-4 py-2 border rounded mb-4">
               
               <label class="block mb-2">Jubir Keluarga Pria</label>
-              <input type="text" name="m_spokesman" value="<?= $client->f_bride_nchild ?>" placeholder="Jubir Keluarga Pria" class="w-full px-4 py-2 border rounded mb-4">
+              <input type="text" name="m_spokesman" value="<?= $client->m_spokesman ?>" placeholder="Jubir Keluarga Pria" class="w-full px-4 py-2 border rounded mb-4">
               
               <label class="block mb-2">Penghulu</label>
-              <input type="text" name="wedding_officiant" value="<?= $client->f_bride_nchild ?>" placeholder="Penghulu" class="w-full px-4 py-2 border rounded mb-4">
+              <input type="text" name="wedding_officiant" value="<?= $client->wedding_officiant ?>" placeholder="Penghulu" class="w-full px-4 py-2 border rounded mb-4">
               
               <label class="block mb-2">Wali</label>
-              <input type="text" name="guardian" value="<?= $client->f_bride_nchild ?>" placeholder="Wali" class="w-full px-4 py-2 border rounded mb-4">
+              <input type="text" name="guardian" value="<?= $client->guardian ?>" placeholder="Wali" class="w-full px-4 py-2 border rounded mb-4">
               
               <label class="block mb-2">Saksi Calon Pengantin Wanita</label>
-              <input type="text" name="f_witness" value="<?= $client->f_bride_nchild ?>" placeholder="Saksi Calon Pengantin Wanita" class="w-full px-4 py-2 border rounded mb-4">
+              <input type="text" name="f_witness" value="<?= $client->f_witness ?>" placeholder="Saksi Calon Pengantin Wanita" class="w-full px-4 py-2 border rounded mb-4">
               
               <label class="block mb-2">Saksi Calon Pengantin Pria</label>
-              <input type="text" name="m_witness" value="<?= $client->f_bride_nchild ?>" placeholder="Saksi Calon Pengantin Pria" class="w-full px-4 py-2 border rounded mb-4">
+              <input type="text" name="m_witness" value="<?= $client->m_witness ?>" placeholder="Saksi Calon Pengantin Pria" class="w-full px-4 py-2 border rounded mb-4">
               
               <label class="block mb-2">Qoriah/Saritilawah</label>
-              <input type="text" name="qori" value="<?= $client->f_bride_nchild ?>" placeholder="Qoriah/Saritilawah" class="w-full px-4 py-2 border rounded mb-4">
+              <input type="text" name="qori" value="<?= $client->qori ?>" placeholder="Qoriah/Saritilawah" class="w-full px-4 py-2 border rounded mb-4">
               
               <label class="block mb-2">Nasihat Pernikahan</label>
-              <input type="text" name="advice_doa" value="<?= $client->f_bride_nchild ?>" placeholder="Nasihat Pernikahan" class="w-full px-4 py-2 border rounded mb-4">
+              <input type="text" name="advice_doa" value="<?= $client->advice_doa ?>" placeholder="Nasihat Pernikahan" class="w-full px-4 py-2 border rounded mb-4">
               
               <label class="block mb-2">Pengapit Calon Pengantin Wanita dari Keluarga</label>
-              <input type="text" name="clamp" value="<?= $client->f_bride_nchild ?>" placeholder="Pengapit Calon Pengantin Wanita dari Keluarga" class="w-full px-4 py-2 border rounded mb-4">
+              <input type="text" name="clamp" value="<?= $client->clamp ?>" placeholder="Pengapit Calon Pengantin Wanita dari Keluarga" class="w-full px-4 py-2 border rounded mb-4">
               
               <label class="block mb-2">Pembawa Nampan Kalung Bunga Melati</label>
-              <input type="text" name="jasmine_carrier" value="<?= $client->f_bride_nchild ?>" placeholder="Pembawa Nampan Kalung Bunga Melati" class="w-full px-4 py-2 border rounded mb-4">
+              <input type="text" name="jasmine_carrier" value="<?= $client->jasmine_carrier ?>" placeholder="Pembawa Nampan Kalung Bunga Melati" class="w-full px-4 py-2 border rounded mb-4">
               
               <label class="block mb-2">Pembawa Mas Kawin/Mahar</label>
-              <input type="text" name="mahr_carrier" value="<?= $client->f_bride_nchild ?>" placeholder="Pembawa Mas Kawin/Mahar" class="w-full px-4 py-2 border rounded mb-4">
+              <input type="text" name="mahr_carrier" value="<?= $client->mahr_carrier ?>" placeholder="Pembawa Mas Kawin/Mahar" class="w-full px-4 py-2 border rounded mb-4">
               
               <label class="block mb-2">Pembawa Cincin Kawin</label>
-              <input type="text" name="ring_carrier" value="<?= $client->f_bride_nchild ?>" placeholder="Pembawa Cincin Kawi" class="w-full px-4 py-2 border rounded mb-4">
+              <input type="text" name="ring_carrier" value="<?= $client->ring_carrier ?>" placeholder="Pembawa Cincin Kawi" class="w-full px-4 py-2 border rounded mb-4">
 
               <!-- Petugas dan Koordinator Resepsi -->
+              <?php else : ?>
               <h3 class="text-lg font-bold mt-6 mb-2">Petugas dan Koordinator Resepsi</h3>
               <label class="block mb-2">Pendeta</label>
-              <input type="text" name="pastor" value="<?= $client->f_bride_nchild ?>" placeholder="Pendeta" class="w-full px-4 py-2 border rounded mb-4">
+              <input type="text" name="pastor" value="<?= $client->pastor ?>" placeholder="Pendeta" class="w-full px-4 py-2 border rounded mb-4">
               
               <label class="block mb-2">Gereja</label>
-              <input type="text" name="church" value="<?= $client->f_bride_nchild ?>" placeholder="Gereja" class="w-full px-4 py-2 border rounded mb-4">
+              <input type="text" name="church" value="<?= $client->church ?>" placeholder="Gereja" class="w-full px-4 py-2 border rounded mb-4">
               
               <label class="block mb-2">Pemimpin Doa</label>
-              <input type="text" name="prayer" value="<?= $client->f_bride_nchild ?>" placeholder="Pemimpin Doa" class="w-full px-4 py-2 border rounded mb-4">
+              <input type="text" name="prayer" value="<?= $client->prayer ?>" placeholder="Pemimpin Doa" class="w-full px-4 py-2 border rounded mb-4">
               
               <label class="block mb-2">Sambutan Pernikahan</label>
-              <input type="text" name="wedding_speech" value="<?= $client->f_bride_nchild ?>" placeholder="Sambutan Pernikahan" class="w-full px-4 py-2 border rounded mb-4">
+              <input type="text" name="wedding_speech" value="<?= $client->wedding_speech ?>" placeholder="Sambutan Pernikahan" class="w-full px-4 py-2 border rounded mb-4">
+              <?php endif; ?>
 
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Update</button>
                 <a href="<?= site_url('clients') ?>" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded">Batal</a>
