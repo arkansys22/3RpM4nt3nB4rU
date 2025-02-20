@@ -21,7 +21,8 @@ class Crud_clients extends CI_Controller {
     }
 
     public function store() {
-        $id_session = sha1(uniqid());
+        $id_session = hash('sha256', bin2hex(random_bytes(16)));
+
         $created_at = date('Y-m-d H:i:s'); // Waktu sekarang
         
         $data = [

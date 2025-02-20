@@ -24,7 +24,8 @@ class crud_projects extends CI_Controller {
     }
 
     public function store() {
-        $id_session = sha1(uniqid());
+        $id_session = hash('sha256', bin2hex(random_bytes(16)));
+
         $date_create = date('Y-m-d H:i:s');  // tanggal dan waktu
     
         $data = array(
