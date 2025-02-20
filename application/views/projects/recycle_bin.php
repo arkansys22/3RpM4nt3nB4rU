@@ -44,9 +44,9 @@
                             <th class="border px-4 py-2">Tanggal Pernikahan</th>
                             <th class="border px-4 py-2">Value</th>
                             <th class="border px-4 py-2">Detail</th>
-                            <th class="border px-4 py-2">Religion</th>
+                            <th class="border px-4 py-2">Agama</th>
                             <th class="border px-4 py-2">Lokasi</th>
-                            <th class="border px-4 py-2">Tindakan</th>
+                            <th class="border px-4 py-2">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -59,8 +59,8 @@
                                 <td class="border px-4 py-2"><?= $p->religion ?></td>
                                 <td class="border px-4 py-2"><?= $p->location ?></td>
                                     <td class="border px-4 py-2">
-                                        <a href="<?= site_url('projects/restore/'.$p->id_session) ?>" class="bg-green-500 text-white px-2 py-1 rounded">Restore</a>
-                                        <a href="<?= site_url('projects/permanent_delete/'.$p->id_session) ?>" class="bg-red-500 text-white px-2 py-1 rounded" onclick="return confirm('Hapus secara permanen?')">Delete Permanen</a>
+                                        <a href="<?= site_url('projects/restore/'.$p->id_session) ?>" class="bg-green-500 text-white px-2 py-1 rounded whitespace-nowrap mb-2 block">Restore</a>
+                                        <a href="<?= site_url('projects/permanent_delete/'.$p->id_session) ?>" class="bg-red-500 text-white px-2 py-1 rounded whitespace-nowrap block" onclick="return confirm('Hapus secara permanen?')">Delete Permanen</a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

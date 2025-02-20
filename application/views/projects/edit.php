@@ -61,7 +61,7 @@
                   </select>
 
                 <label class="block mb-2">Lokasi</label>
-                <input type="text" name="location" value="<?= $projects->location ?>" class="w-full px-4 py-2 border rounded mb-4w-full px-4 py-2 border rounded mb-4" required>
+                <input type="text" name="location" value="<?= $projects->location ?>" class="w-full px-4 py-2 border rounded mb-4" required>
 
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Update</button>
                 <a href="<?= site_url('projects') ?>" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded">Batal</a>
