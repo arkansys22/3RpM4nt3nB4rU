@@ -51,9 +51,9 @@
               <table class="mt-4 w-full border-collapse border border-gray-300">
                 <thead>
                   <tr class="bg-gray-200">
-                    <th class="border px-4 py-2">Nama</th>
+                    <th class="border px-4 py-2">Nama Client</th>
                     <th class="border px-4 py-2">Email</th>
-                    <th class="border px-4 py-2">Telepon</th>
+                    <th class="border px-4 py-2">No HP</th>
                     <th class="border px-4 py-2">Tanggal Pernikahan</th>
                     <th class="border px-4 py-2">Lokasi</th>
                     <th class="border px-4 py-2">Aksi</th>
@@ -68,8 +68,8 @@
                     <td class="border px-4 py-2"><?= $client->wedding_date ?></td>
                     <td class="border px-4 py-2"><?= $client->location ?></td>
                     <td class="border px-4 py-2">
-                      <a href="<?= site_url('clients/edit/' . $client->id_session) ?>" class="bg-yellow-500 text-white px-2 py-1 rounded">Edit</a>
-                      <a href="<?= site_url('clients/delete/' . $client->id_session) ?>" class="bg-red-500 text-white px-2 py-1 rounded" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                      <a href="<?= site_url('clients/edit/' . $client->id_session) ?>" class="bg-yellow-500 text-white px-2 py-1 rounded whitespace-nowrap mb-2 block">Edit</a>
+                      <a href="<?= site_url('clients/delete/' . $client->id_session) ?>" class="bg-red-500 text-white px-2 py-1 rounded whitespace-nowrap block" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
                     </td>
                   </tr>
                   <?php endforeach; ?>
