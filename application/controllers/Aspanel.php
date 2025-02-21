@@ -5,6 +5,7 @@ class Aspanel extends CI_Controller {
 	function __construct()
 	{
 		parent::__construct();
+		$this->load->model('Potensial_model');
 		date_default_timezone_set('Asia/Jakarta');
 	}
 	public function index()
@@ -25,9 +26,42 @@ class Aspanel extends CI_Controller {
 
 	public function logout()
 		{
+
+		if ($this->agent->is_browser()) // Agent untuk fitur di log activity
+                {
+                      $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
+                }
+                elseif ($this->agent->is_robot())
+                {
+                      $agent = $this->agent->robot();
+                }
+                elseif ($this->agent->is_mobile())
+                {
+                      $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
+                }
+                else
+                {
+                      $agent = 'Unidentified User Agent';
+                }
+
+
 		$id = array('id_session' => $this->session->id_session);
 						$data = array('user_login_status'=>'offline');
 						$this->db->update('user', $data, $id);
+
+			$data_log = array(
+
+            'log_activity_user_id'=>$this->session->id_session,
+            'log_activity_modul' => 'logout',            
+            'log_activity_status' => 'Logout ',
+            'log_activity_platform'=> $agent,
+            'log_activity_ip'=> $this->input->ip_address()
+            
+        );
+
+        $this->Potensial_model->insert_log_activity($data_log);
+
+
             // Unset user data
             $this->session->unset_userdata('logged_in');
             $this->session->unset_userdata('user_id');
