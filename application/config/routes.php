@@ -7,6 +7,7 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['login'] = "User/login";
 $route['panel'] = "aspanel/home";
+$route['logout'] = "aspanel/logout";
 
 $route['project'] = 'crud_project/index'; // Menampilkan daftar project
 $route['project/create'] = 'crud_project/create'; // Menampilkan form tambah project
@@ -31,6 +32,7 @@ $route['clients/recycle_bin'] = 'crud_clients/recycle_bin'; // Halaman recycle b
 $route['clients/restore/(:any)'] = 'crud_clients/restore/$1'; // Restore clients
 $route['clients/permanent_delete/(:any)'] = 'crud_clients/permanent_delete/$1'; // Hapus permanen clients
 
+<<<<<<< HEAD
 $route['crews'] = 'Crud_crews/index'; // Menampilkan daftar crews yang masih aktif
 $route['crews/create'] = 'Crud_crews/create'; // Menampilkan halaman tambah crews
 $route['crews/store'] = 'Crud_crews/store'; // Menyimpan data crews yang baru dibuat
@@ -40,5 +42,32 @@ $route['crews/recycle_bin'] = 'Crud_crews/recycle_bin'; // Menampilkan daftar cr
 $route['crews/soft_delete/(:any)'] = 'Crud_crews/soft_delete/$1'; // Menghapus data crews (soft delete, ubah status jadi 'delete')
 $route['crews/restore/(:any)'] = 'Crud_crews/restore/$1'; // Mengembalikan data crews dari Recycle Bin ke daftar aktif
 $route['crews/delete_permanent/(:any)'] = 'Crud_crews/delete_permanent/$1'; // Menghapus permanen data crews dari Recycle Bin
+=======
+
+$route['potensial-clients'] = 'crud_potensial_clients/index'; // Menampilkan daftar Potensial Clients
+
+$route['potensial-clients-hot'] = 'crud_potensial_clients/index_hot'; // Menampilkan daftar Potensial Clients Hot
+
+$route['potensial-clients-konsul'] = 'crud_potensial_clients/index_konsul'; // Menampilkan daftar Potensial Clients konsul
+
+$route['potensial-clients-bayar'] = 'crud_potensial_clients/index_deal'; // Menampilkan daftar Potensial Clients bayar
+
+$route['potensial-clients-batal'] = 'crud_potensial_clients/index_batal'; // Menampilkan daftar Potensial Clients batal
+
+$route['potensial-clients-ghosting'] = 'crud_potensial_clients/index_ghosting'; // Menampilkan daftar Potensial Clients Ghosting
+
+$route['potensial-clients/create'] = 'crud_potensial_clients/create'; // Menampilkan form tambah Potensial Clients
+$route['potensial-clients/store'] = 'crud_potensial_clients/store'; // Menyimpan data Potensial Clients baru
+
+$route['potensial-clients/lihat/(:any)'] = 'crud_potensial_clients/lihat/$1'; // Menampilkan lihat Potensial Clients
+
+
+$route['potensial-clients/edit/(:any)'] = 'crud_potensial_clients/edit/$1'; // Menampilkan form edit Potensial Clients
+$route['potensial-clients/update/(:any)'] = 'crud_potensial_clients/update/$1'; // Mengupdate Potensial Clients
+$route['potensial-clients/delete/(:any)'] = 'crud_potensial_clients/delete/$1'; // Menghapus Potensial Clients
+$route['potensial-clients/recycle_bin'] = 'crud_potensial_clients/recycle_bin'; // Halaman recycle bin
+$route['potensial-clients/restore/(:any)'] = 'crud_potensial_clients/restore/$1'; // Restore Potensial Clients
+$route['potensial-clients/permanent_delete/(:any)'] = 'crud_potensial_clients/permanent_delete/$1'; // Hapus permanen Potensial Clients
+>>>>>>> 467fb443fe126f3ebc1b1c00e9136d140f43ab8f
 
 $route['petacrawl\.xml'] = "petacrawl";

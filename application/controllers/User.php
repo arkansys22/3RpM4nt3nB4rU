@@ -56,7 +56,7 @@ class User extends CI_Controller
             $this->db->update('user', $data, $id);
 
             $data2 = array (
-              'log_activity_user_id'=>$row['id_user'],
+              'log_activity_user_id'=>$row['id_session'],
               'log_activity_modul' => 'login',
               'log_activity_status' => 'login',
               'log_activity_platform'=> $agent,
