@@ -24,16 +24,6 @@ $route['projects/permanent_delete/(:any)'] = 'crud_projects/permanent_delete/$1'
 
 
 
-$route['projects'] = 'crud_projects/index'; // Menampilkan daftar projects
-$route['projects/create'] = 'crud_projects/create'; // Menampilkan form tambah projects
-$route['projects/store'] = 'crud_projects/store'; // Menyimpan data projects baru
-$route['projects/edit/(:any)'] = 'crud_projects/edit/$1'; // Menampilkan form edit projects
-$route['projects/update/(:any)'] = 'crud_projects/update/$1'; // Mengupdate projects
-$route['projects/delete/(:any)'] = 'crud_projects/delete/$1'; // Menghapus projects
-$route['projects/recycle_bin'] = 'crud_projects/recycle_bin'; // Halaman recycle bin
-$route['projects/restore/(:any)'] = 'crud_projects/restore/$1'; // Restore clients
-$route['projects/permanent_delete/(:any)'] = 'crud_projects/permanent_delete/$1'; // Hapus permanen clients
-=======
 $route['project'] = 'crud_project/index'; // Menampilkan daftar project
 $route['project/create'] = 'crud_project/create'; // Menampilkan form tambah project
 $route['project/store'] = 'crud_project/store'; // Menyimpan data project baru
