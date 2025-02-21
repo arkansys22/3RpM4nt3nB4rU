@@ -44,8 +44,8 @@
               <label class="block mb-2">Email</label>
               <input type="email" name="email" placeholder="Email" class="w-full px-4 py-2 border rounded mb-4" required>
 
-              <label class="block mb-2">Nomor Handphone</label>
-              <input type="number" name="phone" placeholder="No HP" class="w-full px-4 py-2 border rounded mb-4" required>
+              <label class="block mb-2">No HP</label>
+              <input type="text" name="phone" placeholder="No HP" class="w-full px-4 py-2 border rounded mb-4" required>
 
               <!-- Data Mempelai Wanita -->
               <h3 class="text-lg font-bold mt-6 mb-2">Data Mempelai Wanita</h3>

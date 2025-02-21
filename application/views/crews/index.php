@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Clients</title>
+    <title>Daftar crews</title>
     <link href="<?php echo base_url()?>assets/backend/style.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body
-    x-data="{ page: 'clients', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-data="{ page: 'crews', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
     x-init="
          darkMode = JSON.parse(localStorage.getItem('darkMode'));
          $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
@@ -33,16 +33,16 @@
         <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-              <h2 class="text-2xl font-bold mb-4">Daftar Clients</h2>
-                <!-- <button class="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none">
-                  <a href="<?= site_url('clients/create') ?>">
+              <h2 class="text-2xl font-bold mb-4">Daftar crews</h2>
+              <button class="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none">
+                  <a href="<?= site_url('crews/create') ?>">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m7-7H5"></path>
                     </svg>
                   </a>
-                </button> -->
+                </button>
                 <button class="bg-red-500 text-white p-3 rounded-md hover:bg-red-700 focus:outline-none">
-                  <a href="<?= site_url('clients/recycle_bin') ?>">
+                  <a href="<?= site_url('crews/recycle_bin') ?>">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-2 14H7L5 7M12 4v-2m4 2h-8m5 2l1-1m3 1l-1-1m0 0h6l-1 2m-7-5h2m6 5H5"></path>
                     </svg>
@@ -51,25 +51,29 @@
               <table class="mt-4 w-full border-collapse border border-gray-300">
                 <thead>
                   <tr class="bg-gray-200">
-                    <th class="border px-4 py-2">Nama Client</th>
-                    <th class="border px-4 py-2">Email</th>
+                    <th class="border px-4 py-2">Nama</th>
+                    <th class="border px-4 py-2">Gender</th>
+                    <th class="border px-4 py-2">Agama</th>
                     <th class="border px-4 py-2">No HP</th>
-                    <th class="border px-4 py-2">Tanggal Pernikahan</th>
-                    <th class="border px-4 py-2">Lokasi</th>
+                    <th class="border px-4 py-2">Alamat</th>
+                    <th class="border px-4 py-2">Usia</th>
+                    <th class="border px-4 py-2">Bergabung</th>
                     <th class="border px-4 py-2">Aksi</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <?php foreach ($clients as $client): ?>
+                  <?php $no = 1; foreach ($crews as $c) : ?>
                   <tr class="text-center">
-                    <td class="border px-4 py-2"><?= $client->client_name ?></td>
-                    <td class="border px-4 py-2"><?= $client->email ?></td>
-                    <td class="border px-4 py-2"><?= $client->phone ?></td>
-                    <td class="border px-4 py-2"><?= $client->wedding_date ?></td>
-                    <td class="border px-4 py-2"><?= $client->location ?></td>
+                    <td class="border px-4 py-2"><?= $c->crew_name ?></td>
+                    <td class="border px-4 py-2"><?= $c->gender ?></td>
+                    <td class="border px-4 py-2"><?= $c->religion ?></td>
+                    <td class="border px-4 py-2"><?= $c->phone ?></td>
+                    <td class="border px-4 py-2"><?= $c->address ?></td>
+                    <td class="border px-4 py-2"><?= $c->age ?></td>
+                    <td class="border px-4 py-2"><?= $c->joining_date ?></td>
                     <td class="border px-4 py-2">
-                      <a href="<?= site_url('clients/edit/' . $client->id_session) ?>" class="bg-yellow-500 text-white px-2 py-1 rounded whitespace-nowrap mb-2 block">Edit</a>
-                      <a href="<?= site_url('clients/delete/' . $client->id_session) ?>" class="bg-red-500 text-white px-2 py-1 rounded whitespace-nowrap block" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                      <a href="<?= site_url('crews/edit/'.$c->id_session) ?>" class="bg-yellow-500 text-white px-2 py-1 rounded whitespace-nowrap mb-2 block">Edit</a>
+                      <a href="<?= site_url('crews/soft_delete/'.$c->id_session) ?>" class="bg-red-500 text-white px-2 py-1 rounded whitespace-nowrap block" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
                     </td>
                   </tr>
                   <?php endforeach; ?>

@@ -5,14 +5,14 @@ class crud_user extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('Potensial_model');
+        $this->load->model('User_model');
         $this->load->helper('url');
     }
 
     public function index() {
         if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
                 cek_session_akses('home',$this->session->id_session);
-        $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients(); // Ubah pemanggilan model
+        $data['User_clients'] = $this->User_model->get_all_User_clients(); // Ubah pemanggilan model
         $this->load->view('user/index', $data);
         }else{
                 redirect(base_url());
@@ -23,7 +23,7 @@ class crud_user extends CI_Controller {
     public function create() {
         if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
             cek_session_akses('potensial-clients',$this->session->id_session);
-        $this->load->view('potensial_clients/create');
+        $this->load->view('User_clients/create');
         }else{
                 redirect(base_url());
                 }
@@ -63,7 +63,7 @@ class crud_user extends CI_Controller {
         );
     
         // Insert ke tabel projects
-        $this->Potensial_model->insert_potensial_clients($data);
+        $this->User_model->insert_User_clients($data);
 
         $data_log = array(
 
@@ -76,7 +76,7 @@ class crud_user extends CI_Controller {
             
         );
 
-        $this->Potensial_model->insert_log_activity($data_log);
+        $this->User_model->insert_log_activity($data_log);
     
     
         $this->session->set_flashdata('Success', 'Potensial klien berhasil dibuat');
@@ -86,9 +86,9 @@ class crud_user extends CI_Controller {
     public function lihat($id_session) {
         if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
             cek_session_akses('potensial-clients',$this->session->id_session);
-        $data['pc'] = $this->Potensial_model->get_potensial_clients_by_session($id_session);
-        $data['logactivity'] = $this->Potensial_model->get_logactivity_by_session($id_session);
-        $this->load->view('potensial_clients/lihat', $data);
+        $data['pc'] = $this->User_model->get_User_clients_by_session($id_session);
+        $data['logactivity'] = $this->User_model->get_logactivity_by_session($id_session);
+        $this->load->view('User_clients/lihat', $data);
          }else{
                 redirect(base_url());
             }
@@ -97,8 +97,8 @@ class crud_user extends CI_Controller {
     public function edit($id_session) {
         if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
             cek_session_akses('potensial-clients',$this->session->id_session);
-        $data['pc'] = $this->Potensial_model->get_potensial_clients_by_session($id_session);
-        $this->load->view('potensial_clients/edit', $data);
+        $data['pc'] = $this->User_model->get_User_clients_by_session($id_session);
+        $this->load->view('User_clients/edit', $data);
          }else{
                 redirect(base_url());
             }
@@ -132,7 +132,7 @@ class crud_user extends CI_Controller {
             'note'      => $this->input->post('note'),
         );
     
-        $this->Potensial_model->update_potensial_clients($id_session, $data);
+        $this->User_model->update_User_clients($id_session, $data);
         $status = 'Edit ' .$this->input->post('status');
 
 
@@ -147,7 +147,7 @@ class crud_user extends CI_Controller {
             
         );
 
-        $this->Potensial_model->insert_log_activity($data_log);
+        $this->User_model->insert_log_activity($data_log);
     
         $this->session->set_flashdata('Success', 'Projects berhasil diupdate');
         redirect('potensial-clients');
@@ -176,7 +176,7 @@ class crud_user extends CI_Controller {
                 }
 
         $data = ['status' => 'delete'];
-        $this->Potensial_model->update_potensial_clients($id_session, $data);
+        $this->User_model->update_User_clients($id_session, $data);
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
@@ -188,7 +188,7 @@ class crud_user extends CI_Controller {
             
         );
 
-        $this->Potensial_model->insert_log_activity($data_log);
+        $this->User_model->insert_log_activity($data_log);
 
 
         $this->session->set_flashdata('Success', 'Potensial klien berhasil dihapus');
@@ -199,8 +199,8 @@ class crud_user extends CI_Controller {
     }
 
     public function recycle_bin() {
-        $data['potensial_clients'] = $this->Potensial_model->get_deleted_potensial_clients();  // Get projects with status 'delete'
-        $this->load->view('potensial_clients/recycle_bin', $data);
+        $data['User_clients'] = $this->User_model->get_deleted_User_clients();  // Get projects with status 'delete'
+        $this->load->view('User_clients/recycle_bin', $data);
     }    
 
     public function restore($id_session) {
@@ -222,7 +222,7 @@ class crud_user extends CI_Controller {
                       $agent = 'Unidentified User Agent';
                 }
         $data = ['status' => 'Tanya-tanya'];
-        $this->Potensial_model->update_potensial_clients($id_session, $data);
+        $this->User_model->update_User_clients($id_session, $data);
 
         $data_log = array(
 
@@ -235,18 +235,18 @@ class crud_user extends CI_Controller {
             
         );
 
-        $this->Potensial_model->insert_log_activity($data_log);      
+        $this->User_model->insert_log_activity($data_log);      
     
         $this->session->set_flashdata('Success', 'Potensial klien berhasil dipulihkan');
         redirect('potensial-clients');
     }
 
     public function permanent_delete($id_session) {
-        $this->Potensial_model->delete_potensial_clients_permanent($id_session);
+        $this->User_model->delete_User_clients_permanent($id_session);
     
           
         $this->session->set_flashdata('Success', 'Potensial klien berhasil dihapus permanen');
-        redirect('potensial_clients/recycle_bin');
+        redirect('User_clients/recycle_bin');
     }
     
 }

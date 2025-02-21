@@ -91,10 +91,10 @@ INSERT INTO `clients` (`id`, `id_session`, `client_name`, `email`, `phone`, `f_b
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `projects`
+-- Struktur dari tabel `project`
 --
 
-CREATE TABLE `projects` (
+CREATE TABLE `project` (
   `id` int(11) NOT NULL,
   `id_session` varchar(255) NOT NULL,
   `project_name` varchar(255) NOT NULL,
@@ -110,10 +110,10 @@ CREATE TABLE `projects` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `projects`
+-- Dumping data untuk tabel `project`
 --
 
-INSERT INTO `projects` (`id`, `id_session`, `project_name`, `client_name`, `event_date`, `value`, `detail`, `religion`, `location`, `create_by`, `create_date`, `status`) VALUES
+INSERT INTO `project` (`id`, `id_session`, `project_name`, `client_name`, `event_date`, `value`, `detail`, `religion`, `location`, `create_by`, `create_date`, `status`) VALUES
 (50, 'ce1f8cfa140582c795212e5af0667e8619f93877', 'abc', 'bbb', '2025-01-02', '12412746', 'cab', 'Lainnya', 'bbb', '1d3ee28b20064eb055ea2315493770bf-20220408132300', '2025-02-18 15:34:05', 'delete'),
 (51, '4fe7eb389179cd5f168eee04018d7a86c0f324d5', 'kkk', 'kkk', '2025-04-02', '1000000', 'kkk', 'Hindu', 'kkk', '1d3ee28b20064eb055ea2315493770bf-20220408132300', '2025-02-19 11:13:06', 'create');
 
@@ -129,9 +129,9 @@ ALTER TABLE `clients`
   ADD UNIQUE KEY `id_session` (`id_session`);
 
 --
--- Indeks untuk tabel `projects`
+-- Indeks untuk tabel `project`
 --
-ALTER TABLE `projects`
+ALTER TABLE `project`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_session` (`id_session`);
 
@@ -146,9 +146,9 @@ ALTER TABLE `clients`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
--- AUTO_INCREMENT untuk tabel `projects`
+-- AUTO_INCREMENT untuk tabel `project`
 --
-ALTER TABLE `projects`
+ALTER TABLE `project`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 COMMIT;
 
