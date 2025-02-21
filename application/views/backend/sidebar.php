@@ -111,13 +111,13 @@
 					            </a>					            
 					        </li>
 					        <!-- Menu Item clients -->
-							<!-- Menu Item projects -->
+							<!-- Menu Item project -->
 					        <li>
 					            <a
 						              class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
-						              href="<?= base_url('projects'); ?>"
-						              @click="selected = 'Projects'"
-						              :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'Projects') }"
+						              href="<?= base_url('project'); ?>"
+						              @click="selected = 'project'"
+						              :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'project') }"
 						            >
 									<svg
 						                class="fill-current"
@@ -144,10 +144,10 @@
 						                  fill=""
 						                />
 						            </svg>
-							             Projects
+							             project
 					            </a>					            
 					        </li>
-					        <!-- Menu Item projects -->
+					        <!-- Menu Item project -->
 					        <!-- Menu Item Settings -->
 					        <li>
 					            <a

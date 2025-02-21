@@ -26,7 +26,7 @@ class Clients_model extends CI_Model {
             // Ambil hari dari created_at (format: Senin, Selasa, dst.)
             $create_day = date('l', strtotime($data['created_at'])); 
 
-            // Data untuk tabel projects
+            // Data untuk tabel project
             $project_data = [
                 'id_session'         => $data['id_session'],
                 'project_name'       => $data['client_name'],  // client_name → project_name
@@ -37,8 +37,8 @@ class Clients_model extends CI_Model {
                 'status'             => 'create'
             ];
 
-            // Insert ke tabel projects
-            $this->db->insert('projects', $project_data);
+            // Insert ke tabel project
+            $this->db->insert('project', $project_data);
         }
 
         return $insert;

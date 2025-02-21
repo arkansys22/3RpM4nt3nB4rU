@@ -80,7 +80,7 @@ class Crud_clients extends CI_Controller {
 
         $client_id = $this->db->insert_id();  // Mendapatkan id auto-increment
 
-        $projects_data = array(
+        $project_data = array(
             'id'           => $client_id,  // Gunakan id yang sama di clients
             'id_session'   => $id_session,
             'client_name'  => $this->input->post('client_name'),
@@ -91,8 +91,8 @@ class Crud_clients extends CI_Controller {
             'status'       => 'create'
         );
 
-        // Insert ke tabel projects
-        $this->db->insert('projects', $projects_data);
+        // Insert ke tabel project
+        $this->db->insert('project', $project_data);
     
         $this->session->set_flashdata('Success', 'Client berhasil dibuat');
         redirect('clients');
@@ -152,15 +152,15 @@ class Crud_clients extends CI_Controller {
 
         $this->Clients_model->update_client($id_session, $data);
 
-        // Update juga di tabel projects
-        $projects_data = array(
+        // Update juga di tabel project
+        $project_data = array(
             'client_name' => $this->input->post('client_name'),
             'event_date' => $this->input->post('wedding_date'),
             'location' => $this->input->post('location'),
         );
 
             $this->db->where('id_session', $id_session);
-            $this->db->update('projects', $projects_data);
+            $this->db->update('project', $project_data);
 
             $this->session->set_flashdata('Success', 'Client berhasil diupdate');
             redirect('clients');
@@ -170,9 +170,9 @@ class Crud_clients extends CI_Controller {
         $data = ['status' => 'delete'];
         $this->Clients_model->update_client($id_session, $data);
 
-        // Update juga di tabel projects
+        // Update juga di tabel project
         $this->db->where('id_session', $id_session);
-        $this->db->update('projects', $data);
+        $this->db->update('project', $data);
 
         $this->session->set_flashdata('Success', 'Client berhasil dihapus');
         redirect('clients');
@@ -187,9 +187,9 @@ class Crud_clients extends CI_Controller {
         $data = ['status' => 'create']; // Kembalikan status menjadi 'create'
         $this->Clients_model->update_client($id_session, $data);
     
-        // Update juga di tabel projects
+        // Update juga di tabel project
         $this->db->where('id_session', $id_session);
-        $this->db->update('projects', $data);
+        $this->db->update('project', $data);
     
         $this->session->set_flashdata('Success', 'Client berhasil dipulihkan');
         redirect('clients/recycle_bin');
@@ -198,9 +198,9 @@ class Crud_clients extends CI_Controller {
     public function permanent_delete($id_session) {
         $this->Clients_model->delete_client_permanent($id_session);
     
-        // Hapus juga di tabel projects
+        // Hapus juga di tabel project
         $this->db->where('id_session', $id_session);
-        $this->db->delete('projects');
+        $this->db->delete('project');
     
         $this->session->set_flashdata('Success', 'Client berhasil dihapus permanen');
         redirect('clients/recycle_bin');

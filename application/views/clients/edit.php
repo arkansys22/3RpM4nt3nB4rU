@@ -1,6 +1,6 @@
 <?php
-// Ambil agama dari tabel projects berdasarkan id_session klien
-$project = $this->db->get_where('projects', ['id_session' => $client->id_session])->row();
+// Ambil agama dari tabel project berdasarkan id_session klien
+$project = $this->db->get_where('project', ['id_session' => $client->id_session])->row();
 $religion = $project->religion ?? ''; // Pastikan tidak error jika religion kosong
 
 $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
