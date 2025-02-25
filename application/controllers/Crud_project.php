@@ -22,13 +22,35 @@ class Crud_project extends CI_Controller {
     }
 
     public function create() {
+        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
+            cek_session_akses('home',$this->session->id_session);
         $this->load->view('project/create');
+        }else{
+            redirect(base_url());
+            }
     }
 
     public function store() {
         $id_session = hash('sha256', bin2hex(random_bytes(16)));
 
         $date_create = date('Y-m-d H:i:s');  // tanggal dan waktu
+    
+        if ($this->agent->is_browser()) // Agent untuk fitur di log activity
+                {
+                    $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
+                }
+                elseif ($this->agent->is_robot())
+                {
+                    $agent = $this->agent->robot();
+                }
+                elseif ($this->agent->is_mobile())
+                {
+                    $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
+                }
+                else
+                {
+                    $agent = 'Unidentified User Agent';
+                }
     
         $data = array(
             'id_session'    => $id_session,
@@ -72,36 +94,85 @@ class Crud_project extends CI_Controller {
         // Data untuk tabel crew_projects
         $crew_projects_data = array(
             'project_id'   => $id_session,  
-            'created_at'   => $date_create
+            'created_at'   => $date_create,
+            'status'       => 'create'
         );
     
         // Insert ke tabel crew_projects
         $this->db->insert('crew_projects', $crew_projects_data);
-    
-        $this->session->set_flashdata('Success', 'project berhasil dibuat');
+
+        $data_log = array(
+
+            'log_activity_user_id'=>$this->session->id_session,
+            'log_activity_modul' => 'project/create',
+            'log_activity_document_no' => $id_session,
+            'log_activity_status' => 'Tambah Project',
+            'log_activity_platform'=> $agent,
+            'log_activity_ip'=> $this->input->ip_address()
+            
+        );
+
+        $this->project_model->insert_log_activity($data_log);
+
+        $this->session->set_flashdata('Success', 'Project berhasil dibuat');
+
         redirect('project');
     }
 
+    public function lihat($id_session) {
+        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
+            cek_session_akses('project',$this->session->id_session);
+            $data['project'] = $this->project_model->get_project_by_session($id_session);
+            $data['crew_project'] = $this->CrewProjects_model->get_crew_by_project($id_session);
+            $data['logactivity'] = $this->project_model->get_logactivity_by_session($id_session);
+            $this->load->view('project/lihat', $data);
+        }else{
+                redirect(base_url());
+            }
+    }
+
     public function edit($id_session) {
-        $data['project'] = $this->project_model->get_project_by_session($id_session);
+        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
+            cek_session_akses('crews',$this->session->id_session);
+            $data['project'] = $this->project_model->get_project_by_session($id_session);
 
-        if (!$data['project']) {
-            $this->session->set_flashdata('error', 'Project tidak ditemukan!');
-            redirect('project');
-            return;
+            if (!$data['project']) {
+                $this->session->set_flashdata('error', 'Project tidak ditemukan!');
+                redirect('project');
+                return;
+            }
+
+            // Ambil daftar crew yang statusnya "active"
+            $data['crews_list'] = $this->Crews_model->get_all_crews();
+
+            // Ambil data koordinator yang sudah dipilih sebelumnya
+            $data['selected_crews'] = $this->CrewProjects_model->get_crew_by_project($id_session);
+
+            // Load view edit
+            $this->load->view('project/edit', $data);
+        } else {
+            redirect(base_url());
         }
-
-        // Ambil daftar crew yang statusnya "active"
-        $data['crews_list'] = $this->Crews_model->get_active_crews();
-
-        // Ambil data koordinator yang sudah dipilih sebelumnya
-        $data['selected_crews'] = $this->CrewProjects_model->get_crew_by_project($id_session);
-
-        // Load view edit
-        $this->load->view('project/edit', $data);
     }
 
     public function update($id_session) {
+        if ($this->agent->is_browser()) // Agent untuk fitur di log activity
+                {
+                    $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
+                }
+                elseif ($this->agent->is_robot())
+                {
+                    $agent = $this->agent->robot();
+                }
+                elseif ($this->agent->is_mobile())
+                {
+                    $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
+                }
+                else
+                {
+                    $agent = 'Unidentified User Agent';
+                }
+
         $project = $this->project_model->get_project_by_session($id_session);
 
         if (!$project) {
@@ -134,11 +205,13 @@ class Crud_project extends CI_Controller {
     
         // Data untuk update crew_projects
         $data_crews = [
-            'koor_pengawas'   => $this->input->post('koor_pengawas'),
+            'koor_acara'   => $this->input->post('koor_acara'),
             'koor_lapangan'   => $this->input->post('koor_lapangan'),
             'koor_catering'   => $this->input->post('koor_catering'),
             'koor_pengantin'  => $this->input->post('koor_pengantin'),
             'koor_tamu'       => $this->input->post('koor_tamu'),
+            'koor_tambahan1'  => $this->input->post('koor_tambahan1'),
+            'koor_tambahan2'  => $this->input->post('koor_tambahan2'),
         ];
 
         // Jika tidak dipilih, kosongkan datanya
@@ -150,12 +223,49 @@ class Crud_project extends CI_Controller {
 
         $this->CrewProjects_model->update_crew_roles($id_session, $data_crews);
 
-        $this->session->set_flashdata('success', 'Project berhasil diperbarui');
+        $status = 'Edit' ;
+
+
+        $data_log = array(
+
+            'log_activity_user_id'=>$this->session->id_session,
+            'log_activity_modul' => 'project/edit',
+            'log_activity_document_no' => $id_session,
+            'log_activity_status' => $status,
+            'log_activity_platform'=> $agent,
+            'log_activity_ip'=> $this->input->ip_address()
+            
+        );
+
+        $this->project_model->insert_log_activity($data_log);
+
+        $this->session->set_flashdata('Success', 'Project berhasil diupdate');
         redirect('project');
     }
 
-
     public function delete($id_session) {
+
+        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
+            cek_session_akses('crews',$this->session->id_session);
+        
+
+        if ($this->agent->is_browser()) // Agent untuk fitur di log activity
+                {
+                      $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
+                }
+                elseif ($this->agent->is_robot())
+                {
+                      $agent = $this->agent->robot();
+                }
+                elseif ($this->agent->is_mobile())
+                {
+                      $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
+                }
+                else
+                {
+                      $agent = 'Unidentified User Agent';
+                }
+
         $data = ['status' => 'delete'];
         $this->project_model->update_project($id_session, $data);
     
@@ -165,26 +275,82 @@ class Crud_project extends CI_Controller {
     
         // Hapus juga data crews dari tabel crew_projects
         $this->db->where('project_id', $id_session);
-        $this->db->delete('crew_projects');
-    
+        $this->db->update('crew_projects', $data);
+
+        $data_log = array(
+
+            'log_activity_user_id'=>$this->session->id_session,
+            'log_activity_modul' => 'project/delete',
+            'log_activity_document_no' => $id_session,
+            'log_activity_status' => 'Delete',
+            'log_activity_platform'=> $agent,
+            'log_activity_ip'=> $this->input->ip_address()
+            
+        );
+
+        $this->project_model->insert_log_activity($data_log);
+
+
         $this->session->set_flashdata('Success', 'Project berhasil dihapus');
         redirect('project');
-    }    
+         }else{
+                redirect(base_url());
+            }
+    }
 
     public function recycle_bin() {
+        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
+            cek_session_akses('home',$this->session->id_session);
         $data['project'] = $this->project_model->get_deleted_project();  // Get project with status 'delete'
         $this->load->view('project/recycle_bin', $data);
-    }    
+    }else{
+            redirect(base_url());
+            }
+    }
 
     public function restore($id_session) {
+        if ($this->agent->is_browser()) // Agent untuk fitur di log activity
+                {
+                      $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
+                }
+                elseif ($this->agent->is_robot())
+                {
+                      $agent = $this->agent->robot();
+                }
+                elseif ($this->agent->is_mobile())
+                {
+                      $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
+                }
+                else
+                {
+                      $agent = 'Unidentified User Agent';
+                }
+
         $data = ['status' => 'create'];
         $this->project_model->update_project($id_session, $data);
     
         // Update juga di tabel clients
         $this->db->where('id_session', $id_session);
         $this->db->update('clients', $data);
+
+        // Update juga di tabel crew_projects
+        $this->db->where('project_id', $id_session);
+        $this->db->update('crew_projects', $data);
+
+        $data_log = array(
+
+            'log_activity_user_id'=>$this->session->id_session,
+            'log_activity_modul' => 'project/restore',
+            'log_activity_document_no' => $id_session,
+            'log_activity_status' => 'Restore',
+            'log_activity_platform'=> $agent,
+            'log_activity_ip'=> $this->input->ip_address()
+            
+        );
+
+        $this->project_model->insert_log_activity($data_log);      
     
-        $this->session->set_flashdata('Success', 'project berhasil dipulihkan');
+        $this->session->set_flashdata('Success', 'Project berhasil dipulihkan');
         redirect('project/recycle_bin');
     }
 
@@ -202,29 +368,6 @@ class Crud_project extends CI_Controller {
     
         $this->session->set_flashdata('Success', 'Project berhasil dihapus permanen');
         redirect('project/recycle_bin');
-    }
-    
-    
-    public function add_crews_to_project() {
-        $id_session = hash('sha256', bin2hex(random_bytes(16)));
-
-        $this->load->model('CrewProjects_model');
-
-        $data = array(
-            'id_session' => $id_session,
-            'crew_id' => $this->input->post('crew_id'),
-            'project_id' => $this->input->post('project_id'),
-            'role' => $this->input->post('role')
-        );
-
-        $this->CrewProjects_model->add_crews_to_project($data);
-        redirect('project/detail/'.$this->input->post('project_id'));
-    }
-
-    public function remove_crews_from_project($id, $project_id) {
-        $this->load->model('CrewProjects_model');
-        $this->CrewProjects_model->remove_crews_from_project($id);
-        redirect('project/detail/'.$project_id);
     }
 
 }

@@ -80,7 +80,7 @@ class crud_potensial_clients extends CI_Controller {
     }
 
     public function store() {
-        $id_session2 = sha1(uniqid());
+        $id_session2 = hash('sha256', bin2hex(random_bytes(16)));
         $date_create = date('Y-m-d H:i:s');  // tanggal dan waktu
         
         if ($this->agent->is_browser()) // Agent untuk fitur di log activity
@@ -249,9 +249,14 @@ class crud_potensial_clients extends CI_Controller {
     }
 
     public function recycle_bin() {
+        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
+            cek_session_akses('home',$this->session->id_session);
         $data['potensial_clients'] = $this->Potensial_model->get_deleted_potensial_clients();  // Get projects with status 'delete'
         $this->load->view('potensial_clients/recycle_bin', $data);
-    }    
+         }else{
+                redirect(base_url());
+            }
+    }
 
     public function restore($id_session) {
 
@@ -294,7 +299,6 @@ class crud_potensial_clients extends CI_Controller {
     public function permanent_delete($id_session) {
         $this->Potensial_model->delete_potensial_clients_permanent($id_session);
     
-          
         $this->session->set_flashdata('Success', 'Potensial klien berhasil dihapus permanen');
         redirect('potensial_clients/recycle_bin');
     }

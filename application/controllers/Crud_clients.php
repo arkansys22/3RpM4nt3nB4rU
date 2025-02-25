@@ -1,4 +1,6 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
 class Crud_clients extends CI_Controller {
     public function __construct() {
         parent::__construct();
@@ -17,14 +19,36 @@ class Crud_clients extends CI_Controller {
     }
 
     public function create() {
+        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
+            cek_session_akses('home',$this->session->id_session);
         $this->load->view('clients/create');
+        }else{
+            redirect(base_url());
+            }
     }
 
     public function store() {
         $id_session = hash('sha256', bin2hex(random_bytes(16)));
 
         $created_at = date('Y-m-d H:i:s'); // Waktu sekarang
-        
+
+        if ($this->agent->is_browser()) // Agent untuk fitur di log activity
+                {
+                    $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
+                }
+                elseif ($this->agent->is_robot())
+                {
+                    $agent = $this->agent->robot();
+                }
+                elseif ($this->agent->is_mobile())
+                {
+                    $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
+                }
+                else
+                {
+                    $agent = 'Unidentified User Agent';
+                }
+
         $data = [
             
             'client_name'           => $this->input->post('client_name'),
@@ -93,17 +117,64 @@ class Crud_clients extends CI_Controller {
 
         // Insert ke tabel project
         $this->db->insert('project', $project_data);
-    
+
+        $data_log = array(
+
+            'log_activity_user_id'=>$this->session->id_session,
+            'log_activity_modul' => 'clients/create',
+            'log_activity_document_no' => $id_session,
+            'log_activity_status' => 'Tambah Client',
+            'log_activity_platform'=> $agent,
+            'log_activity_ip'=> $this->input->ip_address()
+            
+        );
+
+        $this->Clients_model->insert_log_activity($data_log);
+
         $this->session->set_flashdata('Success', 'Client berhasil dibuat');
+
         redirect('clients');
     }
 
+    public function lihat($id_session) {
+        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
+            cek_session_akses('clients',$this->session->id_session);
+            $data['clients'] = $this->Clients_model->get_client_by_session($id_session);
+            $data['logactivity'] = $this->Clients_model->get_logactivity_by_session($id_session);
+            $this->load->view('clients/lihat', $data);
+        }else{
+                redirect(base_url());
+            }
+    }
+
     public function edit($id_session) {
-        $data['client'] = $this->Clients_model->get_client_by_session($id_session); // Ubah pemanggilan model
-        $this->load->view('clients/edit', $data);
+        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
+            cek_session_akses('clients',$this->session->id_session);
+        $data['clients'] = $this->Clients_model->get_client_by_session($id_session); // Ubah pemanggilan model
+        $this->load->view('clients/edit', $data);        
+    }else{
+                redirect(base_url());
+            }
     }
 
     public function update($id_session){
+        if ($this->agent->is_browser()) // Agent untuk fitur di log activity
+        {
+            $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
+        }
+        elseif ($this->agent->is_robot())
+        {
+            $agent = $this->agent->robot();
+        }
+        elseif ($this->agent->is_mobile())
+        {
+            $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
+        }
+        else
+        {
+            $agent = 'Unidentified User Agent';
+        }
+
         $data = array(
             'client_name'           => $this->input->post('client_name'),
             'email'                 => $this->input->post('email'),
@@ -162,11 +233,46 @@ class Crud_clients extends CI_Controller {
             $this->db->where('id_session', $id_session);
             $this->db->update('project', $project_data);
 
-            $this->session->set_flashdata('Success', 'Client berhasil diupdate');
-            redirect('clients');
+        $status = 'Edit' ;
+        $data_log = array(
+
+            'log_activity_user_id'=>$this->session->id_session,
+            'log_activity_modul' => 'clients/edit',
+            'log_activity_document_no' => $id_session,
+            'log_activity_status' => $status,
+            'log_activity_platform'=> $agent,
+            'log_activity_ip'=> $this->input->ip_address()
+            
+        );
+
+        $this->Clients_model->insert_log_activity($data_log);
+
+        $this->session->set_flashdata('Success', 'Client berhasil diupdate');
+        redirect('clients');
     }
 
     public function delete($id_session) {
+        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
+            cek_session_akses('clients',$this->session->id_session);
+        
+
+        if ($this->agent->is_browser()) // Agent untuk fitur di log activity
+                {
+                      $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
+                }
+                elseif ($this->agent->is_robot())
+                {
+                      $agent = $this->agent->robot();
+                }
+                elseif ($this->agent->is_mobile())
+                {
+                      $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
+                }
+                else
+                {
+                      $agent = 'Unidentified User Agent';
+                }
+
         $data = ['status' => 'delete'];
         $this->Clients_model->update_client($id_session, $data);
 
@@ -174,22 +280,74 @@ class Crud_clients extends CI_Controller {
         $this->db->where('id_session', $id_session);
         $this->db->update('project', $data);
 
+        $data_log = array(
+
+            'log_activity_user_id'=>$this->session->id_session,
+            'log_activity_modul' => 'clients/delete',
+            'log_activity_document_no' => $id_session,
+            'log_activity_status' => 'Delete',
+            'log_activity_platform'=> $agent,
+            'log_activity_ip'=> $this->input->ip_address()
+            
+        );
+
+        $this->Clients_model->insert_log_activity($data_log);
+
+
         $this->session->set_flashdata('Success', 'Client berhasil dihapus');
         redirect('clients');
+         }else{
+                redirect(base_url());
+            }
     }
 
     public function recycle_bin() {
+        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
+            cek_session_akses('home',$this->session->id_session);
         $data['clients'] = $this->Clients_model->get_deleted_clients(); // Mengambil data dengan status delete
         $this->load->view('clients/recycle_bin', $data);
+        }else{
+            redirect(base_url());
+            }
     }
     
     public function restore($id_session) {
+        if ($this->agent->is_browser()) // Agent untuk fitur di log activity
+                {
+                      $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
+                }
+                elseif ($this->agent->is_robot())
+                {
+                      $agent = $this->agent->robot();
+                }
+                elseif ($this->agent->is_mobile())
+                {
+                      $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
+                }
+                else
+                {
+                      $agent = 'Unidentified User Agent';
+                }
+                
         $data = ['status' => 'create']; // Kembalikan status menjadi 'create'
         $this->Clients_model->update_client($id_session, $data);
     
         // Update juga di tabel project
         $this->db->where('id_session', $id_session);
         $this->db->update('project', $data);
+
+        $data_log = array(
+
+            'log_activity_user_id'=>$this->session->id_session,
+            'log_activity_modul' => 'clients/restore',
+            'log_activity_document_no' => $id_session,
+            'log_activity_status' => 'Restore',
+            'log_activity_platform'=> $agent,
+            'log_activity_ip'=> $this->input->ip_address()
+            
+        );
+
+        $this->Clients_model->insert_log_activity($data_log);      
     
         $this->session->set_flashdata('Success', 'Client berhasil dipulihkan');
         redirect('clients/recycle_bin');
