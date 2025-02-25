@@ -9,35 +9,96 @@ class Crud_crews extends CI_Controller {
     }
 
     public function index() {
-        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
-                cek_session_akses('home',$this->session->id_session);
-            $data['crews'] = $this->crews_model->get_all_crews();
+
+        if ($this->session->level=='1'){
+            cek_session_akses_developer('crews',$this->session->id_session);
+            $data['crews'] = $this->crews_model->get_all_crews(); // Ubah pemanggilan model
             $this->load->view('crews/index', $data);
+
+        }else if($this->session->level=='2'){
+            cek_session_akses_administrator('crews',$this->session->id_session);
+            $data['crews'] = $this->crews_model->get_all_crews(); // Ubah pemanggilan model
+            $this->load->view('crews/index', $data);
+
+        }else if($this->session->level=='3'){
+            cek_session_akses_staff_accounting('crews',$this->session->id_session);
+            $data['aaa'] = '';
+            $this->load->view('backend/v_home', $data);
+
+        }else if($this->session->level=='4'){
+            cek_session_akses_staff_admin('crews',$this->session->id_session);
+            $data['crews'] = $this->crews_model->get_all_crews(); // Ubah pemanggilan model
+            $this->load->view('crews/index', $data);
+
+        }else if($this->session->level=='5'){
+            cek_session_akses_client('crews',$this->session->id_session);
+            $data['aaa'] = '';
+            $this->load->view('backend/v_home', $data);
+            
         }else{
-                redirect(base_url());
-                }
+            redirect(base_url());
+            }
     }
 
     public function recycle_bin() {
-        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
-            cek_session_akses('home',$this->session->id_session);
-        $data['crews'] = $this->crews_model->get_deleted();
-        $this->load->view('crews/recycle_bin', $data);
-    }else{
+
+        if ($this->session->level=='1'){
+            cek_session_akses_developer('crews',$this->session->id_session);
+            $data['crews'] = $this->crews_model->get_deleted();  // Get projects with status 'delete'
+            $this->load->view('crews/recycle_bin', $data);
+
+        }else if($this->session->level=='2'){
+            cek_session_akses_administrator('crews',$this->session->id_session);
+            $data['crews'] = $this->crews_model->get_deleted();  // Get projects with status 'delete'
+            $this->load->view('crews/recycle_bin', $data);
+
+        }else if($this->session->level=='3'){
+            cek_session_akses_staff_accounting('crews',$this->session->id_session);
+            redirect(base_url());
+
+        }else if($this->session->level=='4'){
+            cek_session_akses_staff_admin('crews',$this->session->id_session);
+            $data['crews'] = $this->crews_model->get_deleted();  // Get projects with status 'delete'
+            $this->load->view('crews/recycle_bin', $data);
+
+        }else if($this->session->level=='5'){
+            cek_session_akses_client('crews',$this->session->id_session);
+            redirect(base_url());
+            
+        }else{
             redirect(base_url());
             }
     }
 
     public function create() {
-        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
-            cek_session_akses('home',$this->session->id_session);
-        $this->load->view('crews/create');
+
+        if ($this->session->level=='1'){
+            cek_session_akses_developer('crews',$this->session->id_session);
+            $this->load->view('crews/create');
+
+        }else if($this->session->level=='2'){
+            cek_session_akses_administrator('crews',$this->session->id_session);
+            $this->load->view('crews/create');
+
+        }else if($this->session->level=='3'){
+            cek_session_akses_staff_accounting('crews',$this->session->id_session);
+            redirect(base_url());
+
+        }else if($this->session->level=='4'){
+            cek_session_akses_staff_admin('crews',$this->session->id_session);
+            $this->load->view('crews/create');
+
+        }else if($this->session->level=='5'){
+            cek_session_akses_client('crews',$this->session->id_session);
+            redirect(base_url());
+            
         }else{
             redirect(base_url());
-            }
+            }       
     }
 
     public function store() {
+
         $id_session = hash('sha256', bin2hex(random_bytes(16)));
 
         $created_at = date('Y-m-d H:i:s'); // Waktu sekarang
@@ -92,27 +153,70 @@ class Crud_crews extends CI_Controller {
     }
 
     public function lihat($id_session) {
-        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
-            cek_session_akses('crews',$this->session->id_session);
+
+        if ($this->session->level=='1'){
+            cek_session_akses_developer('crews',$this->session->id_session);
             $data['crews'] = $this->crews_model->get_by_id_session($id_session);
             $data['logactivity'] = $this->crews_model->get_logactivity_by_session($id_session);
             $this->load->view('crews/lihat', $data);
+
+        }else if($this->session->level=='2'){
+            cek_session_akses_administrator('crews',$this->session->id_session);
+            $data['crews'] = $this->crews_model->get_by_id_session($id_session);
+            $data['logactivity'] = $this->crews_model->get_logactivity_by_session($id_session);
+            $this->load->view('crews/lihat', $data);
+
+        }else if($this->session->level=='3'){
+            cek_session_akses_staff_accounting('crews',$this->session->id_session);
+            redirect(base_url());
+
+        }else if($this->session->level=='4'){
+            cek_session_akses_staff_admin('crews',$this->session->id_session);
+            $data['crews'] = $this->crews_model->get_by_id_session($id_session);
+            $data['logactivity'] = $this->crews_model->get_logactivity_by_session($id_session);
+            $this->load->view('crews/lihat', $data);
+
+        }else if($this->session->level=='5'){
+            cek_session_akses_client('crews',$this->session->id_session);
+            redirect(base_url());
+            
         }else{
-                redirect(base_url());
+            redirect(base_url());
             }
     }
 
     public function edit($id_session) {
-        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
-            cek_session_akses('crews',$this->session->id_session);
-        $data['crews'] = $this->crews_model->get_by_id_session($id_session);
-        $this->load->view('crews/edit', $data);
+
+        if ($this->session->level=='1'){
+            cek_session_akses_developer('crews',$this->session->id_session);
+            $data['crews'] = $this->crews_model->get_by_id_session($id_session);
+            $this->load->view('crews/edit', $data);
+
+        }else if($this->session->level=='2'){
+            cek_session_akses_administrator('crews',$this->session->id_session);
+            $data['crews'] = $this->crews_model->get_by_id_session($id_session);
+            $this->load->view('crews/edit', $data);
+
+        }else if($this->session->level=='3'){
+            cek_session_akses_staff_accounting('crews',$this->session->id_session);
+            redirect(base_url());
+
+        }else if($this->session->level=='4'){
+            cek_session_akses_staff_admin('crews',$this->session->id_session);
+            $data['crews'] = $this->crews_model->get_by_id_session($id_session);
+            $this->load->view('crews/edit', $data);
+
+        }else if($this->session->level=='5'){
+            cek_session_akses_client('crews',$this->session->id_session);
+            redirect(base_url());
+            
         }else{
-                redirect(base_url());
+            redirect(base_url());
             }
     }
 
     public function update($id_session) {
+
         if ($this->agent->is_browser()) // Agent untuk fitur di log activity
                 {
                     $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
@@ -162,8 +266,8 @@ class Crud_crews extends CI_Controller {
     }
 
     public function soft_delete($id_session) {
+
         if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
-            cek_session_akses('crews',$this->session->id_session);
         
 
         if ($this->agent->is_browser()) // Agent untuk fitur di log activity
@@ -208,6 +312,7 @@ class Crud_crews extends CI_Controller {
     }
 
     public function restore($id_session) {
+
         if ($this->agent->is_browser()) // Agent untuk fitur di log activity
                 {
                       $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
@@ -246,6 +351,7 @@ class Crud_crews extends CI_Controller {
     }
 
     public function delete_permanent($id_session) {
+
         $this->crews_model->delete_permanent($id_session);
 
         $this->session->set_flashdata('Success', 'Crew berhasil dihapus permanen');
