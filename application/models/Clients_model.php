@@ -67,4 +67,14 @@ class Clients_model extends CI_Model {
         $this->db->where('id_session', $id_session);
         return $this->db->delete('clients');
     }
+
+    public function insert_log_activity($data_log) {
+        return $this->db->insert('log_activity', $data_log);
+    }
+
+    public function get_logactivity_by_session($id_session) {
+        $this->db->order_by('log_activity_id', 'DESC');
+        $this->db->limit(5, 0);
+        return $this->db->get_where('log_activity', ['log_activity_document_no' => $id_session])->result();
+    }
 }

@@ -66,45 +66,13 @@ class project_model extends CI_Model {
         return $this->db->delete('project');
     }
 
-    public function get_crews_by_project_grouped($project_id) {
-        $this->db->select('crew_projects.role, crews.id as crew_id, crews.crew_name');
-        $this->db->from('crew_projects');
-        $this->db->join('crews', 'crews.id = crew_projects.crew_id');
-        $this->db->where('crew_projects.project_id', $project_id);
-        
-        $result = $this->db->get()->result();
-    
-        // Kelompokkan berdasarkan peran (tanpa array statis, agar fleksibel)
-        $grouped = [];
-    
-        foreach ($result as $row) {
-            $grouped[$row->role][] = [
-                'crew_id'   => $row->crew_id,
-                'crew_name' => $row->crew_name
-            ];
-        }
-    
-        return $grouped;
-    }    
-    
-    public function update_crews_in_project($project_id, $crews_roles) {
-        // Hapus semua crews lama dalam proyek ini
-        $this->db->where('project_id', $project_id);
-        $this->db->delete('crew_projects');
-    
-        // Simpan crews yang baru dipilih
-        foreach ($crews_roles as $role => $crew_id) {
-            if ($crew_id != "-") { // Jika tidak dipilih, lewati
-                $data = [
-                    'project_id' => $project_id,
-                    'crew_id'    => $crew_id,
-                    'role'       => $role
-                ];
-                $this->db->insert('crew_projects', $data);
-            }
-        }
+    public function insert_log_activity($data_log) {
+        return $this->db->insert('log_activity', $data_log);
     }
-    
-    
-    
+
+    public function get_logactivity_by_session($id_session) {
+        $this->db->order_by('log_activity_id', 'DESC');
+        $this->db->limit(5, 0);
+        return $this->db->get_where('log_activity', ['log_activity_document_no' => $id_session])->result();
+    }
 }
