@@ -103,7 +103,7 @@ class crud_user extends CI_Controller {
             cek_session_akses_developer('user',$this->session->id_session);
             $data['level'] = $this->Crud_m->view_ordering('user_level','user_level_id','asc');
             $data['pc'] = $this->users_model->get_users_by_session($id_session);
-            $this->load->view('User/edit', $data);
+            $this->load->view('user/edit', $data);
             }else{
                 redirect(base_url());
             }
