@@ -92,7 +92,7 @@ class crud_user extends CI_Controller {
             cek_session_akses_developer('user',$this->session->id_session);
             $data['pc'] = $this->users_model->get_users_by_session($id_session);
             $data['logactivity'] = $this->users_model->get_logactivity_by_session($id_session);
-            $this->load->view('User/lihat', $data);
+            $this->load->view('user/lihat', $data);
              }else{
                     redirect(base_url());
                 }
