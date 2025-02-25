@@ -169,7 +169,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
               <input type="text" name="mahr_carrier" value="<?= $clients->mahr_carrier ?>" placeholder="Pembawa Mas Kawin/Mahar" class="w-full px-4 py-2 border rounded mb-4">
               
               <label class="block mb-2">Pembawa Cincin Kawin</label>
-              <input type="text" name="ring_carrier" value="<?= $clients->ring_carrier ?>" placeholder="Pembawa Cincin Kawi" class="w-full px-4 py-2 border rounded mb-4">
+              <input type="text" name="ring_carrier" value="<?= $clients->ring_carrier ?>" placeholder="Pembawa Cincin Kawin" class="w-full px-4 py-2 border rounded mb-4">
 
               <!-- Petugas dan Koordinator Resepsi -->
               <?php else : ?>
