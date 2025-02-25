@@ -14,10 +14,31 @@ class Aspanel extends CI_Controller {
 		}
 	public function home()
 		{
-			if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
-				cek_session_akses('home',$this->session->id_session);
+			if ($this->session->level=='1'){
+				cek_session_akses_developer('panel',$this->session->id_session);
 				$data['aaa'] = '';
 				$this->load->view('backend/v_home', $data);
+
+			}else if($this->session->level=='2'){
+				cek_session_akses_administrator('panel',$this->session->id_session);
+				$data['aaa'] = '';
+				$this->load->view('backend/v_home', $data);
+
+			}else if($this->session->level=='3'){
+				cek_session_akses_staff_accounting('panel',$this->session->id_session);
+				$data['aaa'] = '';
+				$this->load->view('backend/v_home', $data);
+
+			}else if($this->session->level=='4'){
+				cek_session_akses_staff_admin('panel',$this->session->id_session);
+				$data['aaa'] = '';
+				$this->load->view('backend/v_home', $data);
+
+			}else if($this->session->level=='5'){
+				cek_session_akses_client('panel',$this->session->id_session);
+				$data['aaa'] = '';
+				$this->load->view('backend/v_home', $data);
+				
 			}else{
 				redirect(base_url());
 				}

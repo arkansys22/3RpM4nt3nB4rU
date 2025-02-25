@@ -10,73 +10,215 @@ class crud_potensial_clients extends CI_Controller {
     }
 
     public function index() {
-        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
-                cek_session_akses('home',$this->session->id_session);
-        $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients(); // Ubah pemanggilan model
-        $this->load->view('potensial_clients/index', $data);
-        }else{
+
+        if ($this->session->level=='1'){
+                cek_session_akses_developer('potensial-clients',$this->session->id_session);
+                $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients(); // Ubah pemanggilan model
+                $this->load->view('potensial_clients/index', $data);
+
+            }else if($this->session->level=='2'){
+                cek_session_akses_administrator('potensial-clients',$this->session->id_session);
+                $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients(); // Ubah pemanggilan model
+                $this->load->view('potensial_clients/index', $data);
+
+            }else if($this->session->level=='3'){
+                cek_session_akses_staff_accounting('potensial-clients',$this->session->id_session);
+                $data['aaa'] = '';
+                $this->load->view('backend/v_home', $data);
+
+            }else if($this->session->level=='4'){
+                cek_session_akses_staff_admin('potensial-clients',$this->session->id_session);
+                $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients(); // Ubah pemanggilan model
+                $this->load->view('potensial_clients/index', $data);
+
+            }else if($this->session->level=='5'){
+                cek_session_akses_client('potensial-clients',$this->session->id_session);
+                $data['aaa'] = '';
+                $this->load->view('backend/v_home', $data);
+                
+            }else{
                 redirect(base_url());
                 }
     }
 
 
     public function index_hot() {
-        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
-                cek_session_akses('home',$this->session->id_session);
-        $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_hot(); // Ubah pemanggilan model
-        $this->load->view('potensial_clients/index_hot', $data);
-        }else{
+
+        if ($this->session->level=='1'){
+                cek_session_akses_developer('potensial-clients',$this->session->id_session);
+                $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_hot(); // Ubah pemanggilan model
+                $this->load->view('potensial_clients/index_hot', $data);
+
+            }else if($this->session->level=='2'){
+                cek_session_akses_administrator('potensial-clients',$this->session->id_session);
+                $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_hot(); // Ubah pemanggilan model
+                $this->load->view('potensial_clients/index_hot', $data);
+
+            }else if($this->session->level=='3'){
+                cek_session_akses_staff_accounting('potensial-clients',$this->session->id_session);
+                redirect(base_url());
+
+            }else if($this->session->level=='4'){
+                cek_session_akses_staff_admin('potensial-clients',$this->session->id_session);
+                $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_hot(); // Ubah pemanggilan model
+                $this->load->view('potensial_clients/index_hot', $data);
+
+            }else if($this->session->level=='5'){
+                cek_session_akses_client('potensial-clients',$this->session->id_session);
+                redirect(base_url());
+                
+            }else{
                 redirect(base_url());
                 }
+
     }
 
     public function index_konsul() {
-        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
-                cek_session_akses('home',$this->session->id_session);
-        $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_konsul(); // Ubah pemanggilan model
-        $this->load->view('potensial_clients/index_konsul', $data);
-        }else{
+
+        if ($this->session->level=='1'){
+                cek_session_akses_developer('potensial-clients',$this->session->id_session);
+                $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_konsul(); // Ubah pemanggilan model
+                $this->load->view('potensial_clients/index_konsul', $data);
+
+            }else if($this->session->level=='2'){
+                cek_session_akses_administrator('potensial-clients',$this->session->id_session);
+                $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_konsul(); // Ubah pemanggilan model
+                $this->load->view('potensial_clients/index_konsul', $data);
+
+            }else if($this->session->level=='3'){
+                cek_session_akses_staff_accounting('potensial-clients',$this->session->id_session);
+                redirect(base_url());
+
+            }else if($this->session->level=='4'){
+                cek_session_akses_staff_admin('potensial-clients',$this->session->id_session);
+                $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_konsul(); // Ubah pemanggilan model
+                $this->load->view('potensial_clients/index_konsul', $data);
+
+            }else if($this->session->level=='5'){
+                cek_session_akses_client('potensial-clients',$this->session->id_session);
+                redirect(base_url());
+                
+            }else{
                 redirect(base_url());
                 }
     }
 
     public function index_deal() {
-        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
-                cek_session_akses('home',$this->session->id_session);
-        $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_bayar(); // Ubah pemanggilan model
-        $this->load->view('potensial_clients/index_bayar', $data);
-        }else{
+
+        if ($this->session->level=='1'){
+                cek_session_akses_developer('potensial-clients',$this->session->id_session);
+                $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_bayar(); // Ubah pemanggilan model
+                $this->load->view('potensial_clients/index_bayar', $data);
+
+            }else if($this->session->level=='2'){
+                cek_session_akses_administrator('potensial-clients',$this->session->id_session);
+                $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_bayar(); // Ubah pemanggilan model
+                $this->load->view('potensial_clients/index_bayar', $data);
+
+            }else if($this->session->level=='3'){
+                cek_session_akses_staff_accounting('potensial-clients',$this->session->id_session);
+                redirect(base_url());
+
+            }else if($this->session->level=='4'){
+                cek_session_akses_staff_admin('potensial-clients',$this->session->id_session);
+                $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_bayar(); // Ubah pemanggilan model
+                $this->load->view('potensial_clients/index_bayar', $data);
+
+            }else if($this->session->level=='5'){
+                cek_session_akses_client('potensial-clients',$this->session->id_session);
+                redirect(base_url());
+                
+            }else{
                 redirect(base_url());
                 }
+        
     }
 
     public function index_ghosting() {
-        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
-                cek_session_akses('home',$this->session->id_session);
-        $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_ghosting(); // Ubah pemanggilan model
-        $this->load->view('potensial_clients/index_ghosting', $data);
-        }else{
+
+        if ($this->session->level=='1'){
+                cek_session_akses_developer('potensial-clients',$this->session->id_session);
+                $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_ghosting(); // Ubah pemanggilan model
+                $this->load->view('potensial_clients/index_ghosting', $data);
+
+            }else if($this->session->level=='2'){
+                cek_session_akses_administrator('potensial-clients',$this->session->id_session);
+                $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_ghosting(); // Ubah pemanggilan model
+                $this->load->view('potensial_clients/index_ghosting', $data);
+
+            }else if($this->session->level=='3'){
+                cek_session_akses_staff_accounting('potensial-clients',$this->session->id_session);
+                redirect(base_url());
+
+            }else if($this->session->level=='4'){
+                cek_session_akses_staff_admin('potensial-clients',$this->session->id_session);
+                $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_ghosting(); // Ubah pemanggilan model
+                $this->load->view('potensial_clients/index_ghosting', $data);
+
+            }else if($this->session->level=='5'){
+                cek_session_akses_client('potensial-clients',$this->session->id_session);
+                redirect(base_url());
+                
+            }else{
                 redirect(base_url());
                 }
     }
 
     public function index_batal() {
-        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
-                cek_session_akses('home',$this->session->id_session);
-        $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_batal(); // Ubah pemanggilan model
-        $this->load->view('potensial_clients/index_batal', $data);
-        }else{
+
+        if ($this->session->level=='1'){
+                cek_session_akses_developer('potensial-clients',$this->session->id_session);
+                $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_batal(); // Ubah pemanggilan model
+                $this->load->view('potensial_clients/index_batal', $data);
+
+            }else if($this->session->level=='2'){
+                cek_session_akses_administrator('potensial-clients',$this->session->id_session);
+                $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_batal(); // Ubah pemanggilan model
+                $this->load->view('potensial_clients/index_batal', $data);
+
+            }else if($this->session->level=='3'){
+                cek_session_akses_staff_accounting('potensial-clients',$this->session->id_session);
+                redirect(base_url());
+
+            }else if($this->session->level=='4'){
+                cek_session_akses_staff_admin('potensial-clients',$this->session->id_session);
+                $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_batal(); // Ubah pemanggilan model
+                $this->load->view('potensial_clients/index_batal', $data);
+
+            }else if($this->session->level=='5'){
+                cek_session_akses_client('potensial-clients',$this->session->id_session);
+                redirect(base_url());
+                
+            }else{
                 redirect(base_url());
                 }
     }
 
     public function create() {
-        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
-            cek_session_akses('potensial-clients',$this->session->id_session);
-        $this->load->view('potensial_clients/create');
-        }else{
+
+        if ($this->session->level=='1'){
+                cek_session_akses_developer('potensial-clients',$this->session->id_session);
+                $this->load->view('potensial_clients/create');
+
+            }else if($this->session->level=='2'){
+                cek_session_akses_administrator('potensial-clients',$this->session->id_session);
+                $this->load->view('potensial_clients/create');
+
+            }else if($this->session->level=='3'){
+                cek_session_akses_staff_accounting('potensial-clients',$this->session->id_session);
                 redirect(base_url());
-                }
+
+            }else if($this->session->level=='4'){
+                cek_session_akses_staff_admin('potensial-clients',$this->session->id_session);
+                $this->load->view('potensial_clients/create');
+
+            }else if($this->session->level=='5'){
+                cek_session_akses_client('potensial-clients',$this->session->id_session);
+                redirect(base_url());
+                
+            }else{
+                redirect(base_url());
+                }       
     }
 
     public function store() {
@@ -134,24 +276,66 @@ class crud_potensial_clients extends CI_Controller {
     }
 
     public function lihat($id_session) {
-        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
-            cek_session_akses('potensial-clients',$this->session->id_session);
-        $data['pc'] = $this->Potensial_model->get_potensial_clients_by_session($id_session);
-        $data['logactivity'] = $this->Potensial_model->get_logactivity_by_session($id_session);
-        $this->load->view('potensial_clients/lihat', $data);
-         }else{
+
+        if ($this->session->level=='1'){
+                cek_session_akses_developer('potensial-clients',$this->session->id_session);
+                $data['pc'] = $this->Potensial_model->get_potensial_clients_by_session($id_session);
+                $data['logactivity'] = $this->Potensial_model->get_logactivity_by_session($id_session);
+                $this->load->view('potensial_clients/lihat', $data);
+
+            }else if($this->session->level=='2'){
+                cek_session_akses_administrator('potensial-clients',$this->session->id_session);
+                $data['pc'] = $this->Potensial_model->get_potensial_clients_by_session($id_session);
+                $data['logactivity'] = $this->Potensial_model->get_logactivity_by_session($id_session);
+                $this->load->view('potensial_clients/lihat', $data);
+
+            }else if($this->session->level=='3'){
+                cek_session_akses_staff_accounting('potensial-clients',$this->session->id_session);
                 redirect(base_url());
-            }
+
+            }else if($this->session->level=='4'){
+                cek_session_akses_staff_admin('potensial-clients',$this->session->id_session);
+                $data['pc'] = $this->Potensial_model->get_potensial_clients_by_session($id_session);
+                $data['logactivity'] = $this->Potensial_model->get_logactivity_by_session($id_session);
+                $this->load->view('potensial_clients/lihat', $data);
+
+            }else if($this->session->level=='5'){
+                cek_session_akses_client('potensial-clients',$this->session->id_session);
+                redirect(base_url());
+                
+            }else{
+                redirect(base_url());
+                }
     }
 
     public function edit($id_session) {
-        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
-            cek_session_akses('potensial-clients',$this->session->id_session);
-        $data['pc'] = $this->Potensial_model->get_potensial_clients_by_session($id_session);
-        $this->load->view('potensial_clients/edit', $data);
-         }else{
+
+        if ($this->session->level=='1'){
+                cek_session_akses_developer('potensial-clients',$this->session->id_session);
+                $data['pc'] = $this->Potensial_model->get_potensial_clients_by_session($id_session);
+                $this->load->view('potensial_clients/edit', $data);
+
+            }else if($this->session->level=='2'){
+                cek_session_akses_administrator('potensial-clients',$this->session->id_session);
+                $data['pc'] = $this->Potensial_model->get_potensial_clients_by_session($id_session);
+                $this->load->view('potensial_clients/edit', $data);
+
+            }else if($this->session->level=='3'){
+                cek_session_akses_staff_accounting('potensial-clients',$this->session->id_session);
                 redirect(base_url());
-            }
+
+            }else if($this->session->level=='4'){
+                cek_session_akses_staff_admin('potensial-clients',$this->session->id_session);
+                $data['pc'] = $this->Potensial_model->get_potensial_clients_by_session($id_session);
+                $this->load->view('potensial_clients/edit', $data);
+
+            }else if($this->session->level=='5'){
+                cek_session_akses_client('potensial-clients',$this->session->id_session);
+                redirect(base_url());
+                
+            }else{
+                redirect(base_url());
+                }
     }
 
     public function update($id_session) {
@@ -204,8 +388,9 @@ class crud_potensial_clients extends CI_Controller {
     }
 
     public function delete($id_session) {
+
         if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
-            cek_session_akses('potensial-clients',$this->session->id_session);
+
         
 
         if ($this->agent->is_browser()) // Agent untuk fitur di log activity
@@ -249,8 +434,33 @@ class crud_potensial_clients extends CI_Controller {
     }
 
     public function recycle_bin() {
-        $data['potensial_clients'] = $this->Potensial_model->get_deleted_potensial_clients();  // Get projects with status 'delete'
-        $this->load->view('potensial_clients/recycle_bin', $data);
+
+        if ($this->session->level=='1'){
+                cek_session_akses_developer('potensial-clients',$this->session->id_session);
+                $data['potensial_clients'] = $this->Potensial_model->get_deleted_potensial_clients();  // Get projects with status 'delete'
+                $this->load->view('potensial_clients/recycle_bin', $data);
+
+            }else if($this->session->level=='2'){
+                cek_session_akses_administrator('potensial-clients',$this->session->id_session);
+                $data['potensial_clients'] = $this->Potensial_model->get_deleted_potensial_clients();  // Get projects with status 'delete'
+                $this->load->view('potensial_clients/recycle_bin', $data);
+
+            }else if($this->session->level=='3'){
+                cek_session_akses_staff_accounting('potensial-clients',$this->session->id_session);
+                redirect(base_url());
+
+            }else if($this->session->level=='4'){
+                cek_session_akses_staff_admin('potensial-clients',$this->session->id_session);
+                $data['potensial_clients'] = $this->Potensial_model->get_deleted_potensial_clients();  // Get projects with status 'delete'
+                $this->load->view('potensial_clients/recycle_bin', $data);
+
+            }else if($this->session->level=='5'){
+                cek_session_akses_client('potensial-clients',$this->session->id_session);
+                redirect(base_url());
+                
+            }else{
+                redirect(base_url());
+                }
     }    
 
     public function restore($id_session) {

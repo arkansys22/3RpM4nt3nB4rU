@@ -12,15 +12,16 @@ $route['logout'] = "aspanel/logout";
 
 
 
-$route['user'] = 'crud_user/index'; // Menampilkan daftar projects
-$route['projects/create'] = 'crud_projects/create'; // Menampilkan form tambah projects
-$route['projects/store'] = 'crud_projects/store'; // Menyimpan data projects baru
-$route['projects/edit/(:any)'] = 'crud_projects/edit/$1'; // Menampilkan form edit projects
-$route['projects/update/(:any)'] = 'crud_projects/update/$1'; // Mengupdate projects
-$route['projects/delete/(:any)'] = 'crud_projects/delete/$1'; // Menghapus projects
-$route['projects/recycle_bin'] = 'crud_projects/recycle_bin'; // Halaman recycle bin
-$route['projects/restore/(:any)'] = 'crud_projects/restore/$1'; // Restore clients
-$route['projects/permanent_delete/(:any)'] = 'crud_projects/permanent_delete/$1'; // Hapus permanen clients
+$route['user'] = 'crud_user/index'; // Menampilkan daftar user
+$route['user/lihat/(:any)'] = 'crud_user/lihat/$1'; // Menampilkan detail user
+$route['user/create'] = 'crud_user/create'; // Menampilkan form tambah user
+$route['user/store'] = 'crud_user/store'; // Menyimpan data user baru
+$route['user/edit/(:any)'] = 'crud_user/edit/$1'; // Menampilkan form edit user
+$route['user/update/(:any)'] = 'crud_user/update/$1'; // Mengupdate user
+$route['user/delete/(:any)'] = 'crud_user/delete/$1'; // Menghapus user
+$route['user/recycle_bin'] = 'crud_user/recycle_bin'; // Halaman recycle bin
+$route['user/restore/(:any)'] = 'crud_user/restore/$1'; // Restore user
+$route['user/permanent_delete/(:any)'] = 'crud_user/permanent_delete/$1'; // Hapus permanen user
 
 
 

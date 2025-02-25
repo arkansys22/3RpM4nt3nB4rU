@@ -37,9 +37,9 @@
               <form action="<?= site_url('potensial-clients/update/'.$pc->id_session) ?>" method="post" class="bg-white p-6 shadow-md rounded">
                 <label class="block mb-2">Nama Klien : <?= $pc->pc_name ?></label>        
                 <label class="block mb-2">Nomer WhatsApp : <?= $pc->pc_nowa ?></label>        
-                <label class="block mb-2">Tanggal Pernikahan : <?= date('l', strtotime($pc->event_date)) ?>, <?= tgl_indo($pc->event_date) ?></label>
+                <label class="block mb-2">Tanggal Pernikahan : <?= hari($pc->event_date) ?>, <?= tgl_indo($pc->event_date) ?></label>
                 <label class="block mb-2">Lokasi Pernikahan : <?= $pc->location ?></label>
-                <label class="block mb-2">Pertama Chat : <?= date('l', strtotime($pc->chat_date)) ?>, <?= tgl_indo($pc->chat_date) ?></label>
+                <label class="block mb-2">Pertama Chat : <?= hari($pc->chat_date) ?>, <?= tgl_indo($pc->chat_date) ?></label>
                 <label class="block mb-2">Catatan : <?= $pc->note ?></label>
                 <br>
                 <a href="<?= site_url('potensial-clients/edit/'. $pc->id_session) ?>" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded">Edit</a>
@@ -94,7 +94,7 @@
                           </p>
                         </td>
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                          <p class="text-black dark:text-white"><?= $p->log_activity_waktu?></p>
+                          <p class="text-black dark:text-white"><?= hari($p->log_activity_waktu) ?>, <?= tgl_indo($p->log_activity_waktu)?></p>
                         </td>
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
                          <p class="text-black dark:text-white"><?= $p->log_activity_platform ?></p>

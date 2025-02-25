@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Potensial Klien</title>
+    <title>Tambah Pengguna</title>
     <link href="<?php echo base_url()?>assets/backend/style.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -33,25 +33,34 @@
         <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-              <h1 class="text-2xl font-bold mb-4">Tambah Potensial Klien</h1>
-              <form action="<?= site_url('potensial-clients/store') ?>" method="post" class="bg-white p-6 shadow-md rounded">
-                <label class="block mb-2">Nama Klien</label>
-                <input type="text" name="pc_name" class="w-full px-4 py-2 border rounded mb-4" required>
+              <h1 class="text-2xl font-bold mb-4">Tambah Pengguna</h1>
+              <form action="<?= site_url('user/store') ?>" method="post" class="bg-white p-6 shadow-md rounded">
+                <label class="block mb-2">Username</label>
+                <input type="text" name="username" class="w-full px-4 py-2 border rounded mb-4" required>
 
-                <label class="block mb-2">Nomer WhatsApp</label>
-                <input type="text" name="pc_nowa" class="w-full px-4 py-2 border rounded mb-4" required>
+                <label class="block mb-2">Nama</label>
+                <input type="text" name="nama" class="w-full px-4 py-2 border rounded mb-4" required>
 
-                <label class="block mb-2">Tanggal Pernikahan</label>
-                <input type="date" name="event_date" class="w-full px-4 py-2 border rounded mb-4" required>
+                <label class="block mb-2">Email</label>
+                <input type="email" name="email" class="w-full px-4 py-2 border rounded mb-4" required>
+
+                <label class="block mb-2">Password</label>
+                <input type="password" name="password" class="w-full px-4 py-2 border rounded mb-4" required>
                
-                <label class="block mb-2">Lokasi Pernikahan</label>
-                <input type="text" name="location" class="w-full px-4 py-2 border rounded mb-4" required>
-
-                <label class="block mb-2">Pertama Chat</label>
-                <input type="date" name="chat_date" class="w-full px-4 py-2 border rounded mb-4" required>
+                <label class="block mb-2">Level</label>
+                <select name="level" class="w-full px-4 py-2 border rounded mb-4" required> 
+                <option value=""></option> 
+                      <?php foreach ($level as $p) {
+                            if ($rows['level'] == $p['user_level_id']){
+                              echo"<option selected='selected' value='$p[user_level_id]'>$p[user_level_nama]</option> ";
+                            }else{
+                              echo"<option value='$p[user_level_id]'>$p[user_level_nama]</option>";
+                         }
+                      } ?>                    
+                </select>
 
                 <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">Simpan</button>
-                <a href="<?= site_url('potensial-clients') ?>" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded">Batal</a>
+                <a href="javascript:history.back()" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded">Batal</a>
               </form>
             </div>
           </div>
