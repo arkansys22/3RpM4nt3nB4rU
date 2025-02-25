@@ -181,7 +181,7 @@
 						                  fill=""
 						                />
 						            </svg>
-							             project
+							             Project
 					            </a>					            
 					        </li>
 					        <!-- Menu Item project -->
