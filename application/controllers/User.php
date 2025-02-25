@@ -52,7 +52,7 @@ class User extends CI_Controller
 
             $this->session->set_flashdata('user_loggedin','Selamat Anda Berhasil Login');
             $id = array('id_session' => $this->session->id_session);
-            $data = array('user_login_status'=>'online','user_login_tanggal'=> date('Y-m-d'),'user_login_jam'=> date('H:i:s'));
+            $data = array('user_login_status'=>'online');
             $this->db->update('user', $data, $id);
 
             $data2 = array (

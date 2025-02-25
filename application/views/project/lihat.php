@@ -38,7 +38,7 @@
                 <label class="block mb-2 text-black dark:text-white">Nama Project : <?= $project->project_name ?></label>        
                 <label class="block mb-2 text-black dark:text-white">Agama : <?= $project->religion ?></label>        
                 <label class="block mb-2 text-black dark:text-white">Value : <?= "Rp " . number_format($project->value, 0, ',', '.') ?></label>
-                <label class="block mb-2 text-black dark:text-white">Tanggal Pernikahan : <?= date('l', strtotime($project->event_date)) ?>, <?= tgl_indo($project->event_date) ?></label>
+                <label class="block mb-2 text-black dark:text-white">Tanggal Pernikahan : <?= hari('l', strtotime($project->event_date)) ?>, <?= tgl_indo($project->event_date) ?></label>
                 <label class="block mb-2 text-black dark:text-white">Lokasi : <?= $project->location ?></label>
                 <label class="block mb-2 text-black dark:text-white">Detail : <?= $project->detail ?></label>
 

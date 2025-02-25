@@ -12,7 +12,18 @@ $route['logout'] = "aspanel/logout";
 
 
 
-$route['user'] = 'crud_user/index'; // Menampilkan daftar projects
+$route['user'] = 'crud_user/index'; // Menampilkan daftar user
+$route['user/lihat/(:any)'] = 'crud_user/lihat/$1'; // Menampilkan detail user
+$route['user/create'] = 'crud_user/create'; // Menampilkan form tambah user
+$route['user/store'] = 'crud_user/store'; // Menyimpan data user baru
+$route['user/edit/(:any)'] = 'crud_user/edit/$1'; // Menampilkan form edit user
+$route['user/update/(:any)'] = 'crud_user/update/$1'; // Mengupdate user
+$route['user/delete/(:any)'] = 'crud_user/delete/$1'; // Menghapus user
+$route['user/recycle_bin'] = 'crud_user/recycle_bin'; // Halaman recycle bin
+$route['user/restore/(:any)'] = 'crud_user/restore/$1'; // Restore user
+$route['user/permanent_delete/(:any)'] = 'crud_user/permanent_delete/$1'; // Hapus permanen user
+
+
 
 $route['project'] = 'crud_project/index'; // Menampilkan daftar project
 $route['project/create'] = 'crud_project/create'; // Menampilkan form tambah project
@@ -21,9 +32,9 @@ $route['project/edit/(:any)'] = 'crud_project/edit/$1'; // Menampilkan form edit
 $route['project/update/(:any)'] = 'crud_project/update/$1'; // Mengupdate project
 $route['project/delete/(:any)'] = 'crud_project/delete/$1'; // Menghapus project
 $route['project/recycle_bin'] = 'crud_project/recycle_bin'; // Halaman recycle bin
-$route['project/restore/(:any)'] = 'crud_project/restore/$1'; // Restore clients
-$route['project/permanent_delete/(:any)'] = 'crud_project/permanent_delete/$1'; // Hapus permanen clients
-$route['project/lihat/(:any)'] = 'crud_project/lihat/$1'; // Menampilkan lihat Crew
+$route['project/restore/(:any)'] = 'crud_project/restore/$1'; // Restore project
+$route['project/permanent_delete/(:any)'] = 'crud_project/permanent_delete/$1'; // Hapus permanen project
+$route['project/lihat/(:any)'] = 'crud_project/lihat/$1'; // Menampilkan lihat project
 
 $route['clients'] = 'crud_clients/index'; // Menampilkan daftar clients
 // $route['clients/create'] = 'crud_clients/create'; // Halaman tambah clients
@@ -34,7 +45,7 @@ $route['clients/delete/(:any)'] = 'crud_clients/delete/$1'; // Hapus clients ber
 $route['clients/recycle_bin'] = 'crud_clients/recycle_bin'; // Halaman recycle bin
 $route['clients/restore/(:any)'] = 'crud_clients/restore/$1'; // Restore clients
 $route['clients/permanent_delete/(:any)'] = 'crud_clients/permanent_delete/$1'; // Hapus permanen clients
-$route['clients/lihat/(:any)'] = 'crud_clients/lihat/$1'; // Menampilkan lihat Crew
+$route['clients/lihat/(:any)'] = 'crud_clients/lihat/$1'; // Menampilkan lihat clients
 
 $route['crews'] = 'Crud_crews/index'; // Menampilkan daftar crews yang masih aktif
 $route['crews/create'] = 'Crud_crews/create'; // Menampilkan halaman tambah crews

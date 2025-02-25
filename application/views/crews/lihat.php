@@ -41,7 +41,7 @@
                 <label class="block mb-2 text-black dark:text-white">No HP : <?= $crews->phone ?></label>
                 <label class="block mb-2 text-black dark:text-white">Alamat : <?= $crews->address ?></label>
                 <label class="block mb-2 text-black dark:text-white">Umur : <?= $crews->age ?></label>
-                <label class="block mb-2 text-black dark:text-white">Bergabung : <?= date('l', strtotime($crews->joining_date)) ?>, <?= tgl_indo($crews->joining_date) ?></label>
+                <label class="block mb-2 text-black dark:text-white">Bergabung : <?= hari('l', strtotime($crews->joining_date)) ?>, <?= tgl_indo($crews->joining_date) ?></label>
                 <br>
                 <a href="<?= site_url('crews/edit/'. $crews->id_session) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Edit</a>
                 <a href="javascript:history.back()" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a>

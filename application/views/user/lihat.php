@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lihat Potensial Klien</title>
+    <title>Lihat Pengguna</title>
     <link href="<?php echo base_url()?>assets/backend/style.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -33,16 +33,15 @@
         <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-              <h1 class="text-2xl font-bold mb-4">Lihat Potensial Klien <?= $pc->status ?></h1>
+              <h1 class="text-2xl font-bold mb-4">Lihat Pengguna <?= $pc->username ?></h1>
               <form action="<?= site_url('potensial-clients/update/'.$pc->id_session) ?>" method="post" class="bg-white p-6 shadow-md rounded">
-                <label class="block mb-2">Nama Klien : <?= $pc->pc_name ?></label>        
-                <label class="block mb-2">Nomer WhatsApp : <?= $pc->pc_nowa ?></label>        
-                <label class="block mb-2">Tanggal Pernikahan : <?= date('l', strtotime($pc->event_date)) ?>, <?= tgl_indo($pc->event_date) ?></label>
-                <label class="block mb-2">Lokasi Pernikahan : <?= $pc->location ?></label>
-                <label class="block mb-2">Pertama Chat : <?= date('l', strtotime($pc->chat_date)) ?>, <?= tgl_indo($pc->chat_date) ?></label>
-                <label class="block mb-2">Catatan : <?= $pc->note ?></label>
-                <br>
-                <a href="<?= site_url('potensial-clients/edit/'. $pc->id_session) ?>" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded">Edit</a>
+                <label class="block mb-2">Username : <?= $pc->username ?></label>        
+                <label class="block mb-2">Nama : <?= $pc->nama ?></label>
+                <label class="block mb-2">Email : <?= $pc->email ?></label>
+                <label class="block mb-2">Register : <?= $pc->user_post_hari ?>, <?= tgl_indo($pc->user_post_tanggal) ?> <?= $pc->user_post_jam ?></label>
+                <?php $user= $this->Crud_m->view_where('user', array('id_session'=> $pc->create_by))->row(); ?>           
+                <label class="block mb-2">Register by : <?= $user->nama ?></label>              
+                <a href="<?= site_url('user/edit/'. $pc->id_session) ?>" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded">Edit</a>
                 <a href="javascript:history.back()" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded">Kembali</a>
               </form>
 
@@ -94,7 +93,7 @@
                           </p>
                         </td>
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                          <p class="text-black dark:text-white"><?= $p->log_activity_waktu?></p>
+                          <p class="text-black dark:text-white"><?= hari($p->log_activity_waktu) ?>, <?= tgl_indo($p->log_activity_waktu)?></p>
                         </td>
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
                          <p class="text-black dark:text-white"><?= $p->log_activity_platform ?></p>

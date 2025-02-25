@@ -1,49 +1,49 @@
 <?php
-function cek_session_akses($id){
+function cek_session_akses_developer($id){
   $ci = & get_instance();
   $session = $ci->db->query("SELECT * FROM user WHERE user.id_session='$id'")->num_rows();
   if ($session == '0' AND $ci->session->userdata('level') != '1'){
-    redirect(base_url().'aspanel/home');
+    redirect(base_url().'panel');
   }
 }
 
-function cek_session_akses_admin($id){
+function cek_session_akses_administrator($id){
   $ci = & get_instance();
   $session = $ci->db->query("SELECT * FROM user WHERE user.id_session='$id'")->num_rows();
   if ($session == '0' AND $ci->session->userdata('level') != '2'){
-    redirect(base_url().'aspanel/home');
+    redirect(base_url().'panel');
   }
 }
 
-function cek_session_akses_level_3($id){
+function cek_session_akses_staff_accounting($id){
   $ci = & get_instance();
   $session = $ci->db->query("SELECT * FROM user WHERE user.id_session='$id'")->num_rows();
   if ($session == '0' AND $ci->session->userdata('level') != '3'){
-    redirect(base_url().'aspanel/home');
+    redirect(base_url().'panel');
   }
 }
 
-function cek_session_akses_level_4($id){
+function cek_session_akses_staff_admin($id){
   $ci = & get_instance();
   $session = $ci->db->query("SELECT * FROM user WHERE user.id_session='$id'")->num_rows();
   if ($session == '0' AND $ci->session->userdata('level') != '4'){
-    redirect(base_url().'aspanel/home');
+    redirect(base_url().'panel');
   }
 }
 
-function cek_session_akses_level_5($id){
+function cek_session_akses_client($id){
   $ci = & get_instance();
   $session = $ci->db->query("SELECT * FROM user WHERE user.id_session='$id'")->num_rows();
   if ($session == '0' AND $ci->session->userdata('level') != '5'){
-    redirect(base_url().'aspanel/home');
+    redirect(base_url().'panel');
   }
 }
 
-function cek_session_akses_supervisor($id){
+function cek_session_akses_guest($id){
   $ci = & get_instance();
   $session = $ci->db->query("SELECT * FROM user WHERE user.id_session='$id'")->num_rows();
   if ($session == '0' AND $ci->session->userdata('level') != '6'){
-    redirect(base_url().'aspanel/home');
+    redirect(base_url().'panel');
   }
 }
 
@@ -54,11 +54,29 @@ function hari_ini($w){
     return $hari_ini;
 }
 
+
+function hari($date){
+
+    $daftar_hari = array(
+     'Sunday' => 'Minggu',
+     'Monday' => 'Senin',
+     'Tuesday' => 'Selasa',
+     'Wednesday' => 'Rabu',
+     'Thursday' => 'Kamis',
+     'Friday' => 'Jumat',
+     'Saturday' => 'Sabtu'
+    );
+    $namahari = $daftar_hari[date('l', strtotime($date))];
+    
+    return $namahari;
+}
+
 function tgl_indo($tgl){
         $tanggal = substr($tgl,8,2);
         $bulan = getBulan(substr($tgl,5,2));
         $tahun = substr($tgl,0,4);
-        return $tanggal.' '.$bulan.' '.$tahun;
+        $waktu = substr($tgl,11,8);
+        return $tanggal.' '.$bulan.' '.$tahun.' '.$waktu;
 }
 
 function getBulan($bln){

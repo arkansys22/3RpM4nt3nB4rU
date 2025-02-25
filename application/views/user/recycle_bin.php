@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recycle Bin Potensial Klien</title>
+    <title>Recycle Bin Pengguna</title>
     <link href="<?php echo base_url()?>assets/backend/style.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -32,10 +32,10 @@
             <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
                 <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
                     <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-                        <h1 class="text-2xl font-bold mb-4">Recycle Bin Potensial Klien</h1>
+                        <h1 class="text-2xl font-bold mb-4">Recycle Bin Pengguna</h1>
 
                     <!-- Tombol Kembali -->
-                    <a href="<?= site_url('potensial-clients') ?>" class="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none">Kembali</a>
+                    <a href="<?= site_url('user') ?>" class="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none">Kembali</a>
 
 
                     <!-- ====== Data Table Two Start --><br><br>
@@ -81,7 +81,7 @@
                                 </th>
                                 <th>
                                   <div class="flex items-center justify-between gap-1.5">
-                                    <p>Nama Klien</p>
+                                    <p>Username</p>
                                     <div class="inline-flex flex-col space-y-[2px]">
                                       <span class="inline-block">
                                         <svg
@@ -115,7 +115,7 @@
                                 </th>
                                 <th>
                                   <div class="flex items-center justify-between gap-1.5">
-                                    <p>Nomer WhatsApp</p>
+                                    <p>Hak Akses</p>
                                     <div class="inline-flex flex-col space-y-[2px]">
                                       <span class="inline-block">
                                         <svg
@@ -149,41 +149,7 @@
                                 </th>
                                 <th>
                                   <div class="flex items-center justify-between gap-1.5">
-                                    <p>Tanggal & Lokasi Acara</p>
-                                    <div class="inline-flex flex-col space-y-[2px]">
-                                      <span class="inline-block">
-                                        <svg
-                                          class="fill-current"
-                                          width="10"
-                                          height="5"
-                                          viewBox="0 0 10 5"
-                                          fill="none"
-                                          xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                          <path d="M5 0L0 5H10L5 0Z" fill="" />
-                                        </svg>
-                                      </span>
-                                      <span class="inline-block">
-                                        <svg
-                                          class="fill-current"
-                                          width="10"
-                                          height="5"
-                                          viewBox="0 0 10 5"
-                                          fill="none"
-                                          xmlns="http://www.w3.org/2000/svg"
-                                        >
-                                          <path
-                                            d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
-                                            fill=""
-                                          />
-                                        </svg>
-                                      </span>
-                                    </div>
-                                  </div>
-                                </th>
-                                <th>
-                                  <div class="flex items-center justify-between gap-1.5">
-                                    <p>Chat Pertama</p>
+                                    <p>Status</p>
                                     <div class="inline-flex flex-col space-y-[2px]">
                                       <span class="inline-block">
                                         <svg
@@ -253,17 +219,17 @@
                               </tr>
                             </thead>
                             <tbody>
-                            <?php $no = 1; foreach ($potensial_clients as $p): ?>
+                            <?php $no = 1; foreach ($users as $p): ?>
                               <tr>
                                 <td><?=$no++?></td>
-                                <td><?= $p->pc_name ?></td>
-                                <td><a href="https://wa.me/<?= $p->pc_nowa?>"><?= $p->pc_nowa ?></a></td>
-                                <td><?= tgl_indo($p->event_date)?>, <?= $p->location ?></td>
-                                <td><?= tgl_indo($p->chat_date)?></td>
+                                <td><?= $p->username ?></td>
+                                <?php $level= $this->Crud_m->view_where('user_level', array('user_level_id'=> $p->level))->row(); ?>
+                                <td><?= $level->user_level_nama ?></td>
+                                <td><?= $p->user_login_status ?></td>
                                 <td>
 
-                                    <a href="<?= site_url('potensial-clients/restore/'.$p->id_session) ?>" class="bg-green-500 text-white px-2 py-1 rounded">Restore</a>
-                                    <a href="<?= site_url('potensial-clients/permanent_delete/'.$p->id_session) ?>" class="bg-red-500 text-white px-2 py-1 rounded" onclick="return confirm('Hapus secara permanen?')">Delete Permanen</a>
+                                    <a href="<?= site_url('user/restore/'.$p->id_session) ?>" class="bg-green-500 text-white px-2 py-1 rounded">Restore</a>
+                                    <a href="<?= site_url('user/permanent_delete/'.$p->id_session) ?>" class="bg-red-500 text-white px-2 py-1 rounded" onclick="return confirm('Hapus secara permanen pengguna <?= $p->username ?> ?' )">Delete Permanen</a>
 
                                   
                                 </td>
