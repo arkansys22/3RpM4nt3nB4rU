@@ -6,15 +6,24 @@ class crews_model extends CI_Model {
     }
 
     public function get_all_crews() {
-        return $this->db->get_where('crews', ['status' => 'active'])->result();
-    }    
+        $this->db->select("*, TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) AS age");
+        $this->db->from("crews");
+        $this->db->where("status", "active"); // Hanya ambil data crew yang aktif
+        return $this->db->get()->result();
+    }
 
     public function get_deleted() {
-        return $this->db->get_where('crews', ['status' => 'delete'])->result();
+        $this->db->select("*, TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) AS age");
+        $this->db->from("crews");
+        $this->db->where("status", "delete"); // Ambil data yang dihapus
+        return $this->db->get()->result();
     }
 
     public function get_by_id_session($id_session) {
-        return $this->db->get_where('crews', ['id_session' => $id_session])->row();
+        $this->db->select("*, TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) AS age");
+        $this->db->from("crews");
+        $this->db->where("id_session", $id_session);
+        return $this->db->get()->row();
     }
 
     public function insert($data) {
