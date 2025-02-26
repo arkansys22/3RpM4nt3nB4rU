@@ -37,12 +37,11 @@
               <form action="<?= site_url('project/update/'.$project->id_session) ?>" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
                 <label class="block mb-2 text-black dark:text-white">Nama Project : <?= $project->project_name ?></label>        
                 <label class="block mb-2 text-black dark:text-white">Agama : <?= $project->religion ?></label>        
-                <label class="block mb-2 text-black dark:text-white">Value : <?= "Rp " . number_format($project->value, 0, ',', '.') ?></label>
-                <label class="block mb-2 text-black dark:text-white">Tanggal Pernikahan : <?= hari('l', strtotime($project->event_date)) ?>, <?= tgl_indo($project->event_date) ?></label>
+                <label class="block mb-2 text-black dark:text-white">Value : <?= "Rp " . number_format($project->value, 0, ',', '.'); ?></label>
+                <label class="block mb-2 text-black dark:text-white">Tanggal Pernikahan : <?= hari($project->event_date) ?>, <?= tgl_indo($project->event_date) ?></label>
                 <label class="block mb-2 text-black dark:text-white">Lokasi : <?= $project->location ?></label>
                 <label class="block mb-2 text-black dark:text-white">Detail : <?= $project->detail ?></label>
 
-                <h4 class="text-lg font-semibold mt-4 mb-2">List Crew</h4>
                 <?php
                 $roles = [
                   'koor_acara'      => 'Koordinator Acara',
@@ -54,14 +53,25 @@
                   'koor_tambahan2'  => 'Koordinator Tambahan2'
                 ];
 
-                foreach ($roles as $field => $label):
+                $hasCrew = false;
+                foreach ($roles as $field => $label) {
+                  if (!empty($crew_project->$field)) {
+                  $hasCrew = true;
+                  break;
+                  }
+                }
+
+                if ($hasCrew): ?>
+                  <h4 class="text-lg font-semibold mt-4 mb-2">List Crew</h4>
+                  <?php foreach ($roles as $field => $label):
                   if (!empty($crew_project->$field)):
                     $crew = $this->Crud_m->view_where('crews', array('id_session' => $crew_project->$field))->row();
-                ?>
+                  ?>
                   <label class="block mb-2 text-black dark:text-white"><?= $label ?> : <?= $crew->crew_name ?></label>
-                <?php 
+                  <?php 
                   endif;
-                endforeach; 
+                  endforeach; 
+                endif; 
                 ?>
 
                 <a href="<?= site_url('project/edit/'. $project->id_session) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Edit</a>
@@ -112,7 +122,7 @@
                           </p>
                         </td>
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                          <p class="text-black dark:text-white"><?= $p->log_activity_waktu?></p>
+                        <p class="text-black dark:text-white"><?= hari($p->log_activity_waktu) ?>, <?= tgl_indo($p->log_activity_waktu)?></p>
                         </td>
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
                          <p class="text-black dark:text-white"><?= $p->log_activity_platform ?></p>
@@ -126,11 +136,7 @@
                   </table>
                 </div>
               </div>
-
               <!-- ====== Table Three End -->
-
-
-
             </div>
           </div>
         </div>

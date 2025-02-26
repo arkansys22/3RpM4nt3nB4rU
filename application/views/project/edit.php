@@ -45,8 +45,8 @@
                 <input type="date" name="event_date" value="<?= $project->event_date ?>" class="w-full px-4 py-2 border rounded mb-4" required>
 
                 <label class="block mb-2">Value</label>
-                <input type="number" name="value" value="<?= $project->value ?>" class="w-full px-4 py-2 border rounded mb-4" required>
-                
+                <input type="text" id="formattedNumber" class="w-full px-4 py-2 border rounded mb-4" oninput="formatNumber(this)" name="value" required>
+
                 <label class="block mb-2">Detail</label>
                 <textarea name="detail" class="w-full px-4 py-2 border rounded mb-4" required><?= $project->detail ?></textarea>
                 
@@ -58,7 +58,7 @@
                     <option value="Hindu" <?= $project->religion == 'Hindu' ? 'selected' : '' ?>>Hindu</option>
                     <option value="Buddha" <?= $project->religion == 'Buddha' ? 'selected' : '' ?>>Buddha</option>
                     <option value="Lainnya" <?= $project->religion == 'Lainnya' ? 'selected' : '' ?>>Lainnya</option>
-                  </select>
+                </select>
 
                 <label class="block mb-2">Lokasi</label>
                 <input type="text" name="location" value="<?= $project->location ?>" class="w-full px-4 py-2 border rounded mb-4" required>
@@ -103,6 +103,15 @@
     </div>
     <!-- ===== Content Area End ===== -->
   </div>
-  <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
+  <script defer src="<?php echo base_url()?>assets/backend/bundle.js">
+  </script>
+  <script>
+    function formatNumber(input) {
+        let value = input.value.replace(/\D/g, ''); // Hanya angka
+        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Tambah titik setiap 3 digit
+        input.value = value;
+    }
+  </script>
+
 </body>
 </html>

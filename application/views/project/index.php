@@ -35,20 +35,20 @@
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
               <h1 class="text-2xl font-bold mb-4">Daftar Project</h1>
               <div class="flex justify-between mb-4">
-              <button class="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none">
-                  <a href="<?= site_url('project/create') ?>">
+              <a href="<?= site_url('project/create') ?>">
+                <button class="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m7-7H5"></path>
                     </svg>
-                  </a>
                 </button>
+              </a>
+              <a href="<?= site_url('project/recycle_bin') ?>">
                 <button class="bg-red-500 text-white p-3 rounded-md hover:bg-red-700 focus:outline-none">
-                  <a href="<?= site_url('project/recycle_bin') ?>">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-2 14H7L5 7M12 4v-2m4 2h-8m5 2l1-1m3 1l-1-1m0 0h6l-1 2m-7-5h2m6 5H5"></path>
-                    </svg>
-                    </a>
+                  </svg>
                 </button>
+              </a>
               </div>
 
               <!-- ====== Data Table Two Start --><br>
@@ -301,8 +301,8 @@
                   <?php foreach ($project as $p): ?>
                   <tr>
                     <td><?= $p->project_name ?></td>
-                    <td><?= $p->event_date ?></td>
-                    <td><?= "Rp " . number_format($p->value, 0, ',', '.') ?></td>
+                    <td><?= tgl_indo($p->event_date) ?></td>
+                    <td><?= "Rp " . number_format($p->value, 0, ',', '.'); ?></td>
                     <td><?= $p->detail ?></td>
                     <td><?= $p->religion ?></td>
                     <td><?= $p->location ?></td>

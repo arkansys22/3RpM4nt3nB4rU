@@ -101,7 +101,7 @@ class Crud_project extends CI_Controller {
             'event_date'    => $this->input->post('event_date'),
             'location'      => $this->input->post('location'),
             'client_name'   => $this->input->post('client_name'),
-            'value'         => $this->input->post('value'),
+            'value'         => str_replace('.', '', $this->input->post('value')),
             'detail'        => $this->input->post('detail'),
             'religion'      => $this->input->post('religion'),
             'create_date'   => $date_create
@@ -262,7 +262,7 @@ class Crud_project extends CI_Controller {
             'project_name'  => $this->input->post('project_name'),
             'client_name'   => $this->input->post('client_name'),
             'event_date'    => $this->input->post('event_date'),
-            'value'         => $this->input->post('value'),
+            'value'         => str_replace('.', '', $this->input->post('value')),
             'detail'        => $this->input->post('detail'),
             'religion'      => $this->input->post('religion'),
             'location'      => $this->input->post('location'),

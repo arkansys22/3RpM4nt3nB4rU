@@ -45,7 +45,8 @@
                 <input type="date" name="event_date" class="w-full px-4 py-2 border rounded mb-4" required>
 
                 <label class="block mb-2">Value</label>
-                <input type="number" name="value" class="w-full px-4 py-2 border rounded mb-4" required>
+                <input type="text" id="formattedNumber" class="w-full px-4 py-2 border rounded mb-4" oninput="formatNumber(this)" name="value" required>
+
 
                 <label class="block mb-2">Detail</label>
                 <textarea name="detail" class="w-full px-4 py-2 border rounded mb-4" required></textarea>
@@ -78,5 +79,12 @@
     <!-- ===== Content Area End ===== -->
   </div>
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
+  <script>
+    function formatNumber(input) {
+      let value = input.value.replace(/\D/g, ''); // Hanya angka
+      value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Tambah titik setiap 3 digit
+      input.value = value;
+  }
+  </script>
 </body>
 </html>

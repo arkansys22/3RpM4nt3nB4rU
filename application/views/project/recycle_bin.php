@@ -288,7 +288,7 @@
                             <?php foreach ($project as $p): ?>
                                 <tr>
                                 <td><?= $p->project_name ?></td>
-                                <td><?= $p->event_date ?></td>
+                                <td><?= tgl_indo($p->event_date) ?></td>
                                 <td><?= "Rp " . number_format($p->value, 0, ',', '.') ?></td>
                                 <td><?= $p->detail ?></td>
                                 <td><?= $p->religion ?></td>
