@@ -225,7 +225,7 @@
 						                  fill=""
 						                />
 						            </svg>
-							             Crews
+							             Crew
 					            </a>					            
 					        </li>    
 
