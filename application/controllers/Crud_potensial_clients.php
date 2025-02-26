@@ -505,7 +505,7 @@ class crud_potensial_clients extends CI_Controller {
         $this->Potensial_model->delete_potensial_clients_permanent($id_session);
     
         $this->session->set_flashdata('Success', 'Potensial klien berhasil dihapus permanen');
-        redirect('potensial_clients/recycle_bin');
+        redirect('potensial-clients/recycle_bin');
     }
     
 }
