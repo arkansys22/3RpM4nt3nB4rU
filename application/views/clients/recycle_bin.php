@@ -81,7 +81,7 @@
                                 </th>
                                 <th>
                                   <div class="flex items-center justify-between gap-1.5">
-                                    <p>Email</p>
+                                    <p>Agama</p>
                                     <div class="inline-flex flex-col space-y-[2px]">
                                       <span class="inline-block">
                                         <svg
@@ -255,9 +255,14 @@
                   <?php foreach ($clients as $client): ?>
                   <tr>
                     <td><?= $client->client_name ?></td>
-                    <td><?= $client->email ?></td>
+                    <td>
+                      <?php 
+                        $project = $this->db->get_where('project', ['id_session' => $client->id_session])->row();
+                        echo $project ? $project->religion : 'N/A';
+                      ?>
+                    </td>
                     <td><?= $client->phone ?></td>
-                    <td><?= $client->wedding_date ?></td>
+                    <td><?= tgl_indo($client->wedding_date) ?></td>
                     <td><?= $client->location ?></td>
                     <td>
                     <div class="flex flex-col gap-2 w-full">

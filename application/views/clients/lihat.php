@@ -74,7 +74,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
 
                 <!-- Detail Pernikahan -->
                 <h3 class="text-lg font-bold mt-6 mb-2 text-black dark:text-white">Detail Pernikahan</h3>
-                <label class="block mb-2 text-black dark:text-white">Tanggal Pernikahan : <?= $clients->wedding_date ?></label>
+                <label class="block mb-2 text-black dark:text-white">Tanggal Pernikahan : <?= hari($clients->wedding_date) ?>, <?= tgl_indo($clients->wedding_date) ?></label>
                 <label class="block mb-2 text-black dark:text-white">Lokasi : <?= $clients->location ?></label>
 
                 <?php if ($islam) : ?>
@@ -154,7 +154,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                           </p>
                         </td>
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                          <p class="text-black dark:text-white"><?= $p->log_activity_waktu?></p>
+                        <p class="text-black dark:text-white"><?= hari($p->log_activity_waktu) ?>, <?= tgl_indo($p->log_activity_waktu)?></p>
                         </td>
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
                          <p class="text-black dark:text-white"><?= $p->log_activity_platform ?></p>
@@ -168,11 +168,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                   </table>
                 </div>
               </div>
-
               <!-- ====== Table Three End -->
-
-
-
             </div>
           </div>
         </div>

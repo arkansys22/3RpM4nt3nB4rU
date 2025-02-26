@@ -124,8 +124,13 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
               <label class="block mb-2">Mahar</label>
               <input type="text" name="mahr" value="<?= $clients->mahr ?>" placeholder="Mahar" class="w-full px-4 py-2 border rounded mb-4">
 
-              <label class="block mb-2">Simbolis</label>
-              <input type="text" name="handover" value="<?= $clients->handover ?>" placeholder="Simbolis" class="w-full px-4 py-2 border rounded mb-4">
+              <label class="block mb-2">Simbolis Seserahan</label>
+              <select type="text" name="handover" value="<?= $clients->handover ?>" class="w-full px-4 py-2 border rounded mb-4">
+              <option value="">Pilih Simbolis Seserahan</option>
+              <option value="Seperangkat Alat Solat" <?= $clients->handover == 'Seperangkat Alat Solat' ? 'selected' : '' ?>>Seperangkat Alat Solat</option>
+              <option value="Make Up" <?= $clients->handover == 'Make Up' ? 'selected' : '' ?>>Make Up</option>
+              <option value="Lainnya" <?= $clients->handover == 'Lainnya' ? 'selected' : '' ?>>Lainnya</option>
+              </select>
 
               <!-- Petugas dan Koordinator Akad Nikah -->
               <h3 class="text-lg font-bold mt-6 mb-2">Petugas dan Koordinator</h3>
