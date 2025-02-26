@@ -216,6 +216,40 @@
                                 </th>
                                 <th>
                                   <div class="flex items-center justify-between gap-1.5">
+                                    <p>Tanggal Lahir</p>
+                                    <div class="inline-flex flex-col space-y-[2px]">
+                                      <span class="inline-block">
+                                        <svg
+                                          class="fill-current"
+                                          width="10"
+                                          height="5"
+                                          viewBox="0 0 10 5"
+                                          fill="none"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                          <path d="M5 0L0 5H10L5 0Z" fill="" />
+                                        </svg>
+                                      </span>
+                                      <span class="inline-block">
+                                        <svg
+                                          class="fill-current"
+                                          width="10"
+                                          height="5"
+                                          viewBox="0 0 10 5"
+                                          fill="none"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                          <path
+                                            d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
+                                            fill=""
+                                          />
+                                        </svg>
+                                      </span>
+                                    </div>
+                                  </div>
+                                </th>
+                                <th>
+                                  <div class="flex items-center justify-between gap-1.5">
                                     <p>Usia</p>
                                     <div class="inline-flex flex-col space-y-[2px]">
                                       <span class="inline-block">
@@ -326,8 +360,9 @@
                                         <td><?= $c->religion ?></td>
                                         <td><?= $c->phone ?></td>
                                         <td><?= $c->address ?></td>
-                                        <td><?= $c->age ?></td>
-                                        <td><?= $c->joining_date ?></td>
+                                        <td><?= tgl_indo($c->birth_date) ?></td>
+                                        <td><?= $c->age ?> Tahun</td>
+                                        <td><?= tgl_indo($c->joining_date) ?></td>
                                         <td>
                                         <div class="flex flex-col gap-2 w-full">
                                             <a href="<?= site_url('crews/restore/'.$c->id_session) ?>" class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 text-center w-full">Restore</a>

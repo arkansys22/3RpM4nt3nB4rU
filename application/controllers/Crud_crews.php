@@ -127,7 +127,7 @@ class Crud_crews extends CI_Controller {
             'religion'    => $this->input->post('religion'),
             'phone'       => $this->input->post('phone'),
             'address'     => $this->input->post('address'),
-            'age'         => $this->input->post('age'),
+            'birth_date'  => $this->input->post('birth_date'),
             'joining_date'=> $this->input->post('joining_date'),
             'created_at'  => $created_at,
             'status'      => 'active'
@@ -240,7 +240,7 @@ class Crud_crews extends CI_Controller {
             'religion'    => $this->input->post('religion'),
             'phone'       => $this->input->post('phone'),
             'address'     => $this->input->post('address'),
-            'age'         => $this->input->post('age'),
+            'birth_date'  => $this->input->post('birth_date'),
             'joining_date'=> $this->input->post('joining_date'),
         ];
 

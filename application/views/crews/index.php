@@ -35,20 +35,20 @@
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
               <h1 class="text-2xl font-bold mb-4">Daftar Crew</h1>
               <div class="flex justify-between mb-4">
+              <a href="<?= site_url('crews/create') ?>">
                 <button class="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none">
-                  <a href="<?= site_url('crews/create') ?>">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m7-7H5"></path>
                     </svg>
-                  </a>
                 </button>
+              </a>
+              <a href="<?= site_url('crews/recycle_bin') ?>">
                 <button class="bg-red-500 text-white p-3 rounded-md hover:bg-red-700 focus:outline-none">
-                  <a href="<?= site_url('crews/recycle_bin') ?>">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-2 14H7L5 7M12 4v-2m4 2h-8m5 2l1-1m3 1l-1-1m0 0h6l-1 2m-7-5h2m6 5H5"></path>
                     </svg>
-                  </a>
                 </button>
+              </a>
               </div>
 
               <!-- ====== Data Table Two Start --><br>
@@ -229,6 +229,40 @@
                         </th>
                         <th>
                           <div class="flex items-center justify-between gap-1.5">
+                            <p>Tanggal Lahir</p>
+                            <div class="inline-flex flex-col space-y-[2px]">
+                              <span class="inline-block">
+                                <svg
+                                  class="fill-current"
+                                  width="10"
+                                  height="5"
+                                  viewBox="0 0 10 5"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path d="M5 0L0 5H10L5 0Z" fill="" />
+                                </svg>
+                              </span>
+                              <span class="inline-block">
+                                <svg
+                                  class="fill-current"
+                                  width="10"
+                                  height="5"
+                                  viewBox="0 0 10 5"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
+                                    fill=""
+                                  />
+                                </svg>
+                              </span>
+                            </div>
+                          </div>
+                        </th>
+                        <th>
+                          <div class="flex items-center justify-between gap-1.5">
                             <p>Usia</p>
                             <div class="inline-flex flex-col space-y-[2px]">
                               <span class="inline-block">
@@ -337,10 +371,11 @@
                         <td><?= $c->crew_name ?></td>
                         <td><?= $c->gender ?></td>
                         <td><?= $c->religion ?></td>
-                        <td><?= $c->phone ?></td>
+                        <td><a href="https://wa.me/<?= $c->phone?>"><?= $c->phone ?></a></td>
                         <td><?= $c->address ?></td>
-                        <td><?= $c->age ?></td>
-                        <td><?= $c->joining_date ?></td>
+                        <td><?= tgl_indo($c->birth_date) ?></td>
+                        <td><?= $c->age ?> Tahun</td>
+                        <td><?= tgl_indo($c->joining_date) ?></td>
                         <td>
                             <div class="flex flex-col gap-2 w-full">
                               <a href="<?= site_url('crews/lihat/'.$c->id_session) ?>" class="inline-block bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600 text-center text-xs sm:text-sm md:text-base">Lihat</a>

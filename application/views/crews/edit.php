@@ -60,8 +60,8 @@
                 <label class="block mb-2">Alamat</label>
                 <textarea name="address" class="w-full px-4 py-2 border rounded mb-4" required><?= $crews->address ?></textarea>
 
-                <label class="block mb-2">Usia</label>
-                <input type="number" name="age" value="<?= $crews->age ?>" class="w-full px-4 py-2 border rounded mb-4" required>
+                <label class="block mb-2">Tanggal Lahir</label>
+                <input type="date" name="birth_date" value="<?= $crews->birth_date ?>" class="w-full px-4 py-2 border rounded mb-4" required>
 
                 <label class="block mb-2">Tanggal Bergabung</label>
                 <input type="date" name="joining_date" value="<?= $crews->joining_date ?>" class="w-full px-4 py-2 border rounded mb-4" required>

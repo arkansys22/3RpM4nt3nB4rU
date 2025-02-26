@@ -62,8 +62,8 @@
                 <label class="block mb-2">Alamat</label>
                 <textarea name="address" class="w-full px-4 py-2 border rounded mb-4" required></textarea>
 
-                <label class="block mb-2">Usia</label>
-                <input type="number" name="age" class="w-full px-4 py-2 border rounded mb-4" required>
+                <label class="block mb-2">Tanggal Lahir</label>
+                <input type="date" name="birth_date" class="w-full px-4 py-2 border rounded mb-4" required>
 
                 <label class="block mb-2">Tanggal Bergabung</label>
                 <input type="date" name="joining_date" class="w-full px-4 py-2 border rounded mb-4" required>
