@@ -74,4 +74,9 @@ $route['potensial-clients/recycle_bin'] = 'crud_potensial_clients/recycle_bin'; 
 $route['potensial-clients/restore/(:any)'] = 'crud_potensial_clients/restore/$1'; // Restore Potensial Clients
 $route['potensial-clients/permanent_delete/(:any)'] = 'crud_potensial_clients/permanent_delete/$1'; // Hapus permanen Potensial Clients
 
+$route['naskah/jubir_cpp/(:any)'] = 'Jubir_cpp/view/$1';
+$route['naskah/jubir_cpp/pdf/(:any)'] = 'Jubir_cpp/generate_pdf/$1';
+$route['naskah/jubir_cpw/(:any)'] = 'Jubir_cpw/view/$1';
+$route['naskah/jubir_cpw/pdf/(:any)'] = 'Jubir_cpw/generate_pdf/$1';
+
 $route['petacrawl\.xml'] = "petacrawl";

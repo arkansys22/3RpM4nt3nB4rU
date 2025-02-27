@@ -108,6 +108,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                 <?php endif; ?>
                 <a href="<?= site_url('clients/edit/'. $clients->id_session) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Edit</a>
                 <a href="javascript:history.back()" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a>
+                <a href="<?= site_url('naskah/jubir_cpp/'. $clients->id_session) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Naskah Jubir Cpp</a>
               </form>
 
               <!-- ====== Table Three Start -->
