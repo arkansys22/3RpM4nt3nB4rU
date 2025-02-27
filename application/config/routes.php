@@ -78,5 +78,7 @@ $route['naskah/jubir_cpp/(:any)'] = 'Jubir_cpp/view/$1';
 $route['naskah/jubir_cpp/pdf/(:any)'] = 'Jubir_cpp/generate_pdf/$1';
 $route['naskah/jubir_cpw/(:any)'] = 'Jubir_cpw/view/$1';
 $route['naskah/jubir_cpw/pdf/(:any)'] = 'Jubir_cpw/generate_pdf/$1';
+$route['naskah/izin_menikah/(:any)'] = 'Izin_menikah/view/$1';
+$route['naskah/izin_menikah/pdf/(:any)'] = 'Izin_menikah/generate_pdf/$1';
 
 $route['petacrawl\.xml'] = "petacrawl";
