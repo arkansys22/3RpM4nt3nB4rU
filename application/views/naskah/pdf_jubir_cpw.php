@@ -5,8 +5,8 @@
     <title>Penerimaan Calon Pengantin Pria (Jubir CPW)</title>
     <style>
         p {
-    font-size: 18px; /* Ukuran teks lebih besar dari standar (16px) */
-    line-height: 1.5; /* Agar lebih nyaman dibaca */
+    font-size: 20px; /* Ukuran teks lebih besar dari standar (16px) */
+    line-height: 1; /* Agar lebih nyaman dibaca */
     }
         .text-justify {
             text-align: justify;
