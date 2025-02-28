@@ -80,5 +80,9 @@ $route['naskah/jubir_cpw/(:any)'] = 'Jubir_cpw/view/$1';
 $route['naskah/jubir_cpw/pdf/(:any)'] = 'Jubir_cpw/generate_pdf/$1';
 $route['naskah/izin_menikah/(:any)'] = 'Izin_menikah/view/$1';
 $route['naskah/izin_menikah/pdf/(:any)'] = 'Izin_menikah/generate_pdf/$1';
+$route['naskah/terima_kasih/(:any)'] = 'Terima_kasih/view/$1';
+$route['naskah/terima_kasih/pdf/(:any)'] = 'Terima_kasih/generate_pdf/$1';
+$route['naskah/data_pengantin/(:any)'] = 'Data_pengantin/view/$1';
+$route['naskah/data_pengantin/pdf/(:any)'] = 'Data_pengantin/generate_pdf/$1';
 
 $route['petacrawl\.xml'] = "petacrawl";
