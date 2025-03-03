@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Jubir_cpw extends CI_Controller {
+class Izin_menikah extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('Naskah_model');
@@ -14,7 +14,7 @@ class Jubir_cpw extends CI_Controller {
             show_404();
         }
 
-        $this->load->view('naskah/jubir_cpw', $data);
+        $this->load->view('naskah/izin_menikah', $data);
     }
 
     public function generate_pdf($id_session) {
@@ -27,13 +27,13 @@ class Jubir_cpw extends CI_Controller {
         }
     
         // Ambil client_name sebagai nama file, jika tidak ada gunakan default
-        $client_name = $data['client']->client_name ? $data['client']->client_name : 'Jubir_CPW_Naskah';
+        $client_name = $data['client']->client_name ? $data['client']->client_name : 'Izin_Menikah_naskah';
         
         // Format nama file sesuai keinginan
-        $filename = $client_name . ' Naskah Penerimaan Calon Pengantin Pria (Jubir CPW)';
+        $filename = $client_name . ' Naskah Permohonan Izin Menikah';
     
         // Generate PDF dengan nama file yang sudah diformat
-        $html = $this->load->view('naskah/pdf_jubir_cpw', $data, true);
+        $html = $this->load->view('naskah/pdf_izin_menikah', $data, true);
         $this->pdf->createPDF_P($html, $filename, true);
     }
 }    

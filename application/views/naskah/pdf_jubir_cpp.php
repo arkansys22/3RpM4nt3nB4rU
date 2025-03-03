@@ -2,8 +2,12 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Penyerahan Calon Pengantin Pria</title>
+    <title>Penyerahan Calon Pengantin Pria (Jubir CPP)</title>
     <style>
+        p {
+    font-size: 20px; /* Ukuran teks lebih besar dari standar (16px) */
+    line-height: 1; /* Agar lebih nyaman dibaca */
+    }
         .text-justify {
             text-align: justify;
         }
@@ -13,7 +17,7 @@
     </style>
 </head>
 <body>
-    <h1 style="text-align: center;">Penyerahan Calon Pengantin Pria</h1><br>
+    <h2 style="text-align: center;">Penyerahan Calon Pengantin Pria (Jubir CPP)</h2><br>
         <p>Bismillahirrohmanirrohim,</p>
         <p>Assalamu’alaikum wr.wb</p>
         <p class="text-justify indent">Alhamdulillah alhamdulillahi robbil ‘aalamiin, was-sholaatu wassalaamu ‘alaa asyrofil
@@ -25,8 +29,8 @@
         <p class="text-justify indent">Yang kami hormati para ‘Alim ulama yang dimuliakan Allah, para sesepuh, tokoh agama,
         tokoh masyarakat, dan para tamu undangan yang kami hormati wabil khusus <strong>keluarga besar
         <?= $client->f_bride_fathername; ?></strong> dan <strong><?= $client->f_bride_mothername; ?>.</strong></p>
-        Ijinkan kami berdiri dihadapan bapak/ibu serta hadirin untuk memberikan sedikit sambutan
-        mewakili keluarga dari <strong><?= $client->m_bride_fname; ?>.</strong>
+        <p class="text-justify indent"> Ijinkan kami berdiri dihadapan bapak/ibu serta hadirin untuk memberikan sedikit sambutan
+        mewakili keluarga dari <strong><?= $client->m_bride_fname; ?>.</strong></p>
         <p class="text-justify indent">Pertama - tama kami sekeluarga menyampaikan salam hormat kepada keluarga besar
         bapak & Ibu dengan iringan doa semoga selalu dalam lindungan dan ridho Allah SWT.</p>
         <p class="text-justify indent">Kedua, saya selaku wakil dari keluarga bermaksud mengantarkan dan menyerahkan

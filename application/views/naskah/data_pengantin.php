@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Pengantin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @media print {
+    .no-print {
+        display: none !important; /* Menyembunyikan elemen dengan class 'no-print' */
+    }
+    @page {
+        margin: 0; /* Menghapus margin default browser */
+    }
+    }
+        p.indent {
+            text-indent: 40px; /* Indentasi awal paragraf */
+        }
+        <style>
+    table {
+        width: 80%;
+        margin: 0 auto; /* Agar tetap di tengah */
+    }
+</style>
+    </style>
+</head>
+<body class="p-5">
+
+    <div class="max-w-[80%] mx-auto text-left">
+    <!-- Bagian Header -->
+    <div class="flex justify-between items-start mb-4">
+        <div>
+            <h1 class="font-bold text-sm">ACARA AKAD RESEPSI</h1>
+            <p class="text-xs"><?= $client->location; ?></p>
+            <p class="text-xs"><?= hari($client->wedding_date) ?>, <?= tgl_indo($client->wedding_date) ?></p>
+        </div>
+        <div class="text-right font-bold text-sm">
+            <?= $client->client_name; ?>
+        </div>
+    </div>
+
+    <!-- Bagian Mantenbaru Organizer -->
+    <div class="mb-4">
+        <h2 class="font-bold text-sm">MANTENBARU ORGANIZER</h2>
+        <p class="text-xs">SUSUNAN PANITIA</p>
+    </div>
+
+    <div class = "w-[80%] mx-auto flex flex-col items-center">
+    <!-- Bagian Tabel -->
+    <table class="w-full border border-black text-left">
+        <thead>
+            <tr>
+                <th colspan="2" class="border border-black text-center text-sm font-semibold p-1">
+                    Data Calon Pengantin Wanita
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="border border-black p-1 text-xs w-2/5">CPW (Anak ke <?= $client->f_bride_nchild; ?> dari <?= $client->f_bride_hsibling; ?> bersaudara)</td>
+                <td class="border border-black p-1 text-xs"><?= $client->f_bride_fname; ?> (<?= $client->f_bride_cname; ?>)</td>
+            </tr>
+            <tr>
+                <td class="border border-black p-1 text-xs w-2/5">Bapak CPW (<?= $client->f_bride_fathercname; ?>)</td>
+                <td class="border border-black p-1 text-xs"><?= $client->f_bride_fathername; ?></td>
+            </tr>
+            <tr>
+                <td class="border border-black p-1 text-xs w-2/5">Ibu CPW (<?= $client->f_bride_mothercname; ?>)</td>
+                <td class="border border-black p-1 text-xs"><?= $client->f_bride_mothername; ?></td>
+            </tr>
+            <tr>
+                <td class="border border-black p-1 text-xs w-2/5">Nama Saudara Kandung</td>
+                <td class="border border-black p-1 text-xs">
+                <?= nl2br($client->f_bride_sibling); ?>
+                </td>
+            </tr>
+        </tbody>
+    </table><br>
+
+    <table class="w-full border border-black text-left">
+        <thead>
+            <tr>
+                <th colspan="2" class="border border-black text-center text-sm font-semibold p-1">
+                    Data Calon Pengantin Pria
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="border border-black p-1 text-xs w-2/5">CPW (Anak ke <?= $client->m_bride_nchild; ?> dari <?= $client->m_bride_hsibling; ?> bersaudara)</td>
+                <td class="border border-black p-1 text-xs"><?= $client->m_bride_fname; ?> (<?= $client->m_bride_cname; ?>)</td>
+            </tr>
+            <tr>
+                <td class="border border-black p-1 text-xs w-2/5">Bapak CPW (<?= $client->m_bride_fathercname; ?>)</td>
+                <td class="border border-black p-1 text-xs"><?= $client->m_bride_fathername; ?></td>
+            </tr>
+            <tr>
+                <td class="border border-black p-1 text-xs w-2/5">Ibu CPW (<?= $client->m_bride_mothercname; ?>)</td>
+                <td class="border border-black p-1 text-xs"><?= $client->m_bride_mothername; ?></td>
+            </tr>
+            <tr>
+                <td class="border border-black p-1 text-xs w-2/5">Nama Saudara Kandung</td>
+                <td class="border border-black p-1 text-xs">
+                <?= nl2br($client->m_bride_sibling); ?>
+                </td>
+            </tr>
+            <tr>
+                <td class="border border-black p-1 text-xs w-2/5">Mahar</td>
+                <td class="border border-black p-1 text-xs"><?= $client->mahr; ?></td>
+            </tr>
+            <tr>
+                <td class="border border-black p-1 text-xs w-2/5">Simbolis</td>
+                <td class="border border-black p-1 text-xs"><?= $client->handover; ?></td>
+            </tr>
+        </tbody>
+    </table><br>
+
+    <table class="w-full border border-black text-left">
+        <thead>
+            <tr>
+                <th colspan="2" class="border border-black text-center text-sm font-semibold p-1">
+                    Petugas & Koordinator Akad Nikah
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="border border-black p-1 text-xs w-2/5">Koor. Keluarga</td>
+                <td class="border border-black p-1 text-xs"><?= $client->female_coor; ?>(CPW),<br>
+                <?= $client->male_coor; ?>(CPP)</td>
+
+            </tr>
+            <tr>
+                <td class="border border-black p-1 text-xs w-2/5">Jubir Kel. CPW (Bapak)</td>
+                <td class="border border-black p-1 text-xs"><?= $client->f_spokesman; ?></td>
+            </tr>
+            <tr>
+                <td class="border border-black p-1 text-xs w-2/5">Jubir Kel. CPP (Bapak)</td>
+                <td class="border border-black p-1 text-xs"><?= $client->m_spokesman; ?></td>
+            </tr>
+            <tr>
+                <td class="border border-black p-1 text-xs w-2/5">Penghulu</td>
+                <td class="border border-black p-1 text-xs"><?= $client->wedding_officiant; ?></td>
+            </tr>
+            <tr>
+                <td class="border border-black p-1 text-xs w-2/5">Wali CPW (Bapak)</td>
+                <td class="border border-black p-1 text-xs"><?= $client->guardian; ?></td>
+            </tr>
+            <tr>
+                <td class="border border-black p-1 text-xs w-2/5">Saksi CPW (Bapak)</td>
+                <td class="border border-black p-1 text-xs"><?= $client->f_witness; ?></td>
+            </tr>
+            <tr>
+                <td class="border border-black p-1 text-xs w-2/5">Saksi CPP (Bapak)</td>
+                <td class="border border-black p-1 text-xs"><?= $client->m_witness; ?></td>
+            </tr>
+            <tr>
+                <td class="border border-black p-1 text-xs w-2/5">Qori/Saritilawah</td>
+                <td class="border border-black p-1 text-xs"><?= $client->qori; ?></td>
+            </tr>
+            <tr>
+                <td class="border border-black p-1 text-xs w-2/5">Sambutan/Doa Pernikahan (Bapak)</td>
+                <td class="border border-black p-1 text-xs"><?= $client->advice_doa; ?></td>
+            </tr>
+            <tr>
+                <td class="border border-black p-1 text-xs w-2/5">Pengapit CPW dari Kel. CPW</td>
+                <td class="border border-black p-1 text-xs"><?= $client->clamp; ?></td>
+            </tr>
+            <tr>
+                <td class="border border-black p-1 text-xs w-2/5">Pembawa Nampan Kalung Bunga Melati</td>
+                <td class="border border-black p-1 text-xs"><?= $client->jasmine_carrier; ?></td>
+            </tr>
+            <tr>
+                <td class="border border-black p-1 text-xs w-2/5">Pembawa Mas Kawin/Mahar</td>
+                <td class="border border-black p-1 text-xs"><?= $client->mahr_carrier; ?></td>
+            </tr>
+            <tr>
+                <td class="border border-black p-1 text-xs w-2/5">Pembawa Cincin Kawin</td>
+                <td class="border border-black p-1 text-xs"><?= $client->ring_carrier; ?></td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+
+        <div class="mt-6 flex justify-between no-print">
+            <a href="<?= base_url('naskah/data_pengantin/pdf/' . $client->id_session); ?>" 
+               class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+               Download PDF
+            </a>
+            <button onclick="window.print()" 
+                    class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                Print
+            </button>
+        </div>
+    </div>
+    </div>
+</body>
+</html>

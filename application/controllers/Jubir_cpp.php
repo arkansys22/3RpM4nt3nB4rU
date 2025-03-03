@@ -34,6 +34,6 @@ class Jubir_cpp extends CI_Controller {
     
         // Generate PDF dengan nama file yang sudah diformat
         $html = $this->load->view('naskah/pdf_jubir_cpp', $data, true);
-        $this->pdf->createPDF($html, $filename, true);
+        $this->pdf->createPDF_P($html, $filename, true);
     }
 }    
