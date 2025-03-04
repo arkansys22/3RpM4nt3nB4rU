@@ -8,6 +8,7 @@ class Crud_project extends CI_Controller {
         $this->load->model('project_model');
         $this->load->model('CrewProjects_model');
         $this->load->model('Crews_model');
+        $this->load->model('Payment_model');
         $this->load->helper('url');
     }
 
@@ -166,6 +167,7 @@ class Crud_project extends CI_Controller {
             cek_session_akses_developer('project',$this->session->id_session);
             $data['project'] = $this->project_model->get_project_by_session($id_session);
             $data['crew_project'] = $this->CrewProjects_model->get_crew_by_project($id_session);
+            $data['payment'] = $this->Payment_model->get_payment_by_session($id_session);
             $data['logactivity'] = $this->project_model->get_logactivity_by_session($id_session);
             $this->load->view('project/lihat', $data);
 
@@ -173,6 +175,7 @@ class Crud_project extends CI_Controller {
             cek_session_akses_administrator('project',$this->session->id_session);
             $data['project'] = $this->project_model->get_project_by_session($id_session);
             $data['crew_project'] = $this->CrewProjects_model->get_crew_by_project($id_session);
+            $data['payment'] = $this->Payment_model->get_payment_by_session($id_session);
             $data['logactivity'] = $this->project_model->get_logactivity_by_session($id_session);
             $this->load->view('project/lihat', $data);
 
@@ -184,6 +187,7 @@ class Crud_project extends CI_Controller {
             cek_session_akses_staff_admin('project',$this->session->id_session);
             $data['project'] = $this->project_model->get_project_by_session($id_session);
             $data['crew_project'] = $this->CrewProjects_model->get_crew_by_project($id_session);
+            $data['payment'] = $this->Payment_model->get_payment_by_session($id_session);
             $data['logactivity'] = $this->project_model->get_logactivity_by_session($id_session);
             $this->load->view('project/lihat', $data);
 
@@ -468,4 +472,16 @@ class Crud_project extends CI_Controller {
         redirect('project/recycle_bin');
     }
 
+    public function detail_project($id_session) {
+        $this->load->model('Projects_model'); 
+        $this->load->model('Payment_model');  
+    
+        $data['project'] = $this->Projects_model->get_by_session($id_session);
+        $data['payments'] = $this->Payment_model->get_by_project($id_session); 
+    
+        if (!$data['project']) show_404();
+    
+        $this->load->view('projects/detail', $data);
+    }
+    
 }
