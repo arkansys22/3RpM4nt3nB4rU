@@ -127,12 +127,23 @@ class crud_user extends CI_Controller {
                 {
                       $agent = 'Unidentified User Agent';
                 }
+        if ($this->input->post('password')=='' ){
         $data = array(
             'username'  => $this->input->post('username'),
             'nama'  => $this->input->post('nama'),
             'email'        => $this->input->post('email'),
-            'level'    => $this->input->post('level'),       
-        );
+            'level'    => $this->input->post('level')       
+            );
+        }else{
+            $data = array(
+            'username'  => $this->input->post('username'),
+            'nama'  => $this->input->post('nama'),
+            'email'        => $this->input->post('email'),
+            'level'    => $this->input->post('level'),
+            'password'    => sha1($this->input->post('password'))       
+            );
+
+        }
     
         $this->users_model->update_users($id_session, $data);
         $status = 'Edit Pengguna';
