@@ -263,6 +263,8 @@ class Crud_clients extends CI_Controller {
             'client_name'           => $this->input->post('client_name'),
             'email'                 => $this->input->post('email'),
             'phone'                 => $this->input->post('phone'),
+            'wedding_ceremony'      => $this->input->post('wedding_ceremony'),
+            'reception_afterward'   => $this->input->post('reception_afterward'),
             'f_bride_fname'         => $this->input->post('f_bride_fname'),
             'f_bride_cname'         => $this->input->post('f_bride_cname'),
             'f_bride_nchild'        => $this->input->post('f_bride_nchild'),
@@ -469,4 +471,5 @@ class Crud_clients extends CI_Controller {
         $this->session->set_flashdata('Success', 'Client berhasil dihapus permanen');
         redirect('clients/recycle_bin');
     }
+    
 }

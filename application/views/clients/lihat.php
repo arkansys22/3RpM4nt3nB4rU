@@ -41,7 +41,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
         <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-              <h1 class="text-2xl font-bold mb-4">Lihat Client <?= $clients->status ?></h1>
+              <h1 class="text-2xl font-bold mb-4">Lihat Client</h1>
               <form action="<?= site_url('clients/update/'.$clients->id_session) ?>" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
                 <label class="block mb-2 text-black dark:text-white">Nama Client : <?= $clients->client_name ?></label>        
                 <label class="block mb-2 text-black dark:text-white">Agama : <?= $project->religion ?></label>        
@@ -106,13 +106,17 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                 <label class="block mb-2 text-black dark:text-white">Pemimpin Doa : <?= $clients->prayer ?></label>
                 <label class="block mb-2 text-black dark:text-white">Sambutan Pernikahan : <?= $clients->wedding_speech ?></label>
                 <?php endif; ?>
-                <a href="<?= site_url('clients/edit/'. $clients->id_session) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Edit</a>
-                <a href="javascript:history.back()" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a>
-                <a href="<?= site_url('naskah/jubir_cpp/'. $clients->id_session) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Naskah Jubir CPP</a>
-                <a href="<?= site_url('naskah/jubir_cpw/'. $clients->id_session) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Naskah Jubir CPW</a>
-                <a href="<?= site_url('naskah/izin_menikah/'. $clients->id_session) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Naskah Izin Menikah</a>
-                <a href="<?= site_url('naskah/terima_kasih/'. $clients->id_session) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Naskah Ucapan Terimakasih</a>
-                <a href="<?= site_url('naskah/data_pengantin/'. $clients->id_session) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Data Pengantin</a>
+                <div class="flex flex-wrap gap-2 mt-4">
+                  <a href="<?= site_url('clients/edit/'. $clients->id_session) ?>" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Edit</a>
+                  <a href="javascript:history.back()" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Kembali</a>
+                  <a href="<?= site_url('naskah/jubir_cpp/'. $clients->id_session) ?>" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Jubir CPP</a>
+                  <a href="<?= site_url('naskah/jubir_cpw/'. $clients->id_session) ?>" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Jubir CPW</a>
+                  <a href="<?= site_url('naskah/izin_menikah/'. $clients->id_session) ?>" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Izin Menikah</a>
+                  <a href="<?= site_url('naskah/terima_kasih/'. $clients->id_session) ?>" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Ucapan Terimakasih</a>
+                  <a href="<?= site_url('naskah/data_pengantin/'. $clients->id_session) ?>" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Data Pengantin</a>
+                  <a href="<?= $clients->wedding_ceremony ?>" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Susunan Akad</a>
+                  <a href="<?= $clients->reception_afterward ?>" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Susunan Resepsi</a>
+                </div>
               </form>
 
               <!-- ====== Table Three Start -->
