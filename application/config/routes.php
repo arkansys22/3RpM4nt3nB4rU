@@ -36,6 +36,12 @@ $route['project/restore/(:any)'] = 'crud_project/restore/$1'; // Restore project
 $route['project/permanent_delete/(:any)'] = 'crud_project/permanent_delete/$1'; // Hapus permanen project
 $route['project/lihat/(:any)'] = 'crud_project/lihat/$1'; // Menampilkan lihat project
 
+$route['payment/create/(:num)/(:num)'] = 'Crud_payment/create/$1/$2';  // Routing untuk menambah pembayaran (Add Payment)
+$route['payment/edit/(:num)/(:num)'] = 'Crud_payment/edit/$1/$2';      // Routing untuk mengedit pembayaran (Edit Payment)
+$route['payment/update/(:num)/(:num)'] = 'Crud_payment/update/$1/$2';    // Routing untuk menyimpan perubahan (Update Payment)
+$route['payment/delete/(:num)/(:num)'] = 'Crud_payment/delete/$1/$2';    // Routing untuk menghapus pembayaran (Delete Payment)
+$route['payment/view/(:any)/(:num)'] = 'Crud_payment/view_invoice/$1/$2';
+
 $route['clients'] = 'crud_clients/index'; // Menampilkan daftar clients
 // $route['clients/create'] = 'crud_clients/create'; // Halaman tambah clients
 $route['clients/store'] = 'crud_clients/store'; // Menyimpan data clients baru
