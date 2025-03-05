@@ -107,7 +107,8 @@
                         <p><strong>DP:</strong> <?= "Rp " . number_format($payment->$dp, 0, ',', '.') ?></p>
                         <p><strong>Tanggal:</strong> <?= date('d-m-Y', strtotime($payment->$date)) ?></p>
                         <p><strong>Jatuh Tempo:</strong> <?= date('d-m-Y', strtotime($payment->$due_date)) ?></p>
-                        <a href="<?= base_url('payment/view/' . $payment->id_session . '/' . $i) ?>" class="btn btn-success">Lihat Invoice</a>
+                        <a href="<?= base_url('payment/view_invoice/' . $payment->id_session . '/' . $i) ?>" class="btn btn-success">Lihat Invoice</a>
+                        <a href="<?= base_url('payment/view_kwitansi/' . $payment->id_session . '/' . $i) ?>" class="btn btn-success">Lihat Kwitansi</a>
                         <a href="<?= base_url('Crud_payment/edit/' . $payment->id_session . '/' . $i) ?>" class="btn btn-warning">Edit</a>
                         <!-- Tombol Hapus untuk setiap invoice -->
                         <a href="<?= base_url('Crud_payment/delete/' . $payment->id_session . '/' . $i) ?>" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus invoice ini?')">Hapus</a>
@@ -118,6 +119,42 @@
                 </div>
             <?php endif; ?>
         <?php endfor; ?>
+    <?php endif; ?>
+
+    <h2 class="text-xl font-bold mb-4">Daftar Vendor</h2>
+
+    <?php if (empty($vendors)): ?>
+        <!-- Jika belum ada vendor, tampilkan tombol Add Vendor -->
+        <div class="border p-4 mb-4">
+            <p>Belum ada data vendor.</p>
+            <a href="<?= base_url('Crud_vendor/create/' . $project->id_session) ?>" class="btn btn-primary">Tambah Vendor</a>
+        </div>
+    <?php else: ?>
+        <!-- Loop untuk menampilkan data vendor -->
+        <?php foreach ($vendors as $vendor): ?>
+            <div class="border p-4 mb-4">
+                <h3 class="font-bold"><?= htmlspecialchars($vendor->vendor_name) ?></h3>
+                <p><strong>Kontak:</strong> <?= htmlspecialchars($vendor->contact) ?></p>
+                <p><strong>Alamat:</strong> <?= htmlspecialchars($vendor->address) ?></p>
+                <a href="<?= base_url('Crud_vendor/edit/' . $vendor->id_session) ?>" class="btn btn-warning">Edit</a>
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
+
+    <h1>Vendor Details for Project: <?= $project->project_name ?></h1>
+    <?php if (!empty($vendor)): ?>
+        <?php foreach ($vendor as $v): ?>
+            <div>
+                <h2>Vendor 1: <?= $v->vendor_1 ?></h2>
+                <p>Social Media: <?= $v->social_media_1 ?></p>
+                <p>Contact Name: <?= $v->contact_name_1 ?></p>
+                <p>Phone: <?= $v->phone_1 ?></p>
+                <p>Detail: <?= $v->detail_1 ?></p>
+                <!-- ...display other vendor details similarly... -->
+            </div>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>No vendor data found.</p>
     <?php endif; ?>
 
                 <a href="<?= site_url('project/edit/'. $project->id_session) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Edit</a>

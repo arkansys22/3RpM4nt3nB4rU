@@ -9,6 +9,7 @@ class Crud_project extends CI_Controller {
         $this->load->model('CrewProjects_model');
         $this->load->model('Crews_model');
         $this->load->model('Payment_model');
+        $this->load->model('Vendor_model');
         $this->load->helper('url');
     }
 
