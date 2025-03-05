@@ -37,10 +37,12 @@ $route['project/permanent_delete/(:any)'] = 'crud_project/permanent_delete/$1'; 
 $route['project/lihat/(:any)'] = 'crud_project/lihat/$1'; // Menampilkan lihat project
 
 $route['payment/create/(:num)/(:num)'] = 'Crud_payment/create/$1/$2';  // Routing untuk menambah pembayaran (Add Payment)
+$route['payment/store/(:num)/(:num)'] = 'Crud_payment/store/$1/$2';  // Routing untuk menambah pembayaran (Add Payment)
 $route['payment/edit/(:num)/(:num)'] = 'Crud_payment/edit/$1/$2';      // Routing untuk mengedit pembayaran (Edit Payment)
 $route['payment/update/(:num)/(:num)'] = 'Crud_payment/update/$1/$2';    // Routing untuk menyimpan perubahan (Update Payment)
 $route['payment/delete/(:num)/(:num)'] = 'Crud_payment/delete/$1/$2';    // Routing untuk menghapus pembayaran (Delete Payment)
-$route['payment/view/(:any)/(:num)'] = 'Crud_payment/view_invoice/$1/$2';
+$route['payment/view_invoice/(:any)/(:num)'] = 'Crud_payment/view_invoice/$1/$2';
+$route['payment/view_kwitansi/(:any)/(:num)'] = 'Crud_payment/view_kwitansi/$1/$2';
 
 $route['clients'] = 'crud_clients/index'; // Menampilkan daftar clients
 // $route['clients/create'] = 'crud_clients/create'; // Halaman tambah clients
@@ -90,5 +92,10 @@ $route['naskah/terima_kasih/(:any)'] = 'Terima_kasih/view/$1';
 $route['naskah/terima_kasih/pdf/(:any)'] = 'Terima_kasih/generate_pdf/$1';
 $route['naskah/data_pengantin/(:any)'] = 'Data_pengantin/view/$1';
 $route['naskah/data_pengantin/pdf/(:any)'] = 'Data_pengantin/generate_pdf/$1';
+
+$route['vendor/create/(:any)'] = 'crud_vendor/create/$1'; // Create vendor form based on session_id
+$route['vendor/store/(:any)'] = 'crud_vendor/store/$1'; // Store vendor data based on session_id
+$route['vendor/edit/(:any)'] = 'crud_vendor/edit/$1'; // Edit vendor data based on session_id
+$route['vendor/update/(:any)'] = 'crud_vendor/update/$1'; // Update vendor data based on session_id
 
 $route['petacrawl\.xml'] = "petacrawl";
