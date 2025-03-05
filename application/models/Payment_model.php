@@ -27,7 +27,7 @@ class Payment_model extends CI_Model {
 
     public function update_payment($id_session, $invoice_number, $data) {
         $this->db->where('id_session', $id_session);
-        $this->db->where('invoice_' . $invoice_number, NULL); // Filter berdasarkan nomor invoice
+        $this->db->where('invoice_' . $invoice_number); // Filter berdasarkan nomor invoice
         return $this->db->update('payment', $data);  // Mengupdate data payment
     }
             

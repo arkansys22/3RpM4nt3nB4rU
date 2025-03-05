@@ -89,12 +89,24 @@
   <script>
     // JavaScript to handle adding new detail fields dynamically
     document.getElementById('add-detail-btn').addEventListener('click', function() {
-        const newDetailInput = document.createElement('textarea');
-        newDetailInput.name = 'details[]';
-        newDetailInput.required = true;
-
         const detailsSection = document.getElementById('details-section');
-        detailsSection.appendChild(newDetailInput);
+        const existingDetail = detailsSection.querySelector('textarea');
+        
+        if (existingDetail) {
+            const newDetailWrapper = document.createElement('div');
+            newDetailWrapper.classList.add('mb-2');
+
+            const newDetailLabel = document.createElement('label');
+            newDetailLabel.classList.add('block', 'mb-2');
+            newDetailLabel.textContent = 'Details';
+
+            const newDetailInput = existingDetail.cloneNode(true);
+            newDetailInput.value = ''; // Clear the value of the cloned textarea
+
+            newDetailWrapper.appendChild(newDetailLabel);
+            newDetailWrapper.appendChild(newDetailInput);
+            detailsSection.appendChild(newDetailWrapper);
+        }
     });
 </script>
 <script>

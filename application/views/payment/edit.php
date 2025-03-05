@@ -58,7 +58,7 @@
         <?php if (isset($payment)): ?>
             <?php $details = json_decode($payment->{"details_$invoice_number"}, true); ?>
             <?php foreach ($details as $detail): ?>
-                <div class="mb-2">
+                <div class="mb-2 detail-item">
                     <label class="block mb-2" for="details">Details</label>
                     <textarea name="details[]" class="w-full px-4 py-2 border rounded mb-4"><?= htmlspecialchars($detail) ?></textarea>
                 </div>
@@ -92,12 +92,23 @@
   <script>
     // JavaScript to handle adding new detail fields dynamically
     document.getElementById('add-detail-btn').addEventListener('click', function() {
+        const newDetailDiv = document.createElement('div');
+        newDetailDiv.classList.add('mb-2', 'detail-item');
+
+        const newDetailLabel = document.createElement('label');
+        newDetailLabel.classList.add('block', 'mb-2');
+        newDetailLabel.textContent = 'Details';
+
         const newDetailInput = document.createElement('textarea');
         newDetailInput.name = 'details[]';
+        newDetailInput.classList.add('w-full', 'px-4', 'py-2', 'border', 'rounded', 'mb-4');
         newDetailInput.required = true;
 
+        newDetailDiv.appendChild(newDetailLabel);
+        newDetailDiv.appendChild(newDetailInput);
+
         const detailsSection = document.getElementById('details-section');
-        detailsSection.appendChild(newDetailInput);
+        detailsSection.appendChild(newDetailDiv);
     });
 </script>
 <script>

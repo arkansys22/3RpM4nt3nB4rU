@@ -9,25 +9,19 @@ class Crud_payment extends CI_Controller {
         $this->load->helper('url');
     }
 
-    // Menampilkan data payment berdasarkan id_session
     public function lihat($id_session) {
-        // Mengambil data pembayaran berdasarkan id_session
         $data['payment'] = $this->Payment_model->get_payment_by_session($id_session);
         $data['project'] = $this->Payment_model->get_project($id_session);
     
         $this->load->view('project/lihat', $data);
     }
-        
 
-    // Menambahkan data payment
     public function create($id_session, $invoice_number = 1) {
-        // Mengambil data project untuk id_session
         $data['project'] = $this->Payment_model->get_project($id_session);
         $data['invoice_number'] = $invoice_number;
         $data['payment'] = $this->Payment_model->get_payment_by_invoice($id_session, $invoice_number);
         $due_date = $this->input->post('due_date_' . $invoice_number);
     
-        // Load view untuk menambah pembayaran
         $this->load->view('payment/create', $data);
     }    
 
@@ -93,7 +87,8 @@ class Crud_payment extends CI_Controller {
         ];
 
         // Update data pembayaran
-        $this->Payment_model->update_payment($id_session, $invoice_number, $data);
+        $this->db->where('id_session', $id_session);
+        $this->db->update('payment', $data);
 
         // Redirect ke halaman lihat untuk menampilkan data
         redirect('project/lihat/' . $id_session);
@@ -117,7 +112,19 @@ class Crud_payment extends CI_Controller {
     
         $data['invoice_number'] = $invoice_number;
         // Kirim data ke view
-        $this->load->view('payment/view', $data);
+        $this->load->view('payment/view_invoice', $data);
     }
     
+    public function view_kwitansi($id_session, $invoice_number) {
+        // Ambil data pembayaran berdasarkan id_session dan invoice_number
+        $data['payment'] = $this->Payment_model->get_payment_by_invoice($id_session, $invoice_number);
+    
+        // Ambil data project berdasarkan id_session
+        $data['project'] = $this->Payment_model->get_project($id_session); 
+    
+        $data['invoice_number'] = $invoice_number;
+        // Kirim data ke view
+        $this->load->view('payment/view_kwitansi', $data);
+    }
+
 }
