@@ -35,12 +35,12 @@
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
               <h1 class="text-2xl font-bold mb-4">Lihat project</h1>
               <form action="<?= site_url('project/update/'.$project->id_session) ?>" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
-                <label class="block mb-2 text-black dark:text-white">Nama Project : <?= $project->project_name ?></label>        
-                <label class="block mb-2 text-black dark:text-white">Agama : <?= $project->religion ?></label>        
-                <label class="block mb-2 text-black dark:text-white">Value : <?= "Rp " . number_format($project->value, 0, ',', '.'); ?></label>
-                <label class="block mb-2 text-black dark:text-white">Tanggal Pernikahan : <?= hari($project->event_date) ?>, <?= tgl_indo($project->event_date) ?></label>
-                <label class="block mb-2 text-black dark:text-white">Lokasi : <?= $project->location ?></label>
-                <label class="block mb-2 text-black dark:text-white">Detail : <?= $project->detail ?></label>
+                <label class="block mb-2 text-black dark:text-white"><strong>Nama Project : </strong><?= $project->project_name ?></label>        
+                <label class="block mb-2 text-black dark:text-white"><strong>Agama : </strong><?= $project->religion ?></label>        
+                <label class="block mb-2 text-black dark:text-white"><strong>Value : </strong><?= "Rp " . number_format($project->value, 0, ',', '.'); ?></label>
+                <label class="block mb-2 text-black dark:text-white"><strong>Tanggal Pernikahan : </strong><?= hari($project->event_date) ?>, <?= tgl_indo($project->event_date) ?></label>
+                <label class="block mb-2 text-black dark:text-white"><strong>Lokasi : </strong><?= $project->location ?></label>
+                <label class="block mb-2 text-black dark:text-white"><strong>Detail : </strong><?= $project->detail ?></label>
 
                 <?php
                 $roles = [
@@ -78,8 +78,8 @@
 
     <?php if (empty($payment)): ?>
         <!-- Jika belum ada pembayaran, tampilkan tombol Add Payment untuk invoice pertama -->
-        <div class="border p-4 mb-4">
-            <p>Belum ada data pembayaran.</p>
+        <div class="border p-4 mb-4 text-black dark:text-white">
+            <p class="text-red-500 font-semibold">Belum ada data pembayaran.</p>
             <a href="<?= base_url('Crud_payment/create/' . $project->id_session . '/1') ?>" class="btn btn-primary">Tambah Invoice & Kwitansi 1</a>
         </div>
     <?php else: ?>
@@ -96,7 +96,7 @@
             ?>
 
             <?php if (!empty($payment->$invoice) || ($i == 1) || !empty($payment->{"invoice_" . ($i - 1)})): ?>
-                <div class="border p-4 mb-4">
+                <div class="border p-4 mb-4 text-black dark:text-white">
                     <h3 class="font-bold">Invoice & Kwitansi <?= $i ?></h3>
 
                     <?php if (!empty($payment->$invoice)): ?>
@@ -121,41 +121,52 @@
         <?php endfor; ?>
     <?php endif; ?>
 
-    <h2 class="text-xl font-bold mb-4">Daftar Vendor</h2>
+    <h2 class="text-lg font-bold mb-2">Vendor</h2>
 
-    <?php if (empty($vendors)): ?>
-        <!-- Jika belum ada vendor, tampilkan tombol Add Vendor -->
-        <div class="border p-4 mb-4">
-            <p>Belum ada data vendor.</p>
-            <a href="<?= base_url('Crud_vendor/create/' . $project->id_session) ?>" class="btn btn-primary">Tambah Vendor</a>
-        </div>
-    <?php else: ?>
-        <!-- Loop untuk menampilkan data vendor -->
-        <?php foreach ($vendors as $vendor): ?>
-            <div class="border p-4 mb-4">
-                <h3 class="font-bold"><?= htmlspecialchars($vendor->vendor_name) ?></h3>
-                <p><strong>Kontak:</strong> <?= htmlspecialchars($vendor->contact) ?></p>
-                <p><strong>Alamat:</strong> <?= htmlspecialchars($vendor->address) ?></p>
-                <a href="<?= base_url('Crud_vendor/edit/' . $vendor->id_session) ?>" class="btn btn-warning">Edit</a>
-            </div>
-        <?php endforeach; ?>
-    <?php endif; ?>
+<div class="border p-4 mb-4 text-black dark:text-white">
+    <?php
+    // List kolom vendor dari database
+    $vendor_fields = ['vendor_1', 'vendor_2', 'vendor_3', 'vendor_4', 'vendor_5', 'vendor_6', 'vendor_7', 'vendor_8', 'vendor_9'];
 
-    <h1>Vendor Details for Project: <?= $project->project_name ?></h1>
-    <?php if (!empty($vendor)): ?>
-        <?php foreach ($vendor as $v): ?>
-            <div>
-                <h2>Vendor 1: <?= $v->vendor_1 ?></h2>
-                <p>Social Media: <?= $v->social_media_1 ?></p>
-                <p>Contact Name: <?= $v->contact_name_1 ?></p>
-                <p>Phone: <?= $v->phone_1 ?></p>
-                <p>Detail: <?= $v->detail_1 ?></p>
-                <!-- ...display other vendor details similarly... -->
-            </div>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <p>No vendor data found.</p>
-    <?php endif; ?>
+    // Nama jenis vendor (MC, Dekorasi, dll.)
+    $vendor_types = [
+        'Venue',
+        'MC',
+        'WO',
+        'MUA',
+        'Perlengkapan Catering',
+        'Catering',
+        'Dokumentasi',
+        'Dekorasi',
+        'Entertainment'
+    ];
+
+    $has_vendor = false; // Cek apakah ada vendor yang diisi
+
+    foreach ($vendor_fields as $index => $field) {
+        if (!empty($vendor->$field)) {
+            echo "<p class='text-white-700 font-medium'><strong>{$vendor_types[$index]} :</strong> {$vendor->$field}</p>";
+            $has_vendor = true;
+        }
+    }
+
+    // Jika semua kolom kosong, tampilkan pesan "Belum ada vendor" dan tombol "Add Vendor"
+    if (!$has_vendor) {
+        echo "<p class='text-red-500 font-semibold'>Belum ada vendor.</p>";
+        echo '<a href="' . site_url('crud_vendor/create/' . $project->id_session) . '" class="ml-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">Add Vendor</a>';
+    }
+    ?>
+
+<?php
+// Jika sudah ada vendor, tampilkan tombol Edit Vendor di luar box
+if ($has_vendor) {
+    echo '<a href="' . site_url('crud_vendor/edit/' . $vendor->id_session) . '" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Edit Vendor</a>';
+}
+?>
+</div>
+
+
+
 
                 <a href="<?= site_url('project/edit/'. $project->id_session) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Edit</a>
                 <a href="javascript:history.back()" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a>

@@ -169,6 +169,7 @@ class Crud_project extends CI_Controller {
             $data['project'] = $this->project_model->get_project_by_session($id_session);
             $data['crew_project'] = $this->CrewProjects_model->get_crew_by_project($id_session);
             $data['payment'] = $this->Payment_model->get_payment_by_session($id_session);
+            $data['vendor'] = $this->Vendor_model->get_vendor_by_id($id_session);
             $data['logactivity'] = $this->project_model->get_logactivity_by_session($id_session);
             $this->load->view('project/lihat', $data);
 
@@ -177,6 +178,7 @@ class Crud_project extends CI_Controller {
             $data['project'] = $this->project_model->get_project_by_session($id_session);
             $data['crew_project'] = $this->CrewProjects_model->get_crew_by_project($id_session);
             $data['payment'] = $this->Payment_model->get_payment_by_session($id_session);
+            $data['vendor'] = $this->Vendor_model->get_vendor_by_id($id_session);
             $data['logactivity'] = $this->project_model->get_logactivity_by_session($id_session);
             $this->load->view('project/lihat', $data);
 
@@ -189,6 +191,7 @@ class Crud_project extends CI_Controller {
             $data['project'] = $this->project_model->get_project_by_session($id_session);
             $data['crew_project'] = $this->CrewProjects_model->get_crew_by_project($id_session);
             $data['payment'] = $this->Payment_model->get_payment_by_session($id_session);
+            $data['vendor'] = $this->Vendor_model->get_vendor_by_id($id_session);
             $data['logactivity'] = $this->project_model->get_logactivity_by_session($id_session);
             $this->load->view('project/lihat', $data);
 
