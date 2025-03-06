@@ -114,6 +114,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                   <a href="<?= site_url('naskah/izin_menikah/'. $clients->id_session) ?>" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Izin Menikah</a>
                   <a href="<?= site_url('naskah/terima_kasih/'. $clients->id_session) ?>" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Ucapan Terimakasih</a>
                   <a href="<?= site_url('naskah/data_pengantin/'. $clients->id_session) ?>" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Data Pengantin</a>
+                  <a href="<?= site_url('naskah/list_vendor/'. $clients->id_session) ?>" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">List Vendor</a>
                   <a href="<?= $clients->wedding_ceremony ?>" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Susunan Akad</a>
                   <a href="<?= $clients->reception_afterward ?>" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Susunan Resepsi</a>
                 </div>
@@ -151,28 +152,43 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                     <tbody>
                       <?php $no = 1; foreach ($logactivity as $p): ?>
                       <tr>
-                        <?php $company= $this->Crud_m->view_where('user', array('id_session'=> $p->log_activity_user_id))->row(); ?>
-                        <?php $level= $this->Crud_m->view_where('user_level', array('user_level_id'=> $company->level))->row(); ?>
+                        <?php 
+                          // Cek apakah log_activity_user_id adalah 'client'
+                          if ($p->log_activity_user_id == 'client') {
+                              // Jika client, tampilkan langsung tanpa query database
+                              $company = (object) ['username' => 'Client', 'level' => 'client'];
+                              $level = (object) ['user_level_nama' => 'Client'];
+                          } else {
+                              // Jika bukan client, lakukan query untuk mendapatkan data user dan level
+                              $company = $this->Crud_m->view_where('user', array('id_session'=> $p->log_activity_user_id))->row();
+                              $level = $this->Crud_m->view_where('user_level', array('user_level_id'=> $company->level))->row();
+                          }
+                        ?>
+
                         <td class="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
                           <h5 class="font-medium text-black dark:text-white"><?= $company->username ?></h5>
                           <p class="text-sm"><?= $level->user_level_nama ?></p>
                         </td>                        
+
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
                           <p class="inline-flex rounded-full bg-success bg-opacity-10 px-3 py-1 text-sm font-medium text-success">
                             <?= $p->log_activity_status ?>
                           </p>
                         </td>
+
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                        <p class="text-black dark:text-white"><?= hari($p->log_activity_waktu) ?>, <?= tgl_indo($p->log_activity_waktu)?></p>
+                          <p class="text-black dark:text-white"><?= hari($p->log_activity_waktu) ?>, <?= tgl_indo($p->log_activity_waktu)?></p>
                         </td>
+
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                         <p class="text-black dark:text-white"><?= $p->log_activity_platform ?></p>
+                          <p class="text-black dark:text-white"><?= $p->log_activity_platform ?></p>
                         </td>
+
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                         <p class="text-black dark:text-white"><?= $p->log_activity_ip ?></p>
+                          <p class="text-black dark:text-white"><?= $p->log_activity_ip ?></p>
                         </td>
                       </tr>
-                      <?php endforeach; ?>                            
+                      <?php endforeach; ?>
                     </tbody>
                   </table>
                 </div>
