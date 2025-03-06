@@ -33,166 +33,53 @@
         <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-              <h1 class="text-2xl font-bold mb-4">Tambah Vendor untuk Project: <?= $project->project_name ?></h1>
-              <form action="<?= base_url('vendor/store/'.$project->id_session) ?>" method="post" class="bg-white p-6 shadow-md rounded">
-                <!-- Vendor 1 (MC) -->
-                <h2 class="text-xl font-semibold mb-4">Venue</h2>
-                <label class="block mb-2">Nama Venue</label>
-                <input type="text" name="vendor_1" class="w-full px-4 py-2 border rounded mb-4" required>
+              <h2 class="text-2xl font-bold mb-4">Tambah Vendor</h2>
+              <form action="<?= base_url('crud_vendor/store') ?>" method="POST" class="bg-white p-6 shadow-md rounded">
+                <input type="hidden" name="id_session" value="<?= $project->id_session ?>">
+                
+                <?php 
+                // Daftar jenis vendor yang akan digunakan sebagai label
+                $vendor_labels = [
+                    'Venue',
+                    'MC',
+                    'WO',
+                    'MUA',
+                    'Perlengkapan Catering',
+                    'Catering',
+                    'Dokumentasi',
+                    'Dekorasi',
+                    'Entertainment'
+                ];
+                
+                for ($i = 1; $i <= 9; $i++): ?>
+                <h3 class="font-semibold mb-2"><?= $vendor_labels[$i - 1] ?></h3> <!-- Ubah label sesuai daftar -->
 
-                <label class="block mb-2">Media Sosial</label>
-                <input type="text" name="social_media_1" class="w-full px-4 py-2 border rounded mb-4">
-
-                <label class="block mb-2">Nama Kontak</label>
-                <input type="text" name="contact_name_1" class="w-full px-4 py-2 border rounded mb-4">
-
-                <label class="block mb-2">No HP</label>
-                <input type="text" name="phone_1" class="w-full px-4 py-2 border rounded mb-4">
-
-                <label class="block mb-2">Detail</label>
-                <textarea name="detail_1" class="w-full px-4 py-2 border rounded mb-4"></textarea>
-
-                <!-- Vendor 2 (WO) -->
-                <h2 class="text-xl font-semibold mb-4">MC</h2>
-                <label class="block mb-2">Nama MC</label>
-                <input type="text" name="vendor_2" class="w-full px-4 py-2 border rounded mb-4" required>
-
-                <label class="block mb-2">Media Sosial</label>
-                <input type="text" name="social_media_2" class="w-full px-4 py-2 border rounded mb-4">
-
-                <label class="block mb-2">Nama Kontak</label>
-                <input type="text" name="contact_name_2" class="w-full px-4 py-2 border rounded mb-4">
-
-                <label class="block mb-2">No HP</label>
-                <input type="text" name="phone_2" class="w-full px-4 py-2 border rounded mb-4">
-
-                <label class="block mb-2">Detail</label>
-                <textarea name="detail_2" class="w-full px-4 py-2 border rounded mb-4"></textarea>
-
-                <!-- Vendor 3 (Others) -->
-                <h2 class="text-xl font-semibold mb-4">WO</h2>
-
-                <h2 class="text-xl font-semibold mb-4">MC</h2>
-                <label class="block mb-2">Nama MC</label>
-                <input type="text" name="vendor_3" class="w-full px-4 py-2 border rounded mb-4" required>
-
-                <label class="block mb-2">Media Sosial</label>
-                <input type="text" name="social_media_3" class="w-full px-4 py-2 border rounded mb-4">
-
-                <label class="block mb-2">Nama Kontak</label>
-                <input type="text" name="contact_name_3" class="w-full px-4 py-2 border rounded mb-4">
-
-                <label class="block mb-2">No HP</label>
-                <input type="text" name="phone_3" class="w-full px-4 py-2 border rounded mb-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                    <div>
+                        <label class="block mb-2">Nama Vendor</label>
+                        <input type="text" name="vendor_<?= $i ?>" class="w-full px-4 py-2 border rounded" value="<?= $i === 3 ? 'Mantenbaru Organizer' : '' ?>" <?= $i === 3 ? 'readonly' : '' ?>>
+                    </div>
+                    <div>
+                        <label class="block mb-2">Social Media</label>
+                        <input type="text" name="social_media_<?= $i ?>" class="w-full px-4 py-2 border rounded" value="<?= $i === 3 ? 'Mantenbaru_organizer' : '' ?>" <?= $i === 3 ? 'readonly' : '' ?>>
+                    </div>
+                    <div>
+                        <label class="block mb-2">Nama Kontak</label>
+                        <input type="text" name="contact_name_<?= $i ?>" class="w-full px-4 py-2 border rounded" value="<?= $i === 3 ? 'Icha' : '' ?>" <?= $i === 3 ? 'readonly' : '' ?>>
+                    </div>
+                    <div>
+                        <label class="block mb-2">No HP</label>
+                        <input type="text" name="phone_<?= $i ?>" class="w-full px-4 py-2 border rounded" value="<?= $i === 3 ? '0812-1012-6196' : '' ?>" <?= $i === 3 ? 'readonly' : '' ?>>
+                    </div>
+                </div>
 
                 <label class="block mb-2">Detail</label>
-                <textarea name="detail_3" class="w-full px-4 py-2 border rounded mb-4"></textarea>
-
-                <!-- Vendor 4 -->
-                <h2 class="text-xl font-semibold mb-4">Make Up</h2>
-                <label class="block mb-2">Nama MUA</label>
-                <input type="text" name="vendor_4" class="w-full px-4 py-2 border rounded mb-4">
-
-                <label class="block mb-2">Media Sosial</label>
-                <input type="text" name="social_media_4" class="w-full px-4 py-2 border rounded mb-4">
-
-                <label class="block mb-2">Nama Kontak</label>
-                <input type="text" name="contact_name_4" class="w-full px-4 py-2 border rounded mb-4">
-
-                <label class="block mb-2">No HP</label>
-                <input type="text" name="phone_4" class="w-full px-4 py-2 border rounded mb-4">
-
-                <label class="block mb-2">Detail</label>
-                <textarea name="detail_4" class="w-full px-4 py-2 border rounded mb-4"></textarea>
-
-                <!-- Vendor 5 -->
-                <h2 class="text-xl font-semibold mb-4">Perlengkapan Catering</h2>
-                <label class="block mb-2">Nama Penyedia</label>
-                <input type="text" name="vendor_5" class="w-full px-4 py-2 border rounded mb-4">
-
-                <label class="block mb-2">Media Sosial</label>
-                <input type="text" name="social_media_5" class="w-full px-4 py-2 border rounded mb-4">
-
-                <label class="block mb-2">Nama Kontak</label>
-                <input type="text" name="contact_name_5" class="w-full px-4 py-2 border rounded mb-4">
-
-                <label class="block mb-2">No HP</label>
-                <input type="text" name="phone_5" class="w-full px-4 py-2 border rounded mb-4">
-
-                <label class="block mb-2">Detail</label>
-                <textarea name="detail_5" class="w-full px-4 py-2 border rounded mb-4"></textarea>
-
-                <!-- Vendor 6 -->
-                <h2 class="text-xl font-semibold mb-4">Catering</h2>
-                <label class="block mb-2">Nama Catering</label>
-                <input type="text" name="vendor_6" class="w-full px-4 py-2 border rounded mb-4">
-
-                <label class="block mb-2">Media Sosial</label>
-                <input type="text" name="social_media_6" class="w-full px-4 py-2 border rounded mb-4">
-
-                <label class="block mb-2">Nama Kontak</label>
-                <input type="text" name="contact_name_6" class="w-full px-4 py-2 border rounded mb-4">
-
-                <label class="block mb-2">No HP</label>
-                <input type="text" name="phone_6" class="w-full px-4 py-2 border rounded mb-4">
-
-                <label class="block mb-2">Detail</label>
-                <textarea name="detail_6" class="w-full px-4 py-2 border rounded mb-4"></textarea>
-
-                <!-- Vendor 7 -->
-                <h2 class="text-xl font-semibold mb-4">Dokumentasi</h2>
-                <label class="block mb-2">Nama Dokumentasi</label>
-                <input type="text" name="vendor_7" class="w-full px-4 py-2 border rounded mb-4">
-
-                <label class="block mb-2">Media Sosial</label>
-                <input type="text" name="social_media_7" class="w-full px-4 py-2 border rounded mb-4">
-
-                <label class="block mb-2">Nama Kontak</label>
-                <input type="text" name="contact_name_7" class="w-full px-4 py-2 border rounded mb-4">
-
-                <label class="block mb-2">No HP</label>
-                <input type="text" name="phone_7" class="w-full px-4 py-2 border rounded mb-4">
-
-                <label class="block mb-2">Detail</label>
-                <textarea name="detail_7" class="w-full px-4 py-2 border rounded mb-4"></textarea>
-
-                <!-- Vendor 8 -->
-                <h2 class="text-xl font-semibold mb-4">Dekorasi</h2>
-                <label class="block mb-2">Nama Dekorasi</label>
-                <input type="text" name="vendor_8" class="w-full px-4 py-2 border rounded mb-4">
-
-                <label class="block mb-2">Media Sosial</label>
-                <input type="text" name="social_media_8" class="w-full px-4 py-2 border rounded mb-4">
-
-                <label class="block mb-2">Nama Kontak</label>
-                <input type="text" name="contact_name_8" class="w-full px-4 py-2 border rounded mb-4">
-
-                <label class="block mb-2">No HP</label>
-                <input type="text" name="phone_8" class="w-full px-4 py-2 border rounded mb-4">
-
-                <label class="block mb-2">Detail</label>
-                <textarea name="detail_8" class="w-full px-4 py-2 border rounded mb-4"></textarea>
-
-                <!-- Vendor 9 -->
-                <h2 class="text-xl font-semibold mb-4">Entertainment</h2>
-                <label class="block mb-2">Nama Entertainment</label>
-                <input type="text" name="vendor_9" class="w-full px-4 py-2 border rounded mb-4">
-
-                <label class="block mb-2">Media Sosial</label>
-                <input type="text" name="social_media_9" class="w-full px-4 py-2 border rounded mb-4">
-
-                <label class="block mb-2">Nama Kontak</label>
-                <input type="text" name="contact_name_9" class="w-full px-4 py-2 border rounded mb-4">
-
-                <label class="block mb-2">No HP</label>
-                <input type="text" name="phone_9" class="w-full px-4 py-2 border rounded mb-4">
-
-                <label class="block mb-2">Detail</label>
-                <textarea name="detail_9" class="w-full px-4 py-2 border rounded mb-4"></textarea>
-
+                <textarea name="detail_<?= $i ?>" class="w-full px-4 py-2 border rounded mb-4"></textarea>
+                <?php endfor; ?>
+                
                 <div class="flex flex-col sm:flex-row justify-end">
-                  <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded w-full hover:bg-green-600 sm:w-24 mb-2 sm:mb-0 text-center">Simpan</button>
-                  <a href="javascript:history.back()" class="sm:ml-2 bg-gray-500 text-white px-4 py-2 rounded w-full hover:bg-gray-600 sm:w-24 text-center">Batal</a>
+                    <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded w-full hover:bg-green-600 sm:w-24 mb-2 sm:mb-0 text-center">Simpan</button>
+                    <a href="<?= site_url('project') ?>" class="sm:ml-2 bg-gray-500 text-white px-4 py-2 rounded w-full hover:bg-gray-600 sm:w-24 text-center">Batal</a>
                 </div>
               </form>
             </div>
