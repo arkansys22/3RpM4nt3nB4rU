@@ -55,6 +55,10 @@ $route['clients/restore/(:any)'] = 'crud_clients/restore/$1'; // Restore clients
 $route['clients/permanent_delete/(:any)'] = 'crud_clients/permanent_delete/$1'; // Hapus permanen clients
 $route['clients/lihat/(:any)'] = 'crud_clients/lihat/$1'; // Menampilkan lihat clients
 
+$route['clients/c_edit/(:any)'] = 'crud_clients/c_edit/$1'; // Halaman edit clients berdasarkan id_session
+$route['clients/c_update/(:any)'] = 'crud_clients/c_update/$1'; // Proses update data clients
+$route['clients/c_lihat/(:any)'] = 'crud_clients/c_lihat/$1'; // Menampilkan lihat clients
+
 $route['crews'] = 'Crud_crews/index'; // Menampilkan daftar crews yang masih aktif
 $route['crews/create'] = 'Crud_crews/create'; // Menampilkan halaman tambah crews
 $route['crews/store'] = 'Crud_crews/store'; // Menyimpan data crews yang baru dibuat
@@ -92,6 +96,8 @@ $route['naskah/terima_kasih/(:any)'] = 'Terima_kasih/view/$1';
 $route['naskah/terima_kasih/pdf/(:any)'] = 'Terima_kasih/generate_pdf/$1';
 $route['naskah/data_pengantin/(:any)'] = 'Data_pengantin/view/$1';
 $route['naskah/data_pengantin/pdf/(:any)'] = 'Data_pengantin/generate_pdf/$1';
+$route['naskah/list_vendor/(:any)'] = 'crud_vendor/view/$1';
+$route['naskah/list_vendor/pdf/(:any)'] = 'crud_vendor/generate_pdf/$1';
 
 $route['vendor/create/(:any)'] = 'crud_vendor/create/$1'; // Create vendor form based on session_id
 $route['vendor/store/(:any)'] = 'crud_vendor/store/$1'; // Store vendor data based on session_id
