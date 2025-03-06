@@ -33,14 +33,14 @@
         <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-              <h1 class="text-2xl font-bold mb-4">Lihat project <?= $project->status ?></h1>
+              <h1 class="text-2xl font-bold mb-4">Lihat project</h1>
               <form action="<?= site_url('project/update/'.$project->id_session) ?>" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
-                <label class="block mb-2 text-black dark:text-white">Nama Project : <?= $project->project_name ?></label>        
-                <label class="block mb-2 text-black dark:text-white">Agama : <?= $project->religion ?></label>        
-                <label class="block mb-2 text-black dark:text-white">Value : <?= "Rp " . number_format($project->value, 0, ',', '.'); ?></label>
-                <label class="block mb-2 text-black dark:text-white">Tanggal Pernikahan : <?= hari($project->event_date) ?>, <?= tgl_indo($project->event_date) ?></label>
-                <label class="block mb-2 text-black dark:text-white">Lokasi : <?= $project->location ?></label>
-                <label class="block mb-2 text-black dark:text-white">Detail : <?= $project->detail ?></label>
+                <label class="block mb-2 text-black dark:text-white"><strong>Nama Project : </strong><?= $project->project_name ?></label>        
+                <label class="block mb-2 text-black dark:text-white"><strong>Agama : </strong><?= $project->religion ?></label>        
+                <label class="block mb-2 text-black dark:text-white"><strong>Value : </strong><?= "Rp " . number_format($project->value, 0, ',', '.'); ?></label>
+                <label class="block mb-2 text-black dark:text-white"><strong>Tanggal Pernikahan : </strong><?= hari($project->event_date) ?>, <?= tgl_indo($project->event_date) ?></label>
+                <label class="block mb-2 text-black dark:text-white"><strong>Lokasi : </strong><?= $project->location ?></label>
+                <label class="block mb-2 text-black dark:text-white"><strong>Detail : </strong><?= $project->detail ?></label>
 
                 <?php
                 $roles = [
@@ -73,6 +73,100 @@
                   endforeach; 
                 endif; 
                 ?>
+
+    <h2 class="text-xl font-bold mb-4">Daftar Pembayaran</h2>
+
+    <?php if (empty($payment)): ?>
+        <!-- Jika belum ada pembayaran, tampilkan tombol Add Payment untuk invoice pertama -->
+        <div class="border p-4 mb-4 text-black dark:text-white">
+            <p class="text-red-500 font-semibold">Belum ada data pembayaran.</p>
+            <a href="<?= base_url('Crud_payment/create/' . $project->id_session . '/1') ?>" class="btn btn-primary">Tambah Invoice & Kwitansi 1</a>
+        </div>
+    <?php else: ?>
+        <!-- Loop untuk menampilkan data pembayaran untuk setiap invoice -->
+        <?php for ($i = 1; $i <= 7; $i++): ?>
+            <?php 
+                $invoice = "invoice_{$i}"; 
+                $kwitansi = "kwitansi_{$i}"; 
+                $amount = "amount_{$i}";
+                $dp = "dp_{$i}";
+                $date = "date_{$i}";
+                $details = "details_{$i}";
+                $due_date = "due_date_{$i}";
+            ?>
+
+            <?php if (!empty($payment->$invoice) || ($i == 1) || !empty($payment->{"invoice_" . ($i - 1)})): ?>
+                <div class="border p-4 mb-4 text-black dark:text-white">
+                    <h3 class="font-bold">Invoice & Kwitansi <?= $i ?></h3>
+
+                    <?php if (!empty($payment->$invoice)): ?>
+                        <!-- Menampilkan data jika invoice sudah ada -->
+                        <p><strong>Invoice:</strong> <?= htmlspecialchars($payment->$invoice) ?></p>
+                        <p><strong>Kwitansi:</strong> <?= htmlspecialchars($payment->$kwitansi) ?></p>
+                        <p><strong>Jumlah:</strong> <?= "Rp " . number_format($payment->$amount, 0, ',', '.') ?></p>
+                        <p><strong>DP:</strong> <?= "Rp " . number_format($payment->$dp, 0, ',', '.') ?></p>
+                        <p><strong>Tanggal:</strong> <?= date('d-m-Y', strtotime($payment->$date)) ?></p>
+                        <p><strong>Jatuh Tempo:</strong> <?= date('d-m-Y', strtotime($payment->$due_date)) ?></p>
+                        <a href="<?= base_url('payment/view_invoice/' . $payment->id_session . '/' . $i) ?>" class="btn btn-success">Lihat Invoice</a>
+                        <a href="<?= base_url('payment/view_kwitansi/' . $payment->id_session . '/' . $i) ?>" class="btn btn-success">Lihat Kwitansi</a>
+                        <a href="<?= base_url('Crud_payment/edit/' . $payment->id_session . '/' . $i) ?>" class="btn btn-warning">Edit</a>
+                        <!-- Tombol Hapus untuk setiap invoice -->
+                        <a href="<?= base_url('Crud_payment/delete/' . $payment->id_session . '/' . $i) ?>" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus invoice ini?')">Hapus</a>
+                    <?php else: ?>
+                        <!-- Menampilkan tombol Add Payment jika invoice kosong -->
+                        <a href="<?= base_url('Crud_payment/create/' . $payment->id_session . '/' . $i) ?>" class="btn btn-primary">Tambah Invoice & Kwitansi <?= $i ?></a>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
+        <?php endfor; ?>
+    <?php endif; ?>
+
+    <h2 class="text-lg font-bold mb-2">Vendor</h2>
+
+<div class="border p-4 mb-4 text-black dark:text-white">
+    <?php
+    // List kolom vendor dari database
+    $vendor_fields = ['vendor_1', 'vendor_2', 'vendor_3', 'vendor_4', 'vendor_5', 'vendor_6', 'vendor_7', 'vendor_8', 'vendor_9'];
+
+    // Nama jenis vendor (MC, Dekorasi, dll.)
+    $vendor_types = [
+        'Venue',
+        'MC',
+        'WO',
+        'MUA',
+        'Perlengkapan Catering',
+        'Catering',
+        'Dokumentasi',
+        'Dekorasi',
+        'Entertainment'
+    ];
+
+    $has_vendor = false; // Cek apakah ada vendor yang diisi
+
+    foreach ($vendor_fields as $index => $field) {
+        if (!empty($vendor->$field)) {
+            echo "<p class='text-white-700 font-medium'><strong>{$vendor_types[$index]} :</strong> {$vendor->$field}</p>";
+            $has_vendor = true;
+        }
+    }
+
+    // Jika semua kolom kosong, tampilkan pesan "Belum ada vendor" dan tombol "Add Vendor"
+    if (!$has_vendor) {
+        echo "<p class='text-red-500 font-semibold'>Belum ada vendor.</p>";
+        echo '<a href="' . site_url('crud_vendor/create/' . $project->id_session) . '" class="ml-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">Add Vendor</a>';
+    }
+    ?>
+
+<?php
+// Jika sudah ada vendor, tampilkan tombol Edit Vendor di luar box
+if ($has_vendor) {
+    echo '<a href="' . site_url('crud_vendor/edit/' . $vendor->id_session) . '" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Edit Vendor</a>';
+}
+?>
+</div>
+
+
+
 
                 <a href="<?= site_url('project/edit/'. $project->id_session) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Edit</a>
                 <a href="javascript:history.back()" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a>

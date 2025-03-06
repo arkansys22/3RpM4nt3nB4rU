@@ -36,6 +36,14 @@ $route['project/restore/(:any)'] = 'crud_project/restore/$1'; // Restore project
 $route['project/permanent_delete/(:any)'] = 'crud_project/permanent_delete/$1'; // Hapus permanen project
 $route['project/lihat/(:any)'] = 'crud_project/lihat/$1'; // Menampilkan lihat project
 
+$route['payment/create/(:num)/(:num)'] = 'Crud_payment/create/$1/$2';  // Routing untuk menambah pembayaran (Add Payment)
+$route['payment/store/(:num)/(:num)'] = 'Crud_payment/store/$1/$2';  // Routing untuk menambah pembayaran (Add Payment)
+$route['payment/edit/(:num)/(:num)'] = 'Crud_payment/edit/$1/$2';      // Routing untuk mengedit pembayaran (Edit Payment)
+$route['payment/update/(:num)/(:num)'] = 'Crud_payment/update/$1/$2';    // Routing untuk menyimpan perubahan (Update Payment)
+$route['payment/delete/(:num)/(:num)'] = 'Crud_payment/delete/$1/$2';    // Routing untuk menghapus pembayaran (Delete Payment)
+$route['payment/view_invoice/(:any)/(:num)'] = 'Crud_payment/view_invoice/$1/$2';
+$route['payment/view_kwitansi/(:any)/(:num)'] = 'Crud_payment/view_kwitansi/$1/$2';
+
 $route['clients'] = 'crud_clients/index'; // Menampilkan daftar clients
 // $route['clients/create'] = 'crud_clients/create'; // Halaman tambah clients
 $route['clients/store'] = 'crud_clients/store'; // Menyimpan data clients baru
@@ -46,6 +54,10 @@ $route['clients/recycle_bin'] = 'crud_clients/recycle_bin'; // Halaman recycle b
 $route['clients/restore/(:any)'] = 'crud_clients/restore/$1'; // Restore clients
 $route['clients/permanent_delete/(:any)'] = 'crud_clients/permanent_delete/$1'; // Hapus permanen clients
 $route['clients/lihat/(:any)'] = 'crud_clients/lihat/$1'; // Menampilkan lihat clients
+
+$route['clients/c_edit/(:any)'] = 'crud_clients/c_edit/$1'; // Halaman edit clients berdasarkan id_session
+$route['clients/c_update/(:any)'] = 'crud_clients/c_update/$1'; // Proses update data clients
+$route['clients/c_lihat/(:any)'] = 'crud_clients/c_lihat/$1'; // Menampilkan lihat clients
 
 $route['crews'] = 'Crud_crews/index'; // Menampilkan daftar crews yang masih aktif
 $route['crews/create'] = 'Crud_crews/create'; // Menampilkan halaman tambah crews
@@ -84,5 +96,12 @@ $route['naskah/terima_kasih/(:any)'] = 'Terima_kasih/view/$1';
 $route['naskah/terima_kasih/pdf/(:any)'] = 'Terima_kasih/generate_pdf/$1';
 $route['naskah/data_pengantin/(:any)'] = 'Data_pengantin/view/$1';
 $route['naskah/data_pengantin/pdf/(:any)'] = 'Data_pengantin/generate_pdf/$1';
+$route['naskah/list_vendor/(:any)'] = 'crud_vendor/view/$1';
+$route['naskah/list_vendor/pdf/(:any)'] = 'crud_vendor/generate_pdf/$1';
+
+$route['vendor/create/(:any)'] = 'crud_vendor/create/$1'; // Create vendor form based on session_id
+$route['vendor/store/(:any)'] = 'crud_vendor/store/$1'; // Store vendor data based on session_id
+$route['vendor/edit/(:any)'] = 'crud_vendor/edit/$1'; // Edit vendor data based on session_id
+$route['vendor/update/(:any)'] = 'crud_vendor/update/$1'; // Update vendor data based on session_id
 
 $route['petacrawl\.xml'] = "petacrawl";
