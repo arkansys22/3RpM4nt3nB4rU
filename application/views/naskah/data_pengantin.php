@@ -17,13 +17,11 @@
         p.indent {
             text-indent: 40px; /* Indentasi awal paragraf */
         }
-        <style>
     table {
         width: 80%;
         margin: 0 auto; /* Agar tetap di tengah */
     }
 </style>
-    </style>
 </head>
 <body class="p-5">
 
