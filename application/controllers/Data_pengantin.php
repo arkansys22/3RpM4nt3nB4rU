@@ -27,10 +27,10 @@ class Data_pengantin extends CI_Controller {
         }
     
         // Ambil client_name sebagai nama file, jika tidak ada gunakan default
-        $client_name = $data['client']->client_name ? $data['client']->client_name : 'Data_Pengantin';
+        $client_name = $data['client']->client_name ? $data['client']->client_name : 'Data_Pengantin_&_Susunan_Acara';
         
         // Format nama file sesuai keinginan
-        $filename = $client_name . ' Data Pengantin';
+        $filename = $client_name . ' Data Pengantin & Susunan Acara';
     
         // Generate PDF dengan nama file yang sudah diformat
         $html = $this->load->view('naskah/pdf_data_pengantin', $data, true);
