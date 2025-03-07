@@ -104,4 +104,10 @@ $route['vendor/store/(:any)'] = 'crud_vendor/store/$1'; // Store vendor data bas
 $route['vendor/edit/(:any)'] = 'crud_vendor/edit/$1'; // Edit vendor data based on session_id
 $route['vendor/update/(:any)'] = 'crud_vendor/update/$1'; // Update vendor data based on session_id
 
+$route['agenda'] = 'crud_agenda/index'; // Menampilkan daftar crews yang masih aktif
+$route['agenda/create/(:any)'] = 'crud_agenda/create/$1'; // Create vendor form based on session_id
+$route['agenda/store/(:any)'] = 'crud_agenda/store/$1'; // Store vendor data based on session_id
+$route['agenda/edit/(:any)'] = 'crud_agenda/edit/$1'; // Edit vendor data based on session_id
+$route['agenda/update/(:any)'] = 'crud_agenda/update/$1'; // Update vendor data based on session_id
+
 $route['petacrawl\.xml'] = "petacrawl";
