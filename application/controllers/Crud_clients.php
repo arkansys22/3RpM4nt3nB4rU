@@ -4,7 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Crud_clients extends CI_Controller {
     public function __construct() {
         parent::__construct();
-        $this->load->model('Clients_model'); // Ubah dari Client_model ke Clients_model
+        $this->load->model('Clients_model');
+        $this->load->model('Vendor_model');
         $this->load->helper('url');
     }
 
@@ -334,7 +335,7 @@ class Crud_clients extends CI_Controller {
         $this->Clients_model->insert_log_activity($data_log);
 
         $this->session->set_flashdata('Success', 'Client berhasil diupdate');
-        redirect('clients');
+        redirect('clients/lihat/'.$id_session);
     }
 
     public function delete($id_session) {
@@ -475,6 +476,7 @@ class Crud_clients extends CI_Controller {
     public function c_lihat($id_session) {
 
             $data['clients'] = $this->Clients_model->get_client_by_session($id_session);
+            $data['vendor'] = $this->Vendor_model->get_vendor_by_id($id_session);
             $data['logactivity'] = $this->Clients_model->get_logactivity_by_session($id_session);
             $this->load->view('clients/c_lihat', $data);
 
