@@ -79,7 +79,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
 
                 <?php if ($islam) : ?>
                 <label class="block mb-2 text-black dark:text-white">Mahar : <?= $clients->mahr ?></label>
-                <label class="block mb-2 text-black dark:text-white">Simbolis : <?= $clients->handover ?></label>
+                <label class="block mb-2 text-black dark:text-white">Simbolis Seserahan : <?= $clients->handover ?></label>
 
                 <!-- Petugas dan Koordinator Akad Nikah -->
                 <h3 class="text-lg font-bold mt-6 mb-2 text-black dark:text-white">Petugas dan Koordinator</h3>
@@ -115,8 +115,9 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                   <a href="<?= site_url('naskah/terima_kasih/'. $clients->id_session) ?>" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Ucapan Terimakasih</a>
                   <a href="<?= site_url('naskah/data_pengantin/'. $clients->id_session) ?>" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Data Pengantin</a>
                   <a href="<?= site_url('naskah/list_vendor/'. $clients->id_session) ?>" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">List Vendor</a>
-                  <a href="<?= $clients->wedding_ceremony ?>" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Susunan Akad</a>
-                  <a href="<?= $clients->reception_afterward ?>" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Susunan Resepsi</a>
+                  <a href="<?= $clients->wedding_ceremony ?>"  target="_blank" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Susunan Akad</a>
+                  <a href="<?= $clients->reception_afterward ?>"  target="_blank" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Susunan Resepsi</a>
+                  <a href="<?= $clients->list_photo ?>"  target="_blank" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">List Foto</a>
                 </div>
               </form>
 

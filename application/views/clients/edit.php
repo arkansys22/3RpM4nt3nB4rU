@@ -62,6 +62,8 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
               <label class="block mb-2">Susunan Acara Resepsi</label>
               <input type="text" name="reception_afterward" value="<?= $clients->reception_afterward ?>" placeholder="Link GDrive" class="w-full px-4 py-2 border rounded mb-4">
 
+              <label class="block mb-2">List Foto</label>
+              <input type="text" name="reception_afterward" value="<?= $clients->list_photo ?>" placeholder="Link GDrive" class="w-full px-4 py-2 border rounded mb-4">
 
               <!-- Data Mempelai Wanita -->
               <h3 class="text-lg font-bold mt-6 mb-2">Data Mempelai Wanita</h3>
@@ -81,16 +83,16 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
               <input type="text" name="f_bride_fathername" value="<?= $clients->f_bride_fathername ?>" placeholder="Nama Lengkap Ayah" class="w-full px-4 py-2 border rounded mb-4" required>
               
               <label class="block mb-2">Nama Panggilan Ayah</label>
-              <input type="text" name="f_bride_fathercname" value="<?= $clients->f_bride_fathercname ?>" placeholder="Nama Panggilan Ayah" class="w-full px-4 py-2 border rounded mb-4">
+              <input type="text" name="f_bride_fathercname" value="<?= $clients->f_bride_fathercname ?>" placeholder="Bapak/Papa/Ayah/Abi" class="w-full px-4 py-2 border rounded mb-4">
 
               <label class="block mb-2">Nama Lengkap Ibu</label>
               <input type="text" name="f_bride_mothername" value="<?= $clients->f_bride_mothername ?>" placeholder="Nama Lengkap Ibu" class="w-full px-4 py-2 border rounded mb-4" required>
 
               <label class="block mb-2">Nama Panggilan Ibu</label>
-              <input type="text" name="f_bride_mothercname" value="<?= $clients->f_bride_mothercname ?>" placeholder="Nama Panggilan Ibu" class="w-full px-4 py-2 border rounded mb-4">
+              <input type="text" name="f_bride_mothercname" value="<?= $clients->f_bride_mothercname ?>" placeholder="Ibu/Mamah/Bunda/Umi" class="w-full px-4 py-2 border rounded mb-4">
 
               <label class="block mb-2">Nama Saudara Kandung</label>
-              <textarea name="f_bride_sibling" placeholder="1. A&#10;2. B&#10;3. ..." class="w-full px-4 py-2 border rounded mb-4"><?= $clients->f_bride_sibling ?></textarea>
+              <textarea name="f_bride_sibling" placeholder="1. Contoh A&#10;2. Contoh B&#10;3. ..." class="w-full px-4 py-2 border rounded mb-4"><?= $clients->f_bride_sibling ?></textarea>
 
               <!-- Data Mempelai Pria -->
               <h3 class="text-lg font-bold mt-6 mb-2">Data Mempelai Pria</h3>
@@ -110,24 +112,24 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
               <input type="text" name="m_bride_fathername" value="<?= $clients->m_bride_fathername ?>" placeholder="Nama Lengkap Ayah" class="w-full px-4 py-2 border rounded mb-4" required>
               
               <label class="block mb-2">Nama Panggilan Ayah</label>
-              <input type="text" name="m_bride_fathercname" value="<?= $clients->m_bride_fathercname ?>" placeholder="Nama Panggilan Ayah" class="w-full px-4 py-2 border rounded mb-4">
+              <input type="text" name="m_bride_fathercname" value="<?= $clients->m_bride_fathercname ?>" placeholder="Bapak/Papa/Ayah/Abi" class="w-full px-4 py-2 border rounded mb-4">
               
               <label class="block mb-2">Nama Lengkap Ibu</label>
               <input type="text" name="m_bride_mothername" value="<?= $clients->m_bride_mothername ?>" placeholder="Nama Lengkap Ibu" class="w-full px-4 py-2 border rounded mb-4" required>
               
               <label class="block mb-2">Nama Panggilan Ibu</label>
-              <input type="text" name="m_bride_mothercname" value="<?= $clients->m_bride_mothercname ?>" placeholder="Nama Panggilan Ibu" class="w-full px-4 py-2 border rounded mb-4">
+              <input type="text" name="m_bride_mothercname" value="<?= $clients->m_bride_mothercname ?>" placeholder="Ibu/Mamah/Bunda/Umi" class="w-full px-4 py-2 border rounded mb-4">
               
               <label class="block mb-2">Nama Saudara Kandung</label>
-              <textarea name="m_bride_sibling" placeholder="1. A&#10;2. B&#10;3. ..." class="w-full px-4 py-2 border rounded mb-4"><?= $clients->m_bride_sibling ?></textarea>
+              <textarea name="m_bride_sibling" placeholder="1. Contoh A&#10;2. Contoh B&#10;3. ..." class="w-full px-4 py-2 border rounded mb-4"><?= $clients->m_bride_sibling ?></textarea>
 
               <!-- Detail Pernikahan -->
               <h3 class="text-lg font-bold mt-6 mb-2">Detail Pernikahan</h3>
               <label class="block mb-2">Tanggal Pernikahan</label>
               <input type="date" name="wedding_date" value="<?= $clients->wedding_date ?>" placeholder="Tanggal Pernikahan" class="w-full px-4 py-2 border rounded mb-4" required>
 
-              <label class="block mb-2">Lokasi</label>
-              <input type="text" name="location" value="<?= $clients->location ?>" placeholder="Lokasi" class="w-full px-4 py-2 border rounded mb-4" required>
+              <label class="block mb-2">Lokasi Acara</label>
+              <input type="text" name="location" value="<?= $clients->location ?>" placeholder="Lokasi Acara" class="w-full px-4 py-2 border rounded mb-4" required>
 
               <?php if ($islam) : ?>
               <label class="block mb-2">Mahar</label>
@@ -156,7 +158,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
               <input type="text" name="m_spokesman" value="<?= $clients->m_spokesman ?>" placeholder="Jubir Keluarga Pria" class="w-full px-4 py-2 border rounded mb-4">
               
               <label class="block mb-2">Penghulu</label>
-              <input type="text" name="wedding_officiant" value="<?= $clients->wedding_officiant ?>" placeholder="Penghulu" class="w-full px-4 py-2 border rounded mb-4">
+              <input type="text" name="wedding_officiant" value="<?= $clients->wedding_officiant ?>" placeholder="Bapak A S.Ag (KUA Bogor)" class="w-full px-4 py-2 border rounded mb-4">
               
               <label class="block mb-2">Wali</label>
               <input type="text" name="guardian" value="<?= $clients->guardian ?>" placeholder="Wali" class="w-full px-4 py-2 border rounded mb-4">
@@ -173,17 +175,17 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
               <label class="block mb-2">Nasihat Pernikahan</label>
               <input type="text" name="advice_doa" value="<?= $clients->advice_doa ?>" placeholder="Nasihat Pernikahan" class="w-full px-4 py-2 border rounded mb-4">
               
-              <label class="block mb-2">Pengapit Calon Pengantin Wanita dari Keluarga</label>
-              <input type="text" name="clamp" value="<?= $clients->clamp ?>" placeholder="Pengapit Calon Pengantin Wanita dari Keluarga" class="w-full px-4 py-2 border rounded mb-4">
+              <label class="block mb-2">Pengapit Calon Pengantin Wanita dari Keluarga Wanita</label>
+              <input type="text" name="clamp" value="<?= $clients->clamp ?>" placeholder="Pengapit Calon Pengantin Wanita dari Keluarga Wanita" class="w-full px-4 py-2 border rounded mb-4">
               
-              <label class="block mb-2">Pembawa Nampan Kalung Bunga Melati</label>
-              <input type="text" name="jasmine_carrier" value="<?= $clients->jasmine_carrier ?>" placeholder="Pembawa Nampan Kalung Bunga Melati" class="w-full px-4 py-2 border rounded mb-4">
+              <label class="block mb-2">Pembawa Nampan Kalung Bunga Melati dari Keluarga Wanita</label>
+              <input type="text" name="jasmine_carrier" value="<?= $clients->jasmine_carrier ?>" placeholder="Pembawa Nampan Kalung Bunga Melati dari Keluarga Wanita" class="w-full px-4 py-2 border rounded mb-4">
               
-              <label class="block mb-2">Pembawa Mas Kawin/Mahar</label>
-              <input type="text" name="mahr_carrier" value="<?= $clients->mahr_carrier ?>" placeholder="Pembawa Mas Kawin/Mahar" class="w-full px-4 py-2 border rounded mb-4">
+              <label class="block mb-2">Pembawa Mas Kawin/Mahar dari Keluarga Pria</label>
+              <input type="text" name="mahr_carrier" value="<?= $clients->mahr_carrier ?>" placeholder="Pembawa Mas Kawin/Mahar dari Keluarga Pria" class="w-full px-4 py-2 border rounded mb-4">
               
-              <label class="block mb-2">Pembawa Cincin Kawin</label>
-              <input type="text" name="ring_carrier" value="<?= $clients->ring_carrier ?>" placeholder="Pembawa Cincin Kawin" class="w-full px-4 py-2 border rounded mb-4">
+              <label class="block mb-2">Pembawa Cincin Kawin dari Keluarga Pria</label>
+              <input type="text" name="ring_carrier" value="<?= $clients->ring_carrier ?>" placeholder="Pembawa Cincin Kawin dari Keluarga Pria" class="w-full px-4 py-2 border rounded mb-4">
 
               <!-- Petugas dan Koordinator Resepsi -->
               <?php else : ?>
