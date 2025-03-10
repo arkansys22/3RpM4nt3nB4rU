@@ -75,4 +75,10 @@ class project_model extends CI_Model {
         $this->db->limit(5, 0);
         return $this->db->get_where('log_activity', ['log_activity_document_no' => $id_session])->result();
     }
+
+    public function get_project()
+    {
+        return $this->db->get('project')->row(); // Mengambil satu baris data dari tabel project
+    }
+
 }
