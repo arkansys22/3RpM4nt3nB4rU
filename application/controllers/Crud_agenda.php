@@ -13,14 +13,14 @@ class Crud_agenda extends CI_Controller {
 
         if ($this->session->level=='1'){
             cek_session_akses_developer('agenda',$this->session->id_session);
-            $data['project'] = $this->project_model->get_project_by_session($id_session);
-            $data['agenda'] = $this->Agenda_model->get_agenda_by_session($id_session);
+            $data['project'] = $this->project_model->get_project();
+            $data['agenda'] = $this->Agenda_model->get_agenda_by_project();
                 $this->load->view('agenda/index', $data);
 
         }else if($this->session->level=='2'){
             cek_session_akses_administrator('agenda',$this->session->id_session);
-            $data['project'] = $this->project_model->get_project_by_session($id_session);
-            $data['agenda'] = $this->Agenda_model->get_agenda_by_session($id_session);
+            $data['project'] = $this->project_model->get_project();
+            $data['agenda'] = $this->Agenda_model->get_agenda_by_project();
                 $this->load->view('agenda/index', $data);
 
         }else if($this->session->level=='3'){
@@ -30,8 +30,8 @@ class Crud_agenda extends CI_Controller {
 
         }else if($this->session->level=='4'){
             cek_session_akses_staff_admin('agenda',$this->session->id_session);
-            $data['project'] = $this->project_model->get_project_by_session($id_session);
-            $data['agenda'] = $this->Agenda_model->get_agenda_by_session($id_session);
+            $data['project'] = $this->project_model->get_project();
+            $data['agenda'] = $this->Agenda_model->get_agenda_by_project();
                 $this->load->view('agenda/index', $data);
 
         }else if($this->session->level=='5'){
@@ -70,9 +70,7 @@ class Crud_agenda extends CI_Controller {
 }
 
 public function edit($id_session) {
-    $data['agenda'] = $this->Agenda_model->get_agenda_by_session($id_session);
-    $data['project'] = $this->project_model->get_project_by_session($id_session);
-
+    $data['agenda'] = $this->Agenda_model->get_agenda_by_id($id_session);
     $this->load->view('agenda/edit', $data);
 }
 

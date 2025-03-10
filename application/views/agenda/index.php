@@ -332,23 +332,39 @@
                       </tr>
                     </thead>
                     <tbody>
-                    <?php $no = 1; foreach ($agenda as $a) : ?>
-                      <tr>
-                        <td><?= $a->client_name ?></td>
-                        <td><?= tgl_indo($a->brainstorming) ?></td>
-                        <td><?= tgl_indo($a->technical_meeting) ?></td>
-                        <td><?= tgl_indo($a->final_revision) ?></td>
-                        <td><?= tgl_indo($a->loading_decoration) ?></td>
-                        <td><?= tgl_indo($a->wedding_day) ?> Tahun</td>
-                        <td><?= tgl_indo($a->honeymoon) ?></td>
-                        <td>
-                            <div class="flex flex-col gap-2 w-full">
-                              <a href="<?= site_url('agenda/create/'.$project->id_session) ?>" class="inline-block bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600 text-center text-xs sm:text-sm md:text-base">Tambah</a>
-                              <a href="<?= site_url('agenda/soft_delete/'.$a->id_session) ?>" class="inline-block bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-center text-xs sm:text-sm md:text-base" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
-                            </div>
-                        </td>
-                      </tr>
-                      <?php endforeach; ?>                      
+                    <?php if (!empty($agenda)) : ?>
+    <?php foreach ($agenda as $a) : ?>
+        <tr>
+            <td><?= $a->client_name ?></td> <!-- Diambil dari tabel project -->
+            <td><?= tgl_indo($a->brainstorming ?? '-') ?></td> <!-- Dari tabel agenda -->
+            <td><?= tgl_indo($a->technical_meeting ?? '-') ?></td>
+            <td><?= tgl_indo($a->final_revision ?? '-') ?></td>
+            <td><?= tgl_indo($a->loading_decoration ?? '-') ?></td>
+            <td><?= tgl_indo($a->wedding_day ?? '-') ?></td>
+            <td><?= tgl_indo($a->honeymoon ?? '-') ?></td>
+            <td>
+                <div class="flex flex-col gap-2 w-full">
+                    <?php if (!empty($a->brainstorming) || !empty($a->technical_meeting) || !empty($a->final_revision) || !empty($a->loading_decoration) || !empty($a->wedding_day) || !empty($a->honeymoon)) : ?>
+                        <!-- Jika ada data, tampilkan tombol Edit & Hapus -->
+                        <a href="<?= site_url('agenda/edit/'.$a->id_session) ?>" class="inline-block bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 text-center text-xs sm:text-sm md:text-base">Edit</a>
+                        <a href="<?= site_url('agenda/soft_delete/'.$a->id_session) ?>" class="inline-block bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-center text-xs sm:text-sm md:text-base" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                    <?php else : ?>
+                        <!-- Jika kosong, tampilkan tombol Tambah -->
+                        <a href="<?= site_url('agenda/create/'.$a->id_session) ?>" class="inline-block bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600 text-center text-xs sm:text-sm md:text-base">Tambah</a>
+                    <?php endif; ?>
+                </div>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+<?php else : ?>
+    <tr>
+        <td colspan="7" class="text-center">Belum ada agenda untuk client ini.</td>
+        <td>
+            <a href="<?= site_url('agenda/create/'.$id_session) ?>" class="inline-block bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600 text-center text-xs sm:text-sm md:text-base">Tambah</a>
+        </td>
+    </tr>
+<?php endif; ?>
+
                     </tbody>
                   </table>
                 </div>

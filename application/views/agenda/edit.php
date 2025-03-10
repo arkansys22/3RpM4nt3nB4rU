@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Edit Agenda for <?= $agenda->client_name ?></h1>
-    <form action="<?= site_url('agenda/update') ?>" method="post">
+    <form action="<?= site_url('agenda/update/'.$agenda->id_session) ?>" method="post">
         <input type="hidden" name="id_session" value="<?= $agenda->id_session ?>">
         <label for="client_name">Client Name:</label>
         <input type="text" id="client_name" name="client_name" value="<?= $agenda->client_name ?>" readonly><br>
