@@ -57,6 +57,17 @@
                          }
                       } ?>                    
                 </select>
+
+                <label class="block mb-2">Crews ID</label>
+                <select name="crewid" class="w-full px-4 py-2 border rounded mb-4" required> 
+                      <?php foreach ($crews as $p) {
+                            if ($pc->crews_idsession == $p['id_session']){
+                              echo"<option selected='selected' value='$p[id_session]'>$p[crew_name]</option> ";
+                            }else{
+                              echo"<option value='$p[id_session]'>$p[crew_name]</option>";
+                         }
+                      } ?>                    
+                </select>
                 
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Update</button>
                 <a href="javascript:history.back()" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded">Batal</a>
