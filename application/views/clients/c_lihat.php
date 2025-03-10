@@ -700,7 +700,7 @@
 									<div class="blog-details">
 										<ul class="post-meta-one">
 											<li>
-												<p><i class="fa fa-clock-o"></i>Sabtu, 24 Nov 2025 </p>
+												<p><i class="fa fa-clock-o"></i><?= hari($agenda->brainstorming) ?>, <?= tgl_indo($agenda->brainstorming) ?></p>
 											</li>
 										</ul>
 
@@ -722,7 +722,7 @@
 									<div class="blog-details">
 										<ul class="post-meta-one">
 											<li>
-												<p><i class="fa fa-clock-o"></i>Sabtu, 24 Nov 2025 </p>
+												<p><i class="fa fa-clock-o"></i><?= hari($agenda->technical_meeting) ?>, <?= tgl_indo($agenda->technical_meeting) ?></p>
 											</li>
 										</ul>
 
@@ -744,7 +744,7 @@
 									<div class="blog-details">
 										<ul class="post-meta-one">
 											<li>
-												<p><i class="fa fa-clock-o"></i>Sabtu, 24 Nov 2025 </p>
+												<p><i class="fa fa-clock-o"></i><?= hari($agenda->final_revision) ?>, <?= tgl_indo($agenda->final_revision) ?></p>
 											</li>
 										</ul>
 
@@ -766,7 +766,7 @@
 									<div class="blog-details">
 										<ul class="post-meta-one">
 											<li>
-												<p><i class="fa fa-clock-o"></i>Sabtu, 24 Nov 2025 </p>
+												<p><i class="fa fa-clock-o"></i><?= hari($agenda->loading_decoration) ?>, <?= tgl_indo($agenda->loading_decoration) ?></p>
 											</li>
 										</ul>
 
@@ -788,7 +788,7 @@
 									<div class="blog-details">
 										<ul class="post-meta-one">
 											<li>
-												<p><i class="fa fa-clock-o"></i>Sabtu, 24 Nov 2025 </p>
+												<p><i class="fa fa-clock-o"></i><?= hari($agenda->wedding_day) ?>, <?= tgl_indo($agenda->wedding_day) ?></p>
 											</li>
 										</ul>
 
@@ -810,7 +810,7 @@
 									<div class="blog-details">
 										<ul class="post-meta-one">
 											<li>
-												<p><i class="fa fa-clock-o"></i>Sabtu, 24 Nov 2025 </p>
+												<p><i class="fa fa-clock-o"></i><?= hari($agenda->honeymoon) ?>, <?= tgl_indo($agenda->honeymoon) ?></p>
 											</li>
 										</ul>
 
@@ -1028,7 +1028,7 @@
 							<h3 class="">
 								<span>Ulasan Kamu Sangat Berarti Untuk Perkembangan Mantenbaru</span>
 							</h3>
-							<a href="https://g.page/r/CfXM0XtrsWnfEAE/review" class="mybtn mybtn-bg"> <span><i class="fas fa-hand-holding-heart"> Berikan Ulasan Disini</i></span> </a> 
+							<a href="https://g.page/r/CfXM0XtrsWnfEAE/review" target="_blank" class="mybtn mybtn-bg"> <span><i class="fas fa-hand-holding-heart"> Berikan Ulasan Disini</i></span> </a> 
 						</div>
 					</div>
 				</div>
