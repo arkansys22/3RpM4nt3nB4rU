@@ -47,6 +47,14 @@ function cek_session_akses_guest($id){
   }
 }
 
+function cek_session_akses_staff($id){
+  $ci = & get_instance();
+  $session = $ci->db->query("SELECT * FROM user WHERE user.id_session='$id'")->num_rows();
+  if ($session == '0' AND $ci->session->userdata('level') != '7'){
+    redirect(base_url().'panel');
+  }
+}
+
 
 function hari_ini($w){
     $seminggu = array("Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu");
