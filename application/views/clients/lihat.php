@@ -52,8 +52,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                 <h3 class="text-lg font-bold mt-6 mb-2 text-black dark:text-white">Data Mempelai Wanita</h3>
                 <label class="block mb-2 text-black dark:text-white">Nama Lengkap : <?= $clients->f_bride_fname ?></label>
                 <label class="block mb-2 text-black dark:text-white">Nama Panggilan : <?= $clients->f_bride_cname ?></label>
-                <label class="block mb-2 text-black dark:text-white">Anak Keberapa : <?= $clients->f_bride_nchild ?></label>
-                <label class="block mb-2 text-black dark:text-white">Berapa Bersaudara : <?= $clients->f_bride_hsibling ?></label>
+                <label class="block mb-2 text-black dark:text-white">Anak Keberapa : <?= $clients->f_bride_nchild ?> dari <?= $clients->f_bride_hsibling ?> Bersaudara</label>
                 <label class="block mb-2 text-black dark:text-white">Nama Lengkap Ayah : <?= $clients->f_bride_fathername ?></label>
                 <label class="block mb-2 text-black dark:text-white">Nama Panggilan Ayah : <?= $clients->f_bride_fathercname ?></label>
                 <label class="block mb-2 text-black dark:text-white">Nama Lengkap Ibu : <?= $clients->f_bride_mothername ?></label>
@@ -64,8 +63,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                 <h3 class="text-lg font-bold mt-6 mb-2 text-black dark:text-white">Data Mempelai Pria</h3>
                 <label class="block mb-2 text-black dark:text-white">Nama Lengkap : <?= $clients->m_bride_fname ?></label>
                 <label class="block mb-2 text-black dark:text-white">Nama Panggilan : <?= $clients->m_bride_cname ?></label>
-                <label class="block mb-2 text-black dark:text-white">Anak Keberapa : <?= $clients->m_bride_nchild ?></label>
-                <label class="block mb-2 text-black dark:text-white">Berapa Bersaudara : <?= $clients->m_bride_hsibling ?></label>
+                <label class="block mb-2 text-black dark:text-white">Anak Keberapa : <?= $clients->m_bride_nchild ?> dari <?= $clients->m_bride_hsibling ?> Bersaudara</label>
                 <label class="block mb-2 text-black dark:text-white">Nama Lengkap Ayah : <?= $clients->m_bride_fathername ?></label>
                 <label class="block mb-2 text-black dark:text-white">Nama Panggilan Ayah : <?= $clients->m_bride_fathercname ?></label>
                 <label class="block mb-2 text-black dark:text-white">Nama Lengkap Ibu : <?= $clients->m_bride_mothername ?></label>
@@ -101,23 +99,27 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                 <?php else : ?>
                 <!-- Petugas dan Koordinator Resepsi -->
                 <h3 class="text-lg font-bold mt-6 mb-2 text-black dark:text-white">Petugas dan Koordinator Resepsi</h3>
+                <label class="block mb-2 text-black dark:text-white">Koordinator Keluarga Wanita : <?= $clients->female_coor ?></label>
+                <label class="block mb-2 text-black dark:text-white">Koordinator Keluarga Pria : <?= $clients->male_coor ?></label>
                 <label class="block mb-2 text-black dark:text-white">Pendeta : <?= $clients->pastor ?></label>
                 <label class="block mb-2 text-black dark:text-white">Gereja : <?= $clients->church ?></label>
                 <label class="block mb-2 text-black dark:text-white">Pemimpin Doa : <?= $clients->prayer ?></label>
                 <label class="block mb-2 text-black dark:text-white">Sambutan Pernikahan : <?= $clients->wedding_speech ?></label>
                 <?php endif; ?>
                 <div class="flex flex-wrap gap-2 mt-4">
-                  <a href="<?= site_url('clients/edit/'. $clients->id_session) ?>" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Edit</a>
+                  <a href="<?= site_url('clients/edit/'. $clients->id_session) ?>" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">Edit</a>
                   <a href="javascript:history.back()" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Kembali</a>
-                  <a href="<?= site_url('naskah/jubir_cpp/'. $clients->id_session) ?>" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Jubir CPP</a>
-                  <a href="<?= site_url('naskah/jubir_cpw/'. $clients->id_session) ?>" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Jubir CPW</a>
-                  <a href="<?= site_url('naskah/izin_menikah/'. $clients->id_session) ?>" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Izin Menikah</a>
-                  <a href="<?= site_url('naskah/terima_kasih/'. $clients->id_session) ?>" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Ucapan Terimakasih</a>
-                  <a href="<?= site_url('naskah/data_pengantin/'. $clients->id_session) ?>" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Data Pengantin</a>
-                  <a href="<?= site_url('naskah/list_vendor/'. $clients->id_session) ?>" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">List Vendor</a>
-                  <a href="<?= $clients->wedding_ceremony ?>"  target="_blank" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Susunan Akad</a>
-                  <a href="<?= $clients->reception_afterward ?>"  target="_blank" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Susunan Resepsi</a>
-                  <a href="<?= $clients->list_photo ?>"  target="_blank" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">List Foto</a>
+                  <a href="<?= site_url('naskah/jubir_cpp/'. $clients->id_session) ?>" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Jubir CPP</a>
+                  <a href="<?= site_url('naskah/jubir_cpw/'. $clients->id_session) ?>" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Jubir CPW</a>
+                  <a href="<?= site_url('naskah/izin_menikah/'. $clients->id_session) ?>" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Izin Menikah</a>
+                  <a href="<?= site_url('naskah/terima_kasih/'. $clients->id_session) ?>" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Ucapan Terimakasih</a>
+                  <a href="<?= site_url('naskah/data_pengantin/'. $clients->id_session) ?>" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Data Pengantin</a>
+                  <a href="<?= site_url('naskah/list_vendor/'. $clients->id_session) ?>" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">List Vendor</a>
+                  <a href="<?= $clients->wedding_ceremony ?>"  target="_blank" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Susunan Akad</a>
+                  <a href="<?= $clients->reception_afterward ?>"  target="_blank" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Susunan Resepsi</a>
+                  <a href="<?= $clients->list_photo ?>"  target="_blank" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">List Foto</a>
+                  <a href="<?= site_url('clients/c_lihat/'. $clients->id_session) ?>" target="_blank" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Lihat Profile</a>
+                    <a href="https://wa.me/<?= $clients->phone?>?text=Halo Kami dari Mantenbaru Organizer!%0A%0AKami%20ingin%20membagikan%20data%20profil%20pengantin%20yang%20sudah%20kami%20buat.%20Silakan%20klik%20link%20di%20bawah%20ini%20untuk%20melihat%20dan%20mengedit%20data%20sesuai%20kebutuhan.%20Anda%20bisa%20memperbarui%20informasi%20yang%20diperlukan%20agar%20data%20profil%20pengantin%20bisa%20sesuai%20dengan%20keinginan.%0A%0A<?= site_url('clients/c_lihat/'. $clients->id_session) ?>%0A%0AJika%20anda%20membutuhkan%20username%20dan%20password%20untuk%20mengedit%20data%20sesuai%20kebutuhan,%20jangan%20ragu%20untuk%20menghubungi%20kami.%20Terima%20kasih!" target="_blank" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Share Profile</a>
                 </div>
               </form>
 
