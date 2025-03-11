@@ -5,26 +5,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Agenda</title>
     <link href="<?php echo base_url()?>assets/backend/style.css" rel="stylesheet" type="text/css"/>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>Edit Agenda for <?= $agenda->client_name ?></h1>
-    <form action="<?= site_url('agenda/update/'.$agenda->id_session) ?>" method="post">
-        <input type="hidden" name="id_session" value="<?= $agenda->id_session ?>">
-        <label for="client_name">Client Name:</label>
-        <input type="text" id="client_name" name="client_name" value="<?= $agenda->client_name ?>" readonly><br>
-        <label for="brainstorming">Brainstorming:</label>
-        <input type="date" id="brainstorming" name="brainstorming" value="<?= $agenda->brainstorming ?>"><br>
-        <label for="technical_meeting">Technical Meeting:</label>
-        <input type="date" id="technical_meeting" name="technical_meeting" value="<?= $agenda->technical_meeting ?>"><br>
-        <label for="final_revision">Final Revision:</label>
-        <input type="date" id="final_revision" name="final_revision" value="<?= $agenda->final_revision ?>"><br>
-        <label for="loading_decoration">Loading Decoration:</label>
-        <input type="date" id="loading_decoration" name="loading_decoration" value="<?= $agenda->loading_decoration ?>"><br>
-        <label for="wedding_day">Wedding Day:</label>
-        <input type="date" id="wedding_day" name="wedding_day" value="<?= $agenda->wedding_day ?>"><br>
-        <label for="honeymoon">Honeymoon:</label>
-        <input type="date" id="honeymoon" name="honeymoon" value="<?= $agenda->honeymoon ?>"><br>
-        <button type="submit">Save</button>
-    </form>
+<body
+    x-data="{ page: 'agenda', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-init="
+         darkMode = JSON.parse(localStorage.getItem('darkMode'));
+         $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+    :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}"
+  >
+  <!-- ===== Preloader Start ===== -->
+  <div x-show="loaded" x-init="window.addEventListener('DOMContentLoaded', () => {setTimeout(() => loaded = false, 500)})" class="fixed left-0 top-0 z-999999 flex h-screen w-screen items-center justify-center bg-white dark:bg-black">
+    <div class="h-16 w-16 animate-spin rounded-full border-4 border-solid border-primary border-t-transparent">
+    </div>
+  </div>
+  <!-- ===== Preloader End ===== -->
+  <!-- ===== Page Wrapper Start ===== -->
+  <div class="flex h-screen overflow-hidden">
+    <?php $this->load->view('backend/sidebar')?>
+
+    <!-- ===== Content Area Start ===== -->
+    <div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
+      <?php $this->load->view('backend/header')?>
+
+      <!-- ===== Main Content Start ===== -->
+      <main>
+        <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+          <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
+            <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
+              <h1 class="text-2xl font-bold mb-4">Edit Agenda for <?= $agenda->client_name ?></h1>
+              <form action="<?= site_url('agenda/update/'.$agenda->id_session) ?>" method="post" class="bg-white p-6 shadow-md rounded">
+                <input type="hidden" name="id_session" value="<?= $agenda->id_session ?>">
+
+                <label class="block mb-2">Brainstorming</label>
+                <input type="date" id="brainstorming" name="brainstorming" value="<?= $agenda->brainstorming ?>" class="w-full px-4 py-2 border rounded mb-4">
+
+                <label class="block mb-2">Technical Meeting</label>
+                <input type="date" id="technical_meeting" name="technical_meeting" value="<?= $agenda->technical_meeting ?>" class="w-full px-4 py-2 border rounded mb-4">
+
+                <label class="block mb-2">Final Revision</label>
+                <input type="date" id="final_revision" name="final_revision" value="<?= $agenda->final_revision ?>" class="w-full px-4 py-2 border rounded mb-4">
+
+                <label class="block mb-2">Loading Decoration</label>
+                <input type="date" id="loading_decoration" name="loading_decoration" value="<?= $agenda->loading_decoration ?>" class="w-full px-4 py-2 border rounded mb-4">
+
+                <label class="block mb-2">Wedding Day</label>
+                <input type="date" id="wedding_day" name="wedding_day" value="<?= $agenda->wedding_day ?>" class="w-full px-4 py-2 border rounded mb-4">
+
+                <label class="block mb-2">Honeymoon</label>
+                <input type="date" id="honeymoon" name="honeymoon" value="<?= $agenda->honeymoon ?>" class="w-full px-4 py-2 border rounded mb-4">
+
+                <div class="flex flex-col sm:flex-row justify-end">
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded w-full hover:bg-blue-600 sm:w-24 mb-2 sm:mb-0 text-center">Save</button>
+                <a href="javascript:history.back()" class="sm:ml-2 bg-gray-500 text-white px-4 py-2 rounded w-full hover:bg-gray-600 sm:w-24 text-center">Cancel</a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </main>
+      <!-- ===== Main Content End ===== -->
+    </div>
+    <!-- ===== Content Area End ===== -->
+  </div>
+  <script defer src="<?php echo base_url()?>assets/backend/bundle.js">
+  </script>
 </body>
 </html>
