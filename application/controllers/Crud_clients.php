@@ -267,6 +267,7 @@ class Crud_clients extends CI_Controller {
             'phone'                 => $this->input->post('phone'),
             'wedding_ceremony'      => $this->input->post('wedding_ceremony'),
             'reception_afterward'   => $this->input->post('reception_afterward'),
+            'list_photo'             => $this->input->post('list_photo'),
             'f_bride_fname'         => $this->input->post('f_bride_fname'),
             'f_bride_cname'         => $this->input->post('f_bride_cname'),
             'f_bride_nchild'        => $this->input->post('f_bride_nchild'),
@@ -504,11 +505,6 @@ class Crud_clients extends CI_Controller {
         }
 
         $data = array(
-            'client_name'           => $this->input->post('client_name'),
-            'email'                 => $this->input->post('email'),
-            'phone'                 => $this->input->post('phone'),
-            'wedding_ceremony'      => $this->input->post('wedding_ceremony'),
-            'reception_afterward'   => $this->input->post('reception_afterward'),
             'f_bride_fname'         => $this->input->post('f_bride_fname'),
             'f_bride_cname'         => $this->input->post('f_bride_cname'),
             'f_bride_nchild'        => $this->input->post('f_bride_nchild'),
@@ -555,7 +551,6 @@ class Crud_clients extends CI_Controller {
 
         // Update juga di tabel project
         $project_data = array(
-            'client_name' => $this->input->post('client_name'),
             'event_date' => $this->input->post('wedding_date'),
             'location' => $this->input->post('location'),
         );
@@ -583,9 +578,32 @@ class Crud_clients extends CI_Controller {
 
     public function c_edit($id_session) {
 
+        if ($this->session->level=='1'){
+            cek_session_akses_developer('clients',$this->session->id_session);
             $data['clients'] = $this->Clients_model->get_client_by_session($id_session);
             $this->load->view('clients/c_edit', $data);
 
+        }else if($this->session->level=='2'){
+            cek_session_akses_administrator('clients',$this->session->id_session);
+            $data['clients'] = $this->Clients_model->get_client_by_session($id_session);
+            $this->load->view('clients/c_edit', $data);
+
+        }else if($this->session->level=='3'){
+            cek_session_akses_staff_accounting('clients',$this->session->id_session);
+            redirect(base_url());
+
+        }else if($this->session->level=='4'){
+            cek_session_akses_staff_admin('clients',$this->session->id_session);
+            $data['clients'] = $this->Clients_model->get_client_by_session($id_session);
+            $this->load->view('clients/c_edit', $data);
+
+        }else if($this->session->level=='5'){
+            cek_session_akses_client('clients',$this->session->id_session);
+            redirect(base_url());
+            
+        }else{
+            redirect(base_url('client/login'));
+            }
     }
 
 }
