@@ -1029,7 +1029,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
 						<div class="single-review">
 							<div class="reviewr">
 								<div class="img">
-									<img src="<?php echo base_url()?>assets/frontend/assets/images/ghazy.jpg" alt="">
+									<img src="<?php echo base_url()?>assets/frontend/assets/images/ghazy2.jpg" alt="">
 								</div>
 								<div class="content">
 									<h4 class="name">
