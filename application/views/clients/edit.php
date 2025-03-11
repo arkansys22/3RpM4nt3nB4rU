@@ -63,7 +63,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
               <input type="text" name="reception_afterward" value="<?= $clients->reception_afterward ?>" placeholder="Link GDrive" class="w-full px-4 py-2 border rounded mb-4">
 
               <label class="block mb-2">List Foto</label>
-              <input type="text" name="reception_afterward" value="<?= $clients->list_photo ?>" placeholder="Link GDrive" class="w-full px-4 py-2 border rounded mb-4">
+              <input type="text" name="list_photo" value="<?= $clients->list_photo ?>" placeholder="Link GDrive" class="w-full px-4 py-2 border rounded mb-4">
 
               <!-- Data Mempelai Wanita -->
               <h3 class="text-lg font-bold mt-6 mb-2">Data Mempelai Wanita</h3>
@@ -126,10 +126,10 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
               <!-- Detail Pernikahan -->
               <h3 class="text-lg font-bold mt-6 mb-2">Detail Pernikahan</h3>
               <label class="block mb-2">Tanggal Pernikahan</label>
-              <input type="date" name="wedding_date" value="<?= $clients->wedding_date ?>" placeholder="Tanggal Pernikahan" class="w-full px-4 py-2 border rounded mb-4" required>
+              <input type="date" name="wedding_date" value="<?= $clients->wedding_date ?>" placeholder="Tanggal Pernikahan" class="w-full px-4 py-2 border rounded mb-4" readonly>
 
               <label class="block mb-2">Lokasi Acara</label>
-              <input type="text" name="location" value="<?= $clients->location ?>" placeholder="Lokasi Acara" class="w-full px-4 py-2 border rounded mb-4" required>
+              <input type="text" name="location" value="<?= $clients->location ?>" placeholder="Lokasi Acara" class="w-full px-4 py-2 border rounded mb-4" readonly>
 
               <?php if ($islam) : ?>
               <label class="block mb-2">Mahar</label>
@@ -190,6 +190,12 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
               <!-- Petugas dan Koordinator Resepsi -->
               <?php else : ?>
               <h3 class="text-lg font-bold mt-6 mb-2">Petugas dan Koordinator Resepsi</h3>
+              <label class="block mb-2">Koordinator Keluarga Wanita</label>
+              <input type="text" name="female_coor" value="<?= $clients->female_coor ?>" placeholder="Koordinator Keluarga Wanita" class="w-full px-4 py-2 border rounded mb-4">
+              
+              <label class="block mb-2">Koordinator Keluarga Pria</label>
+              <input type="text" name="male_coor" value="<?= $clients->male_coor ?>" placeholder="Koordinator Keluarga Pria" class="w-full px-4 py-2 border rounded mb-4">
+
               <label class="block mb-2">Pendeta</label>
               <input type="text" name="pastor" value="<?= $clients->pastor ?>" placeholder="Pendeta" class="w-full px-4 py-2 border rounded mb-4">
               
