@@ -9,8 +9,8 @@ $route['login'] = "User/login";
 $route['panel'] = "aspanel/home";
 $route['logout'] = "aspanel/logout";
 
-
-
+$route['client/login'] = "Client/login";
+$route['client/logout'] = "Client/logout";
 
 $route['user'] = 'crud_user/index'; // Menampilkan daftar user
 $route['user/lihat/(:any)'] = 'crud_user/lihat/$1'; // Menampilkan detail user
