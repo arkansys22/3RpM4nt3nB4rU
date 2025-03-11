@@ -1,3 +1,11 @@
+<?php
+// Ambil agama dari tabel project berdasarkan id_session klien
+$project = $this->db->get_where('project', ['id_session' => $clients->id_session])->row();
+$religion = $project->religion ?? ''; // Pastikan tidak error jika religion kosong
+
+$islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -117,11 +125,13 @@
 				</div>
 				<div class="row">
 					<div class="col-lg-12">
-					<h3>Data Pengantin Wanita</h3>
+					<div class="d-flex justify-content-between align-items-center flex-wrap">
+						<h3 class="mb-0">Data Pengantin Wanita</h3>
+						<a href="<?= site_url('clients/c_edit/'. $clients->id_session) ?>" class="mybtn mybtn-bg mt-2 mt-md-0"> <span><i class="fas fa-user"></i>Edit Data</span> </a>
+					</div>
 						<div class="about-box">
 							<div class="row">
 								<div class="col-lg-12 d-flex align-self-center">
-
 									<div class="about-content">
 										<ul class="info-list">
 											<li>
@@ -169,7 +179,6 @@
 						<div class="about-box">
 							<div class="row">
 								<div class="col-lg-12 d-flex align-self-center">
-
 									<div class="about-content">
 										<ul class="info-list">
 											<li>
@@ -217,7 +226,6 @@
 						<div class="about-box">
 							<div class="row">
 								<div class="col-lg-12 d-flex align-self-center">
-
 									<div class="about-content">
 										<ul class="info-list">
 											<li>
@@ -228,6 +236,7 @@
 												<span class="title">Lokasi Acara : </span>
 												<span class="value"><?= $clients->location ?></span>
 											</li>
+											<?php if ($islam) : ?>
 											<li>
 												<span class="title">Mahar : </span>
 												<span class="value"><?= $clients->mahr ?></span>
@@ -292,7 +301,32 @@
 												<span class="title">Koor. Kel. Wanita : </span>
 												<span class="value"><?= $clients->female_coor ?></span>
 											</li>
-
+											<?php else : ?>
+											<li>
+												<span class="title">Koor. Kel. Pria : </span>
+												<span class="value"><?= $clients->male_coor ?></span>
+											</li>
+											<li>
+												<span class="title">Koor. Kel. Wanita : </span>
+												<span class="value"><?= $clients->female_coor ?></span>
+											</li>
+                                            <li>
+                                                <span class="title">Pendeta : </span>
+                                                <span class="value"><?= $clients->pastor ?></span>
+                                            </li>
+                                            <li>
+                                                <span class="title">Gereja : </span>
+                                                <span class="value"><?= $clients->church ?></span>
+                                            </li>
+                                            <li>
+                                                <span class="title">Pemimpin Doa : </span>
+                                                <span class="value"><?= $clients->prayer ?></span>
+                                            </li>
+                                            <li>
+												<span class="title">Sambutan Pernikahan : </span>
+                                                <span class="value"><?= $clients->wedding_speech ?></span>
+                                            </li>
+                                            <?php endif; ?>
 										</ul>
 									</div>
 								</div>
@@ -535,7 +569,7 @@
 							</div>
 
 							<div class="mix col-md-6 col-lg-6 gallery-item cat-3 cat-1">
-								<a href="<?php echo base_url()?>assets/frontend/ajax/portfolio-ajax-project-3.html" class="gallery-item-content pp">
+								<a href="<?php echo base_url()?>assets/frontend/ajax/portfolio-ajax-project-1.html" class="gallery-item-content pp">
 									<div class="item-thumbnail">
 										<img src="<?php echo base_url()?>assets/frontend/assets/images/9.jpg" alt="">
 										<div class="content-overlay">
@@ -550,7 +584,7 @@
 								</a>
 							</div>
 							<div class="mix col-md-6 col-lg-6 gallery-item  cat-3 cat-4">
-								<a href="<?php echo base_url()?>assets/frontend/ajax/portfolio-ajax-project-2.html" class="gallery-item-content pp">
+								<a href="<?php echo base_url()?>assets/frontend/ajax/portfolio-ajax-project-1.html" class="gallery-item-content pp">
 									<div class="item-thumbnail">
 										<img src="<?php echo base_url()?>assets/frontend/assets/images/2.jpg" alt="">
 										<div class="content-overlay">
@@ -565,7 +599,7 @@
 								</a>
 							</div>
 							<div class="mix col-md-6 col-lg-6 gallery-item cat-2 cat-1">
-								<a href="<?php echo base_url()?>assets/frontend/ajax/portfolio-ajax-project-3.html" class="gallery-item-content pp">
+								<a href="<?php echo base_url()?>assets/frontend/ajax/portfolio-ajax-project-1.html" class="gallery-item-content pp">
 									<div class="item-thumbnail">
 										<img src="<?php echo base_url()?>assets/frontend/assets/images/3.jpg" alt="">
 										<div class="content-overlay">
@@ -595,7 +629,7 @@
 								</a>
 							</div>
 							<div class="mix col-md-6 col-lg-6 gallery-item cat-3 cat-4">
-								<a href="<?php echo base_url()?>assets/frontend/ajax/portfolio-ajax-project-2.html" class="gallery-item-content pp">
+								<a href="<?php echo base_url()?>assets/frontend/ajax/portfolio-ajax-project-1.html" class="gallery-item-content pp">
 									<div class="item-thumbnail">
 										<img src="<?php echo base_url()?>assets/frontend/assets/images/5.jpg" alt="">
 										<div class="content-overlay">
@@ -610,7 +644,7 @@
 								</a>
 							</div>
 							<div class="mix col-md-6 col-lg-6 gallery-item cat-1 cat-2">
-								<a href="<?php echo base_url()?>assets/frontend/ajax/portfolio-ajax-project-3.html" class="gallery-item-content pp">
+								<a href="<?php echo base_url()?>assets/frontend/ajax/portfolio-ajax-project-1.html" class="gallery-item-content pp">
 									<div class="item-thumbnail">
 										<img src="<?php echo base_url()?>assets/frontend/assets/images/6.jpg" alt="">
 										<div class="content-overlay">
@@ -640,7 +674,7 @@
 								</a>
 							</div>
 							<div class="mix col-md-6 col-lg-6 gallery-item cat-3 cat-2">
-								<a href="<?php echo base_url()?>assets/frontend/ajax/portfolio-ajax-project-2.html" class="gallery-item-content pp">
+								<a href="<?php echo base_url()?>assets/frontend/ajax/portfolio-ajax-project-1.html" class="gallery-item-content pp">
 									<div class="item-thumbnail">
 										<img src="<?php echo base_url()?>assets/frontend/assets/images/8.jpg" alt="">
 										<div class="content-overlay">
@@ -655,7 +689,7 @@
 								</a>
 							</div>
 							<div class="mix col-md-6 col-lg-6 gallery-item cat-4 cat-1">
-								<a href="<?php echo base_url()?>assets/frontend/ajax/portfolio-ajax-project-3.html" class="gallery-item-content pp">
+								<a href="<?php echo base_url()?>assets/frontend/ajax/portfolio-ajax-project-1.html" class="gallery-item-content pp">
 									<div class="item-thumbnail">
 										<img src="<?php echo base_url()?>assets/frontend/assets/images/9.jpg" alt="">
 										<div class="content-overlay">
