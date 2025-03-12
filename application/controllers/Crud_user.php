@@ -169,7 +169,7 @@ class crud_user extends CI_Controller {
         $this->users_model->insert_log_activity($data_log);
     
         $this->session->set_flashdata('Success', 'Pengguna berhasil diupdate');
-        redirect('user');
+        redirect('user/lihat/' . $id_session);
     }
 
     public function delete($id_session) {
