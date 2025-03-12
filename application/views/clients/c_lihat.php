@@ -780,7 +780,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
 											</li>
 										</ul>
 
-										<div class="blog-title" data-toggle="modal" data-target="#blogmodal">
+										<div class="blog-title">
 											Final Revisi
 										</div>
 										<p class="text">
@@ -801,11 +801,11 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
 											</li>
 										</ul>
 
-										<div class="blog-title" data-toggle="modal" data-target="#blogmodal">
+										<div class="blog-title">
 											Loading & Installation 
 										</div>
 										<p class="text">
-											Pemasangan segala keperluan pernikahan seperti dekorasi, sound system, catering dan lainnya sesuai dengan tata letak.  
+											Pemasangan keperluan pernikahan seperti dekorasi, sound, alat catering dan lainnya sesuai dengan tata letak.  
 										</p>
 									</div>
 								</div>
@@ -822,7 +822,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
 											</li>
 										</ul>
 
-										<div class="blog-title" data-toggle="modal" data-target="#blogmodal">
+										<div class="blog-title">
 											Wedding Day
 										</div>
 										<p class="text">
@@ -843,7 +843,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
 											</li>
 										</ul>
 
-										<div class="blog-title" data-toggle="modal" data-target="#blogmodal">
+										<div class="blog-title">
 											Honeymoon
 										</div>
 										<p class="text">
