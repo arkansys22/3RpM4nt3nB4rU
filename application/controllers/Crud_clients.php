@@ -478,7 +478,7 @@ class Crud_clients extends CI_Controller {
     public function c_lihat($id_session) {
 
             $data['clients'] = $this->Clients_model->get_client_by_session($id_session);
-            $data['vendor'] = $this->Vendor_model->get_vendor_by_id($id_session);
+            $data['vendors'] = $this->Vendor_model->get_vendor_by_id($id_session);
             $data['agenda'] = $this->Agenda_model->get_agenda_by_session($id_session);
             $data['logactivity'] = $this->Clients_model->get_logactivity_by_session($id_session);
             $this->load->view('clients/c_lihat', $data);

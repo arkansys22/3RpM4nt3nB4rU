@@ -419,8 +419,8 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
 								</div>
 							</div>
 						</div>
+						</div>
 					</div>
-				</div>
 				<div class="row">
 					<div class="col-lg-12">
 					<h3>Naskah Jubir Pengantin Wanita</h3>
@@ -552,162 +552,34 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="row project-gallery-item">
-							<div class="mix col-md-6 col-lg-6 gallery-item cat-1 cat-3">
-								<a href="<?php echo base_url()?>assets/frontend/ajax/portfolio-ajax-project-1.html" class="gallery-item-content pp">
-									<div  class="item-thumbnail">
-										<img src="<?php echo base_url()?>assets/frontend/assets/images/1.jpg" alt="">
-										<div class="content-overlay">
-											<div class="content">
-												<h4 class="project-title">
-													Venue Pernikahan
-												</h4>
-												<span class="project-category"><?= $vendor->vendor_1; ?></span>
-											</div>
-										</div>
-									</div>
-								</a>
-							</div>
-
-							<div class="mix col-md-6 col-lg-6 gallery-item cat-3 cat-1">
-								<a href="<?php echo base_url()?>assets/frontend/ajax/portfolio-ajax-project-1.html" class="gallery-item-content pp">
-									<div class="item-thumbnail">
-										<img src="<?php echo base_url()?>assets/frontend/assets/images/9.jpg" alt="">
-										<div class="content-overlay">
-											<div class="content">
-												<h4 class="project-title">
-													Dekorasi
-												</h4>
-												<span class="project-category"><?= $vendor->vendor_8; ?></span>
-											</div>
-										</div>
-									</div>
-								</a>
-							</div>
-							<div class="mix col-md-6 col-lg-6 gallery-item  cat-3 cat-4">
-								<a href="<?php echo base_url()?>assets/frontend/ajax/portfolio-ajax-project-1.html" class="gallery-item-content pp">
-									<div class="item-thumbnail">
-										<img src="<?php echo base_url()?>assets/frontend/assets/images/2.jpg" alt="">
-										<div class="content-overlay">
-											<div class="content">
-												<h4 class="project-title">
-													MC Akad
-												</h4>
-												<span class="project-category"><?= $vendor->vendor_2; ?></span>
-											</div>
-										</div>
-									</div>
-								</a>
-							</div>
-							<div class="mix col-md-6 col-lg-6 gallery-item cat-2 cat-1">
-								<a href="<?php echo base_url()?>assets/frontend/ajax/portfolio-ajax-project-1.html" class="gallery-item-content pp">
-									<div class="item-thumbnail">
-										<img src="<?php echo base_url()?>assets/frontend/assets/images/3.jpg" alt="">
-										<div class="content-overlay">
-											<div class="content">
-												<h4 class="project-title">
-													MC Resepsi
-												</h4>
-												<span class="project-category"><?= $vendor->vendor_2; ?></span>
-											</div>
-										</div>
-									</div>
-								</a>
-							</div>
+							<?php 
+							$order = ['Venue', 'MC Akad', 'MC Resepsi', 'Wedding Organizer', 'MUA', 'Perlengkapan Catering', 'Catering', 'Dokumentasi', 'Dekorasi', 'Entertainment'];
+							usort($vendors, function($a, $b) use ($order) {
+								$pos_a = array_search($a->type, $order);
+								$pos_b = array_search($b->type, $order);
+								return $pos_a - $pos_b;
+							});
+							foreach ($vendors as $vendor) : ?>
 							<div class="mix col-md-6 col-lg-6 gallery-item cat-1 cat-3">
 								<a href="<?php echo base_url()?>assets/frontend/ajax/portfolio-ajax-project-1.html" class="gallery-item-content pp">
 									<div class="item-thumbnail">
-										<img src="<?php echo base_url()?>assets/frontend/assets/images/4.jpg" alt="">
+										<img src="<?php echo base_url()?>uploads/<?= $vendor->photo1 ?>" alt="" style="width: 100%; height: 300px; object-fit: cover;">
 										<div class="content-overlay">
 											<div class="content">
 												<h4 class="project-title">
-													Wedding Planner & Crew
+													<?= $vendor->type ?>
 												</h4>
-												<span class="project-category"><?= $vendor->vendor_3; ?></span>
+												<span class="project-category"><?= $vendor->vendor ?></span>
 											</div>
 										</div>
 									</div>
 								</a>
 							</div>
-							<div class="mix col-md-6 col-lg-6 gallery-item cat-3 cat-4">
-								<a href="<?php echo base_url()?>assets/frontend/ajax/portfolio-ajax-project-1.html" class="gallery-item-content pp">
-									<div class="item-thumbnail">
-										<img src="<?php echo base_url()?>assets/frontend/assets/images/5.jpg" alt="">
-										<div class="content-overlay">
-											<div class="content">
-												<h4 class="project-title">
-													Rias Pengantin & Busana
-												</h4>
-												<span class="project-category"><?= $vendor->vendor_4; ?></span>
-											</div>
-										</div>
-									</div>
-								</a>
-							</div>
-							<div class="mix col-md-6 col-lg-6 gallery-item cat-1 cat-2">
-								<a href="<?php echo base_url()?>assets/frontend/ajax/portfolio-ajax-project-1.html" class="gallery-item-content pp">
-									<div class="item-thumbnail">
-										<img src="<?php echo base_url()?>assets/frontend/assets/images/6.jpg" alt="">
-										<div class="content-overlay">
-											<div class="content">
-												<h4 class="project-title">
-													Konsumsi Prasmanan
-												</h4>
-												<span class="project-category"><?= $vendor->vendor_5; ?></span>
-											</div>
-										</div>
-									</div>
-								</a>
-							</div>
-							<div class="mix col-md-6 col-lg-6 gallery-item cat-4 cat-2">
-								<a href="<?php echo base_url()?>assets/frontend/ajax/portfolio-ajax-project-1.html" class="gallery-item-content pp">
-									<div class="item-thumbnail">
-										<img src="<?php echo base_url()?>assets/frontend/assets/images/7.jpg" alt="">
-										<div class="content-overlay">
-											<div class="content">
-												<h4 class="project-title">
-													Konsumsi Gubukan
-												</h4>
-												<span class="project-category"><?= $vendor->vendor_6; ?></span>
-											</div>
-										</div>
-									</div>
-								</a>
-							</div>
-							<div class="mix col-md-6 col-lg-6 gallery-item cat-3 cat-2">
-								<a href="<?php echo base_url()?>assets/frontend/ajax/portfolio-ajax-project-1.html" class="gallery-item-content pp">
-									<div class="item-thumbnail">
-										<img src="<?php echo base_url()?>assets/frontend/assets/images/8.jpg" alt="">
-										<div class="content-overlay">
-											<div class="content">
-												<h4 class="project-title">
-													Dokumentasi
-												</h4>
-												<span class="project-category"><?= $vendor->vendor_7; ?></span>
-											</div>
-										</div>
-									</div>
-								</a>
-							</div>
-							<div class="mix col-md-6 col-lg-6 gallery-item cat-4 cat-1">
-								<a href="<?php echo base_url()?>assets/frontend/ajax/portfolio-ajax-project-1.html" class="gallery-item-content pp">
-									<div class="item-thumbnail">
-										<img src="<?php echo base_url()?>assets/frontend/assets/images/9.jpg" alt="">
-										<div class="content-overlay">
-											<div class="content">
-												<h4 class="project-title">
-													Entertainment
-												</h4>
-												<span class="project-category"><?= $vendor->vendor_9; ?></span>
-											</div>
-										</div>
-									</div>
-								</a>
-							</div>
+							<?php endforeach; ?>
 						</div>
 					</div>
 				</div>
 			</div>
-
 		</section>
 		<!-- Portfolio Area End -->
 
