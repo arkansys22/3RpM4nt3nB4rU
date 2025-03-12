@@ -101,9 +101,9 @@ $route['naskah/list_vendor/pdf/(:any)'] = 'crud_vendor/generate_pdf/$1';
 
 $route['vendor/create/(:any)'] = 'crud_vendor/create/$1'; // Create vendor form based on session_id
 $route['vendor/store/(:any)'] = 'crud_vendor/store/$1'; // Store vendor data based on session_id
-$route['crud_vendor/edit/(:num)/(:num)'] = 'crud_vendor/edit/$1/$2';
-$route['crud_vendor/update/(:num)/(:num)'] = 'crud_vendor/update/$1/$2';
-$route['crud_vendor/delete/(:num)/(:num)'] = 'crud_vendor/delete/$1/$2';
+$route['vendor/edit/(:num)/(:num)'] = 'crud_vendor/edit/$1/$2';
+$route['vendor/update/(:num)/(:num)'] = 'crud_vendor/update/$1/$2';
+$route['vendor/delete/(:num)/(:num)'] = 'crud_vendor/delete/$1/$2';
 
 $route['agenda'] = 'crud_agenda/index'; // Menampilkan daftar crews yang masih aktif
 $route['agenda/create/(:any)'] = 'crud_agenda/create/$1'; // Create vendor form based on session_id
