@@ -124,49 +124,27 @@
     <h2 class="text-lg font-bold mb-2">Vendor</h2>
 
 <div class="border p-4 mb-4 text-black dark:text-white">
-    <?php
-    // List kolom vendor dari database
-    $vendor_fields = ['vendor_1', 'vendor_2', 'vendor_3', 'vendor_4', 'vendor_5', 'vendor_6', 'vendor_7', 'vendor_8', 'vendor_9'];
-
-    // Nama jenis vendor (MC, Dekorasi, dll.)
-    $vendor_types = [
-        'Venue',
-        'MC',
-        'WO',
-        'MUA',
-        'Perlengkapan Catering',
-        'Catering',
-        'Dokumentasi',
-        'Dekorasi',
-        'Entertainment'
-    ];
-
-    $has_vendor = false; // Cek apakah ada vendor yang diisi
-
-    foreach ($vendor_fields as $index => $field) {
-        if (!empty($vendor->$field)) {
-            echo "<p class='text-white-700 font-medium'><strong>{$vendor_types[$index]} :</strong> {$vendor->$field}</p>";
-            $has_vendor = true;
-        }
-    }
-
-    // Jika semua kolom kosong, tampilkan pesan "Belum ada vendor" dan tombol "Add Vendor"
-    if (!$has_vendor) {
-        echo "<p class='text-red-500 font-semibold'>Belum ada vendor.</p>";
-        echo '<a href="' . site_url('crud_vendor/create/' . $project->id_session) . '" class="ml-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">Add Vendor</a>';
-    }
-    ?>
-
-<?php
-// Jika sudah ada vendor, tampilkan tombol Edit Vendor di luar box
-if ($has_vendor) {
-    echo '<a href="' . site_url('crud_vendor/edit/' . $vendor->id_session) . '" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Edit Vendor</a>';
-}
-?>
+    <?php if (empty($vendors)): ?>
+        <p class='text-red-500 font-semibold'>Belum ada vendor.</p>
+        <a href="<?= site_url('crud_vendor/create/' . $project->id_session) ?>" class="ml-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">Add Vendor</a>
+    <?php else: ?>
+        <?php foreach ($vendors as $vendor): ?>
+            <div class="mb-4">
+                <p class='text-white-700 font-medium'><strong>Type:</strong> <?= $vendor->type ?></p>
+                <p class='text-white-700 font-medium'><strong>Social Media:</strong> <?= $vendor->social_media ?></p>
+                <p class='text-white-700 font-medium'><strong>Contact Name:</strong> <?= $vendor->contact_name ?></p>
+                <p class='text-white-700 font-medium'><strong>Phone:</strong> <?= $vendor->phone ?></p>
+                <p class='text-white-700 font-medium'><strong>Detail:</strong> <?= $vendor->detail ?></p>
+                <p class='text-white-700 font-medium'><strong>Photo 1:</strong> <img src="<?= base_url('uploads/' . $vendor->photo1) ?>" alt="Photo 1" /></p>
+                <p class='text-white-700 font-medium'><strong>Photo 2:</strong> <img src="<?= base_url('uploads/' . $vendor->photo2) ?>" alt="Photo 2" /></p>
+                <p class='text-white-700 font-medium'><strong>Photo 3:</strong> <img src="<?= base_url('uploads/' . $vendor->photo3) ?>" alt="Photo 3" /></p>
+                <p class='text-white-700 font-medium'><strong>Photo 4:</strong> <img src="<?= base_url('uploads/' . $vendor->photo4) ?>" alt="Photo 4" /></p>
+                <p class='text-white-700 font-medium'><strong>Photo 5:</strong> <img src="<?= base_url('uploads/' . $vendor->photo5) ?>" alt="Photo 5" /></p>
+                <a href="<?= site_url('crud_vendor/edit/' . $vendor->id) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Edit Vendor</a>
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
 </div>
-
-
-
 
                 <a href="<?= site_url('project/edit/'. $project->id_session) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Edit</a>
                 <a href="javascript:history.back()" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a>
