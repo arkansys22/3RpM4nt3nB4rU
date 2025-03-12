@@ -594,12 +594,12 @@ class Crud_clients extends CI_Controller {
 
         }else if($this->session->level=='4'){
             cek_session_akses_staff_admin('clients',$this->session->id_session);
-            $data['clients'] = $this->Clients_model->get_client_by_session($id_session);
-            $this->load->view('clients/c_edit', $data);
+            redirect(base_url());
 
         }else if($this->session->level=='5'){
             cek_session_akses_client('clients',$this->session->id_session);
-            redirect(base_url());
+            $data['clients'] = $this->Clients_model->get_client_by_session($id_session);
+            $this->load->view('clients/c_edit', $data);
             
         }else{
             redirect(base_url('client/login'));

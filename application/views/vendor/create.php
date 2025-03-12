@@ -34,53 +34,40 @@
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
               <h2 class="text-2xl font-bold mb-4">Tambah Vendor</h2>
-              <form action="<?= base_url('crud_vendor/store') ?>" method="POST" class="bg-white p-6 shadow-md rounded">
+              <form action="<?= base_url('crud_vendor/store') ?>" method="POST" enctype="multipart/form-data" class="bg-white p-6 shadow-md rounded">
                 <input type="hidden" name="id_session" value="<?= $project->id_session ?>">
-                
-                <?php 
-                // Daftar jenis vendor yang akan digunakan sebagai label
-                $vendor_labels = [
-                    'Venue',
-                    'MC',
-                    'WO',
-                    'MUA',
-                    'Perlengkapan Catering',
-                    'Catering',
-                    'Dokumentasi',
-                    'Dekorasi',
-                    'Entertainment'
-                ];
-                
-                for ($i = 1; $i <= 9; $i++): ?>
-                <h3 class="font-semibold mb-2"><?= $vendor_labels[$i - 1] ?></h3> <!-- Ubah label sesuai daftar -->
-
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
-                    <div>
-                        <label class="block mb-2">Nama Vendor</label>
-                        <input type="text" name="vendor_<?= $i ?>" class="w-full px-4 py-2 border rounded" value="<?= $i === 3 ? 'Mantenbaru Organizer' : '' ?>" <?= $i === 3 ? 'readonly' : '' ?>>
-                    </div>
-                    <div>
-                        <label class="block mb-2">Social Media</label>
-                        <input type="text" name="social_media_<?= $i ?>" class="w-full px-4 py-2 border rounded" value="<?= $i === 3 ? 'Mantenbaru_organizer' : '' ?>" <?= $i === 3 ? 'readonly' : '' ?>>
-                    </div>
-                    <div>
-                        <label class="block mb-2">Nama Kontak</label>
-                        <input type="text" name="contact_name_<?= $i ?>" class="w-full px-4 py-2 border rounded" value="<?= $i === 3 ? 'Icha' : '' ?>" <?= $i === 3 ? 'readonly' : '' ?>>
-                    </div>
-                    <div>
-                        <label class="block mb-2">No HP</label>
-                        <input type="text" name="phone_<?= $i ?>" class="w-full px-4 py-2 border rounded" value="<?= $i === 3 ? '0812-1012-6196' : '' ?>" <?= $i === 3 ? 'readonly' : '' ?>>
-                    </div>
-                </div>
-
-                <label class="block mb-2">Detail</label>
-                <textarea name="detail_<?= $i ?>" class="w-full px-4 py-2 border rounded mb-4"></textarea>
-                <?php endfor; ?>
-                
-                <div class="flex flex-col sm:flex-row justify-end">
-                    <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded w-full hover:bg-green-600 sm:w-24 mb-2 sm:mb-0 text-center">Simpan</button>
-                    <a href="<?= site_url('project') ?>" class="sm:ml-2 bg-gray-500 text-white px-4 py-2 rounded w-full hover:bg-gray-600 sm:w-24 text-center">Batal</a>
-                </div>
+                <label class="block mb-2 text-black dark:text-white"><strong>Type:</strong></label>
+                <select name="type" class="block w-full mb-2">
+                    <option value="Venue">Venue</option>
+                    <option value="MC">MC</option>
+                    <option value="WO">WO</option>
+                    <option value="MUA">MUA</option>
+                    <option value="Perlengkapan Catering">Perlengkapan Catering</option>
+                    <option value="Catering">Catering</option>
+                    <option value="Dokumentasi">Dokumentasi</option>
+                    <option value="Dekorasi">Dekorasi</option>
+                    <option value="Entertainment">Entertainment</option>
+                </select>
+                <label class="block mb-2 text-black dark:text-white"><strong>Social Media:</strong></label>
+                <input type="text" name="social_media" class="block w-full mb-2">
+                <label class="block mb-2 text-black dark:text-white"><strong>Contact Name:</strong></label>
+                <input type="text" name="contact_name" class="block w-full mb-2">
+                <label class="block mb-2 text-black dark:text-white"><strong>Phone:</strong></label>
+                <input type="text" name="phone" class="block w-full mb-2">
+                <label class="block mb-2 text-black dark:text-white"><strong>Detail:</strong></label>
+                <textarea name="detail" class="block w-full mb-2"></textarea>
+                <label class="block mb-2 text-black dark:text-white"><strong>Photo 1:</strong></label>
+                <input type="file" name="photo1" class="block w-full mb-2">
+                <label class="block mb-2 text-black dark:text-white"><strong>Photo 2:</strong></label>
+                <input type="file" name="photo2" class="block w-full mb-2">
+                <label class="block mb-2 text-black dark:text-white"><strong>Photo 3:</strong></label>
+                <input type="file" name="photo3" class="block w-full mb-2">
+                <label class="block mb-2 text-black dark:text-white"><strong>Photo 4:</strong></label>
+                <input type="file" name="photo4" class="block w-full mb-2">
+                <label class="block mb-2 text-black dark:text-white"><strong>Photo 5:</strong></label>
+                <input type="file" name="photo5" class="block w-full mb-2">
+                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded w-full hover:bg-green-600 sm:w-24 mb-2 sm:mb-0 text-center">Simpan</button>
+                <a href="<?= site_url('project') ?>" class="sm:ml-2 bg-gray-500 text-white px-4 py-2 rounded w-full hover:bg-gray-600 sm:w-24 text-center">Batal</a>
               </form>
             </div>
           </div>

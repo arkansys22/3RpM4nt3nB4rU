@@ -34,53 +34,40 @@
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
               <h1 class="text-2xl font-bold mb-4">Edit Vendor</h1>
-              <form action="<?= base_url('crud_vendor/update/' . $vendor->id_session) ?>" method="post" class="bg-white p-6 shadow-md rounded">
+              <form action="<?= base_url('crud_vendor/update/' . $vendor->id) ?>" method="post" enctype="multipart/form-data" class="bg-white p-6 shadow-md rounded">
                 <input type="hidden" name="id_session" value="<?= $vendor->id_session ?>">
-
-                <?php 
-                // Daftar jenis vendor yang akan digunakan sebagai label
-                $vendor_labels = [
-                    'Venue',
-                    'MC',
-                    'WO',
-                    'MUA',
-                    'Perlengkapan Catering',
-                    'Catering',
-                    'Dokumentasi',
-                    'Dekorasi',
-                    'Entertainment'
-                ];
-
-                for ($i = 1; $i <= 9; $i++): ?>
-                        <h3 class="font-semibold mb-2"><?= $vendor_labels[$i - 1] ?></h3> <!-- Ubah label sesuai daftar -->
-
-                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
-                            <div>
-                                <label class="block mb-2">Nama Vendor</label>
-                                <input type="text" name="vendor_<?= $i ?>" value="<?= $i == 3 ? 'Mantenbaru Organizer' : $vendor->{'vendor_'.$i} ?>" class="w-full px-4 py-2 border rounded" <?= $i == 3 ? 'readonly' : '' ?>>
-                            </div>
-                            <div>
-                                <label class="block mb-2">Social Media</label>
-                                <input type="text" name="social_media_<?= $i ?>" value="<?= $i == 3 ? 'Mantenbaru_organizer' : $vendor->{'social_media_'.$i} ?>" class="w-full px-4 py-2 border rounded" <?= $i == 3 ? 'readonly' : '' ?>>
-                            </div>
-                            <div>
-                                <label class="block mb-2">Nama Kontak</label>
-                                <input type="text" name="contact_name_<?= $i ?>" value="<?= $i == 3 ? 'Icha' : $vendor->{'contact_name_'.$i} ?>" class="w-full px-4 py-2 border rounded" <?= $i == 3 ? 'readonly' : '' ?>>
-                            </div>
-                            <div>
-                                <label class="block mb-2">Nomor Telepon</label>
-                                <input type="text" name="phone_<?= $i ?>" value="<?= $i == 3 ? '0812-1012-6196' : $vendor->{'phone_'.$i} ?>" class="w-full px-4 py-2 border rounded" <?= $i == 3 ? 'readonly' : '' ?>>
-                            </div>
-                        </div>
-
-                        <label class="block mb-2">Detail</label>
-                        <textarea name="detail_<?= $i ?>" class="w-full px-4 py-2 border rounded mb-4"><?= $vendor->{'detail_'.$i} ?></textarea>
-                  <?php endfor; ?>
-
-                <div class="flex flex-col sm:flex-row justify-end">
+                <label class="block mb-2 text-black dark:text-white"><strong>Type:</strong></label>
+                <select name="type" class="block w-full mb-2">
+                    <option value="Venue" <?= $vendor->type == 'Venue' ? 'selected' : '' ?>>Venue</option>
+                    <option value="MC" <?= $vendor->type == 'MC' ? 'selected' : '' ?>>MC</option>
+                    <option value="WO" <?= $vendor->type == 'WO' ? 'selected' : '' ?>>WO</option>
+                    <option value="MUA" <?= $vendor->type == 'MUA' ? 'selected' : '' ?>>MUA</option>
+                    <option value="Perlengkapan Catering" <?= $vendor->type == 'Perlengkapan Catering' ? 'selected' : '' ?>>Perlengkapan Catering</option>
+                    <option value="Catering" <?= $vendor->type == 'Catering' ? 'selected' : '' ?>>Catering</option>
+                    <option value="Dokumentasi" <?= $vendor->type == 'Dokumentasi' ? 'selected' : '' ?>>Dokumentasi</option>
+                    <option value="Dekorasi" <?= $vendor->type == 'Dekorasi' ? 'selected' : '' ?>>Dekorasi</option>
+                    <option value="Entertainment" <?= $vendor->type == 'Entertainment' ? 'selected' : '' ?>>Entertainment</option>
+                </select>
+                <label class="block mb-2 text-black dark:text-white"><strong>Social Media:</strong></label>
+                <input type="text" name="social_media" value="<?= $vendor->social_media ?>" class="block w-full mb-2">
+                <label class="block mb-2 text-black dark:text-white"><strong>Contact Name:</strong></label>
+                <input type="text" name="contact_name" value="<?= $vendor->contact_name ?>" class="block w-full mb-2">
+                <label class="block mb-2 text-black dark:text-white"><strong>Phone:</strong></label>
+                <input type="text" name="phone" value="<?= $vendor->phone ?>" class="block w-full mb-2">
+                <label class="block mb-2 text-black dark:text-white"><strong>Detail:</strong></label>
+                <textarea name="detail" class="block w-full mb-2"><?= $vendor->detail ?></textarea>
+                <label class="block mb-2 text-black dark:text-white"><strong>Photo 1:</strong></label>
+                <input type="file" name="photo1" class="block w-full mb-2">
+                <label class="block mb-2 text-black dark:text-white"><strong>Photo 2:</strong></label>
+                <input type="file" name="photo2" class="block w-full mb-2">
+                <label class="block mb-2 text-black dark:text-white"><strong>Photo 3:</strong></label>
+                <input type="file" name="photo3" class="block w-full mb-2">
+                <label class="block mb-2 text-black dark:text-white"><strong>Photo 4:</strong></label>
+                <input type="file" name="photo4" class="block w-full mb-2">
+                <label class="block mb-2 text-black dark:text-white"><strong>Photo 5:</strong></label>
+                <input type="file" name="photo5" class="block w-full mb-2">
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded w-full hover:bg-blue-600 sm:w-24 mb-2 sm:mb-0 text-center">Update</button>
                 <a href="javascript:history.back()" class="sm:ml-2 bg-gray-500 text-white px-4 py-2 rounded w-full hover:bg-gray-600 sm:w-24 text-center">Batal</a>
-                </div>
               </form>
             </div>
           </div>

@@ -13,9 +13,9 @@ class Vendor_model extends CI_Model {
         return $this->db->insert($this->table, $data);
     }
 
-    public function update_vendor($id_session, $data) {
-        $this->db->where('id_session', $id_session);
-        return $this->db->update('vendor', $data);
+    public function update_vendor($id, $data) {
+        $this->db->where('id', $id);
+        return $this->db->update($this->table, $data);
     }
 
 }
