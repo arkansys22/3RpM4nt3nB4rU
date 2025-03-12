@@ -36,11 +36,15 @@
               <h2 class="text-2xl font-bold mb-4">Tambah Vendor</h2>
               <form action="<?= base_url('crud_vendor/store') ?>" method="POST" enctype="multipart/form-data" class="bg-white p-6 shadow-md rounded">
                 <input type="hidden" name="id_session" value="<?= $project->id_session ?>">
-                <label class="block mb-2 text-black dark:text-white"><strong>Type:</strong></label>
-                <select name="type" class="block w-full mb-2">
+                <label class="block mb-2"><strong>Nama Vendor</strong></label>
+                <input type="text" name="vendor" class="w-full px-4 py-2 border rounded mb-4">
+                <label class="block mb-2"><strong>Jenis</strong></label>
+                <select name="type" class="w-full px-4 py-2 border rounded mb-4">
+                    <option value="">-</option>
                     <option value="Venue">Venue</option>
-                    <option value="MC">MC</option>
-                    <option value="WO">WO</option>
+                    <option value="MC Akad">MC Akad</option>
+                    <option value="MC Resepsi">MC Resepsi</option>
+                    <option value="Wedding Organizer">Wedding Organizer</option>
                     <option value="MUA">MUA</option>
                     <option value="Perlengkapan Catering">Perlengkapan Catering</option>
                     <option value="Catering">Catering</option>
@@ -48,26 +52,28 @@
                     <option value="Dekorasi">Dekorasi</option>
                     <option value="Entertainment">Entertainment</option>
                 </select>
-                <label class="block mb-2 text-black dark:text-white"><strong>Social Media:</strong></label>
-                <input type="text" name="social_media" class="block w-full mb-2">
-                <label class="block mb-2 text-black dark:text-white"><strong>Contact Name:</strong></label>
-                <input type="text" name="contact_name" class="block w-full mb-2">
-                <label class="block mb-2 text-black dark:text-white"><strong>Phone:</strong></label>
-                <input type="text" name="phone" class="block w-full mb-2">
-                <label class="block mb-2 text-black dark:text-white"><strong>Detail:</strong></label>
-                <textarea name="detail" class="block w-full mb-2"></textarea>
-                <label class="block mb-2 text-black dark:text-white"><strong>Photo 1:</strong></label>
-                <input type="file" name="photo1" class="block w-full mb-2">
-                <label class="block mb-2 text-black dark:text-white"><strong>Photo 2:</strong></label>
-                <input type="file" name="photo2" class="block w-full mb-2">
-                <label class="block mb-2 text-black dark:text-white"><strong>Photo 3:</strong></label>
-                <input type="file" name="photo3" class="block w-full mb-2">
-                <label class="block mb-2 text-black dark:text-white"><strong>Photo 4:</strong></label>
-                <input type="file" name="photo4" class="block w-full mb-2">
-                <label class="block mb-2 text-black dark:text-white"><strong>Photo 5:</strong></label>
-                <input type="file" name="photo5" class="block w-full mb-2">
-                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded w-full hover:bg-green-600 sm:w-24 mb-2 sm:mb-0 text-center">Simpan</button>
-                <a href="<?= site_url('project') ?>" class="sm:ml-2 bg-gray-500 text-white px-4 py-2 rounded w-full hover:bg-gray-600 sm:w-24 text-center">Batal</a>
+                <label class="block mb-2"><strong>Sosial Media</strong></label>
+                <input type="text" name="social_media" class="w-full px-4 py-2 border rounded mb-4">
+                <label class="block mb-2"><strong>Nama Kontak</strong></label>
+                <input type="text" name="contact_name" class="w-full px-4 py-2 border rounded mb-4">
+                <label class="block mb-2"><strong>No HP</strong></label>
+                <input type="text" name="phone" class="w-full px-4 py-2 border rounded mb-4">
+                <label class="block mb-2"><strong>Detail</strong></label>
+                <textarea name="detail" class="w-full px-4 py-2 border rounded mb-4"></textarea>
+                <label class="block mb-2"><strong>Photo 1</strong></label>
+                <input type="file" name="photo1" class="w-full px-4 py-2 border rounded mb-4">
+                <label class="block mb-2"><strong>Photo 2</strong></label>
+                <input type="file" name="photo2" class="w-full px-4 py-2 border rounded mb-4">
+                <label class="block mb-2"><strong>Photo 3</strong></label>
+                <input type="file" name="photo3" class="w-full px-4 py-2 border rounded mb-4">
+                <label class="block mb-2"><strong>Photo 4</strong></label>
+                <input type="file" name="photo4" class="w-full px-4 py-2 border rounded mb-4">
+                <label class="block mb-2"><strong>Photo 5</strong></label>
+                <input type="file" name="photo5" class="w-full px-4 py-2 border rounded mb-4">
+                <div class="flex flex-col sm:flex-row justify-end">
+                  <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded w-full hover:bg-green-600 sm:w-24 mb-2 sm:mb-0 text-center">Simpan</button>
+                  <a href="<?= site_url('project') ?>" class="sm:ml-2 bg-gray-500 text-white px-4 py-2 rounded w-full hover:bg-gray-600 sm:w-24 text-center">Batal</a>
+                </div>
               </form>
             </div>
           </div>
