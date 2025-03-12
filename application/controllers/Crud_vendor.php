@@ -8,50 +8,88 @@ class Crud_vendor extends CI_Controller {
         $this->load->model('Vendor_model');
         $this->load->model('project_model');
         $this->load->model('Naskah_model');
+        $this->load->library('upload');
     }
 
     public function lihat($id_session) {
-        $data['vendor'] = $this->Vendor_model->get_vendor_by_id($id_session);
         $data['project'] = $this->project_model->get_project_by_session($id_session);
-    
+        $data['vendors'] = $this->Vendor_model->get_vendor_by_id($id_session);
+
         $this->load->view('project/lihat', $data);
     }
 
     public function create($id_session) {
         $data['project'] = $this->project_model->get_project_by_session($id_session);
-        $data['vendor'] = $this->Vendor_model->get_vendor_by_id($id_session);
+        $data['vendors'] = $this->Vendor_model->get_vendor_by_id($id_session);
     
         $this->load->view('vendor/create', $data);
     }    
 
     public function store() {
-        $data = array(
-            'id_session' => $this->input->post('id_session'),
-            'type' => $this->input->post('type'),
-            'social_media' => $this->input->post('social_media'),
-            'contact_name' => $this->input->post('contact_name'),
-            'phone' => $this->input->post('phone'),
-            'detail' => $this->input->post('detail'),
-            'photo1' => $this->upload_photo('photo1'),
-            'photo2' => $this->upload_photo('photo2'),
-            'photo3' => $this->upload_photo('photo3'),
-            'photo4' => $this->upload_photo('photo4'),
-            'photo5' => $this->upload_photo('photo5')
-        );
+        $id_session = $this->input->post('id_session'); // Ambil ID session dari form
+        $vendor_id = hash('sha256', bin2hex(random_bytes(16)));
+        $data = [
+            'id_session'    => $id_session,
+            'vendor_id'     => $vendor_id,
+            'vendor'        => $this->input->post('vendor'),
+            'type'          => $this->input->post('type'),
+            'social_media'  => $this->input->post('social_media'),
+            'contact_name'  => $this->input->post('contact_name'),
+            'phone'         => $this->input->post('phone'),
+            'detail'        => $this->input->post('detail'),
+        ];
     
+        // Konfigurasi upload
+        $config['upload_path']   = './uploads/';
+        $config['allowed_types'] = 'jpg|jpeg|png';
+        $config['max_size']      = 10024; // 2MB
+        $config['encrypt_name']  = TRUE;
+    
+        if (!is_dir($config['upload_path'])) {
+            mkdir($config['upload_path'], 0777, true);
+        }
+    
+        // Upload foto 1-5
+        for ($i = 1; $i <= 5; $i++) {
+            $input_name = 'photo' . $i;
+            if (!empty($_FILES[$input_name]['name'])) {
+                $_FILES['file']['name']     = $_FILES[$input_name]['name'];
+                $_FILES['file']['type']     = $_FILES[$input_name]['type'];
+                $_FILES['file']['tmp_name'] = $_FILES[$input_name]['tmp_name'];
+                $_FILES['file']['error']    = $_FILES[$input_name]['error'];
+                $_FILES['file']['size']     = $_FILES[$input_name]['size'];
+    
+                $this->upload->initialize($config);
+    
+                if ($this->upload->do_upload('file')) {
+                    $upload_data = $this->upload->data();
+                    $data['photo' . $i] = $upload_data['file_name'];
+                } else {
+                    $this->session->set_flashdata('message', '<p style="color:red;">Gagal upload ' . $input_name . ': ' . $this->upload->display_errors() . '</p>');
+                    redirect('crud_vendor/create');
+                }
+            }
+        }
+    
+        // Simpan ke database
         $this->Vendor_model->insert_vendor($data);
-        redirect('project/lihat/' . $this->input->post('id_session'));
+        $this->session->set_flashdata('message', '<p style="color:green;">Vendor berhasil disimpan!</p>');
+    
+        // Redirect ke halaman project/lihat/{id_session}
+        redirect('project/lihat/' . $id_session);
     }
+    
 
-    public function edit($id_session) {
-        $data['vendor'] = $this->Vendor_model->get_vendor_by_id($id_session);
+    public function edit($id_session, $vendor_id) {
+        $data['vendor'] = $this->Vendor_model->get_vendor_by_id_and_vendor_id($id_session, $vendor_id);
         $data['project'] = $this->project_model->get_project_by_session($id_session);
     
         $this->load->view('vendor/edit', $data);
     }
     
-    public function update($id) {
+    public function update($id_session, $vendor_id) {
         $data = array(
+            'vendor' => $this->input->post('vendor'),
             'type' => $this->input->post('type'),
             'social_media' => $this->input->post('social_media'),
             'contact_name' => $this->input->post('contact_name'),
@@ -64,28 +102,31 @@ class Crud_vendor extends CI_Controller {
             'photo5' => $this->upload_photo('photo5')
         );
     
-        $this->Vendor_model->update_vendor($id, $data);
-        redirect('project/lihat/' . $this->input->post('id_session'));
+        $this->Vendor_model->update_vendor($id_session, $vendor_id, $data);
+        redirect('project/lihat/' . $id_session);
     }
-    
-    private function upload_photo($field_name) {
-        if (!empty($_FILES[$field_name]['name'])) {
-            $config['upload_path'] = './uploads/';
-            $config['allowed_types'] = 'jpg|jpeg|png';
-            $config['file_name'] = time() . '_' . $_FILES[$field_name]['name'];
-    
-            $this->load->library('upload', $config);
-    
-            if ($this->upload->do_upload($field_name)) {
-                return $this->upload->data('file_name');
-            }
+
+    public function delete($id_session, $vendor_id) {
+        // Cek apakah vendor dengan id_session dan vendor_id tersebut ada
+        $vendor = $this->db->get_where('vendor', ['id_session' => $id_session, 'vendor_id' => $vendor_id])->row();
+
+        if (!$vendor) {
+            $this->session->set_flashdata('error', 'Vendor tidak ditemukan.');
+            redirect($_SERVER['HTTP_REFERER']); // Kembali ke halaman sebelumnya
         }
-        return null;
+
+        // Hapus vendor
+        if ($this->Vendor_model->delete_vendor($id_session, $vendor_id)) {
+            $this->session->set_flashdata('success', 'Vendor berhasil dihapus.');
+        } else {
+            $this->session->set_flashdata('error', 'Gagal menghapus vendor.');
+        }
+        redirect('project/lihat/' . $id_session);
     }
 
     public function view($id_session) {
         $data['client'] = $this->Naskah_model->get_by_session($id_session);
-        $data['vendor'] = $this->Naskah_model->get_vendors_by_session($id_session);
+        $data['vendors'] = $this->Vendor_model->get_vendor_by_id($id_session);
 
         if (!$data['client']) {
             show_404();
@@ -99,7 +140,7 @@ class Crud_vendor extends CI_Controller {
     
         // Ambil data client
         $data['client'] = $this->Naskah_model->get_by_session($id_session);
-        $data['vendor'] = $this->Naskah_model->get_vendors_by_session($id_session);
+        $data['vendors'] = $this->Vendor_model->get_vendor_by_id($id_session);
         if (!$data['client']) {
             show_404();
         }

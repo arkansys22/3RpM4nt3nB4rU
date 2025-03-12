@@ -3,19 +3,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Vendor_model extends CI_Model {
 
-    private $table = 'vendor';
-
     public function get_vendor_by_id($id_session) {
-        return $this->db->get_where('vendor', ['id_session' => $id_session])->row();
+        return $this->db->get_where('vendor', ['id_session' => $id_session])->result();
     }
 
     public function insert_vendor($data) {
-        return $this->db->insert($this->table, $data);
+        return $this->db->insert('vendor', $data);
     }
 
-    public function update_vendor($id, $data) {
-        $this->db->where('id', $id);
-        return $this->db->update($this->table, $data);
+    public function get_vendor_by_id_and_vendor_id($id_session, $vendor_id) {
+        return $this->db->get_where('vendor', ['id_session' => $id_session, 'vendor_id' => $vendor_id])->row();
     }
 
+    public function update_vendor($id_session, $vendor_id, $data) {
+        $this->db->where('id_session', $id_session);
+        $this->db->where('vendor_id', $vendor_id);
+        return $this->db->update('vendor', $data);
+    }
+
+    public function delete_vendor($id_session, $vendor_id) {
+        $this->db->where('id_session', $id_session);
+        $this->db->where('vendor_id', $vendor_id);
+        return $this->db->delete('vendor');
+    }
 }
