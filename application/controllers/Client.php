@@ -48,24 +48,25 @@ class Client extends CI_Controller
             'username' => $row['username'],
             'level' => $row['level'],
             'id_user' => $row['id_user'],
-            'id_session' => $row['id_session']
+            'id_session' => $row['client_idsession'] // Use client_idsession
           )
         );
 
         $this->session->set_flashdata('user_loggedin', 'Selamat Anda Berhasil Login');
-        $id = array('id_session' => $this->session->id_session);
+        $id = array('id_session' => $this->session->userdata('id_session'));
         $data = array('user_login_status' => 'online');
         $this->db->update('user', $data, $id); // Change table to 'user'
 
         $data2 = array(
-          'log_activity_user_id' => $row['id_session'],
+          'log_activity_user_id' => $row['client_idsession'], // Use client_idsession
           'log_activity_modul' => 'login',
           'log_activity_status' => 'login',
           'log_activity_platform' => $agent,
           'log_activity_ip' => $this->input->ip_address()
         );
         $this->db->insert('log_activity', $data2);
-        redirect('panel');
+        $id_session = $this->session->userdata('id_session'); // Ensure id_session is set
+        redirect('clients/c_lihat/'.$id_session);
       } else {
         // Set message
         $this->session->set_flashdata('login_failed', 'username and password you entered is unregisted');
@@ -74,5 +75,4 @@ class Client extends CI_Controller
     }
   }
 
-  // ...existing code for registration and other methods...
 }
