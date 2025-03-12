@@ -103,6 +103,7 @@ class crud_user extends CI_Controller {
             cek_session_akses_developer('user',$this->session->id_session);
             $data['level'] = $this->Crud_m->view_ordering('user_level','user_level_id','asc');
             $data['crews'] = $this->Crud_m->view_ordering('crews','id','asc');
+            $data['clients'] = $this->Crud_m->view_ordering('clients','id','asc');
             $data['pc'] = $this->users_model->get_users_by_session($id_session);
             $this->load->view('user/edit', $data);
             }else{
@@ -133,6 +134,7 @@ class crud_user extends CI_Controller {
             'username'  => $this->input->post('username'),
             'nama'  => $this->input->post('nama'),
             'crews_idsession'        => $this->input->post('crewid'),
+            'client_idsession'        => $this->input->post('clientid'),
             'email'        => $this->input->post('email'),
             'level'    => $this->input->post('level')       
             );
@@ -143,6 +145,7 @@ class crud_user extends CI_Controller {
             'email'        => $this->input->post('email'),
             'level'    => $this->input->post('level'),
             'crews_idsession'        => $this->input->post('crewid'),
+            'client_idsession'        => $this->input->post('clientid'),
             'password'    => sha1($this->input->post('password'))       
             );
 
