@@ -123,30 +123,66 @@
 
     <h2 class="text-lg font-bold mb-2">Vendor</h2>
 
-<div class="border p-4 mb-4 text-black dark:text-white">
-    <?php if (empty($vendors)): ?>
-        <p class='text-red-500 font-semibold'>Belum ada vendor.</p>
-        <a href="<?= site_url('crud_vendor/create/' . $project->id_session) ?>" class="ml-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">Add Vendor</a>
-    <?php else: ?>
+    <div class="border p-4 mb-4 text-black dark:text-white">
+    <?php
+    // Tentukan urutan yang diinginkan
+    $type_order = [
+        'Venue', 'MC Akad', 'MC Resepsi', 'Wedding Organizer', 'MUA',
+        'Perlengkapan Catering', 'Catering', 'Dokumentasi',
+        'Dekorasi', 'Entertaiment'
+    ];
+
+    // Urutkan vendor berdasarkan tipe
+    usort($vendors, function ($a, $b) use ($type_order) {
+        $posA = array_search($a->type, $type_order);
+        $posB = array_search($b->type, $type_order);
+
+        // Jika tidak ditemukan dalam array, tempatkan di akhir
+        $posA = ($posA === false) ? count($type_order) : $posA;
+        $posB = ($posB === false) ? count($type_order) : $posB;
+
+        return $posA - $posB;
+    });
+    ?>
+
+    <?php if (!empty($vendors)): ?>
         <?php foreach ($vendors as $vendor): ?>
-            <div class="mb-4">
-                <p class='text-white-700 font-medium'><strong>Type:</strong> <?= $vendor->type ?></p>
-                <p class='text-white-700 font-medium'><strong>Social Media:</strong> <?= $vendor->social_media ?></p>
-                <p class='text-white-700 font-medium'><strong>Contact Name:</strong> <?= $vendor->contact_name ?></p>
-                <p class='text-white-700 font-medium'><strong>Phone:</strong> <?= $vendor->phone ?></p>
-                <p class='text-white-700 font-medium'><strong>Detail:</strong> <?= $vendor->detail ?></p>
-                <p class='text-white-700 font-medium'><strong>Photo 1:</strong> <img src="<?= base_url('uploads/' . $vendor->photo1) ?>" alt="Photo 1" /></p>
-                <p class='text-white-700 font-medium'><strong>Photo 2:</strong> <img src="<?= base_url('uploads/' . $vendor->photo2) ?>" alt="Photo 2" /></p>
-                <p class='text-white-700 font-medium'><strong>Photo 3:</strong> <img src="<?= base_url('uploads/' . $vendor->photo3) ?>" alt="Photo 3" /></p>
-                <p class='text-white-700 font-medium'><strong>Photo 4:</strong> <img src="<?= base_url('uploads/' . $vendor->photo4) ?>" alt="Photo 4" /></p>
-                <p class='text-white-700 font-medium'><strong>Photo 5:</strong> <img src="<?= base_url('uploads/' . $vendor->photo5) ?>" alt="Photo 5" /></p>
-                <a href="<?= site_url('crud_vendor/edit/' . $vendor->id) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Edit Vendor</a>
+            <div class="mb-2 flex items-center justify-between border-b pb-2">
+                <div>
+                    <p class='text-black dark:text-white font-medium'>
+                        <strong><?= htmlspecialchars($vendor->type) ?>:</strong> 
+                        <?= htmlspecialchars($vendor->vendor) ?>
+                    </p>
+                </div>
+                <div class="flex gap-2">
+                    <!-- Tombol Edit -->
+                    <a href="<?= site_url('crud_vendor/edit/' . $vendor->id_session . '/' . $vendor->vendor_id) ?>" 
+                       class="bg-green-500 text-white text-sm px-2 py-1 rounded-md hover:bg-green-600">
+                       Edit
+                    </a>
+
+                    <!-- Tombol Hapus -->
+                    <a href="<?= site_url('crud_vendor/delete/' . $vendor->id_session . '/' . $vendor->vendor_id) ?>" 
+                       onclick="return confirm('Apakah Anda yakin ingin menghapus vendor ini?')"
+                       class="bg-red-500 text-white text-sm px-2 py-1 rounded-md hover:bg-red-600">
+                       Hapus
+                    </a>
+                </div>
             </div>
         <?php endforeach; ?>
+    <?php else: ?>
+        <p class='text-red-500 font-semibold'>Belum ada vendor.</p>
     <?php endif; ?>
+
+    <!-- Tombol Tambah Vendor -->
+    <a href="<?= site_url('crud_vendor/create/' . $project->id_session) ?>" 
+       class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
+       Add Vendor
+    </a>
 </div>
 
-                <a href="<?= site_url('project/edit/'. $project->id_session) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Edit</a>
+
+                <a href="<?= site_url('project/edit/'. $project->id_session) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Edit Project</a>
                 <a href="javascript:history.back()" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a>
               </form>
 
