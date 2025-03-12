@@ -15,7 +15,7 @@
         const crewIdSelect = document.querySelector('select[name="crewid"]');
 
         function toggleFields() {
-          if (levelSelect.value === '4') { // Assuming '4' is the value for client level
+          if (levelSelect.value === '5') { // Assuming '5' is the value for client level
             clientIdField.style.display = 'block';
             crewIdField.style.display = 'none';
             crewIdSelect.value = '-';
