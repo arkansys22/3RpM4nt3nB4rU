@@ -41,7 +41,7 @@
 
 			      <!-- Logo Header -->
 			      <a class="block flex-shrink-0 lg:hidden" href="#"> 
-			        <img src="src/images/logo/logo-icon.svg" alt="Logo" />
+			        <img src="<?php echo base_url()?>assets/backend/src/images/logomantenbaru.png" alt="Logo" style="width:200px; height: 100%; "/>
 			      </a>
 			    </div>
 			    <div class="hidden sm:block">
@@ -149,7 +149,7 @@
 			          >
 			            <li>
 			              <a
-			                href="profile.html"
+			                href="#"
 			                class="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
 			              >
 			                <svg
