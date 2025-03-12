@@ -729,7 +729,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
 							<div class="col-lg-4 col-md-6">
 								<div class="blog-box">
 									<div class="blog-images">
-										<img src="<?php echo base_url()?>assets/frontend/assets/images/b1.jpg" class="img-fluid" alt="">
+										<img src="<?php echo base_url()?>assets/frontend/assets/images/agenda1.jpg" class="img-fluid" alt="">
 									</div>
 									<div class="blog-details">
 										<ul class="post-meta-one">
@@ -738,12 +738,11 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
 											</li>
 										</ul>
 
-										<div class="blog-title" data-toggle="modal" data-target="#blogmodal">
+										<div class="blog-title">
 											Brainstorming Concept
 										</div>
 										<p class="text">
-											Repulsive questions contented him few extensive supported. Of remarkably thoroughly he appearance
-											in. Supposing tolerably applauded.
+											Penyusunan konsep pernikahan mulai dari souvenir, undangan pernikahan, susunan acara, dekorasi dan lain lain.
 										</p>
 									</div>
 								</div>
@@ -751,7 +750,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
 							<div class="col-lg-4 col-md-6">
 								<div class="blog-box">
 									<div class="blog-images">
-										<img src="<?php echo base_url()?>assets/frontend/assets/images/b2.jpg" class="img-fluid" alt="">
+										<img src="<?php echo base_url()?>assets/frontend/assets/images/agenda2.jpg" class="img-fluid" alt="">
 									</div>
 									<div class="blog-details">
 										<ul class="post-meta-one">
@@ -760,12 +759,11 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
 											</li>
 										</ul>
 
-										<div class="blog-title" data-toggle="modal" data-target="#blogmodal">
-											Technical Meeting At Venue
+										<div class="blog-title">
+											Technical Meeting
 										</div>
 										<p class="text">
-											Repulsive questions contented him few extensive supported. Of remarkably thoroughly he appearance
-											in. Supposing tolerably applauded.
+											Pertemuan dengan para vendor pernikahan sebagai tujuan untuk memastikan berjalan sesuai yang direncanakan.
 										</p>
 									</div>
 								</div>
@@ -773,7 +771,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
 							<div class="col-lg-4 col-md-6">
 								<div class="blog-box">
 									<div class="blog-images">
-										<img src="<?php echo base_url()?>assets/frontend/assets/images/b2.jpg" class="img-fluid" alt="">
+										<img src="<?php echo base_url()?>assets/frontend/assets/images/agenda3.jpg" class="img-fluid" alt="">
 									</div>
 									<div class="blog-details">
 										<ul class="post-meta-one">
@@ -786,8 +784,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
 											Final Revisi
 										</div>
 										<p class="text">
-											Repulsive questions contented him few extensive supported. Of remarkably thoroughly he appearance
-											in. Supposing tolerably applauded.
+											Batas akhir finalisasi konsep pernikahan untuk memastikan segala keperluan pernikahan telah sesuai.
 										</p>
 									</div>
 								</div>
@@ -795,7 +792,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
 							<div class="col-lg-4 col-md-6">
 								<div class="blog-box">
 									<div class="blog-images">
-										<img src="<?php echo base_url()?>assets/frontend/assets/images/b2.jpg" class="img-fluid" alt="">
+										<img src="<?php echo base_url()?>assets/frontend/assets/images/agenda4.jpg" class="img-fluid" alt="">
 									</div>
 									<div class="blog-details">
 										<ul class="post-meta-one">
@@ -805,11 +802,10 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
 										</ul>
 
 										<div class="blog-title" data-toggle="modal" data-target="#blogmodal">
-											Loading Decoration
+											Loading & Installation 
 										</div>
 										<p class="text">
-											Repulsive questions contented him few extensive supported. Of remarkably thoroughly he appearance
-											in. Supposing tolerably applauded.
+											Pemasangan segala keperluan pernikahan seperti dekorasi, sound system, catering dan lainnya sesuai dengan tata letak.  
 										</p>
 									</div>
 								</div>
@@ -817,7 +813,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
 							<div class="col-lg-4 col-md-6">
 								<div class="blog-box">
 									<div class="blog-images">
-										<img src="<?php echo base_url()?>assets/frontend/assets/images/b2.jpg" class="img-fluid" alt="">
+										<img src="<?php echo base_url()?>assets/frontend/assets/images/agenda5.jpg" class="img-fluid" alt="">
 									</div>
 									<div class="blog-details">
 										<ul class="post-meta-one">
@@ -830,8 +826,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
 											Wedding Day
 										</div>
 										<p class="text">
-											Repulsive questions contented him few extensive supported. Of remarkably thoroughly he appearance
-											in. Supposing tolerably applauded.
+											Hari istimewa pernikahan kamu dan pasangan dapat berjalan sesuai dengan wedding dream yang telah dirancang.
 										</p>
 									</div>
 								</div>
@@ -839,7 +834,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
 							<div class="col-lg-4 col-md-6">
 								<div class="blog-box">
 									<div class="blog-images">
-										<img src="<?php echo base_url()?>assets/frontend/assets/images/b2.jpg" class="img-fluid" alt="">
+										<img src="<?php echo base_url()?>assets/frontend/assets/images/agenda6.jpg" class="img-fluid" alt="">
 									</div>
 									<div class="blog-details">
 										<ul class="post-meta-one">
@@ -852,8 +847,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
 											Honeymoon
 										</div>
 										<p class="text">
-											Repulsive questions contented him few extensive supported. Of remarkably thoroughly he appearance
-											in. Supposing tolerably applauded.
+											Yeaay! Waktunya tiba hari liburan pertama kali kamu dan pasangan yang telah sah menjadi suami istri.
 										</p>
 									</div>
 								</div>
