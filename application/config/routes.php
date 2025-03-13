@@ -58,6 +58,7 @@ $route['clients/lihat/(:any)'] = 'crud_clients/lihat/$1'; // Menampilkan lihat c
 $route['clients/c_edit/(:any)'] = 'crud_clients/c_edit/$1'; // Halaman edit clients berdasarkan id_session
 $route['clients/c_update/(:any)'] = 'crud_clients/c_update/$1'; // Proses update data clients
 $route['clients/c_lihat/(:any)'] = 'crud_clients/c_lihat/$1'; // Menampilkan lihat clients
+$route['clients/c_concept'] = 'crud_clients/c_concept';
 
 $route['crews'] = 'Crud_crews/index'; // Menampilkan daftar crews yang masih aktif
 $route['crews/create'] = 'Crud_crews/create'; // Menampilkan halaman tambah crews
