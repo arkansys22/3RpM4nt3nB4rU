@@ -485,6 +485,14 @@ class Crud_clients extends CI_Controller {
 
     }
 
+    public function c_concept() {
+        $id_session = $this->input->get('id_session');
+        $vendor_id = $this->input->get('vendor_id');
+        
+        $data['vendors'] = $this->Vendor_model->get_vendor_by_id_and_vendor_id($id_session, $vendor_id);
+        $this->load->view('clients/c_concept', $data);
+    }
+    
     public function c_update($id_session){
 
         if ($this->agent->is_browser()) // Agent untuk fitur di log activity
