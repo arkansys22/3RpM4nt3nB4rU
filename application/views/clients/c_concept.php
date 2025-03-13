@@ -8,11 +8,6 @@ if (!$vendor) {
     return;
 }
 
-$clients = $this->db->get_where('clients', ['id_session' => $vendor->id_session])->row();
-if (!$clients) {
-    $clients = (object) ['client_name' => 'N/A', 'location' => 'N/A', 'event_date' => date('Y-m-d')];
-}
-
 // Pilihan info berdasarkan type vendor
 $info = '';
 switch ($vendor->type) {
@@ -54,18 +49,7 @@ $photo5 = !empty($vendor->photo5) ? base_url("uploads/{$vendor->photo5}") : base
         </div>
         <div class="col-md-6">
             <div class="project-details-info">
-            <h5 class="">Project</h5>
-                <ul class="info-list">
-                    <li>
-                        <span>Pengantin :</span> <?= htmlspecialchars($clients->client_name) ?>
-                    </li>
-                    <li>
-                        <span>Lokasi :</span> <?= htmlspecialchars($clients->location) ?>
-                    </li>
-                    <li>
-                        <span>Tanggal :</span> <?= hari($clients->wedding_date) ?>, <?= tgl_indo($clients->wedding_date) ?>
-                    </li>
-                </ul>
+                <h5 class=""><?= htmlspecialchars($vendor->vendor) ?></h5>
 
                 <h5 class="mt-5">Detail</h5>
                 <?php if (strpos($info, "\n") !== false): ?>
