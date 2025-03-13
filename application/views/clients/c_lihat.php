@@ -4,6 +4,9 @@ $project = $this->db->get_where('project', ['id_session' => $clients->id_session
 $religion = $project->religion ?? ''; // Pastikan tidak error jika religion kosong
 
 $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
+
+// Ambil data vendor dari database berdasarkan id_session klien
+$vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session])->result();
 ?>
 
 <!DOCTYPE html>
@@ -561,7 +564,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
 							});
 							foreach ($vendors as $vendor) : ?>
 							<div class="mix col-md-6 col-lg-6 gallery-item cat-1 cat-3">
-								<a href="<?php echo base_url()?>assets/frontend/ajax/portfolio-ajax-project-1.html" class="gallery-item-content pp">
+								<a href="<?php echo site_url('clients/c_concept?id_session=' . $vendor->id_session . '&vendor_id=' . $vendor->vendor_id); ?>" class="gallery-item-content pp">
 									<div class="item-thumbnail">
 										<img src="<?php echo base_url()?>uploads/<?= $vendor->photo1 ?>" alt="" style="width: 100%; height: 300px; object-fit: cover;">
 										<div class="content-overlay">
@@ -860,9 +863,6 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
 									Terima kasih untuk team manten baru! Di bantu a-z nya banget! Kayak tuan putri sehari🤭 sukses selalu kedepannya untuk mantenbaru! …
 								</p>
 							</div>
-						</div>
-					</div>
-					<div class="col-lg-4 col-md-6">
 						<div class="single-review">
 							<div class="reviewr">
 								<div class="img">
