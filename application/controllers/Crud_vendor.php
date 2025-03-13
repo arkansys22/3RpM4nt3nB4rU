@@ -88,6 +88,8 @@ class Crud_vendor extends CI_Controller {
     }
     
     public function update($id_session, $vendor_id) {
+        $existing_vendor = $this->Vendor_model->get_vendor_by_id_and_vendor_id($id_session, $vendor_id);
+
         $data = array(
             'vendor' => $this->input->post('vendor'),
             'type' => $this->input->post('type'),
@@ -95,13 +97,13 @@ class Crud_vendor extends CI_Controller {
             'contact_name' => $this->input->post('contact_name'),
             'phone' => $this->input->post('phone'),
             'detail' => $this->input->post('detail'),
-            'photo1' => $this->upload_photo('photo1'),
-            'photo2' => $this->upload_photo('photo2'),
-            'photo3' => $this->upload_photo('photo3'),
-            'photo4' => $this->upload_photo('photo4'),
-            'photo5' => $this->upload_photo('photo5')
+            'photo1' => $this->upload_photo('photo1') ?: $existing_vendor->photo1,
+            'photo2' => $this->upload_photo('photo2') ?: $existing_vendor->photo2,
+            'photo3' => $this->upload_photo('photo3') ?: $existing_vendor->photo3,
+            'photo4' => $this->upload_photo('photo4') ?: $existing_vendor->photo4,
+            'photo5' => $this->upload_photo('photo5') ?: $existing_vendor->photo5
         );
-    
+
         $this->Vendor_model->update_vendor($id_session, $vendor_id, $data);
         redirect('project/lihat/' . $id_session);
     }
@@ -154,5 +156,25 @@ class Crud_vendor extends CI_Controller {
         // Generate PDF dengan nama file yang sudah diformat
         $html = $this->load->view('naskah/pdf_list_vendor', $data, true);
         $this->pdf->createPDF_P($html, $filename, true);
+    }
+
+    private function upload_photo($input_name) {
+        $config['upload_path']   = './uploads/';
+        $config['allowed_types'] = 'jpg|jpeg|png';
+        $config['max_size']      = 10024; // 2MB
+        $config['encrypt_name']  = TRUE;
+
+        if (!is_dir($config['upload_path'])) {
+            mkdir($config['upload_path'], 0777, true);
+        }
+
+        $this->upload->initialize($config);
+
+        if ($this->upload->do_upload($input_name)) {
+            $upload_data = $this->upload->data();
+            return $upload_data['file_name'];
+        } else {
+            return null;
+        }
     }
 }
