@@ -59,7 +59,7 @@
                 <input type="text" name="phone" value="<?= $vendor->phone ?>" class="w-full px-4 py-2 border rounded mb-4">
                 <label class="block mb-2"><strong>Detail:</strong></label>
                 <textarea name="detail" class="w-full px-4 py-2 border rounded mb-4"><?= $vendor->detail ?></textarea>
-                <label class="block mb-2"><strong>Photo 1:</strong></label>
+                <label class="block mb-2"><strong>Photo 1: (Photo yang akan di showing pada wedding concept)</strong></label>
                 <?php if ($vendor->photo1): ?>
                   <img src="<?= base_url('uploads/' . $vendor->photo1) ?>" alt="Photo 1" class="block w-full mb-4">
                 <?php endif; ?>
