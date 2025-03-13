@@ -863,31 +863,32 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 									Terima kasih untuk team manten baru! Di bantu a-z nya banget! Kayak tuan putri sehari🤭 sukses selalu kedepannya untuk mantenbaru! …
 								</p>
 							</div>
-						<div class="single-review">
-							<div class="reviewr">
-								<div class="img">
-									<img src="<?php echo base_url()?>assets/frontend/assets/images/yasmine.jpg" alt="">
+							<div class="single-review">
+								<div class="reviewr">
+									<div class="img">
+										<img src="<?php echo base_url()?>assets/frontend/assets/images/yasmine.jpg" alt="">
+									</div>
+									<div class="content">
+										<h4 class="name">
+											Yasmine Alfredo
+										</h4>
+										<p>
+											The Wedding Of Yasmine & Andre
+										</p>
+									</div>
+								</div>
+								<div class="stars">
+									<i class="fas fa-star"></i>
+									<i class="fas fa-star"></i>
+									<i class="fas fa-star"></i>
+									<i class="fas fa-star"></i>
+									<i class="fas fa-star"></i>
 								</div>
 								<div class="content">
-									<h4 class="name">
-										Yasmine Alfredo
-									</h4>
 									<p>
-										The Wedding Of Yasmine & Andre
+										Alhamdulillah gak salah pilih vendor, acaraku jadi terorganized dan teamnya sangat bisa berkomunikasi dengan baik. Paham sama keinginan manten dan perhatian sama every single details yang ternyata di momen acara itu aku butuhkan, aku happy banget. Aku dan suamiku, mau terima kasih banyak untuk seluruh team MantenBaru yang aku gak bisa sebutkan satu persatu, semoga makin sukses untuk MantenBaru!
 									</p>
 								</div>
-							</div>
-							<div class="stars">
-								<i class="fas fa-star"></i>
-								<i class="fas fa-star"></i>
-								<i class="fas fa-star"></i>
-								<i class="fas fa-star"></i>
-								<i class="fas fa-star"></i>
-							</div>
-							<div class="content">
-								<p>
-									Alhamdulillah gak salah pilih vendor, acaraku jadi terorganized dan teamnya sangat bisa berkomunikasi dengan baik. Paham sama keinginan manten dan perhatian sama every single details yang ternyata di momen acara itu aku butuhkan, aku happy banget. Aku dan suamiku, mau terima kasih banyak untuk seluruh team MantenBaru yang aku gak bisa sebutkan satu persatu, semoga makin sukses untuk MantenBaru!
-								</p>
 							</div>
 						</div>
 					</div>
@@ -919,9 +920,8 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 								</p>
 							</div>
 						</div>
-					</div>
+					</div>				
 				</div>
-				
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="section-heading">
