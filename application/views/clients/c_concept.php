@@ -1,0 +1,84 @@
+<?php
+$id_session = $this->input->get('id_session', true);
+$vendor_id = $this->input->get('vendor_id', true);
+$vendor = $this->db->get_where('vendor', ['id_session' => $id_session, 'vendor_id' => $vendor_id])->row();
+
+if (!$vendor) {
+    echo "<p class='text-center text-danger'>Vendor tidak ditemukan.</p>";
+    return;
+}
+
+$clients = $this->db->get_where('clients', ['id_session' => $vendor->id_session])->row();
+if (!$clients) {
+    $clients = (object) ['client_name' => 'N/A', 'location' => 'N/A', 'event_date' => date('Y-m-d')];
+}
+
+// Pilihan info berdasarkan type vendor
+$info = '';
+switch ($vendor->type) {
+    case 'Venue': $info = $vendor->detail; break;
+    case 'MC Akad': $info = $vendor->detail; break;
+    case 'MC Resepsi': $info = $vendor->detail; break;
+    case 'Wedding Organizer': $info = $vendor->detail; break;
+    case 'MUA': $info = $vendor->detail; break;
+    case 'Perlengkapan Catering': $info = $vendor->detail; break;
+    case 'Catering': $info = $vendor->detail; break;
+    case 'Dokumentasi': $info = $vendor->detail; break;
+    case 'Dekorasi': $info = $vendor->detail; break;
+    case 'Entertainment': $info = $vendor->detail; break;
+}
+
+// Periksa apakah foto tersedia
+$photo2 = !empty($vendor->photo2) ? base_url("uploads/{$vendor->photo2}") : base_url("uploads/default.jpg");
+$photo3 = !empty($vendor->photo3) ? base_url("uploads/{$vendor->photo3}") : base_url("uploads/default.jpg");
+$photo4 = !empty($vendor->photo4) ? base_url("uploads/{$vendor->photo4}") : base_url("uploads/default.jpg");
+$photo5 = !empty($vendor->photo5) ? base_url("uploads/{$vendor->photo5}") : base_url("uploads/default.jpg");
+?>
+
+<div class="container ajax-container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="header-area">
+                <h3 class="project-title"><?= htmlspecialchars($vendor->type) ?></h3>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="owl-carousel owl-theme single-slideshow" data-autoplay="true" data-loop="true" data-nav="true" data-items="1">
+                <div class="item"> <img class="img-fluid" alt="" src="<?= $photo2 ?>"> </div>
+                <div class="item"> <img class="img-fluid" alt="" src="<?= $photo3 ?>"> </div>
+                <div class="item"> <img class="img-fluid" alt="" src="<?= $photo4 ?>"> </div>
+                <div class="item"> <img class="img-fluid" alt="" src="<?= $photo5 ?>"> </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="project-details-info">
+            <h5 class="">Project</h5>
+                <ul class="info-list">
+                    <li>
+                        <span>Pengantin :</span> <?= htmlspecialchars($clients->client_name) ?>
+                    </li>
+                    <li>
+                        <span>Lokasi :</span> <?= htmlspecialchars($clients->location) ?>
+                    </li>
+                    <li>
+                        <span>Tanggal :</span> <?= hari($clients->wedding_date) ?>, <?= tgl_indo($clients->wedding_date) ?>
+                    </li>
+                </ul>
+
+                <h5 class="mt-5">Detail</h5>
+                <?php if (strpos($info, "\n") !== false): ?>
+                    <ul>
+                        <?php foreach (explode("\n", $info) as $line): ?>
+                            <li><?= htmlspecialchars($line) ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php else: ?>
+                    <p><?= htmlspecialchars($info) ?></p>
+                <?php endif; ?>
+
+            </div>
+        </div>
+    </div>
+</div>
