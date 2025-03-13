@@ -37,7 +37,7 @@ class Aspanel extends CI_Controller {
 			}else if($this->session->level=='5'){
 				cek_session_akses_client('panel',$this->session->id_session);
 				$data['aaa'] = '';
-				$this->load->view('backend/v_home', $data);
+				$this->load->view('backend/v_home_clients', $data);
 				
 			}else if($this->session->level=='7'){
 				cek_session_akses_staff('panel',$this->session->id_session);

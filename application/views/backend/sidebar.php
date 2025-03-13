@@ -7,7 +7,7 @@
 			<!-- SIDEBAR HEADER -->
 			<div class="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
 			    <a href="#"> <!-- Logo Header -->
-			      <img src="src/images/logo/logo.svg" alt="Logo" />
+			      <img src="<?php echo base_url()?>assets/backend/src/images/logomantenbaru.png" alt="Logo" style="width:200px; height: 100%; "/>
 			    </a>
 
 			    <button
