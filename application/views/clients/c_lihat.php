@@ -862,8 +862,11 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 								<p>
 									Terima kasih untuk team manten baru! Di bantu a-z nya banget! Kayak tuan putri sehari🤭 sukses selalu kedepannya untuk mantenbaru! …
 								</p>
-							</div>
-							<div class="single-review">
+							</div>							
+						</div>
+					</div>
+					<div class="col-lg-4 col-md-6">
+						<div class="single-review">
 								<div class="reviewr">
 									<div class="img">
 										<img src="<?php echo base_url()?>assets/frontend/assets/images/yasmine.jpg" alt="">
@@ -889,7 +892,6 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 										Alhamdulillah gak salah pilih vendor, acaraku jadi terorganized dan teamnya sangat bisa berkomunikasi dengan baik. Paham sama keinginan manten dan perhatian sama every single details yang ternyata di momen acara itu aku butuhkan, aku happy banget. Aku dan suamiku, mau terima kasih banyak untuk seluruh team MantenBaru yang aku gak bisa sebutkan satu persatu, semoga makin sukses untuk MantenBaru!
 									</p>
 								</div>
-							</div>
 						</div>
 					</div>
 					<div class="col-lg-4 col-md-6">
