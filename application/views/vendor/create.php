@@ -60,7 +60,7 @@
                 <input type="text" name="phone" class="w-full px-4 py-2 border rounded mb-4">
                 <label class="block mb-2"><strong>Detail</strong></label>
                 <textarea name="detail" class="w-full px-4 py-2 border rounded mb-4"></textarea>
-                <label class="block mb-2"><strong>Photo 1</strong></label>
+                <label class="block mb-2"><strong>Photo 1 (Photo yang akan di showing pada wedding concept)</strong></label>
                 <input type="file" name="photo1" class="w-full px-4 py-2 border rounded mb-4">
                 <label class="block mb-2"><strong>Photo 2</strong></label>
                 <input type="file" name="photo2" class="w-full px-4 py-2 border rounded mb-4">
