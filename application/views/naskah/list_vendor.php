@@ -50,78 +50,23 @@
             </tr>
         </thead>
         <tbody>
+            <?php 
+            $order = ['Venue', 'MC Akad', 'MC Resepsi', 'Wedding Organizer', 'MUA', 'Perlengkapan Catering', 'Catering', 'Dokumentasi', 'Dekorasi', 'Entertainment'];
+            usort($vendors, function($a, $b) use ($order) {
+                $pos_a = array_search($a->type, $order);
+                $pos_b = array_search($b->type, $order);
+                return $pos_a - $pos_b;
+            });
+            foreach ($vendors as $vendor): ?>
             <tr>
-                <td class="border border-black p-1 text-xs w-3/6">Venue & Keamanan<br>
-                <?= nl2br($vendor->detail_1); ?></td>
-                <td class="border border-black p-1 text-xs w-2/6"><?= $vendor->vendor_1; ?><br>
-                ig: @<?= $vendor->social_media_1; ?></td>
-                <td class="border border-black p-1 text-xs w-2/6"><?= $vendor->contact_name_1; ?><br>
-                (<?= $vendor->phone_1; ?>)</td>
+                <td class="border border-black p-1 text-xs w-3/6"><?= $vendor->type; ?><br>
+                <?= nl2br($vendor->detail); ?></td>
+                <td class="border border-black p-1 text-xs w-2/6"><?= $vendor->vendor; ?><br>
+                ig: @<?= $vendor->social_media; ?></td>
+                <td class="border border-black p-1 text-xs w-2/6"><?= $vendor->contact_name; ?><br>
+                (<?= $vendor->phone; ?>)</td>
             </tr>
-            <tr>
-                <td class="border border-black p-1 text-xs w-3/6">MC
-                <?= $vendor->detail_2; ?></td>
-                <td class="border border-black p-1 text-xs w-2/6"><?= $vendor->vendor_2; ?><br>
-                ig: @<?= $vendor->social_media_2; ?></td>
-                <td class="border border-black p-1 text-xs w-2/6"><?= $vendor->contact_name_2; ?><br>
-                (<?= $vendor->phone_2; ?>)</td>
-            </tr>
-            <tr>
-                <td class="border border-black p-1 text-xs w-3/6">Wedding Planer & Crew<br>
-                <?= nl2br($vendor->detail_3); ?></td>
-                <td class="border border-black p-1 text-xs w-2/6"><?= $vendor->vendor_3; ?><br>
-                ig: @<?= $vendor->social_media_3; ?></td>
-                <td class="border border-black p-1 text-xs w-2/6"><?= $vendor->contact_name_3; ?><br>
-                (<?= $vendor->phone_3; ?>)</td>
-            </tr>
-            <tr>
-                <td class="border border-black p-1 text-xs w-3/6">Perias
-                <?= $vendor->detail_4; ?></td>
-                <td class="border border-black p-1 text-xs w-2/6"><?= $vendor->vendor_4; ?><br>
-                ig: @<?= $vendor->social_media_4; ?></td>
-                <td class="border border-black p-1 text-xs w-2/6"><?= $vendor->contact_name_4; ?><br>
-                (<?= $vendor->phone_4; ?>)</td>
-            </tr>
-            <tr>
-                <td class="border border-black p-1 text-xs w-3/6">Perlengkapan Catering<br>
-                <?= nl2br($vendor->detail_5); ?></td>
-                <td class="border border-black p-1 text-xs w-2/6"><?= $vendor->vendor_5; ?><br>
-                ig: @<?= $vendor->social_media_5; ?></td>
-                <td class="border border-black p-1 text-xs w-2/6"><?= $vendor->contact_name_5; ?><br>
-                (<?= $vendor->phone_5; ?>)</td>
-            </tr>
-            <tr>
-                <td class="border border-black p-1 text-xs w-3/6">Konsumsi<br>
-                <?= nl2br($vendor->detail_6); ?></td>
-                <td class="border border-black p-1 text-xs w-2/6"><?= $vendor->vendor_6; ?><br>
-                ig: @<?= $vendor->social_media_6; ?></td>
-                <td class="border border-black p-1 text-xs w-2/6"><?= $vendor->contact_name_6; ?><br>
-                (<?= $vendor->phone_6; ?>)</td>
-            </tr>
-            <tr>
-                <td class="border border-black p-1 text-xs w-3/6">Dokumentasi<br>
-                <?= nl2br($vendor->detail_7); ?></td>
-                <td class="border border-black p-1 text-xs w-2/6"><?= $vendor->vendor_7; ?><br>
-                ig: @<?= $vendor->social_media_7; ?></td>
-                <td class="border border-black p-1 text-xs w-2/6"><?= $vendor->contact_name_7; ?><br>
-                (<?= $vendor->phone_7; ?>)</td>
-            </tr>
-            <tr>
-                <td class="border border-black p-1 text-xs w-3/6">Dekorasi<br>
-                <?= nl2br($vendor->detail_8); ?></td>
-                <td class="border border-black p-1 text-xs w-2/6"><?= $vendor->vendor_8; ?><br>
-                ig: @<?= $vendor->social_media_8; ?></td>
-                <td class="border border-black p-1 text-xs w-2/6"><?= $vendor->contact_name_8; ?><br>
-                (<?= $vendor->phone_8; ?>)</td>
-            </tr>
-            <tr>
-                <td class="border border-black p-1 text-xs w-3/6">Entertainment<br>
-                <?= nl2br($vendor->detail_9); ?></td>
-                <td class="border border-black p-1 text-xs w-2/6"><?= $vendor->vendor_9; ?><br>
-                ig: @<?= $vendor->social_media_9; ?></td>
-                <td class="border border-black p-1 text-xs w-2/6"><?= $vendor->contact_name_9; ?><br>
-                (<?= $vendor->phone_9; ?>)</td>
-            </tr>
+            <?php endforeach; ?>
         </tbody>
     </table><br>
 
