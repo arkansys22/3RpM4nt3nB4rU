@@ -28,6 +28,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
     <link rel="stylesheet" href="<?php echo base_url()?>assets/frontend/assets/css/responsive.css">
     <!-- Tight Theme -->
     <link rel="stylesheet" href="<?php echo base_url()?>assets/frontend/assets/css/lite.css">
+    <style> .hidden { display: none; } </style>
 </head>
 <body>
     <!-- preloader area start -->
@@ -80,6 +81,26 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                                                     <span class="value"><input type="text" name="f_bride_fathercname" value="<?= $clients->f_bride_fathercname ?>" class="form-control"></span>
                                                 </li>
                                                 <li>
+        <span class="title">Ayah Mempelai Wanita :</span>
+        <li>
+        <li class="value">
+            <label><input type="radio" name="fayah_status" onclick="toggleReplacementFields('fayah', false)" <?= empty($clients->f_bride_freplacementname) ? 'checked' : '' ?>> Masih Ada</label>
+            <label><input type="radio" name="fayah_status" onclick="toggleReplacementFields('fayah', true)" <?= !empty($clients->f_bride_freplacementname) ? 'checked' : '' ?>> Tidak Ada</label>
+        </li>
+        </li>
+    </li>
+    <li>
+    <li id="fayah" class="<?= !empty($clients->f_bride_freplacementname) ? '' : 'hidden' ?>">
+        <span class="title">Nama Lengkap Pengganti Ayah :</span>
+        <span class="value"><input type="text" name="f_bride_freplacementname" value="<?= $clients->f_bride_freplacementname ?>" class="form-control"></span>
+    </li>
+    <li id="fayah_cname" class="<?= !empty($clients->f_bride_freplacementcname) ? '' : 'hidden' ?>">
+        <span class="title">Nama Panggilan Pengganti Ayah :</span>
+        <span class="value"><input type="text" name="f_bride_freplacementcname" value="<?= $clients->f_bride_freplacementcname ?>" class="form-control"></span>
+    </li>
+    </li>
+
+                                                <li>
                                                     <span class="title">Nama Ibu : </span>
                                                     <span class="value"><input type="text" name="f_bride_mothername" value="<?= $clients->f_bride_mothername ?>" class="form-control" required></span>
                                                 </li>
@@ -87,6 +108,26 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                                                     <span class="title">Nama Panggilan Ibu : </span>
                                                     <span class="value"><input type="text" name="f_bride_mothercname" value="<?= $clients->f_bride_mothercname ?>" class="form-control"></span>
                                                 </li>
+                                                <li>
+        <span class="title">Ibu Mempelai Wanita :</span>
+        <li>
+        <li class="value">
+            <label><input type="radio" name="fibu_status" onclick="toggleReplacementFields('fibu', false)" <?= empty($clients->f_bride_mreplacementname) ? 'checked' : '' ?>> Masih Ada</label>
+            <label><input type="radio" name="fibu_status" onclick="toggleReplacementFields('fibu', true)" <?= !empty($clients->f_bride_mreplacementname) ? 'checked' : '' ?>> Tidak Ada</label>
+        </li>
+        </li>
+    </li>
+    <li>
+    <li id="fibu" class="<?= !empty($clients->f_bride_mreplacementname) ? '' : 'hidden' ?>">
+        <span class="title">Nama Lengkap Pengganti Ibu :</span>
+        <span class="value"><input type="text" name="f_bride_mreplacementname" value="<?= $clients->f_bride_mreplacementname ?>" class="form-control"></span>
+    </li>
+    <li id="fibu_cname" class="<?= !empty($clients->f_bride_mreplacementcname) ? '' : 'hidden' ?>">
+        <span class="title">Nama Panggilan Pengganti Ibu :</span>
+        <span class="value"><input type="text" name="f_bride_mreplacementcname" value="<?= $clients->f_bride_mreplacementcname ?>" class="form-control"></span>
+    </li>
+    </li>
+
                                                 <li>
                                                     <span class="title">Anak Ke : </span>
                                                     <span class="value"><input type="number" name="f_bride_nchild" value="<?= $clients->f_bride_nchild ?>" class="form-control">
@@ -128,6 +169,26 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                                                     <span class="value"><input type="text" name="m_bride_fathercname" value="<?= $clients->m_bride_fathercname ?>" class="form-control"></span>
                                                 </li>
                                                 <li>
+        <span class="title">Ayah Mempelai Pria :</span>
+        <li>
+        <li class="value">
+            <label><input type="radio" name="mayah_status" onclick="toggleReplacementFields('mayah', false)" <?= empty($clients->m_bride_freplacementname) ? 'checked' : '' ?>> Masih Ada</label>
+            <label><input type="radio" name="mayah_status" onclick="toggleReplacementFields('mayah', true)" <?= !empty($clients->m_bride_freplacementname) ? 'checked' : '' ?>> Tidak Ada</label>
+        </li>
+    </li>
+    </li>
+    <li>
+    <li id="mayah" class="<?= !empty($clients->m_bride_freplacementname) ? '' : 'hidden' ?>">
+        <span class="title">Nama Lengkap Pengganti Ayah :</span>
+        <span class="value"><input type="text" name="m_bride_freplacementname" value="<?= $clients->m_bride_freplacementname ?>" class="form-control"></span>
+    </li>
+    <li id="mayah_cname" class="<?= !empty($clients->m_bride_freplacementcname) ? '' : 'hidden' ?>">
+        <span class="title">Nama Panggilan Pengganti Ayah :</span>
+        <span class="value"><input type="text" name="m_bride_freplacementcname" value="<?= $clients->m_bride_freplacementcname ?>" class="form-control"></span>
+    </li>
+    </li>
+
+                                                <li>
                                                     <span class="title">Nama Ibu : </span>
                                                     <span class="value"><input type="text" name="m_bride_mothername" value="<?= $clients->m_bride_mothername ?>" class="form-control" required></span>
                                                 </li>
@@ -135,6 +196,26 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                                                     <span class="title">Nama Panggilan Ibu : </span>
                                                     <span class="value"><input type="text" name="m_bride_mothercname" value="<?= $clients->m_bride_mothercname ?>" class="form-control"></span>
                                                 </li>
+                                                <li>
+        <span class="title">Ibu Mempelai Pria :</span>
+        <li>
+        <li class="value">
+            <label><input type="radio" name="mibu_status" onclick="toggleReplacementFields('mibu', false)" <?= empty($clients->m_bride_mreplacementname) ? 'checked' : '' ?>> Masih Ada</label>
+            <label><input type="radio" name="mibu_status" onclick="toggleReplacementFields('mibu', true)" <?= !empty($clients->m_bride_mreplacementname) ? 'checked' : '' ?>> Tidak Ada</label>
+        </li>
+    </li>
+    </li>
+    <li>
+    <li id="mibu" class="<?= !empty($clients->m_bride_mreplacementname) ? '' : 'hidden' ?>">
+        <span class="title">Nama Lengkap Pengganti Ibu :</span>
+        <span class="value"><input type="text" name="m_bride_mreplacementname" value="<?= $clients->m_bride_mreplacementname ?>" class="form-control"></span>
+    </li>
+    <li id="mibu_cname" class="<?= !empty($clients->m_bride_mreplacementcname) ? '' : 'hidden' ?>">
+        <span class="title">Nama Panggilan Pengganti Ibu :</span>
+        <span class="value"><input type="text" name="m_bride_mreplacementcname" value="<?= $clients->m_bride_mreplacementcname ?>" class="form-control"></span>
+    </li>
+    </li>
+
                                                 <li>
                                                     <span class="title">Anak Ke : </span>
                                                     <span class="value"><input type="number" name="m_bride_nchild" value="<?= $clients->m_bride_nchild ?>" class="form-control">
@@ -291,5 +372,26 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
     <script src="<?php echo base_url()?>assets/frontend/assets/js/mixitup.min.js"></script>
     <script src="<?php echo base_url()?>assets/frontend/assets/js/owl.carousel.min.js"></script>
     <script src="<?php echo base_url()?>assets/frontend/assets/js/main.js"></script>
+    <script>
+function toggleReplacementFields(id, show) {
+    document.getElementById(id).classList.toggle('hidden', !show);
+    document.getElementById(id + '_cname').classList.toggle('hidden', !show);
+}
+
+window.onload = function() {
+    const fields = [
+        { status: 'fayah_status', replacement: "<?= $clients->f_bride_freplacementname ?? '' ?>", id: 'fayah' },
+        { status: 'fibu_status', replacement: "<?= $clients->f_bride_mreplacementname ?? '' ?>", id: 'fibu' },
+        { status: 'mayah_status', replacement: "<?= $clients->m_bride_freplacementname ?? '' ?>", id: 'mayah' },
+        { status: 'mibu_status', replacement: "<?= $clients->m_bride_mreplacementname ?? '' ?>", id: 'mibu' }
+    ];
+    
+    fields.forEach(field => {
+        const hasReplacement = field.replacement.trim() !== '';
+        document.querySelector(`input[name="${field.status}"][onclick*='${hasReplacement}']`).checked = true;
+        toggleReplacementFields(field.id, hasReplacement);
+    });
+};
+</script>
 </body>
 </html>
