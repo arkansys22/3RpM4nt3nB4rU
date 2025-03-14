@@ -13,7 +13,7 @@
         }
         .box {
             width: 40%; /* Setengah lebar halaman */
-            margin: 30px auto; /* Tengah secara horizontal */
+            margin: 5px auto; /* Tengah secara horizontal */
             border: 2px solid black; /* Border hitam */
             padding: 15px; /* Jarak dalam */
             text-align: justify; /* Teks rata kanan kiri */
