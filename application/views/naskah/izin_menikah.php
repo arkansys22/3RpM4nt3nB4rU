@@ -50,16 +50,14 @@
         <p class="text-lg leading-relaxed">Aamiin aamiin Allahumma aamiin..</p>
     </br>
 
-    <div class="w-2/5 mx-auto border-2 border-black p-4 text-center">
-    <p class="text-xl leading-relaxed font-semibold text-justify">
-        Saya terima nikah dan
-        kawinnya <?= $client->f_bride_fname; ?> binti
-        <?= $client->f_bride_fathername; ?> dengan
-        mas kawin tersebut dibayar tunai
-    </p>
-</div>
-
-        
+    <div class="w-full sm:w-3/5 lg:w-2/5 mx-auto border-2 border-black p-4 text-center">
+        <p class="text-lg sm:text-xl leading-relaxed font-semibold text-justify">
+            Saya terima nikah dan
+            kawinnya <?= $client->f_bride_fname; ?> binti
+            <?= $client->f_bride_fathername; ?> dengan
+            mas kawin tersebut dibayar tunai
+        </p>
+    </div>
     <div class="mt-6 flex justify-between no-print">
     <div class="flex">
         <a href="<?= base_url('naskah/izin_menikah/pdf/' . $client->id_session); ?>" 
