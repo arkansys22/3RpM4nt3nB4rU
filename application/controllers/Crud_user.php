@@ -26,10 +26,16 @@ class crud_user extends CI_Controller {
 
 
     public function create() {
-        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
+        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='5'){
             cek_session_akses_developer('user',$this->session->id_session);
             $data['level'] = $this->Crud_m->view_ordering('user_level','user_level_id','asc');
-        $this->load->view('user/create', $data);
+            $this->load->view('user/create', $data);
+
+        }else if($this->session->level=='4'){
+            cek_session_akses_staff_admin('user',$this->session->id_session);
+            $data['level'] = $this->Crud_m->view_ordering('user_level','user_level_id','asc');
+            $this->load->view('user/create', $data);
+
         }else{
                 redirect(base_url());
                 }
@@ -88,25 +94,42 @@ class crud_user extends CI_Controller {
     }
 
     public function lihat($id_session) {
-        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
+        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='5'){
             cek_session_akses_developer('user',$this->session->id_session);
             $data['pc'] = $this->users_model->get_users_by_session($id_session);
             $data['logactivity'] = $this->users_model->get_logactivity_by_session($id_session);
             $this->load->view('user/lihat', $data);
-             }else{
+
+
+        }else if($this->session->level=='4'){
+            cek_session_akses_staff_admin('user',$this->session->id_session);
+            $data['pc'] = $this->users_model->get_users_by_session($id_session);
+            $data['logactivity'] = $this->users_model->get_logactivity_by_session($id_session);
+            $this->load->view('user/lihat', $data);
+
+        }else{
                     redirect(base_url());
                 }
     }
 
     public function edit($id_session) {
-        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
+        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='5'){
             cek_session_akses_developer('user',$this->session->id_session);
             $data['level'] = $this->Crud_m->view_ordering('user_level','user_level_id','asc');
             $data['crews'] = $this->Crud_m->view_ordering('crews','id','asc');
             $data['clients'] = $this->Crud_m->view_ordering('clients','id','asc');
             $data['pc'] = $this->users_model->get_users_by_session($id_session);
             $this->load->view('user/edit', $data);
-            }else{
+            
+        }else if($this->session->level=='4'){
+            cek_session_akses_staff_admin('user',$this->session->id_session);
+            $data['level'] = $this->Crud_m->view_ordering('user_level','user_level_id','asc');
+            $data['crews'] = $this->Crud_m->view_ordering('crews','id','asc');
+            $data['clients'] = $this->Crud_m->view_ordering('clients','id','asc');
+            $data['pc'] = $this->users_model->get_users_by_session($id_session);
+            $this->load->view('user/edit', $data);
+
+        }else{
                 redirect(base_url());
             }
     }
