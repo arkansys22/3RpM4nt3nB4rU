@@ -34,6 +34,16 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
     <link rel="stylesheet" href="<?php echo base_url()?>assets/frontend/assets/css/responsive.css">
     <!-- Tight Theme -->
     <link rel="stylesheet" href="<?php echo base_url()?>assets/frontend/assets/css/lite.css">
+	<style>.box {
+            width: 40%; /* Setengah lebar halaman */
+            margin: 5px auto; /* Tengah secara horizontal */
+            border: 2px solid black; /* Border hitam */
+            padding: 15px; /* Jarak dalam */
+            text-align: justify; /* Teks rata kanan kiri */
+            font-weight: bold; /* Teks tebal */
+            font-size: 20px; /* Ukuran teks lebih besar */
+            line-height: 1.8; /* Jarak antar baris */
+        }</style>
 </head>
 
 <body>
@@ -495,6 +505,13 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
         langsungkan sebentar lagi. Hingga rumah tanggamu nanti senantiasa
         rukun, damai dan bahagia penuh rahmat dan keberkahan dari Allah SWT.</p>
         <p class="text-lg leading-relaxed">Aamiin aamiin Allahumma aamiin..</p>
+		<div class="box">
+        Saya terima nikah dan
+        kawinnya <?= $clients->f_bride_fname; ?> binti
+        <?= $clients->f_bride_fathername; ?> dengan
+        mas kawin tersebut dibayar
+        tunai
+    </div>
 											<a href="<?= site_url('naskah/izin_menikah/pdf/'. $clients->id_session) ?>" class="mybtn mybtn-bg"> <span><i class="fas fa-download"></i>Download </span> </a>								
 											
 										</div>
@@ -506,7 +523,7 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 					</div>
 				<div class="row">
 					<div class="col-lg-12">
-					<h3>Ucapatan Terima Kasih Pengantin Ke Tamu Resepsi</h3>
+					<h3>Ucapan Terima Kasih Pengantin Ke Tamu Resepsi</h3>
 						<div class="about-box">
 							<div class="row">
 								<div class="col-lg-12 d-flex align-self-center">
