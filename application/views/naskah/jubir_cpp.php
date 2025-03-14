@@ -7,13 +7,21 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @media print {
-    .no-print {
-        display: none !important; /* Menyembunyikan elemen dengan class 'no-print' */
-    }
-    @page {
-        margin: 0; /* Menghapus margin default browser */
-    }
-    }
+            .no-print {
+                display: none !important; /* Menyembunyikan elemen dengan class 'no-print' */
+            }
+            @page {
+                margin: 0; /* Menghapus margin default browser */
+            }
+            .print-only {
+                display: block; /* Menampilkan elemen dengan class 'print-only' */
+            }
+        }
+        @media screen {
+            .print-only {
+                display: none; /* Menyembunyikan elemen dengan class 'print-only' */
+            }
+        }
         p.indent {
             text-indent: 40px; /* Indentasi awal paragraf */
         }
@@ -53,6 +61,7 @@
         <p class="indent text-lg text-justify">Kami sekeluarga besar senantiasa mengiringi dengan doa dan restu, semoga proses ini
         dapat berjalan lancar tanpa ada halangan suatu apapun serta dalam berkah dan ridho Allah SWT
         aamiin ya Robbal aalamiin.</p>
+        <br class="print-only"><br class="print-only"><br class="print-only"><br class="print-only">
         <p class="indent text-lg text-justify">Saya selaku wakil keluarga yang bertindak dalam penyerahan calon pengantin pria,
         apabila ada tutur kata ataupun tingkah laku saya dan juga segenap rombongan yang kurang
         berkenan, saya memohon maaf yang sebesar besarnya dan berharap semoga penyerahan ini
