@@ -55,12 +55,20 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                 <label class="block mb-2 text-black dark:text-white">Anak Keberapa : <?= $clients->f_bride_nchild ?> dari <?= $clients->f_bride_hsibling ?> Bersaudara</label>
                 <label class="block mb-2 text-black dark:text-white">Nama Lengkap Ayah : <?= $clients->f_bride_fathername ?></label>
                 <label class="block mb-2 text-black dark:text-white">Nama Panggilan Ayah : <?= $clients->f_bride_fathercname ?></label>
+                <?php if (!empty($clients->f_bride_freplacementname)) : ?>
                 <label class="block mb-2 text-black dark:text-white">Nama Lengkap Pengganti : <?= $clients->f_bride_freplacementname ?></label>
+                <?php endif; ?>
+                <?php if (!empty($clients->f_bride_freplacementcname)) : ?>
                 <label class="block mb-2 text-black dark:text-white">Nama Panggilan Pengganti : <?= $clients->f_bride_freplacementcname ?></label>
+                <?php endif; ?>
                 <label class="block mb-2 text-black dark:text-white">Nama Lengkap Ibu : <?= $clients->f_bride_mothername ?></label>
                 <label class="block mb-2 text-black dark:text-white">Nama Panggilan Ibu : <?= $clients->f_bride_mothercname ?></label>
+                <?php if (!empty($clients->f_bride_mreplacementname)) : ?>
                 <label class="block mb-2 text-black dark:text-white">Nama Lengkap Pengganti : <?= $clients->f_bride_mreplacementname ?></label>
+                <?php endif; ?>
+                <?php if (!empty($clients->f_bride_mreplacementcname)) : ?>
                 <label class="block mb-2 text-black dark:text-white">Nama Panggilan Pengganti : <?= $clients->f_bride_mreplacementcname ?></label>
+                <?php endif; ?>
                 <label class="block mb-2 text-black dark:text-white">Nama Saudara Kandung : <?= nl2br($clients->f_bride_sibling) ?></label>
 
                 <!-- Data Mempelai Pria -->
@@ -70,12 +78,20 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                 <label class="block mb-2 text-black dark:text-white">Anak Keberapa : <?= $clients->m_bride_nchild ?> dari <?= $clients->m_bride_hsibling ?> Bersaudara</label>
                 <label class="block mb-2 text-black dark:text-white">Nama Lengkap Ayah : <?= $clients->m_bride_fathername ?></label>
                 <label class="block mb-2 text-black dark:text-white">Nama Panggilan Ayah : <?= $clients->m_bride_fathercname ?></label>
+                <?php if (!empty($clients->m_bride_freplacementname)) : ?>
                 <label class="block mb-2 text-black dark:text-white">Nama Lengkap Pengganti : <?= $clients->m_bride_freplacementname ?></label>
+                <?php endif; ?>
+                <?php if (!empty($clients->m_bride_freplacementcname)) : ?>
                 <label class="block mb-2 text-black dark:text-white">Nama Panggilan Pengganti : <?= $clients->m_bride_freplacementcname ?></label>
+                <?php endif; ?>
                 <label class="block mb-2 text-black dark:text-white">Nama Lengkap Ibu : <?= $clients->m_bride_mothername ?></label>
                 <label class="block mb-2 text-black dark:text-white">Nama Panggilan Ibu : <?= $clients->m_bride_mothercname ?></label>
+                <?php if (!empty($clients->m_bride_mreplacementname)) : ?>
                 <label class="block mb-2 text-black dark:text-white">Nama Lengkap Pengganti : <?= $clients->m_bride_mreplacementname ?></label>
+                <?php endif; ?>
+                <?php if (!empty($clients->m_bride_mreplacementcname)) : ?>
                 <label class="block mb-2 text-black dark:text-white">Nama Panggilan Pengganti : <?= $clients->m_bride_mreplacementcname ?></label>
+                <?php endif; ?>
                 <label class="block mb-2 text-black dark:text-white">Nama Saudara Kandung : <?= nl2br($clients->m_bride_sibling) ?></label>
 
                 <!-- Detail Pernikahan -->
