@@ -61,11 +61,19 @@
             </tr>
             <tr>
                 <td class="border border-black p-1 text-xs w-2/5">Bapak CPW (<?= $client->f_bride_fathercname; ?>)</td>
-                <td class="border border-black p-1 text-xs"><?= $client->f_bride_fathername; ?></td>
+                <td class="border border-black p-1 text-xs"><?= $client->f_bride_fathername; ?>
+                <?php if (!empty($client->f_bride_freplacementname)): ?>
+                <br>Pengganti: <?= $client->f_bride_freplacementname; ?> (<?= $client->f_bride_freplacementcname; ?>)
+                <?php endif; ?>
+            </td>
             </tr>
             <tr>
                 <td class="border border-black p-1 text-xs w-2/5">Ibu CPW (<?= $client->f_bride_mothercname; ?>)</td>
-                <td class="border border-black p-1 text-xs"><?= $client->f_bride_mothername; ?></td>
+                <td class="border border-black p-1 text-xs"><?= $client->f_bride_mothername; ?>
+                <?php if (!empty($client->f_bride_mreplacementname)): ?>
+                <br>Pengganti: <?= $client->f_bride_mreplacementname; ?> (<?= $client->f_bride_mreplacementcname; ?>)
+                <?php endif; ?>
+            </td>
             </tr>
             <tr>
                 <td class="border border-black p-1 text-xs w-2/5">Nama Saudara Kandung</td>
@@ -86,16 +94,24 @@
         </thead>
         <tbody>
             <tr>
-                <td class="border border-black p-1 text-xs w-2/5">CPW (Anak ke <?= $client->m_bride_nchild; ?> dari <?= $client->m_bride_hsibling; ?> bersaudara)</td>
+                <td class="border border-black p-1 text-xs w-2/5">CPP (Anak ke <?= $client->m_bride_nchild; ?> dari <?= $client->m_bride_hsibling; ?> bersaudara)</td>
                 <td class="border border-black p-1 text-xs"><?= $client->m_bride_fname; ?> (<?= $client->m_bride_cname; ?>)</td>
             </tr>
             <tr>
-                <td class="border border-black p-1 text-xs w-2/5">Bapak CPW (<?= $client->m_bride_fathercname; ?>)</td>
-                <td class="border border-black p-1 text-xs"><?= $client->m_bride_fathername; ?></td>
+                <td class="border border-black p-1 text-xs w-2/5">Bapak CPP (<?= $client->m_bride_fathercname; ?>)</td>
+                <td class="border border-black p-1 text-xs"><?= $client->m_bride_fathername; ?>
+                <?php if (!empty($client->m_bride_freplacementname)): ?>
+                <br>Pengganti: <?= $client->m_bride_freplacementname; ?> (<?= $client->m_bride_freplacementcname; ?>)
+                <?php endif; ?>
+            </td>
             </tr>
             <tr>
-                <td class="border border-black p-1 text-xs w-2/5">Ibu CPW (<?= $client->m_bride_mothercname; ?>)</td>
-                <td class="border border-black p-1 text-xs"><?= $client->m_bride_mothername; ?></td>
+                <td class="border border-black p-1 text-xs w-2/5">Ibu CPP (<?= $client->m_bride_mothercname; ?>)</td>
+                <td class="border border-black p-1 text-xs"><?= $client->m_bride_mothername; ?>
+                <?php if (!empty($client->m_bride_mreplacementname)): ?>
+                <br>Pengganti: <?= $client->m_bride_mreplacementname; ?> (<?= $client->m_bride_mreplacementcname; ?>)
+                <?php endif; ?>
+            </td>
             </tr>
             <tr>
                 <td class="border border-black p-1 text-xs w-2/5">Nama Saudara Kandung</td>

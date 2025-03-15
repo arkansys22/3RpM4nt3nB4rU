@@ -70,11 +70,18 @@
             </tr>
             <tr>
                 <td>Bapak CPW (<?= $client->f_bride_fathercname; ?>)</td>
-                <td><?= $client->f_bride_fathername; ?></td>
+                <td><?= $client->f_bride_fathername; ?>
+                <?php if (!empty($client->f_bride_freplacementname)): ?>
+                <br>Pengganti: <?= $client->f_bride_freplacementname; ?> (<?= $client->f_bride_freplacementcname; ?>)
+                <?php endif; ?></td>
             </tr>
             <tr>
                 <td>Ibu CPW (<?= $client->f_bride_mothercname; ?>)</td>
-                <td><?= $client->f_bride_mothername; ?></td>
+                <td><?= $client->f_bride_mothername; ?>
+                <?php if (!empty($client->f_bride_mreplacementname)): ?>
+                <br>Pengganti: <?= $client->f_bride_mreplacementname; ?> (<?= $client->f_bride_mreplacementcname; ?>)
+                <?php endif; ?>
+            </td>
             </tr>
             <tr>
                 <td>Nama Saudara Kandung</td>
@@ -94,11 +101,19 @@
             </tr>
             <tr>
                 <td>Bapak CPW (<?= $client->m_bride_fathercname; ?>)</td>
-                <td><?= $client->m_bride_fathername; ?></td>
+                <td><?= $client->m_bride_fathername; ?>
+                <?php if (!empty($client->m_bride_freplacementname)): ?>
+                <br>Pengganti: <?= $client->m_bride_freplacementname; ?> (<?= $client->m_bride_freplacementcname; ?>)
+                <?php endif; ?>
+            </td>
             </tr>
             <tr>
                 <td>Ibu CPW (<?= $client->m_bride_mothercname; ?>)</td>
-                <td><?= $client->m_bride_mothername; ?></td>
+                <td><?= $client->m_bride_mothername; ?>
+                <?php if (!empty($client->m_bride_mreplacementname)): ?>
+                <br>Pengganti: <?= $client->m_bride_mreplacementname; ?> (<?= $client->m_bride_mreplacementcname; ?>)
+                <?php endif; ?>
+            </td>
             </tr>
             <tr>
                 <td>Nama Saudara Kandung</td>
