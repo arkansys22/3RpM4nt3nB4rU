@@ -163,6 +163,18 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 												<span class="title">Nama Panggilan Ayah : </span>
 												<span class="value"><?= $clients->f_bride_fathercname ?></span>
 											</li>
+											<?php if (!empty($clients->f_bride_freplacementname)) : ?>
+											<li>
+												<span class="title">Nama Pengganti Ayah : </span>
+												<span class="value"><?= $clients->f_bride_freplacementname ?></span>
+											</li>
+											<?php endif; ?>
+											<?php if (!empty($clients->f_bride_freplacementcname)) : ?>
+											<li>
+												<span class="title">Nama Panggilan Pengganti Ayah : </span>
+												<span class="value"><?= $clients->f_bride_freplacementcname ?></span>
+											</li>
+											<?php endif; ?>
 											<li>
 												<span class="title">Nama Ibu : </span>
 												<span class="value"><?= $clients->f_bride_mothername ?></span>
@@ -171,6 +183,18 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 												<span class="title">Nama Panggilan Ibu : </span>
 												<span class="value"><?= $clients->f_bride_mothercname ?></span>
 											</li>
+											<?php if (!empty($clients->f_bride_mreplacementname)) : ?>
+											<li>
+												<span class="title">Nama Pengganti Ibu : </span>
+												<span class="value"><?= $clients->f_bride_mreplacementname ?></span>
+											</li>
+											<?php endif; ?>
+											<?php if (!empty($clients->f_bride_mreplacementcname)) : ?>
+											<li>
+												<span class="title">Nama Panggilan Pengganti Ibu : </span>
+												<span class="value"><?= $clients->f_bride_mreplacementcname ?></span>
+											</li>
+											<?php endif; ?>
 											<li>
 												<span class="title">Pengantin Anak Ke : </span>
 												<span class="value"><?= $clients->f_bride_nchild ?> dari <?= $clients->f_bride_hsibling ?> Bersaudara</span>
@@ -210,6 +234,18 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 												<span class="title">Nama Panggilan Ayah : </span>
 												<span class="value"><?= $clients->m_bride_fathercname ?></span>
 											</li>
+											<?php if (!empty($clients->m_bride_freplacementname)) : ?>
+											<li>
+												<span class="title">Nama Pengganti Ayah : </span>
+												<span class="value"><?= $clients->m_bride_freplacementname ?></span>
+											</li>
+											<?php endif; ?>
+											<?php if (!empty($clients->m_bride_freplacementcname)) : ?>
+											<li>
+												<span class="title">Nama Panggilan Pengganti Ayah : </span>
+												<span class="value"><?= $clients->m_bride_freplacementcname ?></span>
+											</li>
+											<?php endif; ?>
 											<li>
 												<span class="title">Nama Ibu : </span>
 												<span class="value"><?= $clients->m_bride_mothername ?></span>
@@ -218,6 +254,18 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 												<span class="title">Nama Panggilan Ibu : </span>
 												<span class="value"><?= $clients->m_bride_mothercname ?></span>
 											</li>
+											<?php if (!empty($clients->m_bride_mreplacementname)) : ?>
+											<li>
+												<span class="title">Nama Pengganti Ibu : </span>
+												<span class="value"><?= $clients->m_bride_mreplacementname ?></span>
+											</li>
+											<?php endif; ?>
+											<?php if (!empty($clients->m_bride_mreplacementcname)) : ?>
+											<li>
+												<span class="title">Nama Panggilan Pengganti Ibu : </span>
+												<span class="value"><?= $clients->m_bride_mreplacementcname ?></span>
+											</li>
+											<?php endif; ?>
 											<li>
 												<span class="title">Pengantin Anak Ke : </span>
 												<span class="value"><?= $clients->m_bride_nchild ?> dari <?= $clients->m_bride_hsibling ?> Bersaudara</span>
@@ -483,28 +531,31 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
         <p class="text-lg leading-relaxed">Bismillahirrohmanirrohim,</p>
         <p class="text-lg leading-relaxed">Astagfirullahal’adzim 3x</p>
         <p class="text-lg leading-relaxed">Asyhadualla illa ha illalah, wa asyhadu anna muhammadarrosulullah.</p>
-        <p class="text-lg leading-relaxed"><?= $clients->f_bride_fathercname; ?> dan <?= $clients->f_bride_mothercname; ?> yang <?= $clients->f_bride_cname; ?> cintai dan hormati, <?= $clients->f_bride_cname; ?> bersyukur dan berterima
+        <p class="text-lg leading-relaxed"><?php if (!empty($clients->f_bride_freplacementcname)) {echo $clients->f_bride_freplacementcname;} else {echo $clients->f_bride_fathercname;}?>
+        dan <?php if (!empty($clients->f_bride_mreplacementcname)) {echo $clients->f_bride_mreplacementcname;} else {echo $clients->f_bride_mothercname;}?> yang <?= $clients->f_bride_cname; ?> cintai dan hormati, <?= $clients->f_bride_cname; ?> bersyukur dan berterima
         kasih kepada Allah SWT karena telah diberikan limpahan perhatian, kasih
         sayang dan cinta kasih pada <?= $clients->f_bride_cname; ?> tiada henti.</p>
         <p class="text-lg leading-relaxed text-justify"><?= $clients->f_bride_cname; ?> menghaturkan permohonan maaf yang sedalam-dalamnya atas
         segala kehilafan dan kesalahan <?= $clients->f_bride_cname; ?>, baik kata-kata maupun perbuatan
-        yang menyakiti <?= $clients->f_bride_fathercname; ?> dan <?= $clients->f_bride_mothercname; ?>.</p>
+        yang menyakiti <?php if (!empty($clients->f_bride_freplacementcname)) {echo $clients->f_bride_freplacementcname;} else {echo $clients->f_bride_fathercname;}?>
+        dan <?php if (!empty($clients->f_bride_mreplacementcname)) {echo $clients->f_bride_mreplacementcname;} else {echo $clients->f_bride_mothercname;}?>.</p>
         <p class="text-lg leading-relaxed text-justify">Hari ini <?= hari($clients->wedding_date) ?>, <?= tgl_indo($clients->wedding_date) ?>, <?= $clients->f_bride_cname; ?> memohon izin dan memohon
         restu untuk dinikahkan dengan lelaki pilihan <?= $clients->f_bride_cname; ?>, untuk menemani
         perjalanan panjang hidup <?= $clients->f_bride_cname; ?> kelak.</p>
         <p class="text-lg leading-relaxed text-justify">Seorang laki-laki bernama <?= $clients->m_bride_fname; ?>, yang Insha’Allah
         bisa menjadi imam yang bijak dan penuh kasih sayang.</p></br>
 
-        <h4 class="text-xl font-bold text-center mb-4">Permohonan Izin Menikah (<?= $clients->f_bride_fathercname; ?>)</h4>
+        <h4 class="text-xl font-bold text-center mb-4">Permohonan Izin Menikah (<?php if (!empty($clients->f_bride_freplacementcname)) {echo $clients->f_bride_freplacementcname;} else {echo $clients->f_bride_fathercname;}?>)</h4>
 </br>
         <p class="text-lg leading-relaxed text-justify">Putriku <?= $clients->f_bride_cname; ?>, penyampaian izin pernikahanmu dan permohonan restumu
-        sudah <?= $clients->f_bride_fathercname; ?> restui dan <?= $clients->f_bride_fathercname; ?> dengar dengan seksama.</p>
-        <p class="text-lg leading-relaxed text-justify">Karena Insya Allah sebentar lagi <?= $clients->f_bride_fathercname; ?> akan segera menikahkanmu
+        sudah <?php if (!empty($clients->f_bride_freplacementcname)) {echo $clients->f_bride_freplacementcname;} else {echo $clients->f_bride_fathercname;}?> restui dan <?php if (!empty($clients->f_bride_freplacementcname)) {echo $clients->f_bride_freplacementcname;} else {echo $clients->f_bride_fathercname;}?> dengar dengan seksama.</p>
+        <p class="text-lg leading-relaxed text-justify">Karena Insya Allah sebentar lagi <?php if (!empty($clients->f_bride_freplacementcname)) {echo $clients->f_bride_freplacementcname;} else {echo $clients->f_bride_fathercname;}?> akan segera menikahkanmu
         dengan calon suamimu yang bernama <?= $clients->m_bride_fname; ?>.</p>
-        <p class="text-lg leading-relaxed text-justify">Teriring doa, semoga Allah meridhoi hajat pernikahan yang akan <?= $clients->f_bride_fathercname; ?>
+        <p class="text-lg leading-relaxed text-justify">Teriring doa, semoga Allah meridhoi hajat pernikahan yang akan <?php if (!empty($clients->f_bride_freplacementcname)) {echo $clients->f_bride_freplacementcname;} else {echo $clients->f_bride_fathercname;}?>
         langsungkan sebentar lagi. Hingga rumah tanggamu nanti senantiasa
         rukun, damai dan bahagia penuh rahmat dan keberkahan dari Allah SWT.</p>
         <p class="text-lg leading-relaxed">Aamiin aamiin Allahumma aamiin..</p>
+		<?php if (empty($clients->f_bride_freplacementname)): ?>
 		<div class="box">
         Saya terima nikah dan
         kawinnya <?= $clients->f_bride_fname; ?> binti
@@ -512,6 +563,7 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
         mas kawin tersebut dibayar
         tunai
     </div>
+	<?php endif; ?>
 											<a href="<?= site_url('naskah/izin_menikah/pdf/'. $clients->id_session) ?>" class="mybtn mybtn-bg"> <span><i class="fas fa-download"></i>Download </span> </a>								
 											
 										</div>
