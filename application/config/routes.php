@@ -112,4 +112,18 @@ $route['agenda/store'] = 'crud_agenda/store'; // Store vendor data based on sess
 $route['agenda/edit/(:any)'] = 'crud_agenda/edit/$1'; // Edit vendor data based on session_id
 $route['agenda/update/(:any)'] = 'crud_agenda/update/$1'; // Update vendor data based on session_id
 
+$route['supplies'] = 'crud_supplies/index'; // Menampilkan daftar supplies
+$route['supplies/create'] = 'crud_supplies/create'; // Menampilkan form tambah supplies
+$route['supplies/store'] = 'crud_supplies/store'; // Menyimpan data supplies baru
+$route['supplies/store2'] = 'crud_supplies/store2'; // Menyimpan data supplies baru
+$route['supplies/store3'] = 'crud_supplies/store3'; // Menyimpan data supplies baru
+$route['supplies/editin/(:any)'] = 'crud_supplies/edit/$1'; // Menampilkan form edit supplies
+$route['supplies/editout/(:any)'] = 'crud_supplies/edit/$1'; // Menampilkan form edit supplies
+$route['supplies/update/(:any)'] = 'crud_supplies/update/$1'; // Mengupdate supplies
+$route['supplies/delete/(:any)'] = 'crud_supplies/delete/$1'; // Menghapus supplies
+$route['supplies/recycle_bin'] = 'crud_supplies/recycle_bin'; // Halaman recycle bin
+$route['supplies/restore/(:any)'] = 'crud_supplies/restore/$1'; // Restore supplies
+$route['supplies/permanent_delete/(:any)'] = 'crud_supplies/permanent_delete/$1'; // Hapus permanen supplies
+$route['supplies/lihat/(:any)'] = 'crud_supplies/lihat/$1'; // Menampilkan lihat supplies
+
 $route['petacrawl\.xml'] = "petacrawl";
