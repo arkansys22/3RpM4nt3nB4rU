@@ -377,9 +377,9 @@
                         <td><?= $c->age ?> Tahun</td>
                         <td><?= tgl_indo($c->joining_date) ?></td>
                         <td>
-                            <div class="flex flex-col gap-2 w-full">
-                              <a href="<?= site_url('crews/lihat/'.$c->id_session) ?>" class="inline-block bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600 text-center text-xs sm:text-sm md:text-base">Lihat</a>
-                              <a href="<?= site_url('crews/soft_delete/'.$c->id_session) ?>" class="inline-block bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-center text-xs sm:text-sm md:text-base" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                            <div class="flex flex-col items-start gap-2 w-max">
+                              <a href="<?= site_url('crews/lihat/'.$c->id_session) ?>" class="inline-flex justify-center bg-yellow-500 text-white px-2 py-1 rounded-md hover:bg-yellow-600 text-center w-full">Lihat</a>
+                              <a href="<?= site_url('crews/soft_delete/'.$c->id_session) ?>" class="inline-flex justify-center bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 min-w-full text-center" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
                             </div>
                         </td>
                       </tr>

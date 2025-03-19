@@ -343,14 +343,14 @@
             <td><?= tgl_indo($a->wedding_day ?? '-') ?></td>
             <td><?= tgl_indo($a->honeymoon ?? '-') ?></td>
             <td>
-                <div class="flex flex-col gap-2 w-full">
+                <div class="flex flex-col items-start gap-2 w-max">
                     <?php if (!empty($a->brainstorming) || !empty($a->technical_meeting) || !empty($a->final_revision) || !empty($a->loading_decoration) || !empty($a->wedding_day) || !empty($a->honeymoon)) : ?>
                         <!-- Jika ada data, tampilkan tombol Edit & Hapus -->
-                        <a href="<?= site_url('agenda/edit/'.$a->id_session) ?>" class="inline-block bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 text-center text-xs sm:text-sm md:text-base">Edit</a>
-                        <a href="<?= site_url('agenda/soft_delete/'.$a->id_session) ?>" class="inline-block bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 text-center text-xs sm:text-sm md:text-base" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                        <a href="<?= site_url('agenda/edit/'.$a->id_session) ?>" class="inline-flex justify-center bg-yellow-500 text-white px-2 py-1 rounded-md hover:bg-yellow-600 text-center w-full">Edit</a>
+                        <a href="<?= site_url('agenda/soft_delete/'.$a->id_session) ?>" class="inline-flex justify-center bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 min-w-full text-center" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
                     <?php else : ?>
                         <!-- Jika kosong, tampilkan tombol Tambah -->
-                        <a href="<?= site_url('agenda/create/'.$a->id_session) ?>" class="inline-block bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600 text-center text-xs sm:text-sm md:text-base">Tambah</a>
+                        <a href="<?= site_url('agenda/create/'.$a->id_session) ?>" class="inline-flex justify-center bg-yellow-500 text-white px-2 py-1 rounded-md hover:bg-yellow-600 text-center w-full">Tambah</a>
                     <?php endif; ?>
                 </div>
             </td>
@@ -360,7 +360,7 @@
     <tr>
         <td colspan="7" class="text-center">Belum ada agenda untuk client ini.</td>
         <td>
-            <a href="<?= site_url('agenda/create/'.$id_session) ?>" class="inline-block bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600 text-center text-xs sm:text-sm md:text-base">Tambah</a>
+            <a href="<?= site_url('agenda/create/'.$id_session) ?>" class="inline-flex justify-center bg-yellow-500 text-white px-2 py-1 rounded-md hover:bg-yellow-600 text-center w-full">Tambah</a>
         </td>
     </tr>
 <?php endif; ?>

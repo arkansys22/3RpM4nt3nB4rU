@@ -252,8 +252,10 @@
                         <td><?= $level->user_level_nama ?></td>
                         <td><?= $p->user_login_status ?></td>                
                         <td>
-                          <a href="<?= site_url('user/lihat/'. $p->id_session) ?>" class="bg-yellow-500 text-white px-2 py-1 rounded">Lihat</a>
-                          <a href="<?= site_url('user/delete/'.$p->id_session) ?>" class="bg-red-500 text-white px-2 py-1 rounded" onclick="return confirm('Yakin ingin menghapus pengguna <?= $p->username ?> ?')">Hapus</a>
+                        <div class="flex flex-col items-start gap-2 w-max">
+                          <a href="<?= site_url('user/lihat/'. $p->id_session) ?>" class="inline-flex justify-center bg-yellow-500 text-white px-2 py-1 rounded-md hover:bg-yellow-600 text-center w-full">Lihat</a>
+                          <a href="<?= site_url('user/delete/'.$p->id_session) ?>" class="inline-flex justify-center bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 min-w-full text-center" onclick="return confirm('Yakin ingin menghapus pengguna <?= $p->username ?> ?')">Hapus</a>
+                        </div>
                         </td>
                       </tr>
                       
