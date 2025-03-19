@@ -50,7 +50,6 @@
                 </button>
               </a>
               </div>
-
               <!-- ====== Data Table Two Start --><br>
               <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                 <div class="data-table-common data-table-two max-w-full overflow-x-auto">
@@ -224,45 +223,30 @@
             </div>
           </div>
           <!-- ====== Data Table Two End -->
-              <!-- ====== Table Three Start -->
-              <div class="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default  dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1" >
-                <div class="max-w-full overflow-x-auto">
-                  <table class="w-full table-auto">
-                    <thead>
-                      <tr class="bg-gray-2 text-left dark:bg-meta-4">
-                        <th
-                          class="min-w-[220px] px-4 py-4 font-medium text-black dark:text-white xl:pl-11"
-                        >
-                          Author
-                        </th>
-                        <th
-                          class="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white"
-                        >
-                          Status
-                        </th>
-                        <th
-                          class="min-w-[120px] px-4 py-4 font-medium text-black dark:text-white"
-                        >
-                          Time
-                        </th>
-                        <th class="px-4 py-4 font-medium text-black dark:text-white">
-                          Device
-                        </th>
-                        <th class="px-4 py-4 font-medium text-black dark:text-white">
-                          IP
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <?php $no = 1; foreach ($logactivity as $p): ?>
-                      <tr>
-                        <?php $company= $this->Crud_m->view_where('user', array('id_session'=> $p->log_activity_user_id))->row(); ?>
-                        <?php $level= $this->Crud_m->view_where('user_level', array('user_level_id'=> $company->level))->row(); ?>
-                        <td class="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
-                          <h5 class="font-medium text-black dark:text-white"><?= $company->username ?></h5>
-                          <p class="text-sm"><?= $level->user_level_nama ?></p>
-                        </td>                        
-                        <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+          <!-- ====== Table Three Start -->
+          <div class="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+            <div class="max-w-full overflow-x-auto">
+              <div class="max-h-[400px] overflow-y-auto"> <!-- Tambahkan batas tinggi & scroll -->
+                <table class="w-full table-auto">
+                  <thead>
+                    <tr class="bg-gray-2 text-left dark:bg-meta-4">
+                      <th class="min-w-[220px] px-4 py-4 font-medium text-black dark:text-white xl:pl-11">Author</th>
+                      <th class="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">Status</th>
+                      <th class="min-w-[120px] px-4 py-4 font-medium text-black dark:text-white">Time</th>
+                      <th class="px-4 py-4 font-medium text-black dark:text-white">Device</th>
+                      <th class="px-4 py-4 font-medium text-black dark:text-white">IP</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php $no = 1; foreach ($logactivity as $p): ?>
+                    <tr>
+                      <?php $company= $this->Crud_m->view_where('user', array('id_session'=> $p->log_activity_user_id))->row(); ?>
+                      <?php $level= $this->Crud_m->view_where('user_level', array('user_level_id'=> $company->level))->row(); ?>
+                      <td class="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
+                        <h5 class="font-medium text-black dark:text-white"><?= $company->username ?></h5>
+                        <p class="text-sm"><?= $level->user_level_nama ?></p>
+                      </td>                        
+                      <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
                         <?php if ($p->log_activity_status == 'Barang Keluar'): ?>
                           <p class="inline-flex rounded-full bg-danger bg-opacity-10 px-3 py-1 text-sm font-medium text-danger">
                             <?= $p->log_activity_status ?>
@@ -273,22 +257,23 @@
                           </p>
                         <?php endif; ?>
                       </td>
-                        <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+                      <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
                         <p class="text-black dark:text-white"><?= hari($p->log_activity_waktu) ?>, <?= tgl_indo($p->log_activity_waktu)?></p>
-                        </td>
-                        <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                         <p class="text-black dark:text-white"><?= $p->log_activity_platform ?></p>
-                        </td>
-                        <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                         <p class="text-black dark:text-white"><?= $p->log_activity_ip ?></p>
-                        </td>
-                      </tr>
-                      <?php endforeach; ?>                            
-                    </tbody>
-                  </table>
-                </div>
+                      </td>
+                      <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+                        <p class="text-black dark:text-white"><?= $p->log_activity_platform ?></p>
+                      </td>
+                      <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+                        <p class="text-black dark:text-white"><?= $p->log_activity_ip ?></p>
+                      </td>
+                    </tr>
+                    <?php endforeach; ?>                            
+                  </tbody>
+                </table>
               </div>
-              <!-- ====== Table Three End -->
+            </div>
+          </div>
+          <!-- ====== Table Three End -->
         </div>
       </div>
     </div>

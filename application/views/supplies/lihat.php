@@ -42,89 +42,68 @@
                 <a href="<?= site_url('supplies/delete/'.$supplies->id_session) ?>" class="ml-2 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 inline-block text-center w-auto" onclick="return confirm('Hapus produk ini?')">Hapus</a>
                 <a href="javascript:history.back()" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a>
               </form>
-
-              <!-- ====== Table Three Start -->
-              <div class="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default  dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1" >
-                <div class="max-w-full overflow-x-auto">
-                  <table class="w-full table-auto">
-                    <thead>
-                      <tr class="bg-gray-2 text-left dark:bg-meta-4">
-                        <th
-                          class="min-w-[220px] px-4 py-4 font-medium text-center text-black dark:text-white xl:pl-11"
-                        >
-                          Product Name
-                        </th>
-                        <th
-                          class="min-w-[150px] px-4 py-4 font-medium text-center text-black dark:text-white"
-                        >
-                          Type
-                        </th>
-                        <th
-                          class="min-w-[120px] px-4 py-4 font-medium text-center text-black dark:text-white"
-                        >
-                          Status
-                        </th>
-                        <th class="px-4 py-4 font-medium text-center text-black dark:text-white">
-                          Amount
-                        </th>
-                        <th class="px-4 py-4 font-medium text-center text-black dark:text-white">
-                          Detail
-                        </th>
-                        <th class="px-4 py-4 font-medium text-center text-black dark:text-white">
-                          Time
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-  <?php $no = 1; foreach ($logactivity as $p): ?>
-  <tr>
-    <!-- Ambil Nama Barang dari tabel supplies -->
-    <td class="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
-      <h5 class="font-medium text-center text-black dark:text-white"><?= $p->product_name ?></h5>
-    </td>
-
-        <!-- Type Barang (Mengambil dari supplies_stock.type) -->
-        <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-      <p class="text-black text-center dark:text-white"><?= $p->type ?></p>
-    </td>
-
-        <!-- Status Barang Masuk/Keluar -->
-        <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-      <?php if ($p->log_activity_status == 'Barang Keluar'): ?>
-        <!-- Status Barang Keluar dengan warna merah -->
-        <p class="inline-flex rounded-full bg-danger bg-opacity-10 px-3 py-1 text-center text-sm font-medium text-danger">
-          <?= $p->log_activity_status ?>
-        </p>
-      <?php else: ?>
-        <!-- Status Barang Masuk dengan warna hijau -->
-        <p class="inline-flex rounded-full bg-success bg-opacity-10 px-3 py-1 text-center text-sm font-medium text-success">
-          <?= $p->log_activity_status ?>
-        </p>
-      <?php endif; ?>
-    </td>
-
-    
-    <!-- Jumlah Barang Masuk/Keluar (Mengambil dari supplies_stock.amount) -->
-    <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-      <p class="text-black text-center dark:text-white"><?= $p->amount ?></p>
-    </td>
-
-    <!-- Detail Aktivitas -->
-    <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-      <p class="text-black text-center dark:text-white"><?= $p->detail ?></p>
-    </td>
-
-    <!-- Waktu Aktivitas -->
-    <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-      <p class="text-black text-center dark:text-white"><?= hari($p->log_activity_waktu) ?>, <?= tgl_indo($p->log_activity_waktu)?></p>
-    </td>
-  </tr>
-  <?php endforeach; ?>
-</tbody>
-                  </table>
-                </div>
+            <!-- ====== Table Three Start -->
+            <div class="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+              <div class="max-w-full max-h-[400px] overflow-y-auto overflow-x-auto">
+                <table class="w-full table-auto">
+                  <thead>
+                    <tr class="bg-gray-2 text-left dark:bg-meta-4">
+                      <th class="min-w-[220px] px-4 py-4 font-medium text-center text-black dark:text-white xl:pl-11">
+                        Product Name
+                      </th>
+                      <th class="min-w-[150px] px-4 py-4 font-medium text-center text-black dark:text-white">
+                        Type
+                      </th>
+                      <th class="min-w-[120px] px-4 py-4 font-medium text-center text-black dark:text-white">
+                        Status
+                      </th>
+                      <th class="px-4 py-4 font-medium text-center text-black dark:text-white">
+                        Amount
+                      </th>
+                      <th class="px-4 py-4 font-medium text-center text-black dark:text-white">
+                        Detail
+                      </th>
+                      <th class="px-4 py-4 font-medium text-center text-black dark:text-white">
+                        Time
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php $no = 1; foreach ($logactivity as $p): ?>
+                    <tr>
+                      <td class="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
+                        <h5 class="font-medium text-center text-black dark:text-white"><?= $p->product_name ?></h5>
+                      </td>
+                      <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+                        <p class="text-black text-center dark:text-white"><?= $p->type ?></p>
+                      </td>
+                      <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+                        <?php if ($p->log_activity_status == 'Barang Keluar'): ?>
+                        <p class="inline-flex rounded-full bg-danger bg-opacity-10 px-3 py-1 text-center text-sm font-medium text-danger">
+                          <?= $p->log_activity_status ?>
+                        </p>
+                        <?php else: ?>
+                        <p class="inline-flex rounded-full bg-success bg-opacity-10 px-3 py-1 text-center text-sm font-medium text-success">
+                          <?= $p->log_activity_status ?>
+                        </p>
+                        <?php endif; ?>
+                      </td>
+                      <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+                        <p class="text-black text-center dark:text-white"><?= $p->amount ?></p>
+                      </td>
+                      <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+                        <p class="text-black text-center dark:text-white"><?= $p->detail ?></p>
+                      </td>
+                      <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+                        <p class="text-black text-center dark:text-white"><?= hari($p->log_activity_waktu) ?>, <?= tgl_indo($p->log_activity_waktu)?></p>
+                      </td>
+                    </tr>
+                    <?php endforeach; ?>
+                  </tbody>
+                </table>
               </div>
-              <!-- ====== Table Three End -->
+            </div>
+            <!-- ====== Table Three End -->
             </div>
           </div>
         </div>
