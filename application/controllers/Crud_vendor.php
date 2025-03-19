@@ -11,13 +11,6 @@ class Crud_vendor extends CI_Controller {
         $this->load->library('upload');
     }
 
-    public function lihat($id_session) {
-        $data['project'] = $this->project_model->get_project_by_session($id_session);
-        $data['vendors'] = $this->Vendor_model->get_vendor_by_id($id_session);
-
-        $this->load->view('project/lihat', $data);
-    }
-
     public function create($id_session) {
         $data['project'] = $this->project_model->get_project_by_session($id_session);
         $data['vendors'] = $this->Vendor_model->get_vendor_by_id($id_session);
