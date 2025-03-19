@@ -45,30 +45,30 @@ class Crud_supplies extends CI_Controller {
 
     public function index() {
         if ($this->session->level=='1'){
-            cek_session_akses_developer('project',$this->session->id_session);
+            cek_session_akses_developer('supplies',$this->session->id_session);
             $data['supplies'] = $this->Supplies_model->get_all_supplies();
             $data['logactivity'] = $this->Supplies_model->get_logactivity_by_session();
             $this->load->view('supplies/index', $data);
 
         }else if($this->session->level=='2'){
-            cek_session_akses_administrator('project',$this->session->id_session);
+            cek_session_akses_administrator('supplies',$this->session->id_session);
             $data['supplies'] = $this->Supplies_model->get_all_supplies();
             $data['logactivity'] = $this->Supplies_model->get_logactivity_by_session();
             $this->load->view('supplies/index', $data);
 
         }else if($this->session->level=='3'){
-            cek_session_akses_staff_accounting('project',$this->session->id_session);
+            cek_session_akses_staff_accounting('supplies',$this->session->id_session);
             $data['aaa'] = '';
             $this->load->view('backend/v_home', $data);
 
         }else if($this->session->level=='4'){
-            cek_session_akses_staff_admin('project',$this->session->id_session);
+            cek_session_akses_staff_admin('supplies',$this->session->id_session);
             $data['supplies'] = $this->Supplies_model->get_all_supplies();
             $data['logactivity'] = $this->Supplies_model->get_logactivity_by_session();
             $this->load->view('supplies/index', $data);
 
         }else if($this->session->level=='5'){
-            cek_session_akses_client('project',$this->session->id_session);
+            cek_session_akses_client('supplies',$this->session->id_session);
             $data['aaa'] = '';
             $this->load->view('backend/v_home', $data);
             
