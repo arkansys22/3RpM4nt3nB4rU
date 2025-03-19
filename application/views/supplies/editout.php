@@ -37,28 +37,26 @@
               <form action="<?= base_url('supplies/store3') ?>" method="POST" enctype="multipart/form-data" class="bg-white p-6 shadow-md rounded">
     <input type="hidden" name="id_session" value="<?= $supplies->id_session ?>">
 
-    <div>
-        <label class="block mb-2">Nama Produk</label>
-        <select name="product_name" class="w-full px-4 py-2 border rounded mb-4" required> 
-            <?php if ($supplies): ?>
-                <option value="<?php echo $supplies->product_name; ?>" <?php echo ($supplies->product_name == $supplies->product_name) ? 'selected' : ''; ?>>
-                    <?php echo $supplies->product_name; ?>
-                </option>
-            <?php else: ?>
-                <option disabled>Data tidak ditemukan</option>
-            <?php endif; ?>
-        </select>
-    </div>
+    <label class="block mb-2">Nama Produk</label>
+    <input type="text" name="product_name" value="<?= $supplies->product_name ?>" 
+    class="w-full px-4 py-2 border rounded mb-4 bg-gray-100 cursor-not-allowed" readonly>
 
     <label class="block mb-2">Barang Keluar</label>
-    <input type="text" name="goods_out" value="<?= $supplies->goods_out ?>" class="w-full px-4 py-2 border rounded mb-4" required>
+    <input type="text" name="goods_out" class="w-full px-4 py-2 border rounded mb-4" required>
 
     <label class="block mb-2">Detail</label>
-    <input type="text" name="detail" value="<?= $supplies->detail ?>" class="w-full px-4 py-2 border rounded mb-4" required>
+    <input type="text" name="detail" class="w-full px-4 py-2 border rounded mb-4" required>
+
+    <!-- Input hidden untuk menyimpan value lama -->
+    <input type="hidden" name="old_goods_out" value="<?= $supplies->goods_out ?>">
+    <input type="hidden" name="old_detail" value="<?= $supplies->detail ?>">
 
     <div class="flex flex-col sm:flex-row justify-end">
         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded w-full hover:bg-blue-600 sm:w-24 mb-2 sm:mb-0 text-center">Ambil Stock</button>
-        <a href="javascript:history.back()" class="sm:ml-2 bg-gray-500 text-white px-4 py-2 rounded w-full hover:bg-gray-600 sm:w-24 text-center">Batal</a>
+        <a href="javascript:history.back()" 
+          class="sm:ml-2 bg-gray-500 text-white px-4 py-2 rounded w-full hover:bg-gray-600 sm:w-24 text-center flex items-center justify-center">
+          Batal
+        </a>
     </div>
 </form>
             </div>
