@@ -210,7 +210,7 @@ class Crud_supplies extends CI_Controller {
             'created_by'    => $this->session->id_session,
             'amount'        => $new_amount, // Amount dikurangi dengan barang keluar
             'goods_in'      => 0, // Tidak ada barang masuk
-            'goods_out'     => $goods_out,
+            'goods_out'     => -abs($goods_out), // Simpan sebagai negatif jika diinginkan
             'status'        => 'created',
             'created_at'    => $created_at,
             'detail'          => $this->input->post('detail'),
