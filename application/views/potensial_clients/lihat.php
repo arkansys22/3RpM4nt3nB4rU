@@ -35,12 +35,12 @@
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
               <h1 class="text-2xl font-bold mb-4">Lihat Potensial Klien <?= $pc->status ?></h1>
               <form action="<?= site_url('potensial-clients/update/'.$pc->id_session) ?>" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
-                <label class="block mb-2 text-black dark:text-white">Nama Klien : <?= $pc->pc_name ?></label>        
-                <label class="block mb-2 text-black dark:text-white">Nomer WhatsApp : <?= $pc->pc_nowa ?></label>        
-                <label class="block mb-2 text-black dark:text-white">Tanggal Pernikahan : <?= hari($pc->event_date) ?>, <?= tgl_indo($pc->event_date) ?></label>
-                <label class="block mb-2 text-black dark:text-white">Lokasi Pernikahan : <?= $pc->location ?></label>
-                <label class="block mb-2 text-black dark:text-white">Pertama Chat : <?= hari($pc->chat_date) ?>, <?= tgl_indo($pc->chat_date) ?></label>
-                <label class="block mb-2 text-black dark:text-white">Catatan : <?= $pc->note ?></label>
+                <label class="block mb-2 text-black dark:text-white"><strong>Nama Klien : </strong><?= $pc->pc_name ?></label>        
+                <label class="block mb-2 text-black dark:text-white"><strong>Nomer WhatsApp : </strong><?= $pc->pc_nowa ?></label>        
+                <label class="block mb-2 text-black dark:text-white"><strong>Tanggal Pernikahan : </strong><?= hari($pc->event_date) ?>, <?= tgl_indo($pc->event_date) ?></label>
+                <label class="block mb-2 text-black dark:text-white"><strong>Lokasi Pernikahan : </strong><?= $pc->location ?></label>
+                <label class="block mb-2 text-black dark:text-white"><strong>Pertama Chat : </strong><?= hari($pc->chat_date) ?>, <?= tgl_indo($pc->chat_date) ?></label>
+                <label class="block mb-2 text-black dark:text-white"><strong>Catatan : </strong><?= $pc->note ?></label>
                 <br>
                 <a href="<?= site_url('potensial-clients/edit/'. $pc->id_session) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Edit</a>
                 <a href="javascript:history.back()" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a>

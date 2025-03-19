@@ -67,7 +67,7 @@
                   if (!empty($crew_project->$field)):
                     $crew = $this->Crud_m->view_where('crews', array('id_session' => $crew_project->$field))->row();
                   ?>
-                  <label class="block mb-2 text-black dark:text-white"><?= $label ?> : <?= $crew->crew_name ?></label>
+                  <label class="block mb-2 text-black dark:text-white"><strong><?= $label ?> : </strong><?= $crew->crew_name ?></label>
                   <?php 
                   endif;
                   endforeach; 

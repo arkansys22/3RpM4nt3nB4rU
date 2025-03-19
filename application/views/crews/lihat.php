@@ -35,14 +35,14 @@
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
               <h1 class="text-2xl font-bold mb-4">Lihat Crew <?= $crews->status ?></h1>
               <form action="<?= site_url('crews/update/'.$crews->id_session) ?>" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
-                <label class="block mb-2 text-black dark:text-white">Nama Crew : <?= $crews->crew_name ?></label>        
-                <label class="block mb-2 text-black dark:text-white">Gender : <?= $crews->gender ?></label>        
-                <label class="block mb-2 text-black dark:text-white">Agama : <?= $crews->religion ?></label>
-                <label class="block mb-2 text-black dark:text-white">No HP : <?= $crews->phone ?></label>
-                <label class="block mb-2 text-black dark:text-white">Alamat : <?= $crews->address ?></label>
-                <label class="block mb-2 text-black dark:text-white">Tanggal Lahir : <?= tgl_indo($crews->birth_date) ?></label>
-                <label class="block mb-2 text-black dark:text-white">Umur : <?= $crews->age ?> Tahun</label>
-                <label class="block mb-2 text-black dark:text-white">Bergabung : <?= hari($crews->joining_date) ?>, <?= tgl_indo($crews->joining_date) ?></label>
+                <label class="block mb-2 text-black dark:text-white"><strong>Nama Crew : </strong><?= $crews->crew_name ?></label>        
+                <label class="block mb-2 text-black dark:text-white"><strong>Gender : </strong><?= $crews->gender ?></label>        
+                <label class="block mb-2 text-black dark:text-white"><strong>Agama : </strong><?= $crews->religion ?></label>
+                <label class="block mb-2 text-black dark:text-white"><strong>No HP : </strong><?= $crews->phone ?></label>
+                <label class="block mb-2 text-black dark:text-white"><strong>Alamat : </strong><?= $crews->address ?></label>
+                <label class="block mb-2 text-black dark:text-white"><strong>Tanggal Lahir : </strong><?= tgl_indo($crews->birth_date) ?></label>
+                <label class="block mb-2 text-black dark:text-white"><strong>Umur : </strong><?= $crews->age ?> Tahun</label>
+                <label class="block mb-2 text-black dark:text-white"><strong>Bergabung : </strong><?= hari($crews->joining_date) ?>, <?= tgl_indo($crews->joining_date) ?></label>
                 <br>
                 <a href="<?= site_url('crews/edit/'. $crews->id_session) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Edit</a>
                 <a href="javascript:history.back()" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a>
