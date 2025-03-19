@@ -294,9 +294,9 @@
                                 <td><?= $p->religion ?></td>
                                 <td><?= $p->location ?></td>
                                     <td>
-                                    <div class="flex flex-col gap-2 w-full">
+                                    <div class="flex flex-col items-start gap-2 w-max">
                                         <a href="<?= site_url('project/restore/'.$p->id_session) ?>" class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 text-center w-full">Restore</a>
-                                        <a href="<?= site_url('project/permanent_delete/'.$p->id_session) ?>" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 text-center w-full whitespace-nowrap overflow-hidden text-ellipsis" onclick="return confirm('Hapus secara permanen?')">Delete Permanen</a>
+                                        <a href="<?= site_url('project/permanent_delete/'.$p->id_session) ?>" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 text-center w-full whitespace-nowrap overflow-hidden text-ellipsis" onclick="return confirm('Hapus secara permanen?')">Delete Permanent</a>
                                     </div>
                                     </td>
                                 </tr>

@@ -265,9 +265,9 @@
                     <td><?= tgl_indo($client->wedding_date) ?></td>
                     <td><?= $client->location ?></td>
                     <td>
-                    <div class="flex flex-col gap-2 w-full">
+                    <div class="flex flex-col items-start gap-2 w-max">
                       <a href="<?= site_url('clients/restore/' . $client->id_session) ?>" class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 text-center w-full">Restore</a>
-                      <a href="<?= site_url('clients/permanent_delete/' . $client->id_session) ?>" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 text-center w-full whitespace-nowrap overflow-hidden text-ellipsis" onclick="return confirm('Yakin ingin menghapus permanen?')">Delete Permanen</a>
+                      <a href="<?= site_url('clients/permanent_delete/' . $client->id_session) ?>" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 text-center w-full whitespace-nowrap overflow-hidden text-ellipsis" onclick="return confirm('Yakin ingin menghapus permanen?')">Delete Permanent</a>
                     </div>
                     </td>
                   </tr>
