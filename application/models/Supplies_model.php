@@ -99,8 +99,7 @@ class Supplies_model extends CI_Model {
 
     public function get_stock($id_session) {
 
-        $this->db->order_by('created_at', 'DESC');
-        $this->db->limit(5,0);
+        $this->db->order_by('created_at', 'DESC');        
         return $this->db->get_where('supplies_stock', ['id_session' => $id_session])->result();
 
     }
@@ -112,6 +111,8 @@ class Supplies_model extends CI_Model {
         $this->db->where('id_session', $id_session);
         return $this->db->update('supplies', $data);
     }
+
+
 
     public function delete_supplies($id_session) {
         $this->db->where('id_session', $id_session);

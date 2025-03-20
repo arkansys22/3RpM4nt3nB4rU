@@ -147,8 +147,9 @@ class Crud_supplies extends CI_Controller {
     
         // Insert data baru ke database
         $this->db->insert('supplies_stock', $stock);
-    
-        $status = 'Barang Masuk';
+        
+        $product_name =  $this->input->post('product_name');
+        $status = 'Barang Masuk '.$product_name;
     
         // Simpan log aktivitas
         $data_log = array(
@@ -218,8 +219,8 @@ class Crud_supplies extends CI_Controller {
     
         // Insert data baru ke database
         $this->db->insert('supplies_stock', $stock);
-    
-        $status = 'Barang Keluar';
+        $product_name =  $this->input->post('product_name');
+        $status = 'Barang Keluar '.$product_name;
     
         // Simpan log aktivitas
         $data_log = array(
