@@ -10,37 +10,63 @@ class crud_potensial_clients extends CI_Controller {
     }
 
     public function index() {
-
-        if ($this->session->level=='1'){
-                cek_session_akses_developer('potensial-clients',$this->session->id_session);
-                $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients(); // Ubah pemanggilan model
-                $this->load->view('potensial_clients/index', $data);
-
-            }else if($this->session->level=='2'){
-                cek_session_akses_administrator('potensial-clients',$this->session->id_session);
-                $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients(); // Ubah pemanggilan model
-                $this->load->view('potensial_clients/index', $data);
-
-            }else if($this->session->level=='3'){
-                cek_session_akses_staff_accounting('potensial-clients',$this->session->id_session);
-                $data['aaa'] = '';
-                $this->load->view('backend/v_home', $data);
-
-            }else if($this->session->level=='4'){
-                cek_session_akses_staff_admin('potensial-clients',$this->session->id_session);
-                $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients(); // Ubah pemanggilan model
-                $this->load->view('potensial_clients/index', $data);
-
-            }else if($this->session->level=='5'){
-                cek_session_akses_client('potensial-clients',$this->session->id_session);
-                $data['aaa'] = '';
-                $this->load->view('backend/v_home', $data);
-                
-            }else{
-                redirect(base_url());
-                }
+        if ($this->session->level == '1') {
+            cek_session_akses_developer('potensial-clients', $this->session->id_session);
+            
+            // Ambil semua data potensial clients
+            $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients();
+    
+            // Ambil data berdasarkan status tertentu
+            $data['potensial_clients_tanya'] = $this->Potensial_model->get_clients_by_status('Tanya-tanya');
+            $data['potensial_clients_hot'] = $this->Potensial_model->get_clients_by_status('Hot');
+            $data['potensial_clients_konsul'] = $this->Potensial_model->get_clients_by_status('Konsul');
+            $data['potensial_clients_deal'] = $this->Potensial_model->get_clients_by_status('Deal');
+            $data['potensial_clients_ghosting'] = $this->Potensial_model->get_clients_by_status('Ghosting');
+            $data['potensial_clients_batal'] = $this->Potensial_model->get_clients_by_status('Batal');
+    
+            $this->load->view('potensial_clients/index', $data);
+        } else if ($this->session->level == '2') {
+            cek_session_akses_administrator('potensial-clients', $this->session->id_session);
+            
+            // Ambil semua data potensial clients
+            $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients();
+    
+            // Ambil data berdasarkan status tertentu
+            $data['potensial_clients_tanya'] = $this->Potensial_model->get_clients_by_status('Tanya-tanya');
+            $data['potensial_clients_hot'] = $this->Potensial_model->get_clients_by_status('Hot');
+            $data['potensial_clients_konsul'] = $this->Potensial_model->get_clients_by_status('Konsul');
+            $data['potensial_clients_deal'] = $this->Potensial_model->get_clients_by_status('Deal');
+            $data['potensial_clients_ghosting'] = $this->Potensial_model->get_clients_by_status('Ghosting');
+            $data['potensial_clients_batal'] = $this->Potensial_model->get_clients_by_status('Batal');
+    
+            $this->load->view('potensial_clients/index', $data);
+        } else if ($this->session->level == '3') {
+            cek_session_akses_staff_accounting('potensial-clients', $this->session->id_session);
+            $data['aaa'] = '';
+            $this->load->view('backend/v_home', $data);
+        } else if ($this->session->level == '4') {
+            cek_session_akses_staff_admin('potensial-clients', $this->session->id_session);
+            
+            // Ambil semua data potensial clients
+            $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients();
+    
+            // Ambil data berdasarkan status tertentu
+            $data['potensial_clients_tanya'] = $this->Potensial_model->get_clients_by_status('Tanya-tanya');
+            $data['potensial_clients_hot'] = $this->Potensial_model->get_clients_by_status('Hot');
+            $data['potensial_clients_konsul'] = $this->Potensial_model->get_clients_by_status('Konsul');
+            $data['potensial_clients_deal'] = $this->Potensial_model->get_clients_by_status('Deal');
+            $data['potensial_clients_ghosting'] = $this->Potensial_model->get_clients_by_status('Ghosting');
+            $data['potensial_clients_batal'] = $this->Potensial_model->get_clients_by_status('Batal');
+    
+            $this->load->view('potensial_clients/index', $data);
+        } else if ($this->session->level == '5') {
+            cek_session_akses_client('potensial-clients', $this->session->id_session);
+            $data['aaa'] = '';
+            $this->load->view('backend/v_home', $data);
+        } else {
+            redirect(base_url());
+        }
     }
-
 
     public function index_hot() {
 

@@ -6,49 +6,89 @@ class Aspanel extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('Potensial_model');
+		$this->load->model('Clients_model');
+		$this->load->model('project_model');
 		date_default_timezone_set('Asia/Jakarta');
 	}
 	public function index()
 		{
 		redirect(base_url('login'));
 		}
-	public function home()
+		public function home()
 		{
-			if ($this->session->level=='1'){
-				cek_session_akses_developer('panel',$this->session->id_session);
+			if ($this->session->level == '1') {
+				cek_session_akses_developer('panel', $this->session->id_session);
+				$month_now = date('Y-m');
+				$month_last = date('Y-m', strtotime('last month'));
+				$data['client_bulan_ini'] = $this->Clients_model->get_clients_by_month(date('Y-m'));  // Client bulan ini
+				$data['client_bulan_lalu'] = $this->Clients_model->get_clients_by_month(date('Y-m', strtotime('last month'))); // Client bulan lalu
+				$data['total_client'] = $this->Clients_model->get_total_clients(); // Total client
+				$data['total_potensial_client'] = $this->Potensial_model->get_total_potensial_clients(); // Total potensial client
+				$data['revenue_bulan_ini'] = $this->project_model->get_revenue_by_month($month_now);
+        $data['revenue_bulan_lalu'] = $this->project_model->get_revenue_by_month($month_last);
+		$data['total_revenue_all'] = $this->project_model->get_total_revenue_all();
+
+        // Hitung persentase perubahan revenue
+        $data['percent_change'] = null;
+        if ($data['revenue_bulan_ini'] && $data['revenue_bulan_lalu'] && $data['revenue_bulan_lalu']->total_revenue != 0) {
+            $data['percent_change'] = (($data['revenue_bulan_ini']->total_revenue - $data['revenue_bulan_lalu']->total_revenue) / $data['revenue_bulan_lalu']->total_revenue) * 100;
+        }$this->load->view('backend/v_home', $data);
+		
+			} else if ($this->session->level == '2') {
+				cek_session_akses_administrator('panel', $this->session->id_session);
+				$month_now = date('Y-m');
+				$month_last = date('Y-m', strtotime('last month'));
+				$data['client_bulan_ini'] = $this->Clients_model->get_clients_by_month(date('Y-m'));
+				$data['client_bulan_lalu'] = $this->Clients_model->get_clients_by_month(date('Y-m', strtotime('last month')));
+				$data['total_client'] = $this->Clients_model->get_total_clients();
+				$data['total_potensial_client'] = $this->Potensial_model->get_total_potensial_clients();
+				$data['revenue_bulan_ini'] = $this->project_model->get_revenue_by_month($month_now);
+        $data['revenue_bulan_lalu'] = $this->project_model->get_revenue_by_month($month_last);
+		$data['total_revenue_all'] = $this->project_model->get_total_revenue_all();
+
+        // Hitung persentase perubahan revenue
+        $data['percent_change'] = null;
+        if ($data['revenue_bulan_ini'] && $data['revenue_bulan_lalu'] && $data['revenue_bulan_lalu']->total_revenue != 0) {
+            $data['percent_change'] = (($data['revenue_bulan_ini']->total_revenue - $data['revenue_bulan_lalu']->total_revenue) / $data['revenue_bulan_lalu']->total_revenue) * 100;
+        }$this->load->view('backend/v_home', $data);
+		
+			} else if ($this->session->level == '3') {
+				cek_session_akses_staff_accounting('panel', $this->session->id_session);
 				$data['aaa'] = '';
 				$this->load->view('backend/v_home', $data);
+		
+			} else if ($this->session->level == '4') {
+				cek_session_akses_staff_admin('panel', $this->session->id_session);
+				$month_now = date('Y-m');
+				$month_last = date('Y-m', strtotime('last month'));
+				$data['client_bulan_ini'] = $this->Clients_model->get_clients_by_month(date('Y-m'));
+				$data['client_bulan_lalu'] = $this->Clients_model->get_clients_by_month(date('Y-m', strtotime('last month')));
+				$data['total_client'] = $this->Clients_model->get_total_clients();
+				$data['total_potensial_client'] = $this->Potensial_model->get_total_potensial_clients();
+				$data['revenue_bulan_ini'] = $this->project_model->get_revenue_by_month($month_now);
+        $data['revenue_bulan_lalu'] = $this->project_model->get_revenue_by_month($month_last);
+		$data['total_revenue_all'] = $this->project_model->get_total_revenue_all();
 
-			}else if($this->session->level=='2'){
-				cek_session_akses_administrator('panel',$this->session->id_session);
-				$data['aaa'] = '';
-				$this->load->view('backend/v_home', $data);
-
-			}else if($this->session->level=='3'){
-				cek_session_akses_staff_accounting('panel',$this->session->id_session);
-				$data['aaa'] = '';
-				$this->load->view('backend/v_home', $data);
-
-			}else if($this->session->level=='4'){
-				cek_session_akses_staff_admin('panel',$this->session->id_session);
-				$data['aaa'] = '';
-				$this->load->view('backend/v_home', $data);
-
-			}else if($this->session->level=='5'){
-				cek_session_akses_client('panel',$this->session->id_session);
+        // Hitung persentase perubahan revenue
+        $data['percent_change'] = null;
+        if ($data['revenue_bulan_ini'] && $data['revenue_bulan_lalu'] && $data['revenue_bulan_lalu']->total_revenue != 0) {
+            $data['percent_change'] = (($data['revenue_bulan_ini']->total_revenue - $data['revenue_bulan_lalu']->total_revenue) / $data['revenue_bulan_lalu']->total_revenue) * 100;
+        }$this->load->view('backend/v_home', $data);
+		
+			} else if ($this->session->level == '5') {
+				cek_session_akses_client('panel', $this->session->id_session);
 				$data['aaa'] = '';
 				$this->load->view('backend/v_home_clients', $data);
-				
-			}else if($this->session->level=='7'){
-				cek_session_akses_staff('panel',$this->session->id_session);
+		
+			} else if ($this->session->level == '7') {
+				cek_session_akses_staff('panel', $this->session->id_session);
 				$data['aaa'] = '';
 				$this->load->view('backend/v_home_staff', $data);
-				
-			}else{
+		
+			} else {
 				redirect(base_url());
-				}
+			}
 		}
-	
 
 	public function logout()
 		{

@@ -32,6 +32,136 @@
       <main>
         <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
+          <div class="data-stats-slider-outer relative col-span-12 rounded-sm border border-stroke bg-white py-10 shadow-default dark:border-strokedark dark:bg-boxdark">
+    <div class="dataStatsSlider swiper !-mx-px">
+        <div class="swiper-wrapper">
+
+            <!-- Potensial Clients (Tanya-tanya) -->
+            <div class="swiper-slide border-r border-stroke px-10 last:border-r-0 dark:border-strokedark">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                        <h4 class="text-xl font-bold text-black dark:text-white">Potential Client</h4>
+                    </div>
+                </div>
+                <div class="mt-5.5 flex flex-col gap-1.5">
+                    <div class="flex items-center justify-between gap-1">
+                        <p class="text-sm font-medium">Total</p>
+                        <p class="font-medium text-black dark:text-white"><?= count($potensial_clients_tanya); ?></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Clients Hot -->
+            <div class="swiper-slide border-r border-stroke px-10 last:border-r-0 dark:border-strokedark">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                        <h4 class="text-xl font-bold text-black dark:text-white">Client Hot</h4>
+                    </div>
+                </div>
+                <div class="mt-5.5 flex flex-col gap-1.5">
+                    <div class="flex items-center justify-between gap-1">
+                        <p class="text-sm font-medium">Total</p>
+                        <p class="font-medium text-black dark:text-white"><?= count($potensial_clients_hot); ?></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Clients Konsul -->
+            <div class="swiper-slide border-r border-stroke px-10 last:border-r-0 dark:border-strokedark">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                        <h4 class="text-xl font-bold text-black dark:text-white">Client Konsul</h4>
+                    </div>
+                </div>
+                <div class="mt-5.5 flex flex-col gap-1.5">
+                    <div class="flex items-center justify-between gap-1">
+                        <p class="text-sm font-medium">Total</p>
+                        <p class="font-medium text-black dark:text-white"><?= count($potensial_clients_konsul); ?></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Clients Deal -->
+            <div class="swiper-slide border-r border-stroke px-10 last:border-r-0 dark:border-strokedark">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                        <h4 class="text-xl font-bold text-black dark:text-white">Client Deal</h4>
+                    </div>
+                </div>
+                <div class="mt-5.5 flex flex-col gap-1.5">
+                    <div class="flex items-center justify-between gap-1">
+                        <p class="text-sm font-medium">Total</p>
+                        <p class="font-medium text-black dark:text-white"><?= count($potensial_clients_deal); ?></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Clients Ghosting -->
+            <div class="swiper-slide border-r border-stroke px-10 last:border-r-0 dark:border-strokedark">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                        <h4 class="text-xl font-bold text-black dark:text-white">Client Ghosting</h4>
+                    </div>
+                </div>
+                <div class="mt-5.5 flex flex-col gap-1.5">
+                    <div class="flex items-center justify-between gap-1">
+                        <p class="text-sm font-medium">Total</p>
+                        <p class="font-medium text-black dark:text-white"><?= count($potensial_clients_ghosting); ?></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Clients Batal -->
+            <div class="swiper-slide border-r border-stroke px-10 last:border-r-0 dark:border-strokedark">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2.5">
+                        <h4 class="text-xl font-bold text-black dark:text-white">Client Batal</h4>
+                    </div>
+                </div>
+                <div class="mt-5.5 flex flex-col gap-1.5">
+                    <div class="flex items-center justify-between gap-1">
+                        <p class="text-sm font-medium">Total</p>
+                        <p class="font-medium text-black dark:text-white"><?= count($potensial_clients_batal); ?></p>
+                    </div>
+                </div>
+            </div>
+            <!-- Repeat for other client statuses (Deal, Ghosting, Batal) -->
+        </div>
+    </div>
+    <!-- Swiper Navigation (Prev/Next) -->
+    <div class="swiper-button-prev">
+	                  <svg
+	                    class="fill-current"
+	                    width="23"
+	                    height="23"
+	                    viewBox="0 0 23 23"
+	                    fill="none"
+	                    xmlns="http://www.w3.org/2000/svg"
+	                  >
+	                    <path
+	                      d="M15.8562 2.80185C16.0624 2.80185 16.2343 2.8706 16.4062 3.0081C16.7155 3.31748 16.7155 3.79873 16.4062 4.1081L9.1874 11.4987L16.4062 18.855C16.7155 19.1644 16.7155 19.6456 16.4062 19.955C16.0968 20.2644 15.6155 20.2644 15.3062 19.955L7.5374 12.0487C7.22803 11.7394 7.22803 11.2581 7.5374 10.9487L15.3062 3.04248C15.4437 2.90498 15.6499 2.80185 15.8562 2.80185Z"
+	                      fill=""
+	                    />
+	                  </svg>
+	                </div>
+
+	                <div class="swiper-button-next">
+	                  <svg
+	                    class="fill-current"
+	                    width="23"
+	                    height="23"
+	                    viewBox="0 0 23 23"
+	                    fill="none"
+	                    xmlns="http://www.w3.org/2000/svg"
+	                  >
+	                    <path
+	                      d="M8.08721 20.1957C7.88096 20.1957 7.70908 20.127 7.53721 19.9895C7.22783 19.6801 7.22783 19.1988 7.53721 18.8895L14.756 11.4988L7.53721 4.14258C7.22783 3.8332 7.22783 3.35195 7.53721 3.04258C7.84658 2.7332 8.32783 2.7332 8.63721 3.04258L16.406 10.9488C16.7153 11.2582 16.7153 11.7395 16.406 12.0488L8.63721 19.9551C8.49971 20.0926 8.29346 20.1957 8.08721 20.1957Z"
+	                      fill=""
+	                    />
+	                  </svg>
+	                </div>
+                </div>
+
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
               <h1 class="text-2xl font-bold mb-4">Daftar Potensial Klien</h1>
 
@@ -102,7 +232,6 @@
                   </a>     
                 </div> 
               </div>
-
 
               <!-- ====== Data Table Two Start --><br>
               <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
