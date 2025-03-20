@@ -78,3 +78,4 @@ GitHub.sublime-settings
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/sublimetext,codeigniter,visualstudiocode
+application/config/database.php
