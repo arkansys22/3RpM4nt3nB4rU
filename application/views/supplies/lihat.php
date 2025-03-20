@@ -69,33 +69,38 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <?php $no = 1; foreach ($logactivity as $p): ?>
+                    <?php $no = 1; foreach ($supplies_stock as $p): ?>
+                    <?php $supplies= $this->Crud_m->view_where('supplies', array('id_session'=> $p->id_session))->row(); ?>
                     <tr>
                       <td class="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
-                        <h5 class="font-medium text-center text-black dark:text-white"><?= $p->product_name ?></h5>
+                        <h5 class="font-medium text-center text-black dark:text-white"><?= $supplies->product_name ?></h5>
                       </td>
                       <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                        <p class="text-black text-center dark:text-white"><?= $p->type ?></p>
+                        <p class="text-black text-center dark:text-white"><?= $supplies->type ?></p>
                       </td>
                       <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                        <?php if ($p->log_activity_status == 'Barang Keluar'): ?>
+                        <?php if ($p->status == 'Barang Keluar'): ?>
                         <p class="inline-flex rounded-full bg-danger bg-opacity-10 px-3 py-1 text-center text-sm font-medium text-danger">
-                          <?= $p->log_activity_status ?>
+                          <?= $p->status ?>
                         </p>
                         <?php else: ?>
                         <p class="inline-flex rounded-full bg-success bg-opacity-10 px-3 py-1 text-center text-sm font-medium text-success">
-                          <?= $p->log_activity_status ?>
+                          <?= $p->status ?>
                         </p>
                         <?php endif; ?>
                       </td>
                       <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                        <p class="text-black text-center dark:text-white"><?= $p->amount ?></p>
+                        <?php if ($p->status == 'Barang Masuk'): ?>
+                        <p class="text-black text-center dark:text-white"><?= $p->goods_in ?></p>
+                        <?php else: ?>
+                        <p class="text-black text-center dark:text-white"><?= $p->goods_out ?></p>
+                        <?php endif; ?>
                       </td>
                       <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
                         <p class="text-black text-center dark:text-white"><?= $p->detail ?></p>
                       </td>
                       <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                        <p class="text-black text-center dark:text-white"><?= hari($p->log_activity_waktu) ?>, <?= tgl_indo($p->log_activity_waktu)?></p>
+                        <p class="text-black text-center dark:text-white"><?= hari($p->created_at) ?>, <?= tgl_indo($p->created_at)?></p>
                       </td>
                     </tr>
                     <?php endforeach; ?>

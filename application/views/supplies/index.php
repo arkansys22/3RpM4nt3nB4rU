@@ -33,7 +33,7 @@
         <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-              <h1 class="text-2xl font-bold mb-4">Daftar Stock</h1>
+              <h1 class="text-2xl font-bold mb-4">Daftar Stockss</h1>
               <div class="flex justify-between mb-4">
               <a href="<?= site_url('supplies/create') ?>">
                 <button class="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none">
@@ -242,6 +242,7 @@
                     <tr>
                       <?php $company= $this->Crud_m->view_where('user', array('id_session'=> $p->log_activity_user_id))->row(); ?>
                       <?php $level= $this->Crud_m->view_where('user_level', array('user_level_id'=> $company->level))->row(); ?>
+               
                       <td class="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
                         <h5 class="font-medium text-black dark:text-white"><?= $company->username ?></h5>
                         <p class="text-sm"><?= $level->user_level_nama ?></p>
@@ -249,11 +250,11 @@
                       <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
                         <?php if ($p->log_activity_status == 'Barang Keluar'): ?>
                           <p class="inline-flex rounded-full bg-danger bg-opacity-10 px-3 py-1 text-sm font-medium text-danger">
-                            <?= $p->log_activity_status ?>
+                            <?= $p->log_activity_status?> 
                           </p>
                         <?php else: ?>
                           <p class="inline-flex rounded-full bg-success bg-opacity-10 px-3 py-1 text-sm font-medium text-success">
-                            <?= $p->log_activity_status ?>
+                            <?= $p->log_activity_status?> 
                           </p>
                         <?php endif; ?>
                       </td>
