@@ -5,7 +5,7 @@ class crud_user extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('Users_model');
+        $this->load->model('Users2_model');
         $this->load->helper('url');
     }
 
