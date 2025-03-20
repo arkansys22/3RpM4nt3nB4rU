@@ -21,6 +21,8 @@ application/logs/*
 !application/logs/.htaccess
 /vendor/
 
+.htaccess
+
 ### CodeIgniter Patch ###
 
 ### SublimeText ###
