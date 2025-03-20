@@ -75,4 +75,15 @@ class potensial_model extends CI_Model {
         return $this->db->delete('potensial_clients');
     }
 
+    public function get_clients_by_status($status)
+    {
+        $this->db->where('status', $status);
+        return $this->db->get('potensial_clients')->result();
+    }
+
+    public function get_total_potensial_clients()
+    {
+        return $this->db->count_all_results('potensial_clients');
+    }
+
 }
