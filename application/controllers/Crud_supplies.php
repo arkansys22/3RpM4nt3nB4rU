@@ -13,7 +13,7 @@ class Crud_supplies extends CI_Controller {
         if ($this->session->level=='1'){
             cek_session_akses_developer('supplies',$this->session->id_session);
             $data['supplies'] = $this->Supplies_model->get_supplies_by_session($id_session);
-            $data['logactivity'] = $this->Supplies_model->get_logactivity_with_details($id_session);
+            $data['supplies_stock'] = $this->Supplies_model->get_stock($id_session);
             $this->load->view('supplies/lihat', $data);
 
         }else if($this->session->level=='2'){
@@ -140,7 +140,7 @@ class Crud_supplies extends CI_Controller {
             'amount'        => $new_amount, // Sekarang amount ditambah dari jumlah sebelumnya
             'goods_in'      => $goods_in,
             'goods_out'     => $goods_out,
-            'status'        => 'created',
+            'status'        => 'Barang Masuk',
             'created_at'    => $created_at,
             'detail'          => $this->input->post('detail'),
         );
@@ -211,7 +211,7 @@ class Crud_supplies extends CI_Controller {
             'amount'        => $new_amount, // Amount dikurangi dengan barang keluar
             'goods_in'      => 0, // Tidak ada barang masuk
             'goods_out'     => -abs($goods_out), // Simpan sebagai negatif jika diinginkan
-            'status'        => 'created',
+            'status'        => 'Barang Keluar',
             'created_at'    => $created_at,
             'detail'          => $this->input->post('detail'),
         );

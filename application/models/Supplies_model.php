@@ -96,7 +96,18 @@ class Supplies_model extends CI_Model {
         
         return $query->row(); // Kembalikan sebagai objek
     }
+
+    public function get_stock($id_session) {
+
+        $this->db->order_by('created_at', 'DESC');
+        $this->db->limit(5,0);
+        return $this->db->get_where('supplies_stock', ['id_session' => $id_session])->result();
+
+    }
     
+
+
+
     public function update_supplies($id_session, $data) {
         $this->db->where('id_session', $id_session);
         return $this->db->update('supplies', $data);
