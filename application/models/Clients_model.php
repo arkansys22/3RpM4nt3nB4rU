@@ -77,4 +77,16 @@ class Clients_model extends CI_Model {
         $this->db->limit(5, 0);
         return $this->db->get_where('log_activity', ['log_activity_document_no' => $id_session])->result();
     }
+
+    public function get_clients_by_month($month)
+    {
+        $this->db->like('wedding_date', $month, 'after');
+        return $this->db->get('clients')->result();
+    }
+
+    public function get_total_clients()
+    {
+        return $this->db->count_all_results('clients');
+    }
+
 }

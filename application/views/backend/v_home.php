@@ -59,73 +59,123 @@
 	                <div class="dataStatsSlider swiper !-mx-px">
 	                  <div class="swiper-wrapper">
 
-	                    <div class="swiper-slide border-r border-stroke px-10 last:border-r-0 dark:border-strokedark">
-	                      	<div class="flex items-center justify-between">
-		                        <div class="flex items-center gap-2.5">
-		                          <div
-		                            class="h-10.5 w-10.5 overflow-hidden rounded-full"
-		                          >
-		                            <img
-		                              src="src/images/brand/brand-07.svg"
-		                              alt="brand"
-		                            />
-		                          </div>
-		                          <h4
-		                            class="text-xl font-bold text-black dark:text-white"
-		                          >
-		                            Clients
-		                          </h4>
-		                        </div>
-		                        
-	                      	</div>
-		                    <div class="mt-5.5 flex flex-col gap-1.5">
-		                        <div class="flex items-center justify-between gap-1">
-		                          <p class="text-sm font-medium">Total Clients</p>
+					  <div class="swiper-slide border-r border-stroke px-10 last:border-r-0 dark:border-strokedark">
+						<div class="flex items-center justify-between">
+							<div class="flex items-center gap-2.5">
+								<h4 class="text-xl font-bold text-black dark:text-white">
+									Client
+								</h4>
+							</div>
+						</div>
 
-		                          <p class="font-medium text-black dark:text-white">
-		                            $410.50
-		                          </p>
-		                        </div>
+						<div class="mt-5.5 flex flex-col gap-1.5">
+							<!-- Client Bulan Ini -->
+							<div class="flex items-center justify-between gap-1">
+								<p class="text-sm font-medium">Client Bulan Ini</p>
+								<p class="font-medium text-black dark:text-white">
+									<?= count($client_bulan_ini); ?>
+								</p>
+							</div>
 
-		                        <div class="flex items-center justify-between gap-1">
-		                          <span class="text-meta-3">+2.5% than last Week</span>                  	
-		                        </div>
-		                    </div>
+							<!-- Client Bulan Lalu -->
+							<div class="flex items-center justify-between gap-1">
+								<p class="text-sm font-medium">Client Bulan Lalu</p>
+								<p class="font-medium text-black dark:text-white">
+									<?= count($client_bulan_lalu); ?>
+								</p>
+							</div>
+
+							<!-- Total Client -->
+							<div class="flex items-center justify-between gap-1">
+								<p class="text-sm font-medium">Total Semua Client</p>
+								<p class="font-medium text-black dark:text-white">
+									<?= $total_client; ?>
+								</p>
+							</div>
+
+							<!-- Total Potensial Client -->
+							<div class="flex items-center justify-between gap-1">
+								<p class="text-sm font-medium">Total Potensial Client</p>
+								<p class="font-medium text-black dark:text-white">
+									<?= $total_potensial_client; ?>
+								</p>
+							</div>
+						</div>
 	                    </div>
 
 	                    <div class="swiper-slide border-r border-stroke px-10 last:border-r-0 dark:border-strokedark">
-	                      	<div class="flex items-center justify-between">
-		                        <div class="flex items-center gap-2.5">
-		                          <div
-		                            class="h-10.5 w-10.5 overflow-hidden rounded-full"
-		                          >
-		                            <img
-		                              src="src/images/brand/brand-07.svg"
-		                              alt="brand"
-		                            />
-		                          </div>
-		                          <h4
-		                            class="text-xl font-bold text-black dark:text-white"
-		                          >
-		                            Income
-		                          </h4>
-		                        </div>
-		                        
-	                      	</div>
-		                    <div class="mt-5.5 flex flex-col gap-1.5">
-		                        <div class="flex items-center justify-between gap-1">
-		                          <p class="text-sm font-medium">Total Income</p>
+							<div class="flex items-center justify-between">
+								<div class="flex items-center gap-2.5">
+									<h4 class="text-xl font-bold text-black dark:text-white">
+										Income
+									</h4>
+								</div>
+							</div>
 
-		                          <p class="font-medium text-black dark:text-white">
-		                            $410.50
-		                          </p>
-		                        </div>
+							<div class="mt-5.5 flex flex-col gap-1.5">
+								<!-- Total Revenue Bulan Ini -->
+								<div class="flex items-center justify-between gap-1">
+									<p class="text-sm font-medium">Pemasukan Bulan Ini</p>
+									<p class="font-medium text-black dark:text-white">
+										Rp <?= number_format($revenue_bulan_ini->total_revenue ?? 0, 0, ',', '.') ?>
+									</p>
+								</div>
 
-		                        <div class="flex items-center justify-between gap-1">
-		                          <span class="text-meta-3">+2.5% than last Week</span>                  	
-		                        </div>
-		                    </div>
-	                    </div>
+								<!-- Pemasukan Bulan Lalu -->
+								<div class="flex items-center justify-between gap-1">
+									<p class="text-sm font-medium">Pemasukan Bulan Lalu</p>
+									<p class="font-medium text-black dark:text-white">
+										Rp <?= number_format($revenue_bulan_lalu->total_revenue ?? 0, 0, ',', '.') ?>
+									</p>
+								</div>
+
+								<!-- Persentase Perubahan -->
+								<div class="flex items-center justify-between gap-1">
+									<span class="text-sm font-medium 
+										<?php 
+											// Cek apakah persentase perubahan positif atau negatif
+											if ($revenue_bulan_lalu->total_revenue == 0 && $revenue_bulan_ini->total_revenue > 0) {
+												// Jika bulan lalu 0 dan bulan ini lebih dari 0, kita anggap kenaikan 100%
+												echo 'text-meta-3'; // Warna hijau untuk kenaikan
+											} elseif ($revenue_bulan_lalu->total_revenue == 0 && $revenue_bulan_ini->total_revenue == 0) {
+												// Jika kedua bulan 0, tidak ada perubahan
+												echo 'text-meta-3'; // Warna netral
+											} else {
+												// Jika ada pemasukan di bulan lalu dan bulan ini, hitung persentase perubahan
+												$percent_change = (($revenue_bulan_ini->total_revenue - $revenue_bulan_lalu->total_revenue) / $revenue_bulan_lalu->total_revenue) * 100;
+												if ($percent_change > 0) {
+													echo 'text-meta-3'; // Warna hijau untuk kenaikan
+												} else {
+													echo 'text-red-500'; // Warna merah untuk penurunan
+												}
+											}
+										?>
+									">
+										<?php
+											// Cek apakah bulan lalu 0 dan bulan ini lebih dari 0
+											if ($revenue_bulan_lalu->total_revenue == 0 && $revenue_bulan_ini->total_revenue > 0) {
+												// Jika bulan lalu 0 dan bulan ini lebih dari 0, kita anggap kenaikan 100%
+												echo '+100% dibanding bulan lalu';
+											} elseif ($revenue_bulan_lalu->total_revenue == 0 && $revenue_bulan_ini->total_revenue == 0) {
+												// Jika kedua bulan 0, tidak ada perubahan
+												echo '0% dibanding bulan lalu';
+											} else {
+												// Jika ada pemasukan di bulan lalu dan bulan ini, hitung persentase perubahan
+												$percent_change = (($revenue_bulan_ini->total_revenue - $revenue_bulan_lalu->total_revenue) / $revenue_bulan_lalu->total_revenue) * 100;
+												echo ($percent_change > 0 ? '+' : '') . round($percent_change, 2) . '% dibanding bulan lalu';
+											}
+										?>
+									</span>
+								</div>
+								<!-- Total Revenue Semua -->
+								<div class="flex items-center justify-between gap-1">
+									<p class="text-sm font-medium">Total Revenue</p>
+									<p class="font-medium text-black dark:text-white">
+										Rp <?= number_format($total_revenue_all ?? 0, 0, ',', '.') ?>
+									</p>
+								</div>
+							</div>
+						</div>
 
 	                   	<div class="swiper-slide border-r border-stroke px-10 last:border-r-0 dark:border-strokedark">
 	                      	<div class="flex items-center justify-between">

@@ -81,4 +81,35 @@ class project_model extends CI_Model {
         return $this->db->get('project')->row(); // Mengambil satu baris data dari tabel project
     }
 
+    public function get_revenue_data() {
+        $this->db->select("YEAR(event_date) as year, MONTH(event_date) as month, SUM(value) as total_revenue");
+        $this->db->from("project");
+        $this->db->where("event_date BETWEEN CURDATE() - INTERVAL 1 MONTH AND CURDATE()");
+        $this->db->group_by("YEAR(event_date), MONTH(event_date)");
+        $this->db->order_by("year DESC, month DESC");
+        $query = $this->db->get();
+        
+        return $query->result();
+    }
+
+    public function get_revenue_by_month($month)
+    {
+        $this->db->select('SUM(value) as total_revenue');
+        $this->db->from('project');
+        // Gunakan YEAR() dan MONTH() untuk mengambil bulan dan tahun dari event_date
+        $this->db->where('YEAR(event_date)', date('Y', strtotime($month)));  // Tahun
+        $this->db->where('MONTH(event_date)', date('m', strtotime($month)));  // Bulan
+        $query = $this->db->get();
+        return $query->row();
+    }
+
+    public function get_total_revenue_all()
+    {
+        $this->db->select('SUM(value) as total_revenue');
+        $this->db->from('project');
+        $query = $this->db->get();
+        return $query->row()->total_revenue;
+    }
+
+
 }
