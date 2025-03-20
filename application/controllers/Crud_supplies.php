@@ -320,7 +320,7 @@ class Crud_supplies extends CI_Controller {
             } else {
                 // Jika tidak ada data ditemukan, set error message atau redirect
                 $data['error'] = 'Data supplies tidak ditemukan.';
-                $this->load->view('supplies/error', $data);
+                $this->load->view('404', $data);
                 return; // Stop further execution
             }
     
