@@ -138,6 +138,7 @@ class Crud_payment extends CI_Controller {
             'detail'        => json_encode($this->input->post('detail')),
             'date'           => $this->input->post('date'),
             'due_date'       => $this->input->post('due_date'),
+            'created_by'    => $this->session->id_session,
         ];
         
         $this->Payment_model->insert_payment($data);
@@ -188,6 +189,7 @@ class Crud_payment extends CI_Controller {
             'detail' => json_encode($this->input->post('detail')),
             'date' => $this->input->post('date'),
             'due_date' => null, // Set due_date to null
+            'created_by'    => $this->session->id_session,
         ];
         
         $this->Payment_model->insert_payment($data);
