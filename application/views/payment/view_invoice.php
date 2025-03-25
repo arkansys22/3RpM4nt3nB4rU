@@ -61,8 +61,8 @@
                     </tr>
                     <tr>
                         <td class="border border-black text-xs text-center"><?= $payment->transactions_id; ?></td>
-                        <td class="border border-black text-xs text-center"><?= date('d-M-y') ?></td>
-                        <td class="border border-black text-xs text-center whitespace-nowrap"><?= date('d-M-y', strtotime($payment->{$due_date})) ?></td>
+                        <td class="border border-black text-xs text-center"><?= date('d-M-y', strtotime($payment->date)); ?></td>
+                        <td class="border border-black text-xs text-center whitespace-nowrap"><?= date('d-M-y', strtotime($payment->due_date)); ?></td>
                     </tr>
                 </table>
             </div>
@@ -90,45 +90,43 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php 
-                    // Ambil details sesuai dengan invoice_number
-                    $details = json_decode($payment->{"details_" . $invoice_number}, true);
-                    $unit_price = $payment->{"amount_" . $invoice_number}; // Ambil unit price
-                    $details_count = count($details);
-                    ?>
                     <tr>
-                        <td class="border border-black p-2 text-justify text-xs" rowspan="<?= $details_count ?>">
-                            <?php foreach ($details as $index => $detail): ?>
-                                <?= $index === 0 ? '<br>' : '' ?> <!-- Add <br> before the first detail -->
-                                <?= htmlspecialchars($detail) ?><br>
-                                <?= $index === $details_count - 1 ? '<br>' : '' ?> <!-- Add <br> after the last detail -->
+                        <td class="border border-black p-2 text-justify text-xs">
+                            <?php 
+                            $details = str_replace(['[', ']', '"'], '', $payment->detail); // Remove brackets and quotes
+                            $detailsArray = explode(',', $details); // Split the cleaned details by comma
+                            foreach ($detailsArray as $item): ?>
+                                <div><?= trim($item); ?></div> <!-- Display each item directly in a new line -->
                             <?php endforeach; ?>
                         </td>
-                        <td class="border border-black p-2 text-center text-xs" rowspan="<?= $details_count ?>">1 Sesi</td> <!-- Menampilkan unit price -->
-                        <td class="border border-black p-2 text-center text-xs" rowspan="<?= $details_count ?>">
+                        <td class="border border-black p-2 text-center text-xs">1 Sesi</td>
+                        <td class="border border-black p-2 text-center text-xs">
                             <div class="flex justify-center items-center h-full">
                                 <span class="mr-1">Rp</span>
-                                <span><?= number_format($unit_price, 0, ',', '.') ?></span>
+                                <span><?= number_format($payment->total_bill, 0, ',', '.') ?></span>
                             </div>
-                        </td> <!-- Menampilkan unit price -->
-                        <td class="border border-black p-2 text-center text-xs" rowspan="<?= $details_count ?>">
+                        </td>
+                        <td class="border border-black p-2 text-center text-xs">
                             <div class="flex justify-center items-center h-full">
                                 <span class="mr-1">Rp</span>
-                                <span><?= number_format($unit_price, 0, ',', '.') ?></span>
+                                <span><?= number_format($payment->total_bill, 0, ',', '.') ?></span>
                             </div>
-                        </td> <!-- Total berdasarkan unit price -->
+                        </td>
                     </tr>
-                    <?php for ($i = 1; $i < $details_count; $i++): ?>
-                        <tr></tr>
-                    <?php endfor; ?>
                     <tr>
                         <th colspan="3" class="border border-black text-right text-sm p-1">
                             <strong>GRAND TOTAL</strong>
                         </th>
-                        <td class="border border-black p-2 text-center text-sm" style="width: auto;">
+                        <td class="border border-black p-2 text-center text-sm">
                             <div class="flex justify-center items-center h-full">
                                 <span class="mr-1"><strong>Rp</strong></span>
-                                <strong><?= number_format($unit_price, 0, ',', '.') ?></strong>
+                                <strong>
+                                    <?php 
+                                    $grandTotal = 0;
+                                    $grandTotal += $payment->total_bill; // Add total_bill to grand total
+                                    echo number_format($grandTotal, 0, ',', '.'); 
+                                    ?>
+                                </strong></strong>
                             </div>
                         </td>
                     </tr>
@@ -139,7 +137,7 @@
         <!-- Payment Terms -->
         <div class="mb-6">
             <p class="text-xs">Ketentuan Pembayaran :</p>
-            <p class="text-xs">Syarat Pembayaran adalah DP <?= number_format($payment->{"dp_" . $invoice_number}, 0, ',', '.') ?></p>
+            <p class="text-xs">Syarat Pembayaran adalah DP sebesar Rp <?= number_format($payment->DP, 0, ',', '.') ?></p>
             <p class="text-xs">sebagai booking tanggal dan pelunasan H-7</p>
             <p class="text-xs">sebelum acara.</p>
         </div>

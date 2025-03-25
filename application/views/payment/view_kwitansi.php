@@ -58,7 +58,7 @@
                 <table class="table-auto">
                     <tr>
                         <td class="border-b border-black text-xs text-left" style="width: 80px;">Nomor</td>
-                        <td class="text-xs text-center" rowspan="2">&nbsp;&nbsp;:&nbsp;<strong>MBP1<?= date('ymd', strtotime($payment->{"date_" . $invoice_number})) ?></strong></td>
+                        <td class="text-xs text-center" rowspan="2">&nbsp;&nbsp;:&nbsp;<strong><?= $payment->transactions_id; ?></strong></td>
                     </tr>
                     <tr>
                         <td class="text-xs text-left"><em>Number</em></td>
@@ -91,7 +91,7 @@
         <div class="mt-2 flex justify-start">
             <table class="table-auto">
             <?php 
-                    $unit_price = $payment->{"amount_" . $invoice_number}; // Ambil unit price
+                    $unit_price = $payment->total_paid; // Menggunakan total paid langsung dari tabel payment
                     ?>
             <tr>
                 <td class="border-b border-black text-xs text-left" style="width: 120px;">Sejumlah uang</td>
@@ -108,7 +108,7 @@
             <table class="table-auto">
                 <tr>
                     <td class="border-b border-black text-xs text-left" style="width: 120px;">Untuk pembayaran</td>
-                    <td class="text-xs text-justify" rowspan="2">&nbsp;&nbsp;:&nbsp;<?= $payment->{"kwitansi_" . $invoice_number}; ?> <?= $project->client_name; ?>
+                    <td class="text-xs text-justify" rowspan="2">&nbsp;&nbsp;:&nbsp;<?= $payment->detail; ?> <?= $project->client_name; ?>
                     <div class="flex justify-between mt-1">
                         <span>&nbsp;&nbsp;&nbsp;&nbsp;Waktu acara <?= date('d M y', strtotime($project->event_date)) ?></span>
                         <span class="ml-2">Lokasi acara <?= $project->location; ?></span>
@@ -127,7 +127,7 @@
                     7 => "Juli", 8 => "Agustus", 9 => "September", 10 => "Oktober", 11 => "November", 12 => "Desember"
                 ];
 
-                $date = strtotime($payment->{"date_" . $invoice_number});
+                $date = strtotime($payment->date);
                 ?>
                 <p class="text-xs p-0.5" style="padding-right: 40px;">Bogor, <?= date('d', $date) . ' ' . $bulan[date('n', $date)] . ' ' . date('Y', $date) ?></p>
             </div>

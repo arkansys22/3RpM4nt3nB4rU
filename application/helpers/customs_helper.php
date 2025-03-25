@@ -128,72 +128,39 @@ function getBulan($bln){
             }
         }
 
-        if (!function_exists('terbilang')) {
-          function terbilang($angka) {
-              $angka = (int) $angka;
-      
-              // Satuan angka
-              $huruf = array(
-                  '', 'Satu', 'Dua', 'Tiga', 'Empat', 'Lima', 'Enam', 'Tujuh', 'Delapan', 'Sembilan',
-                  'Sepuluh', 'Sebelas', 'Dua Belas', 'Tiga Belas', 'Empat Belas', 'Lima Belas', 'Enam Belas',
-                  'Tujuh Belas', 'Delapan Belas', 'Sembilan Belas', 'Dua Puluh', 'Tiga Puluh', 'Empat Puluh',
-                  'Lima Puluh', 'Enam Puluh', 'Tujuh Puluh', 'Delapan Puluh', 'Sembilan Puluh', 'Seratus'
-              );
-      
-              // Satuan besar seperti ribu, juta, miliar
-              $unit = array(
-                  '', 'Ribu', 'Juta', 'Miliar', 'Triliun'
-              );
-      
-              // Angka 0
-              if ($angka == 0) {
-                  return 'Nol Rupiah';
-              }
-      
-              $result = '';
-              $unitIndex = 0;
-      
-              // Pecah angka menjadi bagian 3 digit
-              while ($angka > 0) {
-                  $bagian = $angka % 1000;
-                  if ($bagian > 0) {
-                      $result = terbilang_hubungan($bagian, $huruf) . ' ' . $unit[$unitIndex] . ' ' . $result;
-                  }
-                  $angka = floor($angka / 1000);
-                  $unitIndex++;
-              }
-      
-              // Menghapus spasi ekstra dan menambahkan "Rupiah" di akhir dengan benar
-              return trim($result) . ' Rupiah'; // Tambahkan spasi sebelum 'Rupiah'
-          }
-      
-          // Fungsi bantu untuk menangani 3 digit
-          function terbilang_hubungan($angka, $huruf) {
-              $result = '';
-      
-              // Proses ratusan
-              if ($angka >= 100) {
-                  // Memastikan angka 100 hingga 199 menjadi 'Seratus'
-                  if ($angka >= 100 && $angka < 200) {
-                      $result .= 'Seratus ';
-                  } else {
-                      $result .= isset($huruf[(int)($angka / 100)]) ? $huruf[(int)($angka / 100)] . ' Ratus ' : '';
-                  }
-                  $angka = $angka % 100;
-              }
-      
-              // Proses puluhan
-              if ($angka >= 20) {
-                  $result .= isset($huruf[(int)($angka / 10) * 10]) ? $huruf[(int)($angka / 10) * 10] . ' ' : '';
-                  $angka = $angka % 10;
-              }
-      
-              // Proses satuan
-              if ($angka > 0) {
-                  $result .= isset($huruf[$angka]) ? $huruf[$angka] . ' ' : '';
-              }
-      
-              return trim($result);
-          }
-      }
-      
+if (!function_exists('terbilang')) {
+    function terbilang($angka, $isFinal = true) {
+        $angka = abs($angka);
+        $huruf = ["", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan", "sepuluh", "sebelas"];
+        $temp = "";
+
+        if ($angka < 12) {
+            $temp = $huruf[$angka];
+        } else if ($angka < 20) {
+            $temp = $huruf[$angka - 10] . " belas";
+        } else if ($angka < 100) {
+            $temp = $huruf[floor($angka / 10)] . " puluh " . terbilang($angka % 10, false);
+        } else if ($angka < 200) {
+            $temp = "seratus " . terbilang($angka - 100, false);
+        } else if ($angka < 1000) {
+            $temp = $huruf[floor($angka / 100)] . " ratus " . terbilang($angka % 100, false);
+        } else if ($angka < 2000) {
+            $temp = "seribu " . terbilang($angka - 1000, false);
+        } else if ($angka < 1000000) {
+            $temp = terbilang(floor($angka / 1000), false) . " ribu " . terbilang($angka % 1000, false);
+        } else if ($angka < 1000000000) {
+            $temp = terbilang(floor($angka / 1000000), false) . " juta " . terbilang($angka % 1000000, false);
+        } else if ($angka < 1000000000000) {
+            $temp = terbilang(floor($angka / 1000000000), false) . " milyar " . terbilang(fmod($angka, 1000000000), false);
+        } else if ($angka < 1000000000000000) {
+            $temp = terbilang(floor($angka / 1000000000000), false) . " triliun " . terbilang(fmod($angka, 1000000000000), false);
+        }
+
+        // Append "rupiah" only for the final number
+        if ($isFinal) {
+            $temp .= " rupiah";
+        }
+
+        return ucfirst(strtolower(trim($temp)));
+    }
+}
