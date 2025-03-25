@@ -3,7 +3,7 @@
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
 <head>
 		<meta http-equiv="content-type" content="text/html;charset=utf-8" />
-	    <title>Login Pengguna | Mantenbaru Wedding Organizer</title>
+	    <title>Maid Mantenbaru Wedding Organizer</title>
 	    <meta name="title" content="Vendor Pernikahan Terlengkap | Mantenbaru Wedding Organizer">
 	    <meta name="site_url" content="<?php echo base_url()?>">
 	    <meta name="description" content="">
@@ -63,7 +63,7 @@
 						<div class="flex items-center justify-between">
 							<div class="flex items-center gap-2.5">
 								<h4 class="text-xl font-bold text-black dark:text-white">
-									Client
+									Clients
 								</h4>
 							</div>
 						</div>
@@ -72,7 +72,7 @@
 							<!-- Client Bulan Ini -->
 							<div class="flex items-center justify-between gap-1">
 								<p class="text-sm font-medium">Client Bulan Ini</p>
-								<p class="font-medium text-black dark:text-white">
+								<p class="text-sm font-medium text-black dark:text-white">
 									<?= count($client_bulan_ini); ?>
 								</p>
 							</div>
@@ -80,7 +80,14 @@
 							<!-- Client Bulan Lalu -->
 							<div class="flex items-center justify-between gap-1">
 								<p class="text-sm font-medium">Client Bulan Lalu</p>
-								<p class="font-medium text-black dark:text-white">
+								<p class="text-sm font-medium text-black dark:text-white">
+									<?= count($client_bulan_lalu); ?>
+								</p>
+							</div>
+
+							<div class="flex items-center justify-between gap-1">
+								<p class="text-sm font-medium">Client Bulan Berikutnya</p>
+								<p class="text-sm font-medium text-black dark:text-white">
 									<?= count($client_bulan_lalu); ?>
 								</p>
 							</div>
@@ -88,18 +95,20 @@
 							<!-- Total Client -->
 							<div class="flex items-center justify-between gap-1">
 								<p class="text-sm font-medium">Total Semua Client</p>
-								<p class="font-medium text-black dark:text-white">
+								<p class="text-sm font-medium text-black dark:text-white">
 									<?= $total_client; ?>
 								</p>
 							</div>
-
-							<!-- Total Potensial Client -->
 							<div class="flex items-center justify-between gap-1">
-								<p class="text-sm font-medium">Total Potensial Client</p>
-								<p class="font-medium text-black dark:text-white">
-									<?= $total_potensial_client; ?>
+								<p class="text-sm font-medium">
+									<a href="#">
+				                        <span class="text-sm font-medium text-primary dark:text-white">
+				                          Lebih Lengkap >>
+				                        </span>
+				                        
+				                    </a>				                      
 								</p>
-							</div>
+							</div>				
 						</div>
 	                    </div>
 
@@ -107,7 +116,7 @@
 							<div class="flex items-center justify-between">
 								<div class="flex items-center gap-2.5">
 									<h4 class="text-xl font-bold text-black dark:text-white">
-										Income
+										Revenue
 									</h4>
 								</div>
 							</div>
@@ -116,91 +125,97 @@
 								<!-- Total Revenue Bulan Ini -->
 								<div class="flex items-center justify-between gap-1">
 									<p class="text-sm font-medium">Bulan Ini</p>
-										<p id="revenue_bulan_ini" class="font-medium text-black dark:text-white">Rp 0</p>
+										<p id="revenue_bulan_ini" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
 								</div>
 
 								<!-- Pemasukan Bulan Lalu -->
 								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium">Bulan Lalu</p>
-										<p id="revenue_bulan_lalu" class="font-medium text-black dark:text-white">Rp 0</p>
+									<p class="text-sm font-medium">Bulan Sebelumnya</p>
+										<p id="revenue_bulan_lalu" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
 								</div>
-
-								<!-- Persentase Perubahan -->
-									<p class="text-sm font-medium"></p>
-									<p id="percent_change" class="font-medium text-black dark:text-white">0% dibanding bulan lalu</p>
 								<!-- Total Revenue Semua -->
 								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium">Total Revenue</p>
-										<p id="total_revenue_all" class="font-medium text-black dark:text-white">Rp 0</p>
+									<p class="text-sm font-medium">Total Gross Revenue</p>
+										<p id="total_revenue_all" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
+								</div>
+								<div class="flex items-center justify-between gap-1">
+									<p class="text-sm font-medium">Total Net Revenue</p>
+										<p id="total_net_revenue_all" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
+								</div>
+								<div class="flex items-center justify-between gap-1">
+									<p class="text-sm font-medium">
+										<a href="#">
+					                        <span class="text-sm font-medium text-primary dark:text-white">
+					                          Lebih Lengkap >>
+					                        </span>
+					                        
+					                    </a>				                      
+									</p>
 								</div>
 							</div>
 						</div>
 	                   	<div class="swiper-slide border-r border-stroke px-10 last:border-r-0 dark:border-strokedark">
 	                      	<div class="flex items-center justify-between">
 		                        <div class="flex items-center gap-2.5">
-		                          <div
-		                            class="h-10.5 w-10.5 overflow-hidden rounded-full"
-		                          >
-		                            <img
-		                              src="src/images/brand/brand-07.svg"
-		                              alt="brand"
-		                            />
-		                          </div>
 		                          <h4
 		                            class="text-xl font-bold text-black dark:text-white"
 		                          >
-		                            Outcome
+		                            Expenses
 		                          </h4>
-		                        </div>
-		                        
+		                        </div>		                        
 	                      	</div>
-		                    <div class="mt-5.5 flex flex-col gap-1.5">
-		                        <div class="flex items-center justify-between gap-1">
-		                          <p class="text-sm font-medium">Total Outcome</p>
+	                      	<div class="mt-5.5 flex flex-col gap-1.5">
+								<!-- Total Revenue Bulan Ini -->
+								<div class="flex items-center justify-between gap-1">
+									<p class="text-sm font-medium">Bulan Ini</p>
+										<p id="expenses_bulan_ini" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
+								</div>
 
-		                          <p class="font-medium text-black dark:text-white">
-		                            $410.50
-		                          </p>
-		                        </div>
+								<!-- Pemasukan Bulan Lalu -->
+								<div class="flex items-center justify-between gap-1">
+									<p class="text-sm font-medium">Bulan Sebelumnya</p>
+										<p id="expenses_bulan_lalu" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
+								</div>
+								<!-- Total Revenue Semua -->
+								<div class="flex items-center justify-between gap-1">
+									<p class="text-sm font-medium">Total Expenses</p>
+										<p id="total_expenses_all" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
+								</div>
+								<div class="flex items-center justify-between gap-1">
+									<p class="text-sm font-medium">
+										<a href="#">
+					                        <span class="text-sm font-medium text-primary dark:text-white">
+					                          Lebih Lengkap >>
+					                        </span>					                        
+					                    </a>				                      
+									</p>
+								</div>
+							</div>
 
-		                        <div class="flex items-center justify-between gap-1">
-		                          <span class="text-meta-3">+2.5% than last Week</span>                  	
-		                        </div>
-		                    </div>
+
 	                    </div>
 
 	                    <div class="swiper-slide border-r border-stroke px-10 last:border-r-0 dark:border-strokedark">
 	                      	<div class="flex items-center justify-between">
 		                        <div class="flex items-center gap-2.5">
-		                          <div
-		                            class="h-10.5 w-10.5 overflow-hidden rounded-full"
-		                          >
-		                            <img
-		                              src="src/images/brand/brand-07.svg"
-		                              alt="brand"
-		                            />
-		                          </div>
-		                          <h4
-		                            class="text-xl font-bold text-black dark:text-white"
-		                          >
-		                            Investment
+		                          <h4 class="text-xl font-bold text-black dark:text-white">
+		                            Profit
 		                          </h4>
-		                        </div>
-		                        
+		                        </div>		                        
 	                      	</div>
-		                    <div class="mt-5.5 flex flex-col gap-1.5">
-		                        <div class="flex items-center justify-between gap-1">
-		                          <p class="text-sm font-medium">Total Investment</p>
+			                <div class="mt-5.5 flex flex-col gap-1.5">
+									<!-- Total Revenue Bulan Ini -->
+									<div class="flex items-center justify-between gap-1">
+										<p class="text-sm font-medium">Gross Profit</p>
+											<p id="expenses_bulan_ini" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
+									</div>
 
-		                          <p class="font-medium text-black dark:text-white">
-		                            $410.50
-		                          </p>
-		                        </div>
-
-		                        <div class="flex items-center justify-between gap-1">
-		                          <span class="text-meta-3">+2.5% than last Week</span>                  	
-		                        </div>
-		                    </div>
+									<!-- Pemasukan Bulan Lalu -->
+									<div class="flex items-center justify-between gap-1">
+										<p class="text-sm font-medium">Net Profit</p>
+											<p id="expenses_bulan_lalu" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
+									</div>
+							</div>
 	                    </div>                  
 	                  </div>
 	                </div>

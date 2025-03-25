@@ -23,7 +23,6 @@ class Aspanel extends CI_Controller {
 				$data['client_bulan_ini'] = $this->Clients_model->get_clients_by_month(date('Y-m'));  // Client bulan ini
 				$data['client_bulan_lalu'] = $this->Clients_model->get_clients_by_month(date('Y-m', strtotime('last month'))); // Client bulan lalu
 				$data['total_client'] = $this->Clients_model->get_total_clients(); // Total client
-				$data['total_potensial_client'] = $this->Potensial_model->get_total_potensial_clients(); // Total potensial client
 				
 				// Revenue bulan ini
 				$data['revenue_bulan_ini'] = $this->db->select_sum('total_paid')
@@ -56,7 +55,6 @@ class Aspanel extends CI_Controller {
 				$data['client_bulan_ini'] = $this->Clients_model->get_clients_by_month(date('Y-m'));
 				$data['client_bulan_lalu'] = $this->Clients_model->get_clients_by_month(date('Y-m', strtotime('last month')));
 				$data['total_client'] = $this->Clients_model->get_total_clients();
-				$data['total_potensial_client'] = $this->Potensial_model->get_total_potensial_clients();
 				
 				// Revenue bulan ini
 				$data['revenue_bulan_ini'] = $this->db->select_sum('total_paid')
@@ -84,7 +82,34 @@ class Aspanel extends CI_Controller {
 		
 			} else if ($this->session->level == '3') {
 				cek_session_akses_staff_accounting('panel', $this->session->id_session);
-				$data['aaa'] = '';
+				$month_now = date('Y-m');
+				$month_last = date('Y-m', strtotime('last month'));
+				$data['client_bulan_ini'] = $this->Clients_model->get_clients_by_month(date('Y-m'));
+				$data['client_bulan_lalu'] = $this->Clients_model->get_clients_by_month(date('Y-m', strtotime('last month')));
+				$data['total_client'] = $this->Clients_model->get_total_clients();
+				
+				// Revenue bulan ini
+				$data['revenue_bulan_ini'] = $this->db->select_sum('total_paid')
+					->where('DATE_FORMAT(date, "%Y-%m") =', $month_now)
+					->get('payment')
+					->row();
+
+				// Revenue bulan lalu
+				$data['revenue_bulan_lalu'] = $this->db->select_sum('total_paid')
+					->where('DATE_FORMAT(date, "%Y-%m") =', $month_last)
+					->get('payment')
+					->row();
+
+				// Total revenue all
+				$data['total_revenue_all'] = $this->db->select_sum('total_bill')
+					->get('payment')
+					->row();
+
+				// Hitung persentase perubahan revenue
+				$data['percent_change'] = null;
+				if ($data['revenue_bulan_ini'] && $data['revenue_bulan_lalu'] && $data['revenue_bulan_lalu']->total_paid != 0) {
+					$data['percent_change'] = (($data['revenue_bulan_ini']->total_paid - $data['revenue_bulan_lalu']->total_paid) / $data['revenue_bulan_lalu']->total_paid) * 100;
+				}
 				$this->load->view('backend/v_home', $data);
 		
 			} else if ($this->session->level == '4') {
@@ -94,7 +119,7 @@ class Aspanel extends CI_Controller {
 				$data['client_bulan_ini'] = $this->Clients_model->get_clients_by_month(date('Y-m'));
 				$data['client_bulan_lalu'] = $this->Clients_model->get_clients_by_month(date('Y-m', strtotime('last month')));
 				$data['total_client'] = $this->Clients_model->get_total_clients();
-				$data['total_potensial_client'] = $this->Potensial_model->get_total_potensial_clients();
+				
 				
 				// Revenue bulan ini
 				$data['revenue_bulan_ini'] = $this->db->select_sum('total_paid')
