@@ -100,7 +100,6 @@ $route['crews/soft_delete/(:any)'] = 'Crud_crews/soft_delete/$1'; // Menghapus d
 $route['crews/restore/(:any)'] = 'Crud_crews/restore/$1'; // Mengembalikan data crews dari Recycle Bin ke daftar aktif
 $route['crews/delete_permanent/(:any)'] = 'Crud_crews/delete_permanent/$1'; // Menghapus permanen data crews dari Recycle Bin
 $route['crews/lihat/(:any)'] = 'Crud_crews/lihat/$1'; // Menampilkan lihat Crew
-$route['crews/create/(:any)'] = 'Crud_crews/create/$1'; // Route for creating an invoice
 
 $route['potensial-clients'] = 'crud_potensial_clients/index'; // Menampilkan daftar Potensial Clients
 $route['potensial-clients-hot'] = 'crud_potensial_clients/index_hot'; // Menampilkan daftar Potensial Clients Hot
@@ -156,5 +155,12 @@ $route['supplies/recycle_bin'] = 'crud_supplies/recycle_bin'; // Halaman recycle
 $route['supplies/restore/(:any)'] = 'crud_supplies/restore/$1'; // Restore supplies
 $route['supplies/permanent_delete/(:any)'] = 'crud_supplies/permanent_delete/$1'; // Hapus permanen supplies
 $route['supplies/lihat/(:any)'] = 'crud_supplies/lihat/$1'; // Menampilkan lihat supplies
+
+$route['crewproject/createlist/(:any)'] = 'Crud_crewprojects/createlist/$1'; // Route for creating a crew list for a project
+$route['crewproject/storelist'] = 'Crud_crewprojects/storelist'; // Route for storing a crew list for a project
+$route['crewproject/delete/(:any)'] = 'Crud_crewprojects/delete/$1'; // Route for deleting a single crew
+$route['crewproject/editlist/(:any)/(:any)'] = 'Crud_crewprojects/editlist/$1/$2'; // Route for editing a crew using project_id and crew_id
+$route['crewproject/updatelist/(:any)/(:any)'] = 'Crud_crewprojects/updatelist/$1/$2'; // Route for updating a crew using id_session and crew_id
+$route['crewproject/updatelist'] = 'Crud_crewprojects/updatelist';
 
 $route['petacrawl\.xml'] = "petacrawl";
