@@ -108,7 +108,7 @@
             <table class="table-auto">
                 <tr>
                     <td class="border-b border-black text-xs text-left" style="width: 120px;">Untuk pembayaran</td>
-                    <td class="text-xs text-justify" rowspan="2">&nbsp;&nbsp;:&nbsp;<?= $payment->detail; ?> <?= $project->client_name; ?>
+                    <td class="text-xs text-justify" rowspan="2">&nbsp;&nbsp;:&nbsp;<?= str_replace('"', '', $payment->detail); ?> <?= $project->client_name; ?>
                     <div class="flex justify-between mt-1">
                         <span>&nbsp;&nbsp;&nbsp;&nbsp;Waktu acara <?= date('d M y', strtotime($project->event_date)) ?></span>
                         <span class="ml-2">Lokasi acara <?= $project->location; ?></span>
