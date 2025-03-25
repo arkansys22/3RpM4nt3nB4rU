@@ -3,50 +3,49 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Payment_model extends CI_Model {
 
-    // Mendapatkan data payment berdasarkan id_session
     public function get_payment_by_session($id_session) {
+        $this->db->select('*');
         $this->db->where('id_session', $id_session);
-        return $this->db->get('payment')->row(); // Mengambil data pertama (bisa diubah jika ingin data lebih banyak)
-    }
-    // Mendapatkan jumlah payment berdasarkan id_session
-    public function get_payment_count($id_session) {
-        $this->db->where('id_session', $id_session);
-        return $this->db->count_all_results('payment');
+        return $this->db->get('payment')->result(); // Kembalikan semua transaksi
     }
 
-    public function get_payment_by_invoice($id_session, $invoice_number) {
+    public function get_payment_by_transaction_id($id_session, $transactions_id) {
         $this->db->where('id_session', $id_session);
-        $this->db->where('invoice_' . $invoice_number . ' !=', NULL);  // Memastikan invoice_number valid
-        return $this->db->get('payment')->row();  // Mengambil satu baris data pembayaran
+        $this->db->where('transactions_id', $transactions_id);
+        $result = $this->db->get('payment')->row();
+
+        if (!$result) {
+            log_message('error', "Payment not found for id_session: $id_session and transactions_id: $transactions_id");
+        }
+
+        return $result;
     }
 
-    // Menambahkan data payment baru
     public function insert_payment($data) {
         return $this->db->insert('payment', $data);
     }
 
-    public function update_payment($id_session, $invoice_number, $data) {
+    public function update_payment($id_session, $transactions_id, $data) {
         $this->db->where('id_session', $id_session);
-        $this->db->where('invoice_' . $invoice_number); // Filter berdasarkan nomor invoice
-        return $this->db->update('payment', $data);  // Mengupdate data payment
+        $this->db->where('transactions_id', $transactions_id);
+        return $this->db->update('payment', $data);
     }
-            
-    public function delete_invoice($id_session, $invoice_number) {
-        // Menghapus data pembayaran berdasarkan id_session dan nomor invoice
+
+    public function delete_payment($id_session, $transactions_id) {
         $this->db->where('id_session', $id_session);
-        $this->db->update('payment', [
-            'invoice_' . $invoice_number => NULL,
-            'kwitansi_' . $invoice_number => NULL,
-            'amount_' . $invoice_number => NULL,
-            'dp_' . $invoice_number => NULL,
-            'date_' . $invoice_number => NULL,
-            'details_' . $invoice_number => NULL
-        ]);
+        $this->db->where('transactions_id', $transactions_id);
+        return $this->db->delete('payment');
     }
-    
-    // Mendapatkan data project berdasarkan id_session
-    public function get_project($id_session) {
+
+    public function has_invoice($id_session) {
+        $this->db->select('transactions_id');
         $this->db->where('id_session', $id_session);
-        return $this->db->get('project')->row();
+        $this->db->like('transactions_id', 'IMB', 'after'); // Cari transactions_id yang diawali dengan 'IMB'
+        return $this->db->get('payment')->row(); // Kembalikan satu baris jika ada
     }
+
+    public function insert_log_activity($data_log) {
+        return $this->db->insert('log_activity', $data_log);
+    }
+
 }
