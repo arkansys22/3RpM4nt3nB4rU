@@ -111,7 +111,7 @@
                         </th>
                         <th>
                           <div class="flex items-center justify-between gap-1.5">
-                            <p>Value</p>
+                            <p>Lokasi</p>
                             <div class="inline-flex flex-col space-y-[2px]">
                               <span class="inline-block">
                                 <svg
@@ -145,7 +145,7 @@
                         </th>
                         <th>
                           <div class="flex items-center justify-between gap-1.5">
-                            <p>Detail</p>
+                            <p>Nilai Project</p>
                             <div class="inline-flex flex-col space-y-[2px]">
                               <span class="inline-block">
                                 <svg
@@ -176,7 +176,7 @@
                               </span>
                             </div>
                           </div>
-                        </th>
+                        </th>                        
                         <th>
                           <div class="flex items-center justify-between gap-1.5">
                             <p>Agama</p>
@@ -210,41 +210,7 @@
                               </span>
                             </div>
                           </div>
-                        </th>
-                        <th>
-                          <div class="flex items-center justify-between gap-1.5">
-                            <p>Lokasi</p>
-                            <div class="inline-flex flex-col space-y-[2px]">
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path d="M5 0L0 5H10L5 0Z" fill="" />
-                                </svg>
-                              </span>
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
-                                    fill=""
-                                  />
-                                </svg>
-                              </span>
-                            </div>
-                          </div>
-                        </th>
+                        </th>                        
                         <th>
                           <div class="flex items-center justify-between gap-1.5">
                             <p>Aksi</p>
@@ -286,10 +252,9 @@
                   <tr>
                     <td><?= $p->project_name ?></td>
                     <td><?= tgl_indo($p->event_date) ?></td>
-                    <td><?= "Rp " . number_format($p->value, 0, ',', '.'); ?></td>
-                    <td><?= $p->detail ?></td>
-                    <td><?= $p->religion ?></td>
                     <td><?= $p->location ?></td>
+                    <td><?= "Rp " . number_format($p->value, 0, ',', '.'); ?></td>
+                    <td><?= $p->religion ?></td>                    
                     <td>
                     <div class="flex flex-col items-start gap-2 w-max">
                       <a href="<?= site_url('finance-project/lihat/'.$p->id_session) ?>" class="inline-flex justify-center bg-yellow-500 text-white px-2 py-1 rounded-md hover:bg-yellow-600 text-center w-full">Lihat</a>
