@@ -176,9 +176,9 @@ class Crud_project extends CI_Controller {
         }
     
         $data['project'] = $this->project_model->get_project_by_session($id_session);
-        $data['crew_project'] = $this->CrewProjects_model->get_crew_by_project($id_session);
-        $data['payment'] = $this->Payment_model->get_payment_by_session($id_session); // Semua transaksi
-        $data['has_invoice'] = $this->Payment_model->has_invoice($id_session); // Periksa apakah ada invoice
+        $data['crew_list'] = $this->CrewProjects_model->get_crew_by_project($id_session); // Fetch the crew list
+        $data['payment'] = $this->Payment_model->get_payment_by_session($id_session); // All transactions
+        $data['has_invoice'] = $this->Payment_model->has_invoice($id_session); // Check if there is an invoice
         $data['vendors'] = $this->Vendor_model->get_vendor_by_id($id_session);
         $data['logactivity'] = $this->project_model->get_logactivity_by_session($id_session);
     
