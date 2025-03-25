@@ -87,14 +87,14 @@
                                     </p>
                                 </div>
                                 <div class="flex gap-2">
-                                    <!-- Tombol Edit -->
-                                    <a href="<?= site_url('crud_crew/edit/' . $crew->id_session . '/' . $crew->crew_id) ?>" 
+                                    <!-- Edit Button -->
+                                    <a href="<?= site_url('crewproject/editlist/' . $crew->id_session . '/' . $crew->crew_id) ?>" 
                                        class="bg-green-500 text-white text-sm px-2 py-1 rounded-md hover:bg-green-600">
                                        Edit
                                     </a>
 
-                                    <!-- Tombol Hapus -->
-                                    <a href="<?= site_url('crud_crew/delete/' . $crew->id_session . '/' . $crew->crew_id) ?>" 
+                                    <!-- Delete Button -->
+                                    <a href="<?= site_url('crewproject/delete/' . $crew->id_session) ?>" 
                                        onclick="return confirm('Apakah Anda yakin ingin menghapus crew ini?')"
                                        class="bg-red-500 text-white text-sm px-2 py-1 rounded-md hover:bg-red-600">
                                        Hapus
@@ -103,13 +103,13 @@
                             </div>
                         <?php endforeach; ?>
                     <?php else: ?>
-                        <p class='text-red-500 font-semibold'>Belum ada crew.</p>
+                        <p class='text-red-500 font-semibold'>Belum ada crew. Silakan tambahkan crew.</p>
                     <?php endif; ?>
 
-                    <!-- Tombol Tambah Crew -->
-                    <a href="<?= site_url('crews/create/' . $project->id_session) ?>" 
+                    <!-- Add Crew Button -->
+                    <a href="<?= site_url('crewproject/createlist/' . $project->id_session) ?>" 
                        class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
-                       Add Crew
+                       Tambah Crew
                     </a>
                 </div>
 
@@ -169,7 +169,7 @@
     <!-- Tombol Tambah Vendor -->
     <a href="<?= site_url('crud_vendor/create/' . $project->id_session) ?>" 
        class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
-       Add Vendor
+       Tambah Vendor
     </a>
 </div>
 
