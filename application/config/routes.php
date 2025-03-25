@@ -75,6 +75,7 @@ $route['crews/soft_delete/(:any)'] = 'Crud_crews/soft_delete/$1'; // Menghapus d
 $route['crews/restore/(:any)'] = 'Crud_crews/restore/$1'; // Mengembalikan data crews dari Recycle Bin ke daftar aktif
 $route['crews/delete_permanent/(:any)'] = 'Crud_crews/delete_permanent/$1'; // Menghapus permanen data crews dari Recycle Bin
 $route['crews/lihat/(:any)'] = 'Crud_crews/lihat/$1'; // Menampilkan lihat Crew
+$route['crews/create/(:any)'] = 'Crud_crews/create/$1'; // Route for creating an invoice
 
 $route['potensial-clients'] = 'crud_potensial_clients/index'; // Menampilkan daftar Potensial Clients
 $route['potensial-clients-hot'] = 'crud_potensial_clients/index_hot'; // Menampilkan daftar Potensial Clients Hot
