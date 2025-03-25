@@ -36,6 +36,21 @@ $route['project/restore/(:any)'] = 'crud_project/restore/$1'; // Restore project
 $route['project/permanent_delete/(:any)'] = 'crud_project/permanent_delete/$1'; // Hapus permanen project
 $route['project/lihat/(:any)'] = 'crud_project/lihat/$1'; // Menampilkan lihat project
 
+
+$route['finance-project'] = 'crud_finance_project/index'; // Menampilkan daftar project
+$route['finance-project/create'] = 'crud_finance_project/create'; // Menampilkan form tambah project
+$route['finance-project/store'] = 'crud_finance_project/store'; // Menyimpan data project baru
+$route['finance-project/edit/(:any)'] = 'crud_finance_project/edit/$1'; // Menampilkan form edit project
+$route['finance-project/edit2/(:any)'] = 'crud_finance_project/edit2/$1'; // Menampilkan form edit project
+$route['finance-project/update2/(:any)'] = 'crud_finance_project/update2/$1'; // Mengupdate project
+$route['finance-project/delete/(:any)'] = 'crud_finance_project/delete/$1'; // Menghapus project
+$route['finance-project/recycle_bin'] = 'crud_finance_project/recycle_bin'; // Halaman recycle bin
+$route['finance-project/restore/(:any)'] = 'crud_finance_project/restore/$1'; // Restore project
+$route['finance-project/permanent_delete/(:any)'] = 'crud_finance_project/permanent_delete/$1'; // Hapus permanen project
+$route['finance-project/lihat/(:any)'] = 'crud_finance_project/lihat/$1'; // Menampilkan lihat project
+
+
+
 $route['payment/create/(:num)/(:num)'] = 'Crud_payment/create/$1/$2';  // Routing untuk menambah pembayaran (Add Payment)
 $route['payment/store/(:num)/(:num)'] = 'Crud_payment/store/$1/$2';  // Routing untuk menambah pembayaran (Add Payment)
 $route['payment/edit/(:num)/(:num)'] = 'Crud_payment/edit/$1/$2';      // Routing untuk mengedit pembayaran (Edit Payment)
