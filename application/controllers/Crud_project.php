@@ -135,16 +135,6 @@ class Crud_project extends CI_Controller {
         // Insert ke tabel clients
         $this->db->insert('clients', $client_data);
 
-        // Data untuk tabel crew_projects
-        $crew_projects_data = array(
-            'project_id'   => $id_session,  
-            'created_at'   => $date_create,
-            'status'       => 'create'
-        );
-    
-        // Insert ke tabel crew_projects
-        $this->db->insert('crew_projects', $crew_projects_data);
-
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
@@ -269,26 +259,6 @@ class Crud_project extends CI_Controller {
         $this->db->where('id_session', $id_session);
         $this->db->update('clients', $client_data);
     
-        // Data untuk update crew_projects
-        $data_crews = [
-            'koor_acara'   => $this->input->post('koor_acara'),
-            'koor_lapangan'   => $this->input->post('koor_lapangan'),
-            'koor_catering'   => $this->input->post('koor_catering'),
-            'koor_pengantin'  => $this->input->post('koor_pengantin'),
-            'koor_tamu'       => $this->input->post('koor_tamu'),
-            'koor_tambahan1'  => $this->input->post('koor_tambahan1'),
-            'koor_tambahan2'  => $this->input->post('koor_tambahan2'),
-        ];
-
-        // Jika tidak dipilih, kosongkan datanya
-        foreach ($data_crews as $key => $value) {
-            if ($value == '-') {
-                $data_crews[$key] = null; 
-            }
-        }
-
-        $this->CrewProjects_model->update_crew_roles($id_session, $data_crews);
-
         $status = 'Edit' ;
 
 
@@ -338,10 +308,6 @@ class Crud_project extends CI_Controller {
         $this->db->where('id_session', $id_session);
         $this->db->update('clients', $data);
     
-        // Hapus juga data crews dari tabel crew_projects
-        $this->db->where('project_id', $id_session);
-        $this->db->update('crew_projects', $data);
-
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
@@ -448,11 +414,7 @@ class Crud_project extends CI_Controller {
         // Hapus juga di tabel clients
         $this->db->where('id_session', $id_session);
         $this->db->delete('clients');
-    
-        // Hapus juga hubungan crew di tabel crew_projects
-        $this->db->where('project_id', $id_session);
-        $this->db->delete('crew_projects');
-    
+        
         $this->session->set_flashdata('Success', 'Project berhasil dihapus permanen');
         redirect('project/recycle_bin');
     }

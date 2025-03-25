@@ -63,33 +63,6 @@
                 <label class="block mb-2">Lokasi</label>
                 <input type="text" name="location" value="<?= $project->location ?>" class="w-full px-4 py-2 border rounded mb-4" required>
 
-                <h4 class="text-lg font-semibold mt-4 mb-2">Pilih Koordinator</h4>
-
-                <?php
-                $roles = [
-                    'koor_acara'      => 'Koordinator Acara',
-                    'koor_lapangan'   => 'Koordinator Lapangan',
-                    'koor_catering'   => 'Koordinator Catering',
-                    'koor_pengantin'  => 'Koordinator Pengantin',
-                    'koor_tamu'       => 'Koordinator Tamu',
-                    'koor_tambahan1'  => 'Koordinator Tambahan1',
-                    'koor_tambahan2'  => 'Koordinator Tambahan2'
-                ];
-
-                foreach ($roles as $field => $label):
-                ?>
-                    <label class="block mb-2"><?= $label ?></label>
-                    <select name="<?= $field ?>" class="w-full px-4 py-2 border rounded mb-4">
-                        <option value="-">-</option> <!-- Pilihan kosong -->
-                        <?php foreach ($crews_list as $crew): ?>
-                            <option value="<?= $crew->id_session ?>" 
-                                <?= (isset($selected_crews->$field) && $selected_crews->$field == $crew->id_session) ? 'selected' : '' ?>>
-                                <?= $crew->crew_name ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-                <?php endforeach; ?>
-
                 <div class="flex flex-col sm:flex-row justify-end">
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded w-full hover:bg-blue-600 sm:w-24 mb-2 sm:mb-0 text-center">Update</button>
                 <a href="javascript:history.back()" class="sm:ml-2 bg-gray-500 text-white px-4 py-2 rounded w-full hover:bg-gray-600 sm:w-24 text-center">Batal</a>
