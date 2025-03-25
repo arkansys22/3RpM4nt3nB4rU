@@ -19,7 +19,7 @@ class Crud_supplies extends CI_Controller {
         }else if($this->session->level=='2'){
             cek_session_akses_administrator('supplies',$this->session->id_session);
             $data['supplies'] = $this->Supplies_model->get_supplies_by_session($id_session);
-            $data['logactivity'] = $this->Supplies_model->get_logactivity_with_details($id_session);
+            $data['supplies_stock'] = $this->Supplies_model->get_stock($id_session);
             $this->load->view('supplies/lihat', $data);
 
         }else if($this->session->level=='3'){
@@ -30,7 +30,7 @@ class Crud_supplies extends CI_Controller {
         }else if($this->session->level=='4'){
             cek_session_akses_staff_admin('supplies',$this->session->id_session);
             $data['supplies'] = $this->Supplies_model->get_supplies_by_session($id_session);
-            $data['logactivity'] = $this->Supplies_model->get_logactivity_with_details($id_session);
+            $data['supplies_stock'] = $this->Supplies_model->get_stock($id_session);
             $this->load->view('supplies/lihat', $data);
 
         }else if($this->session->level=='5'){
