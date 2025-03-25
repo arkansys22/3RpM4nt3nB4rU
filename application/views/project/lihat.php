@@ -74,7 +74,44 @@
                 endif; 
                 ?>
 
+                <h2 class="text-lg font-bold mb-2">List Crew</h2>
 
+                <div class="border p-4 mb-4 text-black dark:text-white">
+                    <?php if (!empty($crew_list)): ?>
+                        <?php foreach ($crew_list as $crew): ?>
+                            <div class="mb-2 flex items-center justify-between border-b pb-2">
+                                <div>
+                                    <p class='text-black dark:text-white font-medium'>
+                                        <strong><?= htmlspecialchars($crew->role) ?>:</strong> 
+                                        <?= htmlspecialchars($crew->crew_name) ?>
+                                    </p>
+                                </div>
+                                <div class="flex gap-2">
+                                    <!-- Tombol Edit -->
+                                    <a href="<?= site_url('crud_crew/edit/' . $crew->id_session . '/' . $crew->crew_id) ?>" 
+                                       class="bg-green-500 text-white text-sm px-2 py-1 rounded-md hover:bg-green-600">
+                                       Edit
+                                    </a>
+
+                                    <!-- Tombol Hapus -->
+                                    <a href="<?= site_url('crud_crew/delete/' . $crew->id_session . '/' . $crew->crew_id) ?>" 
+                                       onclick="return confirm('Apakah Anda yakin ingin menghapus crew ini?')"
+                                       class="bg-red-500 text-white text-sm px-2 py-1 rounded-md hover:bg-red-600">
+                                       Hapus
+                                    </a>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p class='text-red-500 font-semibold'>Belum ada crew.</p>
+                    <?php endif; ?>
+
+                    <!-- Tombol Tambah Crew -->
+                    <a href="<?= site_url('crews/create/' . $project->id_session) ?>" 
+                       class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
+                       Add Crew
+                    </a>
+                </div>
 
     <h2 class="text-lg font-bold mb-2">Vendor</h2>
 
@@ -153,8 +190,15 @@
                     <div>
                         <p class="text-black dark:text-white font-medium">
                             <strong>Transaksi ID:</strong> <?= htmlspecialchars($trans->transactions_id) ?><br>
-                            <strong>Total Tagihan:</strong> Rp <?= number_format($trans->total_bill, 0, ',', '.') ?><br>
-                            <strong>Total Dibayar:</strong> Rp <?= number_format($trans->total_paid, 0, ',', '.') ?><br>
+                            <strong>Total Tagihan:</strong> 
+                            <?php if (strpos($trans->transactions_id, 'IMB') === 0): ?>
+                                Rp <?= number_format($trans->total_bill, 0, ',', '.') ?><br>
+                            <?php elseif (strpos($trans->transactions_id, 'MBP1') === 0): ?>
+                                Rp <?= number_format($trans->total_paid, 0, ',', '.') ?><br>
+                            <?php endif; ?>
+                            <?php if (strpos($trans->transactions_id, 'IMB') === 0): ?>
+                                <strong>DP:</strong> Rp <?= number_format($trans->DP, 0, ',', '.') ?><br>
+                            <?php endif; ?>
                             <strong>Tanggal:</strong> <?= tgl_indo($trans->date) ?><br>
                             <?php if (!empty($trans->due_date)): ?>
                                 <strong>Jatuh Tempo:</strong> <?= tgl_indo($trans->due_date) ?>
@@ -173,7 +217,7 @@
                                Lihat Kwitansi
                             </a>
                         <?php endif; ?>
-                        <a href="<?= site_url('payment/edit/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
+                        <a href="<?= site_url('payment/' . (strpos($trans->transactions_id, 'IMB') === 0 ? 'edit' : 'edit2') . '/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
                            class="bg-green-500 text-white text-sm px-2 py-1 rounded-md hover:bg-green-600">
                            Edit
                         </a>
