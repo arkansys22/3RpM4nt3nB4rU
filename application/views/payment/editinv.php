@@ -44,6 +44,9 @@
                 <label for="due_date" class="block mb-2 font-medium">Jatuh Tempo:</label>
                 <input type="date" name="due_date" value="<?= $payment->due_date ?>" class="w-full px-4 py-2 border rounded mb-4" required>
 
+                <label for="DP" class="block mb-2 font-medium">DP:</label>
+                <input type="text" id="DP" name="DP" value="<?= number_format($payment->DP ?? 0, 0, ',', '.') ?>" class="w-full px-4 py-2 border rounded mb-4" required oninput="formatNumber(this)">
+
                 <label for="detail" class="block mb-2 font-medium">Detail:</label>
                 <div id="detail-section">
                     <?php 
@@ -117,6 +120,19 @@
     document.querySelector('form').addEventListener('submit', function (e) {
         const totalBillInput = document.getElementById('total_bill');
         totalBillInput.value = totalBillInput.value.replace(/\./g, ''); // Hapus semua titik
+    });
+
+    // Format angka dengan titik saat pengguna mengetik untuk DP
+    document.getElementById('DP').addEventListener('input', function (e) {
+        let value = e.target.value.replace(/\D/g, ''); // Hapus karakter non-angka
+        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Tambahkan titik setiap 3 angka
+        e.target.value = value;
+    });
+
+    // Hapus titik sebelum formulir dikirim untuk DP
+    document.querySelector('form').addEventListener('submit', function (e) {
+        const DPInput = document.getElementById('DP');
+        DPInput.value = DPInput.value.replace(/\./g, ''); // Hapus semua titik
     });
   </script>
 </body>

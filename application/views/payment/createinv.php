@@ -50,6 +50,9 @@
                 <label class="block mb-2">Kode Unik</label>
                 <input type="number" name="number" class="w-full px-4 py-2 border rounded mb-4">
 
+                <label class="block mb-2">DP</label>
+                <input type="text" id="formattedNumber" oninput="formatNumber(this)" name="DP" step="0.01" class="w-full px-4 py-2 border rounded mb-4" required>
+
                 <!-- Section for detail -->
                 <div id="detail-section">
                     <div class="mb-2">
@@ -85,6 +88,9 @@
     document.querySelector('form').addEventListener('submit', function (e) {
         const totalBillInput = document.querySelector('input[name="total_bill"]');
         totalBillInput.value = totalBillInput.value.replace(/\./g, ''); // Remove dots before submitting
+
+        const dpInput = document.querySelector('input[name="DP"]');
+        dpInput.value = dpInput.value.replace(/\./g, ''); // Remove dots before submitting DP
     });
   </script>
   <script>
