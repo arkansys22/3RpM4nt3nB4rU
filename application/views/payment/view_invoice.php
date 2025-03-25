@@ -60,9 +60,9 @@
                         <td class="border border-black text-xs text-center"><strong>JATUH TEMPO</strong></td>
                     </tr>
                     <tr>
-                        <td class="border border-black text-xs text-center">IMB<?= date('ymd', strtotime($payment->{"date_" . $invoice_number})) ?></td>
+                        <td class="border border-black text-xs text-center"><?= $payment->transactions_id; ?></td>
                         <td class="border border-black text-xs text-center"><?= date('d-M-y') ?></td>
-                        <td class="border border-black text-xs text-center whitespace-nowrap"><?= date('d-M-y', strtotime($payment->{"due_date_" . $invoice_number})) ?></td>
+                        <td class="border border-black text-xs text-center whitespace-nowrap"><?= date('d-M-y', strtotime($payment->{$due_date})) ?></td>
                     </tr>
                 </table>
             </div>
