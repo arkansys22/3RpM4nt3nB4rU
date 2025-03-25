@@ -74,52 +74,7 @@
                 endif; 
                 ?>
 
-    <h2 class="text-xl font-bold mb-4">Daftar Pembayaran</h2>
 
-    <?php if (empty($payment)): ?>
-        <!-- Jika belum ada pembayaran, tampilkan tombol Add Payment untuk invoice pertama -->
-        <div class="border p-4 mb-4 text-black dark:text-white">
-            <p class="text-red-500 font-semibold">Belum ada data pembayaran.</p>
-            <a href="<?= base_url('Crud_payment/create/' . $project->id_session . '/1') ?>" class="btn btn-primary">Tambah Invoice & Kwitansi 1</a>
-        </div>
-    <?php else: ?>
-        <!-- Loop untuk menampilkan data pembayaran untuk setiap invoice -->
-        <?php for ($i = 1; $i <= 7; $i++): ?>
-            <?php 
-                $invoice = "invoice_{$i}"; 
-                $kwitansi = "kwitansi_{$i}"; 
-                $amount = "amount_{$i}";
-                $dp = "dp_{$i}";
-                $date = "date_{$i}";
-                $details = "details_{$i}";
-                $due_date = "due_date_{$i}";
-            ?>
-
-            <?php if (!empty($payment->$invoice) || ($i == 1) || !empty($payment->{"invoice_" . ($i - 1)})): ?>
-                <div class="border p-4 mb-4 text-black dark:text-white">
-                    <h3 class="font-bold">Invoice & Kwitansi <?= $i ?></h3>
-
-                    <?php if (!empty($payment->$invoice)): ?>
-                        <!-- Menampilkan data jika invoice sudah ada -->
-                        <p><strong>Invoice:</strong> <?= htmlspecialchars($payment->$invoice) ?></p>
-                        <p><strong>Kwitansi:</strong> <?= htmlspecialchars($payment->$kwitansi) ?></p>
-                        <p><strong>Jumlah:</strong> <?= "Rp " . number_format($payment->$amount, 0, ',', '.') ?></p>
-                        <p><strong>DP:</strong> <?= "Rp " . number_format($payment->$dp, 0, ',', '.') ?></p>
-                        <p><strong>Tanggal:</strong> <?= date('d-m-Y', strtotime($payment->$date)) ?></p>
-                        <p><strong>Jatuh Tempo:</strong> <?= date('d-m-Y', strtotime($payment->$due_date)) ?></p>
-                        <a href="<?= base_url('payment/view_invoice/' . $payment->id_session . '/' . $i) ?>" class="btn btn-success">Lihat Invoice</a>
-                        <a href="<?= base_url('payment/view_kwitansi/' . $payment->id_session . '/' . $i) ?>" class="btn btn-success">Lihat Kwitansi</a>
-                        <a href="<?= base_url('Crud_payment/edit/' . $payment->id_session . '/' . $i) ?>" class="btn btn-warning">Edit</a>
-                        <!-- Tombol Hapus untuk setiap invoice -->
-                        <a href="<?= base_url('Crud_payment/delete/' . $payment->id_session . '/' . $i) ?>" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus invoice ini?')">Hapus</a>
-                    <?php else: ?>
-                        <!-- Menampilkan tombol Add Payment jika invoice kosong -->
-                        <a href="<?= base_url('Crud_payment/create/' . $payment->id_session . '/' . $i) ?>" class="btn btn-primary">Tambah Invoice & Kwitansi <?= $i ?></a>
-                    <?php endif; ?>
-                </div>
-            <?php endif; ?>
-        <?php endfor; ?>
-    <?php endif; ?>
 
     <h2 class="text-lg font-bold mb-2">Vendor</h2>
 
@@ -181,6 +136,65 @@
     </a>
 </div>
 
+<h2 class="text-lg font-bold mb-2">Daftar Pembayaran</h2>
+
+<div class="border p-4 mb-4 text-black dark:text-white">
+    <?php if (empty($payment)): ?>
+        <p class="text-red-500 font-semibold">Belum ada transaksi.</p>
+        <a href="<?= site_url('payment/createinv/' . $project->id_session) ?>" 
+           class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
+           Tambah Invoice
+        </a>
+    <?php else: ?>
+        <?php foreach ($payment as $trans): ?>
+            <div class="mb-4">
+                <h3 class="text-md font-semibold">Transaksi <?= $project->client_name ?></h3>
+                <div class="flex items-center justify-between border-b pb-2">
+                    <div>
+                        <p class="text-black dark:text-white font-medium">
+                            <strong>Transaksi ID:</strong> <?= htmlspecialchars($trans->transactions_id) ?><br>
+                            <strong>Total Tagihan:</strong> Rp <?= number_format($trans->total_bill, 0, ',', '.') ?><br>
+                            <strong>Total Dibayar:</strong> Rp <?= number_format($trans->total_paid, 0, ',', '.') ?><br>
+                            <strong>Tanggal:</strong> <?= tgl_indo($trans->date) ?><br>
+                            <?php if (!empty($trans->due_date)): ?>
+                                <strong>Jatuh Tempo:</strong> <?= tgl_indo($trans->due_date) ?>
+                            <?php endif; ?>
+                        </p>
+                    </div>
+                    <div class="flex gap-2">
+                        <?php if (strpos($trans->transactions_id, 'IMB') === 0): ?>
+                            <a href="<?= site_url('payment/view_invoice/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
+                               class="bg-blue-500 text-white text-sm px-2 py-1 rounded-md hover:bg-blue-600">
+                               Lihat Invoice
+                            </a>
+                        <?php elseif (strpos($trans->transactions_id, 'MBP1') === 0): ?>
+                            <a href="<?= site_url('payment/view_kwitansi/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
+                               class="bg-blue-500 text-white text-sm px-2 py-1 rounded-md hover:bg-blue-600">
+                               Lihat Kwitansi
+                            </a>
+                        <?php endif; ?>
+                        <a href="<?= site_url('payment/edit/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
+                           class="bg-green-500 text-white text-sm px-2 py-1 rounded-md hover:bg-green-600">
+                           Edit
+                        </a>
+                        <a href="<?= site_url('payment/delete/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
+                           onclick="return confirm('Apakah Anda yakin ingin menghapus transaksi ini?')"
+                           class="bg-red-500 text-white text-sm px-2 py-1 rounded-md hover:bg-red-600">
+                           Hapus
+                        </a>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
+
+    <?php if (!empty($has_invoice)): ?>
+        <a href="<?= site_url('payment/createkwt/' . $project->id_session . '/' . $has_invoice->transactions_id) ?>" 
+           class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
+           Tambah Kwitansi
+        </a>
+    <?php endif; ?>
+</div>
 
                 <a href="<?= site_url('project/edit/'. $project->id_session) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Edit Project</a>
                 <a href="javascript:history.back()" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a>
@@ -190,7 +204,7 @@
               <div class="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default  dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1" >
                 <div class="max-w-full overflow-x-auto">
                   <table class="w-full table-auto">
-                    <thead>
+                    <thead></thead>
                       <tr class="bg-gray-2 text-left dark:bg-meta-4">
                         <th
                           class="min-w-[220px] px-4 py-4 font-medium text-black dark:text-white xl:pl-11"
