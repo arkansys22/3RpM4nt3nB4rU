@@ -164,45 +164,25 @@ class Crud_project extends CI_Controller {
     }
 
     public function lihat($id_session) {
-
-        if ($this->session->level=='1'){
-            cek_session_akses_developer('project',$this->session->id_session);
-            $data['project'] = $this->project_model->get_project_by_session($id_session);
-            $data['crew_project'] = $this->CrewProjects_model->get_crew_by_project($id_session);
-            $data['payment'] = $this->Payment_model->get_payment_by_session($id_session);
-            $data['vendors'] = $this->Vendor_model->get_vendor_by_id($id_session);
-            $data['logactivity'] = $this->project_model->get_logactivity_by_session($id_session);
-            $this->load->view('project/lihat', $data);
-
-        }else if($this->session->level=='2'){
-            cek_session_akses_administrator('project',$this->session->id_session);
-            $data['project'] = $this->project_model->get_project_by_session($id_session);
-            $data['crew_project'] = $this->CrewProjects_model->get_crew_by_project($id_session);
-            $data['payment'] = $this->Payment_model->get_payment_by_session($id_session);
-            $data['vendors'] = $this->Vendor_model->get_vendor_by_id($id_session);
-            $data['logactivity'] = $this->project_model->get_logactivity_by_session($id_session);
-            $this->load->view('project/lihat', $data);
-
-        }else if($this->session->level=='3'){
-            cek_session_akses_staff_accounting('project',$this->session->id_session);
+        if ($this->session->level == '1') {
+            cek_session_akses_developer('project', $this->session->id_session);
+        } else if ($this->session->level == '2') {
+            cek_session_akses_administrator('project', $this->session->id_session);
+        } else if ($this->session->level == '4') {
+            cek_session_akses_staff_admin('project', $this->session->id_session);
+        } else {
             redirect(base_url());
-
-        }else if($this->session->level=='4'){
-            cek_session_akses_staff_admin('project',$this->session->id_session);
-            $data['project'] = $this->project_model->get_project_by_session($id_session);
-            $data['crew_project'] = $this->CrewProjects_model->get_crew_by_project($id_session);
-            $data['payment'] = $this->Payment_model->get_payment_by_session($id_session);
-            $data['vendors'] = $this->Vendor_model->get_vendor_by_id($id_session);
-            $data['logactivity'] = $this->project_model->get_logactivity_by_session($id_session);
-            $this->load->view('project/lihat', $data);
-
-        }else if($this->session->level=='5'){
-            cek_session_akses_client('project',$this->session->id_session);
-            redirect(base_url());
-            
-        }else{
-            redirect(base_url());
-            }
+            return;
+        }
+    
+        $data['project'] = $this->project_model->get_project_by_session($id_session);
+        $data['crew_project'] = $this->CrewProjects_model->get_crew_by_project($id_session);
+        $data['payment'] = $this->Payment_model->get_payment_by_session($id_session); // Semua transaksi
+        $data['has_invoice'] = $this->Payment_model->has_invoice($id_session); // Periksa apakah ada invoice
+        $data['vendors'] = $this->Vendor_model->get_vendor_by_id($id_session);
+        $data['logactivity'] = $this->project_model->get_logactivity_by_session($id_session);
+    
+        $this->load->view('project/lihat', $data);
     }
 
     public function edit($id_session) {

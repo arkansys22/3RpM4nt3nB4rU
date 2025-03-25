@@ -37,6 +37,7 @@ $route['project/permanent_delete/(:any)'] = 'crud_project/permanent_delete/$1'; 
 $route['project/lihat/(:any)'] = 'crud_project/lihat/$1'; // Menampilkan lihat project
 
 
+
 $route['finance-project'] = 'crud_finance_project/index'; // Menampilkan daftar project
 $route['finance-project/create'] = 'crud_finance_project/create'; // Menampilkan form tambah project
 $route['finance-project/store'] = 'crud_finance_project/store'; // Menyimpan data project baru
@@ -58,6 +59,20 @@ $route['payment/update/(:num)/(:num)'] = 'Crud_payment/update/$1/$2';    // Rout
 $route['payment/delete/(:num)/(:num)'] = 'Crud_payment/delete/$1/$2';    // Routing untuk menghapus pembayaran (Delete Payment)
 $route['payment/view_invoice/(:any)/(:num)'] = 'Crud_payment/view_invoice/$1/$2';
 $route['payment/view_kwitansi/(:any)/(:num)'] = 'Crud_payment/view_kwitansi/$1/$2';
+
+$route['payment/createinv/(:any)'] = 'crud_payment/create/$1'; // Route for creating an invoice
+$route['payment/createkwt/(:any)/(:any)'] = 'crud_payment/create2/$1/$2'; // Route for creating a kwitansi
+$route['payment/edit/(:any)/(:any)'] = 'crud_payment/edit/$1/$2';
+$route['payment/edit2/(:any)/(:any)'] = 'crud_payment/edit2/$1/$2';
+$route['payment/delete/(:any)/(:any)'] = 'crud_payment/delete/$1/$2';
+$route['payment/delete2/(:any)/(:any)'] = 'crud_payment/delete2/$1/$2';
+$route['payment/view_invoice/(:any)/(:any)'] = 'crud_payment/view_invoice/$1/$2';
+$route['payment/view_kwitansi/(:any)/(:any)'] = 'crud_payment/view_kwitansi/$1/$2';
+$route['payment/store'] = 'crud_payment/store'; // Route for storing invoice
+$route['payment/store2'] = 'crud_payment/store2'; // Route for storing kwitansi
+$route['payment/update/(:any)/(:any)'] = 'crud_payment/update/$1/$2';
+$route['payment/update2/(:any)/(:any)'] = 'crud_payment/update2/$1/$2';
+
 
 $route['clients'] = 'crud_clients/index'; // Menampilkan daftar clients
 // $route['clients/create'] = 'crud_clients/create'; // Halaman tambah clients

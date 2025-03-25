@@ -115,68 +115,26 @@
 							<div class="mt-5.5 flex flex-col gap-1.5">
 								<!-- Total Revenue Bulan Ini -->
 								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium">Pemasukan Bulan Ini</p>
-									<p class="font-medium text-black dark:text-white">
-										Rp <?= number_format($revenue_bulan_ini->total_revenue ?? 0, 0, ',', '.') ?>
-									</p>
+									<p class="text-sm font-medium">Bulan Ini</p>
+										<p id="revenue_bulan_ini" class="font-medium text-black dark:text-white">Rp 0</p>
 								</div>
 
 								<!-- Pemasukan Bulan Lalu -->
 								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium">Pemasukan Bulan Lalu</p>
-									<p class="font-medium text-black dark:text-white">
-										Rp <?= number_format($revenue_bulan_lalu->total_revenue ?? 0, 0, ',', '.') ?>
-									</p>
+									<p class="text-sm font-medium">Bulan Lalu</p>
+										<p id="revenue_bulan_lalu" class="font-medium text-black dark:text-white">Rp 0</p>
 								</div>
 
 								<!-- Persentase Perubahan -->
-								<div class="flex items-center justify-between gap-1">
-									<span class="text-sm font-medium 
-										<?php 
-											// Cek apakah persentase perubahan positif atau negatif
-											if ($revenue_bulan_lalu->total_revenue == 0 && $revenue_bulan_ini->total_revenue > 0) {
-												// Jika bulan lalu 0 dan bulan ini lebih dari 0, kita anggap kenaikan 100%
-												echo 'text-meta-3'; // Warna hijau untuk kenaikan
-											} elseif ($revenue_bulan_lalu->total_revenue == 0 && $revenue_bulan_ini->total_revenue == 0) {
-												// Jika kedua bulan 0, tidak ada perubahan
-												echo 'text-meta-3'; // Warna netral
-											} else {
-												// Jika ada pemasukan di bulan lalu dan bulan ini, hitung persentase perubahan
-												$percent_change = (($revenue_bulan_ini->total_revenue - $revenue_bulan_lalu->total_revenue) / $revenue_bulan_lalu->total_revenue) * 100;
-												if ($percent_change > 0) {
-													echo 'text-meta-3'; // Warna hijau untuk kenaikan
-												} else {
-													echo 'text-red-500'; // Warna merah untuk penurunan
-												}
-											}
-										?>
-									">
-										<?php
-											// Cek apakah bulan lalu 0 dan bulan ini lebih dari 0
-											if ($revenue_bulan_lalu->total_revenue == 0 && $revenue_bulan_ini->total_revenue > 0) {
-												// Jika bulan lalu 0 dan bulan ini lebih dari 0, kita anggap kenaikan 100%
-												echo '+100% dibanding bulan lalu';
-											} elseif ($revenue_bulan_lalu->total_revenue == 0 && $revenue_bulan_ini->total_revenue == 0) {
-												// Jika kedua bulan 0, tidak ada perubahan
-												echo '0% dibanding bulan lalu';
-											} else {
-												// Jika ada pemasukan di bulan lalu dan bulan ini, hitung persentase perubahan
-												$percent_change = (($revenue_bulan_ini->total_revenue - $revenue_bulan_lalu->total_revenue) / $revenue_bulan_lalu->total_revenue) * 100;
-												echo ($percent_change > 0 ? '+' : '') . round($percent_change, 2) . '% dibanding bulan lalu';
-											}
-										?>
-									</span>
-								</div>
+									<p class="text-sm font-medium"></p>
+									<p id="percent_change" class="font-medium text-black dark:text-white">0% dibanding bulan lalu</p>
 								<!-- Total Revenue Semua -->
 								<div class="flex items-center justify-between gap-1">
 									<p class="text-sm font-medium">Total Revenue</p>
-									<p class="font-medium text-black dark:text-white">
-										Rp <?= number_format($total_revenue_all ?? 0, 0, ',', '.') ?>
-									</p>
+										<p id="total_revenue_all" class="font-medium text-black dark:text-white">Rp 0</p>
 								</div>
 							</div>
 						</div>
-
 	                   	<div class="swiper-slide border-r border-stroke px-10 last:border-r-0 dark:border-strokedark">
 	                      	<div class="flex items-center justify-between">
 		                        <div class="flex items-center gap-2.5">
@@ -911,6 +869,33 @@
       <!-- ===== Content Area End ===== -->
     </div>
     <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
+	<script>
+    function fetchRevenueData() {
+        fetch('<?= base_url('Aspanel/get_revenue_data') ?>')
+            .then(response => response.json())
+            .then(data => {
+                document.querySelector('#revenue_bulan_ini').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.revenue_bulan_ini)}`;
+                document.querySelector('#revenue_bulan_lalu').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.revenue_bulan_lalu)}`;
+                document.querySelector('#total_revenue_all').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.total_revenue_all)}`;
+                
+                const percentChangeElement = document.querySelector('#percent_change');
+                if (data.percent_change !== null) {
+                    percentChangeElement.textContent = `${data.percent_change > 0 ? '+' : ''}${data.percent_change.toFixed(2)}% dibanding bulan lalu`;
+                    percentChangeElement.style.color = data.percent_change > 0 ? 'green' : 'red';
+                } else {
+                    percentChangeElement.textContent = '0% dibanding bulan lalu';
+                    percentChangeElement.style.color = 'black';
+                }
+            })
+            .catch(error => console.error('Error fetching revenue data:', error));
+    }
+
+    // Panggil fungsi fetchRevenueData setiap 30 detik
+    setInterval(fetchRevenueData, 30000);
+
+    // Panggil fungsi saat halaman dimuat
+    document.addEventListener('DOMContentLoaded', fetchRevenueData);
+</script>
 </body>
 
 </html>
