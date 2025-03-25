@@ -6,6 +6,7 @@ class project_model extends CI_Model {
     }
 
     public function get_all_project() {
+        $this->db->order_by('event_date', 'DESC');
         return $this->db->get_where('project',['status' => 'create'])->result();
     }
 
