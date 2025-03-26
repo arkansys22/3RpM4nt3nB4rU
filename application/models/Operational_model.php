@@ -10,8 +10,8 @@ class Operational_model extends CI_Model {
     }
 
     
-    public function insert_users($data) {
-        return $this->db->insert('user', $data);        
+    public function insert($data) {
+        return $this->db->insert('operational_acc', $data);        
     }
 
     public function get_users_by_session($id_session) {
@@ -44,11 +44,19 @@ class Operational_model extends CI_Model {
         return $this->db->update('user', ['status' => 'create']);
     }
 
-    public function delete_users_permanent($id_session) {
+    public function delete_permanent($id_session) {
         $this->db->where('id_session', $id_session);
-        return $this->db->delete('user');
+        return $this->db->delete('operational_acc');
     }
 
+
+    public function view_ordering($table,$order,$ordering)
+    {
+          $this->db->select('*');
+          $this->db->from($table);
+          $this->db->order_by($order,$ordering);
+          return $this->db->get()->result_array();
+    }
 
    
     

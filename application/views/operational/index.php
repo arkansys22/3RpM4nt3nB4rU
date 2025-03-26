@@ -236,13 +236,14 @@
                     <?php $no = 1; foreach ($ops as $p): ?>
                       <tr>
                         <td><?= $p->tanggal_transaksi ?></td>
-                        <td><?= $p->kategori ?></td>
-                        <?php $level= $this->Crud_m->view_where('user_level', array('user_level_id'=> $p->level))->row(); ?>
-                        <td><?= $level->user_level_nama ?></td>
-                        <td><?= $p->user_login_status ?></td>                
+                        <?php $kat= $this->Crud_m->view_where('operational_kategori', array('nomer_kategori'=> $p->kategori))->row(); ?>
+                        <td><?= $kat->nama_kategori ?></td>
+                        
+                        <td><?= $p->nama_transaksi ?></td>
+                        <td><?= "Rp " . number_format($p->nominal_transaksi, 0, ',', '.'); ?></td>                
                         <td>
                         <div class="flex flex-col items-start gap-2 w-max">
-                          <a href="<?= site_url('user/delete/'.$p->id_session) ?>" class="inline-flex justify-center bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 min-w-full text-center" onclick="return confirm('Yakin ingin menghapus pengguna <?= $p->username ?> ?')">Hapus</a>
+                          <a href="<?= site_url('finance-operational/permanent_delete/'.$p->id_session) ?>" class="inline-flex justify-center bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 min-w-full text-center" onclick="return confirm('Yakin ingin menghapus <?= $p->nama_transaksi ?> ?')">Hapus</a>
                         </div>
                         </td>
                       </tr>

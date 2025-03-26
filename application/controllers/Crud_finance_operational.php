@@ -30,13 +30,13 @@ class crud_finance_operational extends CI_Controller {
     public function create() {
         if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='5'){
             cek_session_akses_developer('user',$this->session->id_session);
-            $data['level'] = $this->Crud_m->view_ordering('user_level','user_level_id','asc');
-            $this->load->view('user/create', $data);
+            $data['kategori'] = $this->Operational_model->view_ordering('operational_kategori','nomer_kategori','asc');
+            $this->load->view('operational/create', $data);
 
         }else if($this->session->level=='4'){
             cek_session_akses_staff_admin('user',$this->session->id_session);
-            $data['level'] = $this->Crud_m->view_ordering('user_level','user_level_id','asc');
-            $this->load->view('user/create', $data);
+            $data['kategori'] = $this->Operational_model->view_ordering('operational_kategori','nomer_kategori','asc');
+            $this->load->view('operational/create', $data);
 
         }else{
                 redirect(base_url());
@@ -44,7 +44,8 @@ class crud_finance_operational extends CI_Controller {
     }
 
     public function store() {
-        $id_session2 = sha1(uniqid());       
+        $id_session2 = hash('sha256', bin2hex(random_bytes(16)));
+        $date_create = date('Y-m-d H:i:s');      
         
         if ($this->agent->is_browser()) // Agent untuk fitur di log activity
                 {
@@ -65,34 +66,29 @@ class crud_finance_operational extends CI_Controller {
 
         $data = array(
             'id_session'    => $id_session2,
-            'username'  => $this->input->post('username'),
-            'nama'  => $this->input->post('nama'),
-            'email'        => $this->input->post('email'),            
-            'password'    => sha1($this->input->post('password')),
-            'level'    => $this->input->post('level'),
-            'user_stat' => 'Publish',
-            'user_login_status' => 'Offline',
+            'nama_transaksi'  => $this->input->post('nama_transaksi'),
+            'tanggal_transaksi'  => $this->input->post('tgl_transaksi'),
+            'nominal_transaksi'        => $this->input->post('nominal'), 
+            'kategori'    => $this->input->post('kategori'),           
             'create_by'     => $this->session->id_session,
-            'user_post_hari'=>hari_ini(date('w')),
-            'user_post_tanggal'=>date('Y-m-d'),
-            'user_post_jam'=>date('H:i:s')
+            'create_date'   => $date_create
         );
     
         // Insert ke tabel projects
-        $this->Users2_model->insert_users($data);
+        $this->Operational_model->insert($data);
 
         $data_log = array(
             'log_activity_user_id'=>$this->session->id_session,
-            'log_activity_modul' => 'user/create',
+            'log_activity_modul' => 'finance-operational/create',
             'log_activity_document_no' => $id_session2,
-            'log_activity_status' => 'Tambah Pengguna',
+            'log_activity_status' => 'Tambah Transaksi Operational',
             'log_activity_platform'=> $agent,
             'log_activity_ip'=> $this->input->ip_address()            
         );
         $this->Users2_model->insert_log_activity($data_log);   
     
-        $this->session->set_flashdata('Success', 'Pengguna berhasil dibuat');
-        redirect('user');
+        $this->session->set_flashdata('Success', 'Berhasil dibuat');
+        redirect('finance-operational');
     }
 
     public function lihat($id_session) {
@@ -308,12 +304,12 @@ class crud_finance_operational extends CI_Controller {
                 }
 
 
-                $this->Users2_model->delete_Users_permanent($id_session);
+                $this->Operational_model->delete_permanent($id_session);
 
                 $data_log = array(
 
                     'log_activity_user_id'=>$this->session->id_session,
-                    'log_activity_modul' => 'user/permanent',
+                    'log_activity_modul' => 'finance-operational/permanent',
                     'log_activity_document_no' => $id_session,
                     'log_activity_status' => 'Hapus Permanent',
                     'log_activity_platform'=> $agent,
@@ -324,8 +320,8 @@ class crud_finance_operational extends CI_Controller {
                 $this->Users2_model->insert_log_activity($data_log);
     
         
-        $this->session->set_flashdata('Success', 'Pengguna berhasil dihapus permanen');
-        redirect('user/recycle_bin');
+        $this->session->set_flashdata('Success', 'Berhasil dihapus permanen');
+        redirect('finance-operational');
         }
     }
     

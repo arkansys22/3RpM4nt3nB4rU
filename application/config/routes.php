@@ -30,9 +30,6 @@ $route['finance-operational/create'] = 'crud_finance_operational/create'; // Men
 $route['finance-operational/store'] = 'crud_finance_operational/store'; // Menyimpan data user baru
 $route['finance-operational/edit/(:any)'] = 'crud_finance_operational/edit/$1'; // Menampilkan form edit user
 $route['finance-operational/update/(:any)'] = 'crud_finance_operational/update/$1'; // Mengupdate user
-$route['finance-operational/delete/(:any)'] = 'crud_finance_operational/delete/$1'; // Menghapus user
-$route['finance-operational/recycle_bin'] = 'crud_finance_operational/recycle_bin'; // Halaman recycle bin
-$route['finance-operational/restore/(:any)'] = 'crud_finance_operational/restore/$1'; // Restore user
 $route['finance-operational/permanent_delete/(:any)'] = 'crud_finance_operational/permanent_delete/$1'; // Hapus permanen user
 
 
