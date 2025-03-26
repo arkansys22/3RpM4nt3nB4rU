@@ -48,9 +48,9 @@
                         <option value="-">-</option>
                         <?php foreach ($crews as $p) {
                               if ($project->crews_idsession == $p['id_session']){
-                                echo"<option selected='selected' value='$p[id_session]'>$p[crew_name]</option> ";
+                                echo"<option selected='selected' value='$p[id_session]'>$p[role] - $p[crew_name]</option> ";
                               }else{
-                                echo"<option value='$p[id_session]'>$p[crew_name]</option>";
+                                echo"<option value='$p[id_session]'>$p[role] | $p[crew_name]</option>";
                            }
                         } ?>
                   </select>
