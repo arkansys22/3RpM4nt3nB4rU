@@ -44,13 +44,13 @@ class Aspanel extends CI_Controller {
 
 				// Expense projct acc bulan ini
 				$data['expense_project_bulan_ini'] = $this->db->select_sum('nominal_transaksi')
-					->where('DATE_FORMAT(date, "%Y-%m") =', $month_now)
+					->where('DATE_FORMAT(tangga_transaksi, "%Y-%m") =', $month_now)
 					->get('project_acc')
 					->row();
 
 				// Expense projct acc bulan lalu
 				$data['expense_project_bulan_lalu'] = $this->db->select_sum('nominal_transaksi')
-					->where('DATE_FORMAT(date, "%Y-%m") =', $month_last)
+					->where('DATE_FORMAT(tangga_transaksi, "%Y-%m") =', $month_last)
 					->get('project_acc')
 					->row();
 
