@@ -10,6 +10,19 @@ class Finance_project_model extends CI_Model {
         return $this->db->get_where('project_acc',['project_id_session' => $id_session])->result();
     }
 
+
+    public function view_join_where($table,$id_session,$table2,$field1,$field2)
+  {
+      $this->db->select('*');
+      $this->db->from($table);
+      $this->db->where('project_id', $id_session);
+      $this->db->join($table2, $table.'.'.$field1.'='.$table2.'.'.$field2);
+      
+      return $this->db->get()->result_array();
+  }
+
+
+
     public function get_deleted_project() {
         return $this->db->get_where('project', ['status' => 'delete'])->result();
     }

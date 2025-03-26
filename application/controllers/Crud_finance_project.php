@@ -232,9 +232,9 @@ class Crud_finance_project extends CI_Controller {
 
     public function edit2($id_session) {
         if ($this->session->level=='1'){
-            cek_session_akses_developer('finance-project',$this->session->id_session);
+            cek_session_akses_developer('finance-project',$this->session->id_session);  
             $data['project'] = $this->project_model->get_project_by_session($id_session);
-            $data['crews'] = $this->Crud_m->view_ordering('crews','id','asc');
+            $data['crews'] = $this->finance_project_model->view_join_where('crew_projects', $id_session,'crews','crew_id','id_session');
             $this->load->view('projectacc/create_crew', $data);
 
         }else if($this->session->level=='2'){
