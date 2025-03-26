@@ -892,6 +892,8 @@
                 document.querySelector('#revenue_bulan_ini').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.revenue_bulan_ini)}`;
                 document.querySelector('#revenue_bulan_lalu').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.revenue_bulan_lalu)}`;
                 document.querySelector('#total_revenue_all').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.total_revenue_all)}`;
+
+                document.querySelector('#expenses_bulan_ini').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.expense_project_bulan_ini)}`;
                 
                 const percentChangeElement = document.querySelector('#percent_change');
                 if (data.percent_change !== null) {

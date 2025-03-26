@@ -41,6 +41,24 @@ class Aspanel extends CI_Controller {
 					->get('payment')
 					->row();
 
+
+				// Expense projct acc bulan ini
+				$data['expense_project_bulan_ini'] = $this->db->select_sum('nominal_transaksi')
+					->where('DATE_FORMAT(date, "%Y-%m") =', $month_now)
+					->get('project_acc')
+					->row();
+
+				// Expense projct acc bulan lalu
+				$data['expense_project_bulan_lalu'] = $this->db->select_sum('nominal_transaksi')
+					->where('DATE_FORMAT(date, "%Y-%m") =', $month_last)
+					->get('project_acc')
+					->row();
+
+				// Total projct acc Expense all
+				$data['total_expense_project_all'] = $this->db->select_sum('nominal_transaksi')
+					->get('project_acc')
+					->row();
+
 				// Hitung persentase perubahan revenue
 				$data['percent_change'] = null;
 				if ($data['revenue_bulan_ini'] && $data['revenue_bulan_lalu'] && $data['revenue_bulan_lalu']->total_paid != 0) {
@@ -647,5 +665,6 @@ class Aspanel extends CI_Controller {
 	        'percent_change' => $percent_change
 	    ]);
 	}
+
 
 }
