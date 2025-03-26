@@ -42,23 +42,6 @@ class Aspanel extends CI_Controller {
 					->row();
 
 
-				// Expense projct acc bulan ini
-				$data['expense_project_bulan_ini'] = $this->db->select_sum('nominal_transaksi')
-					->where('DATE_FORMAT(tanggal_transaksi, "%Y-%m") =', $month_now)
-					->get('project_acc')
-					->row();
-
-				// Expense projct acc bulan lalu
-				$data['expense_project_bulan_lalu'] = $this->db->select_sum('nominal_transaksi')
-					->where('DATE_FORMAT(tanggal_transaksi, "%Y-%m") =', $month_last)
-					->get('project_acc')
-					->row();
-
-				// Total projct acc Expense all
-				$data['total_expense_project_all'] = $this->db->select_sum('nominal_transaksi')
-					->get('project_acc')
-					->row();
-
 				// Hitung persentase perubahan revenue
 				$data['percent_change'] = null;
 				if ($data['revenue_bulan_ini'] && $data['revenue_bulan_lalu'] && $data['revenue_bulan_lalu']->total_paid != 0) {
@@ -663,6 +646,37 @@ class Aspanel extends CI_Controller {
 	        'revenue_bulan_lalu' => $revenue_bulan_lalu->total_paid ?? 0,
 	        'total_revenue_all' => $total_revenue_all->total_bill ?? 0,
 	        'percent_change' => $percent_change
+	    ]);
+	}
+
+
+	public function get_expense_data()
+	{
+	    $date_now = date('Y-m-d'); // Current date
+	    $date_start_of_month = date('Y-m-01'); // Start of the current month
+	    $date_start_of_last_month = date('Y-m-01', strtotime('first day of last month')); // Start of last month
+	    $date_end_of_last_month = date('Y-m-t', strtotime('last month')); // End of last month
+
+	    // Revenue bulan ini
+	    $expense_bulan_ini = $this->db->select_sum('nominal_transaksi')
+	        ->where('DATE(date) >=', $date_start_of_month)
+	        ->where('DATE(date) <=', $date_now)
+	        ->get('project_acc')
+	        ->row();
+
+	    // Revenue bulan lalu
+	    $expense_bulan_lalu = $this->db->select_sum('nominal_transaksi')
+	        ->where('DATE(date) >=', $date_start_of_last_month)
+	        ->where('DATE(date) <=', $date_end_of_last_month)
+	        ->get('project_acc')
+	        ->row();
+
+	    
+
+	    echo json_encode([
+	        'expense_bulan_ini' => $expense_bulan_ini->nominal_transaksi ?? 0,
+	        'expense_bulan_lalu' => $expense_bulan_lalu->nominal_transaksi ?? 0
+	      
 	    ]);
 	}
 
