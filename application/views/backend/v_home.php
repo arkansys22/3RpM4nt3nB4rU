@@ -63,7 +63,7 @@
 						<div class="flex items-center justify-between">
 							<div class="flex items-center gap-2.5">
 								<h4 class="text-xl font-bold text-black dark:text-white">
-									Clients
+									Clientss
 								</h4>
 							</div>
 						</div>
