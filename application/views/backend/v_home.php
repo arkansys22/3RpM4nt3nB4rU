@@ -124,7 +124,7 @@
 							<div class="mt-5.5 flex flex-col gap-1.5">
 								<!-- Total Revenue Bulan Ini -->
 								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium">Bulan Ini</p>
+									<p class="text-sm font-medium">Bulan Ini2</p>
 										<p id="revenue_bulan_ini" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
 								</div>
 
