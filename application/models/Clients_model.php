@@ -7,7 +7,8 @@ class Clients_model extends CI_Model {
         parent::__construct();
     }
 
-    public function get_all_clients() {     
+    public function get_all_clients() {
+        $this->db->order_by('wedding_date', 'DESC');     
         return $this->db->get_where('clients', ['status' => 'create'])->result();
     }
 
