@@ -8,6 +8,7 @@ class Aspanel extends CI_Controller {
 		$this->load->model('Potensial_model');
 		$this->load->model('Clients_model');
 		$this->load->model('project_model');
+		$this->load->model('finance_project_model');
 		date_default_timezone_set('Asia/Jakarta');
 	}
 	public function index()
@@ -23,7 +24,12 @@ class Aspanel extends CI_Controller {
 				$data['client_bulan_ini'] = $this->Clients_model->get_clients_by_month(date('Y-m'));  // Client bulan ini
 				$data['client_bulan_lalu'] = $this->Clients_model->get_clients_by_month(date('Y-m', strtotime('last month'))); // Client bulan lalu
 				$data['total_client'] = $this->Clients_model->get_total_clients(); // Total client
+
 				
+				
+
+
+
 				// Revenue bulan ini
 				$data['revenue_bulan_ini'] = $this->db->select_sum('total_paid')
 					->where('DATE_FORMAT(date, "%Y-%m") =', $month_now)
@@ -37,26 +43,8 @@ class Aspanel extends CI_Controller {
 					->row();
 
 				// Total revenue all
-				$data['total_revenue_all'] = $this->db->select_sum('total_bill')
+				$data['total_revenue_all'] = $this->db->select_sum('total_paid')
 					->get('payment')
-					->row();
-
-
-				// Expense projct acc bulan ini
-				$data['expense_bulan_ini'] = $this->db->select_sum('nominal_transaksi')
-					->where('DATE_FORMAT(tanggal_transaksi, "%Y-%m") =', $month_now)
-					->get('project_acc')
-					->row();
-
-				// Expense projct acc bulan lalu
-				$data['expense_bulan_lalu'] = $this->db->select_sum('nominal_transaksi')
-					->where('DATE_FORMAT(tanggal_transaksi, "%Y-%m") =', $month_last)
-					->get('project_acc')
-					->row();
-
-				// Total projct acc Expense all
-				$data['total_expense_all'] = $this->db->select_sum('nominal_transaksi')
-					->get('project_acc')
 					->row();
 
 				// Hitung persentase perubahan revenue
@@ -648,9 +636,40 @@ class Aspanel extends CI_Controller {
 	        ->row();
 
 	    // Total revenue all
-	    $total_revenue_all = $this->db->select_sum('total_bill')
+	    $total_revenue_all = $this->db->select_sum('total_paid')
 	        ->get('payment')
 	        ->row();
+
+	    $total_project_acc = $this->db->select_sum('nominal_transaksi')
+	        ->get('project_acc')
+	        ->row();
+
+	    $total_net_revenue = $total_revenue_all->total_paid - $total_project_acc->nominal_transaksi;
+
+
+	    $expense_bulan_ini = $this->db->select_sum('nominal_transaksi')
+	    	->where('DATE(tanggal_transaksi) >=', $date_start_of_month)
+	        ->where('DATE(tanggal_transaksi) <=', $date_now)
+	        ->get('operational_acc')
+	        ->row();
+
+	    $expense_bulan_lalu = $this->db->select_sum('nominal_transaksi')
+	    	->where('DATE(tanggal_transaksi) >=', $date_start_of_last_month)
+	        ->where('DATE(tanggal_transaksi) <=', $date_end_of_last_month)
+	        ->get('operational_acc')
+	        ->row();
+
+	    $total_expense_all = $this->db->select_sum('nominal_transaksi')
+	        ->get('operational_acc')
+	        ->row();
+
+	    $total_other = $this->db->select_sum('nominal_transaksi')
+	        ->get('other_acc')
+	        ->row();
+
+	    $total_gross_profit = ($total_revenue_all->total_paid - $total_project_acc->nominal_transaksi) - $total_expense_all->nominal_transaksi;
+
+	    $total_net_profit = $total_revenue_all->total_paid - $total_project_acc->nominal_transaksi - $total_expense_all->nominal_transaksi - $total_other->nominal_transaksi ;
 
 	    // Hitung persentase perubahan revenue
 	    $percent_change = null;
@@ -661,39 +680,14 @@ class Aspanel extends CI_Controller {
 	    echo json_encode([
 	        'revenue_bulan_ini' => $revenue_bulan_ini->total_paid ?? 0,
 	        'revenue_bulan_lalu' => $revenue_bulan_lalu->total_paid ?? 0,
-	        'total_revenue_all' => $total_revenue_all->total_bill ?? 0,
-	        'percent_change' => $percent_change
-	    ]);
-	}
-
-
-	public function get_expense_data()
-	{
-	    $date_now = date('Y-m-d'); // Current date
-	    $date_start_of_month = date('Y-m-01'); // Start of the current month
-	    $date_start_of_last_month = date('Y-m-01', strtotime('first day of last month')); // Start of last month
-	    $date_end_of_last_month = date('Y-m-t', strtotime('last month')); // End of last month
-
-	    // Revenue bulan ini
-	    $expense_bulan_ini = $this->db->select_sum('nominal_transaksi')
-	        ->where('DATE(date) >=', $date_start_of_month)
-	        ->where('DATE(date) <=', $date_now)
-	        ->get('project_acc')
-	        ->row();
-
-	    // Revenue bulan lalu
-	    $expense_bulan_lalu = $this->db->select_sum('nominal_transaksi')
-	        ->where('DATE(date) >=', $date_start_of_last_month)
-	        ->where('DATE(date) <=', $date_end_of_last_month)
-	        ->get('project_acc')
-	        ->row();
-
-	    
-
-	    echo json_encode([
+	        'total_revenue_all' => $total_revenue_all->total_paid ?? 0,
+	        'total_net_revenue' => $total_net_revenue,
 	        'expense_bulan_ini' => $expense_bulan_ini->nominal_transaksi ?? 0,
-	        'expense_bulan_lalu' => $expense_bulan_lalu->nominal_transaksi ?? 0
-	      
+	        'expense_bulan_lalu' => $expense_bulan_lalu->nominal_transaksi ?? 0,
+	        'total_expense_all' => $total_expense_all->nominal_transaksi ?? 0,
+	        'total_gross_profit' => $total_gross_profit,
+	        'total_net_profit' => $total_net_profit,
+	        'percent_change' => $percent_change
 	    ]);
 	}
 

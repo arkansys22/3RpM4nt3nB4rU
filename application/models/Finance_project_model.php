@@ -44,6 +44,73 @@ class Finance_project_model extends CI_Model {
         return $query->row();
     }
 
+    public function get_expense_project_bulan_ini()
+    {
+
+        $date_now = date('Y-m');
+        $date_start_of_month = date('Y-m-01');
+     
+        $this->db->select('SUM(nominal_transaksi) as total_expense_project_bulan_ini');
+        $this->db->from('project_acc');
+        $this->db->where('DATE(tanggal_transaksi) >=', $date_start_of_month);
+        $this->db->where('DATE(tanggal_transaksi) >=', $date_now);
+        $query = $this->db->get();
+        return $query->row();
+    }
+
+    public function get_expense_operasional_bulan_ini()
+    {
+
+        $date_now = date('Y-m');
+        $date_start_of_month = date('Y-m-01');
+     
+        $this->db->select('SUM(nominal_transaksi) as total_expense_operasional_bulan_ini');
+        $this->db->from('operational_acc');
+        $this->db->where('DATE(tanggal_transaksi) >=', $date_start_of_month);
+        $this->db->where('DATE(tanggal_transaksi) >=', $date_now);
+        $query = $this->db->get();
+        return $query->row();
+    }
+
+
+    public function get_expense_project_bulan_lalu()
+    {
+
+        $date_start_of_last_month = date('Y-m-01', strtotime('first day of last month')); // Start of last month
+        $date_end_of_last_month = date('Y-m-t', strtotime('last month')); // End of last month
+     
+        $this->db->select('SUM(nominal_transaksi) as total_expense_project_bulan_lalu');
+        $this->db->from('project_acc');
+        $this->db->where('DATE(tanggal_transaksi) >=', $date_start_of_last_month);
+        $this->db->where('DATE(tanggal_transaksi) >=', $date_end_of_last_month);
+        $query = $this->db->get();
+        return $query->row();
+    }
+
+    public function get_expense_operasional_bulan_lalu()
+    {
+
+        $date_start_of_last_month = date('Y-m-01', strtotime('first day of last month')); // Start of last month
+        $date_end_of_last_month = date('Y-m-t', strtotime('last month')); // End of last month
+     
+        $this->db->select('SUM(nominal_transaksi) as total_expense_operasional_bulan_lalu');
+        $this->db->from('operational_acc');
+        $this->db->where('DATE(tanggal_transaksi) >=', $date_start_of_last_month);
+        $this->db->where('DATE(tanggal_transaksi) >=', $date_end_of_last_month);
+        $query = $this->db->get();
+        return $query->row();
+    }
+
+
+    public function getTotalNilaiBulanLalu() {
+        $bulanLalu = date('Y-m-01', strtotime('-1 month'));
+        $this->db->select('SUM(nominal_transaksi)');
+        $this->db->where('DATE(tanggal_transaksi) >=', $bulanLalu);
+        $this->db->where('DATE(tanggal_transaksi) <', date('Y-m-01', strtotime('+1 month', strtotime($bulanLalu))));
+        $query = $this->db->get('operational_acc');
+        return $query->row()->select('sum(nominal_transaksi)');
+    }
+
 
 
 }

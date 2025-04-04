@@ -167,6 +167,7 @@ class Crud_finance_project extends CI_Controller {
             $data['project'] = $this->project_model->get_project_by_session($id_session);         
             $data['financeacc'] = $this->finance_project_model->get_all_projectacc($id_session);
             $data['modal_ops'] = $this->finance_project_model->get_finance_out($id_session);
+          
             $this->load->view('projectacc/lihat', $data);
 
         }else if($this->session->level=='2'){

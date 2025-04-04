@@ -42,7 +42,8 @@
                 <label class="block mb-2 text-black dark:text-white"><strong>Nilai Project : </strong><?= "Rp " . number_format($project->value, 0, ',', '.'); ?></label>
 
                 <label class="block mb-2 text-black dark:text-white"><strong>Biaya Pokok : </strong>
-                <?= "Rp " . number_format($modal_ops->total_finance_out, 0, ',', '.'); ?></label>
+                <?= "Rp " . number_format($modal_ops->total_finance_out, 0, ',', '.'); ?>
+                </label>
 
                 <label class="block mb-2 text-black dark:text-white"><strong>Gross Profit : </strong>
 

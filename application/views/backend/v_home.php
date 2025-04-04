@@ -36,12 +36,7 @@
          $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
     :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}"
   >
-  <!-- ===== Preloader Start ===== -->
-		    <div x-show="loaded" x-init="window.addEventListener('DOMContentLoaded', () => {setTimeout(() => 	loaded = false, 500)})" class="fixed left-0 top-0 z-999999 flex h-screen w-screen items-center justify-center bg-white dark:bg-black">
-			  <div class="h-16 w-16 animate-spin rounded-full border-4 border-solid border-primary border-t-transparent">
-			  </div>
-			</div>
-    <!-- ===== Preloader End ===== -->
+
     <!-- ===== Page Wrapper Start ===== -->
     <div class="flex h-screen overflow-hidden">
      <?php $this->load->view('backend/sidebar')?>
@@ -86,7 +81,7 @@
 							</div>
 
 							<div class="flex items-center justify-between gap-1">
-								<p class="text-sm font-medium">Client Bulan Berikutnya</p>
+								<p class="text-sm font-medium">Client Bulan Depan</p>
 								<p class="text-sm font-medium text-black dark:text-white">
 									<?= count($client_bulan_lalu); ?>
 								</p>
@@ -116,7 +111,7 @@
 							<div class="flex items-center justify-between">
 								<div class="flex items-center gap-2.5">
 									<h4 class="text-xl font-bold text-black dark:text-white">
-										Revenue
+										Gross & Net Revenue
 									</h4>
 								</div>
 							</div>
@@ -130,17 +125,17 @@
 
 								<!-- Pemasukan Bulan Lalu -->
 								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium">Bulan Sebelumnya</p>
+									<p class="text-sm font-medium">Bulan Lalu</p>
 										<p id="revenue_bulan_lalu" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
 								</div>
 								<!-- Total Revenue Semua -->
 								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium">Total Gross Revenue</p>
+									<p class="text-sm font-medium">Total Gross</p>
 										<p id="total_revenue_all" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
 								</div>
 								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium">Total Net Revenue</p>
-										<p id="total_net_revenue_all" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
+									<p class="text-sm font-medium">Total Net</p>
+										<p id="total_net_revenue" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
 								</div>
 								<div class="flex items-center justify-between gap-1">
 									<p class="text-sm font-medium">
@@ -160,7 +155,7 @@
 		                          <h4
 		                            class="text-xl font-bold text-black dark:text-white"
 		                          >
-		                            Expenses
+		                            Expenses 
 		                          </h4>
 		                        </div>		                        
 	                      	</div>
@@ -168,18 +163,22 @@
 								<!-- Total Revenue Bulan Ini -->
 								<div class="flex items-center justify-between gap-1">
 									<p class="text-sm font-medium">Bulan Ini</p>
-										<p id="expense_bulan_ini" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
+										<p id="expense_bulan_ini" class="text-sm font-medium text-black dark:text-white">
+
+										</p>
 								</div>
 
 								<!-- Pemasukan Bulan Lalu -->
 								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium">Bulan Sebelumnya</p>
-										<p id="expense_bulan_lalu" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
+									<p class="text-sm font-medium">Bulan Lalu</p>
+										<p id="expense_bulan_lalu" class="text-sm font-medium text-black dark:text-white">
+
+										</p>
 								</div>
 								<!-- Total Revenue Semua -->
 								<div class="flex items-center justify-between gap-1">
 									<p class="text-sm font-medium">Total Expenses</p>
-										<p id="total_expenses_all" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
+										<p id="total_expense_all" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
 								</div>
 								<div class="flex items-center justify-between gap-1">
 									<p class="text-sm font-medium">
@@ -207,13 +206,13 @@
 									<!-- Total Revenue Bulan Ini -->
 									<div class="flex items-center justify-between gap-1">
 										<p class="text-sm font-medium">Gross Profit</p>
-											<p id="expenses_bulan_ini" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
+											<p id="total_gross_profit" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
 									</div>
 
 									<!-- Pemasukan Bulan Lalu -->
 									<div class="flex items-center justify-between gap-1">
 										<p class="text-sm font-medium">Net Profit</p>
-											<p id="expenses_bulan_lalu" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
+											<p id="total_net_profit" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
 									</div>
 							</div>
 	                    </div>                  
@@ -297,60 +296,7 @@
 				            Button 10
 				        </button>
 				    </div><br>
-
-				    <!-- ====== Chart Thirteen Start -->
-				    <div class="rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-7">
-				        <div class="mb-5.5 flex flex-wrap items-center justify-between gap-2">
-				            <div>
-				                <h4 class="text-title-sm2 font-bold text-black dark:text-white">
-				                    Clients Interaction
-				                </h4>
-				            </div>
-				            <div class="relative z-20 inline-block rounded">
-				                <select class="relative z-20 inline-flex appearance-none rounded border border-stroke bg-transparent py-[5px] pl-3 pr-8 text-sm font-medium outline-none dark:border-strokedark">
-				                    <option value="" class="dark:bg-boxdark">Last 7 days</option>
-				                    <option value="" class="dark:bg-boxdark">Last 15 days</option>
-				                </select>
-				                <span class="absolute right-3 top-1/2 z-10 -translate-y-1/2">
-				                    <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-				                        <path d="M8.61025 11.8872C8.46025 11.8872 8.33525 11.8372 8.21025 11.7372L2.46025 6.08723C2.23525 5.86223 2.23525 5.51223 2.46025 5.28723C2.68525 5.06223 3.03525 5.06223 3.26025 5.28723L8.61025 10.5122L13.9603 5.23723C14.1853 5.01223 14.5353 5.01223 14.7603 5.23723C14.9853 5.46223 14.9853 5.81223 14.7603 6.03723L9.01025 11.6872C8.88525 11.8122 8.76025 11.8872 8.61025 11.8872Z" fill="#64748B"/>
-				                    </svg>
-				                </span>
-				            </div>
-				        </div>
-
-				        <div class="mb-3 flex flex-wrap gap-6">
-				            <div>
-				                <p class="mb-1.5 text-sm font-medium">Invested Value</p>
-				                <div class="flex items-center gap-2.5">
-				                    <p class="font-medium text-black dark:text-white">$1,279.95</p>
-				                    <p class="flex items-center gap-1 font-medium text-meta-3">
-				                        1,22%
-				                        <svg class="fill-current" width="11" height="8" viewBox="0 0 11 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-				                            <path d="M5.77105 0.0465078L10.7749 7.54651L0.767256 7.54651L5.77105 0.0465078Z" fill=""/>
-				                        </svg>
-				                    </p>
-				                </div>
-				            </div>
-
-				            <div>
-				                <p class="mb-1.5 text-sm font-medium">Total Returns</p>
-				                <div class="flex items-center gap-2.5">
-				                    <p class="font-medium text-black dark:text-white">$22,543.87</p>
-				                    <p class="flex items-center gap-1 font-medium text-meta-3">
-				                        10.14%
-				                        <svg class="fill-current" width="11" height="8" viewBox="0 0 11 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-				                            <path d="M5.77105 0.0465078L10.7749 7.54651L0.767256 7.54651L5.77105 0.0465078Z" fill=""/>
-				                        </svg>
-				                    </p>
-				                </div>
-				            </div>
-				        </div>
-				        <div>
-				            <div id="chartThirteen" class="-ml-5"></div>
-				        </div>
-				    </div>
-				    <!-- ====== Chart Thirteen End -->
+				  
 				</div>
 
 	            
@@ -371,8 +317,12 @@
                 document.querySelector('#revenue_bulan_ini').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.revenue_bulan_ini)}`;
                 document.querySelector('#revenue_bulan_lalu').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.revenue_bulan_lalu)}`;
                 document.querySelector('#total_revenue_all').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.total_revenue_all)}`;
-
-                document.querySelector('#expenses_bulan_ini').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.expense_project_bulan_ini)}`;
+                document.querySelector('#total_net_revenue').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.total_net_revenue)}`;
+                document.querySelector('#expense_bulan_ini').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.expense_bulan_ini)}`;
+                document.querySelector('#expense_bulan_lalu').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.expense_bulan_lalu)}`;
+                document.querySelector('#total_expense_all').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.total_expense_all)}`;
+                document.querySelector('#total_gross_profit').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.total_gross_profit)}`;
+                document.querySelector('#total_net_profit').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.total_net_profit)}`;
                 
                 const percentChangeElement = document.querySelector('#percent_change');
                 if (data.percent_change !== null) {
@@ -393,25 +343,6 @@
     document.addEventListener('DOMContentLoaded', fetchRevenueData);
 	</script>
 
-
-	<script>
-    function fetchExpenseData() {
-        fetch('<?= base_url('Aspanel/get_expense_data') ?>')
-            .then(response => response.json())
-            .then(data => {
-                document.querySelector('#expense_bulan_ini').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.expense_bulan_ini)}`;
-                document.querySelector('#expense_bulan_lalu').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.expense_bulan_lalu)}`;
-         
-            })
-            .catch(error => console.error('Error fetching revenue data:', error));
-    }
-
-    // Panggil fungsi fetchRevenueData setiap 30 detik
-    setInterval(fetchRevenueData, 30000);
-
-    // Panggil fungsi saat halaman dimuat
-    document.addEventListener('DOMContentLoaded', fetchRevenueData);
-	</script>
 </body>
 
 </html>
