@@ -6,30 +6,37 @@ class potensial_model extends CI_Model {
     }
 
     public function get_all_potensial_clients() {
+        $this->db->order_by('chat_date', 'DESC');    
         return $this->db->get_where('potensial_clients',['status' => 'Tanya-tanya'])->result();
     }
 
     public function get_all_potensial_clients_hot() {
+        $this->db->order_by('chat_date', 'DESC');    
         return $this->db->get_where('potensial_clients',['status' => 'Hot'])->result();
     }
 
     public function get_all_potensial_clients_konsul() {
+        $this->db->order_by('chat_date', 'DESC');    
         return $this->db->get_where('potensial_clients',['status' => 'Konsul'])->result();
     }
 
     public function get_all_potensial_clients_bayar() {
+        $this->db->order_by('chat_date', 'DESC');    
         return $this->db->get_where('potensial_clients',['status' => 'Deal'])->result();
     }
 
     public function get_all_potensial_clients_ghosting() {
+        $this->db->order_by('chat_date', 'DESC');    
         return $this->db->get_where('potensial_clients',['status' => 'Ghosting'])->result();
     }
 
     public function get_all_potensial_clients_batal() {
+        $this->db->order_by('chat_date', 'DESC');    
         return $this->db->get_where('potensial_clients',['status' => 'Batal'])->result();
     }
 
     public function get_deleted_potensial_clients() {
+        $this->db->order_by('chat_date', 'DESC');    
         return $this->db->get_where('potensial_clients', ['status' => 'Delete'])->result();
     }
 
@@ -76,7 +83,8 @@ class potensial_model extends CI_Model {
     }
 
     public function get_clients_by_status($status)
-    {
+    {   
+        $this->db->order_by('chat_date', 'DESC');    
         $this->db->where('status', $status);
         return $this->db->get('potensial_clients')->result();
     }
