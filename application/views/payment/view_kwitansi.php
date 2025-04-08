@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Kwitansi Pembayaran</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -24,7 +24,18 @@
                 width: 100%;
                 max-width: 800px;
                 margin: auto;
+                background-color: #fae2d5 !important; /* Pastikan warna background tetap terlihat */
             }
+            /* Pastikan background ikut tercetak */
+            * {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+
+        /* Tambahkan padding untuk memastikan kompatibilitas dengan perangkat mobile */
+        body {
+            padding: 1rem;
         }
     </style>
 </head>
