@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Terima_kasih extends CI_Controller {
+class Terima_kasih2 extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('Naskah_model');
@@ -14,7 +14,7 @@ class Terima_kasih extends CI_Controller {
             show_404();
         }
 
-        $this->load->view('naskah/terima_kasih', $data);
+        $this->load->view('naskah/terima_kasih2', $data);
     }
 
     public function generate_pdf($id_session) {
@@ -33,7 +33,7 @@ class Terima_kasih extends CI_Controller {
         $filename = $client_name . ' Naskah Ucapan Terimakasih oleh Pengantin Pria';
     
         // Generate PDF dengan nama file yang sudah diformat
-        $html = $this->load->view('naskah/pdf_terima_kasih', $data, true);
+        $html = $this->load->view('naskah/pdf_terima_kasih2', $data, true);
         $this->pdf->createPDF_P($html, $filename, true);
     }
 }    
