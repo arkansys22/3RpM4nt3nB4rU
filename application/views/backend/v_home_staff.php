@@ -510,7 +510,7 @@
       <td><?php echo $event['client_name']; ?></td>
       <td><?php echo $event['role']; ?></td>
       <td>
-        <a href="<?php echo base_url('project/view/' . $event['project_id']); ?>" class="bg-yellow-500 text-white px-2 py-1 rounded">Lihat</a>
+        <a href="<?php echo base_url('project/crew_lihat/' . $event['project_id']); ?>" class="bg-yellow-500 text-white px-2 py-1 rounded">Lihat</a>
       </td>
     </tr>
   <?php endforeach; ?>
