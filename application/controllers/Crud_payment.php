@@ -184,7 +184,7 @@ class Crud_payment extends CI_Controller {
 
         $data = [
             'id_session' => $id_session,
-            'transactions_id' => 'MBP1' . date('ymd', strtotime($this->input->post('date'))) . $this->input->post('number'),
+            'transactions_id' => 'MBP' . date('ymd', strtotime($this->input->post('date'))) . $this->input->post('number'),
             'total_paid' => $this->input->post('total_paid'),
             'total_bill' => 0, // Set total_bill to 0
             'detail' => json_encode($this->input->post('detail')),
@@ -268,7 +268,7 @@ class Crud_payment extends CI_Controller {
             cek_session_akses_developer('payment', $this->session->id_session);
             $data['payment'] = $this->Payment_model->get_payment_by_transaction_id($id_session, $transaction_id);
             $data['project'] = $this->project_model->get_project_by_session($id_session);
-            if (!$data['payment'] || strpos($data['payment']->transactions_id, 'MBP1') !== 0) {
+            if (!$data['payment'] || (strpos($data['payment']->transactions_id, 'MBP') !== 0 && strpos($data['payment']->transactions_id, 'MBP1') !== 0)) {
                 show_404(); // Pastikan hanya kwitansi yang dapat diedit
             }
             $this->load->view('payment/editkwt', $data);
@@ -277,7 +277,7 @@ class Crud_payment extends CI_Controller {
             cek_session_akses_administrator('payment', $this->session->id_session);
             $data['payment'] = $this->Payment_model->get_payment_by_transaction_id($id_session, $transaction_id);
             $data['project'] = $this->project_model->get_project_by_session($id_session);
-            if (!$data['payment'] || strpos($data['payment']->transactions_id, 'MBP1') !== 0) {
+            if (!$data['payment'] || (strpos($data['payment']->transactions_id, 'MBP') !== 0 && strpos($data['payment']->transactions_id, 'MBP1') !== 0)) {
                 show_404(); // Pastikan hanya kwitansi yang dapat diedit
             }
             $this->load->view('payment/editkwt', $data);
@@ -290,7 +290,7 @@ class Crud_payment extends CI_Controller {
             cek_session_akses_staff_admin('payment', $this->session->id_session);
             $data['payment'] = $this->Payment_model->get_payment_by_transaction_id($id_session, $transaction_id);
             $data['project'] = $this->project_model->get_project_by_session($id_session);
-            if (!$data['payment'] || strpos($data['payment']->transactions_id, 'MBP1') !== 0) {
+            if (!$data['payment'] || (strpos($data['payment']->transactions_id, 'MBP') !== 0 && strpos($data['payment']->transactions_id, 'MBP1') !== 0)) {
                 show_404(); // Pastikan hanya kwitansi yang dapat diedit
             }
             $this->load->view('payment/editkwt', $data);
