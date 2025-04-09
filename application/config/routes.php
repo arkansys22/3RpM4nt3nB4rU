@@ -81,7 +81,6 @@ $route['payment/store2'] = 'crud_payment/store2'; // Route for storing kwitansi
 $route['payment/update/(:any)/(:any)'] = 'crud_payment/update/$1/$2';
 $route['payment/update2/(:any)/(:any)'] = 'crud_payment/update2/$1/$2';
 
-
 $route['clients'] = 'crud_clients/index'; // Menampilkan daftar clients
 // $route['clients/create'] = 'crud_clients/create'; // Halaman tambah clients
 $route['clients/store'] = 'crud_clients/store'; // Menyimpan data clients baru
@@ -133,6 +132,8 @@ $route['naskah/izin_menikah/(:any)'] = 'Izin_menikah/view/$1';
 $route['naskah/izin_menikah/pdf/(:any)'] = 'Izin_menikah/generate_pdf/$1';
 $route['naskah/terima_kasih/(:any)'] = 'Terima_kasih/view/$1';
 $route['naskah/terima_kasih/pdf/(:any)'] = 'Terima_kasih/generate_pdf/$1';
+$route['naskah/terima_kasih2/(:any)'] = 'Terima_kasih2/view/$1';
+$route['naskah/terima_kasih2/pdf/(:any)'] = 'Terima_kasih2/generate_pdf/$1';
 $route['naskah/data_pengantin/(:any)'] = 'Data_pengantin/view/$1';
 $route['naskah/data_pengantin/pdf/(:any)'] = 'Data_pengantin/generate_pdf/$1';
 $route['naskah/list_vendor/(:any)'] = 'crud_vendor/view/$1';
