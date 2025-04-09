@@ -596,7 +596,7 @@ class Crud_clients extends CI_Controller {
         $status = 'Edit' ;
         $data_log = array(
 
-            'log_activity_user_id'=> 'client',
+            'log_activity_user_id'=>$this->session->id_session,
             'log_activity_modul' => 'clients/c_edit',
             'log_activity_document_no' => $id_session,
             'log_activity_status' => $status,
