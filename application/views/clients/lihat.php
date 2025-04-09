@@ -179,12 +179,24 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                     <tbody>
                       <?php $no = 1; foreach ($logactivity as $p): ?>
                       <tr>
-                        <?php $company= $this->Crud_m->view_where('user', array('id_session'=> $p->log_activity_user_id))->row(); ?>
-                        <?php $level= $this->Crud_m->view_where('user_level', array('user_level_id'=> $company->level))->row(); ?>
+                      <?php 
+                        if ($p->log_activity_user_id === 'client'): ?>
+                          <td class="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
+                            <h5 class="font-medium text-black dark:text-white">Client</h5>
+                          </td>
+                        <?php else: 
+                          $company = $this->Crud_m->view_where('user', array('client_idsession' => $p->log_activity_user_id))->row();
+                          if (!$company) {
+                              $company = $this->Crud_m->view_where('user', array('id_session' => $p->log_activity_user_id))->row();
+                          }
+                          $level = $this->Crud_m->view_where('user_level', array('user_level_id' => $company->level))->row();
+                        ?>
+                        <?php $level = $this->Crud_m->view_where('user_level', array('user_level_id' => $company->level))->row(); ?>
                         <td class="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
                           <h5 class="font-medium text-black dark:text-white"><?= $company->username ?></h5>
                           <p class="text-sm"><?= $level->user_level_nama ?></p>
-                        </td>                        
+                        </td>
+                        <?php endif; ?>                        
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
                           <p class="inline-flex rounded-full bg-success bg-opacity-10 px-3 py-1 text-sm font-medium text-success">
                             <?= $p->log_activity_status ?>
