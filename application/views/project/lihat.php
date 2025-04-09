@@ -185,7 +185,12 @@
     <?php else: ?>
         <?php foreach ($payment as $trans): ?>
             <div class="mb-4">
-                <h3 class="text-md font-semibold">Transaksi <?= $project->client_name ?></h3>
+                <h3 class="text-md font-semibold">
+                  Transaksi <?= $project->client_name ?> 
+                  <span style="color: <?= $trans->status === 'Pending' ? 'red' : ($trans->status === 'Paid' ? 'green' : 'black') ?>;">
+                  <?= $trans->status ?>
+                  </span>
+                </h3>
                 <div class="flex items-center justify-between border-b pb-2">
                     <div>
                         <p class="text-black dark:text-white font-medium">

@@ -190,6 +190,7 @@ class Crud_payment extends CI_Controller {
             'detail' => json_encode($this->input->post('detail')),
             'date' => $this->input->post('date'),
             'due_date' => null, // Set due_date to null
+            'status' => 'Pending',
             'created_by'    => $this->session->id_session,
         ];
         
@@ -372,6 +373,7 @@ class Crud_payment extends CI_Controller {
             'total_paid'    => $this->input->post('total_paid'),
             'detail'        => json_encode($this->input->post('detail')),
             'date'          => $this->input->post('date'),
+            'status'          => $this->input->post('status'),
         ];
 
         $this->Payment_model->update_payment($id_session, $transaction_id, $data);

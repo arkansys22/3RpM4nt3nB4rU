@@ -32,24 +32,30 @@
       <main>
         <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
-            <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-              <h1 class="text-2xl font-bold mb-4">Edit Kwitansi</h1>
-              <form id="edit-kwitansi-form" action="<?= site_url('payment/update2/' . $payment->id_session . '/' . ($payment->transactions_id ?? '')) ?>" method="post" class="bg-white p-6 shadow-md rounded">
-                <label for="total_paid" class="block mb-2 font-medium">Total Dibayar:</label>
-                <input type="text" id="total_paid" name="total_paid" value="<?= number_format($payment->total_paid, 0, ',', '.') ?>" class="w-full px-4 py-2 border rounded mb-4" required>
+        <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
+          <h1 class="text-2xl font-bold mb-4">Edit Kwitansi</h1>
+          <form id="edit-kwitansi-form" action="<?= site_url('payment/update2/' . $payment->id_session . '/' . ($payment->transactions_id ?? '')) ?>" method="post" class="bg-white p-6 shadow-md rounded">
+            <label for="total_paid" class="block mb-2 font-medium">Total Dibayar:</label>
+            <input type="text" id="total_paid" name="total_paid" value="<?= number_format($payment->total_paid, 0, ',', '.') ?>" class="w-full px-4 py-2 border rounded mb-4" required>
 
-                <label for="date" class="block mb-2 font-medium">Tanggal:</label>
-                <input type="date" name="date" value="<?= $payment->date ?>" class="w-full px-4 py-2 border rounded mb-4" required>
+            <label for="date" class="block mb-2 font-medium">Tanggal:</label>
+            <input type="date" name="date" value="<?= $payment->date ?>" class="w-full px-4 py-2 border rounded mb-4" required>
 
-                <label for="detail" class="block mb-2 font-medium">Detail:</label>
-                <textarea name="detail" class="w-full px-4 py-2 border rounded mb-4"><?= htmlspecialchars(json_decode($payment->detail)) ?></textarea>
+            <label for="detail" class="block mb-2 font-medium">Detail:</label>
+            <textarea name="detail" class="w-full px-4 py-2 border rounded mb-4"><?= htmlspecialchars(json_decode($payment->detail)) ?></textarea>
 
-                <div class="flex justify-end">
-                    <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Simpan</button>
-                    <a href="javascript:history.back()" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Batal</a>
-                </div>
-              </form>
+            <label for="status" class="block mb-2 font-medium">Status:</label>
+            <select name="status" id="status" class="w-full px-4 py-2 border rounded mb-4" required>
+          <option value="Pending">Pending</option>
+          <option value="Paid">Paid</option>
+            </select>
+
+            <div class="flex justify-end">
+            <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Simpan</button>
+            <a href="javascript:history.back()" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Batal</a>
             </div>
+          </form>
+        </div>
           </div>
         </div>
       </main>
