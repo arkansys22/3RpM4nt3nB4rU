@@ -43,8 +43,7 @@ $route['project/recycle_bin'] = 'crud_project/recycle_bin'; // Halaman recycle b
 $route['project/restore/(:any)'] = 'crud_project/restore/$1'; // Restore project
 $route['project/permanent_delete/(:any)'] = 'crud_project/permanent_delete/$1'; // Hapus permanen project
 $route['project/lihat/(:any)'] = 'crud_project/lihat/$1'; // Menampilkan lihat project
-
-
+$route['project/crew_lihat/(:any)'] = 'crud_project/crew_lihat/$1'; // Menampilkan lihat project
 
 $route['finance-project'] = 'crud_finance_project/index'; // Menampilkan daftar project
 $route['finance-project/create'] = 'crud_finance_project/create'; // Menampilkan form tambah project
