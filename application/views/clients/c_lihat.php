@@ -418,17 +418,33 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 							<div class="row">
 								<div class="col-lg-12 d-flex align-self-center">
 									<div class="about-content">
-										<a href="<?= $clients->wedding_ceremony ?>" target="_blank" class="mybtn mybtn-bg"> <span><i class="fas fa-download"></i>Susunan Acara Akad</span> </a> 
-										<a href="<?= $clients->reception_afterward ?>"  target="_blank" class="mybtn mybtn-bg"> <span><i class="fas fa-download"></i>Susunan Acara Resepsi</span> </a>
-										<a href="<?= site_url('naskah/data_pengantin/pdf/'. $clients->id_session) ?>" class="mybtn mybtn-bg"> <span><i class="fas fa-download"></i>Susunan Panitia</span> </a>
-										<a href="<?= $clients->list_photo ?>"  target="_blank" class="mybtn mybtn-bg"> <span><i class="fas fa-download"></i>List Tamu/Foto</span> </a></a>
-										
+										<?php if (!empty($clients->wedding_ceremony)) : ?>
+											<a href="<?= $clients->wedding_ceremony ?>" target="_blank" class="mybtn mybtn-bg"> 
+												<span><i class="fas fa-download"></i>Susunan Acara Akad</span> 
+											</a>
+										<?php endif; ?>
+										<?php if (!empty($clients->reception_afterward)) : ?>
+											<a href="<?= $clients->reception_afterward ?>" target="_blank" class="mybtn mybtn-bg"> 
+												<span><i class="fas fa-download"></i>Susunan Acara Resepsi</span> 
+											</a>
+										<?php endif; ?>
+										<?php if (!empty($clients->id_session)) : ?>
+											<a href="<?= site_url('naskah/data_pengantin/pdf/'. $clients->id_session) ?>" class="mybtn mybtn-bg"> 
+												<span><i class="fas fa-download"></i>Susunan Panitia</span> 
+											</a>
+										<?php endif; ?>
+										<?php if (!empty($clients->list_photo)) : ?>
+											<a href="<?= $clients->list_photo ?>" target="_blank" class="mybtn mybtn-bg"> 
+												<span><i class="fas fa-download"></i>List Tamu/Foto</span> 
+											</a>
+										<?php endif; ?>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+				<?php if ($islam) : ?>
 				<div class="row">
 					<div class="col-lg-12">
 					<h3>Naskah Jubir Pengantin Pria</h3>
@@ -605,6 +621,29 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 						</div>
 					</div>
 				</div>
+				<?php else : ?>
+				<div class="row">
+					<div class="col-lg-12">
+					<h3>Ucapan Terima Kasih Pengantin Ke Tamu Resepsi</h3>
+						<div class="about-box">
+							<div class="row">
+								<div class="col-lg-12 d-flex align-self-center">
+									<div class="about-content">
+                  <h4 class="text-xl font-bold text-center mb-4">Kata Sambutan Terima Kasih Oleh Pengantin Pria Di Resepsi</h4>
+</br></br>
+<p class="indent text-lg text-justify">Dengan penuh rasa syukur, kami mengucapkan terima kasih yang sebesar-besarnya kepada semua saudara dan saudari yang telah hadir dalam perayaan pernikahan kami. Kehadiran dan doa-doa yang tulus dari Anda semua sangat berarti bagi kami. Kami merasa diberkati karena dikelilingi oleh orang-orang yang begitu mengasihi dan mendukung kami.
+Kami berdoa agar kasih Tuhan senantiasa menyertai setiap langkah hidup kita, dan semoga kita semua selalu diberkati dengan kedamaian, kebahagiaan, serta keberhasilan dalam segala hal. Terima kasih telah menjadi bagian dari hari yang sangat istimewa ini.</p>
+<p>Tuhan memberkati kita semua.</p>
+										<a href="<?= site_url('naskah/terima_kasih2/pdf/'. $clients->id_session) ?>" class="mybtn mybtn-bg"> <span><i class="fas fa-download"></i>Download </span> </a>								
+										
+									</div>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<?php endif; ?>
 			</div>
 		</section>
 		<!-- Resume Area End -->
@@ -678,7 +717,7 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 									<div class="blog-details">
 										<ul class="post-meta-one">
 											<li>
-												<p><i class="fa fa-clock-o"></i><?= hari($agenda->brainstorming) ?>, <?= tgl_indo($agenda->brainstorming) ?></p>
+												<p><i class="fa fa-clock-o"></i><?= !empty($agenda->brainstorming) ? hari($agenda->brainstorming) . ', ' . tgl_indo($agenda->brainstorming) : 'Tanggal belum ditentukan' ?></p>
 											</li>
 										</ul>
 
@@ -699,7 +738,7 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 									<div class="blog-details">
 										<ul class="post-meta-one">
 											<li>
-												<p><i class="fa fa-clock-o"></i><?= hari($agenda->technical_meeting) ?>, <?= tgl_indo($agenda->technical_meeting) ?></p>
+												<p><i class="fa fa-clock-o"></i><?= !empty($agenda->technical_meeting) ? hari($agenda->technical_meeting) . ', ' . tgl_indo($agenda->technical_meeting) : 'Tanggal belum ditentukan' ?></p>
 											</li>
 										</ul>
 
@@ -720,7 +759,7 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 									<div class="blog-details">
 										<ul class="post-meta-one">
 											<li>
-												<p><i class="fa fa-clock-o"></i><?= hari($agenda->final_revision) ?>, <?= tgl_indo($agenda->final_revision) ?></p>
+												<p><i class="fa fa-clock-o"></i><?= !empty($agenda->final_revision) ? hari($agenda->final_revision) . ', ' . tgl_indo($agenda->final_revision) : 'Tanggal belum ditentukan' ?></p>
 											</li>
 										</ul>
 
@@ -741,7 +780,7 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 									<div class="blog-details">
 										<ul class="post-meta-one">
 											<li>
-												<p><i class="fa fa-clock-o"></i><?= hari($agenda->loading_decoration) ?>, <?= tgl_indo($agenda->loading_decoration) ?></p>
+												<p><i class="fa fa-clock-o"></i><?= !empty($agenda->loading_decoration) ? hari($agenda->loading_decoration) . ', ' . tgl_indo($agenda->loading_decoration) : 'Tanggal belum ditentukan' ?></p>
 											</li>
 										</ul>
 
@@ -762,7 +801,7 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 									<div class="blog-details">
 										<ul class="post-meta-one">
 											<li>
-												<p><i class="fa fa-clock-o"></i><?= hari($agenda->wedding_day) ?>, <?= tgl_indo($agenda->wedding_day) ?></p>
+												<p><i class="fa fa-clock-o"></i><?= !empty($agenda->wedding_day) ? hari($agenda->wedding_day) . ', ' . tgl_indo($agenda->wedding_day) : 'Tanggal belum ditentukan' ?></p>
 											</li>
 										</ul>
 
@@ -783,7 +822,7 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 									<div class="blog-details">
 										<ul class="post-meta-one">
 											<li>
-												<p><i class="fa fa-clock-o"></i><?= hari($agenda->honeymoon) ?>, <?= tgl_indo($agenda->honeymoon) ?></p>
+												<p><i class="fa fa-clock-o"></i><?= !empty($agenda->honeymoon) ? hari($agenda->honeymoon) . ', ' . tgl_indo($agenda->honeymoon) : 'Tanggal belum ditentukan' ?></p>
 											</li>
 										</ul>
 
