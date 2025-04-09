@@ -53,14 +53,26 @@
     </br>
 
     <?php if (empty($client->f_bride_freplacementname)): ?>
-    <div class="w-full sm:w-3/5 lg:w-2/5 mx-auto border-2 border-black p-4 text-center">
-        <p class="text-lg sm:text-xl leading-relaxed font-semibold text-justify">
+    <div class="box">
+        <p>
             Saya terima nikah dan
             kawinnya <?= $client->f_bride_fname; ?> binti
             <?= $client->f_bride_fathername; ?> dengan
             mas kawin tersebut dibayar tunai
         </p>
     </div>
+    <style>
+        .box {
+            width: 40%; /* Setengah lebar halaman */
+            margin: 5px auto; /* Tengah secara horizontal */
+            border: 2px solid black; /* Border hitam */
+            padding: 15px; /* Jarak dalam */
+            text-align: justify; /* Teks rata kanan kiri */
+            font-weight: bold; /* Teks tebal */
+            font-size: 20px; /* Ukuran teks lebih besar */
+            line-height: 1.8; /* Jarak antar baris */
+        }
+    </style>
     <?php endif; ?>
     <div class="mt-6 flex justify-between no-print">
     <div class="flex">
