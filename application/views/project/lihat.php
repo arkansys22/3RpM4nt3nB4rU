@@ -198,7 +198,7 @@
                             <strong>Total Tagihan:</strong> 
                             <?php if (strpos($trans->transactions_id, 'IMB') === 0): ?>
                                 Rp <?= number_format($trans->total_bill, 0, ',', '.') ?><br>
-                            <?php elseif (strpos($trans->transactions_id, 'MBP1') === 0): ?>
+                            <?php elseif (strpos($trans->transactions_id, 'MBP') === 0 || strpos($trans->transactions_id, 'MBP1') === 0): ?>
                                 Rp <?= number_format($trans->total_paid, 0, ',', '.') ?><br>
                             <?php endif; ?>
                             <?php if (strpos($trans->transactions_id, 'IMB') === 0): ?>
@@ -216,7 +216,7 @@
                                class="bg-blue-500 text-white text-sm px-2 py-1 rounded-md hover:bg-blue-600">
                                Lihat Invoice
                             </a>
-                        <?php elseif (strpos($trans->transactions_id, 'MBP1') === 0): ?>
+                        <?php elseif (strpos($trans->transactions_id, 'MBP') === 0 || strpos($trans->transactions_id, 'MBP1') === 0): ?>
                             <a href="<?= site_url('payment/view_kwitansi/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
                                class="bg-blue-500 text-white text-sm px-2 py-1 rounded-md hover:bg-blue-600">
                                Lihat Kwitansi
