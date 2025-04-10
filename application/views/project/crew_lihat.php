@@ -39,7 +39,6 @@
                 <label class="block mb-2 text-black dark:text-white"><strong>Agama : </strong><?= $project->religion ?></label>        
                 <label class="block mb-2 text-black dark:text-white"><strong>Tanggal Pernikahan : </strong><?= hari($project->event_date) ?>, <?= tgl_indo($project->event_date) ?></label>
                 <label class="block mb-2 text-black dark:text-white"><strong>Lokasi : </strong><?= $project->location ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Detail : </strong><?= $project->detail ?></label>
 
                 <?php
                 // Ensure $roles is defined
