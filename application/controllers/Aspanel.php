@@ -23,6 +23,7 @@ class Aspanel extends CI_Controller {
 				$month_last = date('Y-m', strtotime('last month'));
 				$data['client_bulan_ini'] = $this->Clients_model->get_clients_by_month(date('Y-m'));  // Client bulan ini
 				$data['client_bulan_lalu'] = $this->Clients_model->get_clients_by_month(date('Y-m', strtotime('last month'))); // Client bulan lalu
+				$data['client_bulan_depan'] = $this->Clients_model->get_clients_by_month(date('Y-m', strtotime('next month'))); // Client bulan lalu
 				$data['total_client'] = $this->Clients_model->get_total_clients(); // Total client
 
 				

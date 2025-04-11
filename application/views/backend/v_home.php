@@ -83,7 +83,7 @@
 							<div class="flex items-center justify-between gap-1">
 								<p class="text-sm font-medium">Client Bulan Depan</p>
 								<p class="text-sm font-medium text-black dark:text-white">
-									<?= count($client_bulan_lalu); ?>
+									<?= count($client_bulan_depan); ?>
 								</p>
 							</div>
 
