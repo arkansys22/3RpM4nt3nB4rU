@@ -26,10 +26,6 @@ class Aspanel extends CI_Controller {
 				$data['total_client'] = $this->Clients_model->get_total_clients(); // Total client
 
 				
-				
-
-
-
 				// Revenue bulan ini
 				$data['revenue_bulan_ini'] = $this->db->select_sum('total_paid')
 					->where('DATE_FORMAT(date, "%Y-%m") =', $month_now)
@@ -626,6 +622,7 @@ class Aspanel extends CI_Controller {
 	    $revenue_bulan_ini = $this->db->select_sum('total_paid')
 	        ->where('DATE(date) >=', $date_start_of_month)
 	        ->where('DATE(date) <=', $date_now)
+	        ->where('status', 'Paid')
 	        ->get('payment')
 	        ->row();
 
@@ -633,11 +630,13 @@ class Aspanel extends CI_Controller {
 	    $revenue_bulan_lalu = $this->db->select_sum('total_paid')
 	        ->where('DATE(date) >=', $date_start_of_last_month)
 	        ->where('DATE(date) <=', $date_end_of_last_month)
+	        ->where('status', 'Paid')
 	        ->get('payment')
 	        ->row();
 
 	    // Total revenue all
 	    $total_revenue_all = $this->db->select_sum('total_paid')
+	    	->where('status', 'Paid')
 	        ->get('payment')
 	        ->row();
 
