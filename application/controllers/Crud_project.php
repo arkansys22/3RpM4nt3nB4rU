@@ -6,6 +6,7 @@ class Crud_project extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('project_model');
+        $this->load->model('clients_model');
         $this->load->model('CrewProjects_model');
         $this->load->model('Crews_model');
         $this->load->model('Payment_model');
@@ -195,6 +196,7 @@ class Crud_project extends CI_Controller {
         }
 
         $data['project'] = $this->project_model->get_project_by_session($id_session);
+        $data['clients'] = $this->clients_model->get_client_by_session($id_session);
         $data['crew_list'] = $this->CrewProjects_model->get_crew_by_project($id_session);
         $data['vendors'] = $this->Vendor_model->get_vendor_by_id($id_session);
         $data['logactivity'] = $this->project_model->get_logactivity_by_session($id_session);
