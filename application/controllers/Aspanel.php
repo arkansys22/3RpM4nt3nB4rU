@@ -159,12 +159,13 @@ class Aspanel extends CI_Controller {
 			} else if ($this->session->level == '7') {
 				cek_session_akses_staff('panel', $this->session->id_session);
 
-				// Fetch event data
-				$this->db->select('project.event_date, project.location, project.client_name, crew_projects.role, crew_projects.project_id');
-				$this->db->from('user');
-				$this->db->join('crew_projects', 'user.crews_idsession = crew_projects.crew_id');
-				$this->db->join('project', 'crew_projects.project_id = project.id_session');
-				$this->db->where('user.id_session', $this->session->id_session);
+					// Fetch event data
+					$this->db->select('project.event_date, project.location, project.client_name, crew_projects.role, crew_projects.project_id');
+					$this->db->from('user');
+					$this->db->join('crew_projects', 'user.crews_idsession = crew_projects.crew_id');
+					$this->db->join('project', 'crew_projects.project_id = project.id_session');
+					$this->db->where('user.id_session', $this->session->id_session);
+					$this->db->order_by('project.event_date', 'DESC');
 					$events = $this->db->get()->result_array();
 
 				// Pass data to the view
