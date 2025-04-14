@@ -258,7 +258,7 @@
               <div class="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default  dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1" >
                 <div class="max-w-full overflow-x-auto">
                   <table class="w-full table-auto">
-                    <thead></thead>
+                    <thead>
                       <tr class="bg-gray-2 text-left dark:bg-meta-4">
                         <th
                           class="min-w-[220px] px-4 py-4 font-medium xl:pl-11"
