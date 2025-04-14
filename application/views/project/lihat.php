@@ -94,14 +94,14 @@
                                 <div class="flex gap-2">
                                     <!-- Edit Button -->
                                     <a href="<?= site_url('crewproject/editlist/' . $crew->id_session . '/' . $crew->crew_id) ?>" 
-                                       class="bg-green-500 text-sm px-2 py-1 rounded-md hover:bg-green-600">
+                                       class="bg-green-500 text-white text-sm px-2 py-1 rounded-md hover:bg-green-600">
                                        Edit
                                     </a>
 
                                     <!-- Delete Button -->
                                     <a href="<?= site_url('crewproject/delete/' . $crew->id_session) ?>" 
                                        onclick="return confirm('Apakah Anda yakin ingin menghapus crew ini?')"
-                                       class="bg-red-500 text-sm px-2 py-1 rounded-md hover:bg-red-600">
+                                       class="bg-red-500 text-white text-sm px-2 py-1 rounded-md hover:bg-red-600">
                                        Hapus
                                     </a>
                                 </div>
@@ -113,7 +113,7 @@
 
                     <!-- Add Crew Button -->
                     <a href="<?= site_url('crewproject/createlist/' . $project->id_session) ?>" 
-                       class="mt-2 bg-blue-500 px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
+                       class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
                        Tambah Crew
                     </a>
                 </div>
@@ -154,14 +154,14 @@
                 <div class="flex gap-2">
                     <!-- Tombol Edit -->
                     <a href="<?= site_url('crud_vendor/edit/' . $vendor->id_session . '/' . $vendor->vendor_id) ?>" 
-                       class="bg-green-500 text-sm px-2 py-1 rounded-md hover:bg-green-600">
+                       class="bg-green-500 text-white text-sm px-2 py-1 rounded-md hover:bg-green-600">
                        Edit
                     </a>
 
                     <!-- Tombol Hapus -->
                     <a href="<?= site_url('crud_vendor/delete/' . $vendor->id_session . '/' . $vendor->vendor_id) ?>" 
                        onclick="return confirm('Apakah Anda yakin ingin menghapus vendor ini?')"
-                       class="bg-red-500 text-sm px-2 py-1 rounded-md hover:bg-red-600">
+                       class="bg-red-500 text-white text-sm px-2 py-1 rounded-md hover:bg-red-600">
                        Hapus
                     </a>
                 </div>
@@ -173,7 +173,7 @@
 
     <!-- Tombol Tambah Vendor -->
     <a href="<?= site_url('crud_vendor/create/' . $project->id_session) ?>" 
-       class="mt-2 bg-blue-500 px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
+       class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
        Tambah Vendor
     </a>
 </div>
@@ -184,7 +184,7 @@
     <?php if (empty($payment)): ?>
         <p class="text-red-500 font-semibold">Belum ada transaksi.</p>
         <a href="<?= site_url('payment/createinv/' . $project->id_session) ?>" 
-           class="mt-2 bg-blue-500 px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
+           class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
            Tambah Invoice
         </a>
     <?php else: ?>
@@ -218,22 +218,22 @@
                     <div class="flex gap-2">
                         <?php if (strpos($trans->transactions_id, 'IMB') === 0): ?>
                             <a href="<?= site_url('payment/view_invoice/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
-                               class="bg-blue-500 text-sm px-2 py-1 rounded-md hover:bg-blue-600">
+                               class="bg-blue-500 text-white text-sm px-2 py-1 rounded-md hover:bg-blue-600">
                                Lihat Invoice
                             </a>
                         <?php elseif (strpos($trans->transactions_id, 'MBP') === 0 || strpos($trans->transactions_id, 'MBP1') === 0): ?>
                             <a href="<?= site_url('payment/view_kwitansi/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
-                               class="bg-blue-500 text-sm px-2 py-1 rounded-md hover:bg-blue-600">
+                               class="bg-blue-500 text-white text-sm px-2 py-1 rounded-md hover:bg-blue-600">
                                Lihat Kwitansi
                             </a>
                         <?php endif; ?>
                         <a href="<?= site_url('payment/' . (strpos($trans->transactions_id, 'IMB') === 0 ? 'edit' : 'edit2') . '/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
-                           class="bg-green-500 text-sm px-2 py-1 rounded-md hover:bg-green-600">
+                           class="bg-green-500 text-white text-sm px-2 py-1 rounded-md hover:bg-green-600">
                            Edit
                         </a>
                         <a href="<?= site_url('payment/delete/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
                            onclick="return confirm('Apakah Anda yakin ingin menghapus transaksi ini?')"
-                           class="bg-red-500 text-sm px-2 py-1 rounded-md hover:bg-red-600">
+                           class="bg-red-500 text-white text-sm px-2 py-1 rounded-md hover:bg-red-600">
                            Hapus
                         </a>
                     </div>
@@ -244,14 +244,14 @@
 
     <?php if (!empty($has_invoice)): ?>
         <a href="<?= site_url('payment/createkwt/' . $project->id_session . '/' . $has_invoice->transactions_id) ?>" 
-           class="mt-2 bg-blue-500 px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
+           class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
            Tambah Kwitansi
         </a>
     <?php endif; ?>
 </div>
 
-                <a href="<?= site_url('project/edit/'. $project->id_session) ?>" class="ml-2 bg-green-500 px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Edit Project</a>
-                <a href="<?= site_url('project') ?>" class="ml-2 bg-gray-500 px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a>
+                <a href="<?= site_url('project/edit/'. $project->id_session) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Edit Project</a>
+                <a href="<?= site_url('project') ?>" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a>
               </form>
 
               <!-- ====== Table Three Start -->
