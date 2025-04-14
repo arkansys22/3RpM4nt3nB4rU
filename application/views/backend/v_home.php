@@ -138,7 +138,7 @@
 								<div class="flex items-center justify-between gap-1">
 									<p class="text-sm font-medium">
 										<a href="#">
-					                        <span class="text-sm font-medium text-primary dark:text-white">
+					                        <span class="text-sm font-medium">
 					                          Lebih Lengkap >>
 					                        </span>
 					                        
@@ -181,7 +181,7 @@
 								<div class="flex items-center justify-between gap-1">
 									<p class="text-sm font-medium">
 										<a href="#">
-					                        <span class="text-sm font-medium text-primary dark:text-white">
+					                        <span class="text-sm font-medium">
 					                          Lebih Lengkap >>
 					                        </span>					                        
 					                    </a>				                      
