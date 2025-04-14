@@ -149,6 +149,7 @@ $route['agenda/create/(:any)'] = 'crud_agenda/create/$1'; // Create vendor form 
 $route['agenda/store'] = 'crud_agenda/store'; // Store vendor data based on session_id
 $route['agenda/edit/(:any)'] = 'crud_agenda/edit/$1'; // Edit vendor data based on session_id
 $route['agenda/update/(:any)'] = 'crud_agenda/update/$1'; // Update vendor data based on session_id
+$route['agenda/delete_permanent/(:any)'] = 'Crud_agenda/delete_permanent/$1'; // Menghapus permanen data crews dari Recycle Bin
 
 $route['supplies'] = 'crud_supplies/index'; // Menampilkan daftar supplies
 $route['supplies/create'] = 'crud_supplies/create'; // Menampilkan form tambah supplies
