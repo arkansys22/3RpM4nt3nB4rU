@@ -51,4 +51,10 @@ public function delete_permanent($id_session) {
     return $this->db->delete('agenda');
 }
 
+public function insert_log_activity($data_log) {
+    return $this->db->insert('log_activity', $data_log);
+
+    return $insert;
+}
+
 }

@@ -35,9 +35,9 @@
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
               <h1 class="text-2xl font-bold mb-4">Stock <?= $supplies->product_name ?></h1>
               <form method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
-                <label class="block mb-2 text-black dark:text-white"><strong>Nama Produk : </strong><?= $supplies->product_name ?></label>        
-                <label class="block mb-2 text-black dark:text-white"><strong>Jenis : </strong><?= $supplies->type ?></label>        
-                <label class="block mb-2 text-black dark:text-white"><strong>Stock Tersedia : </strong><?= $supplies->amount; ?></label>
+                <label class="block mb-2"><strong>Nama Produk : </strong><?= $supplies->product_name ?></label>        
+                <label class="block mb-2"><strong>Jenis : </strong><?= $supplies->type ?></label>        
+                <label class="block mb-2"><strong>Stock Tersedia : </strong><?= $supplies->amount; ?></label>
 
                 <a href="<?= site_url('supplies/delete/'.$supplies->id_session) ?>" class="ml-2 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 inline-block text-center w-auto" onclick="return confirm('Hapus produk ini?')">Hapus</a>
                 <a href="javascript:history.back()" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a>
@@ -48,22 +48,22 @@
                 <table class="w-full table-auto">
                   <thead>
                     <tr class="bg-gray-2 text-left dark:bg-meta-4">
-                      <th class="min-w-[220px] px-4 py-4 font-medium text-center text-black dark:text-white xl:pl-11">
+                      <th class="min-w-[220px] px-4 py-4 font-medium text-center xl:pl-11">
                         Product Name
                       </th>
-                      <th class="min-w-[150px] px-4 py-4 font-medium text-center text-black dark:text-white">
+                      <th class="min-w-[150px] px-4 py-4 font-medium text-center">
                         Type
                       </th>
-                      <th class="min-w-[120px] px-4 py-4 font-medium text-center text-black dark:text-white">
+                      <th class="min-w-[120px] px-4 py-4 font-medium text-center">
                         Status
                       </th>
-                      <th class="px-4 py-4 font-medium text-center text-black dark:text-white">
+                      <th class="px-4 py-4 font-medium text-center">
                         Amount
                       </th>
-                      <th class="px-4 py-4 font-medium text-center text-black dark:text-white">
+                      <th class="px-4 py-4 font-medium text-center">
                         Detail
                       </th>
-                      <th class="px-4 py-4 font-medium text-center text-black dark:text-white">
+                      <th class="px-4 py-4 font-medium text-center">
                         Time
                       </th>
                     </tr>
@@ -73,10 +73,10 @@
                     <?php $supplies= $this->Crud_m->view_where('supplies', array('id_session'=> $p->id_session))->row(); ?>
                     <tr>
                       <td class="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
-                        <h5 class="font-medium text-center text-black dark:text-white"><?= $supplies->product_name ?></h5>
+                        <h5 class="font-medium text-center"><?= $supplies->product_name ?></h5>
                       </td>
                       <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                        <p class="text-black text-center dark:text-white"><?= $supplies->type ?></p>
+                        <p class="text-center"><?= $supplies->type ?></p>
                       </td>
                       <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
                         <?php if ($p->status == 'Barang Keluar'): ?>
@@ -91,16 +91,16 @@
                       </td>
                       <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
                         <?php if ($p->status == 'Barang Masuk'): ?>
-                        <p class="text-black text-center dark:text-white"><?= $p->goods_in ?></p>
+                        <p class="text-center"><?= $p->goods_in ?></p>
                         <?php else: ?>
-                        <p class="text-black text-center dark:text-white"><?= $p->goods_out ?></p>
+                        <p class="text-center"><?= $p->goods_out ?></p>
                         <?php endif; ?>
                       </td>
                       <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                        <p class="text-black text-center dark:text-white"><?= $p->detail ?></p>
+                        <p class="text-center"><?= $p->detail ?></p>
                       </td>
                       <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                        <p class="text-black text-center dark:text-white"><?= hari($p->created_at) ?>, <?= tgl_indo($p->created_at)?></p>
+                        <p class="text-center"><?= hari($p->created_at) ?>, <?= tgl_indo($p->created_at)?></p>
                       </td>
                     </tr>
                     <?php endforeach; ?>
