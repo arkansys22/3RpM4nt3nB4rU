@@ -40,13 +40,13 @@
             <div class="swiper-slide border-r border-stroke px-10 last:border-r-0 dark:border-strokedark">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2.5">
-                        <h4 class="text-xl font-bold text-black dark:text-white">Potential Client</h4>
+                        <h4 class="text-xl font-bold">Potential Client</h4>
                     </div>
                 </div>
                 <div class="mt-5.5 flex flex-col gap-1.5">
                     <div class="flex items-center justify-between gap-1">
                         <p class="text-sm font-medium">Total</p>
-                        <p class="font-medium text-black dark:text-white"><?= count($potensial_clients_tanya); ?></p>
+                        <p class="font-medium"><?= count($potensial_clients_tanya); ?></p>
                     </div>
                 </div>
             </div>
@@ -55,13 +55,13 @@
             <div class="swiper-slide border-r border-stroke px-10 last:border-r-0 dark:border-strokedark">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2.5">
-                        <h4 class="text-xl font-bold text-black dark:text-white">Client Hot</h4>
+                        <h4 class="text-xl font-bold">Client Hot</h4>
                     </div>
                 </div>
                 <div class="mt-5.5 flex flex-col gap-1.5">
                     <div class="flex items-center justify-between gap-1">
                         <p class="text-sm font-medium">Total</p>
-                        <p class="font-medium text-black dark:text-white"><?= count($potensial_clients_hot); ?></p>
+                        <p class="font-medium"><?= count($potensial_clients_hot); ?></p>
                     </div>
                 </div>
             </div>
@@ -70,13 +70,13 @@
             <div class="swiper-slide border-r border-stroke px-10 last:border-r-0 dark:border-strokedark">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2.5">
-                        <h4 class="text-xl font-bold text-black dark:text-white">Client Konsul</h4>
+                        <h4 class="text-xl font-bold">Client Konsul</h4>
                     </div>
                 </div>
                 <div class="mt-5.5 flex flex-col gap-1.5">
                     <div class="flex items-center justify-between gap-1">
                         <p class="text-sm font-medium">Total</p>
-                        <p class="font-medium text-black dark:text-white"><?= count($potensial_clients_konsul); ?></p>
+                        <p class="font-medium"><?= count($potensial_clients_konsul); ?></p>
                     </div>
                 </div>
             </div>
@@ -85,13 +85,13 @@
             <div class="swiper-slide border-r border-stroke px-10 last:border-r-0 dark:border-strokedark">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2.5">
-                        <h4 class="text-xl font-bold text-black dark:text-white">Client Deal</h4>
+                        <h4 class="text-xl font-bold">Client Deal</h4>
                     </div>
                 </div>
                 <div class="mt-5.5 flex flex-col gap-1.5">
                     <div class="flex items-center justify-between gap-1">
                         <p class="text-sm font-medium">Total</p>
-                        <p class="font-medium text-black dark:text-white"><?= count($potensial_clients_deal); ?></p>
+                        <p class="font-medium"><?= count($potensial_clients_deal); ?></p>
                     </div>
                 </div>
             </div>
@@ -100,13 +100,13 @@
             <div class="swiper-slide border-r border-stroke px-10 last:border-r-0 dark:border-strokedark">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2.5">
-                        <h4 class="text-xl font-bold text-black dark:text-white">Client Ghosting</h4>
+                        <h4 class="text-xl font-bold">Client Ghosting</h4>
                     </div>
                 </div>
                 <div class="mt-5.5 flex flex-col gap-1.5">
                     <div class="flex items-center justify-between gap-1">
                         <p class="text-sm font-medium">Total</p>
-                        <p class="font-medium text-black dark:text-white"><?= count($potensial_clients_ghosting); ?></p>
+                        <p class="font-medium"><?= count($potensial_clients_ghosting); ?></p>
                     </div>
                 </div>
             </div>
@@ -115,13 +115,13 @@
             <div class="swiper-slide border-r border-stroke px-10 last:border-r-0 dark:border-strokedark">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2.5">
-                        <h4 class="text-xl font-bold text-black dark:text-white">Client Batal</h4>
+                        <h4 class="text-xl font-bold">Client Batal</h4>
                     </div>
                 </div>
                 <div class="mt-5.5 flex flex-col gap-1.5">
                     <div class="flex items-center justify-between gap-1">
                         <p class="text-sm font-medium">Total</p>
-                        <p class="font-medium text-black dark:text-white"><?= count($potensial_clients_batal); ?></p>
+                        <p class="font-medium"><?= count($potensial_clients_batal); ?></p>
                     </div>
                 </div>
             </div>
