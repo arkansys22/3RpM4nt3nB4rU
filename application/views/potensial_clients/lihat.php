@@ -35,12 +35,12 @@
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
               <h1 class="text-2xl font-bold mb-4">Lihat Potensial Klien <?= $pc->status ?></h1>
               <form action="<?= site_url('potensial-clients/update/'.$pc->id_session) ?>" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
-                <label class="block mb-2 text-black dark:text-white"><strong>Nama Klien : </strong><?= $pc->pc_name ?></label>        
-                <label class="block mb-2 text-black dark:text-white"><strong>Nomer WhatsApp : </strong><?= $pc->pc_nowa ?></label>        
-                <label class="block mb-2 text-black dark:text-white"><strong>Tanggal Pernikahan : </strong><?= hari($pc->event_date) ?>, <?= tgl_indo($pc->event_date) ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Lokasi Pernikahan : </strong><?= $pc->location ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Pertama Chat : </strong><?= hari($pc->chat_date) ?>, <?= tgl_indo($pc->chat_date) ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Catatan : </strong><?= $pc->note ?></label>
+                <label class="block mb-2"><strong>Nama Klien : </strong><?= $pc->pc_name ?></label>        
+                <label class="block mb-2"><strong>Nomer WhatsApp : </strong><?= $pc->pc_nowa ?></label>        
+                <label class="block mb-2"><strong>Tanggal Pernikahan : </strong><?= hari($pc->event_date) ?>, <?= tgl_indo($pc->event_date) ?></label>
+                <label class="block mb-2"><strong>Lokasi Pernikahan : </strong><?= $pc->location ?></label>
+                <label class="block mb-2"><strong>Pertama Chat : </strong><?= hari($pc->chat_date) ?>, <?= tgl_indo($pc->chat_date) ?></label>
+                <label class="block mb-2"><strong>Catatan : </strong><?= $pc->note ?></label>
                 <br>
                 <a href="<?= site_url('potensial-clients/edit/'. $pc->id_session) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Edit</a>
                 <a href="javascript:history.back()" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a>
@@ -53,24 +53,24 @@
                     <thead>
                       <tr class="bg-gray-2 text-left dark:bg-meta-4">
                         <th
-                          class="min-w-[220px] px-4 py-4 font-medium text-black dark:text-white xl:pl-11"
+                          class="min-w-[220px] px-4 py-4 font-medium xl:pl-11"
                         >
                           Author
                         </th>
                         <th
-                          class="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white"
+                          class="min-w-[150px] px-4 py-4 font-medium"
                         >
                           Status
                         </th>
                         <th
-                          class="min-w-[120px] px-4 py-4 font-medium text-black dark:text-white"
+                          class="min-w-[120px] px-4 py-4 font-medium"
                         >
                           Time
                         </th>
-                        <th class="px-4 py-4 font-medium text-black dark:text-white">
+                        <th class="px-4 py-4 font-medium">
                           Device
                         </th>
-                        <th class="px-4 py-4 font-medium text-black dark:text-white">
+                        <th class="px-4 py-4 font-medium">
                           IP
                         </th>
                       </tr>
@@ -83,7 +83,7 @@
                         <td
                           class="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11"
                         >
-                          <h5 class="font-medium text-black dark:text-white"><?= $company->username ?></h5>
+                          <h5 class="font-medium"><?= $company->username ?></h5>
                           <p class="text-sm"><?= $level->user_level_nama ?></p>
                         </td>                        
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
