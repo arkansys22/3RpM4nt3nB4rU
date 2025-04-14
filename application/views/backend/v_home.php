@@ -28,7 +28,7 @@
 </head>
 
 <body
-    x-data="{ page: 'dashboard', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-data="{ page: 'project', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
     x-init="
          darkMode = JSON.parse(localStorage.getItem('darkMode'));
          $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
@@ -64,7 +64,7 @@
 						<div class="mt-5.5 flex flex-col gap-1.5">
 							<!-- Client Bulan Ini -->
 							<div class="flex items-center justify-between gap-1">
-								<p class="text-sm font-medium text-black dark:text-white">Client Bulan Ini</p>
+								<p class="text-sm font-medium">Client Bulan Ini</p>
 								<p class="text-sm font-medium text-black dark:text-white">
 									<?= count($client_bulan_ini); ?>
 								</p>
@@ -72,22 +72,22 @@
 
 							<!-- Client Bulan Lalu -->
 							<div class="flex items-center justify-between gap-1">
-								<p class="text-sm font-medium text-black dark:text-white">Client Bulan Lalu</p>
+								<p class="text-sm font-medium">Client Bulan Lalu</p>
 								<p class="text-sm font-medium text-black dark:text-white">
 									<?= count($client_bulan_lalu); ?>
 								</p>
 							</div>
 
 							<div class="flex items-center justify-between gap-1">
-								<p class="text-sm font-medium text-black dark:text-white">Client Bulan Depan</p>
+								<p class="text-sm font-medium">Client Bulan Depan</p>
 								<p class="text-sm font-medium text-black dark:text-white">
-									<?= count($client_bulan_depan); ?>
+									<?= count($client_bulan_lalu); ?>
 								</p>
 							</div>
 
 							<!-- Total Client -->
 							<div class="flex items-center justify-between gap-1">
-								<p class="text-sm font-medium text-black dark:text-white">Total Semua Client</p>
+								<p class="text-sm font-medium">Total Semua Client</p>
 								<p class="text-sm font-medium text-black dark:text-white">
 									<?= $total_client; ?>
 								</p>
@@ -117,22 +117,22 @@
 							<div class="mt-5.5 flex flex-col gap-1.5">
 								<!-- Total Revenue Bulan Ini -->
 								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium text-black dark:text-white">Bulan Ini</p>
+									<p class="text-sm font-medium">Bulan Ini</p>
 										<p id="revenue_bulan_ini" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
 								</div>
 
 								<!-- Pemasukan Bulan Lalu -->
 								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium text-black dark:text-white">Bulan Lalu</p>
+									<p class="text-sm font-medium">Bulan Lalu</p>
 										<p id="revenue_bulan_lalu" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
 								</div>
 								<!-- Total Revenue Semua -->
 								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium text-black dark:text-white">Total Gross</p>
+									<p class="text-sm font-medium">Total Gross</p>
 										<p id="total_revenue_all" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
 								</div>
 								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium text-black dark:text-white">Total Net</p>
+									<p class="text-sm font-medium">Total Net</p>
 										<p id="total_net_revenue" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
 								</div>
 								<div class="flex items-center justify-between gap-1">
@@ -160,18 +160,22 @@
 	                      	<div class="mt-5.5 flex flex-col gap-1.5">
 								<!-- Total Revenue Bulan Ini -->
 								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium text-black dark:text-white">Bulan Ini</p>
-										<p id="expense_bulan_ini" class="text-sm font-medium text-black dark:text-white"></p>
+									<p class="text-sm font-medium">Bulan Ini</p>
+										<p id="expense_bulan_ini" class="text-sm font-medium text-black dark:text-white">
+
+										</p>
 								</div>
 
 								<!-- Pemasukan Bulan Lalu -->
 								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium text-black dark:text-white">Bulan Lalu</p>
-										<p id="expense_bulan_lalu" class="text-sm font-medium text-black dark:text-white"></p>
+									<p class="text-sm font-medium">Bulan Lalu</p>
+										<p id="expense_bulan_lalu" class="text-sm font-medium text-black dark:text-white">
+
+										</p>
 								</div>
 								<!-- Total Revenue Semua -->
 								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium text-black dark:text-white">Total Expenses</p>
+									<p class="text-sm font-medium">Total Expenses</p>
 										<p id="total_expense_all" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
 								</div>
 								<div class="flex items-center justify-between gap-1">
@@ -199,13 +203,13 @@
 			                <div class="mt-5.5 flex flex-col gap-1.5">
 									<!-- Total Revenue Bulan Ini -->
 									<div class="flex items-center justify-between gap-1">
-										<p class="text-sm font-medium text-black dark:text-white">Gross Profit</p>
+										<p class="text-sm font-medium">Gross Profit</p>
 											<p id="total_gross_profit" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
 									</div>
 
 									<!-- Pemasukan Bulan Lalu -->
 									<div class="flex items-center justify-between gap-1">
-										<p class="text-sm font-medium text-black dark:text-white">Net Profit</p>
+										<p class="text-sm font-medium">Net Profit</p>
 											<p id="total_net_profit" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
 									</div>
 							</div>
