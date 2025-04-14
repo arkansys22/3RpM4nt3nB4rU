@@ -23,13 +23,10 @@ class Aspanel extends CI_Controller {
 				$month_last = date('Y-m', strtotime('last month'));
 				$data['client_bulan_ini'] = $this->Clients_model->get_clients_by_month(date('Y-m'));  // Client bulan ini
 				$data['client_bulan_lalu'] = $this->Clients_model->get_clients_by_month(date('Y-m', strtotime('last month'))); // Client bulan lalu
+				$data['client_bulan_depan'] = $this->Clients_model->get_clients_by_month(date('Y-m', strtotime('next month'))); // Client bulan lalu
 				$data['total_client'] = $this->Clients_model->get_total_clients(); // Total client
 
 				
-				
-
-
-
 				// Revenue bulan ini
 				$data['revenue_bulan_ini'] = $this->db->select_sum('total_paid')
 					->where('DATE_FORMAT(date, "%Y-%m") =', $month_now)
@@ -159,12 +156,13 @@ class Aspanel extends CI_Controller {
 			} else if ($this->session->level == '7') {
 				cek_session_akses_staff('panel', $this->session->id_session);
 
-				// Fetch event data
-				$this->db->select('project.event_date, project.location, project.client_name, crew_projects.role, crew_projects.project_id');
-				$this->db->from('user');
-				$this->db->join('crew_projects', 'user.crews_idsession = crew_projects.crew_id');
-				$this->db->join('project', 'crew_projects.project_id = project.id_session');
-				$this->db->where('user.id_session', $this->session->id_session);
+					// Fetch event data
+					$this->db->select('project.event_date, project.location, project.client_name, crew_projects.role, crew_projects.project_id');
+					$this->db->from('user');
+					$this->db->join('crew_projects', 'user.crews_idsession = crew_projects.crew_id');
+					$this->db->join('project', 'crew_projects.project_id = project.id_session');
+					$this->db->where('user.id_session', $this->session->id_session);
+					$this->db->order_by('project.event_date', 'DESC');
 					$events = $this->db->get()->result_array();
 
 				// Pass data to the view
@@ -625,6 +623,7 @@ class Aspanel extends CI_Controller {
 	    $revenue_bulan_ini = $this->db->select_sum('total_paid')
 	        ->where('DATE(date) >=', $date_start_of_month)
 	        ->where('DATE(date) <=', $date_now)
+	        ->where('status', 'Paid')
 	        ->get('payment')
 	        ->row();
 
@@ -632,11 +631,13 @@ class Aspanel extends CI_Controller {
 	    $revenue_bulan_lalu = $this->db->select_sum('total_paid')
 	        ->where('DATE(date) >=', $date_start_of_last_month)
 	        ->where('DATE(date) <=', $date_end_of_last_month)
+	        ->where('status', 'Paid')
 	        ->get('payment')
 	        ->row();
 
 	    // Total revenue all
 	    $total_revenue_all = $this->db->select_sum('total_paid')
+	    	->where('status', 'Paid')
 	        ->get('payment')
 	        ->row();
 

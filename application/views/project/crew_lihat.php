@@ -40,6 +40,19 @@
                 <label class="block mb-2 text-black dark:text-white"><strong>Tanggal Pernikahan : </strong><?= hari($project->event_date) ?>, <?= tgl_indo($project->event_date) ?></label>
                 <label class="block mb-2 text-black dark:text-white"><strong>Lokasi : </strong><?= $project->location ?></label>
 
+                <?php  if(!empty($clients->wedding_ceremony)){ ?>
+                  <?php  if($project->religion == 'Islam'){ ?>
+                  <a href="<?= $clients->wedding_ceremony ?>" target="_blank" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Lihat Susunan Akad</a>
+                  <?php }else{?>
+                  <a href="<?= $clients->wedding_ceremony ?>" target="_blank" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Lihat Susunan Pemberkatan</a>
+                  <?php }?>      
+
+                <?php }?>
+                <?php  if(!empty($clients->reception_afterward)){ ?>
+                <a href="<?= $clients->reception_afterward ?>" target="_blank" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Lihat Susunan Resepsi</a>
+                <?php }?>
+
+
                 <?php
                 // Ensure $roles is defined
                 $roles = [
@@ -53,7 +66,7 @@
                 ];
                 ?>
 
-                <h2 class="text-lg font-bold mb-2">Job Description</h2>
+                <h2 class="text-lg font-bold mb-2"><br>Job Description</h2>
                 <div class="border p-4 mb-4 text-black dark:text-white">
                     <?php 
                     $user_role = null;
@@ -74,7 +87,7 @@
                             Lihat Jobdesc
                         </button>
                     <?php else: ?>
-                        <p class="text-red-500 font-semibold">Anda tidak terdaftar sebagai crew dalam proyek ini.</p>
+                        <p class="text-red-500 font-semibold">Job description belum tersedia</p>
                     <?php endif; ?>
                 </div>
 

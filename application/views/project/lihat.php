@@ -37,7 +37,12 @@
               <form action="<?= site_url('project/update/'.$project->id_session) ?>" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
                 <label class="block mb-2 text-black dark:text-white"><strong>Nama Project : </strong><?= $project->project_name ?></label>        
                 <label class="block mb-2 text-black dark:text-white"><strong>Agama : </strong><?= $project->religion ?></label>        
-                <label class="block mb-2 text-black dark:text-white"><strong>Value : </strong><?= "Rp " . number_format($project->value, 0, ',', '.'); ?></label>
+                <label class="block mb-2 text-black dark:text-white"><strong>Nilai Project : </strong><?= "Rp " . number_format($project->value, 0, ',', '.'); ?></label>
+                <label class="block mb-2 text-black dark:text-white"><strong>Telah Dibayar : </strong><?= "Rp " . number_format($paid->total_paid, 0, ',', '.'); ?></label>
+
+                <?php $unpaid = $project->value - $paid->total_paid ?>
+                <label class="block mb-2 text-black dark:text-white"><strong>Kurang Bayar : </strong><?= "Rp " . number_format($unpaid, 0, ',', '.'); ?></label>
+
                 <label class="block mb-2 text-black dark:text-white"><strong>Tanggal Pernikahan : </strong><?= hari($project->event_date) ?>, <?= tgl_indo($project->event_date) ?></label>
                 <label class="block mb-2 text-black dark:text-white"><strong>Lokasi : </strong><?= $project->location ?></label>
                 <label class="block mb-2 text-black dark:text-white"><strong>Detail : </strong><?= $project->detail ?></label>
@@ -246,7 +251,7 @@
 </div>
 
                 <a href="<?= site_url('project/edit/'. $project->id_session) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Edit Project</a>
-                <a href="javascript:history.back()" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a>
+                <a href="<?= site_url('project') ?>" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a>
               </form>
 
               <!-- ====== Table Three Start -->

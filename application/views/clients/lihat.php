@@ -149,7 +149,11 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                     <a href="<?= site_url('naskah/terima_kasih2/'. $clients->id_session) ?>" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Ucapan Terimakasih</a>
                     <a href="<?= site_url('naskah/data_pengantin/'. $clients->id_session) ?>" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Data Pengantin</a>
                     <a href="<?= site_url('naskah/list_vendor/'. $clients->id_session) ?>" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">List Vendor</a>
+                    <?php  if($project->religion == 'Islam'){ ?>
                     <a href="<?= $clients->wedding_ceremony ?>" target="_blank" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Susunan Akad</a>
+                    <?php }else{?>
+                    <a href="<?= $clients->wedding_ceremony ?>" target="_blank" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Susunan Pemberkatan</a>
+                    <?php }?> 
                     <a href="<?= $clients->reception_afterward ?>" target="_blank" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Susunan Resepsi</a>
                     <a href="<?= $clients->list_photo ?>" target="_blank" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">List Foto</a>
                     <a href="<?= site_url('clients/c_lihat/'. $clients->id_session) ?>" target="_blank" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Lihat Profile</a>
