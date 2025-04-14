@@ -1,3 +1,4 @@
+<?php date_default_timezone_set('Asia/Jakarta'); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
