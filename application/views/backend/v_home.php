@@ -55,7 +55,7 @@
 					  <div class="swiper-slide border-r border-stroke px-10 last:border-r-0 dark:border-strokedark">
 						<div class="flex items-center justify-between">
 							<div class="flex items-center gap-2.5">
-								<h4 class="text-xl font-bold text-black dark:text-white">
+								<h4 class="text-xl font-bold">
 									Clients
 								</h4>
 							</div>
@@ -65,7 +65,7 @@
 							<!-- Client Bulan Ini -->
 							<div class="flex items-center justify-between gap-1">
 								<p class="text-sm font-medium">Client Bulan Ini</p>
-								<p class="text-sm font-medium text-black dark:text-white">
+								<p class="text-sm font-medium">
 									<?= count($client_bulan_ini); ?>
 								</p>
 							</div>
@@ -73,14 +73,14 @@
 							<!-- Client Bulan Lalu -->
 							<div class="flex items-center justify-between gap-1">
 								<p class="text-sm font-medium">Client Bulan Lalu</p>
-								<p class="text-sm font-medium text-black dark:text-white">
+								<p class="text-sm font-medium">
 									<?= count($client_bulan_lalu); ?>
 								</p>
 							</div>
 
 							<div class="flex items-center justify-between gap-1">
 								<p class="text-sm font-medium">Client Bulan Depan</p>
-								<p class="text-sm font-medium text-black dark:text-white">
+								<p class="text-sm font-medium">
 									<?= count($client_bulan_lalu); ?>
 								</p>
 							</div>
@@ -88,14 +88,14 @@
 							<!-- Total Client -->
 							<div class="flex items-center justify-between gap-1">
 								<p class="text-sm font-medium">Total Semua Client</p>
-								<p class="text-sm font-medium text-black dark:text-white">
+								<p class="text-sm font-medium">
 									<?= $total_client; ?>
 								</p>
 							</div>
 							<div class="flex items-center justify-between gap-1">
 								<p class="text-sm font-medium">
 									<a href="#">
-				                        <span class="text-sm font-medium text-primary dark:text-white">
+				                        <span class="text-sm font-medium text-primary">
 				                          Lebih Lengkap >>
 				                        </span>
 				                        
