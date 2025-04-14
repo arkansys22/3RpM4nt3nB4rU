@@ -160,6 +160,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                     <a href="https://wa.me/<?= $clients->phone?>?text=Halo Kami dari Mantenbaru Organizer!%0A%0AKami%20ingin%20membagikan%20data%20profil%20pengantin%20yang%20sudah%20kami%20buat.%20Silakan%20klik%20link%20di%20bawah%20ini%20untuk%20melihat%20dan%20mengedit%20data%20sesuai%20kebutuhan.%20Anda%20bisa%20memperbarui%20informasi%20yang%20diperlukan%20agar%20data%20profil%20pengantin%20bisa%20sesuai%20dengan%20keinginan.%0A%0A<?= site_url('clients/c_lihat/'. $clients->id_session) ?>%0A%0AJika%20anda%20membutuhkan%20username%20dan%20password%20untuk%20mengedit%20data%20sesuai%20kebutuhan,%20jangan%20ragu%20untuk%20menghubungi%20kami.%20Terima%20kasih!" target="_blank" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Share Profile</a>
                   <?php endif; ?>
               </form>
+            </div>
 
               <!-- ====== Table Three Start -->
               <div class="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default  dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1" >
@@ -238,7 +239,6 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
       <!-- ===== Main Content End ===== -->
     </div>
     <!-- ===== Content Area End ===== -->
-  </div>
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
 </body>
 </html>
