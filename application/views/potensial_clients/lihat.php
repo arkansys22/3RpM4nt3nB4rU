@@ -94,13 +94,13 @@
                           </p>
                         </td>
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                          <p class="text-black dark:text-white"><?= hari($p->log_activity_waktu) ?>, <?= tgl_indo($p->log_activity_waktu)?></p>
+                          <p><?= hari($p->log_activity_waktu) ?>, <?= tgl_indo($p->log_activity_waktu)?></p>
                         </td>
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                         <p class="text-black dark:text-white"><?= $p->log_activity_platform ?></p>
+                         <p><?= $p->log_activity_platform ?></p>
                         </td>
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                         <p class="text-black dark:text-white"><?= $p->log_activity_ip ?></p>
+                         <p><?= $p->log_activity_ip ?></p>
                         </td>
                       </tr>
                       <?php endforeach; ?>                            
