@@ -37,12 +37,12 @@
               
               <!-- User Details Form -->
               <form action="<?= site_url('potensial-clients/update/'.$pc->id_session) ?>" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
-                <label class="block mb-2 text-black dark:text-white"><strong>Username : </strong><?= $pc->username ?></label>        
-                <label class="block mb-2 text-black dark:text-white"><strong>Nama : </strong><?= $pc->nama ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Email : </strong><?= $pc->email ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Register : </strong><?= $pc->user_post_hari ?>, <?= tgl_indo($pc->user_post_tanggal) ?> <?= $pc->user_post_jam ?></label>
+                <label class="block mb-2"><strong>Username : </strong><?= $pc->username ?></label>        
+                <label class="block mb-2"><strong>Nama : </strong><?= $pc->nama ?></label>
+                <label class="block mb-2"><strong>Email : </strong><?= $pc->email ?></label>
+                <label class="block mb-2"><strong>Register : </strong><?= $pc->user_post_hari ?>, <?= tgl_indo($pc->user_post_tanggal) ?> <?= $pc->user_post_jam ?></label>
                 <?php $user= $this->Crud_m->view_where('user', array('id_session'=> $pc->create_by))->row(); ?>           
-                <label class="block mb-2 text-black dark:text-white"><strong>Register by : </strong><?= $user->nama ?></label>              
+                <label class="block mb-2"><strong>Register by : </strong><?= $user->nama ?></label>              
 
                 <!-- Buttons -->
                 <a href="<?= site_url('user/edit/'. $pc->id_session) ?>" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Edit</a>
@@ -55,11 +55,11 @@
                   <table class="w-full table-auto">
                     <thead>
                       <tr class="bg-gray-2 text-left dark:bg-meta-4">
-                        <th class="min-w-[220px] px-4 py-4 font-medium text-black dark:text-white xl:pl-11">Author</th>
-                        <th class="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">Status</th>
-                        <th class="min-w-[120px] px-4 py-4 font-medium text-black dark:text-white">Time</th>
-                        <th class="px-4 py-4 font-medium text-black dark:text-white">Device</th>
-                        <th class="px-4 py-4 font-medium text-black dark:text-white">IP</th>
+                        <th class="min-w-[220px] px-4 py-4 font-medium xl:pl-11">Author</th>
+                        <th class="min-w-[150px] px-4 py-4 font-medium">Status</th>
+                        <th class="min-w-[120px] px-4 py-4 font-medium">Time</th>
+                        <th class="px-4 py-4 font-medium">Device</th>
+                        <th class="px-4 py-4 font-medium">IP</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -68,7 +68,7 @@
                         <?php $company= $this->Crud_m->view_where('user', array('id_session'=> $p->log_activity_user_id))->row(); ?>
                         <?php $level= $this->Crud_m->view_where('user_level', array('user_level_id'=> $company->level))->row(); ?>
                         <td class="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
-                          <h5 class="font-medium text-black dark:text-white"><?= $company->username ?></h5>
+                          <h5 class="font-medium"><?= $company->username ?></h5>
                           <p class="text-sm"><?= $level->user_level_nama ?></p>
                         </td>
                         
@@ -77,15 +77,15 @@
                         </td>
                         
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                          <p class="text-black dark:text-white"><?= hari($p->log_activity_waktu) ?>, <?= tgl_indo($p->log_activity_waktu)?></p>
+                          <p><?= hari($p->log_activity_waktu) ?>, <?= tgl_indo($p->log_activity_waktu)?></p>
                         </td>
                         
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                          <p class="text-black dark:text-white"><?= $p->log_activity_platform ?></p>
+                          <p><?= $p->log_activity_platform ?></p>
                         </td>
                         
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                          <p class="text-black dark:text-white"><?= $p->log_activity_ip ?></p>
+                          <p><?= $p->log_activity_ip ?></p>
                         </td>
                       </tr>
                       <?php endforeach; ?>
