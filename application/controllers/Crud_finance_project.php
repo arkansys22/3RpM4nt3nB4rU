@@ -148,6 +148,7 @@ class Crud_finance_project extends CI_Controller {
             'log_activity_modul' => 'project/create',
             'log_activity_document_no' => $id_session,
             'log_activity_status' => 'Tambah Project',
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
             'log_activity_ip'=> $this->input->ip_address()
             
@@ -308,6 +309,7 @@ class Crud_finance_project extends CI_Controller {
             'log_activity_document_no' => $id_session,
             'log_activity_status' => $status,
             'log_activity_platform'=> $agent,
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_ip'=> $this->input->ip_address()
             
         );
@@ -386,6 +388,7 @@ class Crud_finance_project extends CI_Controller {
             'log_activity_document_no' => $id_session,
             'log_activity_status' => 'Restore',
             'log_activity_platform'=> $agent,
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_ip'=> $this->input->ip_address()
             
         );

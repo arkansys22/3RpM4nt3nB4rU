@@ -83,6 +83,7 @@ class crud_finance_operational extends CI_Controller {
             'log_activity_document_no' => $id_session2,
             'log_activity_status' => 'Tambah Transaksi Operational',
             'log_activity_platform'=> $agent,
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_ip'=> $this->input->ip_address()            
         );
         $this->Users2_model->insert_log_activity($data_log);   
@@ -182,6 +183,7 @@ class crud_finance_operational extends CI_Controller {
             'log_activity_modul' => 'user/edit',
             'log_activity_document_no' => $id_session,
             'log_activity_status' => $status,
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
             'log_activity_ip'=> $this->input->ip_address()
             
@@ -223,6 +225,7 @@ class crud_finance_operational extends CI_Controller {
             'log_activity_modul' => 'user/delete',
             'log_activity_document_no' => $id_session,
             'log_activity_status' => 'Hapus',
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
             'log_activity_ip'=> $this->input->ip_address()
             
@@ -270,6 +273,7 @@ class crud_finance_operational extends CI_Controller {
             'log_activity_modul' => 'user/restore',
             'log_activity_document_no' => $id_session,
             'log_activity_status' => 'Restore',
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
             'log_activity_ip'=> $this->input->ip_address()
             
@@ -312,6 +316,7 @@ class crud_finance_operational extends CI_Controller {
                     'log_activity_modul' => 'finance-operational/permanent',
                     'log_activity_document_no' => $id_session,
                     'log_activity_status' => 'Hapus Permanent',
+                    'log_activity_waktu' => date('Y-m-d H:i:s'),
                     'log_activity_platform'=> $agent,
                     'log_activity_ip'=> $this->input->ip_address()
                     

@@ -289,6 +289,7 @@ class crud_potensial_clients extends CI_Controller {
             'log_activity_modul' => 'potensial-clients/create',
             'log_activity_document_no' => $id_session2,
             'log_activity_status' => 'Tambah Potensial Klien ',
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
             'log_activity_ip'=> $this->input->ip_address()
             
@@ -445,6 +446,7 @@ class crud_potensial_clients extends CI_Controller {
             'log_activity_modul' => 'potensial-clients/delete',
             'log_activity_document_no' => $id_session,
             'log_activity_status' => 'Hapus',
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
             'log_activity_ip'=> $this->input->ip_address()
             
@@ -517,6 +519,7 @@ class crud_potensial_clients extends CI_Controller {
             'log_activity_modul' => 'potensial-clients/restore',
             'log_activity_document_no' => $id_session,
             'log_activity_status' => 'Restore',
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
             'log_activity_ip'=> $this->input->ip_address()
             
