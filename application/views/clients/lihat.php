@@ -162,7 +162,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
               </form>
 
               <!-- ====== Table Three Start -->
-              <div class="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+              <div class="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default  dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1" >
                 <div class="max-w-full overflow-x-auto">
                   <table class="w-full table-auto">
                     <thead>
@@ -193,7 +193,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                     <tbody>
                       <?php $no = 1; foreach ($logactivity as $p): ?>
                       <tr>
-                      <?php 
+                        <?php 
                         if ($p->log_activity_user_id === 'client'): ?>
                           <td class="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
                             <h5 class="font-medium">Client</h5>
@@ -205,12 +205,11 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                           }
                           $level = $this->Crud_m->view_where('user_level', array('user_level_id' => $company->level))->row();
                         ?>
-                        <?php $level = $this->Crud_m->view_where('user_level', array('user_level_id' => $company->level))->row(); ?>
-                        <td class="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
-                          <h5 class="font-medium"><?= $company->username ?></h5>
-                          <p class="text-sm"><?= $level->user_level_nama ?></p>
-                        </td>
-                        <?php endif; ?>                        
+                          <td class="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
+                            <h5 class="font-medium"><?= $company->username ?></h5>
+                            <p class="text-sm"><?= $level->user_level_nama ?></p>
+                          </td>
+                        <?php endif; ?>
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
                           <p class="inline-flex rounded-full bg-success bg-opacity-10 px-3 py-1 text-sm font-medium text-success">
                             <?= $p->log_activity_status ?>
