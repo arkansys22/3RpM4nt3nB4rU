@@ -215,27 +215,27 @@
                             <?php endif; ?>
                         </p>
                     </div>
-                    <div class="flex gap-2">
-                        <?php if (strpos($trans->transactions_id, 'IMB') === 0): ?>
-                            <a href="<?= site_url('payment/view_invoice/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
-                               class="bg-blue-500 text-white text-sm px-2 py-1 rounded-md hover:bg-blue-600">
-                               Lihat Invoice
-                            </a>
-                        <?php elseif (strpos($trans->transactions_id, 'MBP') === 0 || strpos($trans->transactions_id, 'MBP1') === 0): ?>
-                            <a href="<?= site_url('payment/view_kwitansi/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
-                               class="bg-blue-500 text-white text-sm px-2 py-1 rounded-md hover:bg-blue-600">
-                               Lihat Kwitansi
-                            </a>
-                        <?php endif; ?>
-                        <a href="<?= site_url('payment/' . (strpos($trans->transactions_id, 'IMB') === 0 ? 'edit' : 'edit2') . '/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
-                           class="bg-green-500 text-white text-sm px-2 py-1 rounded-md hover:bg-green-600">
-                           Edit
+                    <div class="flex flex-wrap gap-2">
+                      <?php if (strpos($trans->transactions_id, 'IMB') === 0): ?>
+                        <a href="<?= site_url('payment/view_invoice/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
+                           class="bg-blue-500 text-white text-sm px-2 py-1 rounded-md hover:bg-blue-600 w-full sm:w-auto text-center">
+                           Lihat Invoice
                         </a>
-                        <a href="<?= site_url('payment/delete/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
-                           onclick="return confirm('Apakah Anda yakin ingin menghapus transaksi ini?')"
-                           class="bg-red-500 text-white text-sm px-2 py-1 rounded-md hover:bg-red-600">
-                           Hapus
+                      <?php elseif (strpos($trans->transactions_id, 'MBP') === 0 || strpos($trans->transactions_id, 'MBP1') === 0): ?>
+                        <a href="<?= site_url('payment/view_kwitansi/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
+                           class="bg-blue-500 text-white text-sm px-2 py-1 rounded-md hover:bg-blue-600 w-full sm:w-auto text-center">
+                           Lihat Kwitansi
                         </a>
+                      <?php endif; ?>
+                      <a href="<?= site_url('payment/' . (strpos($trans->transactions_id, 'IMB') === 0 ? 'edit' : 'edit2') . '/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
+                         class="bg-green-500 text-white text-sm px-2 py-1 rounded-md hover:bg-green-600 w-full sm:w-auto text-center">
+                         Edit
+                      </a>
+                      <a href="<?= site_url('payment/delete/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
+                         onclick="return confirm('Apakah Anda yakin ingin menghapus transaksi ini?')"
+                         class="bg-red-500 text-white text-sm px-2 py-1 rounded-md hover:bg-red-600 w-full sm:w-auto text-center">
+                         Hapus
+                      </a>
                     </div>
                 </div>
             </div>
