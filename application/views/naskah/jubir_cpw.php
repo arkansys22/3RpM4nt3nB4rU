@@ -22,7 +22,7 @@
 <body class="bg-gray-100 p-6">
     <div class="max-w-3xl mx-auto bg-white p-6 rounded-lg">
         <h1 class="text-xl font-bold text-center mb-4">Penerimaan Calon Pengantin Pria (Jubir CPW)</h1>
-</br></br>
+</br>
         <p class="text-lg">Bismillahirrohmanirrohim,</p>
         <p class="text-lg">Assalamu’alaikum wr.wb</p>
         <p class="indent text-lg text-justify">Yang kami hormati para sesepuh, tokoh agama, tokoh masyarakat, wabil khusus
