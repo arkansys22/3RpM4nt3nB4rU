@@ -157,6 +157,7 @@ class Crud_supplies extends CI_Controller {
             'log_activity_modul'   => 'supplies/editin',
             'log_activity_document_no' => $id_session,
             'log_activity_status'  => $status,
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
             'log_activity_ip'      => $this->input->ip_address()
         );
@@ -228,6 +229,7 @@ class Crud_supplies extends CI_Controller {
             'log_activity_modul'   => 'supplies/editout',
             'log_activity_document_no' => $id_session,
             'log_activity_status'  => $status,
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
             'log_activity_ip'      => $this->input->ip_address()
         );
@@ -289,6 +291,7 @@ class Crud_supplies extends CI_Controller {
             'log_activity_modul' => 'supplies/create',
             'log_activity_document_no' => $id_session,
             'log_activity_status' => 'Tambah Produk',
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
             'log_activity_ip'=> $this->input->ip_address()
             
@@ -409,6 +412,7 @@ class Crud_supplies extends CI_Controller {
             'log_activity_modul' => 'supplies/edit',
             'log_activity_document_no' => $id_session,
             'log_activity_status' => $status,
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
             'log_activity_ip'=> $this->input->ip_address()
         );
@@ -454,6 +458,7 @@ class Crud_supplies extends CI_Controller {
             'log_activity_modul' => 'supplies/delete',
             'log_activity_document_no' => $id_session,
             'log_activity_status' => 'Deleted',
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
             'log_activity_ip'=> $this->input->ip_address()
             
@@ -526,6 +531,7 @@ class Crud_supplies extends CI_Controller {
             'log_activity_modul' => 'supplies/restore',
             'log_activity_document_no' => $id_session,
             'log_activity_status' => 'Restore',
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
             'log_activity_ip'=> $this->input->ip_address()
             

@@ -62,6 +62,7 @@ class Client extends CI_Controller
           'log_activity_modul' => 'login',
           'log_activity_status' => 'login',
           'log_activity_platform' => $agent,
+          'log_activity_waktu' => date('Y-m-d H:i:s'),
           'log_activity_ip' => $this->input->ip_address()
         );
         $this->db->insert('log_activity', $data2);

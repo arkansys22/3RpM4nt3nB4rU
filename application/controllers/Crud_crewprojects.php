@@ -94,6 +94,7 @@ class Crud_crewprojects extends CI_Controller {
             'log_activity_modul' => 'crewproject/createlist',
             'log_activity_document_no' => $project_id,
             'log_activity_status' => 'Tambah Crew ke Project',
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
             'log_activity_ip'=> $this->input->ip_address()
             
@@ -193,6 +194,7 @@ class Crud_crewprojects extends CI_Controller {
             'log_activity_modul' => 'crewproject/updatelist',
             'log_activity_document_no' => $project_id,
             'log_activity_status' => 'Update Crew ke Project',
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
             'log_activity_ip'=> $this->input->ip_address()
             
