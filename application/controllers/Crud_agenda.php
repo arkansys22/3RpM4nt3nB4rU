@@ -52,23 +52,24 @@ class Crud_agenda extends CI_Controller {
     }    
 
     public function store(){
+        if ($this->agent->is_browser()) // Agent untuk fitur di log activity
+        {
+              $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
+        }
+        elseif ($this->agent->is_robot())
+        {
+              $agent = $this->agent->robot();
+        }
+        elseif ($this->agent->is_mobile())
+        {
+              $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
+        }
+        else
+        {
+              $agent = 'Unidentified User Agent';
+        }
     $id_session = $this->input->post('id_session');
-    if ($this->agent->is_browser()) // Agent untuk fitur di log activity
-    {
-          $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
-    }
-    elseif ($this->agent->is_robot())
-    {
-          $agent = $this->agent->robot();
-    }
-    elseif ($this->agent->is_mobile())
-    {
-          $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
-    }
-    else
-    {
-          $agent = 'Unidentified User Agent';
-    }
+    
     $data = array(
         'id_session' => $id_session,
         'brainstorming' => $this->input->post('brainstorming'),
@@ -86,7 +87,7 @@ class Crud_agenda extends CI_Controller {
     $data_log = array(
 
         'log_activity_user_id'=>$this->session->id_session,
-        'log_activity_modul' => 'potensial-clients/create',
+        'log_activity_modul' => 'agenda/create',
         'log_activity_document_no' => $id_session,
         'log_activity_status' => $status,
         'log_activity_waktu' => date('Y-m-d H:i:s'),
@@ -94,6 +95,7 @@ class Crud_agenda extends CI_Controller {
         'log_activity_ip'=> $this->input->ip_address()
         
     );
+    $this->Agenda_model->insert_log_activity($data_log);
     redirect('agenda');
 }
 
@@ -135,7 +137,7 @@ public function update($id_session){
     $data_log = array(
 
         'log_activity_user_id'=>$this->session->id_session,
-        'log_activity_modul' => 'potensial-clients/edit',
+        'log_activity_modul' => 'agenda/edit',
         'log_activity_document_no' => $id_session,
         'log_activity_status' => $status,
         'log_activity_waktu' => date('Y-m-d H:i:s'),
@@ -144,7 +146,7 @@ public function update($id_session){
         
     );
 
-    $this->Potensial_model->insert_log_activity($data_log);
+    $this->Agenda_model->insert_log_activity($data_log);
         redirect('agenda');
     }
 
