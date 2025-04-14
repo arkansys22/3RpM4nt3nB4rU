@@ -34,7 +34,7 @@
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
               <h1 class="text-2xl font-bold mb-4">Daftar Agenda</h1>
-              <div class="flex justify-between mb-4">
+              <!-- <div class="flex justify-between mb-4">
               <a href="<?= site_url('agenda/create') ?>">
                 <button class="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
@@ -49,7 +49,7 @@
                     </svg>
                 </button>
               </a>
-              </div>
+              </div> -->
 
               <!-- ====== Data Table Two Start --><br>
               <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -347,7 +347,7 @@
                     <?php if (!empty($a->brainstorming) || !empty($a->technical_meeting) || !empty($a->final_revision) || !empty($a->loading_decoration) || !empty($a->wedding_day) || !empty($a->honeymoon)) : ?>
                         <!-- Jika ada data, tampilkan tombol Edit & Hapus -->
                         <a href="<?= site_url('agenda/edit/'.$a->id_session) ?>" class="inline-flex justify-center bg-yellow-500 text-white px-2 py-1 rounded-md hover:bg-yellow-600 text-center w-full">Edit</a>
-                        <a href="<?= site_url('agenda/soft_delete/'.$a->id_session) ?>" class="inline-flex justify-center bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 min-w-full text-center" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                        <a href="<?= site_url('agenda/delete_permanent/'.$a->id_session) ?>" class="inline-flex justify-center bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 min-w-full text-center" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
                     <?php else : ?>
                         <!-- Jika kosong, tampilkan tombol Tambah -->
                         <a href="<?= site_url('agenda/create/'.$a->id_session) ?>" class="inline-flex justify-center bg-yellow-500 text-white px-2 py-1 rounded-md hover:bg-yellow-600 text-center w-full">Tambah</a>

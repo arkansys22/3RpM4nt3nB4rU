@@ -46,4 +46,9 @@ class Agenda_model extends CI_Model {
     return $this->db->get()->row(); // Pastikan pakai row(), bukan result()
 }
 
+public function delete_permanent($id_session) {
+    $this->db->where('id_session', $id_session);
+    return $this->db->delete('agenda');
+}
+
 }

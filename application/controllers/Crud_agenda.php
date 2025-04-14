@@ -90,4 +90,12 @@ public function update($id_session){
         redirect('agenda');
     }
 
+    public function delete_permanent($id_session) {
+
+        $this->Agenda_model->delete_permanent($id_session);
+
+        $this->session->set_flashdata('Success', 'Agenda berhasil dihapus');
+        redirect('agenda');
+    }
+
 }
