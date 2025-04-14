@@ -35,21 +35,21 @@
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
               <h1 class="text-2xl font-bold mb-4">Finance project</h1>
               <form action="<?= site_url('project/update/'.$project->id_session) ?>" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
-                <label class="block mb-2 text-black dark:text-white"><strong>Nama Project : </strong><?= $project->project_name ?></label>        
-                <label class="block mb-2 text-black dark:text-white"><strong>Agama : </strong><?= $project->religion ?></label> 
-                <label class="block mb-2 text-black dark:text-white"><strong>Tanggal Pernikahan : </strong><?= hari($project->event_date) ?>, <?= tgl_indo($project->event_date) ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Lokasi : </strong><?= $project->location ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Nilai Project : </strong><?= "Rp " . number_format($project->value, 0, ',', '.'); ?></label>
+                <label class="block mb-2"><strong>Nama Project : </strong><?= $project->project_name ?></label>        
+                <label class="block mb-2"><strong>Agama : </strong><?= $project->religion ?></label> 
+                <label class="block mb-2"><strong>Tanggal Pernikahan : </strong><?= hari($project->event_date) ?>, <?= tgl_indo($project->event_date) ?></label>
+                <label class="block mb-2"><strong>Lokasi : </strong><?= $project->location ?></label>
+                <label class="block mb-2"><strong>Nilai Project : </strong><?= "Rp " . number_format($project->value, 0, ',', '.'); ?></label>
 
-                <label class="block mb-2 text-black dark:text-white"><strong>Biaya Pokok : </strong>
+                <label class="block mb-2"><strong>Biaya Pokok : </strong>
                 <?= "Rp " . number_format($modal_ops->total_finance_out, 0, ',', '.'); ?>
                 </label>
 
-                <label class="block mb-2 text-black dark:text-white"><strong>Gross Profit : </strong>
+                <label class="block mb-2"><strong>Gross Profit : </strong>
 
                 <?php $profit = $project->value - $modal_ops->total_finance_out ?>
                 <?= "Rp " . number_format($profit, 0, ',', '.'); ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Detail : </strong><?= $project->detail ?></label>
+                <label class="block mb-2"><strong>Detail : </strong><?= $project->detail ?></label>
 
                 <?php
                 $roles = [
@@ -76,7 +76,7 @@
                   if (!empty($crew_project->$field)):
                     $crew = $this->Crud_m->view_where('crews', array('id_session' => $crew_project->$field))->row();
                   ?>
-                  <label class="block mb-2 text-black dark:text-white"><strong><?= $label ?> : </strong><?= $crew->crew_name ?></label>
+                  <label class="block mb-2"><strong><?= $label ?> : </strong><?= $crew->crew_name ?></label>
                   <?php 
                   endif;
                   endforeach; 
@@ -97,19 +97,19 @@
                   <table class="w-full table-auto">
                     <thead>
                       <tr class="bg-gray-2 text-left dark:bg-meta-4">
-                        <th class="px-4 py-4 font-medium text-black dark:text-white">
+                        <th class="px-4 py-4 font-medium">
                           No
                         </th>
-                        <th class="px-4 py-4 font-medium text-black dark:text-white">
+                        <th class="px-4 py-4 font-medium">
                           Date
                         </th>
-                        <th class="px-4 py-4 font-medium text-black dark:text-white">
+                        <th class="px-4 py-4 font-medium">
                           Nama Transaksi
                         </th>
-                        <th class="px-4 py-4 font-medium text-black dark:text-white">
+                        <th class="px-4 py-4 font-medium">
                           Nominal
                         </th>
-                        <th class="px-4 py-4 font-medium text-black dark:text-white">
+                        <th class="px-4 py-4 font-medium">
                            
                         </th>
                       </tr>
@@ -118,7 +118,7 @@
                       <?php $no = 1; foreach ($financeacc as $p): ?>
                       <tr>                        
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                          <p class="text-black dark:text-white"><?=$no++?></p>
+                          <p><?=$no++?></p>
                         </td>                        
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
                           <p class="inline-flex rounded-full bg-success bg-opacity-10 px-3 py-1 text-sm font-medium text-success">
@@ -126,10 +126,10 @@
                           </p>
                         </td>
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                        <p class="text-black dark:text-white"><?= $p->nama_transaksi ?></p>
+                        <p><?= $p->nama_transaksi ?></p>
                         </td>
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                         <p class="text-black dark:text-white" style="text-align: right;">Rp <?= number_format($p->nominal_transaksi, 0, ',', '.'); ?></p>
+                         <p style="text-align: right;">Rp <?= number_format($p->nominal_transaksi, 0, ',', '.'); ?></p>
                         </td>
 
                         <?php 
