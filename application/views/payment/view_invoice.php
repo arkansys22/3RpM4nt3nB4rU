@@ -72,7 +72,7 @@
         <div class="mb-6">
             <p class="text-sm"><strong>PEMBAYARAN KEPADA</strong></p>
             <p class="text-xs"><?= $project->client_name; ?></p> <!-- Menampilkan nama_client -->
-            <p class="text-xs">Untuk acara pernikahan yang rencana berlokasi di</p>
+            <p class="text-xs">Untuk acara yang rencana berlokasi di</p>
             <p class="text-xs"><?= $project->location; ?></p>
             <p class="text-xs">Waktu acara :</p>
             <p class="text-xs"><?= date('d/m/Y', strtotime($project->event_date)) ?></p>
