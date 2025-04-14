@@ -86,9 +86,11 @@
    
 
 
-                <a href="<?= site_url('finance-project/edit/'. $project->id_session) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Tambah Transaksi</a>
-                <a href="<?= site_url('finance-project/edit2/'. $project->id_session) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Tambah Crew</a>
-                <a href="javascript:history.back()" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a>
+                <div class="flex flex-wrap gap-2 mt-4">
+                  <a href="<?= site_url('finance-project/edit/' . $project->id_session) ?>" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 text-center">Tambah Transaksi</a>
+                  <a href="<?= site_url('finance-project/edit2/' . $project->id_session) ?>" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 text-center">Tambah Crew</a>
+                  <a href="javascript:history.back()" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 text-center">Kembali</a>
+                </div>
               </form>
 
               <!-- ====== Table Three Start -->
