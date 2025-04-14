@@ -348,6 +348,7 @@ class Crud_clients extends CI_Controller {
             'log_activity_status' => $status,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_ip'=> $this->input->ip_address()
             
         );
@@ -395,6 +396,7 @@ class Crud_clients extends CI_Controller {
             'log_activity_status' => 'Delete',
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_ip'=> $this->input->ip_address()
             
         );
