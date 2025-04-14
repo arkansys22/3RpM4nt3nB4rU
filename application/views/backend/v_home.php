@@ -108,7 +108,7 @@
 	                    <div class="swiper-slide border-r border-stroke px-10 last:border-r-0 dark:border-strokedark">
 							<div class="flex items-center justify-between">
 								<div class="flex items-center gap-2.5">
-									<h4 class="text-xl font-bold text-black dark:text-white">
+									<h4 class="text-xl font-bold">
 										Gross & Net Revenue
 									</h4>
 								</div>
@@ -118,22 +118,22 @@
 								<!-- Total Revenue Bulan Ini -->
 								<div class="flex items-center justify-between gap-1">
 									<p class="text-sm font-medium">Bulan Ini</p>
-										<p id="revenue_bulan_ini" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
+										<p id="revenue_bulan_ini" class="text-sm font-medium">Rp 0</p>
 								</div>
 
 								<!-- Pemasukan Bulan Lalu -->
 								<div class="flex items-center justify-between gap-1">
 									<p class="text-sm font-medium">Bulan Lalu</p>
-										<p id="revenue_bulan_lalu" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
+										<p id="revenue_bulan_lalu" class="text-sm font-medium">Rp 0</p>
 								</div>
 								<!-- Total Revenue Semua -->
 								<div class="flex items-center justify-between gap-1">
 									<p class="text-sm font-medium">Total Gross</p>
-										<p id="total_revenue_all" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
+										<p id="total_revenue_all" class="text-sm font-medium">Rp 0</p>
 								</div>
 								<div class="flex items-center justify-between gap-1">
 									<p class="text-sm font-medium">Total Net</p>
-										<p id="total_net_revenue" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
+										<p id="total_net_revenue" class="text-sm font-medium">Rp 0</p>
 								</div>
 								<div class="flex items-center justify-between gap-1">
 									<p class="text-sm font-medium">
@@ -151,7 +151,7 @@
 	                      	<div class="flex items-center justify-between">
 		                        <div class="flex items-center gap-2.5">
 		                          <h4
-		                            class="text-xl font-bold text-black dark:text-white"
+		                            class="text-xl font-bold"
 		                          >
 		                            Expenses 
 		                          </h4>
@@ -161,7 +161,7 @@
 								<!-- Total Revenue Bulan Ini -->
 								<div class="flex items-center justify-between gap-1">
 									<p class="text-sm font-medium">Bulan Ini</p>
-										<p id="expense_bulan_ini" class="text-sm font-medium text-black dark:text-white">
+										<p id="expense_bulan_ini" class="text-sm font-medium">
 
 										</p>
 								</div>
@@ -169,14 +169,14 @@
 								<!-- Pemasukan Bulan Lalu -->
 								<div class="flex items-center justify-between gap-1">
 									<p class="text-sm font-medium">Bulan Lalu</p>
-										<p id="expense_bulan_lalu" class="text-sm font-medium text-black dark:text-white">
+										<p id="expense_bulan_lalu" class="text-sm font-medium">
 
 										</p>
 								</div>
 								<!-- Total Revenue Semua -->
 								<div class="flex items-center justify-between gap-1">
 									<p class="text-sm font-medium">Total Expenses</p>
-										<p id="total_expense_all" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
+										<p id="total_expense_all" class="text-sm font-medium">Rp 0</p>
 								</div>
 								<div class="flex items-center justify-between gap-1">
 									<p class="text-sm font-medium">
@@ -195,7 +195,7 @@
 	                    <div class="swiper-slide border-r border-stroke px-10 last:border-r-0 dark:border-strokedark">
 	                      	<div class="flex items-center justify-between">
 		                        <div class="flex items-center gap-2.5">
-		                          <h4 class="text-xl font-bold text-black dark:text-white">
+		                          <h4 class="text-xl font-bold">
 		                            Profit
 		                          </h4>
 		                        </div>		                        
@@ -204,13 +204,13 @@
 									<!-- Total Revenue Bulan Ini -->
 									<div class="flex items-center justify-between gap-1">
 										<p class="text-sm font-medium">Gross Profit</p>
-											<p id="total_gross_profit" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
+											<p id="total_gross_profit" class="text-sm font-medium">Rp 0</p>
 									</div>
 
 									<!-- Pemasukan Bulan Lalu -->
 									<div class="flex items-center justify-between gap-1">
 										<p class="text-sm font-medium">Net Profit</p>
-											<p id="total_net_profit" class="text-sm font-medium text-black dark:text-white">Rp 0</p>
+											<p id="total_net_profit" class="text-sm font-medium">Rp 0</p>
 									</div>
 							</div>
 	                    </div>                  
