@@ -35,17 +35,17 @@
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
               <h1 class="text-2xl font-bold mb-4">Lihat project</h1>
               <form action="<?= site_url('project/update/'.$project->id_session) ?>" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
-                <label class="block mb-2 text-black dark:text-white"><strong>Nama Project : </strong><?= $project->project_name ?></label>        
-                <label class="block mb-2 text-black dark:text-white"><strong>Agama : </strong><?= $project->religion ?></label>        
-                <label class="block mb-2 text-black dark:text-white"><strong>Nilai Project : </strong><?= "Rp " . number_format($project->value, 0, ',', '.'); ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Telah Dibayar : </strong><?= "Rp " . number_format($paid->total_paid, 0, ',', '.'); ?></label>
+                <label class="block mb-2"><strong>Nama Project : </strong><?= $project->project_name ?></label>        
+                <label class="block mb-2"><strong>Agama : </strong><?= $project->religion ?></label>        
+                <label class="block mb-2"><strong>Nilai Project : </strong><?= "Rp " . number_format($project->value, 0, ',', '.'); ?></label>
+                <label class="block mb-2"><strong>Telah Dibayar : </strong><?= "Rp " . number_format($paid->total_paid, 0, ',', '.'); ?></label>
 
                 <?php $unpaid = $project->value - $paid->total_paid ?>
-                <label class="block mb-2 text-black dark:text-white"><strong>Kurang Bayar : </strong><?= "Rp " . number_format($unpaid, 0, ',', '.'); ?></label>
+                <label class="block mb-2"><strong>Kurang Bayar : </strong><?= "Rp " . number_format($unpaid, 0, ',', '.'); ?></label>
 
-                <label class="block mb-2 text-black dark:text-white"><strong>Tanggal Pernikahan : </strong><?= hari($project->event_date) ?>, <?= tgl_indo($project->event_date) ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Lokasi : </strong><?= $project->location ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Detail : </strong><?= $project->detail ?></label>
+                <label class="block mb-2"><strong>Tanggal Pernikahan : </strong><?= hari($project->event_date) ?>, <?= tgl_indo($project->event_date) ?></label>
+                <label class="block mb-2"><strong>Lokasi : </strong><?= $project->location ?></label>
+                <label class="block mb-2"><strong>Detail : </strong><?= $project->detail ?></label>
 
                 <?php
                 $roles = [
@@ -72,7 +72,7 @@
                   if (!empty($crew_project->$field)):
                     $crew = $this->Crud_m->view_where('crews', array('id_session' => $crew_project->$field))->row();
                   ?>
-                  <label class="block mb-2 text-black dark:text-white"><strong><?= $label ?> : </strong><?= $crew->crew_name ?></label>
+                  <label class="block mb-2"><strong><?= $label ?> : </strong><?= $crew->crew_name ?></label>
                   <?php 
                   endif;
                   endforeach; 
@@ -81,12 +81,12 @@
 
                 <h2 class="text-lg font-bold mb-2">List Crew</h2>
 
-                <div class="border p-4 mb-4 text-black dark:text-white">
+                <div class="border p-4 mb-4">
                     <?php if (!empty($crew_list)): ?>
                         <?php foreach ($crew_list as $crew): ?>
                             <div class="mb-2 flex items-center justify-between border-b pb-2">
                                 <div>
-                                    <p class='text-black dark:text-white font-medium'>
+                                    <p class='font-medium'>
                                         <strong><?= htmlspecialchars($crew->role) ?>:</strong> 
                                         <?= htmlspecialchars($crew->crew_name) ?>
                                     </p>
@@ -94,14 +94,14 @@
                                 <div class="flex gap-2">
                                     <!-- Edit Button -->
                                     <a href="<?= site_url('crewproject/editlist/' . $crew->id_session . '/' . $crew->crew_id) ?>" 
-                                       class="bg-green-500 text-white text-sm px-2 py-1 rounded-md hover:bg-green-600">
+                                       class="bg-green-500 text-sm px-2 py-1 rounded-md hover:bg-green-600">
                                        Edit
                                     </a>
 
                                     <!-- Delete Button -->
                                     <a href="<?= site_url('crewproject/delete/' . $crew->id_session) ?>" 
                                        onclick="return confirm('Apakah Anda yakin ingin menghapus crew ini?')"
-                                       class="bg-red-500 text-white text-sm px-2 py-1 rounded-md hover:bg-red-600">
+                                       class="bg-red-500 text-sm px-2 py-1 rounded-md hover:bg-red-600">
                                        Hapus
                                     </a>
                                 </div>
@@ -113,14 +113,14 @@
 
                     <!-- Add Crew Button -->
                     <a href="<?= site_url('crewproject/createlist/' . $project->id_session) ?>" 
-                       class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
+                       class="mt-2 bg-blue-500 px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
                        Tambah Crew
                     </a>
                 </div>
 
     <h2 class="text-lg font-bold mb-2">Vendor</h2>
 
-    <div class="border p-4 mb-4 text-black dark:text-white">
+    <div class="border p-4 mb-4">
     <?php
     // Tentukan urutan yang diinginkan
     $type_order = [
@@ -146,7 +146,7 @@
         <?php foreach ($vendors as $vendor): ?>
             <div class="mb-2 flex items-center justify-between border-b pb-2">
                 <div>
-                    <p class='text-black dark:text-white font-medium'>
+                    <p class='font-medium'>
                         <strong><?= htmlspecialchars($vendor->type) ?>:</strong> 
                         <?= htmlspecialchars($vendor->vendor) ?>
                     </p>
@@ -154,14 +154,14 @@
                 <div class="flex gap-2">
                     <!-- Tombol Edit -->
                     <a href="<?= site_url('crud_vendor/edit/' . $vendor->id_session . '/' . $vendor->vendor_id) ?>" 
-                       class="bg-green-500 text-white text-sm px-2 py-1 rounded-md hover:bg-green-600">
+                       class="bg-green-500 text-sm px-2 py-1 rounded-md hover:bg-green-600">
                        Edit
                     </a>
 
                     <!-- Tombol Hapus -->
                     <a href="<?= site_url('crud_vendor/delete/' . $vendor->id_session . '/' . $vendor->vendor_id) ?>" 
                        onclick="return confirm('Apakah Anda yakin ingin menghapus vendor ini?')"
-                       class="bg-red-500 text-white text-sm px-2 py-1 rounded-md hover:bg-red-600">
+                       class="bg-red-500 text-sm px-2 py-1 rounded-md hover:bg-red-600">
                        Hapus
                     </a>
                 </div>
@@ -173,18 +173,18 @@
 
     <!-- Tombol Tambah Vendor -->
     <a href="<?= site_url('crud_vendor/create/' . $project->id_session) ?>" 
-       class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
+       class="mt-2 bg-blue-500 px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
        Tambah Vendor
     </a>
 </div>
 
 <h2 class="text-lg font-bold mb-2">Daftar Pembayaran</h2>
 
-<div class="border p-4 mb-4 text-black dark:text-white">
+<div class="border p-4 mb-4">
     <?php if (empty($payment)): ?>
         <p class="text-red-500 font-semibold">Belum ada transaksi.</p>
         <a href="<?= site_url('payment/createinv/' . $project->id_session) ?>" 
-           class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
+           class="mt-2 bg-blue-500 px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
            Tambah Invoice
         </a>
     <?php else: ?>
@@ -198,7 +198,7 @@
                 </h3>
                 <div class="flex items-center justify-between border-b pb-2">
                     <div>
-                        <p class="text-black dark:text-white font-medium">
+                        <p class="font-medium">
                             <strong>Transaksi ID:</strong> <?= htmlspecialchars($trans->transactions_id) ?><br>
                             <strong>Total Tagihan:</strong> 
                             <?php if (strpos($trans->transactions_id, 'IMB') === 0): ?>
@@ -218,22 +218,22 @@
                     <div class="flex gap-2">
                         <?php if (strpos($trans->transactions_id, 'IMB') === 0): ?>
                             <a href="<?= site_url('payment/view_invoice/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
-                               class="bg-blue-500 text-white text-sm px-2 py-1 rounded-md hover:bg-blue-600">
+                               class="bg-blue-500 text-sm px-2 py-1 rounded-md hover:bg-blue-600">
                                Lihat Invoice
                             </a>
                         <?php elseif (strpos($trans->transactions_id, 'MBP') === 0 || strpos($trans->transactions_id, 'MBP1') === 0): ?>
                             <a href="<?= site_url('payment/view_kwitansi/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
-                               class="bg-blue-500 text-white text-sm px-2 py-1 rounded-md hover:bg-blue-600">
+                               class="bg-blue-500 text-sm px-2 py-1 rounded-md hover:bg-blue-600">
                                Lihat Kwitansi
                             </a>
                         <?php endif; ?>
                         <a href="<?= site_url('payment/' . (strpos($trans->transactions_id, 'IMB') === 0 ? 'edit' : 'edit2') . '/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
-                           class="bg-green-500 text-white text-sm px-2 py-1 rounded-md hover:bg-green-600">
+                           class="bg-green-500 text-sm px-2 py-1 rounded-md hover:bg-green-600">
                            Edit
                         </a>
                         <a href="<?= site_url('payment/delete/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
                            onclick="return confirm('Apakah Anda yakin ingin menghapus transaksi ini?')"
-                           class="bg-red-500 text-white text-sm px-2 py-1 rounded-md hover:bg-red-600">
+                           class="bg-red-500 text-sm px-2 py-1 rounded-md hover:bg-red-600">
                            Hapus
                         </a>
                     </div>
@@ -244,14 +244,14 @@
 
     <?php if (!empty($has_invoice)): ?>
         <a href="<?= site_url('payment/createkwt/' . $project->id_session . '/' . $has_invoice->transactions_id) ?>" 
-           class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
+           class="mt-2 bg-blue-500 px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
            Tambah Kwitansi
         </a>
     <?php endif; ?>
 </div>
 
-                <a href="<?= site_url('project/edit/'. $project->id_session) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Edit Project</a>
-                <a href="<?= site_url('project') ?>" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a>
+                <a href="<?= site_url('project/edit/'. $project->id_session) ?>" class="ml-2 bg-green-500 px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Edit Project</a>
+                <a href="<?= site_url('project') ?>" class="ml-2 bg-gray-500 px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a>
               </form>
 
               <!-- ====== Table Three Start -->
@@ -261,24 +261,24 @@
                     <thead></thead>
                       <tr class="bg-gray-2 text-left dark:bg-meta-4">
                         <th
-                          class="min-w-[220px] px-4 py-4 font-medium text-black dark:text-white xl:pl-11"
+                          class="min-w-[220px] px-4 py-4 font-medium xl:pl-11"
                         >
                           Author
                         </th>
                         <th
-                          class="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white"
+                          class="min-w-[150px] px-4 py-4 font-medium"
                         >
                           Status
                         </th>
                         <th
-                          class="min-w-[120px] px-4 py-4 font-medium text-black dark:text-white"
+                          class="min-w-[120px] px-4 py-4 font-medium"
                         >
                           Time
                         </th>
-                        <th class="px-4 py-4 font-medium text-black dark:text-white">
+                        <th class="px-4 py-4 font-medium">
                           Device
                         </th>
-                        <th class="px-4 py-4 font-medium text-black dark:text-white">
+                        <th class="px-4 py-4 font-medium">
                           IP
                         </th>
                       </tr>
@@ -289,7 +289,7 @@
                         <?php 
                         if ($p->log_activity_user_id === 'client'): ?>
                           <td class="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
-                            <h5 class="font-medium text-black dark:text-white">Client</h5>
+                            <h5 class="font-medium">Client</h5>
                           </td>
                         <?php else: 
                           $company = $this->Crud_m->view_where('user', array('client_idsession' => $p->log_activity_user_id))->row();
@@ -299,7 +299,7 @@
                           $level = $this->Crud_m->view_where('user_level', array('user_level_id' => $company->level))->row();
                         ?>
                           <td class="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
-                            <h5 class="font-medium text-black dark:text-white"><?= $company->username ?></h5>
+                            <h5 class="font-medium"><?= $company->username ?></h5>
                             <p class="text-sm"><?= $level->user_level_nama ?></p>
                           </td>
                         <?php endif; ?>
@@ -309,13 +309,13 @@
                           </p>
                         </td>
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                        <p class="text-black dark:text-white"><?= hari($p->log_activity_waktu) ?>, <?= tgl_indo($p->log_activity_waktu)?></p>
+                        <p><?= hari($p->log_activity_waktu) ?>, <?= tgl_indo($p->log_activity_waktu)?></p>
                         </td>
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                         <p class="text-black dark:text-white"><?= $p->log_activity_platform ?></p>
+                         <p><?= $p->log_activity_platform ?></p>
                         </td>
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                         <p class="text-black dark:text-white"><?= $p->log_activity_ip ?></p>
+                         <p><?= $p->log_activity_ip ?></p>
                         </td>
                       </tr>
                       <?php endforeach; ?>                            
