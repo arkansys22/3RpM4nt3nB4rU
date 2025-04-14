@@ -151,9 +151,39 @@ public function update($id_session){
     }
 
     public function delete_permanent($id_session) {
-
+        if ($this->agent->is_browser()) // Agent untuk fitur di log activity
+        {
+              $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
+        }
+        elseif ($this->agent->is_robot())
+        {
+              $agent = $this->agent->robot();
+        }
+        elseif ($this->agent->is_mobile())
+        {
+              $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
+        }
+        else
+        {
+              $agent = 'Unidentified User Agent';
+        }
         $this->Agenda_model->delete_permanent($id_session);
+        $status = 'Hapus Agenda' .$this->input->post('status');
 
+
+        $data_log = array(
+    
+            'log_activity_user_id'=>$this->session->id_session,
+            'log_activity_modul' => 'agenda/delete',
+            'log_activity_document_no' => $id_session,
+            'log_activity_status' => $status,
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
+            'log_activity_platform'=> $agent,
+            'log_activity_ip'=> $this->input->ip_address()
+            
+        );
+    
+        $this->Agenda_model->insert_log_activity($data_log);
         $this->session->set_flashdata('Success', 'Agenda berhasil dihapus');
         redirect('agenda');
     }
