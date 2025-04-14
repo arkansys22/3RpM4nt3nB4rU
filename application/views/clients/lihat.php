@@ -43,92 +43,92 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
               <h1 class="text-2xl font-bold mb-4">Lihat Client</h1>
               <form action="<?= site_url('clients/update/'.$clients->id_session) ?>" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
-                <label class="block mb-2 text-black dark:text-white"><strong>Nama Client : </strong><?= $clients->client_name ?></label>        
-                <label class="block mb-2 text-black dark:text-white"><strong>Agama : </strong><?= $project->religion ?></label>        
-                <label class="block mb-2 text-black dark:text-white"><strong>Email : </strong><?= $clients->email ?></label>        
-                <label class="block mb-2 text-black dark:text-white"><strong>No HP : </strong><?= $clients->phone ?></label>
+                <label class="block mb-2"><strong>Nama Client : </strong><?= $clients->client_name ?></label>        
+                <label class="block mb-2"><strong>Agama : </strong><?= $project->religion ?></label>        
+                <label class="block mb-2"><strong>Email : </strong><?= $clients->email ?></label>        
+                <label class="block mb-2"><strong>No HP : </strong><?= $clients->phone ?></label>
 
                 <!-- Data Mempelai Wanita -->
-                <h3 class="text-lg font-bold mt-6 mb-2 text-black dark:text-white"><strong>Data Mempelai Wanita</strong></h3>
-                <label class="block mb-2 text-black dark:text-white"><strong>Nama Lengkap : </strong><?= $clients->f_bride_fname ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Nama Panggilan : </strong><?= $clients->f_bride_cname ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Anak Keberapa : </strong><?= $clients->f_bride_nchild ?> dari <?= $clients->f_bride_hsibling ?> Bersaudara</label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Nama Lengkap Ayah : </strong><?= $clients->f_bride_fathername ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Nama Panggilan Ayah : </strong><?= $clients->f_bride_fathercname ?></label>
+                <h3 class="text-lg font-bold mt-6 mb-2"><strong>Data Mempelai Wanita</strong></h3>
+                <label class="block mb-2"><strong>Nama Lengkap : </strong><?= $clients->f_bride_fname ?></label>
+                <label class="block mb-2"><strong>Nama Panggilan : </strong><?= $clients->f_bride_cname ?></label>
+                <label class="block mb-2"><strong>Anak Keberapa : </strong><?= $clients->f_bride_nchild ?> dari <?= $clients->f_bride_hsibling ?> Bersaudara</label>
+                <label class="block mb-2"><strong>Nama Lengkap Ayah : </strong><?= $clients->f_bride_fathername ?></label>
+                <label class="block mb-2"><strong>Nama Panggilan Ayah : </strong><?= $clients->f_bride_fathercname ?></label>
                 <?php if (!empty($clients->f_bride_freplacementname)) : ?>
-                <label class="block mb-2 text-black dark:text-white"><strong>Nama Lengkap Pengganti : </strong><?= $clients->f_bride_freplacementname ?></label>
+                <label class="block mb-2"><strong>Nama Lengkap Pengganti : </strong><?= $clients->f_bride_freplacementname ?></label>
                 <?php endif; ?>
                 <?php if (!empty($clients->f_bride_freplacementcname)) : ?>
-                <label class="block mb-2 text-black dark:text-white"><strong>Nama Panggilan Pengganti : </strong><?= $clients->f_bride_freplacementcname ?></label>
+                <label class="block mb-2"><strong>Nama Panggilan Pengganti : </strong><?= $clients->f_bride_freplacementcname ?></label>
                 <?php endif; ?>
-                <label class="block mb-2 text-black dark:text-white"><strong>Nama Lengkap Ibu : </strong><?= $clients->f_bride_mothername ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Nama Panggilan Ibu : </strong><?= $clients->f_bride_mothercname ?></label>
+                <label class="block mb-2"><strong>Nama Lengkap Ibu : </strong><?= $clients->f_bride_mothername ?></label>
+                <label class="block mb-2"><strong>Nama Panggilan Ibu : </strong><?= $clients->f_bride_mothercname ?></label>
                 <?php if (!empty($clients->f_bride_mreplacementname)) : ?>
-                <label class="block mb-2 text-black dark:text-white"><strong>Nama Lengkap Pengganti : </strong><?= $clients->f_bride_mreplacementname ?></label>
+                <label class="block mb-2"><strong>Nama Lengkap Pengganti : </strong><?= $clients->f_bride_mreplacementname ?></label>
                 <?php endif; ?>
                 <?php if (!empty($clients->f_bride_mreplacementcname)) : ?>
-                <label class="block mb-2 text-black dark:text-white"><strong>Nama Panggilan Pengganti : </strong><?= $clients->f_bride_mreplacementcname ?></label>
+                <label class="block mb-2"><strong>Nama Panggilan Pengganti : </strong><?= $clients->f_bride_mreplacementcname ?></label>
                 <?php endif; ?>
-                <label class="block mb-2 text-black dark:text-white"><strong>Nama Saudara Kandung : </strong><?= nl2br($clients->f_bride_sibling) ?></label>
+                <label class="block mb-2"><strong>Nama Saudara Kandung : </strong><?= nl2br($clients->f_bride_sibling) ?></label>
 
                 <!-- Data Mempelai Pria -->
-                <h3 class="text-lg font-bold mt-6 mb-2 text-black dark:text-white"><strong>Data Mempelai Pria</strong></h3>
-                <label class="block mb-2 text-black dark:text-white"><strong>Nama Lengkap : </strong><?= $clients->m_bride_fname ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Nama Panggilan : </strong><?= $clients->m_bride_cname ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Anak Keberapa : </strong><?= $clients->m_bride_nchild ?> dari <?= $clients->m_bride_hsibling ?> Bersaudara</label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Nama Lengkap Ayah : </strong><?= $clients->m_bride_fathername ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Nama Panggilan Ayah : </strong><?= $clients->m_bride_fathercname ?></label>
+                <h3 class="text-lg font-bold mt-6 mb-2"><strong>Data Mempelai Pria</strong></h3>
+                <label class="block mb-2"><strong>Nama Lengkap : </strong><?= $clients->m_bride_fname ?></label>
+                <label class="block mb-2"><strong>Nama Panggilan : </strong><?= $clients->m_bride_cname ?></label>
+                <label class="block mb-2"><strong>Anak Keberapa : </strong><?= $clients->m_bride_nchild ?> dari <?= $clients->m_bride_hsibling ?> Bersaudara</label>
+                <label class="block mb-2"><strong>Nama Lengkap Ayah : </strong><?= $clients->m_bride_fathername ?></label>
+                <label class="block mb-2"><strong>Nama Panggilan Ayah : </strong><?= $clients->m_bride_fathercname ?></label>
                 <?php if (!empty($clients->m_bride_freplacementname)) : ?>
-                <label class="block mb-2 text-black dark:text-white"><strong>Nama Lengkap Pengganti : </strong><?= $clients->m_bride_freplacementname ?></label>
+                <label class="block mb-2"><strong>Nama Lengkap Pengganti : </strong><?= $clients->m_bride_freplacementname ?></label>
                 <?php endif; ?>
                 <?php if (!empty($clients->m_bride_freplacementcname)) : ?>
-                <label class="block mb-2 text-black dark:text-white"><strong>Nama Panggilan Pengganti : </strong><?= $clients->m_bride_freplacementcname ?></label>
+                <label class="block mb-2"><strong>Nama Panggilan Pengganti : </strong><?= $clients->m_bride_freplacementcname ?></label>
                 <?php endif; ?>
-                <label class="block mb-2 text-black dark:text-white"><strong>Nama Lengkap Ibu : </strong><?= $clients->m_bride_mothername ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Nama Panggilan Ibu : </strong><?= $clients->m_bride_mothercname ?></label>
+                <label class="block mb-2"><strong>Nama Lengkap Ibu : </strong><?= $clients->m_bride_mothername ?></label>
+                <label class="block mb-2"><strong>Nama Panggilan Ibu : </strong><?= $clients->m_bride_mothercname ?></label>
                 <?php if (!empty($clients->m_bride_mreplacementname)) : ?>
-                <label class="block mb-2 text-black dark:text-white"><strong>Nama Lengkap Pengganti : </strong><?= $clients->m_bride_mreplacementname ?></label>
+                <label class="block mb-2"><strong>Nama Lengkap Pengganti : </strong><?= $clients->m_bride_mreplacementname ?></label>
                 <?php endif; ?>
                 <?php if (!empty($clients->m_bride_mreplacementcname)) : ?>
-                <label class="block mb-2 text-black dark:text-white"><strong>Nama Panggilan Pengganti : </strong><?= $clients->m_bride_mreplacementcname ?></label>
+                <label class="block mb-2"><strong>Nama Panggilan Pengganti : </strong><?= $clients->m_bride_mreplacementcname ?></label>
                 <?php endif; ?>
-                <label class="block mb-2 text-black dark:text-white"><strong>Nama Saudara Kandung : </strong><?= nl2br($clients->m_bride_sibling) ?></label>
+                <label class="block mb-2"><strong>Nama Saudara Kandung : </strong><?= nl2br($clients->m_bride_sibling) ?></label>
 
                 <!-- Detail Pernikahan -->
-                <h3 class="text-lg font-bold mt-6 mb-2 text-black dark:text-white"><strong>Detail Pernikahan</strong></h3>
-                <label class="block mb-2 text-black dark:text-white"><strong>Tanggal Pernikahan : </strong><?= hari($clients->wedding_date) ?>, <?= tgl_indo($clients->wedding_date) ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Lokasi : </strong><?= $clients->location ?></label>
+                <h3 class="text-lg font-bold mt-6 mb-2"><strong>Detail Pernikahan</strong></h3>
+                <label class="block mb-2"><strong>Tanggal Pernikahan : </strong><?= hari($clients->wedding_date) ?>, <?= tgl_indo($clients->wedding_date) ?></label>
+                <label class="block mb-2"><strong>Lokasi : </strong><?= $clients->location ?></label>
 
                 <?php if ($islam) : ?>
-                <label class="block mb-2 text-black dark:text-white"><strong>Mahar : </strong><?= $clients->mahr ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Simbolis Seserahan : </strong><?= $clients->handover ?></label>
+                <label class="block mb-2"><strong>Mahar : </strong><?= $clients->mahr ?></label>
+                <label class="block mb-2"><strong>Simbolis Seserahan : </strong><?= $clients->handover ?></label>
 
                 <!-- Petugas dan Koordinator Akad Nikah -->
-                <h3 class="text-lg font-bold mt-6 mb-2 text-black dark:text-white"><strong>Petugas dan Koordinator</strong></h3>
-                <label class="block mb-2 text-black dark:text-white"><strong>Koordinator Keluarga Wanita : </strong><?= $clients->female_coor ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Koordinator Keluarga Pria : </strong><?= $clients->male_coor ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Jubir Keluarga Wanita : </strong><?= $clients->f_spokesman ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Jubir Keluarga Pria : </strong><?= $clients->m_spokesman ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Penghulu : </strong><?= $clients->wedding_officiant ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Wali : </strong><?= $clients->guardian ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Saksi Calon Pengantin Wanita : </strong><?= $clients->f_witness ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Saksi Calon Pengantin Pria : </strong><?= $clients->m_witness ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Qoriah/Saritilawah : </strong><?= $clients->qori ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Nasihat Pernikahan : </strong><?= $clients->advice_doa ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Pengapit Calon Pengantin Wanita dari Keluarga : </strong><?= $clients->clamp ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Pembawa Nampan Kalung Bunga Melati : </strong><?= $clients->jasmine_carrier ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Pembawa Mas Kawin/Mahar : </strong><?= $clients->mahr_carrier ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Pembawa Cincin Kawin : </strong><?= $clients->ring_carrier ?></label>
+                <h3 class="text-lg font-bold mt-6 mb-2"><strong>Petugas dan Koordinator</strong></h3>
+                <label class="block mb-2"><strong>Koordinator Keluarga Wanita : </strong><?= $clients->female_coor ?></label>
+                <label class="block mb-2"><strong>Koordinator Keluarga Pria : </strong><?= $clients->male_coor ?></label>
+                <label class="block mb-2"><strong>Jubir Keluarga Wanita : </strong><?= $clients->f_spokesman ?></label>
+                <label class="block mb-2"><strong>Jubir Keluarga Pria : </strong><?= $clients->m_spokesman ?></label>
+                <label class="block mb-2"><strong>Penghulu : </strong><?= $clients->wedding_officiant ?></label>
+                <label class="block mb-2"><strong>Wali : </strong><?= $clients->guardian ?></label>
+                <label class="block mb-2"><strong>Saksi Calon Pengantin Wanita : </strong><?= $clients->f_witness ?></label>
+                <label class="block mb-2"><strong>Saksi Calon Pengantin Pria : </strong><?= $clients->m_witness ?></label>
+                <label class="block mb-2"><strong>Qoriah/Saritilawah : </strong><?= $clients->qori ?></label>
+                <label class="block mb-2"><strong>Nasihat Pernikahan : </strong><?= $clients->advice_doa ?></label>
+                <label class="block mb-2"><strong>Pengapit Calon Pengantin Wanita dari Keluarga : </strong><?= $clients->clamp ?></label>
+                <label class="block mb-2"><strong>Pembawa Nampan Kalung Bunga Melati : </strong><?= $clients->jasmine_carrier ?></label>
+                <label class="block mb-2"><strong>Pembawa Mas Kawin/Mahar : </strong><?= $clients->mahr_carrier ?></label>
+                <label class="block mb-2"><strong>Pembawa Cincin Kawin : </strong><?= $clients->ring_carrier ?></label>
 
                 <?php else : ?>
                 <!-- Petugas dan Koordinator Resepsi -->
-                <h3 class="text-lg font-bold mt-6 mb-2 text-black dark:text-white"><strong>Petugas dan Koordinator Resepsi</strong></h3>
-                <label class="block mb-2 text-black dark:text-white"><strong>Koordinator Keluarga Wanita : </strong><?= $clients->female_coor ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Koordinator Keluarga Pria : </strong><?= $clients->male_coor ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Pendeta : </strong><?= $clients->pastor ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Gereja : </strong><?= $clients->church ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Pemimpin Doa : </strong><?= $clients->prayer ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Sambutan Pernikahan : </strong><?= $clients->wedding_speech ?></label>
+                <h3 class="text-lg font-bold mt-6 mb-2"><strong>Petugas dan Koordinator Resepsi</strong></h3>
+                <label class="block mb-2"><strong>Koordinator Keluarga Wanita : </strong><?= $clients->female_coor ?></label>
+                <label class="block mb-2"><strong>Koordinator Keluarga Pria : </strong><?= $clients->male_coor ?></label>
+                <label class="block mb-2"><strong>Pendeta : </strong><?= $clients->pastor ?></label>
+                <label class="block mb-2"><strong>Gereja : </strong><?= $clients->church ?></label>
+                <label class="block mb-2"><strong>Pemimpin Doa : </strong><?= $clients->prayer ?></label>
+                <label class="block mb-2"><strong>Sambutan Pernikahan : </strong><?= $clients->wedding_speech ?></label>
                 <?php endif; ?>
                 <div class="flex flex-wrap gap-2 mt-4">
                   <a href="<?= site_url('clients/edit/'. $clients->id_session) ?>" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">Edit</a>
@@ -168,24 +168,24 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                     <thead>
                       <tr class="bg-gray-2 text-left dark:bg-meta-4">
                         <th
-                          class="min-w-[220px] px-4 py-4 font-medium text-black dark:text-white xl:pl-11"
+                          class="min-w-[220px] px-4 py-4 font-medium xl:pl-11"
                         >
                           Author
                         </th>
                         <th
-                          class="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white"
+                          class="min-w-[150px] px-4 py-4 font-medium"
                         >
                           Status
                         </th>
                         <th
-                          class="min-w-[120px] px-4 py-4 font-medium text-black dark:text-white"
+                          class="min-w-[120px] px-4 py-4 font-medium"
                         >
                           Time
                         </th>
-                        <th class="px-4 py-4 font-medium text-black dark:text-white">
+                        <th class="px-4 py-4 font-medium">
                           Device
                         </th>
-                        <th class="px-4 py-4 font-medium text-black dark:text-white">
+                        <th class="px-4 py-4 font-medium">
                           IP
                         </th>
                       </tr>
@@ -196,7 +196,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                       <?php 
                         if ($p->log_activity_user_id === 'client'): ?>
                           <td class="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
-                            <h5 class="font-medium text-black dark:text-white">Client</h5>
+                            <h5 class="font-medium">Client</h5>
                           </td>
                         <?php else: 
                           $company = $this->Crud_m->view_where('user', array('client_idsession' => $p->log_activity_user_id))->row();
@@ -207,7 +207,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                         ?>
                         <?php $level = $this->Crud_m->view_where('user_level', array('user_level_id' => $company->level))->row(); ?>
                         <td class="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
-                          <h5 class="font-medium text-black dark:text-white"><?= $company->username ?></h5>
+                          <h5 class="font-medium"><?= $company->username ?></h5>
                           <p class="text-sm"><?= $level->user_level_nama ?></p>
                         </td>
                         <?php endif; ?>                        
@@ -217,13 +217,13 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                           </p>
                         </td>
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                        <p class="text-black dark:text-white"><?= hari($p->log_activity_waktu) ?>, <?= tgl_indo($p->log_activity_waktu)?></p>
+                        <p><?= hari($p->log_activity_waktu) ?>, <?= tgl_indo($p->log_activity_waktu)?></p>
                         </td>
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                         <p class="text-black dark:text-white"><?= $p->log_activity_platform ?></p>
+                         <p><?= $p->log_activity_platform ?></p>
                         </td>
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                         <p class="text-black dark:text-white"><?= $p->log_activity_ip ?></p>
+                         <p><?= $p->log_activity_ip ?></p>
                         </td>
                       </tr>
                       <?php endforeach; ?>                            
