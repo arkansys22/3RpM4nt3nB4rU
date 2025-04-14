@@ -150,6 +150,7 @@ class Crud_payment extends CI_Controller {
             'log_activity_modul' => 'payment/create',
             'log_activity_document_no' => $id_session,
             'log_activity_status' => 'Tambah Invoice',
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
             'log_activity_ip'=> $this->input->ip_address()
             
@@ -202,6 +203,7 @@ class Crud_payment extends CI_Controller {
             'log_activity_modul' => 'payment/create2',
             'log_activity_document_no' => $id_session,
             'log_activity_status' => 'Tambah Kwitansi',
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
             'log_activity_ip'=> $this->input->ip_address()
             
@@ -339,6 +341,7 @@ class Crud_payment extends CI_Controller {
             'log_activity_modul' => 'payment/update',
             'log_activity_document_no' => $id_session,
             'log_activity_status' => 'Edit Invoice',
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
             'log_activity_ip'=> $this->input->ip_address()
             
@@ -384,6 +387,7 @@ class Crud_payment extends CI_Controller {
             'log_activity_modul' => 'payment/update2',
             'log_activity_document_no' => $id_session,
             'log_activity_status' => 'Edit Kwitansi',
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
             'log_activity_ip'=> $this->input->ip_address()
             
