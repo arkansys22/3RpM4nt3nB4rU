@@ -109,9 +109,7 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 								<span class="greeting">Our Special Wedding Day</span>
 								
 
-								<?php $project = $this->Crud_m->view_where('project', array('id_session' => $clients->id_session))->row(); ?>
-
-								<?= $project->religion?>
+								<?php $project = $this->Crud_m->view_where('project', array('id_session' => $clients->id_session))->row(); ?>							
 
 								<?php if($project->religion === 'Islam') {?>
 
@@ -441,6 +439,9 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 							<div class="row">
 								<div class="col-lg-12 d-flex align-self-center">
 									<div class="about-content">
+
+
+								<?php if($project->religion === 'Islam') {?>
 										<?php if (!empty($clients->wedding_ceremony)) : ?>
 											<a href="<?= $clients->wedding_ceremony ?>" target="_blank" class="mybtn mybtn-bg"> 
 												<span><i class="fas fa-download"></i>Susunan Acara Akad</span> 
@@ -461,6 +462,38 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 												<span><i class="fas fa-download"></i>List Tamu/Foto</span> 
 											</a>
 										<?php endif; ?>
+								
+
+
+								<?php }elseif ($project->religion === 'Kristen'){ ?>
+										<?php if (!empty($clients->wedding_ceremony)) : ?>
+											<a href="<?= $clients->wedding_ceremony ?>" target="_blank" class="mybtn mybtn-bg"> 
+												<span><i class="fas fa-download"></i>Susunan Acara Pemberkatan</span> 
+											</a>
+										<?php endif; ?>
+										<?php if (!empty($clients->reception_afterward)) : ?>
+											<a href="<?= $clients->reception_afterward ?>" target="_blank" class="mybtn mybtn-bg"> 
+												<span><i class="fas fa-download"></i>Susunan Acara Resepsi</span> 
+											</a>
+										<?php endif; ?>
+										<?php if (!empty($clients->id_session)) : ?>
+											<a href="<?= site_url('naskah/data_pengantin/pdf/'. $clients->id_session) ?>" class="mybtn mybtn-bg"> 
+												<span><i class="fas fa-download"></i>Susunan Panitia</span> 
+											</a>
+										<?php endif; ?>
+										<?php if (!empty($clients->list_photo)) : ?>
+											<a href="<?= $clients->list_photo ?>" target="_blank" class="mybtn mybtn-bg"> 
+												<span><i class="fas fa-download"></i>List Tamu/Foto</span> 
+											</a>
+										<?php endif; ?>
+								
+
+								<?php } ?>
+
+
+
+
+										
 									</div>
 								</div>
 							</div>
