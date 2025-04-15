@@ -231,7 +231,6 @@ class Crud_supplies extends CI_Controller {
             'log_activity_status'  => $status,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_ip'      => $this->input->ip_address()
         );
     
@@ -286,15 +285,16 @@ class Crud_supplies extends CI_Controller {
     
         $this->Supplies_model->insert_stock($stock);
 
+        $product_name =  $this->input->post('product_name');
+        $status = 'Tambah Produk '.$product_name;
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
             'log_activity_modul' => 'supplies/create',
             'log_activity_document_no' => $id_session,
-            'log_activity_status' => 'Tambah Produk',
+            'log_activity_status' => $status,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_ip'=> $this->input->ip_address()
             
         );
@@ -431,49 +431,51 @@ class Crud_supplies extends CI_Controller {
     public function delete($id_session) {
 
         if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
-        
 
-        if ($this->agent->is_browser()) // Agent untuk fitur di log activity
-                {
-                      $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
-                }
-                elseif ($this->agent->is_robot())
-                {
-                      $agent = $this->agent->robot();
-                }
-                elseif ($this->agent->is_mobile())
-                {
-                      $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
-                }
-                else
-                {
-                      $agent = 'Unidentified User Agent';
-                }
-
-                $data = ['status' => 'deleted'];
-
-                $this->Supplies_model->delete_supplies($id_session);
-            
-            $data_log = array(
-
-            'log_activity_user_id'=>$this->session->id_session,
-            'log_activity_modul' => 'supplies/delete',
-            'log_activity_document_no' => $id_session,
-            'log_activity_status' => 'Deleted',
-            'log_activity_waktu' => date('Y-m-d H:i:s'),
-            'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
-            
-        );
-
-        $this->Supplies_model->insert_log_activity($data_log);
-
-
-        $this->session->set_flashdata('Success', 'Stock berhasil dihapus');
-        redirect('supplies');
-         }else{
-                redirect(base_url());
+            if ($this->agent->is_browser()) // Agent untuk fitur di log activity
+            {
+                $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
             }
+            elseif ($this->agent->is_robot())
+            {
+                $agent = $this->agent->robot();
+            }
+            elseif ($this->agent->is_mobile())
+            {
+                $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
+            }
+            else
+            {
+                $agent = 'Unidentified User Agent';
+            }
+
+            // Ambil nama produk sebelum dihapus
+            $product = $this->Supplies_model->get_supplies_by_session($id_session);
+            $product_name = $product ? $product->product_name : 'Unknown Product';
+
+            $data = ['status' => 'deleted'];
+
+            $this->Supplies_model->delete_supplies($id_session);
+
+            $status = 'Delete ' . $product_name;
+
+            $data_log = array(
+                'log_activity_user_id' => $this->session->id_session,
+                'log_activity_modul' => 'supplies/delete',
+                'log_activity_document_no' => $id_session,
+                'log_activity_status' => $status,
+                'log_activity_waktu' => date('Y-m-d H:i:s'),
+                'log_activity_platform' => $agent,
+                'log_activity_ip' => $this->input->ip_address()
+            );
+
+            $this->Supplies_model->insert_log_activity($data_log);
+
+            $this->session->set_flashdata('Success', 'Stock berhasil dihapus');
+            redirect('supplies');
+        } else {
+            redirect(base_url());
+        }
     }
 
     public function recycle_bin() {
@@ -508,49 +510,93 @@ class Crud_supplies extends CI_Controller {
 
     public function restore($id_session) {
 
-        if ($this->agent->is_browser()) // Agent untuk fitur di log activity
-                {
-                      $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
-                }
-                elseif ($this->agent->is_robot())
-                {
-                      $agent = $this->agent->robot();
-                }
-                elseif ($this->agent->is_mobile())
-                {
-                      $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
-                }
-                else
-                {
-                      $agent = 'Unidentified User Agent';
-                }
+        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
 
-        $this->Supplies_model->restore_supplies_and_stock($id_session);    
-        
-        $data_log = array(
+            if ($this->agent->is_browser()) // Agent untuk fitur di log activity
+            {
+                $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
+            }
+            elseif ($this->agent->is_robot())
+            {
+                $agent = $this->agent->robot();
+            }
+            elseif ($this->agent->is_mobile())
+            {
+                $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
+            }
+            else
+            {
+                $agent = 'Unidentified User Agent';
+            }
 
-            'log_activity_user_id'=>$this->session->id_session,
-            'log_activity_modul' => 'supplies/restore',
-            'log_activity_document_no' => $id_session,
-            'log_activity_status' => 'Restore',
-            'log_activity_waktu' => date('Y-m-d H:i:s'),
-            'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
-            
-        );
+            // Restore supplies and stock
+            $this->Supplies_model->restore_supplies_and_stock($id_session);    
 
-        $this->Supplies_model->insert_log_activity($data_log);      
-    
-        $this->session->set_flashdata('Success', 'Stock berhasil dipulihkan');
-        redirect('supplies/recycle_bin');
+            // Get product name after restoring
+            $product = $this->Supplies_model->get_supplies_by_session($id_session);
+            $product_name = $product ? $product->product_name : 'Unknown Product';
+
+            $status = 'Restore '.$product_name;
+
+            $data_log = array(
+                'log_activity_user_id' => $this->session->id_session,
+                'log_activity_modul' => 'supplies/restore',
+                'log_activity_document_no' => $id_session,
+                'log_activity_status' => $status,
+                'log_activity_waktu' => date('Y-m-d H:i:s'),
+                'log_activity_platform' => $agent,
+                'log_activity_ip' => $this->input->ip_address()
+            );
+
+            $this->Supplies_model->insert_log_activity($data_log);      
+
+            $this->session->set_flashdata('Success', 'Stock berhasil dipulihkan');
+            redirect('supplies/recycle_bin');
+        }
     }
 
     public function permanent_delete($id_session) {
 
+        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
+
+            if ($this->agent->is_browser()) // Agent untuk fitur di log activity
+            {
+                $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
+            }
+            elseif ($this->agent->is_robot())
+            {
+                $agent = $this->agent->robot();
+            }
+            elseif ($this->agent->is_mobile())
+            {
+                $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
+            }
+            else
+            {
+                $agent = 'Unidentified User Agent';
+            }
+
+            // Ambil nama produk sebelum dihapus
+            $product = $this->Supplies_model->get_supplies_by_session($id_session);
+            $product_name = $product ? $product->product_name : 'Unknown Product';
+
         $this->Supplies_model->permanent_delete_supplies_and_stock($id_session);
         
+        $status = 'Delete Permanent ' . $product_name;
+
+        $data_log = array(
+            'log_activity_user_id' => $this->session->id_session,
+            'log_activity_modul' => 'supplies/delete_permanent',
+            'log_activity_document_no' => $id_session,
+            'log_activity_status' => $status,
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
+            'log_activity_platform' => $agent,
+            'log_activity_ip' => $this->input->ip_address()
+        );
+
+        $this->Supplies_model->insert_log_activity($data_log);
         $this->session->set_flashdata('Success', 'Stock berhasil dihapus permanen');
         redirect('supplies/recycle_bin');
     }
-
+    }
 }
