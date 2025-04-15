@@ -59,8 +59,8 @@ class Client extends CI_Controller
 
         $data2 = array(
           'log_activity_user_id' => $row['client_idsession'], // Use client_idsession
-          'log_activity_modul' => 'login',
-          'log_activity_status' => 'login',
+          'log_activity_modul' => 'Login',
+          'log_activity_status' => 'Login',
           'log_activity_platform' => $agent,
           'log_activity_waktu' => date('Y-m-d H:i:s'),
           'log_activity_ip' => $this->input->ip_address()
