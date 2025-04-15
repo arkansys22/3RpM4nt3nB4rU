@@ -203,7 +203,7 @@ class Aspanel extends CI_Controller {
 			$data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
-            'log_activity_modul' => 'logout',            
+            'log_activity_modul' => 'Logout',            
             'log_activity_status' => 'Logout ',
 			'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
