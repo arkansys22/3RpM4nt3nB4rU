@@ -1,3 +1,12 @@
+<?php
+// Ambil agama dari tabel project berdasarkan id_session klien
+$project = $this->db->get_where('project', ['id_session' => $client->id_session])->row();
+$religion = $project->religion ?? ''; // Pastikan tidak error jika religion kosong
+
+$islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
+
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -29,7 +38,25 @@
     <!-- Bagian Header -->
     <div class="flex justify-between items-start mb-4">
         <div>
-            <h1 class="font-bold text-sm">ACARA AKAD RESEPSI</h1>
+            <?php
+            if ($islam) {
+                if (!empty($client->wedding_ceremony) && empty($client->reception_afterward)) {
+                    echo '<h1 class="font-bold text-sm">ACARA AKAD</h1>';
+                } elseif (empty($client->wedding_ceremony) && !empty($client->reception_afterward)) {
+                    echo '<h1 class="font-bold text-sm">ACARA RESEPSI</h1>';
+                } elseif (!empty($client->wedding_ceremony) && !empty($client->reception_afterward)) {
+                    echo '<h1 class="font-bold text-sm">ACARA AKAD RESEPSI</h1>';
+                }
+            } else {
+                if (!empty($client->wedding_ceremony) && empty($client->reception_afterward)) {
+                    echo '<h1 class="font-bold text-sm">ACARA PEMBERKATAN</h1>';
+                } elseif (empty($client->wedding_ceremony) && !empty($client->reception_afterward)) {
+                    echo '<h1 class="font-bold text-sm">ACARA RESEPSI</h1>';
+                } elseif (!empty($client->wedding_ceremony) && !empty($client->reception_afterward)) {
+                    echo '<h1 class="font-bold text-sm">ACARA PEMBERKATAN RESEPSI</h1>';
+                }
+            }
+            ?>
             <p class="text-xs"><?= $client->location; ?></p>
             <p class="text-xs"><?= hari($client->wedding_date) ?>, <?= tgl_indo($client->wedding_date) ?></p>
         </div>
@@ -130,71 +157,101 @@
         </tbody>
     </table><br>
 
-    <table class="w-full border border-black text-left">
-        <thead>
-            <tr>
-                <th colspan="2" class="border border-black text-center text-sm font-semibold p-1">
-                    Petugas & Koordinator Akad Nikah
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td class="border border-black p-1 text-xs w-2/5">Koor. Keluarga</td>
-                <td class="border border-black p-1 text-xs"><?= $client->female_coor; ?>(CPW),<br>
-                <?= $client->male_coor; ?>(CPP)</td>
-
-            </tr>
-            <tr>
-                <td class="border border-black p-1 text-xs w-2/5">Jubir Kel. CPW (Bapak)</td>
-                <td class="border border-black p-1 text-xs"><?= $client->f_spokesman; ?></td>
-            </tr>
-            <tr>
-                <td class="border border-black p-1 text-xs w-2/5">Jubir Kel. CPP (Bapak)</td>
-                <td class="border border-black p-1 text-xs"><?= $client->m_spokesman; ?></td>
-            </tr>
-            <tr>
-                <td class="border border-black p-1 text-xs w-2/5">Penghulu</td>
-                <td class="border border-black p-1 text-xs"><?= $client->wedding_officiant; ?></td>
-            </tr>
-            <tr>
-                <td class="border border-black p-1 text-xs w-2/5">Wali CPW (Bapak)</td>
-                <td class="border border-black p-1 text-xs"><?= $client->guardian; ?></td>
-            </tr>
-            <tr>
-                <td class="border border-black p-1 text-xs w-2/5">Saksi CPW (Bapak)</td>
-                <td class="border border-black p-1 text-xs"><?= $client->f_witness; ?></td>
-            </tr>
-            <tr>
-                <td class="border border-black p-1 text-xs w-2/5">Saksi CPP (Bapak)</td>
-                <td class="border border-black p-1 text-xs"><?= $client->m_witness; ?></td>
-            </tr>
-            <tr>
-                <td class="border border-black p-1 text-xs w-2/5">Qori/Saritilawah</td>
-                <td class="border border-black p-1 text-xs"><?= $client->qori; ?></td>
-            </tr>
-            <tr>
-                <td class="border border-black p-1 text-xs w-2/5">Sambutan/Doa Pernikahan (Bapak)</td>
-                <td class="border border-black p-1 text-xs"><?= $client->advice_doa; ?></td>
-            </tr>
-            <tr>
-                <td class="border border-black p-1 text-xs w-2/5">Pengapit CPW dari Kel. CPW</td>
-                <td class="border border-black p-1 text-xs"><?= $client->clamp; ?></td>
-            </tr>
-            <tr>
-                <td class="border border-black p-1 text-xs w-2/5">Pembawa Nampan Kalung Bunga Melati</td>
-                <td class="border border-black p-1 text-xs"><?= $client->jasmine_carrier; ?></td>
-            </tr>
-            <tr>
-                <td class="border border-black p-1 text-xs w-2/5">Pembawa Mas Kawin/Mahar</td>
-                <td class="border border-black p-1 text-xs"><?= $client->mahr_carrier; ?></td>
-            </tr>
-            <tr>
-                <td class="border border-black p-1 text-xs w-2/5">Pembawa Cincin Kawin</td>
-                <td class="border border-black p-1 text-xs"><?= $client->ring_carrier; ?></td>
-            </tr>
-        </tbody>
-    </table>
+    <?php if ($islam): ?>
+        <table class="w-full border border-black text-left">
+            <thead>
+                <tr>
+                    <th colspan="2" class="border border-black text-center text-sm font-semibold p-1">
+                        Petugas & Koordinator Pernikahan
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="border border-black p-1 text-xs w-2/5">Koor. Keluarga</td>
+                    <td class="border border-black p-1 text-xs"><?= $client->female_coor; ?>(CPW),<br>
+                    <?= $client->male_coor; ?>(CPP)</td>
+                </tr>
+                <tr>
+                    <td class="border border-black p-1 text-xs w-2/5">Jubir Kel. CPW (Bapak)</td>
+                    <td class="border border-black p-1 text-xs"><?= $client->f_spokesman; ?></td>
+                </tr>
+                <tr>
+                    <td class="border border-black p-1 text-xs w-2/5">Jubir Kel. CPP (Bapak)</td>
+                    <td class="border border-black p-1 text-xs"><?= $client->m_spokesman; ?></td>
+                </tr>
+                <tr>
+                    <td class="border border-black p-1 text-xs w-2/5">Penghulu</td>
+                    <td class="border border-black p-1 text-xs"><?= $client->wedding_officiant; ?></td>
+                </tr>
+                <tr>
+                    <td class="border border-black p-1 text-xs w-2/5">Wali CPW (Bapak)</td>
+                    <td class="border border-black p-1 text-xs"><?= $client->guardian; ?></td>
+                </tr>
+                <tr>
+                    <td class="border border-black p-1 text-xs w-2/5">Saksi CPW (Bapak)</td>
+                    <td class="border border-black p-1 text-xs"><?= $client->f_witness; ?></td>
+                </tr>
+                <tr>
+                    <td class="border border-black p-1 text-xs w-2/5">Saksi CPP (Bapak)</td>
+                    <td class="border border-black p-1 text-xs"><?= $client->m_witness; ?></td>
+                </tr>
+                <tr>
+                    <td class="border border-black p-1 text-xs w-2/5">Qori/Saritilawah</td>
+                    <td class="border border-black p-1 text-xs"><?= $client->qori; ?></td>
+                </tr>
+                <tr>
+                    <td class="border border-black p-1 text-xs w-2/5">Sambutan/Doa Pernikahan (Bapak)</td>
+                    <td class="border border-black p-1 text-xs"><?= $client->advice_doa; ?></td>
+                </tr>
+                <tr>
+                    <td class="border border-black p-1 text-xs w-2/5">Pengapit CPW dari Kel. CPW</td>
+                    <td class="border border-black p-1 text-xs"><?= $client->clamp; ?></td>
+                </tr>
+                <tr>
+                    <td class="border border-black p-1 text-xs w-2/5">Pembawa Nampan Kalung Bunga Melati</td>
+                    <td class="border border-black p-1 text-xs"><?= $client->jasmine_carrier; ?></td>
+                </tr>
+                <tr>
+                    <td class="border border-black p-1 text-xs w-2/5">Pembawa Mas Kawin/Mahar</td>
+                    <td class="border border-black p-1 text-xs"><?= $client->mahr_carrier; ?></td>
+                </tr>
+                <tr>
+                    <td class="border border-black p-1 text-xs w-2/5">Pembawa Cincin Kawin</td>
+                    <td class="border border-black p-1 text-xs"><?= $client->ring_carrier; ?></td>
+                </tr>
+            </tbody>
+        </table>
+    <?php else: ?>
+        <table class="w-full border border-black text-left">
+            <thead>
+                <tr>
+                    <th colspan="2" class="border border-black text-center text-sm font-semibold p-1">
+                        Petugas & Koordinator Pernikahan
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="border border-black p-1 text-xs w-2/5">Koor. Keluarga</td>
+                    <td class="border border-black p-1 text-xs"><?= $client->male_coor; ?>(CPP),<br>
+                    <?= $client->female_coor; ?>(CPW)</td>
+                </tr>
+                <tr>
+                    <td class="border border-black p-1 text-xs w-2/5">Pendeta (<?= $client->church ?>)</td>
+                    <td class="border border-black p-1 text-xs"><?= $client->pastor ?></td>
+                </tr>
+                <tr>
+                    <td class="border border-black p-1 text-xs w-2/5">Pemimpin Doa</td>
+                    <td class="border border-black p-1 text-xs"><?= $client->prayer; ?></td>
+                </tr>
+                <tr>
+                    <td class="border border-black p-1 text-xs w-2/5">Sambutan Pernikahan</td>
+                    <td class="border border-black p-1 text-xs"><?= $client->wedding_speech; ?></td>
+                </tr>
+            </tbody>
+        </table>
+    <?php endif; ?>
     </div>
 
     <div class="mt-6 flex justify-between no-print">

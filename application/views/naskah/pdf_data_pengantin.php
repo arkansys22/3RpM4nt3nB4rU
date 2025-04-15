@@ -1,3 +1,12 @@
+<?php
+// Ambil agama dari tabel project berdasarkan id_session klien
+$project = $this->db->get_where('project', ['id_session' => $client->id_session])->row();
+$religion = $project->religion ?? ''; // Pastikan tidak error jika religion kosong
+
+$islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,7 +49,25 @@
 <table width="100%" style="border: none; background-color: transparent; margin-bottom: 10px;">
     <tr>
         <td style="text-align: left; vertical-align: top; border: none;">
-            <h1 style="font-weight: bold; font-size: 14px; margin: 0;">ACARA AKAD RESEPSI</h1>
+            <?php
+            if ($islam) {
+                if (!empty($client->wedding_ceremony) && empty($client->reception_afterward)) {
+                    echo '<h1 style="font-weight: bold; font-size: 14px; margin: 0;">ACARA AKAD</h1>';
+                } elseif (empty($client->wedding_ceremony) && !empty($client->reception_afterward)) {
+                    echo '<h1 style="font-weight: bold; font-size: 14px; margin: 0;">ACARA RESEPSI</h1>';
+                } elseif (!empty($client->wedding_ceremony) && !empty($client->reception_afterward)) {
+                    echo '<h1 style="font-weight: bold; font-size: 14px; margin: 0;">ACARA AKAD RESEPSI</h1>';
+                }
+            } else {
+                if (!empty($client->wedding_ceremony) && empty($client->reception_afterward)) {
+                    echo '<h1 style="font-weight: bold; font-size: 14px; margin: 0;">ACARA PEMBERKATAN</h1>';
+                } elseif (empty($client->wedding_ceremony) && !empty($client->reception_afterward)) {
+                    echo '<h1 style="font-weight: bold; font-size: 14px; margin: 0;">ACARA RESEPSI</h1>';
+                } elseif (!empty($client->wedding_ceremony) && !empty($client->reception_afterward)) {
+                    echo '<h1 style="font-weight: bold; font-size: 14px; margin: 0;">ACARA PEMBERKATAN RESEPSI</h1>';
+                }
+            }
+            ?>
             <p style="font-size: 12px; margin: 0;"><?= $client->location; ?></p>
             <p style="font-size: 12px; margin: 0;">
                 <?= hari($client->wedding_date) ?>, <?= tgl_indo($client->wedding_date) ?>
@@ -131,9 +158,10 @@
             </tr>
     </table><br>
 
+    <?php if ($islam): ?>
     <table>
     <tr>
-        <th colspan="2" style="text-align: center;">Petugas & Koordinator Akad Nikah</th>
+        <th colspan="2" style="text-align: center;">Petugas & Koordinator Pernikahan</th>
         </tr>
             <tr>
                 <td>Koor. Keluarga</td>
@@ -190,6 +218,30 @@
                 <td><?= $client->ring_carrier; ?></td>
             </tr>
     </table>
+    <?php else: ?>
+    <table>
+    <tr>
+        <th colspan="2" style="text-align: center;">Petugas & Koordinator Pernikahan</th>
+        </tr>
+            <tr>
+                <td>Koor. Keluarga</td>
+                <td><?= $client->male_coor; ?>(CPP),<br>
+                <?= $client->female_coor; ?>(CPW)</td>
+            </tr>
+            <tr>
+                <td>Pendeta (<?= $client->church ?>)</td>
+                <td><?= $client->pastor; ?></td>
+            </tr>
+            <tr>
+                <td>Pemimpin Doa</td>
+                <td><?= $client->prayer; ?></td>
+            </tr>
+            <tr>
+                <td>Sambutan Pernikahan</td>
+                <td><?= $client->wedding_speech; ?></td>
+            </tr>
+    </table>
+    <?php endif; ?>
 </div>
 
 </body>
