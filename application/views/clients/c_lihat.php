@@ -107,13 +107,34 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 						<div class="col-lg-6  align-self-center">
 							<div class="hero-box text-left">
 								<span class="greeting">Our Special Wedding Day</span>
+								
+
+								<?php $project = $this->Crud_m->view_where('project', array('id_session' => $clients->id_session))->row(); ?>							
+
+								<?php if($project->religion === 'Islam') {?>
+
 								<h2 class="name">
-                <?= $clients->f_bride_cname ?><span> & </span><?= $clients->m_bride_cname ?>
+                				<?= $clients->f_bride_cname ?><span> & </span><?= $clients->m_bride_cname ?>
 								</h2>
 
 								<h4 class="header_title"><?= hari($clients->wedding_date) ?>, <?= tgl_indo($clients->wedding_date) ?> | <?= $clients->location ?></h4>
 								<a id="g-p-f-h" class="pagelink mybtn mybtn-bg" href="#concept"><span><i
 											class="far fa-calendar-check"></i>Our Wedding Concepts</span></a>
+
+
+								<?php }elseif ($project->religion === 'Kristen'){ ?>
+
+								<h2 class="name">
+                				<?= $clients->m_bride_cname ?><span> & </span><?= $clients->f_bride_cname ?>
+								</h2>
+
+								<h4 class="header_title"><?= hari($clients->wedding_date) ?>, <?= tgl_indo($clients->wedding_date) ?> | <?= $clients->location ?></h4>
+								<a id="g-p-f-h" class="pagelink mybtn mybtn-bg" href="#concept"><span><i
+											class="far fa-calendar-check"></i>Our Wedding Concepts</span></a>
+
+								<?php } ?>
+
+
 
 
 							</div>
@@ -418,6 +439,9 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 							<div class="row">
 								<div class="col-lg-12 d-flex align-self-center">
 									<div class="about-content">
+
+
+								<?php if($project->religion === 'Islam') {?>
 										<?php if (!empty($clients->wedding_ceremony)) : ?>
 											<a href="<?= $clients->wedding_ceremony ?>" target="_blank" class="mybtn mybtn-bg"> 
 												<span><i class="fas fa-download"></i>Susunan Acara Akad</span> 
@@ -438,6 +462,38 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 												<span><i class="fas fa-download"></i>List Tamu/Foto</span> 
 											</a>
 										<?php endif; ?>
+								
+
+
+								<?php }elseif ($project->religion === 'Kristen'){ ?>
+										<?php if (!empty($clients->wedding_ceremony)) : ?>
+											<a href="<?= $clients->wedding_ceremony ?>" target="_blank" class="mybtn mybtn-bg"> 
+												<span><i class="fas fa-download"></i>Susunan Acara Pemberkatan</span> 
+											</a>
+										<?php endif; ?>
+										<?php if (!empty($clients->reception_afterward)) : ?>
+											<a href="<?= $clients->reception_afterward ?>" target="_blank" class="mybtn mybtn-bg"> 
+												<span><i class="fas fa-download"></i>Susunan Acara Resepsi</span> 
+											</a>
+										<?php endif; ?>
+										<?php if (!empty($clients->id_session)) : ?>
+											<a href="<?= site_url('naskah/data_pengantin/pdf/'. $clients->id_session) ?>" class="mybtn mybtn-bg"> 
+												<span><i class="fas fa-download"></i>Susunan Panitia</span> 
+											</a>
+										<?php endif; ?>
+										<?php if (!empty($clients->list_photo)) : ?>
+											<a href="<?= $clients->list_photo ?>" target="_blank" class="mybtn mybtn-bg"> 
+												<span><i class="fas fa-download"></i>List Tamu/Foto</span> 
+											</a>
+										<?php endif; ?>
+								
+
+								<?php } ?>
+
+
+
+
+										
 									</div>
 								</div>
 							</div>
