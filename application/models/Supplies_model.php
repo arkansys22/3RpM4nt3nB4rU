@@ -156,76 +156,83 @@ class Supplies_model extends CI_Model {
 
     public function get_logactivity_by_session() {
         $this->db->order_by('log_activity_id', 'DESC');
-        $this->db->where_in('log_activity_modul', ['supplies/create', 'supplies/editin', 'supplies/editout', 'supplies/delete']);
+        $this->db->where_in('log_activity_modul', [
+            'supplies/create', 
+            'supplies/editin', 
+            'supplies/editout', 
+            'supplies/delete', 
+            'supplies/restore',
+            'supplies/delete_permanent'
+        ]);
         $query = $this->db->get('log_activity');
         return $query->result();
-            }
+    }
 
-            public function get_stock_by_id($id_sessionstock) {
-                $this->db->select('supplies_stock.*, supplies.product_name'); // Ambil product_name dari tabel supplies
-                $this->db->from('supplies_stock');
-                $this->db->join('supplies', 'supplies.id_session = supplies_stock.id_session', 'left'); // Join ke supplies
-                $this->db->where('supplies_stock.id_sessionstock', $id_sessionstock);
-                $query = $this->db->get();
-            
-                if ($query->num_rows() > 0) {
-                    return $query->row(); // Kembalikan 1 record sebagai objek
-                } else {
-                    return false;
-                }
-            }
-            
-            public function get_logactivity_with_details($id_session) {
-                $sql = "
-                    SELECT 
-                        log_activity.log_activity_status, 
-                        log_activity.log_activity_waktu, 
-                        supplies.type, 
-                        supplies.product_name, 
-                        supplies_stock.goods_in, 
-                        supplies_stock.goods_out, 
-                        supplies_stock.created_at, 
-                        supplies_stock.detail, 
-                        CASE 
-                            WHEN log_activity.log_activity_status = 'Barang Masuk' THEN COALESCE(supplies_stock.goods_in, 0) 
-                            WHEN log_activity.log_activity_status = 'Barang Keluar' THEN COALESCE(supplies_stock.goods_out, 0) 
-                            ELSE 0 
-                        END as amount 
-                    FROM log_activity 
-                    LEFT JOIN supplies ON log_activity.log_activity_document_no = supplies.id_session 
-                    LEFT JOIN supplies_stock ON supplies.id_session = supplies_stock.id_session 
-                    WHERE log_activity.log_activity_document_no = ? 
-                    AND supplies_stock.created_at = (
-                        SELECT MIN(created_at) 
-                        FROM supplies_stock 
-                        WHERE supplies_stock.id_session = supplies.id_session
-                        AND supplies_stock.created_at >= log_activity.log_activity_waktu
-                    ) 
-                    ORDER BY log_activity.log_activity_waktu DESC
-                ";
-            
-                $query = $this->db->query($sql, array($id_session));
-            
-                return $query->result();
-            }
-                                                                        
-            
-            
-            // Fungsi untuk mengambil jumlah berdasarkan status dan document_no
-            public function get_amount_by_status_and_document($status, $document_no) {
-                $this->db->select('sum(amount) as total_amount');
-                $this->db->from('supplies_stock');
-                $this->db->where('log_activity_status', $status);
-                $this->db->where('id_sessionstock', $document_no);  // Atau gunakan filter yang sesuai untuk status dan document_no
-            
-                $query = $this->db->get();
-            
-                if ($query->num_rows() > 0) {
-                    $row = $query->row();
-                    return $row->total_amount; // Mengembalikan jumlah total
-                } else {
-                    return 0; // Jika tidak ada jumlah
-                }
-            }
-            
+    public function get_stock_by_id($id_sessionstock) {
+        $this->db->select('supplies_stock.*, supplies.product_name'); // Ambil product_name dari tabel supplies
+        $this->db->from('supplies_stock');
+        $this->db->join('supplies', 'supplies.id_session = supplies_stock.id_session', 'left'); // Join ke supplies
+        $this->db->where('supplies_stock.id_sessionstock', $id_sessionstock);
+        $query = $this->db->get();
+    
+        if ($query->num_rows() > 0) {
+            return $query->row(); // Kembalikan 1 record sebagai objek
+        } else {
+            return false;
         }
+    }
+    
+    public function get_logactivity_with_details($id_session) {
+        $sql = "
+            SELECT 
+                log_activity.log_activity_status, 
+                log_activity.log_activity_waktu, 
+                supplies.type, 
+                supplies.product_name, 
+                supplies_stock.goods_in, 
+                supplies_stock.goods_out, 
+                supplies_stock.created_at, 
+                supplies_stock.detail, 
+                CASE 
+                    WHEN log_activity.log_activity_status = 'Barang Masuk' THEN COALESCE(supplies_stock.goods_in, 0) 
+                    WHEN log_activity.log_activity_status = 'Barang Keluar' THEN COALESCE(supplies_stock.goods_out, 0) 
+                    ELSE 0 
+                END as amount 
+            FROM log_activity 
+            LEFT JOIN supplies ON log_activity.log_activity_document_no = supplies.id_session 
+            LEFT JOIN supplies_stock ON supplies.id_session = supplies_stock.id_session 
+            WHERE log_activity.log_activity_document_no = ? 
+            AND supplies_stock.created_at = (
+                SELECT MIN(created_at) 
+                FROM supplies_stock 
+                WHERE supplies_stock.id_session = supplies.id_session
+                AND supplies_stock.created_at >= log_activity.log_activity_waktu
+            ) 
+            ORDER BY log_activity.log_activity_waktu DESC
+        ";
+    
+        $query = $this->db->query($sql, array($id_session));
+    
+        return $query->result();
+    }
+                                                                        
+    
+    
+    // Fungsi untuk mengambil jumlah berdasarkan status dan document_no
+    public function get_amount_by_status_and_document($status, $document_no) {
+        $this->db->select('sum(amount) as total_amount');
+        $this->db->from('supplies_stock');
+        $this->db->where('log_activity_status', $status);
+        $this->db->where('id_sessionstock', $document_no);  // Atau gunakan filter yang sesuai untuk status dan document_no
+    
+        $query = $this->db->get();
+    
+        if ($query->num_rows() > 0) {
+            $row = $query->row();
+            return $row->total_amount; // Mengembalikan jumlah total
+        } else {
+            return 0; // Jika tidak ada jumlah
+        }
+    }
+    
+}
