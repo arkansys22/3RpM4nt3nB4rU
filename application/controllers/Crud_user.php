@@ -176,7 +176,7 @@ class crud_user extends CI_Controller {
         }
     
         $this->Users2_model->update_users($id_session, $data);
-        $status = 'Edit Pengguna';
+        $status = 'Update Data Pengguna';
 
 
         $data_log = array(
@@ -226,7 +226,7 @@ class crud_user extends CI_Controller {
             'log_activity_user_id'=>$this->session->id_session,
             'log_activity_modul' => 'user/delete',
             'log_activity_document_no' => $id_session,
-            'log_activity_status' => 'Hapus',
+            'log_activity_status' => 'Hapus Pengguna',
             'log_activity_platform'=> $agent,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_ip'=> $this->input->ip_address()
@@ -317,7 +317,7 @@ class crud_user extends CI_Controller {
                     'log_activity_user_id'=>$this->session->id_session,
                     'log_activity_modul' => 'user/permanent',
                     'log_activity_document_no' => $id_session,
-                    'log_activity_status' => 'Hapus Permanent',
+                    'log_activity_status' => 'Hapus Permanent Pengguna',
                     'log_activity_platform'=> $agent,
                     'log_activity_waktu' => date('Y-m-d H:i:s'),
                     'log_activity_ip'=> $this->input->ip_address()
