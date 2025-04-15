@@ -45,7 +45,7 @@
                 <input type="date" name="event_date" value="<?= $project->event_date ?>" class="w-full px-4 py-2 border rounded mb-4" required>
 
                 <label class="block mb-2">Value</label>
-                <input type="text" id="formattedNumber" value="<?= $project->value ?>" class="w-full px-4 py-2 border rounded mb-4" oninput="formatNumber(this)" name="value" required>
+                <input type="text" id="value" value="<?= number_format($project->value ?? 0, 0, ',', '.') ?>" class="w-full px-4 py-2 border rounded mb-4" oninput="formatNumber(this)" name="value" required>
 
                 <label class="block mb-2">Detail</label>
                 <textarea name="detail" class="w-full px-4 py-2 border rounded mb-4" required><?= $project->detail ?></textarea>
