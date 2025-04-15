@@ -96,7 +96,6 @@ class Crud_crewprojects extends CI_Controller {
             'log_activity_status' => 'Tambah Crew ke Project',
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_ip'=> $this->input->ip_address()
             
         );
@@ -203,18 +202,51 @@ class Crud_crewprojects extends CI_Controller {
 
         $this->CrewProjects_model->insert_log_activity($data_log);
 
-        $this->session->set_flashdata('Success', 'Crew berhasil diedit di project'); 
+        $this->session->set_flashdata('Success', 'Crew berhasil diupdate di project'); 
 
         redirect('project/lihat/' . $project_id);
     }
 
     public function delete($crew_id) {
+
+        if ($this->agent->is_browser()) // Agent untuk fitur di log activity
+        {
+            $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
+        }
+        elseif ($this->agent->is_robot())
+        {
+            $agent = $this->agent->robot();
+        }
+        elseif ($this->agent->is_mobile())
+        {
+            $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
+        }
+        else
+        {
+            $agent = 'Unidentified User Agent';
+        }
+
         $project_id = $this->CrewProjects_model->get_project_id_by_crew($crew_id); // Fetch the associated project ID
         if (!$project_id) {
             show_404(); // Show 404 if project not found
         }
 
         $this->CrewProjects_model->delete_crew_from_project($crew_id); // Delete the crew
+
+        $data_log = array(
+
+            'log_activity_user_id'=>$this->session->id_session,
+            'log_activity_modul' => 'crewproject/delete',
+            'log_activity_document_no' => $project_id,
+            'log_activity_status' => 'Delete Crew dari Project',
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
+            'log_activity_platform'=> $agent,
+            'log_activity_ip'=> $this->input->ip_address()
+            
+        );
+
+        $this->CrewProjects_model->insert_log_activity($data_log);
+
         redirect('project/lihat/' . $project_id); // Redirect back to the project view
     }
 
