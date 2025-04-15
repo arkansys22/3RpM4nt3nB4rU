@@ -339,7 +339,7 @@ class Crud_clients extends CI_Controller {
             $this->db->where('id_session', $id_session);
             $this->db->update('project', $project_data);
 
-        $status = 'Edit' ;
+        $status = 'Update Data Client' ;
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
@@ -348,7 +348,6 @@ class Crud_clients extends CI_Controller {
             'log_activity_status' => $status,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_ip'=> $this->input->ip_address()
             
         );
@@ -393,10 +392,9 @@ class Crud_clients extends CI_Controller {
             'log_activity_user_id'=>$this->session->id_session,
             'log_activity_modul' => 'clients/delete',
             'log_activity_document_no' => $id_session,
-            'log_activity_status' => 'Delete',
+            'log_activity_status' => 'Delete Client',
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_ip'=> $this->input->ip_address()
             
         );
@@ -472,7 +470,7 @@ class Crud_clients extends CI_Controller {
             'log_activity_user_id'=>$this->session->id_session,
             'log_activity_modul' => 'clients/restore',
             'log_activity_document_no' => $id_session,
-            'log_activity_status' => 'Restore',
+            'log_activity_status' => 'Restore Client',
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
             'log_activity_ip'=> $this->input->ip_address()
@@ -486,6 +484,22 @@ class Crud_clients extends CI_Controller {
     }
     
     public function permanent_delete($id_session) {
+        if ($this->agent->is_browser()) // Agent untuk fitur di log activity
+                {
+                      $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
+                }
+                elseif ($this->agent->is_robot())
+                {
+                      $agent = $this->agent->robot();
+                }
+                elseif ($this->agent->is_mobile())
+                {
+                      $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
+                }
+                else
+                {
+                      $agent = 'Unidentified User Agent';
+                }
 
         $this->Clients_model->delete_client_permanent($id_session);
     
@@ -493,7 +507,21 @@ class Crud_clients extends CI_Controller {
         $this->db->where('id_session', $id_session);
         $this->db->delete('project');
     
-        $this->session->set_flashdata('Success', 'Client berhasil dihapus permanen');
+        $data_log = array(
+
+            'log_activity_user_id'=>$this->session->id_session,
+            'log_activity_modul' => 'clients/delete_permanent',
+            'log_activity_document_no' => $id_session,
+            'log_activity_status' => 'Delete Permanent Client',
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
+            'log_activity_platform'=> $agent,
+            'log_activity_ip'=> $this->input->ip_address()
+            
+        );
+
+        $this->Clients_model->insert_log_activity($data_log);      
+
+        $this->session->set_flashdata('Success', 'Client berhasil dihapus permanent');
         redirect('clients/recycle_bin');
     }
 
@@ -599,7 +627,7 @@ class Crud_clients extends CI_Controller {
             $this->db->where('id_session', $id_session);
             $this->db->update('project', $project_data);
 
-        $status = 'Edit' ;
+        $status = 'Update Data Client' ;
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
