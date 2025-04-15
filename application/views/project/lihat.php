@@ -304,8 +304,9 @@
                           </td>
                         <?php endif; ?>
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                          <p class="inline-flex rounded-full bg-success bg-opacity-10 px-3 py-1 text-sm font-medium text-success">
-                            <?= $p->log_activity_status ?>
+                            <p class="inline-flex rounded-full px-3 py-1 text-sm font-medium 
+                            <?= in_array($p->log_activity_status, ['Hapus Transaksi', 'Delete Project']) || strpos($p->log_activity_status, 'Hapus Vendor') === 0 ? 'bg-danger bg-opacity-10 text-danger' : 'bg-success bg-opacity-10 text-success' ?>">
+                          <?= $p->log_activity_status ?>
                           </p>
                         </td>
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
