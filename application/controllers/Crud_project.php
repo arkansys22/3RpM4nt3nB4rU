@@ -299,7 +299,7 @@ class Crud_project extends CI_Controller {
         $this->db->where('id_session', $id_session);
         $this->db->update('clients', $client_data);
     
-        $status = 'Edit' ;
+        $status = 'Update Project' ;
 
 
         $data_log = array(
@@ -354,7 +354,7 @@ class Crud_project extends CI_Controller {
             'log_activity_user_id'=>$this->session->id_session,
             'log_activity_modul' => 'project/delete',
             'log_activity_document_no' => $id_session,
-            'log_activity_status' => 'Delete',
+            'log_activity_status' => 'Delete Project',
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
             'log_activity_ip'=> $this->input->ip_address()
@@ -427,16 +427,12 @@ class Crud_project extends CI_Controller {
         $this->db->where('id_session', $id_session);
         $this->db->update('clients', $data);
 
-        // Update juga di tabel crew_projects
-        $this->db->where('project_id', $id_session);
-        $this->db->update('crew_projects', $data);
-
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
             'log_activity_modul' => 'project/restore',
             'log_activity_document_no' => $id_session,
-            'log_activity_status' => 'Restore',
+            'log_activity_status' => 'Restore Project',
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
             'log_activity_ip'=> $this->input->ip_address()
@@ -451,13 +447,48 @@ class Crud_project extends CI_Controller {
 
     public function permanent_delete($id_session) {
 
+        if ($this->agent->is_browser()) // Agent untuk fitur di log activity
+                {
+                      $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
+                }
+                elseif ($this->agent->is_robot())
+                {
+                      $agent = $this->agent->robot();
+                }
+                elseif ($this->agent->is_mobile())
+                {
+                      $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
+                }
+                else
+                {
+                      $agent = 'Unidentified User Agent';
+                }
+
         // Hapus project permanen
         $this->project_model->delete_project_permanent($id_session);
     
         // Hapus juga di tabel clients
         $this->db->where('id_session', $id_session);
         $this->db->delete('clients');
-        
+
+        // Hapus juga di tabel crew_projects
+        $this->db->where('project_id', $id_session);
+        $this->db->delete('crew_projects');
+
+        $data_log = array(
+
+            'log_activity_user_id'=>$this->session->id_session,
+            'log_activity_modul' => 'project/delete_permanent',
+            'log_activity_document_no' => $id_session,
+            'log_activity_status' => 'Delete Permanent Project',
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
+            'log_activity_platform'=> $agent,
+            'log_activity_ip'=> $this->input->ip_address()
+            
+        );
+
+        $this->project_model->insert_log_activity($data_log);
+
         $this->session->set_flashdata('Success', 'Project berhasil dihapus permanen');
         redirect('project/recycle_bin');
     }
