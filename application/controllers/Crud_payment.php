@@ -340,7 +340,7 @@ class Crud_payment extends CI_Controller {
             'log_activity_user_id'=>$this->session->id_session,
             'log_activity_modul' => 'payment/update',
             'log_activity_document_no' => $id_session,
-            'log_activity_status' => 'Edit Invoice',
+            'log_activity_status' => 'Update Invoice',
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
             'log_activity_ip'=> $this->input->ip_address()
@@ -349,7 +349,7 @@ class Crud_payment extends CI_Controller {
 
         $this->Payment_model->insert_log_activity($data_log);
 
-        $this->session->set_flashdata('Success', 'Invoice berhasil diedit');
+        $this->session->set_flashdata('Success', 'Invoice berhasil diupdate');
 
         redirect('project/lihat/' . $id_session);
     }
@@ -386,7 +386,7 @@ class Crud_payment extends CI_Controller {
             'log_activity_user_id'=>$this->session->id_session,
             'log_activity_modul' => 'payment/update2',
             'log_activity_document_no' => $id_session,
-            'log_activity_status' => 'Edit Kwitansi',
+            'log_activity_status' => 'Update Kwitansi',
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
             'log_activity_ip'=> $this->input->ip_address()
@@ -395,12 +395,29 @@ class Crud_payment extends CI_Controller {
 
         $this->Payment_model->insert_log_activity($data_log);
 
-        $this->session->set_flashdata('Success', 'Kwitansi berhasil diedit');
+        $this->session->set_flashdata('Success', 'Kwitansi berhasil diupdate');
 
         redirect('project/lihat/' . $id_session);
     }
 
     public function delete($id_session, $transaction_id) {
+        if ($this->agent->is_browser()) // Agent untuk fitur di log activity
+        {
+            $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
+        }
+        elseif ($this->agent->is_robot())
+        {
+            $agent = $this->agent->robot();
+        }
+        elseif ($this->agent->is_mobile())
+        {
+            $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
+        }
+        else
+        {
+            $agent = 'Unidentified User Agent';
+        }
+
         $payment = $this->Payment_model->get_payment_by_transaction_id($id_session, $transaction_id);
 
         if (!$payment) {
@@ -413,6 +430,21 @@ class Crud_payment extends CI_Controller {
         } else {
             $this->session->set_flashdata('error', 'Gagal menghapus transaksi.');
         }
+
+        $data_log = array(
+
+            'log_activity_user_id'=>$this->session->id_session,
+            'log_activity_modul' => 'payment/delete',
+            'log_activity_document_no' => $id_session,
+            'log_activity_status' => 'Hapus Transaksi',
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
+            'log_activity_platform'=> $agent,
+            'log_activity_ip'=> $this->input->ip_address()
+            
+        );
+
+        $this->Payment_model->insert_log_activity($data_log);
+
         redirect('project/lihat/' . $id_session);
     }
 
