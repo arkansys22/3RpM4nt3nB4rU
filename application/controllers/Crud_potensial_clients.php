@@ -288,7 +288,7 @@ class crud_potensial_clients extends CI_Controller {
             'log_activity_user_id'=>$this->session->id_session,
             'log_activity_modul' => 'potensial-clients/create',
             'log_activity_document_no' => $id_session2,
-            'log_activity_status' => 'Tambah Potensial Klien ',
+            'log_activity_status' => 'Tambah Potensial Klien',
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
             'log_activity_ip'=> $this->input->ip_address()
@@ -296,8 +296,7 @@ class crud_potensial_clients extends CI_Controller {
         );
 
         $this->Potensial_model->insert_log_activity($data_log);
-    
-    
+
         $this->session->set_flashdata('Success', 'Potensial klien berhasil dibuat');
         redirect('potensial-clients');
     }
@@ -394,7 +393,7 @@ class crud_potensial_clients extends CI_Controller {
         );
     
         $this->Potensial_model->update_potensial_clients($id_session, $data);
-        $status = 'Edit ' .$this->input->post('status');
+        $status = 'Update Potensial Client ' . $this->input->post('status');
 
 
         $data_log = array(
@@ -412,7 +411,7 @@ class crud_potensial_clients extends CI_Controller {
         $this->Potensial_model->insert_log_activity($data_log);
     
         $this->session->set_flashdata('Success', 'Projects berhasil diupdate');
-        redirect('potensial-clients');
+        redirect('potensial-clients/lihat/' .$id_session);
     }
 
     public function delete($id_session) {
@@ -445,7 +444,7 @@ class crud_potensial_clients extends CI_Controller {
             'log_activity_user_id'=>$this->session->id_session,
             'log_activity_modul' => 'potensial-clients/delete',
             'log_activity_document_no' => $id_session,
-            'log_activity_status' => 'Hapus',
+            'log_activity_status' => 'Delete Potensial Client',
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
             'log_activity_ip'=> $this->input->ip_address()
@@ -518,7 +517,7 @@ class crud_potensial_clients extends CI_Controller {
             'log_activity_user_id'=>$this->session->id_session,
             'log_activity_modul' => 'potensial-clients/restore',
             'log_activity_document_no' => $id_session,
-            'log_activity_status' => 'Restore',
+            'log_activity_status' => 'Restore Potensial Client',
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
             'log_activity_ip'=> $this->input->ip_address()
@@ -533,8 +532,22 @@ class crud_potensial_clients extends CI_Controller {
 
     public function permanent_delete($id_session) {
         $this->Potensial_model->delete_potensial_clients_permanent($id_session);
-    
-        $this->session->set_flashdata('Success', 'Potensial klien berhasil dihapus permanen');
+        
+        $data_log = array(
+
+            'log_activity_user_id'=>$this->session->id_session,
+            'log_activity_modul' => 'potensial-clients/delete permanent',
+            'log_activity_document_no' => $id_session,
+            'log_activity_status' => 'Delete Permanent Potensial Client',
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
+            'log_activity_platform'=> $agent,
+            'log_activity_ip'=> $this->input->ip_address()
+            
+        );
+
+        $this->Potensial_model->insert_log_activity($data_log);
+
+        $this->session->set_flashdata('Success', 'Potensial klien berhasil dihapus permanent');
         redirect('potensial-clients/recycle_bin');
     }
     
