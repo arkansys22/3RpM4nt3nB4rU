@@ -246,7 +246,7 @@ class Crud_crews extends CI_Controller {
         ];
 
         $this->crews_model->update($id_session, $data);
-        $status = 'Edit' ;
+        $status = 'Update Data Crew' ;
 
 
         $data_log = array(
@@ -264,7 +264,7 @@ class Crud_crews extends CI_Controller {
         $this->crews_model->insert_log_activity($data_log);
 
         $this->session->set_flashdata('Success', 'Crew berhasil diupdate');
-        redirect('crews');
+        redirect('crews/lihat/'. $id_session);
     }
 
     public function soft_delete($id_session) {
@@ -297,7 +297,7 @@ class Crud_crews extends CI_Controller {
             'log_activity_user_id'=>$this->session->id_session,
             'log_activity_modul' => 'crews/delete',
             'log_activity_document_no' => $id_session,
-            'log_activity_status' => 'Delete',
+            'log_activity_status' => 'Delete Crew',
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
             'log_activity_ip'=> $this->input->ip_address()
@@ -341,7 +341,7 @@ class Crud_crews extends CI_Controller {
             'log_activity_user_id'=>$this->session->id_session,
             'log_activity_modul' => 'crews/restore',
             'log_activity_document_no' => $id_session,
-            'log_activity_status' => 'Restore',
+            'log_activity_status' => 'Restore Crew',
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
             'log_activity_ip'=> $this->input->ip_address()
@@ -356,7 +356,38 @@ class Crud_crews extends CI_Controller {
 
     public function delete_permanent($id_session) {
 
+        if ($this->agent->is_browser()) // Agent untuk fitur di log activity
+        {
+              $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
+        }
+        elseif ($this->agent->is_robot())
+        {
+              $agent = $this->agent->robot();
+        }
+        elseif ($this->agent->is_mobile())
+        {
+              $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
+        }
+        else
+        {
+              $agent = 'Unidentified User Agent';
+        }
+
         $this->crews_model->delete_permanent($id_session);
+
+        $data_log = array(
+
+            'log_activity_user_id'=>$this->session->id_session,
+            'log_activity_modul' => 'crews/delete_permanent',
+            'log_activity_document_no' => $id_session,
+            'log_activity_status' => 'Delete Permanent Crew',
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
+            'log_activity_platform'=> $agent,
+            'log_activity_ip'=> $this->input->ip_address()
+            
+        );
+
+        $this->crews_model->insert_log_activity($data_log);
 
         $this->session->set_flashdata('Success', 'Crew berhasil dihapus permanen');
         redirect('crews/recycle_bin');
