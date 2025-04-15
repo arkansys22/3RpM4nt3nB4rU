@@ -57,8 +57,8 @@ class User extends CI_Controller
 
             $data2 = array (
               'log_activity_user_id'=>$row['id_session'],
-              'log_activity_modul' => 'login',
-              'log_activity_status' => 'login',
+              'log_activity_modul' => 'Login',
+              'log_activity_status' => 'Login',
               'log_activity_platform'=> $agent,
               'log_activity_ip'=> $this->input->ip_address()
             );
