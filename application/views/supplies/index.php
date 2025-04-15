@@ -246,15 +246,15 @@
                       <td class="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
                         <h5 class="font-medium text-black dark:text-white"><?= $company->username ?></h5>
                         <p class="text-sm"><?= $level->user_level_nama ?></p>
-                      </td>                        
+                        </td>                        
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                        <?php if ($p->log_activity_status == 'Barang Keluar'): ?>
+                        <?php if (strpos($p->log_activity_status, 'Barang Keluar') !== false): ?>
                           <p class="inline-flex rounded-full bg-danger bg-opacity-10 px-3 py-1 text-sm font-medium text-danger">
                           <?= $p->log_activity_status?> 
                           </p>
-                        <?php elseif ($p->log_activity_status == 'Deleted'): ?>
+                        <?php elseif (strpos($p->log_activity_status, 'Delete') !== false): ?>
                           <p class="inline-flex rounded-full bg-gray-500 bg-opacity-10 px-3 py-1 text-sm font-medium text-gray-500">
-                          <?= $p->log_activity_status?> 
+                          <?= $p->log_activity_status ?> 
                           </p>
                         <?php else: ?>
                           <p class="inline-flex rounded-full bg-success bg-opacity-10 px-3 py-1 text-sm font-medium text-success">
