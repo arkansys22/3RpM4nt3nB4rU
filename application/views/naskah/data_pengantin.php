@@ -146,14 +146,16 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                 <?= nl2br($client->m_bride_sibling); ?>
                 </td>
             </tr>
-            <tr>
-                <td class="border border-black p-1 text-xs w-2/5">Mahar</td>
-                <td class="border border-black p-1 text-xs"><?= $client->mahr; ?></td>
-            </tr>
-            <tr>
-                <td class="border border-black p-1 text-xs w-2/5">Simbolis</td>
-                <td class="border border-black p-1 text-xs"><?= $client->handover; ?></td>
-            </tr>
+            <?php if ($islam): ?>
+                <tr>
+                    <td class="border border-black p-1 text-xs w-2/5">Mahar</td>
+                    <td class="border border-black p-1 text-xs"><?= $client->mahr; ?></td>
+                </tr>
+                <tr>
+                    <td class="border border-black p-1 text-xs w-2/5">Simbolis</td>
+                    <td class="border border-black p-1 text-xs"><?= $client->handover; ?></td>
+                </tr>
+            <?php endif; ?>
         </tbody>
     </table><br>
 
