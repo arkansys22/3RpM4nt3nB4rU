@@ -26,4 +26,9 @@ class Vendor_model extends CI_Model {
         $this->db->where('vendor_id', $vendor_id);
         return $this->db->delete('vendor');
     }
+
+    public function insert_log_activity($data_log) {
+        return $this->db->insert('log_activity', $data_log);
+    }
+
 }
