@@ -19,6 +19,24 @@ class Crud_vendor extends CI_Controller {
     }    
 
     public function store() {
+
+        if ($this->agent->is_browser()) // Agent untuk fitur di log activity
+        {
+            $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
+        }
+        elseif ($this->agent->is_robot())
+        {
+            $agent = $this->agent->robot();
+        }
+        elseif ($this->agent->is_mobile())
+        {
+            $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
+        }
+        else
+        {
+            $agent = 'Unidentified User Agent';
+        }
+
         $id_session = $this->input->post('id_session'); // Ambil ID session dari form
         $vendor_id = hash('sha256', bin2hex(random_bytes(16)));
         $data = [
@@ -66,6 +84,24 @@ class Crud_vendor extends CI_Controller {
     
         // Simpan ke database
         $this->Vendor_model->insert_vendor($data);
+
+        $type =  $this->input->post('type');
+        $status = 'Tambah Vendor '.$type;
+
+        $data_log = array(
+
+            'log_activity_user_id'=>$this->session->id_session,
+            'log_activity_modul' => 'vendor/create',
+            'log_activity_document_no' => $id_session,
+            'log_activity_status' => $status,
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
+            'log_activity_platform'=> $agent,
+            'log_activity_ip'=> $this->input->ip_address()
+            
+        );
+
+        $this->project_model->insert_log_activity($data_log);
+
         $this->session->set_flashdata('message', '<p style="color:green;">Vendor berhasil disimpan!</p>');
     
         // Redirect ke halaman project/lihat/{id_session}
@@ -81,6 +117,24 @@ class Crud_vendor extends CI_Controller {
     }
     
     public function update($id_session, $vendor_id) {
+
+        if ($this->agent->is_browser()) // Agent untuk fitur di log activity
+        {
+            $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
+        }
+        elseif ($this->agent->is_robot())
+        {
+            $agent = $this->agent->robot();
+        }
+        elseif ($this->agent->is_mobile())
+        {
+            $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
+        }
+        else
+        {
+            $agent = 'Unidentified User Agent';
+        }
+
         $existing_vendor = $this->Vendor_model->get_vendor_by_id_and_vendor_id($id_session, $vendor_id);
 
         $data = array(
@@ -98,10 +152,46 @@ class Crud_vendor extends CI_Controller {
         );
 
         $this->Vendor_model->update_vendor($id_session, $vendor_id, $data);
+
+        $type =  $this->input->post('type');
+        $status = 'Update Vendor '.$type;
+
+        $data_log = array(
+
+            'log_activity_user_id'=>$this->session->id_session,
+            'log_activity_modul' => 'vendor/edit',
+            'log_activity_document_no' => $id_session,
+            'log_activity_status' => $status,
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
+            'log_activity_platform'=> $agent,
+            'log_activity_ip'=> $this->input->ip_address()
+            
+        );
+
+        $this->project_model->insert_log_activity($data_log);
+
         redirect('project/lihat/' . $id_session);
     }
 
     public function delete($id_session, $vendor_id) {
+
+        if ($this->agent->is_browser()) // Agent untuk fitur di log activity
+        {
+            $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
+        }
+        elseif ($this->agent->is_robot())
+        {
+            $agent = $this->agent->robot();
+        }
+        elseif ($this->agent->is_mobile())
+        {
+            $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
+        }
+        else
+        {
+            $agent = 'Unidentified User Agent';
+        }
+
         // Cek apakah vendor dengan id_session dan vendor_id tersebut ada
         $vendor = $this->db->get_where('vendor', ['id_session' => $id_session, 'vendor_id' => $vendor_id])->row();
 
@@ -110,12 +200,32 @@ class Crud_vendor extends CI_Controller {
             redirect($_SERVER['HTTP_REFERER']); // Kembali ke halaman sebelumnya
         }
 
+        // Ambil type vendor sebelum dihapus
+        $type = $vendor->type;
+
         // Hapus vendor
         if ($this->Vendor_model->delete_vendor($id_session, $vendor_id)) {
             $this->session->set_flashdata('success', 'Vendor berhasil dihapus.');
         } else {
             $this->session->set_flashdata('error', 'Gagal menghapus vendor.');
         }
+
+        $status = 'Hapus Vendor '.$type;
+
+        $data_log = array(
+
+            'log_activity_user_id'=>$this->session->id_session,
+            'log_activity_modul' => 'vendor/edit',
+            'log_activity_document_no' => $id_session,
+            'log_activity_status' => $status,
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
+            'log_activity_platform'=> $agent,
+            'log_activity_ip'=> $this->input->ip_address()
+            
+        );
+
+        $this->project_model->insert_log_activity($data_log);
+
         redirect('project/lihat/' . $id_session);
     }
 
