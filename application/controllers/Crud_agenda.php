@@ -81,7 +81,7 @@ class Crud_agenda extends CI_Controller {
     );
 
     $this->Agenda_model->insert_agenda($data);
-    $status = 'Buat Agenda' .$this->input->post('status');
+    $status = 'Tambah Agenda' .$this->input->post('status');
 
 
     $data_log = array(
@@ -131,7 +131,7 @@ public function update($id_session){
     );
 
     $this->Agenda_model->update_agenda($id_session, $data);
-    $status = 'Edit Agenda' .$this->input->post('status');
+    $status = 'Update Agenda' .$this->input->post('status');
 
 
     $data_log = array(
