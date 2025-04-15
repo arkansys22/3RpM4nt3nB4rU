@@ -107,13 +107,36 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 						<div class="col-lg-6  align-self-center">
 							<div class="hero-box text-left">
 								<span class="greeting">Our Special Wedding Day</span>
+								
+
+								<?php $project = $this->Crud_m->view_where('project', array('id_session' => $clients->id_session))->row(); ?>
+
+								<?= $project->religion?>
+
+								<?php if($project->religion === 'Islam') {?>
+
 								<h2 class="name">
-                <?= $clients->f_bride_cname ?><span> & </span><?= $clients->m_bride_cname ?>
+                				<?= $clients->f_bride_cname ?><span> & </span><?= $clients->m_bride_cname ?>
 								</h2>
 
 								<h4 class="header_title"><?= hari($clients->wedding_date) ?>, <?= tgl_indo($clients->wedding_date) ?> | <?= $clients->location ?></h4>
 								<a id="g-p-f-h" class="pagelink mybtn mybtn-bg" href="#concept"><span><i
 											class="far fa-calendar-check"></i>Our Wedding Concepts</span></a>
+
+
+								<?php }elseif ($project->religion === 'Kristen'){ ?>
+
+								<h2 class="name">
+                				<?= $clients->m_bride_cname ?><span> & </span><?= $clients->f_bride_cname ?>
+								</h2>
+
+								<h4 class="header_title"><?= hari($clients->wedding_date) ?>, <?= tgl_indo($clients->wedding_date) ?> | <?= $clients->location ?></h4>
+								<a id="g-p-f-h" class="pagelink mybtn mybtn-bg" href="#concept"><span><i
+											class="far fa-calendar-check"></i>Our Wedding Concepts</span></a>
+
+								<?php } ?>
+
+
 
 
 							</div>
