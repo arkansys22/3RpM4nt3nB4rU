@@ -56,9 +56,13 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
 
               <!-- Susunan Acara -->
               <h3 class="text-lg font-bold mt-6 mb-2">Susunan Acara</h3>
-              <label class="block mb-2">Susunan Acara Akad</label>
-              <input type="text" name="wedding_ceremony" value="<?= $clients->wedding_ceremony ?>" placeholder="Link GDrive" class="w-full px-4 py-2 border rounded mb-4">
-
+              <?php if ($islam) : ?>
+                <label class="block mb-2">Susunan Acara Akad</label>
+                <input type="text" name="wedding_ceremony" value="<?= $clients->wedding_ceremony ?>" placeholder="Link GDrive" class="w-full px-4 py-2 border rounded mb-4">
+              <?php else : ?>
+                <label class="block mb-2">Susunan Acara Pemberkatan</label>
+                <input type="text" name="wedding_ceremony" value="<?= $clients->wedding_ceremony ?>" placeholder="Link GDrive" class="w-full px-4 py-2 border rounded mb-4">
+              <?php endif; ?>
               <label class="block mb-2">Susunan Acara Resepsi</label>
               <input type="text" name="reception_afterward" value="<?= $clients->reception_afterward ?>" placeholder="Link GDrive" class="w-full px-4 py-2 border rounded mb-4">
 
