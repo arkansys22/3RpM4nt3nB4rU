@@ -79,8 +79,7 @@ class Clients_model extends CI_Model {
         return $this->db->get_where('log_activity', ['log_activity_document_no' => $id_session])->result();
     }
 
-    public function get_clients_by_month($month)
-    {
+    public function get_clients_by_month($month) {
         $this->db->like('wedding_date', $month, 'after');
         return $this->db->get('clients')->result();
     }
@@ -90,4 +89,18 @@ class Clients_model extends CI_Model {
         return $this->db->count_all_results('clients');
     }
 
+    public function get_clients_per_year() {
+        $this->db->select("YEAR(wedding_date) as year, MONTH(wedding_date) as month, COUNT(*) as count");
+        $this->db->from("clients");
+        $this->db->group_by(["YEAR(wedding_date)", "MONTH(wedding_date)"]);
+        $this->db->order_by("YEAR(wedding_date), MONTH(wedding_date)", "ASC");
+        $query = $this->db->get();
+
+        $result = $query->result_array();
+        $clients_per_year = [];
+        foreach ($result as $row) {
+            $clients_per_year[$row['year']][$row['month']] = $row['count'];
+        }
+        return $clients_per_year;
+    }
 }
