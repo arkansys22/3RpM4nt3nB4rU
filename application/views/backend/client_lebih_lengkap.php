@@ -39,7 +39,10 @@
                 <a href="<?= site_url('panel') ?>" class="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none">Kembali</a>
                 </div>
               <?php foreach (array_reverse($clients_per_year, true) as $year => $months): ?>
-                <h2 class="text-xl font-semibold mb-3">Tahun <?= $year ?></h2>
+                <h2 class="text-xl font-semibold mb-3 flex justify-between">
+                  <span>Tahun <?= $year ?></span>
+                  <span class="text-gray-500 dark:text-gray-400">Total Client: <?= array_sum($months) ?></span>
+                </h2>
                 <div class="overflow-x-auto bg-white dark:bg-neutral-700 rounded-lg shadow-md">
                   <table class="min-w-full text-left text-sm whitespace-nowrap bg-white dark:bg-neutral-800">
                     <thead class="uppercase tracking-wider border-b-2 border-gray-200 dark:border-neutral-600 bg-gray-100 dark:bg-neutral-700">
