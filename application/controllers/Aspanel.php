@@ -714,4 +714,18 @@ class Aspanel extends CI_Controller {
 	    $this->load->view('backend/client_lebih_lengkap_detail', $data);
 	}
 
+	public function revenue_lebih_lengkap() {
+	    $this->load->model('Payment_model');
+	    $data['revenue_per_year'] = $this->Payment_model->get_revenue_per_year();
+	    $this->load->view('backend/revenue_lebih_lengkap', $data);
+	}
+
+	public function revenue_lebih_lengkap_detail($year, $month) {
+	    $this->load->model('Payment_model');
+	    $data['revenues'] = $this->Payment_model->get_paid_revenues_with_transaction_id($month, $year);
+	    $data['month'] = $month;
+	    $data['year'] = $year;
+	    $this->load->view('backend/revenue_lebih_lengkap_detail', $data);
+	}
+	
 }
