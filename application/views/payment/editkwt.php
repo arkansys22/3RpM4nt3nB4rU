@@ -46,8 +46,8 @@
 
             <label for="status" class="block mb-2 font-medium">Status:</label>
             <select name="status" id="status" class="w-full px-4 py-2 border rounded mb-4" required>
-          <option value="Pending">Pending</option>
-          <option value="Paid">Paid</option>
+                <option value="Pending" <?= $payment->status === 'Pending' ? 'selected' : '' ?>>Pending</option>
+                <option value="Paid" <?= $payment->status === 'Paid' ? 'selected' : '' ?>>Paid</option>
             </select>
 
             <div class="flex justify-end">
