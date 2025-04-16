@@ -174,4 +174,7 @@ $route['crewproject/editlist/(:any)/(:any)'] = 'Crud_crewprojects/editlist/$1/$2
 $route['crewproject/updatelist/(:any)/(:any)'] = 'Crud_crewprojects/updatelist/$1/$2'; // Route for updating a crew using id_session and crew_id
 $route['crewproject/updatelist'] = 'Crud_crewprojects/updatelist';
 
+$route['revenue/lebih_lengkap'] = 'Aspanel/revenue_lebih_lengkap';
+$route['revenue/lebih_lengkap/detail/(:num)/(:num)'] = 'Aspanel/revenue_lebih_lengkap_detail/$1/$2';
+
 $route['petacrawl\.xml'] = "petacrawl";
