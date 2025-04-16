@@ -693,25 +693,6 @@ class Aspanel extends CI_Controller {
 	    ]);
 	}
 
-	public function get_client_data()
-	{
-	    $month_now = date('Y-m');
-	    $month_last = date('Y-m', strtotime('last month'));
-	    $month_next = date('Y-m', strtotime('next month'));
-
-	    $client_bulan_ini = $this->Clients_model->get_clients_by_month($month_now);
-	    $client_bulan_lalu = $this->Clients_model->get_clients_by_month($month_last);
-	    $client_bulan_depan = $this->Clients_model->get_clients_by_month($month_next);
-	    $total_client = $this->Clients_model->get_total_clients();
-
-	    echo json_encode([
-	        'client_bulan_ini' => count($client_bulan_ini),
-	        'client_bulan_lalu' => count($client_bulan_lalu),
-	        'client_bulan_depan' => count($client_bulan_depan),
-	        'total_client' => $total_client
-	    ]);
-	}
-
 	public function client_lebih_lengkap() {
 	    $clients_per_year = $this->Clients_model->get_clients_per_year();
 	    $data['clients_per_year'] = $clients_per_year;
