@@ -94,11 +94,10 @@
 							</div>
 							<div class="flex items-center justify-between gap-1">
 								<p class="text-sm font-medium">
-									<a href="#">
+									<a href="<?= base_url('client/lebih_lengkap') ?>">
 				                        <span class="text-sm font-medium text-primary">
 				                          Lebih Lengkap >>
 				                        </span>
-				                        
 				                    </a>				                      
 								</p>
 							</div>				
