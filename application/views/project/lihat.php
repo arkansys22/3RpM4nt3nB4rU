@@ -124,7 +124,7 @@
     <?php
     // Tentukan urutan yang diinginkan
     $type_order = [
-        'Venue', 'MC Akad', 'MC Resepsi', 'Wedding Organizer', 'MUA',
+        'Venue', 'MC Akad', 'MC Pemberkatan', 'MC Resepsi', 'Wedding Organizer', 'MUA',
         'Perlengkapan Catering', 'Catering', 'Dokumentasi',
         'Dekorasi', 'Entertaiment'
     ];
