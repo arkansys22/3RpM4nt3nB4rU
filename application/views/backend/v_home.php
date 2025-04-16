@@ -127,14 +127,13 @@
 										<p id="total_net_revenue" class="text-sm font-medium">Rp 0</p>
 								</div>
 								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium">
-										<a href="#">
-					                        <span class="text-sm font-medium">
-					                          Lebih Lengkap >>
-					                        </span>
-					                        
-					                    </a>				                      
-									</p>
+								    <p class="text-sm font-medium">
+								        <a href="<?= base_url('revenue/lebih_lengkap') ?>">
+								            <span class="text-sm font-medium text-primary">
+								                Lebih Lengkap >>
+								            </span>
+								        </a>
+								    </p>
 								</div>
 							</div>
 						</div>
