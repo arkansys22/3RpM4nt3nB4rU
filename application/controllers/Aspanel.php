@@ -693,5 +693,25 @@ class Aspanel extends CI_Controller {
 	    ]);
 	}
 
+	public function client_lebih_lengkap() {
+	    $clients_per_year = $this->Clients_model->get_clients_per_year();
+	    $data['clients_per_year'] = $clients_per_year;
+	    $this->load->view('backend/client_lebih_lengkap', $data);
+	}
+
+	public function client_lebih_lengkap_detail($year, $month) {
+	    // Format bulan dan tahun
+	    $formatted_month = sprintf('%04d-%02d', $year, $month);
+
+	    // Ambil data client berdasarkan bulan dan tahun
+	    $data['clients'] = $this->Clients_model->get_clients_by_month($formatted_month);
+
+	    // Tambahkan informasi bulan dan tahun ke data
+	    $data['year'] = $year;
+	    $data['month'] = $month;
+
+	    // Load view untuk menampilkan detail client
+	    $this->load->view('backend/client_lebih_lengkap_detail', $data);
+	}
 
 }
