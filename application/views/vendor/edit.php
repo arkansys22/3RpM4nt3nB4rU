@@ -42,6 +42,7 @@
                 <select name="type" class="w-full px-4 py-2 border rounded mb-4">
                     <option value="Venue" <?= $vendor->type == 'Venue' ? 'selected' : '' ?>>Venue</option>
                     <option value="MC Akad" <?= $vendor->type == 'MC Akad' ? 'selected' : '' ?>>MC Akad</option>
+                    <option value="MC Pemberkatan" <?= $vendor->type == 'MC Pemberkatan' ? 'selected' : '' ?>>MC Pemberkatan</option>
                     <option value="MC Resepsi" <?= $vendor->type == 'MC Resepsi' ? 'selected' : '' ?>>MC Resepsi</option>
                     <option value="Wedding Organizer" <?= $vendor->type == 'Wedding Organizer' ? 'selected' : '' ?>>WO</option>
                     <option value="MUA" <?= $vendor->type == 'MUA' ? 'selected' : '' ?>>MUA</option>

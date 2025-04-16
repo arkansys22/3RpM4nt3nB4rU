@@ -43,6 +43,7 @@
                     <option value="">-</option>
                     <option value="Venue">Venue</option>
                     <option value="MC Akad">MC Akad</option>
+                    <option value="MC Pemberkatan">MC Pemberkatan</option>
                     <option value="MC Resepsi">MC Resepsi</option>
                     <option value="Wedding Organizer">Wedding Organizer</option>
                     <option value="MUA">MUA</option>
