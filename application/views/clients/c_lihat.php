@@ -730,7 +730,13 @@ Kami berdoa agar kasih Tuhan senantiasa menyertai setiap langkah hidup kita, dan
 							<div class="mix col-md-6 col-lg-6 gallery-item cat-1 cat-3">
 								<a href="<?php echo site_url('clients/c_concept?id_session=' . $vendor->id_session . '&vendor_id=' . $vendor->vendor_id); ?>" class="gallery-item-content pp">
 									<div class="item-thumbnail">
+									<?php if(empty($vendor->photo1)){?>
+										<img src="<?php echo base_url()?>assets/frontend/blank.png?>" alt="" style="width: 100%; height: 300px; object-fit: cover;">
+									<?php }else{?>
 										<img src="<?php echo base_url()?>uploads/<?= $vendor->photo1 ?>" alt="" style="width: 100%; height: 300px; object-fit: cover;">
+									<?php } ?>
+
+
 										<div class="content-overlay">
 											<div class="content">
 												<h4 class="project-title">
