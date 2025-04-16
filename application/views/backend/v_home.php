@@ -65,32 +65,24 @@
 							<!-- Client Bulan Ini -->
 							<div class="flex items-center justify-between gap-1">
 								<p class="text-sm font-medium">Client Bulan Ini</p>
-								<p class="text-sm font-medium">
-									<?= count($client_bulan_ini); ?>
-								</p>
+									<p id="client_bulan_ini" class="text-sm font-medium"><?= count($client_bulan_ini); ?></p>
 							</div>
 
 							<!-- Client Bulan Lalu -->
 							<div class="flex items-center justify-between gap-1">
 								<p class="text-sm font-medium">Client Bulan Lalu</p>
-								<p class="text-sm font-medium">
-									<?= count($client_bulan_lalu); ?>
-								</p>
+									<p id="client_bulan_lalu" class="text-sm font-medium"><?= count($client_bulan_lalu); ?></p>
 							</div>
 
 							<div class="flex items-center justify-between gap-1">
 								<p class="text-sm font-medium">Client Bulan Depan</p>
-								<p class="text-sm font-medium">
-									<?= count($client_bulan_lalu); ?>
-								</p>
+									<p id="client_bulan_depan" class="text-sm font-medium"><?= count($client_bulan_depan); ?></p>
 							</div>
 
 							<!-- Total Client -->
 							<div class="flex items-center justify-between gap-1">
 								<p class="text-sm font-medium">Total Semua Client</p>
-								<p class="text-sm font-medium">
-									<?= $total_client; ?>
-								</p>
+									<p id="total_client" class="text-sm font-medium"><?= $total_client; ?></p>
 							</div>
 							<div class="flex items-center justify-between gap-1">
 								<p class="text-sm font-medium">
@@ -338,6 +330,24 @@
 
     // Panggil fungsi saat halaman dimuat
     document.addEventListener('DOMContentLoaded', fetchRevenueData);
+
+    function fetchClientData() {
+        fetch('<?= base_url('Aspanel/get_client_data') ?>')
+            .then(response => response.json())
+            .then(data => {
+                document.querySelector('#client_bulan_ini').textContent = data.client_bulan_ini;
+                document.querySelector('#client_bulan_lalu').textContent = data.client_bulan_lalu;
+                document.querySelector('#client_bulan_depan').textContent = data.client_bulan_depan;
+                document.querySelector('#total_client').textContent = data.total_client;
+            })
+            .catch(error => console.error('Error fetching client data:', error));
+    }
+
+    // Panggil fungsi fetchClientData setiap 30 detik
+    setInterval(fetchClientData, 30000);
+
+    // Panggil fungsi saat halaman dimuat
+    document.addEventListener('DOMContentLoaded', fetchClientData);
 	</script>
 
 </body>
