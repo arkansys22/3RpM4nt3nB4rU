@@ -34,23 +34,33 @@
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
                 <div class="flex justify-between items-center mb-4">
-                <h1 class="text-2xl font-bold">Detail Gross & Net Revenue</h1>
+                <h1 class="text-2xl font-bold">Gross & Net Revenue</h1>
                 <!-- Tombol Kembali -->
                 <a href="<?= site_url('panel') ?>" class="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none">Kembali</a>
                 </div>
+
+
+                <h5 class=" font-bold">Total Gross Revenue <span id="total_revenue_all" class="text-sm font-medium"></span></h5>
+                <h5 class=" font-bold">Total Cost Project <span id="total_project_acc" class="text-sm font-medium"></span></h5>  
+                <h5 class=" font-bold">Total Net Revenue <span id="total_net_revenue" class="text-sm font-medium"></span></h5>
+                <h5 class=" font-bold">Total Pending Revenue (<span id="total_pending_revenue" class="text-sm font-medium"></span>)</h5>
+                <br><br> 
+
               <?php foreach ($revenue_per_year as $year => $months): ?>
                 <h2 class="text-xl font-semibold mb-3 flex justify-between">
-                  <span class="text-gray-900 dark:text-gray-200"><?= $year ?></span>
-                  <span class="text-gray-500 dark:text-gray-400">Total Revenue: Rp <?= number_format(array_sum(array_column($months, 'total_bill')), 0, ',', '.') ?></span>
-                  <span class="text-gray-500 dark:text-gray-400">Uang Masuk: Rp <?= number_format(array_sum(array_column($months, 'total_paid')), 0, ',', '.') ?></span>
+                  <span class="text-gray-900 dark:text-gray-200"><?= $year ?></span> 
                 </h2>
+                <div>
+                  <span class="text-gray-500 dark:text-gray-400">Gross Revenue (Paid): Rp <?= number_format(array_sum(array_column($months, 'total_paid')), 0, ',', '.') ?></span>
+                  <span class="text-gray-500 dark:text-gray-400"> | Pending Revenue (Unpaid): Rp <?= number_format(array_sum(array_column($months, 'total_unpaid')), 0, ',', '.') ?></span>
+                  </div><br>
                 <div class="overflow-x-auto bg-white dark:bg-neutral-700 rounded-lg shadow-md">
                   <table class="min-w-full text-left text-sm whitespace-nowrap bg-white dark:bg-neutral-800">
                     <thead class="uppercase tracking-wider border-b-2 border-gray-200 dark:border-neutral-600 bg-gray-100 dark:bg-neutral-700">
                       <tr>
                         <th scope="col" class="px-6 py-4 text-gray-700 dark:text-gray-300">Bulan</th>
-                        <th scope="col" class="px-6 py-4 text-gray-700 dark:text-gray-300">Total Revenue</th>
-                        <th scope="col" class="px-6 py-4 text-gray-700 dark:text-gray-300">Uang Masuk</th>
+                        <th scope="col" class="px-6 py-4 text-gray-700 dark:text-gray-300">Gross Revenue (Paid)</th>
+                        <th scope="col" class="px-6 py-4 text-gray-700 dark:text-gray-300">Pending Revenue (Unpaid)</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -62,11 +72,12 @@
                             </a>
                           </th>
                           <td class="px-6 py-4 text-gray-700 dark:text-gray-400">
-                            Rp <?= isset($months[$month]) ? number_format($months[$month]['total_bill'], 0, ',', '.') : '0' ?>
-                          </td>
-                          <td class="px-6 py-4 text-gray-700 dark:text-gray-400">
                             Rp <?= isset($months[$month]) ? number_format($months[$month]['total_paid'], 0, ',', '.') : '0' ?>
                           </td>
+                          <td class="px-6 py-4 text-gray-700 dark:text-gray-400">
+                            Rp <?= isset($months[$month]) ? number_format($months[$month]['total_unpaid'], 0, ',', '.') : '0' ?>
+                          </td>
+                          
                         </tr>
                       <?php endfor; ?>
                     </tbody>
@@ -82,6 +93,26 @@
     </div>
     <!-- ===== Content Area End ===== -->
   </div>
+  <script>
+    function fetchRevenueData() {
+        fetch('<?= base_url('Aspanel/get_revenue_data') ?>')
+            .then(response => response.json())
+            .then(data => {
+               
+                document.querySelector('#total_revenue_all').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.total_revenue_all)}`;
+                document.querySelector('#total_project_acc').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.total_project_acc)}`; 
+                document.querySelector('#total_net_revenue').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.total_net_revenue)}`;
+                document.querySelector('#total_pending_revenue').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.total_pending_revenue)}`;
+                                  
+            })
+            .catch(error => console.error('Error fetching revenue data:', error));
+      }
+      // Panggil fungsi fetchRevenueData setiap 30 detik
+      setInterval(fetchRevenueData, 30000);
+
+      // Panggil fungsi saat halaman dimuat
+      document.addEventListener('DOMContentLoaded', fetchRevenueData);
+  </script>
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
 </body>
 </html>

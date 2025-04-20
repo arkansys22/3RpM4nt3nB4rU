@@ -49,7 +49,7 @@ class Payment_model extends CI_Model {
     }
 
     public function get_revenue_per_year() {
-        $this->db->select("YEAR(date) as year, MONTH(date) as month, SUM(total_bill) as total_bill, SUM(CASE WHEN status = 'Paid' THEN total_paid ELSE 0 END) as total_paid");
+        $this->db->select("YEAR(date) as year, MONTH(date) as month, SUM(CASE WHEN status = 'Pending' THEN total_paid ELSE 0 END) as total_unpaid, SUM(CASE WHEN status = 'Paid' THEN total_paid ELSE 0 END) as total_paid");
         $this->db->from("payment");
         $this->db->group_by(["YEAR(date)", "MONTH(date)"]);
         $this->db->order_by("YEAR(date) DESC, MONTH(date) DESC");
@@ -59,7 +59,7 @@ class Payment_model extends CI_Model {
         $revenue_per_year = [];
         foreach ($result as $row) {
             $revenue_per_year[$row['year']][$row['month']] = [
-                'total_bill' => $row['total_bill'],
+                'total_unpaid' => $row['total_unpaid'],
                 'total_paid' => $row['total_paid']
             ];
         }
@@ -67,13 +67,14 @@ class Payment_model extends CI_Model {
     }
 
     public function get_paid_revenues_with_transaction_id($month, $year) {
-        $this->db->select('id_session, transactions_id, total_bill, total_paid, date as transaction_date');
+        $this->db->select('id_session, transactions_id, status, total_bill, total_paid, date as transaction_date');
         $this->db->from('payment');
         $this->db->where('MONTH(date)', $month);
         $this->db->where('YEAR(date)', $year);
         $this->db->where('transactions_id IS NOT NULL'); // Ensure transaction_id exists
         $this->db->group_start(); // Start grouping conditions
-        $this->db->where('total_bill IS NOT NULL'); // Include if total_bill exists
+        $this->db->where('total_paid IS NOT NULL'); // Include if total_bill exists
+        $this->db->where('status', 'Pending'); // Only include if status is Paid
         $this->db->or_group_start(); // Start sub-group for total_paid condition
         $this->db->where('total_paid IS NOT NULL'); // Include if total_paid exists
         $this->db->where('status', 'Paid'); // Only include if status is Paid

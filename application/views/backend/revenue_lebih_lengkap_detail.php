@@ -45,9 +45,10 @@
                   <table class="table w-full table-auto" id="dataTableTwo">
                     <thead>
                       <tr>
+                        <th>Nama Project</th>
                         <th>Transaction ID</th>
-                        <th>Total Bill</th>
-                        <th>Uang Masuk</th>
+                        <th>Status</th>
+                        <th>Nominal</th>
                         <th>Tanggal Transaksi</th>
                         <th>Aksi</th>
                       </tr>
@@ -55,9 +56,11 @@
                     <tbody>
                       <?php if (!empty($revenues)): ?>
                         <?php foreach ($revenues as $revenue): ?>
+                          <?php $project = $this->Crud_m->view_where('project', array('id_session' => $revenue->id_session))->row(); ?>
                           <tr>
+                            <td><?= $project->project_name ?></td>
                             <td><?= $revenue->transactions_id ?></td>
-                            <td>Rp <?= number_format($revenue->total_bill, 0, ',', '.') ?></td>
+                            <td><?= $revenue->status ?></td>
                             <td>Rp <?= number_format($revenue->total_paid, 0, ',', '.') ?></td>
                             <td><?= tgl_indo($revenue->transaction_date) ?></td>
                             <td>

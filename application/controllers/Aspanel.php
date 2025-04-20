@@ -642,6 +642,11 @@ class Aspanel extends CI_Controller {
 	        ->get('payment')
 	        ->row();
 
+	    $total_pending_revenue = $this->db->select_sum('total_paid')
+	    	->where('status', 'Pending')
+	        ->get('payment')
+	        ->row();
+
 	    $total_project_acc = $this->db->select_sum('nominal_transaksi')
 	        ->get('project_acc')
 	        ->row();
@@ -683,6 +688,8 @@ class Aspanel extends CI_Controller {
 	        'revenue_bulan_ini' => $revenue_bulan_ini->total_paid ?? 0,
 	        'revenue_bulan_lalu' => $revenue_bulan_lalu->total_paid ?? 0,
 	        'total_revenue_all' => $total_revenue_all->total_paid ?? 0,
+	        'total_pending_revenue' => $total_pending_revenue->total_paid ?? 0,
+	        'total_project_acc' => $total_project_acc->nominal_transaksi ?? 0,
 	        'total_net_revenue' => $total_net_revenue,
 	        'expense_bulan_ini' => $expense_bulan_ini->nominal_transaksi ?? 0,
 	        'expense_bulan_lalu' => $expense_bulan_lalu->nominal_transaksi ?? 0,
