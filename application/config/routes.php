@@ -7,6 +7,7 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['login'] = "User/login";
 $route['panel'] = "aspanel/home";
+$route['panel/staff'] = "aspanel/home/staff";
 $route['logout'] = "aspanel/logout";
 
 $route['client/login'] = "Client/login";
