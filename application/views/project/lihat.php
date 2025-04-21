@@ -82,34 +82,59 @@
                 <h2 class="text-lg font-bold mb-2">List Crew</h2>
 
                 <div class="border p-4 mb-4">
-                    <?php if (!empty($crew_list)): ?>
-                        <?php foreach ($crew_list as $crew): ?>
-                            <div class="mb-2 flex items-center justify-between border-b pb-2">
-                                <div>
-                                    <p class='font-medium'>
-                                        <strong><?= htmlspecialchars($crew->role) ?>:</strong> 
-                                        <?= htmlspecialchars($crew->crew_name) ?>
-                                    </p>
-                                </div>
-                                <div class="flex gap-2">
-                                    <!-- Edit Button -->
-                                    <a href="<?= site_url('crewproject/editlist/' . $crew->id_session . '/' . $crew->crew_id) ?>" 
-                                       class="bg-green-500 text-white text-sm px-2 py-1 rounded-md hover:bg-green-600">
-                                       Edit
-                                    </a>
+                  <?php
+                  // Define the order of roles
+                  $role_order = [
+                    'Koordinator Acara',
+                    'Koordinator Lapangan',
+                    'Koordinator Catering',
+                    'Koordinator Pengantin',
+                    'Koordinator Tamu',
+                    'Koordinator Tambahan1',
+                    'Koordinator Tambahan2'
+                  ];
 
-                                    <!-- Delete Button -->
-                                    <a href="<?= site_url('crewproject/delete/' . $crew->id_session) ?>" 
-                                       onclick="return confirm('Apakah Anda yakin ingin menghapus crew ini?')"
-                                       class="bg-red-500 text-white text-sm px-2 py-1 rounded-md hover:bg-red-600">
-                                       Hapus
-                                    </a>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <p class='text-red-500 font-semibold'>Belum ada crew. Silakan tambahkan crew.</p>
-                    <?php endif; ?>
+                  // Sort the crew list based on the defined role order
+                  usort($crew_list, function ($a, $b) use ($role_order) {
+                    $posA = array_search($a->role, $role_order);
+                    $posB = array_search($b->role, $role_order);
+
+                    // If not found in the array, place at the end
+                    $posA = ($posA === false) ? count($role_order) : $posA;
+                    $posB = ($posB === false) ? count($role_order) : $posB;
+
+                    return $posA - $posB;
+                  });
+                  ?>
+
+                  <?php if (!empty($crew_list)): ?>
+                    <?php foreach ($crew_list as $crew): ?>
+                      <div class="mb-2 flex items-center justify-between border-b pb-2">
+                        <div>
+                          <p class='font-medium'>
+                            <strong><?= htmlspecialchars($crew->role) ?>:</strong> 
+                            <?= htmlspecialchars($crew->crew_name) ?>
+                          </p>
+                        </div>
+                        <div class="flex gap-2">
+                          <!-- Edit Button -->
+                          <a href="<?= site_url('crewproject/editlist/' . $crew->id_session . '/' . $crew->crew_id) ?>" 
+                             class="bg-green-500 text-white text-sm px-2 py-1 rounded-md hover:bg-green-600">
+                             Edit
+                          </a>
+
+                          <!-- Delete Button -->
+                          <a href="<?= site_url('crewproject/delete/' . $crew->id_session) ?>" 
+                             onclick="return confirm('Apakah Anda yakin ingin menghapus crew ini?')"
+                             class="bg-red-500 text-white text-sm px-2 py-1 rounded-md hover:bg-red-600">
+                             Hapus
+                          </a>
+                        </div>
+                      </div>
+                    <?php endforeach; ?>
+                  <?php else: ?>
+                    <p class='text-red-500 font-semibold'>Belum ada crew. Silakan tambahkan crew.</p>
+                  <?php endif; ?>
 
                     <!-- Add Crew Button -->
                     <a href="<?= site_url('crewproject/createlist/' . $project->id_session) ?>" 
