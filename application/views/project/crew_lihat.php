@@ -33,12 +33,19 @@
         <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
+            <div class="flex justify-between items-center mb-4">  
               <h1 class="text-2xl font-bold mb-4">Lihat project</h1>
+              <a href="<?= site_url('panel') ?>" class="flex items-center gap-2 bg-blue-500 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+                  </svg>
+                </a>
+            </div>
               <form action="<?= site_url('project/update/'.$project->id_session) ?>" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
-                <label class="block mb-2 text-black dark:text-white"><strong>Nama Project : </strong><?= $project->project_name ?></label>        
-                <label class="block mb-2 text-black dark:text-white"><strong>Agama : </strong><?= $project->religion ?></label>        
-                <label class="block mb-2 text-black dark:text-white"><strong>Tanggal Pernikahan : </strong><?= hari($project->event_date) ?>, <?= tgl_indo($project->event_date) ?></label>
-                <label class="block mb-2 text-black dark:text-white"><strong>Lokasi : </strong><?= $project->location ?></label>
+                <label class="block mb-2"><strong>Nama Project : </strong><?= $project->project_name ?></label>        
+                <label class="block mb-2"><strong>Agama : </strong><?= $project->religion ?></label>        
+                <label class="block mb-2"><strong>Tanggal Pernikahan : </strong><?= hari($project->event_date) ?>, <?= tgl_indo($project->event_date) ?></label>
+                <label class="block mb-2"><strong>Lokasi : </strong><?= $project->location ?></label>
 
                 <?php  if(!empty($clients->wedding_ceremony)){ ?>
                   <?php  if($project->religion == 'Islam'){ ?>
@@ -67,19 +74,9 @@
                 ?>
 
                 <h2 class="text-lg font-bold mb-2"><br>Job Description</h2>
-                <div class="border p-4 mb-4 text-black dark:text-white">
-                    <?php 
-                    $user_role = null;
-                    foreach ($roles as $field => $label) {
-                        // Match crew_id from crew_projects with crews_idsession in the user table
-                        if (!empty($crew_project->$field) && $crew_project->$field === $user->crews_idsession) {
-                            $user_role = $label;
-                            break;
-                        }
-                    }
-                    ?>
-                    <?php if ($user_role): ?>
-                        <p><strong>Role:</strong> <?= htmlspecialchars($user_role) ?></p>
+                  <div class="border p-4 mb-4">
+                    <?php if (!empty($crew_role)): ?>
+                        <p><strong>Role:</strong> <?= htmlspecialchars($crew_role->role) ?></p>
                         <button 
                             type="button" 
                             class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700"
@@ -89,26 +86,22 @@
                     <?php else: ?>
                         <p class="text-red-500 font-semibold">Job description belum tersedia</p>
                     <?php endif; ?>
-                </div>
+                  </div>
 
-                <!-- Jobdesc Modal -->
-                <div id="jobdescModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div class="bg-white dark:bg-boxdark p-6 rounded shadow-lg max-w-lg w-full">
-                        <h3 class="text-lg font-bold mb-4">Job Description</h3>
-                        <p class="text-black dark:text-white">
-                            <?php 
-                            // Replace this with the actual job description content based on the role
-                            echo $user_role ? "Deskripsi pekerjaan untuk $user_role." : "Tidak ada deskripsi pekerjaan.";
-                            ?>
-                        </p>
-                        <button 
-                            type="button" 
-                            class="mt-4 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-700"
-                            onclick="document.getElementById('jobdescModal').classList.add('hidden')">
-                            Tutup
-                        </button>
+                    <div id="jobdescModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <div class="bg-white dark:bg-boxdark p-6 rounded shadow-lg max-w-lg w-full max-h-[80vh] overflow-y-auto">
+                      <h3 class="text-lg font-bold mb-4">Job Description</h3>
+                      <p class="whitespace-pre-line">
+                        <?= $jobdesc ? nl2br(htmlspecialchars($jobdesc)) : "Tidak ada deskripsi pekerjaan." ?>
+                      </p>
+                      <button 
+                        type="button" 
+                        class="mt-4 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-700"
+                        onclick="document.getElementById('jobdescModal').classList.add('hidden')">
+                        Tutup
+                      </button>
                     </div>
-                </div>
+                    </div>
 
                 <?php
                 $hasCrew = false;
@@ -125,7 +118,7 @@
                   if (!empty($crew_project->$field)):
                     $crew = $this->Crud_m->view_where('crews', array('id_session' => $crew_project->$field))->row();
                   ?>
-                  <label class="block mb-2 text-black dark:text-white"><strong><?= $label ?> : </strong><?= $crew->crew_name ?></label>
+                  <label class="block mb-2"><strong><?= $label ?> : </strong><?= $crew->crew_name ?></label>
                   <?php 
                   endif;
                   endforeach; 
@@ -134,31 +127,55 @@
 
                 <h2 class="text-lg font-bold mb-2">List Crew</h2>
 
-                <div class="border p-4 mb-4 text-black dark:text-white">
-                    <?php if (!empty($crew_list)): ?>
-                        <?php foreach ($crew_list as $crew): ?>
-                            <div class="mb-2 flex items-center justify-between border-b pb-2">
-                                <div>
-                                    <p class='text-black dark:text-white font-medium'>
-                                        <strong><?= htmlspecialchars($crew->role) ?>:</strong> 
-                                        <?= htmlspecialchars($crew->crew_name) ?>
-                                    </p>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <p class='text-red-500 font-semibold'>Belum ada crew.</p>
-                    <?php endif; ?>
-                </div>
+                <div class="border p-4 mb-4">
+                  <?php
+                  // Define the order of roles
+                  $role_order = [
+                    'Koordinator Acara',
+                    'Koordinator Lapangan',
+                    'Koordinator Catering',
+                    'Koordinator Pengantin',
+                    'Koordinator Tamu',
+                    'Koordinator Tambahan1',
+                    'Koordinator Tambahan2'
+                  ];
+
+                  // Sort the crew list based on the defined role order
+                  usort($crew_list, function ($a, $b) use ($role_order) {
+                    $posA = array_search($a->role, $role_order);
+                    $posB = array_search($b->role, $role_order);
+
+                    // If not found in the array, place at the end
+                    $posA = ($posA === false) ? count($role_order) : $posA;
+                    $posB = ($posB === false) ? count($role_order) : $posB;
+
+                    return $posA - $posB;
+                  });
+                  ?>
+
+                  <?php if (!empty($crew_list)): ?>
+                    <?php foreach ($crew_list as $crew): ?>
+                      <div class="mb-2 flex items-center justify-between border-b pb-2">
+                        <div>
+                          <p class='font-medium'>
+                            <strong><?= htmlspecialchars($crew->role) ?>:</strong> 
+                            <?= htmlspecialchars($crew->crew_name) ?>
+                          </p>
+                        </div>
+                      </div>
+                    <?php endforeach; ?>
+                  <?php else: ?>
+                    <p class='text-red-500 font-semibold'>Belum ada crew.</p>
+                  <?php endif; ?>
 
                 <h2 class="text-lg font-bold mb-2">Vendor</h2>
 
-                <div class="border p-4 mb-4 text-black dark:text-white">
+                <div class="border p-4 mb-4">
                     <?php if (!empty($vendors)): ?>
                         <?php foreach ($vendors as $vendor): ?>
                             <div class="mb-2 flex items-center justify-between border-b pb-2">
                                 <div>
-                                    <p class='text-black dark:text-white font-medium'>
+                                    <p class='font-medium'>
                                         <strong><?= htmlspecialchars($vendor->type) ?>:</strong> 
                                         <?= htmlspecialchars($vendor->vendor) ?>
                                     </p>
