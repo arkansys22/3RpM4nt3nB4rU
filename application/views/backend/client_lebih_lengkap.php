@@ -36,7 +36,11 @@
                 <div class="flex justify-between items-center mb-4">
                 <h1 class="text-2xl font-bold">Detail Total Client</h1>
                 <!-- Tombol Kembali -->
-                <a href="<?= site_url('panel') ?>" class="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none">Kembali</a>
+                <a href="<?= site_url('panel') ?>" class="flex items-center gap-2 bg-blue-500 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+                  </svg>
+                </a>
                 </div>
               <?php foreach (array_reverse($clients_per_year, true) as $year => $months): ?>
                 <h2 class="text-xl font-semibold mb-3 flex justify-between">
