@@ -16,7 +16,7 @@ class Aspanel extends CI_Controller {
 		{
 		redirect(base_url('login'));
 		}
-		public function home()
+		public function home($view = null)
 		{
 			if ($this->session->level == '1') {
 				cek_session_akses_developer('panel', $this->session->id_session);
@@ -50,7 +50,20 @@ class Aspanel extends CI_Controller {
 				if ($data['revenue_bulan_ini'] && $data['revenue_bulan_lalu'] && $data['revenue_bulan_lalu']->total_paid != 0) {
 					$data['percent_change'] = (($data['revenue_bulan_ini']->total_paid - $data['revenue_bulan_lalu']->total_paid) / $data['revenue_bulan_lalu']->total_paid) * 100;
 				}
-				$this->load->view('backend/v_home', $data);
+
+				// Load view based on the URI segment
+				if ($view === 'staff') {
+					$this->db->select('project.event_date, project.location, project.client_name, crew_projects.role, crew_projects.project_id');
+					$this->db->from('user');
+					$this->db->join('crew_projects', 'user.crews_idsession = crew_projects.crew_id');
+					$this->db->join('project', 'crew_projects.project_id = project.id_session');
+					$this->db->where('user.id_session', $this->session->id_session);
+					$this->db->order_by('project.event_date', 'DESC');
+					$data['events'] = $this->db->get()->result_array();
+					$this->load->view('backend/v_home_staff', $data);
+				} else {
+					$this->load->view('backend/v_home', $data);
+				}
 		
 			} else if ($this->session->level == '2') {
 				cek_session_akses_administrator('panel', $this->session->id_session);
