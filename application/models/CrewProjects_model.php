@@ -90,5 +90,38 @@ class CrewProjects_model extends CI_Model {
         return $this->db->insert('log_activity', $data_log);
     }
 
+    public function get_crew_login_details($project_id_session, $user_id_session) {
+        $user = $this->db->get_where('user', ['id_session' => $user_id_session])->row();
+        $crews_idsession = $user->crews_idsession ?? null;
+
+        $crew_projects_login = null;
+        $crew_role = null;
+        $jobdesc = null;
+
+        if ($crews_idsession) {
+            $crew_projects_login = $this->db->get_where('crew_projects', [
+                'project_id' => $project_id_session,
+                'crew_id' => $crews_idsession
+            ])->row();
+
+            if ($crew_projects_login) {
+                $crew_role = $this->db->get_where('crew_role', [
+                    'role' => $crew_projects_login->role
+                ])->row();
+
+                if ($crew_role) {
+                    $jobdesc = $crew_role->detail;
+                }
+            }
+        }
+
+        return [
+            'crew_projects_login' => $crew_projects_login,
+            'crew_role' => $crew_role,
+            'jobdesc' => $jobdesc,
+            'user' => $user
+        ];
+    }
+
 }
 ?>
