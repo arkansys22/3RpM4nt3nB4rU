@@ -212,6 +212,14 @@ class Crud_project extends CI_Controller {
             show_error('Project not found.', 404);
         }
 
+        $id_session_user = $this->session->userdata('id_session');
+        $crew_details = $this->CrewProjects_model->get_crew_login_details($id_session, $id_session_user);
+
+        $data['crew_projects_login'] = $crew_details['crew_projects_login'];
+        $data['crew_role'] = $crew_details['crew_role'];
+        $data['jobdesc'] = $crew_details['jobdesc'];
+        $data['user'] = $crew_details['user'];
+
         $this->load->view('project/crew_lihat', $data);
     }
 
