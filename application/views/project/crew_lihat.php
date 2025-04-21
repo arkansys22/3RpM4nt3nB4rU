@@ -47,18 +47,17 @@
                 <label class="block mb-2"><strong>Tanggal Pernikahan : </strong><?= hari($project->event_date) ?>, <?= tgl_indo($project->event_date) ?></label>
                 <label class="block mb-2"><strong>Lokasi : </strong><?= $project->location ?></label>
 
-                <?php  if(!empty($clients->wedding_ceremony)){ ?>
-                  <?php  if($project->religion == 'Islam'){ ?>
-                  <a href="<?= $clients->wedding_ceremony ?>" target="_blank" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Lihat Susunan Akad</a>
-                  <?php }else{?>
-                  <a href="<?= $clients->wedding_ceremony ?>" target="_blank" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Lihat Susunan Pemberkatan</a>
-                  <?php }?>      
+                    <?php if (!empty($clients->wedding_ceremony)): ?>
+                    <?php if ($project->religion == 'Islam'): ?>
+                    <a href="<?= $clients->wedding_ceremony ?>" target="_blank" class="block sm:inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-2 sm:mb-0 text-center">Lihat Susunan Akad</a>
+                    <?php else: ?>
+                    <a href="<?= $clients->wedding_ceremony ?>" target="_blank" class="block sm:inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-2 sm:mb-0 text-center">Lihat Susunan Pemberkatan</a>
+                    <?php endif; ?>
+                    <?php endif; ?>
 
-                <?php }?>
-                <?php  if(!empty($clients->reception_afterward)){ ?>
-                <a href="<?= $clients->reception_afterward ?>" target="_blank" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Lihat Susunan Resepsi</a>
-                <?php }?>
-
+                    <?php if (!empty($clients->reception_afterward)): ?>
+                    <a href="<?= $clients->reception_afterward ?>" target="_blank" class="block sm:inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 text-center">Lihat Susunan Resepsi</a>
+                    <?php endif; ?>
 
                 <?php
                 // Ensure $roles is defined
@@ -131,60 +130,81 @@
                   <?php
                   // Define the order of roles
                   $role_order = [
-                    'Koordinator Acara',
-                    'Koordinator Lapangan',
-                    'Koordinator Catering',
-                    'Koordinator Pengantin',
-                    'Koordinator Tamu',
-                    'Koordinator Tambahan1',
-                    'Koordinator Tambahan2'
+                  'Koordinator Acara',
+                  'Koordinator Lapangan',
+                  'Koordinator Catering',
+                  'Koordinator Pengantin',
+                  'Koordinator Tamu',
+                  'Koordinator Tambahan1',
+                  'Koordinator Tambahan2'
                   ];
 
                   // Sort the crew list based on the defined role order
                   usort($crew_list, function ($a, $b) use ($role_order) {
-                    $posA = array_search($a->role, $role_order);
-                    $posB = array_search($b->role, $role_order);
+                  $posA = array_search($a->role, $role_order);
+                  $posB = array_search($b->role, $role_order);
 
-                    // If not found in the array, place at the end
-                    $posA = ($posA === false) ? count($role_order) : $posA;
-                    $posB = ($posB === false) ? count($role_order) : $posB;
+                  // If not found in the array, place at the end
+                  $posA = ($posA === false) ? count($role_order) : $posA;
+                  $posB = ($posB === false) ? count($role_order) : $posB;
+
+                  return $posA - $posB;
+                  });
+                  ?>
+
+                  <?php if (!empty($crew_list)): ?>
+                  <?php foreach ($crew_list as $index => $crew): ?>
+                    <div class="mb-2 flex items-center justify-between <?= $index === count($crew_list) - 1 ? '' : 'border-b pb-2' ?>">
+                    <div>
+                      <p class='font-medium'>
+                      <strong><?= htmlspecialchars($crew->role) ?>:</strong> 
+                      <?= htmlspecialchars($crew->crew_name) ?>
+                      </p>
+                    </div>
+                    </div>
+                  <?php endforeach; ?>
+                  <?php else: ?>
+                  <p class='text-red-500 font-semibold'>Belum ada crew.</p>
+                  <?php endif; ?>
+                </div>
+
+                <h2 class="text-lg font-bold mb-2">Vendor</h2>
+                  <?php
+                  // Tentukan urutan yang diinginkan
+                  $type_order = [
+                    'Venue', 'MC Akad', 'MC Pemberkatan', 'MC Resepsi', 'Wedding Organizer', 'MUA',
+                    'Perlengkapan Catering', 'Catering', 'Dokumentasi',
+                    'Dekorasi', 'Entertaiment'
+                  ];
+
+                  // Urutkan vendor berdasarkan tipe
+                  usort($vendors, function ($a, $b) use ($type_order) {
+                    $posA = array_search($a->type, $type_order);
+                    $posB = array_search($b->type, $type_order);
+
+                    // Jika tidak ditemukan dalam array, tempatkan di akhir
+                    $posA = ($posA === false) ? count($type_order) : $posA;
+                    $posB = ($posB === false) ? count($type_order) : $posB;
 
                     return $posA - $posB;
                   });
                   ?>
 
-                  <?php if (!empty($crew_list)): ?>
-                    <?php foreach ($crew_list as $crew): ?>
-                      <div class="mb-2 flex items-center justify-between border-b pb-2">
+                <div class="border p-4 mb-4">
+                  <?php if (!empty($vendors)): ?>
+                    <?php foreach ($vendors as $index => $vendor): ?>
+                      <div class="mb-2 flex items-center justify-between <?= $index === count($vendors) - 1 ? '' : 'border-b pb-2' ?>">
                         <div>
                           <p class='font-medium'>
-                            <strong><?= htmlspecialchars($crew->role) ?>:</strong> 
-                            <?= htmlspecialchars($crew->crew_name) ?>
+                            <strong><?= htmlspecialchars($vendor->type) ?>:</strong> 
+                            <?= htmlspecialchars($vendor->vendor) ?>
                           </p>
                         </div>
                       </div>
                     <?php endforeach; ?>
                   <?php else: ?>
-                    <p class='text-red-500 font-semibold'>Belum ada crew.</p>
+                    <p class='text-red-500 font-semibold'>Belum ada vendor.</p>
                   <?php endif; ?>
-
-                <h2 class="text-lg font-bold mb-2">Vendor</h2>
-
-                <div class="border p-4 mb-4">
-                    <?php if (!empty($vendors)): ?>
-                        <?php foreach ($vendors as $vendor): ?>
-                            <div class="mb-2 flex items-center justify-between border-b pb-2">
-                                <div>
-                                    <p class='font-medium'>
-                                        <strong><?= htmlspecialchars($vendor->type) ?>:</strong> 
-                                        <?= htmlspecialchars($vendor->vendor) ?>
-                                    </p>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <p class='text-red-500 font-semibold'>Belum ada vendor.</p>
-                    <?php endif; ?>
                 </div>
               </form>
             </div>
