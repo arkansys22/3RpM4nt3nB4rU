@@ -83,4 +83,34 @@ class Payment_model extends CI_Model {
         return $this->db->get()->result();
     }
 
+    public function get_paid_expense_with_transaction_id($month, $year) {
+        $this->db->select('id_session, nama_transaksi, kategori, nominal_transaksi, tanggal_transaksi as transaction_date');
+        $this->db->from('operational_acc');
+        $this->db->where('MONTH(tanggal_transaksi)', $month);
+        $this->db->where('YEAR(tanggal_transaksi)', $year);
+        $this->db->group_start(); // Start grouping conditions
+        $this->db->where('nominal_transaksi IS NOT NULL'); // Include if total_bill exists        
+        $this->db->group_end(); // End grouping conditions
+        return $this->db->get()->result();
+    }
+
+
+    public function get_expense_per_year() {
+        $this->db->select("YEAR(tanggal_transaksi) as year, MONTH(tanggal_transaksi) as month, SUM(nominal_transaksi) as total");
+        $this->db->from("operational_acc");
+        $this->db->group_by(["YEAR(tanggal_transaksi)", "MONTH(tanggal_transaksi)"]);
+        $this->db->order_by("YEAR(tanggal_transaksi) DESC, MONTH(tanggal_transaksi) DESC");
+        $query = $this->db->get();
+
+        $result = $query->result_array();
+        $espense_per_year = [];
+        foreach ($result as $row) {
+            $espense_per_year[$row['year']][$row['month']] = [
+                'total' => $row['total']
+            ];
+        }
+        return $espense_per_year;
+    }
+
+
 }

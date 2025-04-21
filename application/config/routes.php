@@ -177,4 +177,7 @@ $route['crewproject/updatelist'] = 'Crud_crewprojects/updatelist';
 $route['revenue/lebih_lengkap'] = 'Aspanel/revenue_lebih_lengkap';
 $route['revenue/lebih_lengkap/detail/(:num)/(:num)'] = 'Aspanel/revenue_lebih_lengkap_detail/$1/$2';
 
+$route['expense/lebih_lengkap'] = 'Aspanel/expense_lebih_lengkap';
+$route['expense/lebih_lengkap/detail/(:num)/(:num)'] = 'Aspanel/expense_lebih_lengkap_detail/$1/$2';
+
 $route['petacrawl\.xml'] = "petacrawl";

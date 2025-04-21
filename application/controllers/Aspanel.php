@@ -8,6 +8,7 @@ class Aspanel extends CI_Controller {
 		$this->load->model('Potensial_model');
 		$this->load->model('Clients_model');
 		$this->load->model('project_model');
+		$this->load->model('Payment_model');
 		$this->load->model('finance_project_model');
 		date_default_timezone_set('Asia/Jakarta');
 	}
@@ -733,6 +734,56 @@ class Aspanel extends CI_Controller {
 	    $data['month'] = $month;
 	    $data['year'] = $year;
 	    $this->load->view('backend/revenue_lebih_lengkap_detail', $data);
+	}
+
+
+	public function expense_lebih_lengkap() {
+		if ($this->session->level == '1') {
+			cek_session_akses_developer('panel', $this->session->id_session);	    
+		    $data['expense_per_year'] = $this->Payment_model->get_expense_per_year();
+		    $this->load->view('backend/expense_lebih_lengkap', $data);
+		}else if ($this->session->level == '3') {
+			cek_session_akses_staff_accounting('panel', $this->session->id_session);
+			$data['expense_per_year'] = $this->Payment_model->get_expense_per_year();
+		    $this->load->view('backend/expense_lebih_lengkap', $data);
+		}else{
+				redirect(base_url());
+		}
+	}
+
+	public function expense_lebih_lengkap_detail($year, $month) {
+		if ($this->session->level == '1') {
+			cek_session_akses_developer('panel', $this->session->id_session);
+			$data['expense'] = $this->Payment_model->get_paid_expense_with_transaction_id($month, $year);
+	    	$data['month'] = $month;
+	    	$data['year'] = $year;
+	    	$this->load->view('backend/expense_lebih_lengkap_detail', $data);
+		}else if ($this->session->level == '3') {
+			cek_session_akses_staff_accounting('panel', $this->session->id_session);
+			$data['expense'] = $this->Payment_model->get_paid_expense_with_transaction_id($month, $year);
+	    	$data['month'] = $month;
+	    	$data['year'] = $year;
+	    	$this->load->view('backend/expense_lebih_lengkap_detail', $data);
+		}else{
+				redirect(base_url());
+		}
+
+	    
+	}
+
+
+
+	public function get_expense_data()
+	{
+	      
+	    $total_expense = $this->db->select_sum('nominal_transaksi')
+	        ->get('operational_acc')
+	        ->row();
+
+	    echo json_encode([
+	        'total_expense' => $total_expense->nominal_transaksi ?? 0
+	        
+	    ]);
 	}
 	
 }

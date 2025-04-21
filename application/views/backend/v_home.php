@@ -170,11 +170,11 @@
 								</div>
 								<div class="flex items-center justify-between gap-1">
 									<p class="text-sm font-medium">
-										<a href="#">
-					                        <span class="text-sm font-medium">
-					                          Lebih Lengkap >>
-					                        </span>					                        
-					                    </a>				                      
+										<a href="<?= base_url('expense/lebih_lengkap') ?>">
+				                        <span class="text-sm font-medium text-primary">
+				                          Lebih Lengkap >>
+				                        </span>
+				                    </a>				                      
 									</p>
 								</div>
 							</div>
