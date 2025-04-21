@@ -30,118 +30,118 @@
 
       <!-- ===== Main Content Start ===== -->
       <main>
-        <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
-          <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
-            <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-              <h1 class="text-2xl font-bold mb-4">Lihat project</h1>
-              <form action="<?= site_url('project/update/'.$project->id_session) ?>" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
-                <label class="block mb-2"><strong>Nama Project : </strong><?= $project->project_name ?></label>        
-                <label class="block mb-2"><strong>Agama : </strong><?= $project->religion ?></label>        
-                <label class="block mb-2"><strong>Nilai Project : </strong><?= "Rp " . number_format($project->value, 0, ',', '.'); ?></label>
-                <label class="block mb-2"><strong>Telah Dibayar : </strong><?= "Rp " . number_format($paid->total_paid, 0, ',', '.'); ?></label>
+      <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+        <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
+        <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
+          <h1 class="text-2xl font-bold mb-4">Lihat project</h1>
+          <form action="<?= site_url('project/update/'.$project->id_session) ?>" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
+          <label class="block mb-2"><strong>Nama Project : </strong><?= $project->project_name ?></label>        
+          <label class="block mb-2"><strong>Agama : </strong><?= $project->religion ?></label>        
+          <label class="block mb-2"><strong>Nilai Project : </strong><?= "Rp " . number_format($project->value, 0, ',', '.'); ?></label>
+          <label class="block mb-2"><strong>Telah Dibayar : </strong><?= "Rp " . number_format($paid->total_paid, 0, ',', '.'); ?></label>
 
-                <?php $unpaid = $project->value - $paid->total_paid ?>
-                <label class="block mb-2"><strong>Kurang Bayar : </strong><?= "Rp " . number_format($unpaid, 0, ',', '.'); ?></label>
+          <?php $unpaid = $project->value - $paid->total_paid ?>
+          <label class="block mb-2"><strong>Kurang Bayar : </strong><?= "Rp " . number_format($unpaid, 0, ',', '.'); ?></label>
 
-                <label class="block mb-2"><strong>Tanggal Pernikahan : </strong><?= hari($project->event_date) ?>, <?= tgl_indo($project->event_date) ?></label>
-                <label class="block mb-2"><strong>Lokasi : </strong><?= $project->location ?></label>
-                <label class="block mb-2"><strong>Detail : </strong><?= $project->detail ?></label>
+          <label class="block mb-2"><strong>Tanggal Pernikahan : </strong><?= hari($project->event_date) ?>, <?= tgl_indo($project->event_date) ?></label>
+          <label class="block mb-2"><strong>Lokasi : </strong><?= $project->location ?></label>
+          <label class="block mb-2"><strong>Detail : </strong><?= $project->detail ?></label>
 
-                <?php
-                $roles = [
-                  'koor_acara'      => 'Koordinator Acara',
-                  'koor_lapangan'   => 'Koordinator Lapangan',
-                  'koor_catering'   => 'Koordinator Catering',
-                  'koor_pengantin'  => 'Koordinator Pengantin',
-                  'koor_tamu'       => 'Koordinator Tamu',
-                  'koor_tambahan1'  => 'Koordinator Tambahan1',
-                  'koor_tambahan2'  => 'Koordinator Tambahan2'
-                ];
+          <?php
+          $roles = [
+            'koor_acara'      => 'Koordinator Acara',
+            'koor_lapangan'   => 'Koordinator Lapangan',
+            'koor_catering'   => 'Koordinator Catering',
+            'koor_pengantin'  => 'Koordinator Pengantin',
+            'koor_tamu'       => 'Koordinator Tamu',
+            'koor_tambahan1'  => 'Koordinator Tambahan1',
+            'koor_tambahan2'  => 'Koordinator Tambahan2'
+          ];
 
-                $hasCrew = false;
-                foreach ($roles as $field => $label) {
-                  if (!empty($crew_project->$field)) {
-                  $hasCrew = true;
-                  break;
-                  }
-                }
+          $hasCrew = false;
+          foreach ($roles as $field => $label) {
+            if (!empty($crew_project->$field)) {
+            $hasCrew = true;
+            break;
+            }
+          }
 
-                if ($hasCrew): ?>
-                  <h4 class="text-lg font-semibold mt-4 mb-2">List Crew</h4>
-                  <?php foreach ($roles as $field => $label):
-                  if (!empty($crew_project->$field)):
-                    $crew = $this->Crud_m->view_where('crews', array('id_session' => $crew_project->$field))->row();
-                  ?>
-                  <label class="block mb-2"><strong><?= $label ?> : </strong><?= $crew->crew_name ?></label>
-                  <?php 
-                  endif;
-                  endforeach; 
-                endif; 
-                ?>
+          if ($hasCrew): ?>
+            <h4 class="text-lg font-semibold mt-4 mb-2">List Crew</h4>
+            <?php foreach ($roles as $field => $label):
+            if (!empty($crew_project->$field)):
+            $crew = $this->Crud_m->view_where('crews', array('id_session' => $crew_project->$field))->row();
+            ?>
+            <label class="block mb-2"><strong><?= $label ?> : </strong><?= $crew->crew_name ?></label>
+            <?php 
+            endif;
+            endforeach; 
+          endif; 
+          ?>
 
-                <h2 class="text-lg font-bold mb-2">List Crew</h2>
+          <h2 class="text-lg font-bold mb-2">List Crew</h2>
 
-                <div class="border p-4 mb-4">
-                  <?php
-                  // Define the order of roles
-                  $role_order = [
-                    'Koordinator Acara',
-                    'Koordinator Lapangan',
-                    'Koordinator Catering',
-                    'Koordinator Pengantin',
-                    'Koordinator Tamu',
-                    'Koordinator Tambahan1',
-                    'Koordinator Tambahan2'
-                  ];
+          <div class="border p-4 mb-4">
+            <?php
+            // Define the order of roles
+            $role_order = [
+            'Koordinator Acara',
+            'Koordinator Lapangan',
+            'Koordinator Catering',
+            'Koordinator Pengantin',
+            'Koordinator Tamu',
+            'Koordinator Tambahan1',
+            'Koordinator Tambahan2'
+            ];
 
-                  // Sort the crew list based on the defined role order
-                  usort($crew_list, function ($a, $b) use ($role_order) {
-                    $posA = array_search($a->role, $role_order);
-                    $posB = array_search($b->role, $role_order);
+            // Sort the crew list based on the defined role order
+            usort($crew_list, function ($a, $b) use ($role_order) {
+            $posA = array_search($a->role, $role_order);
+            $posB = array_search($b->role, $role_order);
 
-                    // If not found in the array, place at the end
-                    $posA = ($posA === false) ? count($role_order) : $posA;
-                    $posB = ($posB === false) ? count($role_order) : $posB;
+            // If not found in the array, place at the end
+            $posA = ($posA === false) ? count($role_order) : $posA;
+            $posB = ($posB === false) ? count($role_order) : $posB;
 
-                    return $posA - $posB;
-                  });
-                  ?>
+            return $posA - $posB;
+            });
+            ?>
 
-                  <?php if (!empty($crew_list)): ?>
-                    <?php foreach ($crew_list as $crew): ?>
-                      <div class="mb-2 flex items-center justify-between border-b pb-2">
-                        <div>
-                          <p class='font-medium'>
-                            <strong><?= htmlspecialchars($crew->role) ?>:</strong> 
-                            <?= htmlspecialchars($crew->crew_name) ?>
-                          </p>
-                        </div>
-                        <div class="flex gap-2">
-                          <!-- Edit Button -->
-                          <a href="<?= site_url('crewproject/editlist/' . $crew->id_session . '/' . $crew->crew_id) ?>" 
-                             class="bg-green-500 text-white text-sm px-2 py-1 rounded-md hover:bg-green-600">
-                             Edit
-                          </a>
+            <?php if (!empty($crew_list)): ?>
+            <?php foreach ($crew_list as $index => $crew): ?>
+            <div class="mb-2 flex items-center justify-between <?= $index === count($crew_list) - 1 ? '' : 'border-b pb-2' ?>">
+            <div>
+              <p class='font-medium'>
+              <strong><?= htmlspecialchars($crew->role) ?>:</strong> 
+              <?= htmlspecialchars($crew->crew_name) ?>
+              </p>
+            </div>
+            <div class="flex gap-2">
+              <!-- Edit Button -->
+              <a href="<?= site_url('crewproject/editlist/' . $crew->id_session . '/' . $crew->crew_id) ?>" 
+               class="bg-green-500 text-white text-sm px-2 py-1 rounded-md hover:bg-green-600">
+               Edit
+              </a>
 
-                          <!-- Delete Button -->
-                          <a href="<?= site_url('crewproject/delete/' . $crew->id_session) ?>" 
-                             onclick="return confirm('Apakah Anda yakin ingin menghapus crew ini?')"
-                             class="bg-red-500 text-white text-sm px-2 py-1 rounded-md hover:bg-red-600">
-                             Hapus
-                          </a>
-                        </div>
-                      </div>
-                    <?php endforeach; ?>
-                  <?php else: ?>
-                    <p class='text-red-500 font-semibold'>Belum ada crew. Silakan tambahkan crew.</p>
-                  <?php endif; ?>
+              <!-- Delete Button -->
+              <a href="<?= site_url('crewproject/delete/' . $crew->id_session) ?>" 
+               onclick="return confirm('Apakah Anda yakin ingin menghapus crew ini?')"
+               class="bg-red-500 text-white text-sm px-2 py-1 rounded-md hover:bg-red-600">
+               Hapus
+              </a>
+            </div>
+            </div>
+            <?php endforeach; ?>
+            <?php else: ?>
+            <p class='text-red-500 font-semibold'>Belum ada crew. Silakan tambahkan crew.</p>
+            <?php endif; ?>
 
-                    <!-- Add Crew Button -->
-                    <a href="<?= site_url('crewproject/createlist/' . $project->id_session) ?>" 
-                       class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
-                       Tambah Crew
-                    </a>
-                </div>
+            <!-- Add Crew Button -->
+            <a href="<?= site_url('crewproject/createlist/' . $project->id_session) ?>" 
+             class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
+             Tambah Crew
+            </a>
+          </div>
 
     <h2 class="text-lg font-bold mb-2">Vendor</h2>
 
@@ -149,51 +149,51 @@
     <?php
     // Tentukan urutan yang diinginkan
     $type_order = [
-        'Venue', 'MC Akad', 'MC Pemberkatan', 'MC Resepsi', 'Wedding Organizer', 'MUA',
-        'Perlengkapan Catering', 'Catering', 'Dokumentasi',
-        'Dekorasi', 'Entertaiment'
+      'Venue', 'MC Akad', 'MC Pemberkatan', 'MC Resepsi', 'Wedding Organizer', 'MUA',
+      'Perlengkapan Catering', 'Catering', 'Dokumentasi',
+      'Dekorasi', 'Entertaiment'
     ];
 
     // Urutkan vendor berdasarkan tipe
     usort($vendors, function ($a, $b) use ($type_order) {
-        $posA = array_search($a->type, $type_order);
-        $posB = array_search($b->type, $type_order);
+      $posA = array_search($a->type, $type_order);
+      $posB = array_search($b->type, $type_order);
 
-        // Jika tidak ditemukan dalam array, tempatkan di akhir
-        $posA = ($posA === false) ? count($type_order) : $posA;
-        $posB = ($posB === false) ? count($type_order) : $posB;
+      // Jika tidak ditemukan dalam array, tempatkan di akhir
+      $posA = ($posA === false) ? count($type_order) : $posA;
+      $posB = ($posB === false) ? count($type_order) : $posB;
 
-        return $posA - $posB;
+      return $posA - $posB;
     });
     ?>
 
     <?php if (!empty($vendors)): ?>
-        <?php foreach ($vendors as $vendor): ?>
-            <div class="mb-2 flex items-center justify-between border-b pb-2">
-                <div>
-                    <p class='font-medium'>
-                        <strong><?= htmlspecialchars($vendor->type) ?>:</strong> 
-                        <?= htmlspecialchars($vendor->vendor) ?>
-                    </p>
-                </div>
-                <div class="flex gap-2">
-                    <!-- Tombol Edit -->
-                    <a href="<?= site_url('crud_vendor/edit/' . $vendor->id_session . '/' . $vendor->vendor_id) ?>" 
-                       class="bg-green-500 text-white text-sm px-2 py-1 rounded-md hover:bg-green-600">
-                       Edit
-                    </a>
+      <?php foreach ($vendors as $index => $vendor): ?>
+        <div class="mb-2 flex items-center justify-between <?= $index === count($vendors) - 1 ? '' : 'border-b pb-2' ?>">
+          <div>
+            <p class='font-medium'>
+              <strong><?= htmlspecialchars($vendor->type) ?>:</strong> 
+              <?= htmlspecialchars($vendor->vendor) ?>
+            </p>
+          </div>
+          <div class="flex gap-2">
+            <!-- Tombol Edit -->
+            <a href="<?= site_url('crud_vendor/edit/' . $vendor->id_session . '/' . $vendor->vendor_id) ?>" 
+               class="bg-green-500 text-white text-sm px-2 py-1 rounded-md hover:bg-green-600">
+               Edit
+            </a>
 
-                    <!-- Tombol Hapus -->
-                    <a href="<?= site_url('crud_vendor/delete/' . $vendor->id_session . '/' . $vendor->vendor_id) ?>" 
-                       onclick="return confirm('Apakah Anda yakin ingin menghapus vendor ini?')"
-                       class="bg-red-500 text-white text-sm px-2 py-1 rounded-md hover:bg-red-600">
-                       Hapus
-                    </a>
-                </div>
-            </div>
-        <?php endforeach; ?>
+            <!-- Tombol Hapus -->
+            <a href="<?= site_url('crud_vendor/delete/' . $vendor->id_session . '/' . $vendor->vendor_id) ?>" 
+               onclick="return confirm('Apakah Anda yakin ingin menghapus vendor ini?')"
+               class="bg-red-500 text-white text-sm px-2 py-1 rounded-md hover:bg-red-600">
+               Hapus
+            </a>
+          </div>
+        </div>
+      <?php endforeach; ?>
     <?php else: ?>
-        <p class='text-red-500 font-semibold'>Belum ada vendor.</p>
+      <p class='text-red-500 font-semibold'>Belum ada vendor.</p>
     <?php endif; ?>
 
     <!-- Tombol Tambah Vendor -->
@@ -201,78 +201,78 @@
        class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
        Tambah Vendor
     </a>
-</div>
+  </div>
 
 <h2 class="text-lg font-bold mb-2">Daftar Pembayaran</h2>
 
 <div class="border p-4 mb-4">
-    <?php if (empty($payment)): ?>
-        <p class="text-red-500 font-semibold">Belum ada transaksi.</p>
-        <a href="<?= site_url('payment/createinv/' . $project->id_session) ?>" 
-           class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
-           Tambah Invoice
-        </a>
-    <?php else: ?>
-        <?php foreach ($payment as $trans): ?>
-            <div class="mb-4">
-                <h3 class="text-md font-semibold">
-                  Transaksi <?= $project->client_name ?> 
-                  <span style="color: <?= $trans->status === 'Pending' ? 'red' : ($trans->status === 'Paid' ? 'green' : 'black') ?>;">
-                  <?= $trans->status ?>
-                  </span>
-                </h3>
-                <div class="flex items-center justify-between border-b pb-2">
-                    <div>
-                        <p class="font-medium">
-                            <strong>Transaksi ID:</strong> <?= htmlspecialchars($trans->transactions_id) ?><br>
-                            <strong>Total Tagihan:</strong> 
-                            <?php if (strpos($trans->transactions_id, 'IMB') === 0): ?>
-                                Rp <?= number_format($trans->total_bill, 0, ',', '.') ?><br>
-                            <?php elseif (strpos($trans->transactions_id, 'MBP') === 0 || strpos($trans->transactions_id, 'MBP1') === 0): ?>
-                                Rp <?= number_format($trans->total_paid, 0, ',', '.') ?><br>
-                            <?php endif; ?>
-                            <?php if (strpos($trans->transactions_id, 'IMB') === 0): ?>
-                                <strong>DP:</strong> Rp <?= number_format($trans->DP, 0, ',', '.') ?><br>
-                            <?php endif; ?>
-                            <strong>Tanggal:</strong> <?= tgl_indo($trans->date) ?><br>
-                            <?php if (!empty($trans->due_date)): ?>
-                                <strong>Jatuh Tempo:</strong> <?= tgl_indo($trans->due_date) ?><br>
-                            <?php endif; ?>
-                        </p>
-                        <div class="flex gap-2 mt-2">
-                            <?php if (strpos($trans->transactions_id, 'IMB') === 0): ?>
-                                <a href="<?= site_url('payment/view_invoice/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
-                                   class="bg-blue-500 text-white text-sm px-2 py-1 rounded-md hover:bg-blue-600">
-                                   Lihat Invoice
-                                </a>
-                            <?php elseif (strpos($trans->transactions_id, 'MBP') === 0 || strpos($trans->transactions_id, 'MBP1') === 0): ?>
-                                <a href="<?= site_url('payment/view_kwitansi/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
-                                   class="bg-blue-500 text-white text-sm px-2 py-1 rounded-md hover:bg-blue-600">
-                                   Lihat Kwitansi
-                                </a>
-                            <?php endif; ?>
-                            <a href="<?= site_url('payment/' . (strpos($trans->transactions_id, 'IMB') === 0 ? 'edit' : 'edit2') . '/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
-                               class="bg-green-500 text-white text-sm px-2 py-1 rounded-md hover:bg-green-600">
-                               Edit
-                            </a>
-                            <a href="<?= site_url('payment/delete/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
-                               onclick="return confirm('Apakah Anda yakin ingin menghapus transaksi ini?')"
-                               class="bg-red-500 text-white text-sm px-2 py-1 rounded-md hover:bg-red-600">
-                               Hapus
-                            </a>
-                        </div>
-                    </div>
-                </div>
+  <?php if (empty($payment)): ?>
+    <p class="text-red-500 font-semibold">Belum ada transaksi.</p>
+    <a href="<?= site_url('payment/createinv/' . $project->id_session) ?>" 
+       class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
+       Tambah Invoice
+    </a>
+  <?php else: ?>
+    <?php foreach ($payment as $index => $trans): ?>
+      <div class="mb-4 <?= $index === count($payment) - 1 ? '' : 'border-b pb-2' ?>">
+        <h3 class="text-md font-semibold">
+          Transaksi <?= $project->client_name ?> 
+          <span style="color: <?= $trans->status === 'Pending' ? 'red' : ($trans->status === 'Paid' ? 'green' : 'black') ?>;">
+          <?= $trans->status ?>
+          </span>
+        </h3>
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="font-medium">
+              <strong>Transaksi ID:</strong> <?= htmlspecialchars($trans->transactions_id) ?><br>
+              <strong>Total Tagihan:</strong> 
+              <?php if (strpos($trans->transactions_id, 'IMB') === 0): ?>
+                Rp <?= number_format($trans->total_bill, 0, ',', '.') ?><br>
+              <?php elseif (strpos($trans->transactions_id, 'MBP') === 0 || strpos($trans->transactions_id, 'MBP1') === 0): ?>
+                Rp <?= number_format($trans->total_paid, 0, ',', '.') ?><br>
+              <?php endif; ?>
+              <?php if (strpos($trans->transactions_id, 'IMB') === 0): ?>
+                <strong>DP:</strong> Rp <?= number_format($trans->DP, 0, ',', '.') ?><br>
+              <?php endif; ?>
+              <strong>Tanggal:</strong> <?= tgl_indo($trans->date) ?><br>
+              <?php if (!empty($trans->due_date)): ?>
+                <strong>Jatuh Tempo:</strong> <?= tgl_indo($trans->due_date) ?><br>
+              <?php endif; ?>
+            </p>
+            <div class="flex gap-2 mt-2">
+              <?php if (strpos($trans->transactions_id, 'IMB') === 0): ?>
+                <a href="<?= site_url('payment/view_invoice/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
+                   class="bg-blue-500 text-white text-sm px-2 py-1 rounded-md hover:bg-blue-600">
+                   Lihat Invoice
+                </a>
+              <?php elseif (strpos($trans->transactions_id, 'MBP') === 0 || strpos($trans->transactions_id, 'MBP1') === 0): ?>
+                <a href="<?= site_url('payment/view_kwitansi/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
+                   class="bg-blue-500 text-white text-sm px-2 py-1 rounded-md hover:bg-blue-600">
+                   Lihat Kwitansi
+                </a>
+              <?php endif; ?>
+              <a href="<?= site_url('payment/' . (strpos($trans->transactions_id, 'IMB') === 0 ? 'edit' : 'edit2') . '/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
+                 class="bg-green-500 text-white text-sm px-2 py-1 rounded-md hover:bg-green-600">
+                 Edit
+              </a>
+              <a href="<?= site_url('payment/delete/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
+                 onclick="return confirm('Apakah Anda yakin ingin menghapus transaksi ini?')"
+                 class="bg-red-500 text-white text-sm px-2 py-1 rounded-md hover:bg-red-600">
+                 Hapus
+              </a>
             </div>
-        <?php endforeach; ?>
-    <?php endif; ?>
+          </div>
+        </div>
+      </div>
+    <?php endforeach; ?>
+  <?php endif; ?>
 
-    <?php if (!empty($has_invoice)): ?>
-        <a href="<?= site_url('payment/createkwt/' . $project->id_session . '/' . $has_invoice->transactions_id) ?>" 
-           class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
-           Tambah Kwitansi
-        </a>
-    <?php endif; ?>
+  <?php if (!empty($has_invoice)): ?>
+    <a href="<?= site_url('payment/createkwt/' . $project->id_session . '/' . $has_invoice->transactions_id) ?>" 
+       class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
+       Tambah Kwitansi
+    </a>
+  <?php endif; ?>
 </div>
 
                 <a href="<?= site_url('project/edit/'. $project->id_session) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Edit Project</a>
