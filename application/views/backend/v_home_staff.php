@@ -71,7 +71,7 @@
 		                            />
 		                          </div>
 		                          <h4
-		                            class="text-xl font-bold text-black dark:text-white"
+		                            class="text-xl font-bold"
 		                          >
 		                            Event Berikutnya
 		                          </h4>
@@ -82,7 +82,7 @@
 		                        <div class="flex items-center justify-between gap-1">
 		                          <p class="text-sm font-medium">Total Event</p>
 
-		                          <p class="font-medium text-black dark:text-white">
+		                          <p class="font-medium">
 		                            $410.50
 		                          </p>
 		                        </div>
@@ -102,7 +102,7 @@
 		                            />
 		                          </div>
 		                          <h4
-		                            class="text-xl font-bold text-black dark:text-white"
+		                            class="text-xl font-bold"
 		                          >
 		                            Event Selesai
 		                          </h4>
@@ -113,7 +113,7 @@
 		                        <div class="flex items-center justify-between gap-1">
 		                          <p class="text-sm font-medium">Total Event</p>
 
-		                          <p class="font-medium text-black dark:text-white">
+		                          <p class="font-medium">
 		                            $410.50
 		                          </p>
 		                        </div>
@@ -134,7 +134,7 @@
 		                            />
 		                          </div>
 		                          <h4
-		                            class="text-xl font-bold text-black dark:text-white"
+		                            class="text-xl font-bold"
 		                          >
 		                            Semua Event
 		                          </h4>
@@ -145,7 +145,7 @@
 		                        <div class="flex items-center justify-between gap-1">
 		                          <p class="text-sm font-medium">Total Event</p>
 
-		                          <p class="font-medium text-black dark:text-white">
+		                          <p class="font-medium">
 		                            $410.50
 		                          </p>
 		                        </div>
@@ -197,7 +197,7 @@
             <div class="mx-auto max-w-7xl">
               <!-- Breadcrumb Start -->
               <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <h2 class="text-title-md2 font-bold text-black dark:text-white">Calendar</h2>
+                <h2 class="text-title-md2 font-bold">Calendar</h2>
                 <div class="flex gap-4">
                   <select id="month-select" class="border rounded p-2">
                     <?php for ($m = 1; $m <= 12; $m++): ?>
@@ -287,7 +287,7 @@
                         const event = events.find(e => e.event_date === currentDate);
 
                         rowHTML += `<td class="border border-stroke p-4 dark:border-strokedark ${event ? 'bg-green-200 dark:bg-green-700' : ''}">
-                                      <span class="font-medium text-black dark:text-white">${date}</span>
+                                      <span class="font-medium">${date}</span>
 									  ${event ? `<p class="text-xs text-gray-500 dark:text-gray-300">Client: ${event.client_name}</p><p class="text-xs text-gray-500 dark:text-gray-300">Lokasi: ${event.location}</p>` : ''}
                                     </td>`;
                         date++;
