@@ -20,12 +20,13 @@ $route['user/lihat/(:any)'] = 'crud_user/lihat/$1'; // Menampilkan detail user
 $route['user/create'] = 'crud_user/create'; // Menampilkan form tambah user
 $route['user/store'] = 'crud_user/store'; // Menyimpan data user baru
 $route['user/edit/(:any)'] = 'crud_user/edit/$1'; // Menampilkan form edit user
+$route['user/edit_staff/(:any)'] = 'crud_user/edit/$1'; // Menampilkan form edit user
 $route['user/update/(:any)'] = 'crud_user/update/$1'; // Mengupdate user
+$route['user/update2/(:any)'] = 'crud_user/update2/$1'; // Mengupdate user
 $route['user/delete/(:any)'] = 'crud_user/delete/$1'; // Menghapus user
 $route['user/recycle_bin'] = 'crud_user/recycle_bin'; // Halaman recycle bin
 $route['user/restore/(:any)'] = 'crud_user/restore/$1'; // Restore user
 $route['user/permanent_delete/(:any)'] = 'crud_user/permanent_delete/$1'; // Hapus permanen user
-
 
 $route['finance-operational'] = 'crud_finance_operational/index'; // Menampilkan daftar user
 $route['finance-operational/lihat/(:any)'] = 'crud_finance_operational/lihat/$1'; // Menampilkan detail user
@@ -34,7 +35,6 @@ $route['finance-operational/store'] = 'crud_finance_operational/store'; // Menyi
 $route['finance-operational/edit/(:any)'] = 'crud_finance_operational/edit/$1'; // Menampilkan form edit user
 $route['finance-operational/update/(:any)'] = 'crud_finance_operational/update/$1'; // Mengupdate user
 $route['finance-operational/permanent_delete/(:any)'] = 'crud_finance_operational/permanent_delete/$1'; // Hapus permanen user
-
 
 $route['project'] = 'crud_project/index'; // Menampilkan daftar project
 $route['project/create'] = 'crud_project/create'; // Menampilkan form tambah project
@@ -59,8 +59,6 @@ $route['finance-project/recycle_bin'] = 'crud_finance_project/recycle_bin'; // H
 $route['finance-project/restore/(:any)'] = 'crud_finance_project/restore/$1'; // Restore project
 $route['finance-project/permanent_delete/(:any)'] = 'crud_finance_project/permanent_delete/$1'; // Hapus permanen project
 $route['finance-project/lihat/(:any)'] = 'crud_finance_project/lihat/$1'; // Menampilkan lihat project
-
-
 
 $route['payment/create/(:num)/(:num)'] = 'Crud_payment/create/$1/$2';  // Routing untuk menambah pembayaran (Add Payment)
 $route['payment/store/(:num)/(:num)'] = 'Crud_payment/store/$1/$2';  // Routing untuk menambah pembayaran (Add Payment)
