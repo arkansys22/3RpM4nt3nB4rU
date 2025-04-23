@@ -108,6 +108,12 @@ class crud_user extends CI_Controller {
             $data['logactivity'] = $this->Users2_model->get_logactivity_by_session($id_session);
             $this->load->view('user/lihat', $data);
 
+        }else if($this->session->level=='7'){
+            cek_session_akses_staff('user',$this->session->id_session);
+            $data['pc'] = $this->Users2_model->get_users_by_session($id_session);
+            $data['logactivity'] = $this->Users2_model->get_logactivity_by_session($id_session);
+            $this->load->view('user/lihat', $data);
+
         }else{
                     redirect(base_url());
                 }
@@ -129,6 +135,20 @@ class crud_user extends CI_Controller {
             $data['clients'] = $this->Crud_m->view_ordering('clients','id','asc');
             $data['pc'] = $this->Users2_model->get_users_by_session($id_session);
             $this->load->view('user/edit', $data);
+
+        }else if($this->session->level=='7'){
+            cek_session_akses_staff('user',$this->session->id_session);
+            $data['level'] = $this->Crud_m->view_ordering('user_level','user_level_id','asc');
+            $data['clients'] = $this->Crud_m->view_ordering('clients','id','asc');
+            $data['pc'] = $this->Users2_model->get_users_by_session($id_session);
+
+            // Fetch crews_idsession from user table
+            $crews_idsession = $data['pc']->crews_idsession;
+
+            // Fetch crews data using crews_idsession
+            $data['crews'] = $this->Users2_model->get_crew_by_id_session($crews_idsession);
+
+            $this->load->view('user/edit_staff', $data); // Load edit_staff view
 
         }else{
                 redirect(base_url());
@@ -194,6 +214,66 @@ class crud_user extends CI_Controller {
         $this->Users2_model->insert_log_activity($data_log);
     
         $this->session->set_flashdata('Success', 'Pengguna berhasil diupdate');
+        redirect('user/lihat/' . $id_session);
+    }
+
+    public function update2($id_session) {
+
+        if ($this->agent->is_browser()) {
+            $agent = 'Desktop ' . $this->agent->browser() . ' ' . $this->agent->version();
+        } elseif ($this->agent->is_robot()) {
+            $agent = $this->agent->robot();
+        } elseif ($this->agent->is_mobile()) {
+            $agent = 'Mobile ' . $this->agent->mobile() . ' ' . $this->agent->version();
+        } else {
+            $agent = 'Unidentified User Agent';
+        }
+
+        // Update user table
+        $user_data = array(
+            'username' => $this->input->post('username'),
+            'nama' => $this->input->post('nama'),
+            'email' => $this->input->post('email'),
+        );
+
+        if ($this->input->post('password') != '') {
+            $user_data['password'] = sha1($this->input->post('password'));
+        }
+
+        $this->Users2_model->update_users($id_session, $user_data);
+
+        // Fetch crews_idsession from user table
+        $user = $this->Users2_model->get_users_by_session($id_session);
+        $crews_idsession = $user->crews_idsession;
+
+        if ($crews_idsession) {
+            // Update crews table
+            $crews_data = array(
+                'crew_name' => $this->input->post('nama'),
+                'gender' => $this->input->post('gender'),
+                'religion' => $this->input->post('religion'),
+                'phone' => $this->input->post('phone'),
+                'birth_date' => $this->input->post('birth_date'),
+                'address' => $this->input->post('address'),
+            );
+
+            $this->Users2_model->update_crews($crews_idsession, $crews_data);
+        }
+
+        // Log activity
+        $data_log = array(
+            'log_activity_user_id' => $this->session->id_session,
+            'log_activity_modul' => 'user/edit_staff',
+            'log_activity_document_no' => $id_session,
+            'log_activity_status' => 'Update Data Pengguna',
+            'log_activity_platform' => $agent,
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
+            'log_activity_ip' => $this->input->ip_address(),
+        );
+
+        $this->Users2_model->insert_log_activity($data_log);
+
+        $this->session->set_flashdata('Success', 'Data pengguna berhasil diupdate');
         redirect('user/lihat/' . $id_session);
     }
 
