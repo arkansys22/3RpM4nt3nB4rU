@@ -52,9 +52,17 @@ class Users2_model extends CI_Model {
         return $this->db->delete('user');
     }
 
+    public function get_crew_by_id_session($crews_idsession) {
+        $this->db->select("*, TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) AS age");
+        $this->db->from("crews");
+        $this->db->where("id_session", $crews_idsession); // Match crews_idsession with id_session in crews table
+        $query = $this->db->get();
+        return $query->num_rows() > 0 ? $query->row() : null; // Return null if no data found
+    }
 
-   
-    
-    
-    
+    public function update_crews($crews_idsession, $data) {
+        $this->db->where('id_session', $crews_idsession);
+        return $this->db->update('crews', $data);
+    }
+
 }
