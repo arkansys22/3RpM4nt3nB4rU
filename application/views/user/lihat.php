@@ -36,7 +36,7 @@
               <h1 class="text-2xl font-bold mb-4">Lihat Pengguna <?= $pc->username ?></h1>
               
               <!-- User Details Form -->
-              <form action="<?= site_url('potensial-clients/update/'.$pc->id_session) ?>" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
+              <form action="<?= site_url('user/update/'.$pc->id_session) ?>" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
                 <label class="block mb-2"><strong>Username : </strong><?= $pc->username ?></label>        
                 <label class="block mb-2"><strong>Nama : </strong><?= $pc->nama ?></label>
                 <label class="block mb-2"><strong>Email : </strong><?= $pc->email ?></label>
@@ -45,7 +45,11 @@
                 <label class="block mb-2"><strong>Register by : </strong><?= $user->nama ?></label>              
 
                 <!-- Buttons -->
-                <a href="<?= site_url('user/edit/'. $pc->id_session) ?>" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Edit</a>
+                <?php if ($this->session->userdata('level') == 7): ?>
+                  <a href="<?= site_url('user/edit_staff/'. $pc->id_session) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Edit Data Diri</a>
+                <?php else: ?>
+                  <a href="<?= site_url('user/edit/'. $pc->id_session) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Edit Pengguna</a>
+                <?php endif; ?>
                 <a href="javascript:history.back()" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a>
               </form>
 
