@@ -37,11 +37,71 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
       <?php $this->load->view('backend/header')?>
 
       <!-- ===== Main Content Start ===== -->
-      <main>
         <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-              <h1 class="text-2xl font-bold mb-4">Lihat Client</h1>
+                <div class="flex justify-between items-center mb-4">
+                <h1 class="text-2xl font-bold">Lihat Client</h1>
+                <!-- Dropdown -->
+                <div class="relative">
+                  <div x-data="{ openDropDown: false }" class="inline-block">
+                  <button
+                  @click.prevent="openDropDown = !openDropDown"
+                  class="inline-flex items-center gap-2.5 rounded-md bg-primary px-5.5 py-3 font-medium text-white hover:bg-opacity-95"
+                  >
+                  Menu
+                  <svg
+                  class="fill-current duration-200 ease-linear"
+                  :class="openDropDown && 'rotate-180'"
+                  width="12"
+                  height="7"
+                  viewBox="0 0 12 7"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  >
+                  <path
+                    d="M0.564864 0.879232C0.564864 0.808624 0.600168 0.720364 0.653125 0.667408C0.776689 0.543843 0.970861 0.543844 1.09443 0.649756L5.82517 5.09807C5.91343 5.18633 6.07229 5.18633 6.17821 5.09807L10.9089 0.649756C11.0325 0.526192 11.2267 0.543844 11.3502 0.667408C11.4738 0.790972 11.4562 0.985145 11.3326 1.10871L6.60185 5.55702C6.26647 5.85711 5.73691 5.85711 5.41917 5.55702L0.670776 1.10871C0.600168 1.0381 0.564864 0.967492 0.564864 0.879232Z"
+                    fill=""
+                  />
+                  </svg>
+                  </button>
+
+                  <div
+                  x-show="openDropDown"
+                  @click.outside="openDropDown = false"
+                  class="absolute right-0 mt-2 w-64 rounded-md border border-stroke bg-white py-3 shadow-card dark:border-strokedark dark:bg-boxdark"
+                  >
+                  <ul class="flex flex-col">
+                  <li><a href="<?= site_url('clients/edit/'. $clients->id_session) ?>" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4">Edit</a></li>
+                  <li><a href="javascript:history.back()" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4">Kembali</a></li>
+
+                  <?php if ($islam) : ?>
+                    <li><a href="<?= site_url('naskah/jubir_cpp/'. $clients->id_session) ?>" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Jubir CPP</a></li>
+                    <li><a href="<?= site_url('naskah/jubir_cpw/'. $clients->id_session) ?>" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Jubir CPW</a></li>
+                    <li><a href="<?= site_url('naskah/izin_menikah/'. $clients->id_session) ?>" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Izin Menikah</a></li>
+                    <li><a href="<?= site_url('naskah/terima_kasih/'. $clients->id_session) ?>" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Ucapan Terimakasih</a></li>
+                  <?php else : ?>
+                    <li><a href="<?= site_url('naskah/terima_kasih2/'. $clients->id_session) ?>" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Ucapan Terimakasih</a></li>
+                  <?php endif; ?>
+
+                  <li><a href="<?= site_url('naskah/data_pengantin/'. $clients->id_session) ?>" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Data Pengantin</a></li>
+                  <li><a href="<?= site_url('naskah/list_vendor/'. $clients->id_session) ?>" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">List Vendor</a></li>
+
+                  <?php if (!$islam && $project->religion != 'Islam') : ?>
+                    <li><a href="<?= $clients->wedding_ceremony ?>" target="_blank" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Susunan Pemberkatan</a></li>
+                  <?php else : ?>
+                    <li><a href="<?= $clients->wedding_ceremony ?>" target="_blank" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Susunan Akad</a></li>
+                  <?php endif; ?>
+
+                  <li><a href="<?= $clients->reception_afterward ?>" target="_blank" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Susunan Resepsi</a></li>
+                  <li><a href="<?= $clients->list_photo ?>" target="_blank" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">List Foto</a></li>
+                  <li><a href="<?= site_url('clients/c_lihat/'. $clients->id_session) ?>" target="_blank" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Lihat Profile</a></li>
+                  <li><a href="https://wa.me/<?= $clients->phone?>?text=Halo Kami dari Mantenbaru Organizer!%0A%0AKami%20ingin%20membagikan%20data%20profil%20pengantin%20yang%20sudah%20kami%20buat.%20Silakan%20klik%20link%20di%20bawah%20ini%20untuk%20melihat%20dan%20mengedit%20data%20sesuai%20kebutuhan.%0A%0A<?= site_url('clients/c_lihat/'. $clients->id_session) ?>%0A%0AJika%20anda%20membutuhkan%20username%20dan%20password%20untuk%20mengedit%20data%20sesuai%20kebutuhan,%20jangan%20ragu%20untuk%20menghubungi%20kami.%20Terima%20kasih!" target="_blank" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Share Profile</a></li>
+                  </ul>
+                  </div>
+                  </div>
+                </div>
+                </div>
               <form action="<?= site_url('clients/update/'.$clients->id_session) ?>" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
                 <label class="block mb-2"><strong>Nama Client : </strong><?= $clients->client_name ?></label>        
                 <label class="block mb-2"><strong>Agama : </strong><?= $project->religion ?></label>        
@@ -130,7 +190,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                 <label class="block mb-2"><strong>Pemimpin Doa : </strong><?= $clients->prayer ?></label>
                 <label class="block mb-2"><strong>Sambutan Pernikahan : </strong><?= $clients->wedding_speech ?></label>
                 <?php endif; ?>
-                <div class="flex flex-wrap gap-2 mt-4">
+                <!-- <div class="flex flex-wrap gap-2 mt-4 hidden md:flex">
                   <a href="<?= site_url('clients/edit/'. $clients->id_session) ?>" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">Edit</a>
                   <a href="javascript:history.back()" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Kembali</a>
                   <?php if ($islam) : ?>
@@ -159,8 +219,8 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                     <a href="<?= site_url('clients/c_lihat/'. $clients->id_session) ?>" target="_blank" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Lihat Profile</a>
                     <a href="https://wa.me/<?= $clients->phone?>?text=Halo Kami dari Mantenbaru Organizer!%0A%0AKami%20ingin%20membagikan%20data%20profil%20pengantin%20yang%20sudah%20kami%20buat.%20Silakan%20klik%20link%20di%20bawah%20ini%20untuk%20melihat%20dan%20mengedit%20data%20sesuai%20kebutuhan.%20Anda%20bisa%20memperbarui%20informasi%20yang%20diperlukan%20agar%20data%20profil%20pengantin%20bisa%20sesuai%20dengan%20keinginan.%0A%0A<?= site_url('clients/c_lihat/'. $clients->id_session) ?>%0A%0AJika%20anda%20membutuhkan%20username%20dan%20password%20untuk%20mengedit%20data%20sesuai%20kebutuhan,%20jangan%20ragu%20untuk%20menghubungi%20kami.%20Terima%20kasih!" target="_blank" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Share Profile</a>
                   <?php endif; ?>
+                </div> -->
               </form>
-            </div>
 
               <!-- ====== Table Three Start -->
               <div class="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default  dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1" >
@@ -231,6 +291,8 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                   </table>
                 </div>
               </div>
+            </div>
+          </div>
               <!-- ====== Table Three End -->
             </div>
           </div>
