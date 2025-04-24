@@ -33,7 +33,65 @@
         <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-              <h1 class="text-2xl font-bold mb-4">Lihat Crew <?= $crews->status ?></h1>
+                <div class="flex justify-between items-center mb-4">
+                <h1 class="text-2xl font-bold">Lihat Crew <?= $crews->status ?></h1>
+                <div
+                  x-data="{openDropDown: false}"
+                  class="relative inline-block"
+                >
+                  <a
+                  href="#"
+                  @click.prevent="openDropDown = !openDropDown"
+                  class="inline-flex items-center gap-2.5 rounded-md bg-primary px-5.5 py-3 font-medium text-white hover:bg-opacity-95"
+                  >
+                  Menu
+                  <svg
+                    class="fill-current duration-200 ease-linear"
+                    :class="openDropDown && 'rotate-180'"
+                    width="12"
+                    height="7"
+                    viewBox="0 0 12 7"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                    d="M0.564864 0.879232C0.564864 0.808624 0.600168 0.720364 0.653125 0.667408C0.776689 0.543843 0.970861 0.543844 1.09443 0.649756L5.82517 5.09807C5.91343 5.18633 6.07229 5.18633 6.17821 5.09807L10.9089 0.649756C11.0325 0.526192 11.2267 0.543844 11.3502 0.667408C11.4738 0.790972 11.4562 0.985145 11.3326 1.10871L6.60185 5.55702C6.26647 5.85711 5.73691 5.85711 5.41917 5.55702L0.670776 1.10871C0.600168 1.0381 0.564864 0.967492 0.564864 0.879232Z"
+                    fill=""
+                    />
+                    <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M1.4719 0.229332L6.00169 4.48868L10.5171 0.24288C10.9015 -0.133119 11.4504 -0.0312785 11.7497 0.267983C12.1344 0.652758 12.0332 1.2069 11.732 1.50812L11.7197 1.52041L6.97862 5.9781C6.43509 6.46442 5.57339 6.47872 5.03222 5.96853C5.03192 5.96825 5.03252 5.96881 5.03222 5.96853L0.271144 1.50833C0.123314 1.3605 -5.04223e-08 1.15353 -3.84322e-08 0.879226C-2.88721e-08 0.660517 0.0936127 0.428074 0.253705 0.267982C0.593641 -0.0719548 1.12269 -0.0699964 1.46204 0.220873L1.4719 0.229332ZM5.41917 5.55702C5.73691 5.85711 6.26647 5.85711 6.60185 5.55702L11.3326 1.10871C11.4562 0.985145 11.4738 0.790972 11.3502 0.667408C11.2267 0.543844 11.0325 0.526192 10.9089 0.649756L6.17821 5.09807C6.07229 5.18633 5.91343 5.18633 5.82517 5.09807L1.09443 0.649756C0.970861 0.543844 0.776689 0.543843 0.653125 0.667408C0.600168 0.720364 0.564864 0.808624 0.564864 0.879232C0.564864 0.967492 0.600168 1.0381 0.670776 1.10871L5.41917 5.55702Z"
+                    fill=""
+                    />
+                  </svg>
+                  </a>
+                  <div
+                  x-show="openDropDown"
+                  @click.outside="openDropDown = false"
+                  class="absolute left-0 top-full z-40 mt-2 w-full rounded-md border border-stroke bg-white py-3 shadow-card dark:border-strokedark dark:bg-boxdark"
+                  >
+                  <ul class="flex flex-col">
+                    <li>
+                    <a
+                      href="<?= site_url('crews/edit/'. $crews->id_session) ?>"
+                      class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
+                    >
+                      Edit
+                    </a>
+                    </li>
+                    <li>
+                    <a
+                      href="javascript:history.back()"
+                      class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
+                    >
+                      Kembali
+                    </a>
+                    </li>
+                  </ul>
+                  </div>
+                </div>
+                </div>
               <form action="<?= site_url('crews/update/'.$crews->id_session) ?>" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
                 <label class="block mb-2"><strong>Nama Crew : </strong><?= $crews->crew_name ?></label>        
                 <label class="block mb-2"><strong>Gender : </strong><?= $crews->gender ?></label>        
@@ -43,9 +101,9 @@
                 <label class="block mb-2"><strong>Tanggal Lahir : </strong><?= tgl_indo($crews->birth_date) ?></label>
                 <label class="block mb-2"><strong>Umur : </strong><?= $crews->age ?> Tahun</label>
                 <label class="block mb-2"><strong>Bergabung : </strong><?= hari($crews->joining_date) ?>, <?= tgl_indo($crews->joining_date) ?></label>
-                <br>
+                <!-- <br>
                 <a href="<?= site_url('crews/edit/'. $crews->id_session) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Edit</a>
-                <a href="javascript:history.back()" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a>
+                <a href="javascript:history.back()" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a> -->
               </form>
 
               <!-- ====== Table Three Start -->
