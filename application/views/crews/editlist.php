@@ -52,8 +52,8 @@
                 <label class="block mb-2">Select Role</label>
                 <select name="role" class="w-full px-4 py-2 border rounded mb-4 dark:bg-gray-700 dark:border-gray-600" required>
                     <?php foreach ($roles as $role): ?>
-                        <option value="<?= htmlspecialchars($role) ?>" <?= $selected_crew->role === $role ? 'selected' : '' ?>>
-                            <?= htmlspecialchars($role) ?>
+                        <option value="<?= htmlspecialchars($role->role) ?>" <?= $selected_crew->role === $role->role ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($role->role) ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
