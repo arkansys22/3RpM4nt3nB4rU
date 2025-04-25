@@ -46,6 +46,27 @@
                 <label class="block mb-2"><strong>Agama : </strong><?= $project->religion ?></label>        
                 <label class="block mb-2"><strong>Tanggal Pernikahan : </strong><?= hari($project->event_date) ?>, <?= tgl_indo($project->event_date) ?></label>
                 <label class="block mb-2"><strong>Lokasi : </strong><?= $project->location ?></label>
+                <label class="block mb-2"><strong>Maps : </strong>
+                  <?php if (!empty($clients->maps)): ?>
+                  <a href="<?= $clients->maps ?>" target="_blank" class="text-blue-500 underline">Lihat Maps</a>
+                  <?php else: ?>
+                  <span class="text-red-500">Belum tersedia</span>
+                  <?php endif; ?>
+                </label>
+                <label class="block mb-2"><strong>Jam Stand by : </strong>
+                  <?php if (!empty($clients->stand_by) && $clients->stand_by !== '00:00:00'): ?>
+                  <?= date('H:i', strtotime($clients->stand_by)) ?>
+                  <?php else: ?>
+                  <span class="text-red-500">Belum tersedia</span>
+                  <?php endif; ?>
+                </label>
+                <label class="block mb-2"><strong>Seragam : </strong>
+                  <?php if (!empty($clients->uniform)): ?>
+                  <?= $clients->uniform ?>
+                  <?php else: ?>
+                  <span class="text-red-500">Belum tersedia</span>
+                  <?php endif; ?>
+                </label>
 
                     <?php if (!empty($clients->wedding_ceremony)): ?>
                     <?php if ($project->religion == 'Islam'): ?>
