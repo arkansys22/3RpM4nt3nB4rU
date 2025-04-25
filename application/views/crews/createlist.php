@@ -53,8 +53,8 @@
                     <label for="role" class="block text-sm font-medium mb-2">Posisi</label>
                     <select name="role" id="role" class="w-full px-4 py-2 border rounded dark:bg-gray-700 dark:border-gray-600" required>
                         <option value="">-- Pilih Posisi --</option>
-                        <?php foreach ($roles as $key => $label): ?>
-                            <option value="<?= htmlspecialchars($key) ?>"><?= htmlspecialchars($label) ?></option>
+                        <?php foreach ($roles as $role): ?>
+                            <option value="<?= htmlspecialchars($role->role) ?>"><?= htmlspecialchars($role->role) ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
