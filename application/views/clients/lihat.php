@@ -158,6 +158,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                 <h3 class="text-lg font-bold mt-6 mb-2"><strong>Detail Pernikahan</strong></h3>
                 <label class="block mb-2"><strong>Tanggal Pernikahan : </strong><?= hari($clients->wedding_date) ?>, <?= tgl_indo($clients->wedding_date) ?></label>
                 <label class="block mb-2"><strong>Lokasi : </strong><?= $clients->location ?></label>
+                <label class="block mb-2"><strong>Maps : </strong><a href="<?= $clients->maps ?>" target="_blank" class="text-blue-500 underline">Lihat Maps</a></label>
 
                 <?php if ($islam) : ?>
                 <label class="block mb-2"><strong>Mahar : </strong><?= $clients->mahr ?></label>
