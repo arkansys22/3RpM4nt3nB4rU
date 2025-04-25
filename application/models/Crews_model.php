@@ -59,5 +59,11 @@ class crews_model extends CI_Model {
         $this->db->limit(5, 0);
         return $this->db->get_where('log_activity', ['log_activity_document_no' => $id_session])->result();
     }
+
+    public function get_all_roles() {
+        $this->db->select('role');
+        $this->db->from('crew_role');
+        return $this->db->get()->result();
+    }
 }
 ?>
