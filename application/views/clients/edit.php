@@ -69,6 +69,12 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
               <label class="block mb-2">List Foto</label>
               <input type="text" name="list_photo" value="<?= $clients->list_photo ?>" placeholder="Link GDrive" class="w-full px-4 py-2 border rounded mb-4">
 
+              <label class="block mb-2">Jam Stand by</label>
+              <input type="time" name="stand_by" value="<?= $clients->stand_by ?>" placeholder="Jam Stand by" class="w-full px-4 py-2 border rounded mb-4">
+
+              <label class="block mb-2">Seragam</label>
+              <input type="text" name="uniform" value="<?= $clients->uniform ?>" placeholder="Seragam" class="w-full px-4 py-2 border rounded mb-4">
+
               <!-- Data Mempelai Wanita -->
               <h3 class="text-lg font-bold mt-6 mb-2">Data Mempelai Wanita</h3>
               <label class="block mb-2">Nama Lengkap</label>
@@ -214,6 +220,9 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
 
               <label class="block mb-2">Lokasi Acara</label>
               <input type="text" name="location" value="<?= $clients->location ?>" placeholder="Lokasi Acara" class="w-full px-4 py-2 border rounded mb-4" readonly>
+
+              <label class="block mb-2">Maps</label>
+              <input type="text" name="maps" value="<?= $clients->maps ?>" placeholder="Maps" class="w-full px-4 py-2 border rounded mb-4">
 
               <?php if ($islam) : ?>
               <label class="block mb-2">Mahar</label>
