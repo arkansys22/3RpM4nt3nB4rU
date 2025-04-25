@@ -147,6 +147,7 @@ class Crud_clients extends CI_Controller {
             'wedding_speech'        => $this->input->post('wedding_speech'),
             'wedding_date'          => $this->input->post('wedding_date'),
             'location'              => $this->input->post('location'),
+            'maps'                  => $this->input->post('maps'),
             'created_at'            => $created_at,
             'create_day'            => date('l') // Simpan hari otomatis
         ];
@@ -276,7 +277,9 @@ class Crud_clients extends CI_Controller {
             'phone'                 => $this->input->post('phone'),
             'wedding_ceremony'      => $this->input->post('wedding_ceremony'),
             'reception_afterward'   => $this->input->post('reception_afterward'),
-            'list_photo'             => $this->input->post('list_photo'),
+            'list_photo'            => $this->input->post('list_photo'),
+            'stand_by'              => $this->input->post('stand_by'),
+            'uniform'               => $this->input->post('uniform'),
             'f_bride_fname'         => $this->input->post('f_bride_fname'),
             'f_bride_cname'         => $this->input->post('f_bride_cname'),
             'f_bride_nchild'        => $this->input->post('f_bride_nchild'),
@@ -325,6 +328,7 @@ class Crud_clients extends CI_Controller {
             'wedding_speech'        => $this->input->post('wedding_speech'),
             'wedding_date'          => $this->input->post('wedding_date'),
             'location'              => $this->input->post('location'),
+            'maps'                  => $this->input->post('maps'),
         );
 
         $this->Clients_model->update_client($id_session, $data);
