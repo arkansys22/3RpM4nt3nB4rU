@@ -30,15 +30,7 @@ class Crud_crewprojects extends CI_Controller {
         $data['project_id'] = $project_id;
         $data['existing_crews'] = $this->CrewProjects_model->get_crew_by_project($project_id); // Fetch existing crews
         $data['crews'] = $this->CrewProjects_model->get_all_crews();
-        $data['roles'] = [
-            'koor_acara'      => 'Koordinator Acara',
-            'koor_lapangan'   => 'Koordinator Lapangan',
-            'koor_catering'   => 'Koordinator Catering',
-            'koor_pengantin'  => 'Koordinator Pengantin',
-            'koor_tamu'       => 'Koordinator Tamu',
-            'koor_tambahan1'  => 'Koordinator Tambahan1',
-            'koor_tambahan2'  => 'Koordinator Tambahan2'
-        ];
+        $data['roles'] = $this->CrewProjects_model->get_all_roles(); // Fetch roles from crew_role table
 
         $this->load->view('crews/createlist', $data);
     }
@@ -47,58 +39,37 @@ class Crud_crewprojects extends CI_Controller {
         $id_session = hash('sha256', bin2hex(random_bytes(16)));
         $project_id = $this->input->post('project_id'); // ID session of the project
         $crew_id = $this->input->post('crew_id');       // ID session of the selected crew
-        $role_key = $this->input->post('role');         // Role key (e.g., "koor_acara")
+        $role = $this->input->post('role');            // Role from the dropdown
 
-        if ($this->agent->is_browser()) // Agent untuk fitur di log activity
-        {
-            $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
-        }
-        elseif ($this->agent->is_robot())
-        {
+        if ($this->agent->is_browser()) {
+            $agent = 'Desktop ' . $this->agent->browser() . ' ' . $this->agent->version();
+        } elseif ($this->agent->is_robot()) {
             $agent = $this->agent->robot();
-        }
-        elseif ($this->agent->is_mobile())
-        {
-            $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
-        }
-        else
-        {
+        } elseif ($this->agent->is_mobile()) {
+            $agent = 'Mobile ' . $this->agent->mobile() . ' ' . $this->agent->version();
+        } else {
             $agent = 'Unidentified User Agent';
         }
-
-        // Map role key to its label
-        $roles = [
-            'koor_acara'      => 'Koordinator Acara',
-            'koor_lapangan'   => 'Koordinator Lapangan',
-            'koor_catering'   => 'Koordinator Catering',
-            'koor_pengantin'  => 'Koordinator Pengantin',
-            'koor_tamu'       => 'Koordinator Tamu',
-            'koor_tambahan1'  => 'Koordinator Tambahan1',
-            'koor_tambahan2'  => 'Koordinator Tambahan2'
-        ];
-        $role_label = isset($roles[$role_key]) ? $roles[$role_key] : $role_key;
 
         $data = [
             'id_session'    => $id_session,
             'project_id'    => $project_id,
             'crew_id'       => $crew_id,
-            'role'          => $role_label, // Save the role label directly
+            'role'          => $role, // Save the role directly
             'created_by'    => $this->session->id_session,
         ];
 
         $this->CrewProjects_model->add_crew_to_project($data); // Store the data in the database
 
-        $data_log = array(
-
-            'log_activity_user_id'=>$this->session->id_session,
-            'log_activity_modul' => 'crewproject/createlist',
+        $data_log = [
+            'log_activity_user_id' => $this->session->id_session,
+            'log_activity_modul'   => 'crewproject/createlist',
             'log_activity_document_no' => $project_id,
-            'log_activity_status' => 'Tambah Crew ke Project',
-            'log_activity_waktu' => date('Y-m-d H:i:s'),
+            'log_activity_status'  => 'Tambah Crew ke Project',
+            'log_activity_waktu'   => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
-            
-        );
+            'log_activity_ip'      => $this->input->ip_address()
+        ];
 
         $this->CrewProjects_model->insert_log_activity($data_log);
 
@@ -140,15 +111,7 @@ class Crud_crewprojects extends CI_Controller {
         }
 
         $data['crews'] = $this->CrewProjects_model->get_all_crews(); // Fetch all available crews
-        $data['roles'] = [
-            'Koordinator Acara',
-            'Koordinator Lapangan',
-            'Koordinator Catering',
-            'Koordinator Pengantin',
-            'Koordinator Tamu',
-            'Koordinator Tambahan1',
-            'Koordinator Tambahan2'
-        ];
+        $data['roles'] = $this->CrewProjects_model->get_all_roles(); // Fetch roles from crew_role table
 
         $this->load->view('crews/editlist', $data);
     }
@@ -159,20 +122,13 @@ class Crud_crewprojects extends CI_Controller {
         $role = $this->input->post('role');
         $id_session = $this->input->post('id_session');
 
-        if ($this->agent->is_browser()) // Agent untuk fitur di log activity
-        {
-            $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
-        }
-        elseif ($this->agent->is_robot())
-        {
+        if ($this->agent->is_browser()) {
+            $agent = 'Desktop ' . $this->agent->browser() . ' ' . $this->agent->version();
+        } elseif ($this->agent->is_robot()) {
             $agent = $this->agent->robot();
-        }
-        elseif ($this->agent->is_mobile())
-        {
-            $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
-        }
-        else
-        {
+        } elseif ($this->agent->is_mobile()) {
+            $agent = 'Mobile ' . $this->agent->mobile() . ' ' . $this->agent->version();
+        } else {
             $agent = 'Unidentified User Agent';
         }
 
@@ -182,23 +138,20 @@ class Crud_crewprojects extends CI_Controller {
 
         $data = [
             'crew_id' => $crew_id,
-            'role' => $role
+            'role'    => $role // Update the role directly
         ];
 
-        $this->load->model('CrewProjects_model');
         $this->CrewProjects_model->update_crew_role($id_session, $data);
 
-        $data_log = array(
-
-            'log_activity_user_id'=>$this->session->id_session,
-            'log_activity_modul' => 'crewproject/updatelist',
+        $data_log = [
+            'log_activity_user_id' => $this->session->id_session,
+            'log_activity_modul'   => 'crewproject/updatelist',
             'log_activity_document_no' => $project_id,
-            'log_activity_status' => 'Update Crew ke Project',
-            'log_activity_waktu' => date('Y-m-d H:i:s'),
+            'log_activity_status'  => 'Update Crew ke Project',
+            'log_activity_waktu'   => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
-            
-        );
+            'log_activity_ip'      => $this->input->ip_address()
+        ];
 
         $this->CrewProjects_model->insert_log_activity($data_log);
 
