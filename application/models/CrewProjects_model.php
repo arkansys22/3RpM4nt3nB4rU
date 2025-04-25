@@ -123,5 +123,11 @@ class CrewProjects_model extends CI_Model {
         ];
     }
 
+    public function get_all_roles() {
+        $this->db->select('role');
+        $this->db->from('crew_role');
+        return $this->db->get()->result();
+    }
+
 }
 ?>
