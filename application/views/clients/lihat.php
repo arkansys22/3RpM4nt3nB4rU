@@ -97,6 +97,13 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                   <li><a href="<?= $clients->list_photo ?>" target="_blank" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">List Foto</a></li>
                   <li><a href="<?= site_url('clients/c_lihat/'. $clients->id_session) ?>" target="_blank" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Lihat Profile</a></li>
                   <li><a href="https://wa.me/<?= $clients->phone?>?text=Halo Kami dari Mantenbaru Organizer!%0A%0AKami%20ingin%20membagikan%20data%20profil%20pengantin%20yang%20sudah%20kami%20buat.%20Silakan%20klik%20link%20di%20bawah%20ini%20untuk%20melihat%20dan%20mengedit%20data%20sesuai%20kebutuhan.%0A%0A<?= site_url('clients/c_lihat/'. $clients->id_session) ?>%0A%0AJika%20anda%20membutuhkan%20username%20dan%20password%20untuk%20mengedit%20data%20sesuai%20kebutuhan,%20jangan%20ragu%20untuk%20menghubungi%20kami.%20Terima%20kasih!" target="_blank" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Share Profile</a></li>
+                    <li>
+                    <a href="https://wa.me/?text=<?= $project->project_name ?>%0A<?= hari($clients->wedding_date) ?>,%20<?= tgl_indo($clients->wedding_date) ?>%0A%0AStandby%20di%20lokasi%20jam%20<?= date('H:i', strtotime($clients->stand_by)) ?>%0ADresscode%20<?= $clients->uniform ?>%0A%0A<?= $clients->location ?>%0A<?= $clients->maps ?>%0A%0A<?php if ($islam): ?>Susunan%20Acara%20Akad%0A<?= $clients->wedding_ceremony ?><?php else: ?>Susunan%20Acara%20Pemberkatan%0A<?= $clients->wedding_ceremony ?><?php endif; ?>%0A%0ASusunan%20Acara%20Resepsi%0A<?= $clients->reception_afterward ?>" 
+                    target="_blank" 
+                    class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">
+                      Share to Group
+                    </a>
+                    </li>
                   </ul>
                   </div>
                   </div>
@@ -158,7 +165,13 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                 <h3 class="text-lg font-bold mt-6 mb-2"><strong>Detail Pernikahan</strong></h3>
                 <label class="block mb-2"><strong>Tanggal Pernikahan : </strong><?= hari($clients->wedding_date) ?>, <?= tgl_indo($clients->wedding_date) ?></label>
                 <label class="block mb-2"><strong>Lokasi : </strong><?= $clients->location ?></label>
-                <label class="block mb-2"><strong>Maps : </strong><a href="<?= $clients->maps ?>" target="_blank" class="text-blue-500 underline">Lihat Maps</a></label>
+                <label class="block mb-2"><strong>Maps : </strong>
+                  <?php if (!empty($clients->maps)) : ?>
+                  <a href="<?= $clients->maps ?>" target="_blank" class="text-blue-500 underline">Lihat Maps</a>
+                  <?php else : ?>
+                  <span>Belum tersedia</span>
+                  <?php endif; ?>
+                </label>
 
                 <?php if ($islam) : ?>
                 <label class="block mb-2"><strong>Mahar : </strong><?= $clients->mahr ?></label>
