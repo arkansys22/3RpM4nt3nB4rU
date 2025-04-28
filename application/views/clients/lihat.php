@@ -12,6 +12,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lihat Client</title>
+    <link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
     <link href="<?php echo base_url()?>assets/backend/style.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
