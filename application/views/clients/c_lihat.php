@@ -19,7 +19,7 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Mantenbaru <?= $clients->f_bride_cname ?> dan <?= $clients->m_bride_cname ?></title>
 	<!-- favicon -->
-	<link rel="shortcut icon" href="<?php echo base_url()?>assets/frontend/assets/images/favicon.png" type="image/x-icon">
+	<link rel="shortcut icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
 	<!-- animate css -->
 	<link rel="stylesheet" href="<?php echo base_url()?>assets/frontend/assets/css/animate.css">
 	<!-- bootstrap -->
