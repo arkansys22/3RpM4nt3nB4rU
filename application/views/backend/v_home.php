@@ -249,7 +249,7 @@
 							$this->session->userdata('crews_idsession') != ''
 						) : ?>
 							<a href="<?= base_url('panel/staff') ?>">
-								<button class="w-40 h-40 bg-[#ed126b] text-white font-semibold rounded-none hover:bg-pink-500 focus:outline-none flex flex-col items-center justify-center">
+								<button class="w-40 h-40 bg-[#ed126b] text-white font-semibold rounded-none hover:bg-pink-800 focus:outline-none flex flex-col items-center justify-center">
 									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mb-2">
 										<path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z" />
 									</svg>
@@ -258,39 +258,39 @@
 							</a>
 						<?php endif; ?>
 						<!-- Tombol 2 -->
-						<button class="w-40 h-40 bg-[#ed126b] text-white font-semibold rounded-none hover:bg-pink-500 focus:outline-none">
+						<button class="w-40 h-40 bg-[#ed126b] text-white font-semibold rounded-none hover:bg-pink-800 focus:outline-none">
 							Button 2
 						</button>
 						<!-- Tombol 3 -->
-						<button class="w-40 h-40 bg-[#ed126b] text-white font-semibold rounded-none hover:bg-pink-500 focus:outline-none">
+						<button class="w-40 h-40 bg-[#ed126b] text-white font-semibold rounded-none hover:bg-pink-800 focus:outline-none">
 							Button 3
 						</button>
 						<!-- Tombol 4 -->
-						<button class="w-40 h-40 bg-[#ed126b] text-white font-semibold rounded-none hover:bg-pink-500 focus:outline-none">
+						<button class="w-40 h-40 bg-[#ed126b] text-white font-semibold rounded-none hover:bg-pink-800 focus:outline-none">
 							Button 4
 						</button>
 						<!-- Tombol 5 -->
-						<button class="w-40 h-40 bg-[#ed126b] text-white font-semibold rounded-none hover:bg-pink-500 focus:outline-none">
+						<button class="w-40 h-40 bg-[#ed126b] text-white font-semibold rounded-none hover:bg-pink-800 focus:outline-none">
 							Button 5
 						</button>
 						<!-- Tombol 6 -->
-						<button class="w-40 h-40 bg-[#ed126b] text-white font-semibold rounded-none hover:bg-pink-500 focus:outline-none">
+						<button class="w-40 h-40 bg-[#ed126b] text-white font-semibold rounded-none hover:bg-pink-800 focus:outline-none">
 							Button 6
 						</button>
 						<!-- Tombol 7 -->
-						<button class="w-40 h-40 bg-[#ed126b] text-white font-semibold rounded-none hover:bg-pink-500 focus:outline-none">
+						<button class="w-40 h-40 bg-[#ed126b] text-white font-semibold rounded-none hover:bg-pink-800 focus:outline-none">
 							Button 7
 						</button>
 						<!-- Tombol 8 -->
-						<button class="w-40 h-40 bg-[#ed126b] text-white font-semibold rounded-none hover:bg-pink-500 focus:outline-none">
+						<button class="w-40 h-40 bg-[#ed126b] text-white font-semibold rounded-none hover:bg-pink-800 focus:outline-none">
 							Button 8
 						</button>
 						<!-- Tombol 9 -->
-						<button class="w-40 h-40 bg-[#ed126b] text-white font-semibold rounded-none hover:bg-pink-500 focus:outline-none">
+						<button class="w-40 h-40 bg-[#ed126b] text-white font-semibold rounded-none hover:bg-pink-800 focus:outline-none">
 							Button 9
 						</button>
 						<!-- Tombol 10 -->
-						<button class="w-40 h-40 bg-[#ed126b] text-white font-semibold rounded-none hover:bg-pink-500 focus:outline-none">
+						<button class="w-40 h-40 bg-[#ed126b] text-white font-semibold rounded-none hover:bg-pink-800 focus:outline-none">
 							Button 10
 						</button>
 					</div><br>
