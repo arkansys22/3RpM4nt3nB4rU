@@ -234,5 +234,16 @@ class Supplies_model extends CI_Model {
             return 0; // Jika tidak ada jumlah
         }
     }
+
+    public function get_low_stock_items() {
+        $this->db->select('supplies_stock.id_session, supplies_stock.amount, supplies.product_name, supplies.type');
+        $this->db->from('supplies_stock');
+        $this->db->join('supplies', 'supplies.id_session = supplies_stock.id_session', 'left');
+        $this->db->where('supplies_stock.amount <=', 10); // Only fetch items with amount <= 10
+        $this->db->where('supplies.status', 'created'); // Ensure the supply is active
+        $this->db->where('supplies_stock.created_at = (SELECT MAX(created_at) FROM supplies_stock WHERE supplies_stock.id_session = supplies.id_session)'); // Fetch the latest record
+        $this->db->order_by('supplies_stock.amount', 'ASC');
+        return $this->db->get()->result();
+    }
     
 }
