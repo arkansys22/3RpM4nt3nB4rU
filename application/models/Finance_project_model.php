@@ -111,6 +111,15 @@ class Finance_project_model extends CI_Model {
         return $query->row()->select('sum(nominal_transaksi)');
     }
 
+    public function get_transaction_by_session($id_session) {
+        return $this->db->get_where('project_acc', ['id_session' => $id_session])->row();
+    }
 
+    public function get_transaction_by_ids($project_id_session, $id_session) {
+        return $this->db->get_where('project_acc', [
+            'project_id_session' => $project_id_session,
+            'id_session' => $id_session
+        ])->row();
+    }
 
 }
