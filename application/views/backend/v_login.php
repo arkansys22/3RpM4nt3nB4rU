@@ -21,9 +21,7 @@
     <div class="flex h-screen items-center justify-center">
       <div class="w-full max-w-md p-6 bg-white/70 dark:bg-boxdark-2/70 rounded-lg shadow-md">
         <div class="text-center">
-          <a href="index.html">
-            <img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-02.png') ?>" alt="Logo" style="width: 320px; margin: 0 auto;">
-          </a>
+          <img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-02.png') ?>" alt="Logo" style="width: 320px; margin: 0 auto;">
         </div>
         <br>
         <?php echo $this->session->flashdata('login_failed'); ?>
@@ -70,5 +68,18 @@
       </div>
     </div>
     <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const usernameInput = document.querySelector('input[name="username"]');
+        const passwordInput = document.querySelector('input[name="password"]');
+
+        const changeTextColor = (input) => {
+          input.style.color = '#ed126b';
+        };
+
+        usernameInput.addEventListener('input', () => changeTextColor(usernameInput));
+        passwordInput.addEventListener('input', () => changeTextColor(passwordInput));
+      });
+    </script>
   </body>
 </html>
