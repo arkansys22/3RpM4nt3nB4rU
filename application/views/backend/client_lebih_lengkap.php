@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lebih Lengkap - Clients</title>
+    <link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
     <link href="<?php echo base_url()?>assets/backend/style.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -44,7 +45,7 @@
                 </div>
               <?php foreach (array_reverse($clients_per_year, true) as $year => $months): ?>
                 <h2 class="text-xl font-semibold mb-3 flex justify-between">
-                  <span>Tahun <?= $year ?></span>
+                  <span><?= $year ?></span>
                   <span class="text-gray-500 dark:text-gray-400">Total Client: <?= array_sum($months) ?></span>
                 </h2>
                 <div class="overflow-x-auto bg-white dark:bg-neutral-700 rounded-lg shadow-md">
