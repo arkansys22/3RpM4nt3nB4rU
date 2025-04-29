@@ -4,7 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <link rel="shortcut icon" href="./assets/img/favicon.ico" />
+    <link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link
       rel="apple-touch-icon"
       sizes="76x76"
@@ -24,8 +25,8 @@
     <main>
       <section class="absolute w-full h-full">
         <div
-          class="absolute top-0 w-full h-full bg-white"
-          style="background-image: url(<?= base_url('assets/backend/src/images/logo/bg-login.png') ?>); background-size: cover; background-repeat: no-repeat;"
+          class="absolute top-0 w-full h-full bg-white bg-cover bg-center"
+          style="background-image: url(<?= base_url('assets/backend/src/images/logo/bgclogin.png') ?>); background-size: cover; background-repeat: no-repeat;"
         ></div>
         <div class="container mx-auto px-4 h-full">
           <div class="flex content-center items-center justify-center h-full">
@@ -35,7 +36,7 @@
                 style="background-color: rgba(255, 255, 255, 0.8);"
               >
                 <div class="rounded-t mb-0 px-6 py-6">
-                    <img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-02.png') ?>" alt="Logo" style="width: 220px; margin: 0 auto;">
+                    <img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-02.png') ?>" alt="Logo" style="width: 300px; margin: 0 auto;">
                 </div>
                 <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
                   <form action="<?= base_url('client/login') ?>" method="post">
@@ -50,24 +51,25 @@
                       echo form_open('client/login');
                     ?>
                     <div class="mb-4">
-                      <label class="mb-2.5 block font-medium text-black dark:text-white">Username </label>
                       <div class="relative">
-                        <input type="text" name='username' onkeyup="this.value = this.value.toLowerCase()" value="<?php echo set_value('username') ?>" placeholder="Enter your username" class="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"/>
-                        <span class="absolute right-4 top-4">
-                          <svg class="fill-current" width="22" height="22" viewBox="0 0 22 22" fill="none"></svg>
-                        </span>
-                        <span style="font-size: 15px; color:grey;"><?php echo form_error('username'); ?></span>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="absolute left-3 top-1/2 transform -translate-y-1/2 w-6 h-6 text-black">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                      </svg>
+                      <input type="text" name="username" onkeyup="this.value = this.value.toLowerCase()" value="<?php echo set_value('username') ?>" placeholder="Username" class="w-full pl-12 rounded-lg border border-gray-400 bg-transparent py-2 px-4 outline-none focus:border-gray-600 dark:border-gray-600 dark:bg-form-input dark:focus:border-gray-400" />
                       </div>
+                      <span class="text-sm text-gray-600"><?php echo form_error('username'); ?></span>
                     </div>
-                    <div class="mb-6">
-                      <label class="mb-2.5 block font-medium text-black dark:text-white">Password </label>
+                    <div class="mb-4">
                       <div class="relative">
-                        <input type="password" name='password' placeholder="6+ Characters, 1 Capital letter" class="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary" >
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="absolute left-3 top-1/2 transform -translate-y-1/2 w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25Z" />
+                      </svg>
+                      <input type="password" name="password" placeholder="Password" class="w-full pl-12 rounded-lg border border-gray-400 bg-transparent py-2 px-4 outline-none focus:border-gray-600 dark:border-gray-600 dark:bg-form-input dark:focus:border-gray-400" />
                       </div>
-                      <span style="font-size: 15px; color:grey;"><?php echo form_error('password'); ?></span>
+                      <span class="text-sm text-gray-600"><?php echo form_error('password'); ?></span>
                     </div>
-                    <div class="mb-5">
-                      <input type="submit" name="submit" value="Sign In" class="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 font-medium text-white transition hover:bg-opacity-90" style="background-color: #ed126b; border-color: #ed126b;"/>
+                    <div class="mb-1">
+                      <input type="submit" name="submit" value="Sign In" class="w-full cursor-pointer rounded-lg bg-[#ed126b] text-white py-2 px-4 font-medium hover:bg-opacity-90" />
                     </div>
                   </form>
                 </div>
@@ -78,15 +80,12 @@
         <footer class="absolute w-full bottom-0 bg-white pb-6">
           <div class="container mx-auto px-4">
             <hr class="mb-6 border-b-1 border-gray-700" />
-            <div
-              class="flex flex-wrap items-center md:justify-between justify-center"
-            >
+            <div class="flex flex-wrap items-center md:justify-between justify-center">
               <div class="w-full md:w-4/12 px-4">
                 <div class="text-sm text-gray-900 font-semibold py-1">
                   Copyright © 2025 Mantenbaru Organizer
                 </div>
               </div>
-
             </div>
           </div>
         </footer>
