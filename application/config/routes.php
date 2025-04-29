@@ -168,6 +168,7 @@ $route['supplies/recycle_bin'] = 'crud_supplies/recycle_bin'; // Halaman recycle
 $route['supplies/restore/(:any)'] = 'crud_supplies/restore/$1'; // Restore supplies
 $route['supplies/permanent_delete/(:any)'] = 'crud_supplies/permanent_delete/$1'; // Hapus permanen supplies
 $route['supplies/lihat/(:any)'] = 'crud_supplies/lihat/$1'; // Menampilkan lihat supplies
+$route['supplies/restock'] = 'crud_supplies/restock';
 
 $route['crewproject/createlist/(:any)'] = 'Crud_crewprojects/createlist/$1'; // Route for creating a crew list for a project
 $route['crewproject/storelist'] = 'Crud_crewprojects/storelist'; // Route for storing a crew list for a project
