@@ -92,4 +92,17 @@
       </section>
     </main>
   </body>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const usernameInput = document.querySelector('input[name="username"]');
+      const passwordInput = document.querySelector('input[name="password"]');
+
+      const changeTextColor = (input) => {
+        input.style.color = '#ed126b';
+      };
+
+      usernameInput.addEventListener('input', () => changeTextColor(usernameInput));
+      passwordInput.addEventListener('input', () => changeTextColor(passwordInput));
+    });
+  </script>
 </html>
