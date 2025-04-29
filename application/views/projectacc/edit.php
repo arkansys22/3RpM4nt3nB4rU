@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finance Project</title>
+    <title>Edit Transaksi</title>
     <link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
     <link href="<?php echo base_url()?>assets/backend/style.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -34,29 +34,29 @@
         <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-              <h1 class="text-2xl font-bold mb-4">Finance Project <?= $project->project_name ?> <?= $project->event_date ?> | <?= $project->location ?></h1>
-              <form action="<?= site_url('finance-project/update2/'.$project->id_session) ?>" method="post" class="bg-white p-6 shadow-md rounded">
+              <h1 class="text-2xl font-bold mb-4">Edit Finance Project <?= $project->project_name ?> <?= $project->event_date ?> | <?= $project->location ?></h1>
+              <form action="<?= site_url('finance-project/update/' . $project->id_session . '/' . $transaction->id_session) ?>" method="post" class="bg-white p-6 shadow-md rounded">
 
                 <input type="hidden" name="project_id_session" value="<?= $project->id_session ?>">
 
                 <label class="block mb-2">Nama Transaksi</label>
-                <input type="text" name="nama_transaksi" class="w-full px-4 py-2 border rounded mb-4" required>
+                <input type="text" name="nama_transaksi" class="w-full px-4 py-2 border rounded mb-4" value="<?= $transaction->nama_transaksi ?>" required>
 
                 <label class="block mb-2">Tanggal Transaksi</label>
-                <input type="date" name="event_date" class="w-full px-4 py-2 border rounded mb-4" required>
+                <input type="date" name="event_date" class="w-full px-4 py-2 border rounded mb-4" value="<?= $transaction->tanggal_transaksi ?>" required>
 
                 <label class="block mb-2">Nominal</label>
-                <input type="text" id="formattedNumber" class="w-full px-4 py-2 border rounded mb-4" oninput="formatNumber(this)" name="value" required>
+                <input type="text" id="formattedNumber" value="<?= number_format($transaction->nominal_transaksi ?? 0, 0, ',', '.') ?>" class="w-full px-4 py-2 border rounded mb-4" oninput="formatNumber(this)" name="value" required>
 
                 <label class="block mb-2">Metode Pembayaran</label>
                 <select name="metode" class="w-full px-4 py-2 border rounded mb-4" required>
-                    <option>-- Pilihan Metode Pembayaran --</option>
-                    <option value="Transfer">Transfer Bank</option>
-                    <option value="Cash">Cash</option>
+                  <option>-- Pilihan Metode Pembayaran --</option>
+                  <option value="Transfer" <?= $transaction->metode_transaksi == 'Transfer' ? 'selected' : '' ?>>Transfer Bank</option>
+                  <option value="Cash" <?= $transaction->metode_transaksi == 'Cash' ? 'selected' : '' ?>>Cash</option>
                 </select>
 
                 <label class="block mb-2">Detail</label>
-                <textarea name="detail" class="w-full px-4 py-2 border rounded mb-4" required></textarea>
+                <textarea name="detail" class="w-full px-4 py-2 border rounded mb-4" required><?= $transaction->detail ?></textarea>
                 
 
                 <div class="flex flex-col sm:flex-row justify-end">
