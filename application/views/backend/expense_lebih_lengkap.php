@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lebih Lengkap - Expenses</title>
+    <link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
     <link href="<?php echo base_url()?>assets/backend/style.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -50,10 +51,10 @@
 
               <?php foreach ($expense_per_year as $year => $months): ?>
                 <h2 class="text-xl font-semibold mb-3 flex justify-between">
-                  <span class="text-gray-900 dark:text-gray-200"><?= $year ?></span> 
+                  <span><?= $year ?></span> 
                 </h2>
                 <div>
-                  <span class="text-gray-500 dark:text-gray-400">Expenses : Rp <?= number_format(array_sum(array_column($months, 'total')), 0, ',', '.') ?></span>
+                  <span>Expenses : Rp <?= number_format(array_sum(array_column($months, 'total')), 0, ',', '.') ?></span>
                   </div><br>
                 <div class="overflow-x-auto bg-white dark:bg-neutral-700 rounded-lg shadow-md">
                   <table class="min-w-full text-left text-sm whitespace-nowrap bg-white dark:bg-neutral-800">
