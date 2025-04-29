@@ -244,6 +244,9 @@
                         <td><?= "Rp " . number_format($p->nominal_transaksi, 0, ',', '.'); ?></td>                
                         <td>
                         <div class="flex flex-col items-start gap-2 w-max">
+                          <a href="<?= site_url('finance-operational/edit/'. $p->id_session) ?>" class="inline-flex justify-center px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600 min-w-full text-center">
+                            Edit
+                          </a>
                           <a href="<?= site_url('finance-operational/permanent_delete/'.$p->id_session) ?>" class="inline-flex justify-center bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 min-w-full text-center" onclick="return confirm('Yakin ingin menghapus <?= $p->nama_transaksi ?> ?')">Hapus</a>
                         </div>
                         </td>

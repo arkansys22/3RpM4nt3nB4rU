@@ -3,34 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Pengguna</title>
+    <title>Edit Operational Finance</title>
     <link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
     <link href="<?php echo base_url()?>assets/backend/style.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        const levelSelect = document.querySelector('select[name="level"]');
-        const clientIdField = document.querySelector('select[name="clientid"]').closest('div');
-        const crewIdField = document.querySelector('select[name="crewid"]').closest('div');
-        const clientIdSelect = document.querySelector('select[name="clientid"]');
-        const crewIdSelect = document.querySelector('select[name="crewid"]');
-
-        function toggleFields() {
-          if (levelSelect.value === '5') { // Assuming '5' is the value for client level
-            clientIdField.style.display = 'block';
-            crewIdField.style.display = 'none';
-            crewIdSelect.value = '-';
-          } else {
-            clientIdField.style.display = 'none';
-            crewIdField.style.display = 'block';
-            clientIdSelect.value = '-';
-          }
-        }
-
-        levelSelect.addEventListener('change', toggleFields);
-        toggleFields(); // Initial call to set the correct visibility on page load
-      });
-    </script>
 </head>
 <body
     x-data="{ page: 'projects', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
@@ -58,58 +34,28 @@
         <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-              <h1 class="text-2xl font-bold mb-4">Edit Pengguna</h1>
-              <form action="<?= site_url('user/update/'.$pc->id_session) ?>" method="post" class="bg-white p-6 shadow-md rounded">
-                <label class="block mb-2">Username</label>
-                <input type="text" name="username" value="<?= $pc->username ?>" class="w-full px-4 py-2 border rounded mb-4" required>
+              <h1 class="text-2xl font-bold mb-4">Edit Operational Finance</h1>
+              <form action="<?= site_url('finance-operational/update/'.$pc->id_session) ?>" method="post" class="bg-white p-6 shadow-md rounded">
+                <label class="block mb-2">Nama Transaksi</label>
+                <input type="text" name="nama_transaksi" value="<?= $pc->nama_transaksi ?>" class="w-full px-4 py-2 border rounded mb-4" required>
 
-                <label class="block mb-2">Nama</label>
-                <input type="text" name="nama" value="<?= $pc->nama ?>" class="w-full px-4 py-2 border rounded mb-4" required>
+                <label class="block mb-2">Tanggal Transaksi</label>
+                <input type="date" name="tanggal_transaksi" value="<?= $pc->tanggal_transaksi ?>" class="w-full px-4 py-2 border rounded mb-4" required>
 
-                <label class="block mb-2">Email</label>
-                <input type="email" name="email" value="<?= $pc->email ?>" class="w-full px-4 py-2 border rounded mb-4" required>
-
-                <label class="block mb-2">Password</label>
-                <input type="password" name="password" placeholder="Ganti password isi disini, jika tidak abaikan" class="w-full px-4 py-2 border rounded mb-4w-full px-4 py-2 border rounded mb-4">
+                <label class="block mb-2">Nominal</label>
+                <input type="text"  value="<?= number_format($pc->nominal_transaksi ?? 0, 0, ',', '.') ?>"  class="w-full px-4 py-2 border rounded mb-4" oninput="formatNumber(this)" name="nominal_transaksi"  required>
                 
-                <label class="block mb-2">Level</label>
-                <select name="level" class="w-full px-4 py-2 border rounded mb-4" required> 
-                      <?php foreach ($level as $p) {
-                            if ($pc->level == $p['user_level_id']){
-                              echo"<option selected='selected' value='$p[user_level_id]'>$p[user_level_nama]</option> ";
+                <label class="block mb-2">Kategori</label>
+                <select name="kategori" class="w-full px-4 py-2 border rounded mb-4" required> 
+                      <?php foreach ($kategori as $p) {
+                            if ($pc->kategori == $p['nomer_kategori']){
+                              echo"<option selected='selected' value='$p[nomer_kategori]'>$p[nomer_kategori] - $p[nama_kategori]</option> ";
                             }else{
-                              echo"<option value='$p[user_level_id]'>$p[user_level_nama]</option>";
+                              echo"<option value='$p[nomer_kategori]'>$p[nomer_kategori] - $p[nama_kategori]</option>";
                          }
                       } ?>                    
                 </select>
 
-                <div>
-                  <label class="block mb-2">Crews ID</label>
-                  <select name="crewid" class="w-full px-4 py-2 border rounded mb-4" required> 
-                        <option value="-">-</option>
-                        <?php foreach ($crews as $p) {
-                              if ($pc->crews_idsession == $p['id_session']){
-                                echo"<option selected='selected' value='$p[id_session]'>$p[crew_name]</option> ";
-                              }else{
-                                echo"<option value='$p[id_session]'>$p[crew_name]</option>";
-                           }
-                        } ?>
-                  </select>
-                </div>
-
-                <div>
-                  <label class="block mb-2">Client ID</label>
-                  <select name="clientid" class="w-full px-4 py-2 border rounded mb-4" required> 
-                        <option value="-">-</option>
-                        <?php foreach ($clients as $p) {
-                              if ($pc->client_idsession == $p['id_session']){
-                                echo"<option selected='selected' value='$p[id_session]'>$p[client_name]</option> ";
-                              }else{
-                                echo"<option value='$p[id_session]'>$p[client_name]</option>";
-                           }
-                        } ?>                    
-                  </select>
-                </div>
 
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Update</button>
                 <a href="javascript:history.back()" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded">Batal</a>
@@ -123,5 +69,12 @@
     <!-- ===== Content Area End ===== -->
   </div>
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
+  <script>
+    function formatNumber(input) {
+        let value = input.value.replace(/\D/g, ''); // Hanya angka
+        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Tambah titik setiap 3 digit
+        input.value = value;
+    }
+  </script>
 </body>
 </html>

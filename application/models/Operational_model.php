@@ -14,13 +14,13 @@ class Operational_model extends CI_Model {
         return $this->db->insert('operational_acc', $data);        
     }
 
-    public function get_users_by_session($id_session) {
-        return $this->db->get_where('user', ['id_session' => $id_session])->row();
+    public function get_operational_by_session($id_session) {
+        return $this->db->get_where('operational_acc', ['id_session' => $id_session])->row();
     }
 
-    public function update_users($id_session, $data) {
+    public function update_operational($id_session, $data) {
         $this->db->where('id_session', $id_session);
-        return $this->db->update('user', $data);
+        return $this->db->update('operational_acc', $data);
     }
 
     public function insert_log_activity($data_log) {

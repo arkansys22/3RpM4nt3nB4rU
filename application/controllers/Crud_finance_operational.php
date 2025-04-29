@@ -114,11 +114,9 @@ class crud_finance_operational extends CI_Controller {
     public function edit($id_session) {
         if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='5'){
             cek_session_akses_developer('user',$this->session->id_session);
-            $data['level'] = $this->Crud_m->view_ordering('user_level','user_level_id','asc');
-            $data['crews'] = $this->Crud_m->view_ordering('crews','id','asc');
-            $data['clients'] = $this->Crud_m->view_ordering('clients','id','asc');
-            $data['pc'] = $this->Users2_model->get_users_by_session($id_session);
-            $this->load->view('user/edit', $data);
+            $data['kategori'] = $this->Crud_m->view_ordering('operational_kategori','nomer_kategori','asc');
+            $data['pc'] = $this->Operational_model->get_operational_by_session($id_session);
+            $this->load->view('operational/edit', $data);
             
         }else if($this->session->level=='4'){
             cek_session_akses_staff_admin('user',$this->session->id_session);
@@ -126,7 +124,7 @@ class crud_finance_operational extends CI_Controller {
             $data['crews'] = $this->Crud_m->view_ordering('crews','id','asc');
             $data['clients'] = $this->Crud_m->view_ordering('clients','id','asc');
             $data['pc'] = $this->Users2_model->get_users_by_session($id_session);
-            $this->load->view('user/edit', $data);
+            $this->load->view('operational/edit', $data);
 
         }else{
                 redirect(base_url());
@@ -151,36 +149,22 @@ class crud_finance_operational extends CI_Controller {
                 {
                       $agent = 'Unidentified User Agent';
                 }
-        if ($this->input->post('password')=='' ){
+        
         $data = array(
-            'username'  => $this->input->post('username'),
-            'nama'  => $this->input->post('nama'),
-            'crews_idsession'        => $this->input->post('crewid'),
-            'client_idsession'        => $this->input->post('clientid'),
-            'email'        => $this->input->post('email'),
-            'level'    => $this->input->post('level')       
+            'nama_transaksi'  => $this->input->post('nama_transaksi'),
+            'tanggal_transaksi'  => $this->input->post('tanggal_transaksi'),
+            'nominal_transaksi'        => str_replace('.', '', $this->input->post('nominal_transaksi')), 
+            'kategori'    => $this->input->post('kategori')                
             );
-        }else{
-            $data = array(
-            'username'  => $this->input->post('username'),
-            'nama'  => $this->input->post('nama'),
-            'email'        => $this->input->post('email'),
-            'level'    => $this->input->post('level'),
-            'crews_idsession'        => $this->input->post('crewid'),
-            'client_idsession'        => $this->input->post('clientid'),
-            'password'    => sha1($this->input->post('password'))       
-            );
-
-        }
-    
-        $this->Users2_model->update_users($id_session, $data);
-        $status = 'Edit Pengguna';
+         
+        $this->Operational_model->update_operational($id_session, $data);
+        $status = 'Edit Operational';
 
 
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
-            'log_activity_modul' => 'user/edit',
+            'log_activity_modul' => 'Operational/edit',
             'log_activity_document_no' => $id_session,
             'log_activity_status' => $status,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
@@ -189,10 +173,10 @@ class crud_finance_operational extends CI_Controller {
             
         );
 
-        $this->Users2_model->insert_log_activity($data_log);
+        $this->Operational_model->insert_log_activity($data_log);
     
-        $this->session->set_flashdata('Success', 'Pengguna berhasil diupdate');
-        redirect('user/lihat/' . $id_session);
+        $this->session->set_flashdata('Success', 'Operational berhasil diupdate');
+        redirect('finance-operational');
     }
 
     public function delete($id_session) {
