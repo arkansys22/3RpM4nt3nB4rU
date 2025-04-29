@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finance Project</title>
+    <title>Tambah Transaksi Crew</title>
     <link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
     <link href="<?php echo base_url()?>assets/backend/style.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -35,7 +35,7 @@
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
               <h1 class="text-2xl font-bold mb-4">Finance Project <?= $project->project_name ?> <?= $project->event_date ?> | <?= $project->location ?></h1>
-              <form action="<?= site_url('finance-project/update2/'.$project->id_session) ?>" method="post" class="bg-white p-6 shadow-md rounded">
+              <form action="<?= site_url('finance-project/store2/'.$project->id_session) ?>" method="post" class="bg-white p-6 shadow-md rounded">
 
                 <input type="hidden" name="project_id_session" value="<?= $project->id_session ?>">
 
