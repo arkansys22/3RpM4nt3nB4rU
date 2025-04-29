@@ -599,4 +599,13 @@ class Crud_supplies extends CI_Controller {
         redirect('supplies/recycle_bin');
     }
     }
+
+    public function restock() {
+        if (in_array($this->session->level, ['1', '2', '4'])) {
+            $data['low_stocks'] = $this->Supplies_model->get_low_stock_items();
+            $this->load->view('supplies/restock', $data);
+        } else {
+            redirect(base_url());
+        }
+    }
 }
