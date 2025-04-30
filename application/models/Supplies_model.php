@@ -105,14 +105,10 @@ class Supplies_model extends CI_Model {
     }
     
 
-
-
     public function update_supplies($id_session, $data) {
         $this->db->where('id_session', $id_session);
         return $this->db->update('supplies', $data);
     }
-
-
 
     public function delete_supplies($id_session) {
         $this->db->where('id_session', $id_session);
@@ -215,8 +211,6 @@ class Supplies_model extends CI_Model {
     
         return $query->result();
     }
-                                                                        
-    
     
     // Fungsi untuk mengambil jumlah berdasarkan status dan document_no
     public function get_amount_by_status_and_document($status, $document_no) {
