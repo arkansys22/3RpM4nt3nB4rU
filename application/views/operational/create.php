@@ -59,10 +59,10 @@
                         } ?>
                 </select>
 
-
-
+                <div class="flex flex-col sm:flex-row justify-end">
                 <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">Simpan</button>
-                <a href="javascript:history.back()" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded">Batal</a>
+                <a href="<?= site_url('finance-operational') ?>" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded">Batal</a>
+                </div>
               </form>
             </div>
           </div>
