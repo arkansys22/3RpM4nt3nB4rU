@@ -74,7 +74,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                   >
                   <ul class="flex flex-col">
                   <li><a href="<?= site_url('clients/edit/'. $clients->id_session) ?>" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4">Edit</a></li>
-                  <li><a href="javascript:history.back()" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4">Kembali</a></li>
+                  <li><a href="<?= site_url('clients') ?>" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4">Kembali</a></li>
 
                   <?php if ($islam) : ?>
                     <li><a href="<?= site_url('naskah/jubir_cpp/'. $clients->id_session) ?>" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Jubir CPP</a></li>
