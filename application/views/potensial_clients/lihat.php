@@ -83,7 +83,7 @@
                     </li>
                     <li>
                     <a
-                      href="javascript:history.back()"
+                        href="<?= $pc->status === 'Tanya-tanya' ? site_url('potensial-clients') : ($pc->status === 'Deal' ? site_url('potensial-clients-bayar') : site_url('potensial-clients-'.strtolower($pc->status))) ?>"
                       class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
                     >
                       Kembali
