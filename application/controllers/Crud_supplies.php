@@ -347,8 +347,22 @@ class Crud_supplies extends CI_Controller {
             redirect(base_url());
         }
     }
-    
-    
+
+    public function edit2($id_session) {
+        if (in_array($this->session->level, ['1', '2', '4'])) {
+            $supplies = $this->Supplies_model->get_supplies_by_session($id_session);
+
+            if ($supplies) {
+                $data['supplies'] = $supplies;
+                $this->load->view('supplies/edit', $data);
+            } else {
+                $this->session->set_flashdata('Error', 'Data supplies tidak ditemukan.');
+                redirect('supplies');
+            }
+        } else {
+            redirect(base_url());
+        }
+    }
 
     public function update($id_session) {
 
@@ -426,7 +440,22 @@ class Crud_supplies extends CI_Controller {
         $this->session->set_flashdata('Success', 'Stock berhasil diupdate');
         redirect('supplies');
     }
-    
+
+    public function update2($id_session) {
+        if (in_array($this->session->level, ['1', '2', '4'])) {
+            $data = array(
+                'product_name' => $this->input->post('product_name'),
+                'type' => $this->input->post('type')
+            );
+
+            $this->Supplies_model->update_supplies($id_session, $data);
+
+            $this->session->set_flashdata('Success', 'Produk berhasil diperbarui');
+            redirect('supplies/lihat/' . $id_session);
+        } else {
+            redirect(base_url());
+        }
+    }
 
     public function delete($id_session) {
 
@@ -608,4 +637,5 @@ class Crud_supplies extends CI_Controller {
             redirect(base_url());
         }
     }
+
 }
