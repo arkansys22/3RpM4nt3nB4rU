@@ -34,7 +34,7 @@
         <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-              <h2 class="text-2xl font-bold mb-4">Tambah Vendor</h2>
+              <h2 class="text-2xl font-bold mb-4">Tambah Vendor <?= $project->client_name ?></h2>
               <form action="<?= base_url('crud_vendor/store') ?>" method="POST" enctype="multipart/form-data" class="bg-white p-6 shadow-md rounded">
                 <input type="hidden" name="id_session" value="<?= $project->id_session ?>">
                 <label class="block mb-2"><strong>Nama Vendor</strong></label>
@@ -74,7 +74,7 @@
                 <input type="file" name="photo5" class="w-full px-4 py-2 border rounded mb-4">
                 <div class="flex flex-col sm:flex-row justify-end">
                   <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded w-full hover:bg-green-600 sm:w-24 mb-2 sm:mb-0 text-center">Simpan</button>
-                  <a href="<?= site_url('project') ?>" class="sm:ml-2 bg-gray-500 text-white px-4 py-2 rounded w-full hover:bg-gray-600 sm:w-24 text-center">Batal</a>
+                  <a href="<?= base_url('project/lihat/' . $project->id_session) ?>" class="sm:ml-2 bg-gray-500 text-white px-4 py-2 rounded w-full hover:bg-gray-600 sm:w-24 text-center">Batal</a>
                 </div>
               </form>
             </div>
