@@ -129,5 +129,13 @@ class CrewProjects_model extends CI_Model {
         return $this->db->get()->result();
     }
 
+    public function get_client_name_by_project_id($id_session) {
+        $this->db->select('client_name');
+        $this->db->from('project');
+        $this->db->where('id_session', $id_session);
+        $result = $this->db->get()->row();
+        return $result ? $result->client_name : null;
+    }
+
 }
 ?>
