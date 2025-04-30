@@ -5,6 +5,7 @@ class Crud_crewprojects extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('CrewProjects_model');
+        $this->load->model('project_model');
     }
 
     public function createlist($project_id) {
@@ -31,6 +32,8 @@ class Crud_crewprojects extends CI_Controller {
         $data['existing_crews'] = $this->CrewProjects_model->get_crew_by_project($project_id); // Fetch existing crews
         $data['crews'] = $this->CrewProjects_model->get_all_crews();
         $data['roles'] = $this->CrewProjects_model->get_all_roles(); // Fetch roles from crew_role table
+        $data['client_name'] = $this->CrewProjects_model->get_client_name_by_project_id($project_id); // Fetch client name
+        $data['project'] = $this->project_model->get_project_by_session($project_id); // Corrected reference
 
         $this->load->view('crews/createlist', $data);
     }
@@ -110,6 +113,8 @@ class Crud_crewprojects extends CI_Controller {
             show_404(); // Show 404 if crew not found
         }
 
+        $data['client_name'] = $this->CrewProjects_model->get_client_name_by_project_id($project_id); // Fetch client name
+        $data['project'] = $this->project_model->get_project_by_session($project_id); // Corrected reference
         $data['crews'] = $this->CrewProjects_model->get_all_crews(); // Fetch all available crews
         $data['roles'] = $this->CrewProjects_model->get_all_roles(); // Fetch roles from crew_role table
 
