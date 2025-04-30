@@ -58,7 +58,7 @@
 
                 <div class="flex flex-col sm:flex-row justify-end">
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded w-full hover:bg-blue-600 sm:w-24 mb-2 sm:mb-0 text-center">Save</button>
-                <a href="javascript:history.back()" class="sm:ml-2 bg-gray-500 text-white px-4 py-2 rounded w-full hover:bg-gray-600 sm:w-24 text-center">Cancel</a>
+                <a href="<?= site_url('agenda') ?>" class="sm:ml-2 bg-gray-500 text-white px-4 py-2 rounded w-full hover:bg-gray-600 sm:w-24 text-center">Cancel</a>
                 </div>
               </form>
             </div>
