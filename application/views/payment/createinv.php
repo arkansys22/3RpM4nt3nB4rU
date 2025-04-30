@@ -34,7 +34,7 @@
         <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-              <h1 class="text-2xl font-bold mb-4">Tambah Invoice</h1>
+              <h1 class="text-2xl font-bold mb-4">Tambah Invoice <?= $project->client_name ?></h1>
               <form action="<?= base_url('payment/store') ?>" method="post" class="bg-white p-6 shadow-md rounded">
               <input type="hidden" name="id_session" value="<?= $project->id_session ?>">
               <input type="hidden" name="total_paid" value="0"> <!-- Ensure total_paid is always 0 -->
@@ -67,7 +67,7 @@
 
                 <div class="flex flex-col sm:flex-row justify-end">
                   <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded w-full hover:bg-green-600 sm:w-24 mb-2 sm:mb-0 text-center">Simpan</button>
-                  <a href="javascript:history.back()" class="sm:ml-2 bg-gray-500 text-white px-4 py-2 rounded w-full hover:bg-gray-600 sm:w-24 text-center">Batal</a>
+                    <a href="<?= base_url('project/lihat/' . $project->id_session) ?>" class="sm:ml-2 bg-gray-500 text-white px-4 py-2 rounded w-full hover:bg-gray-600 sm:w-24 text-center">Batal</a>
                 </div>
               </form>
             </div>
