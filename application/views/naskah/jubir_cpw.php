@@ -54,7 +54,7 @@
             Print
         </button>
     </div>
-    <a href="javascript:history.back()" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a>
+    <a href="<?= base_url('clients/lihat/' . $client->id_session); ?>" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a>
         </div>
     </div>
 </body>
