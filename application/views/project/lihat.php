@@ -83,7 +83,7 @@
                 </li>
                 <li>
                 <a
-                  href="javascript:history.back()"
+                  href="<?= site_url('project') ?>"
                   class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
                 >
                   Kembali
