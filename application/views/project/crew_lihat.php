@@ -95,34 +95,53 @@
                 ?>
 
                 <h2 class="text-lg font-bold mb-2"><br>Job Description</h2>
-                  <div class="border p-4 mb-4">
+                  <div x-data="{ modalOpen: false }" class="border p-4 mb-4">
                     <?php if (!empty($crew_role)): ?>
-                        <p><strong>Role:</strong> <?= htmlspecialchars($crew_role->role) ?></p>
-                        <button 
-                            type="button" 
-                            class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700"
-                            onclick="document.getElementById('jobdescModal').classList.remove('hidden')">
-                            Lihat Jobdesc
-                        </button>
-                    <?php else: ?>
-                        <p class="text-red-500 font-semibold">Job description belum tersedia</p>
-                    <?php endif; ?>
-                  </div>
-
-                    <div id="jobdescModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                    <div class="bg-white dark:bg-boxdark p-6 rounded shadow-lg max-w-lg w-full max-h-[80vh] overflow-y-auto">
-                      <h3 class="text-lg font-bold mb-4">Job Description</h3>
-                      <p class="whitespace-pre-line">
-                        <?= $jobdesc ? nl2br(htmlspecialchars($jobdesc)) : "Tidak ada deskripsi pekerjaan." ?>
-                      </p>
-                      <button 
-                        type="button" 
-                        class="mt-4 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-700"
-                        onclick="document.getElementById('jobdescModal').classList.add('hidden')">
-                        Tutup
+                      <p><strong>Role:</strong> <?= htmlspecialchars($crew_role->role) ?></p>
+                      <button
+                        type="button"
+                        @click.prevent="modalOpen = true"
+                        class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+                      >
+                        Lihat Jobdesc
                       </button>
+                    <?php else: ?>
+                      <p class="text-red-500 font-semibold">Job description belum tersedia</p>
+                    <?php endif; ?>
+
+                    <div
+                      x-show="modalOpen"
+                      x-cloak
+                      x-transition
+                      class="fixed left-0 top-0 z-999999 flex h-full min-h-screen w-full items-center justify-center bg-black/90 px-4 py-5"
+                    >
+                      <div
+                        @click.outside="modalOpen = false"
+                        class="w-full max-w-142.5 rounded-lg bg-white px-8 py-12 text-center dark:bg-boxdark md:px-17.5 md:py-15"
+                      >
+                        <h3 class="pb-2 text-xl font-bold text-black dark:text-white sm:text-2xl">
+                          Job Description
+                        </h3>
+                        <span
+                          class="mx-auto mb-6 inline-block h-1 w-22.5 rounded bg-primary"
+                        ></span>
+                        <p class="whitespace-pre-line">
+                          <?= $jobdesc ? nl2br(htmlspecialchars($jobdesc)) : "Tidak ada deskripsi pekerjaan." ?>
+                        </p>
+                        <div class="-mx-3 flex flex-wrap gap-y-4 mt-6">
+                          <div class="w-full px-3">
+                            <button
+                              type="button"
+                              @click="modalOpen = false"
+                              class="block w-full rounded border border-stroke bg-gray p-3 text-center font-medium text-black transition hover:border-meta-1 hover:bg-meta-1 hover:text-white dark:border-strokedark dark:bg-meta-4 dark:text-white dark:hover:border-meta-1 dark:hover:bg-meta-1"
+                            >
+                              Tutup
+                            </button>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    </div>
+                  </div>
 
                 <?php
                 $hasCrew = false;
