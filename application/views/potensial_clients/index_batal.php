@@ -33,10 +33,42 @@
       <main>
         <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
+            <div class="data-stats-slider-outer relative col-span-12 rounded-sm border border-stroke bg-white py-10 shadow-default dark:border-strokedark dark:bg-boxdark">
+              <div class="block lg:hidden">
+                <div class="dataStatsSlider swiper !-mx-px">
+                  <div class="swiper-wrapper">
+                    <!-- Clients Batal -->
+                    <div class="swiper-slide border-r border-stroke px-10 last:border-r-0 dark:border-strokedark">
+                      <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                          <h4 class="text-xl font-bold">Client Batal</h4>
+                        </div>
+                      </div>
+                      <div class="mt-5.5 flex flex-col gap-1.5">
+                        <div class="flex items-center justify-between gap-1">
+                          <p class="text-sm font-medium">Total</p>
+                          <p class="font-medium"><?= count($potensial_clients_batal); ?></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="hidden lg:block">
+                <div class="flex flex-col items-center justify-center">
+                  <!-- Clients Batal -->
+                  <div class="text-center">
+                    <h4 class="text-xl font-bold mb-2">Client Batal</h4>
+                    <p class="text-lg font-medium">Total</p>
+                    <p class="text-2xl font-bold"><?= count($potensial_clients_batal); ?></p>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
               <h1 class="text-2xl font-bold mb-4">Daftar Potensial Klien Batal</h1>
 
-              <div class="col-span-12 flex flex-wrap items-center justify-between gap-3">
+              <div class="col-span-12 flex flex-wrap items-center justify-center gap-3 md:justify-between">
 
                 <div class="relative">
 
@@ -51,7 +83,7 @@
                     </button>
                   </a>
 
-                  <!-- Tombol hot potensial clients-->
+                  <!-- Tombol Hot potensial clients-->
                   <a href="<?= site_url('potensial-clients-hot') ?>">
                     <button class="bg-red-500 p-3 rounded-md hover:bg-primary hover:text-white dark:hover:bg-primary  hover:bg-red-700 focus:outline-none">                      
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" stroke="currentColor" viewBox="0 0 384 512" stroke-width="2"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
