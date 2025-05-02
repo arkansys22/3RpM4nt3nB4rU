@@ -152,7 +152,7 @@
 					        </li>
 
 					         <!-- Menu Item clients -->
-					        <li>
+					        <!-- <li>
 					            <a
 						              class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
 						              href="<?= base_url('clients'); ?>"
@@ -186,7 +186,7 @@
 						            </svg>
 							             Clients
 					            </a>					            
-					        </li>
+					        </li> -->
 					        <!-- Menu Item Agenda -->
 					        <li>
 					            <a
