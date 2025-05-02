@@ -84,7 +84,7 @@ $route['payment/store2'] = 'crud_payment/store2'; // Route for storing kwitansi
 $route['payment/update/(:any)/(:any)'] = 'crud_payment/update/$1/$2';
 $route['payment/update2/(:any)/(:any)'] = 'crud_payment/update2/$1/$2';
 
-$route['clients'] = 'crud_clients/index'; // Menampilkan daftar clients
+// $route['clients'] = 'crud_clients/index'; // Menampilkan daftar clients
 // $route['clients/create'] = 'crud_clients/create'; // Halaman tambah clients
 $route['clients/store'] = 'crud_clients/store'; // Menyimpan data clients baru
 $route['clients/edit/(:any)'] = 'crud_clients/edit/$1'; // Halaman edit clients berdasarkan id_session
