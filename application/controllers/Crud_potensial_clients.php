@@ -73,11 +73,13 @@ class crud_potensial_clients extends CI_Controller {
         if ($this->session->level=='1'){
                 cek_session_akses_developer('potensial-clients',$this->session->id_session);
                 $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_hot(); // Ubah pemanggilan model
+                $data['potensial_clients_hot'] = $this->Potensial_model->get_clients_by_status('Hot');
                 $this->load->view('potensial_clients/index_hot', $data);
 
             }else if($this->session->level=='2'){
                 cek_session_akses_administrator('potensial-clients',$this->session->id_session);
                 $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_hot(); // Ubah pemanggilan model
+                $data['potensial_clients_hot'] = $this->Potensial_model->get_clients_by_status('Hot');
                 $this->load->view('potensial_clients/index_hot', $data);
 
             }else if($this->session->level=='3'){
@@ -87,6 +89,7 @@ class crud_potensial_clients extends CI_Controller {
             }else if($this->session->level=='4'){
                 cek_session_akses_staff_admin('potensial-clients',$this->session->id_session);
                 $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_hot(); // Ubah pemanggilan model
+                $data['potensial_clients_hot'] = $this->Potensial_model->get_clients_by_status('Hot');
                 $this->load->view('potensial_clients/index_hot', $data);
 
             }else if($this->session->level=='5'){
@@ -104,11 +107,13 @@ class crud_potensial_clients extends CI_Controller {
         if ($this->session->level=='1'){
                 cek_session_akses_developer('potensial-clients',$this->session->id_session);
                 $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_konsul(); // Ubah pemanggilan model
+                $data['potensial_clients_konsul'] = $this->Potensial_model->get_clients_by_status('Konsul');
                 $this->load->view('potensial_clients/index_konsul', $data);
 
             }else if($this->session->level=='2'){
                 cek_session_akses_administrator('potensial-clients',$this->session->id_session);
                 $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_konsul(); // Ubah pemanggilan model
+                $data['potensial_clients_konsul'] = $this->Potensial_model->get_clients_by_status('Konsul');
                 $this->load->view('potensial_clients/index_konsul', $data);
 
             }else if($this->session->level=='3'){
@@ -118,6 +123,7 @@ class crud_potensial_clients extends CI_Controller {
             }else if($this->session->level=='4'){
                 cek_session_akses_staff_admin('potensial-clients',$this->session->id_session);
                 $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_konsul(); // Ubah pemanggilan model
+                $data['potensial_clients_konsul'] = $this->Potensial_model->get_clients_by_status('Konsul');
                 $this->load->view('potensial_clients/index_konsul', $data);
 
             }else if($this->session->level=='5'){
@@ -134,11 +140,13 @@ class crud_potensial_clients extends CI_Controller {
         if ($this->session->level=='1'){
                 cek_session_akses_developer('potensial-clients',$this->session->id_session);
                 $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_bayar(); // Ubah pemanggilan model
+                $data['potensial_clients_deal'] = $this->Potensial_model->get_clients_by_status('Deal');
                 $this->load->view('potensial_clients/index_bayar', $data);
 
             }else if($this->session->level=='2'){
                 cek_session_akses_administrator('potensial-clients',$this->session->id_session);
                 $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_bayar(); // Ubah pemanggilan model
+                $data['potensial_clients_deal'] = $this->Potensial_model->get_clients_by_status('Deal');
                 $this->load->view('potensial_clients/index_bayar', $data);
 
             }else if($this->session->level=='3'){
@@ -148,6 +156,7 @@ class crud_potensial_clients extends CI_Controller {
             }else if($this->session->level=='4'){
                 cek_session_akses_staff_admin('potensial-clients',$this->session->id_session);
                 $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_bayar(); // Ubah pemanggilan model
+                $data['potensial_clients_deal'] = $this->Potensial_model->get_clients_by_status('Deal');
                 $this->load->view('potensial_clients/index_bayar', $data);
 
             }else if($this->session->level=='5'){
@@ -165,11 +174,13 @@ class crud_potensial_clients extends CI_Controller {
         if ($this->session->level=='1'){
                 cek_session_akses_developer('potensial-clients',$this->session->id_session);
                 $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_ghosting(); // Ubah pemanggilan model
+                $data['potensial_clients_ghosting'] = $this->Potensial_model->get_clients_by_status('Ghosting');
                 $this->load->view('potensial_clients/index_ghosting', $data);
 
             }else if($this->session->level=='2'){
                 cek_session_akses_administrator('potensial-clients',$this->session->id_session);
                 $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_ghosting(); // Ubah pemanggilan model
+                $data['potensial_clients_ghosting'] = $this->Potensial_model->get_clients_by_status('Ghosting');
                 $this->load->view('potensial_clients/index_ghosting', $data);
 
             }else if($this->session->level=='3'){
@@ -179,6 +190,7 @@ class crud_potensial_clients extends CI_Controller {
             }else if($this->session->level=='4'){
                 cek_session_akses_staff_admin('potensial-clients',$this->session->id_session);
                 $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_ghosting(); // Ubah pemanggilan model
+                $data['potensial_clients_ghosting'] = $this->Potensial_model->get_clients_by_status('Ghosting');
                 $this->load->view('potensial_clients/index_ghosting', $data);
 
             }else if($this->session->level=='5'){
@@ -195,11 +207,13 @@ class crud_potensial_clients extends CI_Controller {
         if ($this->session->level=='1'){
                 cek_session_akses_developer('potensial-clients',$this->session->id_session);
                 $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_batal(); // Ubah pemanggilan model
+                $data['potensial_clients_batal'] = $this->Potensial_model->get_clients_by_status('Batal');
                 $this->load->view('potensial_clients/index_batal', $data);
 
             }else if($this->session->level=='2'){
                 cek_session_akses_administrator('potensial-clients',$this->session->id_session);
                 $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_batal(); // Ubah pemanggilan model
+                $data['potensial_clients_batal'] = $this->Potensial_model->get_clients_by_status('Batal');
                 $this->load->view('potensial_clients/index_batal', $data);
 
             }else if($this->session->level=='3'){
@@ -209,6 +223,7 @@ class crud_potensial_clients extends CI_Controller {
             }else if($this->session->level=='4'){
                 cek_session_akses_staff_admin('potensial-clients',$this->session->id_session);
                 $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_batal(); // Ubah pemanggilan model
+                $data['potensial_clients_batal'] = $this->Potensial_model->get_clients_by_status('Batal');
                 $this->load->view('potensial_clients/index_batal', $data);
 
             }else if($this->session->level=='5'){
