@@ -12,6 +12,7 @@ class Crud_project extends CI_Controller {
         $this->load->model('Payment_model');
         $this->load->model('Vendor_model');
         $this->load->model('Agenda_model');
+        $this->load->model('Clients_model');
         $this->load->helper('url');
     }
 
@@ -183,6 +184,7 @@ class Crud_project extends CI_Controller {
         $data['payment'] = $this->Payment_model->get_payment_by_session($id_session); // All transactions
         $data['has_invoice'] = $this->Payment_model->has_invoice($id_session); // Check if there is an invoice
         $data['vendors'] = $this->Vendor_model->get_vendor_by_id($id_session);
+        $data['clients'] = $this->Clients_model->get_client_by_session($id_session);
         $data['logactivity'] = $this->project_model->get_logactivity_by_session($id_session);
     
         $this->load->view('project/lihat', $data);
