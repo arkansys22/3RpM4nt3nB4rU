@@ -143,10 +143,10 @@ $route['naskah/list_vendor/(:any)'] = 'crud_vendor/view/$1';
 $route['naskah/list_vendor/pdf/(:any)'] = 'crud_vendor/generate_pdf/$1';
 
 $route['vendor/create/(:any)'] = 'crud_vendor/create/$1'; // Create vendor form based on session_id
-$route['vendor/store/(:any)'] = 'crud_vendor/store/$1'; // Store vendor data based on session_id
-$route['vendor/edit/(:num)/(:num)'] = 'crud_vendor/edit/$1/$2';
-$route['vendor/update/(:num)/(:num)'] = 'crud_vendor/update/$1/$2';
-$route['vendor/delete/(:num)/(:num)'] = 'crud_vendor/delete/$1/$2';
+$route['vendor/store'] = 'crud_vendor/store'; // Store vendor data based on session_id
+$route['vendor/edit/(:any)/(:any)'] = 'crud_vendor/edit/$1/$2';
+$route['vendor/update/(:any)/(:any)'] = 'crud_vendor/update/$1/$2';
+$route['vendor/delete/(:any)/(:any)'] = 'crud_vendor/delete/$1/$2';
 
 $route['agenda'] = 'crud_agenda/index'; // Menampilkan daftar crews yang masih aktif
 $route['agenda/create/(:any)'] = 'crud_agenda/create/$1'; // Create vendor form based on session_id
@@ -192,5 +192,16 @@ $route['crew-role/edit/(:any)'] = 'Crud_crewrole/edit/$1'; // Menampilkan form e
 $route['crew-role/update/(:any)'] = 'Crud_crewrole/update/$1'; // Mengupdate role
 $route['crew-role/delete/(:any)'] = 'Crud_crewrole/delete/$1'; // Menghapus role
 $route['crew-role/view/(:any)'] = 'Crud_crewrole/view/$1'; // Menampilkan detail role
+
+$route['partner'] = 'Crud_partner/index';
+$route['partner/create'] = 'Crud_partner/create';
+$route['partner/store'] = 'Crud_partner/store'; // Menyimpan data partner baru
+$route['partner/edit/(:any)'] = 'Crud_partner/edit/$1';
+$route['partner/update/(:any)'] = 'Crud_partner/update/$1'; // Mengupdate data partner
+$route['partner/delete/(:any)'] = 'Crud_partner/soft_delete/$1'; // Menghapus data partner
+$route['partner/delete_permanent/(:any)'] = 'Crud_partner/delete_permanent/$1'; // Menghapus data partner
+$route['partner/lihat/(:any)'] = 'Crud_partner/lihat/$1';
+$route['partner/restore/(:any)'] = 'Crud_partner/restore/$1';
+$route['partner/recycle_bin'] = 'Crud_partner/recycle_bin';
 
 $route['petacrawl\.xml'] = "petacrawl";
