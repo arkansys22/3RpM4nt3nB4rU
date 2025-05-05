@@ -72,7 +72,7 @@
                   @click.outside="openDropDown = false"
                   class="absolute left-0 top-full z-40 mt-2 w-full rounded-md border border-stroke bg-white py-3 shadow-card dark:border-strokedark dark:bg-boxdark"
                   >
-                  <ul class="flex flex-col">
+                    <ul class="flex flex-col">
                     <?php if ($this->session->userdata('level') == 7): ?>
                     <li>
                       <a
@@ -82,25 +82,41 @@
                       Edit Data Diri
                       </a>
                     </li>
-                    <?php else: ?>
                     <li>
                       <a
-                      href="<?= site_url('user/edit/'. $pc->id_session) ?>"
+                      href="<?= site_url('panel') ?>"
+                      class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
+                      >
+                      Kembali
+                      </a>
+                    </li>
+                    <?php elseif ($this->session->userdata('level') == 1): ?>
+                    <li>
+                      <a
+                      href="<?= site_url('user/edit_staff/'. $pc->id_session . '?view_type=edit_staff') ?>"
+                      class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
+                      >
+                      Edit Data Diri
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                      href="<?= site_url('user/edit/'. $pc->id_session . '?view_type=edit') ?>"
                       class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
                       >
                       Edit Pengguna
                       </a>
                     </li>
-                    <?php endif; ?>
                     <li>
-                    <a
+                      <a
                       href="<?= site_url('user') ?>"
                       class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
-                    >
+                      >
                       Kembali
-                    </a>
+                      </a>
                     </li>
-                  </ul>
+                    <?php endif; ?>
+                    </ul>
                   </div>
                 </div>
                 </div>
