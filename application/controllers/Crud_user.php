@@ -120,39 +120,43 @@ class crud_user extends CI_Controller {
     }
 
     public function edit($id_session) {
-        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='5'){
-            cek_session_akses_developer('user',$this->session->id_session);
-            $data['level'] = $this->Crud_m->view_ordering('user_level','user_level_id','asc');
-            $data['crews'] = $this->Crud_m->view_ordering('crews','id','asc');
-            $data['clients'] = $this->Crud_m->view_ordering('clients','id','asc');
-            $data['pc'] = $this->Users2_model->get_users_by_session($id_session);
-            $this->load->view('user/edit', $data);
-            
-        }else if($this->session->level=='4'){
-            cek_session_akses_staff_admin('user',$this->session->id_session);
-            $data['level'] = $this->Crud_m->view_ordering('user_level','user_level_id','asc');
-            $data['crews'] = $this->Crud_m->view_ordering('crews','id','asc');
-            $data['clients'] = $this->Crud_m->view_ordering('clients','id','asc');
-            $data['pc'] = $this->Users2_model->get_users_by_session($id_session);
-            $this->load->view('user/edit', $data);
-
-        }else if($this->session->level=='7'){
-            cek_session_akses_staff('user',$this->session->id_session);
-            $data['level'] = $this->Crud_m->view_ordering('user_level','user_level_id','asc');
-            $data['clients'] = $this->Crud_m->view_ordering('clients','id','asc');
+        if ($this->session->level == '1' || $this->session->level == '2' || $this->session->level == '3' || $this->session->level == '5') {
+            cek_session_akses_developer('user', $this->session->id_session);
+            $data['level'] = $this->Crud_m->view_ordering('user_level', 'user_level_id', 'asc');
+            $data['clients'] = $this->Crud_m->view_ordering('clients', 'id', 'asc');
             $data['pc'] = $this->Users2_model->get_users_by_session($id_session);
 
-            // Fetch crews_idsession from user table
-            $crews_idsession = $data['pc']->crews_idsession;
-
-            // Fetch crews data using crews_idsession
-            $data['crews'] = $this->Users2_model->get_crew_by_id_session($crews_idsession);
-
-            $this->load->view('user/edit_staff', $data); // Load edit_staff view
-
-        }else{
-                redirect(base_url());
+            $view_type = $this->input->get('view_type'); // Get 'view_type' from query string
+            if ($view_type === 'edit_staff') {
+                // Fetch specific crew based on crews_idsession
+                $crews_idsession = $data['pc']->crews_idsession;
+                $data['crews'] = $this->Users2_model->get_crew_by_id_session($crews_idsession);
+                $this->load->view('user/edit_staff', $data);
+            } else {
+                // Fetch all crews for user/edit
+                $data['crews'] = $this->Crud_m->view_ordering('crews', 'id', 'asc');
+                $this->load->view('user/edit', $data);
             }
+        } else if ($this->session->level == '4') {
+            cek_session_akses_staff_admin('user', $this->session->id_session);
+            $data['level'] = $this->Crud_m->view_ordering('user_level', 'user_level_id', 'asc');
+            $data['clients'] = $this->Crud_m->view_ordering('clients', 'id', 'asc');
+            $data['pc'] = $this->Users2_model->get_users_by_session($id_session);
+
+            $view_type = $this->input->get('view_type');
+            if ($view_type === 'edit_staff') {
+                // Fetch specific crew based on crews_idsession
+                $crews_idsession = $data['pc']->crews_idsession;
+                $data['crews'] = $this->Users2_model->get_crew_by_id_session($crews_idsession);
+                $this->load->view('user/edit_staff', $data);
+            } else {
+                // Fetch all crews for user/edit
+                $data['crews'] = $this->Crud_m->view_ordering('crews', 'id', 'asc');
+                $this->load->view('user/edit', $data);
+            }
+        } else {
+            redirect(base_url());
+        }
     }
 
     public function update($id_session) {
