@@ -149,7 +149,7 @@
 			          >
 			            <li>
 			              <a
-			                href="#"
+						    href="<?= base_url('user/lihat/' . $this->session->id_session) ?>"
 			                class="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
 			              >
 			                <svg
