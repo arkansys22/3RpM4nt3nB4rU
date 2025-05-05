@@ -154,6 +154,20 @@ class crud_user extends CI_Controller {
                 $data['crews'] = $this->Crud_m->view_ordering('crews', 'id', 'asc');
                 $this->load->view('user/edit', $data);
             }
+        }else if($this->session->level=='7'){
+            cek_session_akses_staff('user',$this->session->id_session);
+            $data['level'] = $this->Crud_m->view_ordering('user_level','user_level_id','asc');
+            $data['clients'] = $this->Crud_m->view_ordering('clients','id','asc');
+            $data['pc'] = $this->Users2_model->get_users_by_session($id_session);
+
+            // Fetch crews_idsession from user table
+            $crews_idsession = $data['pc']->crews_idsession;
+
+            // Fetch crews data using crews_idsession
+            $data['crews'] = $this->Users2_model->get_crew_by_id_session($crews_idsession);
+
+            $this->load->view('user/edit_staff', $data); // Load edit_staff view
+
         } else {
             redirect(base_url());
         }
