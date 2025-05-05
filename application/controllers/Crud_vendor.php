@@ -110,7 +110,7 @@ class Crud_vendor extends CI_Controller {
     
 
     public function edit($id_session, $vendor_id) {
-        $data['vendor'] = $this->Vendor_model->get_vendor_by_id_and_vendor_id($id_session, $vendor_id);
+        $data['vendors'] = $this->Vendor_model->get_vendor_by_id_and_vendor_id($id_session, $vendor_id);
         $data['project'] = $this->project_model->get_project_by_session($id_session);
     
         $this->load->view('vendor/edit', $data);
@@ -137,6 +137,8 @@ class Crud_vendor extends CI_Controller {
 
         $existing_vendor = $this->Vendor_model->get_vendor_by_id_and_vendor_id($id_session, $vendor_id);
 
+        $old_type = $existing_vendor->type; // Ambil type sebelumnya
+
         $data = array(
             'vendor' => $this->input->post('vendor'),
             'type' => $this->input->post('type'),
@@ -153,8 +155,8 @@ class Crud_vendor extends CI_Controller {
 
         $this->Vendor_model->update_vendor($id_session, $vendor_id, $data);
 
-        $type =  $this->input->post('type');
-        $status = 'Update Vendor '.$type;
+        $new_type = $this->input->post('type'); // Ambil type baru
+        $status = 'Update Vendor dari ' . $old_type . ' ke ' . $new_type;
 
         $data_log = array(
 
