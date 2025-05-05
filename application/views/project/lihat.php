@@ -245,13 +245,13 @@
           </div>
           <div class="flex gap-2">
             <!-- Tombol Edit -->
-            <a href="<?= site_url('crud_vendor/edit/' . $vendor->id_session . '/' . $vendor->vendor_id) ?>" 
+            <a href="<?= site_url('vendor/edit/' . $vendor->id_session . '/' . $vendor->vendor_id) ?>" 
                class="bg-green-500 text-white text-sm px-2 py-1 rounded-md hover:bg-green-600">
                Edit
             </a>
 
             <!-- Tombol Hapus -->
-            <a href="<?= site_url('crud_vendor/delete/' . $vendor->id_session . '/' . $vendor->vendor_id) ?>" 
+            <a href="<?= site_url('vendor/delete/' . $vendor->id_session . '/' . $vendor->vendor_id) ?>" 
                onclick="return confirm('Apakah Anda yakin ingin menghapus vendor ini?')"
                class="bg-red-500 text-white text-sm px-2 py-1 rounded-md hover:bg-red-600">
                Hapus
@@ -264,7 +264,7 @@
     <?php endif; ?>
 
     <!-- Tombol Tambah Vendor -->
-    <a href="<?= site_url('crud_vendor/create/' . $project->id_session) ?>" 
+    <a href="<?= site_url('vendor/create/' . $project->id_session) ?>" 
        class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
        Tambah Vendor
     </a>
