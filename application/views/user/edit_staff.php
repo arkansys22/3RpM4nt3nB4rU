@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Pengguna</title>
+    <title>Edit Data Diri</title>
     <link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
     <link href="<?php echo base_url()?>assets/backend/style.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -34,7 +34,7 @@
         <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-              <h1 class="text-2xl font-bold mb-4">Edit Pengguna</h1>
+              <h1 class="text-2xl font-bold mb-4">Edit Data Diri</h1>
               <form action="<?= site_url('user/update2/'.$pc->id_session) ?>" method="post" class="bg-white p-6 shadow-md rounded">
                 <label class="block mb-2">Username</label>
                 <input type="text" name="username" value="<?= $pc->username ?>" class="w-full px-4 py-2 border rounded mb-4" required>
