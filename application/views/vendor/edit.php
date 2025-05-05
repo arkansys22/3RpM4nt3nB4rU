@@ -35,55 +35,55 @@
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
               <h1 class="text-2xl font-bold mb-4">Edit Vendor <?= $project->client_name ?></h1>
-              <form action="<?= base_url('crud_vendor/update/' . $vendor->id_session . '/' . $vendor->vendor_id) ?>" method="post" enctype="multipart/form-data" class="bg-white p-6 shadow-md rounded">
-                <input type="hidden" name="id_session" value="<?= $vendor->id_session ?>">
+              <form action="<?= base_url('vendor/update/' . $vendors->id_session . '/' . $vendors->vendor_id) ?>" method="post" enctype="multipart/form-data" class="bg-white p-6 shadow-md rounded">
+                <input type="hidden" name="id_session" value="<?= $vendors->id_session ?>">
                 <label class="block mb-2"><strong>Vendor:</strong></label>
-                <input type="text" name="vendor" value="<?= $vendor->vendor ?>" class="w-full px-4 py-2 border rounded mb-4">
+                <input type="text" name="vendor" value="<?= $vendors->vendor ?>" class="w-full px-4 py-2 border rounded mb-4">
                 <label class="block mb-2"><strong>Type:</strong></label>
                 <select name="type" class="w-full px-4 py-2 border rounded mb-4">
-                    <option value="Venue" <?= $vendor->type == 'Venue' ? 'selected' : '' ?>>Venue</option>
-                    <option value="MC Akad" <?= $vendor->type == 'MC Akad' ? 'selected' : '' ?>>MC Akad</option>
-                    <option value="MC Pemberkatan" <?= $vendor->type == 'MC Pemberkatan' ? 'selected' : '' ?>>MC Pemberkatan</option>
-                    <option value="MC Resepsi" <?= $vendor->type == 'MC Resepsi' ? 'selected' : '' ?>>MC Resepsi</option>
-                    <option value="Wedding Organizer" <?= $vendor->type == 'Wedding Organizer' ? 'selected' : '' ?>>WO</option>
-                    <option value="MUA" <?= $vendor->type == 'MUA' ? 'selected' : '' ?>>MUA</option>
-                    <option value="Perlengkapan Catering" <?= $vendor->type == 'Perlengkapan Catering' ? 'selected' : '' ?>>Perlengkapan Catering</option>
-                    <option value="Catering" <?= $vendor->type == 'Catering' ? 'selected' : '' ?>>Catering</option>
-                    <option value="Dokumentasi" <?= $vendor->type == 'Dokumentasi' ? 'selected' : '' ?>>Dokumentasi</option>
-                    <option value="Dekorasi" <?= $vendor->type == 'Dekorasi' ? 'selected' : '' ?>>Dekorasi</option>
-                    <option value="Entertainment" <?= $vendor->type == 'Entertainment' ? 'selected' : '' ?>>Entertainment</option>
+                    <option value="Venue" <?= $vendors->type == 'Venue' ? 'selected' : '' ?>>Venue</option>
+                    <option value="MC Akad" <?= $vendors->type == 'MC Akad' ? 'selected' : '' ?>>MC Akad</option>
+                    <option value="MC Pemberkatan" <?= $vendors->type == 'MC Pemberkatan' ? 'selected' : '' ?>>MC Pemberkatan</option>
+                    <option value="MC Resepsi" <?= $vendors->type == 'MC Resepsi' ? 'selected' : '' ?>>MC Resepsi</option>
+                    <option value="Wedding Organizer" <?= $vendors->type == 'Wedding Organizer' ? 'selected' : '' ?>>WO</option>
+                    <option value="MUA" <?= $vendors->type == 'MUA' ? 'selected' : '' ?>>MUA</option>
+                    <option value="Perlengkapan Catering" <?= $vendors->type == 'Perlengkapan Catering' ? 'selected' : '' ?>>Perlengkapan Catering</option>
+                    <option value="Catering" <?= $vendors->type == 'Catering' ? 'selected' : '' ?>>Catering</option>
+                    <option value="Dokumentasi" <?= $vendors->type == 'Dokumentasi' ? 'selected' : '' ?>>Dokumentasi</option>
+                    <option value="Dekorasi" <?= $vendors->type == 'Dekorasi' ? 'selected' : '' ?>>Dekorasi</option>
+                    <option value="Entertainment" <?= $vendors->type == 'Entertainment' ? 'selected' : '' ?>>Entertainment</option>
                 </select>
                 <label class="block mb-2"><strong>Social Media:</strong></label>
-                <input type="text" name="social_media" value="<?= $vendor->social_media ?>" class="w-full px-4 py-2 border rounded mb-4">
+                <input type="text" name="social_media" value="<?= $vendors->social_media ?>" class="w-full px-4 py-2 border rounded mb-4">
                 <label class="block mb-2"><strong>Contact Name:</strong></label>
-                <input type="text" name="contact_name" value="<?= $vendor->contact_name ?>" class="w-full px-4 py-2 border rounded mb-4">
+                <input type="text" name="contact_name" value="<?= $vendors->contact_name ?>" class="w-full px-4 py-2 border rounded mb-4">
                 <label class="block mb-2"><strong>Phone:</strong></label>
-                <input type="text" name="phone" value="<?= $vendor->phone ?>" class="w-full px-4 py-2 border rounded mb-4">
+                <input type="text" name="phone" value="<?= $vendors->phone ?>" class="w-full px-4 py-2 border rounded mb-4">
                 <label class="block mb-2"><strong>Detail:</strong></label>
-                <textarea name="detail" class="w-full px-4 py-2 border rounded mb-4"><?= $vendor->detail ?></textarea>
+                <textarea name="detail" class="w-full px-4 py-2 border rounded mb-4"><?= $vendors->detail ?></textarea>
                 <label class="block mb-2"><strong>Photo 1: (Photo yang akan di showing pada wedding concept)</strong></label>
-                <?php if ($vendor->photo1): ?>
-                  <img src="<?= base_url('uploads/' . $vendor->photo1) ?>" alt="Photo 1" class="block w-full mb-4">
+                <?php if ($vendors->photo1): ?>
+                  <img src="<?= base_url('uploads/' . $vendors->photo1) ?>" alt="Photo 1" class="block w-full mb-4">
                 <?php endif; ?>
                 <input type="file" name="photo1" class="w-full px-4 py-2 border rounded mb-4">
                 <label class="block mb-2"><strong>Photo 2:</strong></label>
-                <?php if ($vendor->photo2): ?>
-                  <img src="<?= base_url('uploads/' . $vendor->photo2) ?>" alt="Photo 2" class="block w-full mb-4">
+                <?php if ($vendors->photo2): ?>
+                  <img src="<?= base_url('uploads/' . $vendors->photo2) ?>" alt="Photo 2" class="block w-full mb-4">
                 <?php endif; ?>
                 <input type="file" name="photo2" class="w-full px-4 py-2 border rounded mb-4">
                 <label class="block mb-2"><strong>Photo 3:</strong></label>
-                <?php if ($vendor->photo3): ?>
-                  <img src="<?= base_url('uploads/' . $vendor->photo3) ?>" alt="Photo 3" class="block w-full mb-4">
+                <?php if ($vendors->photo3): ?>
+                  <img src="<?= base_url('uploads/' . $vendors->photo3) ?>" alt="Photo 3" class="block w-full mb-4">
                 <?php endif; ?>
                 <input type="file" name="photo3" class="w-full px-4 py-2 border rounded mb-4">
                 <label class="block mb-2"><strong>Photo 4:</strong></label>
-                <?php if ($vendor->photo4): ?>
-                  <img src="<?= base_url('uploads/' . $vendor->photo4) ?>" alt="Photo 4" class="block w-full mb-4">
+                <?php if ($vendors->photo4): ?>
+                  <img src="<?= base_url('uploads/' . $vendors->photo4) ?>" alt="Photo 4" class="block w-full mb-4">
                 <?php endif; ?>
                 <input type="file" name="photo4" class="w-full px-4 py-2 border rounded mb-4">
                 <label class="block mb-2"><strong>Photo 5:</strong></label>
-                <?php if ($vendor->photo5): ?>
-                  <img src="<?= base_url('uploads/' . $vendor->photo5) ?>" alt="Photo 5" class="block w-full mb-4">
+                <?php if ($vendors->photo5): ?>
+                  <img src="<?= base_url('uploads/' . $vendors->photo5) ?>" alt="Photo 5" class="block w-full mb-4">
                 <?php endif; ?>
                 <input type="file" name="photo5" class="w-full px-4 py-2 border rounded mb-4">
                 <div class="flex flex-col sm:flex-row justify-end">
