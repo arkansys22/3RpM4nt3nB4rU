@@ -86,7 +86,7 @@ class crud_user extends CI_Controller {
             'log_activity_status' => 'Tambah Pengguna',
             'log_activity_platform'=> $agent,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
-            'log_activity_ip'=> $this->input->ip_address()            
+             'log_activity_ip'=> $ip_with_location            
         );
         $this->Users2_model->insert_log_activity($data_log);   
     
@@ -218,7 +218,7 @@ class crud_user extends CI_Controller {
         $status = 'Update Data Pengguna';
         $ip = $this->input->ip_address();
         $location = get_location_from_ip($ip);
-        $ip_with_location = $ip . ' (' . $location . ')';
+        $ip_with_location = $ip . "\n" . $location;
 
         $data_log = array(
 
@@ -289,7 +289,7 @@ class crud_user extends CI_Controller {
             'log_activity_status' => 'Update Data Pengguna',
             'log_activity_platform' => $agent,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
-            'log_activity_ip' => $this->input->ip_address(),
+            'log_activity_ip'=> $ip_with_location,
         );
 
         $this->Users2_model->insert_log_activity($data_log);
@@ -330,7 +330,7 @@ class crud_user extends CI_Controller {
             'log_activity_status' => 'Hapus Pengguna',
             'log_activity_platform'=> $agent,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
-            'log_activity_ip'=> $this->input->ip_address()
+             'log_activity_ip'=> $ip_with_location
             
         );
 
@@ -378,7 +378,7 @@ class crud_user extends CI_Controller {
             'log_activity_status' => 'Restore',
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
+             'log_activity_ip'=> $ip_with_location
             
         );
 
@@ -421,7 +421,7 @@ class crud_user extends CI_Controller {
                     'log_activity_status' => 'Hapus Permanent Pengguna',
                     'log_activity_platform'=> $agent,
                     'log_activity_waktu' => date('Y-m-d H:i:s'),
-                    'log_activity_ip'=> $this->input->ip_address()
+                     'log_activity_ip'=> $ip_with_location
                     
                 );
 
