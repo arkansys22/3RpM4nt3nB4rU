@@ -59,7 +59,7 @@ class Client extends CI_Controller
 
         $ip = $this->input->ip_address();
         $location = get_location_from_ip($ip);
-        $ip_with_location = $ip . ' (' . $location . ')';
+        $ip_with_location = $ip . "<br>(" . $location . ")";
 
         $data2 = array(
           'log_activity_user_id' => $row['client_idsession'], // Use client_idsession
