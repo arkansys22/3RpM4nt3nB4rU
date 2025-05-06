@@ -143,7 +143,12 @@ class Crud_finance_project extends CI_Controller {
         $this->db->insert('project_acc', $data);
 
         $project_id_session = $this->input->post('project_id_session');
+
         $status = 'Tambah Transaksi' ;
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
@@ -152,7 +157,7 @@ class Crud_finance_project extends CI_Controller {
             'log_activity_status' => $status,
             'log_activity_platform'=> $agent,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
-            'log_activity_ip'=> $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
             
         );
 
@@ -196,7 +201,12 @@ class Crud_finance_project extends CI_Controller {
         $this->db->insert('project_acc', $data);
 
         $project_id_session = $this->input->post('project_id_session');
+
         $status = 'Tambah Crew' ;
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
@@ -205,7 +215,7 @@ class Crud_finance_project extends CI_Controller {
             'log_activity_status' => $status,
             'log_activity_platform'=> $agent,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
-            'log_activity_ip'=> $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
             
         );
 
@@ -317,7 +327,12 @@ class Crud_finance_project extends CI_Controller {
         $this->db->update('project_acc', $data);
 
         $project_id_session = $this->input->post('project_id_session');
+
         $status = 'Update Transaksi' ;
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
@@ -326,7 +341,7 @@ class Crud_finance_project extends CI_Controller {
             'log_activity_status' => $status,
             'log_activity_platform'=> $agent,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
-            'log_activity_ip'=> $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
             
         );
 
@@ -366,7 +381,12 @@ class Crud_finance_project extends CI_Controller {
         $this->db->update('project_acc', $data);
 
         $project_id_session = $this->input->post('project_id_session');
+
         $status = 'Update Transaksi' ;
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
@@ -375,7 +395,7 @@ class Crud_finance_project extends CI_Controller {
             'log_activity_status' => $status,
             'log_activity_platform'=> $agent,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
-            'log_activity_ip'=> $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
             
         );
 
@@ -484,6 +504,10 @@ class Crud_finance_project extends CI_Controller {
         $this->db->where('project_id', $id_session);
         $this->db->update('crew_projects', $data);
 
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
@@ -492,7 +516,7 @@ class Crud_finance_project extends CI_Controller {
             'log_activity_status' => 'Restore',
             'log_activity_platform'=> $agent,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
-            'log_activity_ip'=> $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
             
         );
 
