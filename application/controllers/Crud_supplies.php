@@ -150,7 +150,10 @@ class Crud_supplies extends CI_Controller {
         
         $product_name =  $this->input->post('product_name');
         $status = 'Barang Masuk '.$product_name;
-    
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         // Simpan log aktivitas
         $data_log = array(
             'log_activity_user_id' => $this->session->id_session,
@@ -159,7 +162,7 @@ class Crud_supplies extends CI_Controller {
             'log_activity_status'  => $status,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'      => $this->input->ip_address()
+            'log_activity_ip'      => $ip_with_location
         );
     
         // Simpan log aktivitas ke database
@@ -220,9 +223,13 @@ class Crud_supplies extends CI_Controller {
     
         // Insert data baru ke database
         $this->db->insert('supplies_stock', $stock);
+
         $product_name =  $this->input->post('product_name');
         $status = 'Barang Keluar '.$product_name;
-    
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         // Simpan log aktivitas
         $data_log = array(
             'log_activity_user_id' => $this->session->id_session,
@@ -231,7 +238,7 @@ class Crud_supplies extends CI_Controller {
             'log_activity_status'  => $status,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'      => $this->input->ip_address()
+            'log_activity_ip'      => $ip_with_location
         );
     
         // Simpan log aktivitas ke database
@@ -287,6 +294,10 @@ class Crud_supplies extends CI_Controller {
 
         $product_name =  $this->input->post('product_name');
         $status = 'Tambah Produk '.$product_name;
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
@@ -295,7 +306,7 @@ class Crud_supplies extends CI_Controller {
             'log_activity_status' => $status,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
             
         );
 
@@ -421,7 +432,10 @@ class Crud_supplies extends CI_Controller {
         $this->db->update('supplies_stock', $stock);
     
         $status = 'Edit';
-    
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         // Simpan log aktivitas
         $data_log = array(
             'log_activity_user_id'=>$this->session->id_session,
@@ -430,7 +444,7 @@ class Crud_supplies extends CI_Controller {
             'log_activity_status' => $status,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
         );
     
         // Simpan log aktivitas ke database
@@ -487,6 +501,9 @@ class Crud_supplies extends CI_Controller {
             $this->Supplies_model->delete_supplies($id_session);
 
             $status = 'Delete ' . $product_name;
+            $ip = $this->input->ip_address();
+            $location = get_location_from_ip($ip);
+            $ip_with_location = $ip . "<br>(" . $location . ")";
 
             $data_log = array(
                 'log_activity_user_id' => $this->session->id_session,
@@ -495,7 +512,7 @@ class Crud_supplies extends CI_Controller {
                 'log_activity_status' => $status,
                 'log_activity_waktu' => date('Y-m-d H:i:s'),
                 'log_activity_platform' => $agent,
-                'log_activity_ip' => $this->input->ip_address()
+                'log_activity_ip'=> $ip_with_location
             );
 
             $this->Supplies_model->insert_log_activity($data_log);
@@ -566,6 +583,9 @@ class Crud_supplies extends CI_Controller {
             $product_name = $product ? $product->product_name : 'Unknown Product';
 
             $status = 'Restore '.$product_name;
+            $ip = $this->input->ip_address();
+            $location = get_location_from_ip($ip);
+            $ip_with_location = $ip . "<br>(" . $location . ")";
 
             $data_log = array(
                 'log_activity_user_id' => $this->session->id_session,
@@ -574,7 +594,7 @@ class Crud_supplies extends CI_Controller {
                 'log_activity_status' => $status,
                 'log_activity_waktu' => date('Y-m-d H:i:s'),
                 'log_activity_platform' => $agent,
-                'log_activity_ip' => $this->input->ip_address()
+                'log_activity_ip'=> $ip_with_location
             );
 
             $this->Supplies_model->insert_log_activity($data_log);      
@@ -612,6 +632,9 @@ class Crud_supplies extends CI_Controller {
         $this->Supplies_model->permanent_delete_supplies_and_stock($id_session);
         
         $status = 'Delete Permanent ' . $product_name;
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
 
         $data_log = array(
             'log_activity_user_id' => $this->session->id_session,
@@ -620,7 +643,7 @@ class Crud_supplies extends CI_Controller {
             'log_activity_status' => $status,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform' => $agent,
-            'log_activity_ip' => $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
         );
 
         $this->Supplies_model->insert_log_activity($data_log);
