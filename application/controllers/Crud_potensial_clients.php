@@ -298,6 +298,10 @@ class crud_potensial_clients extends CI_Controller {
         // Insert ke tabel projects
         $this->Potensial_model->insert_potensial_clients($data);
 
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
@@ -306,7 +310,7 @@ class crud_potensial_clients extends CI_Controller {
             'log_activity_status' => 'Tambah Potensial Klien',
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
             
         );
 
@@ -408,8 +412,11 @@ class crud_potensial_clients extends CI_Controller {
         );
     
         $this->Potensial_model->update_potensial_clients($id_session, $data);
-        $status = 'Update Potensial Client ' . $this->input->post('status');
 
+        $status = 'Update Potensial Client ' . $this->input->post('status');
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
 
         $data_log = array(
 
@@ -419,7 +426,7 @@ class crud_potensial_clients extends CI_Controller {
             'log_activity_status' => $status,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
             
         );
 
@@ -454,6 +461,11 @@ class crud_potensial_clients extends CI_Controller {
 
         $data = ['status' => 'delete'];
         $this->Potensial_model->update_potensial_clients($id_session, $data);
+
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
@@ -462,7 +474,7 @@ class crud_potensial_clients extends CI_Controller {
             'log_activity_status' => 'Delete Potensial Client',
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
             
         );
 
@@ -527,6 +539,10 @@ class crud_potensial_clients extends CI_Controller {
         $data = ['status' => 'Tanya-tanya'];
         $this->Potensial_model->update_potensial_clients($id_session, $data);
 
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
@@ -535,7 +551,7 @@ class crud_potensial_clients extends CI_Controller {
             'log_activity_status' => 'Restore Potensial Client',
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
             
         );
 
@@ -547,7 +563,11 @@ class crud_potensial_clients extends CI_Controller {
 
     public function permanent_delete($id_session) {
         $this->Potensial_model->delete_potensial_clients_permanent($id_session);
-        
+
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
@@ -556,7 +576,7 @@ class crud_potensial_clients extends CI_Controller {
             'log_activity_status' => 'Delete Permanent Potensial Client',
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
             
         );
 
