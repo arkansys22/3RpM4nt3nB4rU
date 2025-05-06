@@ -256,6 +256,10 @@ class Aspanel extends CI_Controller {
 						$data = array('user_login_status'=>'offline');
 						$this->db->update('user', $data, $id);
 
+			$ip = $this->input->ip_address();
+			$location = get_location_from_ip($ip);
+			$ip_with_location = $ip . ' (' . $location . ')';
+
 			$data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
@@ -263,7 +267,7 @@ class Aspanel extends CI_Controller {
             'log_activity_status' => 'Logout ',
 			'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
             
         );
 
