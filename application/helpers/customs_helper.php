@@ -163,4 +163,21 @@ if (!function_exists('terbilang')) {
 
         return ucfirst(strtolower(trim($temp)));
     }
+
+    function get_location_from_ip($ip) {
+      $url = "http://ip-api.com/json/{$ip}";
+      $ch = curl_init();
+      curl_setopt($ch, CURLOPT_URL, $url);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+      curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+      $output = curl_exec($ch);
+      curl_close($ch);
+      $locationData = json_decode($output, true);
+  
+      if ($locationData && $locationData['status'] === 'success') {
+          return $locationData['city'] . ', ' . $locationData['country'];
+      } else {
+          return 'Unknown';
+      }
+  }
 }
