@@ -77,6 +77,10 @@ class crud_finance_operational extends CI_Controller {
         // Insert ke tabel projects
         $this->Operational_model->insert($data);
 
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         $data_log = array(
             'log_activity_user_id'=>$this->session->id_session,
             'log_activity_modul' => 'finance-operational/create',
@@ -84,7 +88,7 @@ class crud_finance_operational extends CI_Controller {
             'log_activity_status' => 'Tambah Transaksi Operational',
             'log_activity_platform'=> $agent,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
-            'log_activity_ip'=> $this->input->ip_address()            
+            'log_activity_ip'=> $ip_with_location            
         );
         $this->Users2_model->insert_log_activity($data_log);   
     
@@ -158,8 +162,11 @@ class crud_finance_operational extends CI_Controller {
             );
          
         $this->Operational_model->update_operational($id_session, $data);
-        $status = 'Edit Operational';
 
+        $status = 'Edit Operational';
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
 
         $data_log = array(
 
@@ -169,7 +176,7 @@ class crud_finance_operational extends CI_Controller {
             'log_activity_status' => $status,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
             
         );
 
@@ -203,6 +210,11 @@ class crud_finance_operational extends CI_Controller {
 
         $data = ['user_stat' => 'Delete'];
         $this->Users2_model->update_users($id_session, $data);
+
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
@@ -211,7 +223,7 @@ class crud_finance_operational extends CI_Controller {
             'log_activity_status' => 'Hapus',
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
             
         );
 
@@ -251,6 +263,10 @@ class crud_finance_operational extends CI_Controller {
         $data = ['user_stat' => 'Publish'];
         $this->Users2_model->update_Users($id_session, $data);
 
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
@@ -259,7 +275,7 @@ class crud_finance_operational extends CI_Controller {
             'log_activity_status' => 'Restore',
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
             
         );
 
@@ -274,40 +290,44 @@ class crud_finance_operational extends CI_Controller {
         if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
             cek_session_akses_developer('user',$this->session->id_session);
 
-            if ($this->agent->is_browser()) // Agent untuk fitur di log activity
-                {
-                      $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
-                }
-                elseif ($this->agent->is_robot())
-                {
-                      $agent = $this->agent->robot();
-                }
-                elseif ($this->agent->is_mobile())
-                {
-                      $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
-                }
-                else
-                {
-                      $agent = 'Unidentified User Agent';
-                }
+        if ($this->agent->is_browser()) // Agent untuk fitur di log activity
+            {
+                    $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
+            }
+            elseif ($this->agent->is_robot())
+            {
+                    $agent = $this->agent->robot();
+            }
+            elseif ($this->agent->is_mobile())
+            {
+                    $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
+            }
+            else
+            {
+                    $agent = 'Unidentified User Agent';
+            }
 
 
-                $this->Operational_model->delete_permanent($id_session);
+            $this->Operational_model->delete_permanent($id_session);
 
-                $data_log = array(
+            $ip = $this->input->ip_address();
+            $location = get_location_from_ip($ip);
+            $ip_with_location = $ip . "<br>(" . $location . ")";
 
-                    'log_activity_user_id'=>$this->session->id_session,
-                    'log_activity_modul' => 'finance-operational/permanent',
-                    'log_activity_document_no' => $id_session,
-                    'log_activity_status' => 'Hapus Permanent',
-                    'log_activity_waktu' => date('Y-m-d H:i:s'),
-                    'log_activity_platform'=> $agent,
-                    'log_activity_ip'=> $this->input->ip_address()
-                    
-                );
+            $data_log = array(
 
-                $this->Users2_model->insert_log_activity($data_log);
-    
+                'log_activity_user_id'=>$this->session->id_session,
+                'log_activity_modul' => 'finance-operational/permanent',
+                'log_activity_document_no' => $id_session,
+                'log_activity_status' => 'Hapus Permanent',
+                'log_activity_waktu' => date('Y-m-d H:i:s'),
+                'log_activity_platform'=> $agent,
+                'log_activity_ip'=> $ip_with_location
+                
+            );
+
+            $this->Users2_model->insert_log_activity($data_log);
+
         
         $this->session->set_flashdata('Success', 'Berhasil dihapus permanen');
         redirect('finance-operational');
