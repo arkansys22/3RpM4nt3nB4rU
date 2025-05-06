@@ -55,12 +55,16 @@ class User extends CI_Controller
             $data = array('user_login_status'=>'online');
             $this->db->update('user', $data, $id);
 
+            $ip = $this->input->ip_address();
+            $location = get_location_from_ip($ip);
+            $ip_with_location = $ip . "<br>(" . $location . ")";
+    
             $data2 = array (
               'log_activity_user_id'=>$row['id_session'],
               'log_activity_modul' => 'Login',
               'log_activity_status' => 'Login',
               'log_activity_platform'=> $agent,
-              'log_activity_ip'=> $this->input->ip_address()
+              'log_activity_ip'=> $ip_with_location
             );
             $this->db->insert('log_activity', $data2);
             redirect('panel');
