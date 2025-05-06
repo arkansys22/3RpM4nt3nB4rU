@@ -77,7 +77,7 @@ class Crud_vendor extends CI_Controller {
                     $data['photo' . $i] = $upload_data['file_name'];
                 } else {
                     $this->session->set_flashdata('message', '<p style="color:red;">Gagal upload ' . $input_name . ': ' . $this->upload->display_errors() . '</p>');
-                    redirect('crud_vendor/create');
+                    redirect('vendor/create');
                 }
             }
         }
@@ -87,6 +87,9 @@ class Crud_vendor extends CI_Controller {
 
         $type =  $this->input->post('type');
         $status = 'Tambah Vendor '.$type;
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
 
         $data_log = array(
 
@@ -96,7 +99,7 @@ class Crud_vendor extends CI_Controller {
             'log_activity_status' => $status,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
             
         );
 
@@ -157,6 +160,9 @@ class Crud_vendor extends CI_Controller {
 
         $new_type = $this->input->post('type'); // Ambil type baru
         $status = 'Update Vendor dari ' . $old_type . ' ke ' . $new_type;
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
 
         $data_log = array(
 
@@ -166,7 +172,7 @@ class Crud_vendor extends CI_Controller {
             'log_activity_status' => $status,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
             
         );
 
@@ -213,6 +219,9 @@ class Crud_vendor extends CI_Controller {
         }
 
         $status = 'Hapus Vendor '.$type;
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
 
         $data_log = array(
 
@@ -222,7 +231,7 @@ class Crud_vendor extends CI_Controller {
             'log_activity_status' => $status,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
             
         );
 
