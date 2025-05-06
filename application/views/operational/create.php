@@ -60,8 +60,8 @@
                 </select>
 
                 <div class="flex flex-col sm:flex-row justify-end">
-                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">Simpan</button>
-                <a href="<?= site_url('finance-operational') ?>" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded">Batal</a>
+                <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded w-full hover:bg-green-600 sm:w-24 mb-2 sm:mb-0 text-center">Simpan</button>
+                <a href="<?= site_url('finance-operational') ?>" class="sm:ml-2 bg-gray-500 text-white px-4 py-2 rounded w-full hover:bg-gray-600 sm:w-24 text-center">Batal</a>
                 </div>
               </form>
             </div>
