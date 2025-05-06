@@ -164,20 +164,51 @@ if (!function_exists('terbilang')) {
         return ucfirst(strtolower(trim($temp)));
     }
 
-    function get_location_from_ip($ip) {
-      $url = "http://ip-api.com/json/{$ip}";
-      $ch = curl_init();
-      curl_setopt($ch, CURLOPT_URL, $url);
-      curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-      curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-      $output = curl_exec($ch);
-      curl_close($ch);
-      $locationData = json_decode($output, true);
+    function get_location_from_ip_async($ip) {
+      $urls = [
+          "http://ip-api.com/json/{$ip}",
+          "https://ipwhois.app/json/{$ip}",
+          "http://ipinfo.io/{$ip}/json"
+      ];
   
-      if ($locationData && $locationData['status'] === 'success') {
-          return $locationData['city'] . ', ' . $locationData['country'];
-      } else {
-          return 'Unknown';
+      $mh = curl_multi_init();
+      $curl_handles = [];
+  
+      foreach ($urls as $url) {
+          $ch = curl_init();
+          curl_setopt($ch, CURLOPT_URL, $url);
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+          curl_setopt($ch, CURLOPT_TIMEOUT, 2);
+          $curl_handles[] = $ch;
+          curl_multi_add_handle($mh, $ch);
       }
+  
+      $running = null;
+      do {
+          curl_multi_exec($mh, $running);
+          usleep(100);
+      } while ($running > 0);
+  
+      $results = [];
+      foreach ($curl_handles as $ch) {
+          $results[] = json_decode(curl_multi_getcontent($ch), true);
+          curl_multi_remove_handle($mh, $ch);
+      }
+  
+      curl_multi_close($mh);
+  
+      $city = '';
+      $country = '';
+  
+      foreach ($results as $response) {
+          if (!empty($response['city']) && !empty($response['country'])) {
+              $city = $response['city'];
+              $country = $response['country'];
+              break;
+          }
+      }
+  
+      return trim("{$city}, {$country}", ', ');
   }
+  
 }
