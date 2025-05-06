@@ -218,7 +218,7 @@ class crud_user extends CI_Controller {
         $status = 'Update Data Pengguna';
         $ip = $this->input->ip_address();
         $location = get_location_from_ip($ip);
-        $ip_with_location = $ip . "\n" . $location;
+        $ip_with_location = $ip . "<br>(" . $location . ")";
 
         $data_log = array(
 
