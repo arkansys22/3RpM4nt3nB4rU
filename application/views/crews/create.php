@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale="1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tambah Crew</title>
     <link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
     <link href="<?php echo base_url()?>assets/backend/style.css" rel="stylesheet" type="text/css"/>
@@ -47,7 +47,7 @@
                 </select>
 
                 <label class="block mb-2">Agama</label>
-                <select type="text" name="religion" class="w-full px-4 py-2 border rounded mb-4" required>
+                <select name="religion" class="w-full px-4 py-2 border rounded mb-4" required>
                     <option value="">Pilih Agama</option>
                     <option value="Islam" <?= set_select('religion', 'Islam') ?>>Islam</option>
                     <option value="Kristen" <?= set_select('religion', 'Kristen') ?>>Kristen</option>
