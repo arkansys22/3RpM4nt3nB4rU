@@ -164,7 +164,7 @@ if (!function_exists('terbilang')) {
         return ucfirst(strtolower(trim($temp)));
     }
 
-    function get_location_from_ip_async($ip) {
+    function get_location_from_ip($ip) {
       $urls = [
           "http://ip-api.com/json/{$ip}",
           "https://ipwhois.app/json/{$ip}",
