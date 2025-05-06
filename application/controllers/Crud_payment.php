@@ -143,16 +143,21 @@ class Crud_payment extends CI_Controller {
         ];
         
         $this->Payment_model->insert_payment($data);
-    
+
+        $status = 'Tambah Invoice ' . $data['transactions_id']; // Log status
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
             'log_activity_modul' => 'payment/create',
             'log_activity_document_no' => $id_session,
-            'log_activity_status' => 'Tambah Invoice',
+            'log_activity_status' => $status, // Update log status
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
             
         );
 
@@ -196,16 +201,21 @@ class Crud_payment extends CI_Controller {
         ];
         
         $this->Payment_model->insert_payment($data);
-    
+
+        $status = 'Tambah Kwitansi ' . $data['transactions_id']; // Log status
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
             'log_activity_modul' => 'payment/create2',
             'log_activity_document_no' => $id_session,
-            'log_activity_status' => 'Tambah Kwitansi',
+            'log_activity_status' => $status,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
             
         );
 
@@ -330,20 +340,24 @@ class Crud_payment extends CI_Controller {
             'date'          => $this->input->post('date'),
             'due_date'      => $this->input->post('due_date'),
             'DP'            => $this->input->post('DP'),
-
         ];
 
         $this->Payment_model->update_payment($id_session, $transaction_id, $data);
-        
+
+        $status = 'Update Invoice ' . $transaction_id; // Include transactions_id in log status
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
             'log_activity_modul' => 'payment/update',
             'log_activity_document_no' => $id_session,
-            'log_activity_status' => 'Update Invoice',
+            'log_activity_status' => $status, // Update log status
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
             
         );
 
@@ -376,20 +390,25 @@ class Crud_payment extends CI_Controller {
             'total_paid'    => $this->input->post('total_paid'),
             'detail'        => json_encode($this->input->post('detail')),
             'date'          => $this->input->post('date'),
-            'status'          => $this->input->post('status'),
+            'status'        => $this->input->post('status'),
         ];
 
         $this->Payment_model->update_payment($id_session, $transaction_id, $data);
-        
+
+        $status = 'Update Kwitansi ' . $transaction_id; // Include transactions_id in log status
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
             'log_activity_modul' => 'payment/update2',
             'log_activity_document_no' => $id_session,
-            'log_activity_status' => 'Update Kwitansi',
+            'log_activity_status' => $status,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
             
         );
 
@@ -431,6 +450,10 @@ class Crud_payment extends CI_Controller {
             $this->session->set_flashdata('error', 'Gagal menghapus transaksi.');
         }
 
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
@@ -439,7 +462,7 @@ class Crud_payment extends CI_Controller {
             'log_activity_status' => 'Hapus Transaksi',
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
             
         );
 
