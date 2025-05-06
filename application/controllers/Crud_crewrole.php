@@ -93,6 +93,9 @@ class Crud_crewrole extends CI_Controller {
 
         // Retrieve the last inserted ID
         $id = $this->db->insert_id();
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
 
         $data_log = array(
 
@@ -102,7 +105,7 @@ class Crud_crewrole extends CI_Controller {
             'log_activity_status' => 'Tambah Crew Role',
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
+             'log_activity_ip'=> $ip_with_location
             
         );
 
@@ -170,7 +173,9 @@ class Crud_crewrole extends CI_Controller {
         $this->CrewRole_model->update_role($id, $data);
 
         $status = 'Update Role' ;
-
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
 
         $data_log = array(
 
@@ -180,7 +185,7 @@ class Crud_crewrole extends CI_Controller {
             'log_activity_status' => $status,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
+             'log_activity_ip'=> $ip_with_location
             
         );
 
@@ -213,7 +218,9 @@ class Crud_crewrole extends CI_Controller {
         $this->CrewRole_model->delete_role($id);
 
         $status = 'Delete Role' ;
-
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
 
         $data_log = array(
 
@@ -223,7 +230,7 @@ class Crud_crewrole extends CI_Controller {
             'log_activity_status' => $status,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
+             'log_activity_ip'=> $ip_with_location
             
         );
 
