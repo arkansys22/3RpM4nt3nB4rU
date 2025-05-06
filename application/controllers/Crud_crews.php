@@ -134,6 +134,10 @@ class Crud_crews extends CI_Controller {
         ];
         $this->crews_model->insert($data);
 
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
@@ -142,7 +146,7 @@ class Crud_crews extends CI_Controller {
             'log_activity_status' => 'Tambah Crew',
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
             
         );
 
@@ -246,8 +250,11 @@ class Crud_crews extends CI_Controller {
         ];
 
         $this->crews_model->update($id_session, $data);
-        $status = 'Update Data Crew' ;
 
+        $status = 'Update Data Crew' ;
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
 
         $data_log = array(
 
@@ -257,7 +264,7 @@ class Crud_crews extends CI_Controller {
             'log_activity_status' => $status,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
             
         );
 
@@ -292,6 +299,10 @@ class Crud_crews extends CI_Controller {
         $data = ['status' => 'delete'];
         $this->crews_model->update($id_session, $data);
 
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
@@ -300,7 +311,7 @@ class Crud_crews extends CI_Controller {
             'log_activity_status' => 'Delete Crew',
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
             
         );
 
@@ -336,6 +347,10 @@ class Crud_crews extends CI_Controller {
         $data = ['status' => 'active'];
         $this->crews_model->update($id_session, $data);
 
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
@@ -344,7 +359,7 @@ class Crud_crews extends CI_Controller {
             'log_activity_status' => 'Restore Crew',
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
             
         );
 
@@ -375,6 +390,10 @@ class Crud_crews extends CI_Controller {
 
         $this->crews_model->delete_permanent($id_session);
 
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
@@ -383,7 +402,7 @@ class Crud_crews extends CI_Controller {
             'log_activity_status' => 'Delete Permanent Crew',
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
             
         );
 
