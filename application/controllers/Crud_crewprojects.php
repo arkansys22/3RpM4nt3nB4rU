@@ -64,6 +64,10 @@ class Crud_crewprojects extends CI_Controller {
 
         $this->CrewProjects_model->add_crew_to_project($data); // Store the data in the database
 
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         $data_log = [
             'log_activity_user_id' => $this->session->id_session,
             'log_activity_modul'   => 'crewproject/createlist',
@@ -71,7 +75,7 @@ class Crud_crewprojects extends CI_Controller {
             'log_activity_status'  => 'Tambah Crew ke Project',
             'log_activity_waktu'   => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'      => $this->input->ip_address()
+            'log_activity_ip'      => $ip_with_location
         ];
 
         $this->CrewProjects_model->insert_log_activity($data_log);
@@ -148,6 +152,10 @@ class Crud_crewprojects extends CI_Controller {
 
         $this->CrewProjects_model->update_crew_role($id_session, $data);
 
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         $data_log = [
             'log_activity_user_id' => $this->session->id_session,
             'log_activity_modul'   => 'crewproject/updatelist',
@@ -155,7 +163,7 @@ class Crud_crewprojects extends CI_Controller {
             'log_activity_status'  => 'Update Crew di Project',
             'log_activity_waktu'   => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'      => $this->input->ip_address()
+            'log_activity_ip'      => $ip_with_location
         ];
 
         $this->CrewProjects_model->insert_log_activity($data_log);
@@ -191,6 +199,10 @@ class Crud_crewprojects extends CI_Controller {
 
         $this->CrewProjects_model->delete_crew_from_project($crew_id); // Delete the crew
 
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
@@ -199,7 +211,7 @@ class Crud_crewprojects extends CI_Controller {
             'log_activity_status' => 'Delete Crew dari Project',
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
+             'log_activity_ip'=> $ip_with_location
             
         );
 
