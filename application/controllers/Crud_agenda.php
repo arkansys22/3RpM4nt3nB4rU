@@ -83,6 +83,9 @@ class Crud_agenda extends CI_Controller {
     $this->Agenda_model->insert_agenda($data);
     $status = 'Tambah Agenda' .$this->input->post('status');
 
+    $ip = $this->input->ip_address();
+    $location = get_location_from_ip($ip);
+    $ip_with_location = $ip . ' (' . $location . ')';
 
     $data_log = array(
 
@@ -92,7 +95,7 @@ class Crud_agenda extends CI_Controller {
         'log_activity_status' => $status,
         'log_activity_waktu' => date('Y-m-d H:i:s'),
         'log_activity_platform'=> $agent,
-        'log_activity_ip'=> $this->input->ip_address()
+         'log_activity_ip'=> $ip_with_location
         
     );
     $this->Agenda_model->insert_log_activity($data_log);
@@ -133,6 +136,9 @@ public function update($id_session){
     $this->Agenda_model->update_agenda($id_session, $data);
     $status = 'Update Agenda' .$this->input->post('status');
 
+    $ip = $this->input->ip_address();
+    $location = get_location_from_ip($ip);
+    $ip_with_location = $ip . ' (' . $location . ')';
 
     $data_log = array(
 
@@ -142,7 +148,7 @@ public function update($id_session){
         'log_activity_status' => $status,
         'log_activity_waktu' => date('Y-m-d H:i:s'),
         'log_activity_platform'=> $agent,
-        'log_activity_ip'=> $this->input->ip_address()
+         'log_activity_ip'=> $ip_with_location
         
     );
 
@@ -170,6 +176,9 @@ public function update($id_session){
         $this->Agenda_model->delete_permanent($id_session);
         $status = 'Hapus Agenda' .$this->input->post('status');
 
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . ' (' . $location . ')';
 
         $data_log = array(
     
@@ -179,7 +188,7 @@ public function update($id_session){
             'log_activity_status' => $status,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
+             'log_activity_ip'=> $ip_with_location
             
         );
     
