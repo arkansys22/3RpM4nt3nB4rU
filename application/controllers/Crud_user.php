@@ -79,6 +79,10 @@ class crud_user extends CI_Controller {
         // Insert ke tabel projects
         $this->Users2_model->insert_users($data);
 
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         $data_log = array(
             'log_activity_user_id'=>$this->session->id_session,
             'log_activity_modul' => 'user/create',
@@ -86,7 +90,7 @@ class crud_user extends CI_Controller {
             'log_activity_status' => 'Tambah Pengguna',
             'log_activity_platform'=> $agent,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
-             'log_activity_ip'=> $ip_with_location            
+            'log_activity_ip'=> $ip_with_location            
         );
         $this->Users2_model->insert_log_activity($data_log);   
     
@@ -281,6 +285,10 @@ class crud_user extends CI_Controller {
             $this->Users2_model->update_crews($crews_idsession, $crews_data);
         }
 
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         // Log activity
         $data_log = array(
             'log_activity_user_id' => $this->session->id_session,
@@ -322,6 +330,11 @@ class crud_user extends CI_Controller {
 
         $data = ['user_stat' => 'Delete'];
         $this->Users2_model->update_users($id_session, $data);
+
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
@@ -370,6 +383,10 @@ class crud_user extends CI_Controller {
         $data = ['user_stat' => 'Publish'];
         $this->Users2_model->update_Users($id_session, $data);
 
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
@@ -412,6 +429,10 @@ class crud_user extends CI_Controller {
 
 
                 $this->Users2_model->delete_Users_permanent($id_session);
+
+                $ip = $this->input->ip_address();
+                $location = get_location_from_ip($ip);
+                $ip_with_location = $ip . "<br>(" . $location . ")";
 
                 $data_log = array(
 
