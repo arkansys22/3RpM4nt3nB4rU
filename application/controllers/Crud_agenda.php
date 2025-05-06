@@ -85,7 +85,7 @@ class Crud_agenda extends CI_Controller {
 
     $ip = $this->input->ip_address();
     $location = get_location_from_ip($ip);
-    $ip_with_location = $ip . ' (' . $location . ')';
+    $ip_with_location = $ip . "<br>(" . $location . ")";
 
     $data_log = array(
 
@@ -138,7 +138,7 @@ public function update($id_session){
 
     $ip = $this->input->ip_address();
     $location = get_location_from_ip($ip);
-    $ip_with_location = $ip . ' (' . $location . ')';
+    $ip_with_location = $ip . "<br>(" . $location . ")";
 
     $data_log = array(
 
@@ -178,7 +178,7 @@ public function update($id_session){
 
         $ip = $this->input->ip_address();
         $location = get_location_from_ip($ip);
-        $ip_with_location = $ip . ' (' . $location . ')';
+        $ip_with_location = $ip . "<br>(" . $location . ")";
 
         $data_log = array(
     
