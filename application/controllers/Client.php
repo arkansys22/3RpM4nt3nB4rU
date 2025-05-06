@@ -57,13 +57,17 @@ class Client extends CI_Controller
         $data = array('user_login_status' => 'online');
         $this->db->update('user', $data, $id); // Change table to 'user'
 
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . ' (' . $location . ')';
+
         $data2 = array(
           'log_activity_user_id' => $row['client_idsession'], // Use client_idsession
           'log_activity_modul' => 'Login',
           'log_activity_status' => 'Login',
           'log_activity_platform' => $agent,
           'log_activity_waktu' => date('Y-m-d H:i:s'),
-          'log_activity_ip' => $this->input->ip_address()
+          'log_activity_ip'=> $ip_with_location
         );
         $this->db->insert('log_activity', $data2);
         $id_session = $this->session->userdata('id_session'); // Ensure id_session is set
