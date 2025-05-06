@@ -214,8 +214,11 @@ class crud_user extends CI_Controller {
         }
     
         $this->Users2_model->update_users($id_session, $data);
-        $status = 'Update Data Pengguna';
 
+        $status = 'Update Data Pengguna';
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . ' (' . $location . ')';
 
         $data_log = array(
 
@@ -225,7 +228,7 @@ class crud_user extends CI_Controller {
             'log_activity_status' => $status,
             'log_activity_platform'=> $agent,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
-            'log_activity_ip'=> $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
             
         );
 
