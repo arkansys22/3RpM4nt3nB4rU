@@ -258,8 +258,8 @@ class Aspanel extends CI_Controller {
 
 			$ip = $this->input->ip_address();
 			$location = get_location_from_ip($ip);
-			$ip_with_location = $ip . ' (' . $location . ')';
-
+			$ip_with_location = $ip . "<br>(" . $location . ")";
+	
 			$data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
