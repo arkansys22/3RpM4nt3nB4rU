@@ -35,7 +35,7 @@
                 <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
                     <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
                         <h2 class="text-2xl font-bold mb-4">Edit Partner <?= $partner->partner_name ?></h2>
-                        <form action="<?= base_url('partner/update/' . $partner->id_session) ?>" method="post" class="bg-white p-6 shadow-md rounded">
+                    <form action="<?= base_url('partner/update/' . $partner->id_session) ?>" method="post" enctype="multipart/form-data" class="bg-white p-6 shadow-md rounded">
                             <label class="block mb-2">Nama Partner</label>
                             <input type="text" name="partner_name" value="<?= $partner->partner_name ?>" class="w-full px-4 py-2 border rounded mb-4" required>
 
@@ -63,9 +63,15 @@
                             <label class="block mb-2">No HP</label>
                             <input type="text" name="phone" value="<?= $partner->phone ?>" class="w-full px-4 py-2 border rounded mb-4" required>
 
+                            <label class="block mb-2">Logo</label>
+                            <?php if ($partner->logo): ?>
+                                <img src="<?= base_url('uploads/partner/' . $partner->logo) ?>" alt="Logo" class="block w-full mb-4">
+                            <?php endif; ?>
+                            <input type="file" name="logo" class="w-full px-4 py-2 border rounded mb-4">
+
                             <div class="flex flex-col sm:flex-row justify-end">
                                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded w-full hover:bg-blue-600 sm:w-24 mb-2 sm:mb-0 text-center">Update</button>
-                                <a href="<?= base_url('partner') ?>" class="sm:ml-2 bg-gray-500 text-white px-4 py-2 rounded w-full hover:bg-gray-600 sm:w-24 text-center">Cancel</a>
+                                <a href="<?= base_url('partner') ?>" class="sm:ml-2 bg-gray-500 text-white px-4 py-2 rounded w-full hover:bg-gray-600 sm:w-24 text-center">Batal</a>
                             </div>
                         </form>
                     </div>
