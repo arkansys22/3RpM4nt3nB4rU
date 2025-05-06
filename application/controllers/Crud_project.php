@@ -142,6 +142,10 @@ class Crud_project extends CI_Controller {
         // Insert ke tabel clients
         $this->db->insert('clients', $client_data);
 
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
@@ -150,7 +154,7 @@ class Crud_project extends CI_Controller {
             'log_activity_status' => 'Tambah Project',
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
             
         );
 
@@ -310,7 +314,9 @@ class Crud_project extends CI_Controller {
         $this->db->update('clients', $client_data);
     
         $status = 'Update Project' ;
-
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
 
         $data_log = array(
 
@@ -320,7 +326,7 @@ class Crud_project extends CI_Controller {
             'log_activity_status' => $status,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
             
         );
 
@@ -358,7 +364,11 @@ class Crud_project extends CI_Controller {
         // Update juga di tabel clients
         $this->db->where('id_session', $id_session);
         $this->db->update('clients', $data);
-    
+
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
@@ -367,7 +377,7 @@ class Crud_project extends CI_Controller {
             'log_activity_status' => 'Delete Project',
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
             
         );
 
@@ -437,6 +447,10 @@ class Crud_project extends CI_Controller {
         $this->db->where('id_session', $id_session);
         $this->db->update('clients', $data);
 
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
@@ -445,7 +459,7 @@ class Crud_project extends CI_Controller {
             'log_activity_status' => 'Restore Project',
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
             
         );
 
@@ -485,6 +499,10 @@ class Crud_project extends CI_Controller {
         $this->db->where('project_id', $id_session);
         $this->db->delete('crew_projects');
 
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
@@ -493,7 +511,7 @@ class Crud_project extends CI_Controller {
             'log_activity_status' => 'Delete Permanent Project',
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $this->input->ip_address()
+            'log_activity_ip'=> $ip_with_location
             
         );
 
