@@ -12,18 +12,30 @@
         const levelSelect = document.querySelector('select[name="level"]');
         const clientIdField = document.querySelector('select[name="clientid"]').closest('div');
         const crewIdField = document.querySelector('select[name="crewid"]').closest('div');
+        const partnerIdField = document.querySelector('select[name="partnerid"]').closest('div'); // Ensure Partner ID field is handled
         const clientIdSelect = document.querySelector('select[name="clientid"]');
         const crewIdSelect = document.querySelector('select[name="crewid"]');
+        const partnerIdSelect = document.querySelector('select[name="partnerid"]'); // Ensure Partner ID select is handled
 
         function toggleFields() {
           if (levelSelect.value === '5') { // Assuming '5' is the value for client level
             clientIdField.style.display = 'block';
             crewIdField.style.display = 'none';
+            partnerIdField.style.display = 'none'; // Hide Partner ID
+            crewIdSelect.value = '-';
+            partnerIdSelect.value = '-';
+          } else if (levelSelect.value === '8') { // Assuming '8' is the value for partner level
+            clientIdField.style.display = 'none';
+            crewIdField.style.display = 'none';
+            partnerIdField.style.display = 'block'; // Show Partner ID
+            clientIdSelect.value = '-';
             crewIdSelect.value = '-';
           } else {
             clientIdField.style.display = 'none';
             crewIdField.style.display = 'block';
+            partnerIdField.style.display = 'none'; // Hide Partner ID
             clientIdSelect.value = '-';
+            partnerIdSelect.value = '-';
           }
         }
 
@@ -35,8 +47,8 @@
 <body
     x-data="{ page: 'projects', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
     x-init="
-         darkMode = JSON.parse(localStorage.getItem('darkMode'));
-         $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+        darkMode = JSON.parse(localStorage.getItem('darkMode'));
+        $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
     :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}"
   >
     <!-- ===== Preloader Start ===== -->
@@ -79,7 +91,7 @@
                               echo"<option selected='selected' value='$p[user_level_id]'>$p[user_level_nama]</option> ";
                             }else{
                               echo"<option value='$p[user_level_id]'>$p[user_level_nama]</option>";
-                         }
+                        }
                       } ?>                    
                 </select>
 
@@ -92,7 +104,7 @@
                                 echo"<option selected='selected' value='$p[id_session]'>$p[crew_name]</option> ";
                               }else{
                                 echo"<option value='$p[id_session]'>$p[crew_name]</option>";
-                           }
+                          }
                         } ?>
                   </select>
                 </div>
@@ -106,8 +118,22 @@
                                 echo"<option selected='selected' value='$p[id_session]'>$p[client_name]</option> ";
                               }else{
                                 echo"<option value='$p[id_session]'>$p[client_name]</option>";
-                           }
+                          }
                         } ?>                    
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block mb-2">Partner ID</label>
+                  <select name="partnerid" class="w-full px-4 py-2 border rounded mb-4" required>
+                    <option value="-">-</option>
+                    <?php foreach ($partner as $p) { // Assuming $partner is provided in the controller
+                      if ($pc->partner_idsession == $p['id_session']) {
+                        echo "<option selected='selected' value='$p[id_session]'>$p[partner_name]</option>";
+                      } else {
+                        echo "<option value='$p[id_session]'>$p[partner_name]</option>";
+                      }
+                    } ?>
                   </select>
                 </div>
 
