@@ -153,9 +153,7 @@
                                                 <td><?= $partner->type ?></td>
                                                 <td><?= $partner->social_media ?></td>
                                                 <td><?= $partner->contact_name ?></td>
-                                                <td>
-                                                    <a href="https://wa.me/<?= $partner->phone ?>" class="text-blue-500 underline"><?= $partner->phone ?></a>
-                                                </td>
+                                                <td><a href="https://wa.me/<?= $partner->phone ?>"><?= $partner->phone ?></a></td>
                                                 <td>
                                                     <div class="flex flex-col items-start gap-2 w-max">
                                                         <a href="<?= base_url('partner/lihat/' . $partner->id_session) ?>" class="inline-flex justify-center bg-yellow-500 text-white px-2 py-1 rounded-md hover:bg-yellow-600 text-center w-full">Lihat</a>
