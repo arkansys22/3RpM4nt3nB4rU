@@ -8,9 +8,10 @@ class Vendor_model extends CI_Model {
     }
 
     public function insert_vendor($data) {
+        unset($data['vendor_status'], $data['partner_id']);
         return $this->db->insert('vendor', $data);
     }
-
+    
     public function get_vendor_by_id_and_vendor_id($id_session, $vendor_id) {
         return $this->db->get_where('vendor', ['id_session' => $id_session, 'vendor_id' => $vendor_id])->row();
     }
