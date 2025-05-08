@@ -99,6 +99,7 @@
                       Edit Data Diri
                       </a>
                     </li>
+                    <?php elseif (in_array($this->session->userdata('level'), [2, 3, 4])): ?>
                     <li>
                       <a
                       href="<?= site_url('user/edit/'. $pc->id_session . '?view_type=edit') ?>"
