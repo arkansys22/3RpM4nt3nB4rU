@@ -178,7 +178,11 @@ class Crud_vendor extends CI_Controller {
         $this->Vendor_model->update_vendor($id_session, $vendor_id, $data);
 
         $new_type = $this->input->post('type'); // Ambil type baru
-        $status = 'Update Vendor dari ' . $old_type . ' ke ' . $new_type;
+        if ($old_type === $new_type) {
+            $status = 'Update Vendor ' . $old_type;
+        } else {
+            $status = 'Update Vendor dari ' . $old_type . ' ke ' . $new_type;
+        }
         $ip = $this->input->ip_address();
         $location = get_location_from_ip($ip);
         $ip_with_location = $ip . "<br>(" . $location . ")";
