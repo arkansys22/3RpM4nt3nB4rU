@@ -99,6 +99,22 @@
                       Edit Data Diri
                       </a>
                     </li>
+                    <li>
+                      <a
+                      href="<?= site_url('user/edit/'. $pc->id_session . '?view_type=edit') ?>"
+                      class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
+                      >
+                      Edit Pengguna
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                      href="<?= site_url('user') ?>"
+                      class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
+                      >
+                      Kembali
+                      </a>
+                    </li>
                     <?php elseif (in_array($this->session->userdata('level'), [2, 3, 4])): ?>
                     <li>
                       <a
