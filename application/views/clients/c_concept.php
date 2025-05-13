@@ -41,10 +41,18 @@ $photo5 = !empty($vendor->photo5) ? base_url("uploads/{$vendor->photo5}") : base
     <div class="row">
         <div class="col-md-6">
             <div class="owl-carousel owl-theme single-slideshow" data-autoplay="true" data-loop="true" data-nav="true" data-items="1">
-                <div class="item"> <img class="img-fluid" alt="" src="<?= $photo2 ?>"> </div>
-                <div class="item"> <img class="img-fluid" alt="" src="<?= $photo3 ?>"> </div>
-                <div class="item"> <img class="img-fluid" alt="" src="<?= $photo4 ?>"> </div>
-                <div class="item"> <img class="img-fluid" alt="" src="<?= $photo5 ?>"> </div>
+                <?php if (!empty($vendor->photo2)): ?>
+                    <div class="item"> <img class="img-fluid" alt="" src="<?= base_url("uploads/{$vendor->photo2}") ?>"> </div>
+                <?php endif; ?>
+                <?php if (!empty($vendor->photo3)): ?>
+                    <div class="item"> <img class="img-fluid" alt="" src="<?= base_url("uploads/{$vendor->photo3}") ?>"> </div>
+                <?php endif; ?>
+                <?php if (!empty($vendor->photo4)): ?>
+                    <div class="item"> <img class="img-fluid" alt="" src="<?= base_url("uploads/{$vendor->photo4}") ?>"> </div>
+                <?php endif; ?>
+                <?php if (!empty($vendor->photo5)): ?>
+                    <div class="item"> <img class="img-fluid" alt="" src="<?= base_url("uploads/{$vendor->photo5}") ?>"> </div>
+                <?php endif; ?>
             </div>
         </div>
         <div class="col-md-6">
