@@ -8,6 +8,7 @@ $route['translate_uri_dashes'] = FALSE;
 $route['login'] = "User/login";
 $route['panel'] = "aspanel/home";
 $route['panel/staff'] = "aspanel/home/staff";
+$route['panel/partner'] = "aspanel/home/partner";
 $route['logout'] = "aspanel/logout";
 
 $route['client/login'] = "Client/login";
@@ -47,6 +48,7 @@ $route['project/restore/(:any)'] = 'crud_project/restore/$1'; // Restore project
 $route['project/permanent_delete/(:any)'] = 'crud_project/permanent_delete/$1'; // Hapus permanen project
 $route['project/lihat/(:any)'] = 'crud_project/lihat/$1'; // Menampilkan lihat project
 $route['project/crew_lihat/(:any)'] = 'crud_project/crew_lihat/$1'; // Menampilkan lihat project
+$route['project/partner_lihat/(:any)'] = 'crud_project/partner_lihat/$1'; // Menampilkan lihat project
 
 $route['finance-project'] = 'crud_finance_project/index'; // Menampilkan daftar project
 $route['finance-project/delete/(:any)'] = 'crud_finance_project/delete/$1'; // Menghapus project
