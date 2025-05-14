@@ -225,7 +225,22 @@ class Aspanel extends CI_Controller {
 				$data['events'] = $events;
 				$this->load->view('backend/v_home_staff', $data);
 
-		
+					} else if ($this->session->level == '8') {
+				cek_session_akses_partner('panel', $this->session->id_session);
+
+					// Fetch event data
+					$this->db->select('project.event_date, project.location, project.client_name, vendor.type, vendor.id_session');
+					$this->db->from('user');
+					$this->db->join('vendor', 'user.partner_idsession = vendor.vendor_id');
+					$this->db->join('project', 'vendor.id_session = project.id_session');
+					$this->db->where('user.id_session', $this->session->id_session);
+					$this->db->order_by('project.event_date', 'DESC');
+					$events = $this->db->get()->result_array();
+
+				// Pass data to the view
+				$data['events'] = $events;
+				$this->load->view('backend/v_home_partner', $data);
+
 			} else {
 				redirect(base_url());
 			}
