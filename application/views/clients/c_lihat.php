@@ -17,7 +17,11 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<?php if($project->religion === 'Islam') { ?>
 	<title>Mantenbaru <?= $clients->f_bride_cname ?> dan <?= $clients->m_bride_cname ?></title>
+	<?php } elseif ($project->religion === 'Kristen') { ?>
+	<title>Mantenbaru <?= $clients->m_bride_cname ?> dan <?= $clients->f_bride_cname ?></title>
+	<?php } ?>
 	<!-- favicon -->
 	<link rel="shortcut icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
 	<!-- animate css -->
