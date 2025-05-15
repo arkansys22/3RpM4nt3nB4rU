@@ -90,20 +90,14 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
               <label class="block mb-2">Berapa Bersaudara (2/3/... bersaudara)</label>
               <input type="number" name="f_bride_hsibling" value="<?= $clients->f_bride_hsibling ?>" placeholder="2/3/..." class="w-full px-4 py-2 border rounded mb-4">
               
-              <label class="block mb-2">Nama Lengkap Ayah</label>
-              <input type="text" name="f_bride_fathername" value="<?= $clients->f_bride_fathername ?>" placeholder="Nama Lengkap Ayah" class="w-full px-4 py-2 border rounded mb-4" required>
-              
-              <label class="block mb-2">Nama Panggilan Ayah</label>
-              <input type="text" name="f_bride_fathercname" value="<?= $clients->f_bride_fathercname ?>" placeholder="Bapak/Papa/Ayah/Abi" class="w-full px-4 py-2 border rounded mb-4">
-
               <label class="block mb-2">Ayah Mempelai Wanita</label>
               <div class="flex gap-4 mb-4">
                   <label>
-                      <input type="radio" name="fayah_status" id="masihAdaFayah" onclick="toggleReplacementFields('fayah', false)"
+                      <input type="radio" name="fayah_status" value="Masih Ada" id="masihAdaFayah" onclick="toggleReplacementFields('fayah', false)"
                       <?= empty($clients->f_bride_freplacementname) ? 'checked' : '' ?>> Masih Ada
                   </label>
                   <label>
-                      <input type="radio" name="fayah_status" id="tidakAdaFayah" onclick="toggleReplacementFields('fayah', true)"
+                      <input type="radio" name="fayah_status" value="Tidak Ada" id="tidakAdaFayah" onclick="toggleReplacementFields('fayah', true)"
                       <?= !empty($clients->f_bride_freplacementname) ? 'checked' : '' ?>> Tidak Ada
                   </label>
               </div>
@@ -116,30 +110,40 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                   <input type="text" name="f_bride_freplacementcname" value="<?= $clients->f_bride_freplacementcname ?>" placeholder="Nama Panggilan Pengganti Ayah" class="w-full px-4 py-2 border rounded mb-4">
               </div>
 
-              <label class="block mb-2">Nama Lengkap Ibu</label>
-              <input type="text" name="f_bride_mothername" value="<?= $clients->f_bride_mothername ?>" placeholder="Nama Lengkap Ibu" class="w-full px-4 py-2 border rounded mb-4" required>
+              <div id="fayah-original" class="<?= empty($clients->f_bride_freplacementname) ? '' : 'hidden' ?>">
+                  <label class="block mb-2">Nama Lengkap Ayah</label>
+                  <input type="text" name="f_bride_fathername" value="<?= $clients->f_bride_fathername ?>" placeholder="Nama Lengkap Ayah" class="w-full px-4 py-2 border rounded mb-4">
 
-              <label class="block mb-2">Nama Panggilan Ibu</label>
-              <input type="text" name="f_bride_mothercname" value="<?= $clients->f_bride_mothercname ?>" placeholder="Ibu/Mamah/Bunda/Umi" class="w-full px-4 py-2 border rounded mb-4">
+                  <label class="block mb-2">Nama Panggilan Ayah</label>
+                  <input type="text" name="f_bride_fathercname" value="<?= $clients->f_bride_fathercname ?>" placeholder="Bapak/Papa/Ayah/Abi" class="w-full px-4 py-2 border rounded mb-4">
+              </div>
 
               <label class="block mb-2">Ibu Mempelai Wanita</label>
               <div class="flex gap-4 mb-4">
                   <label>
-                      <input type="radio" name="fibu_status" id="masihAdaFibu" onclick="toggleReplacementFields('fibu', false)"
+                      <input type="radio" name="fibu_status" value="Masih Ada" id="masihAdaFibu" onclick="toggleReplacementFields('fibu', false)"
                       <?= empty($clients->f_bride_mreplacementname) ? 'checked' : '' ?>> Masih Ada
                   </label>
                   <label>
-                      <input type="radio" name="fibu_status" id="tidakAdaFibu" onclick="toggleReplacementFields('fibu', true)"
+                      <input type="radio" name="fibu_status" value="Tidak Ada" id="tidakAdaFibu" onclick="toggleReplacementFields('fibu', true)"
                       <?= !empty($clients->f_bride_mreplacementname) ? 'checked' : '' ?>> Tidak Ada
                   </label>
               </div>
 
               <div id="fibu" class="<?= !empty($clients->f_bride_mreplacementname) ? '' : 'hidden' ?>">
-              <label class="block mb-2">Nama Lengkap Pengganti Ibu</label>
-              <input type="text" name="f_bride_mreplacementname" value="<?= $clients->f_bride_mreplacementname ?>" placeholder="Nama Lengkap Pengganti Ibu" class="w-full px-4 py-2 border rounded mb-4">
+                  <label class="block mb-2">Nama Lengkap Pengganti Ibu</label>
+                  <input type="text" name="f_bride_mreplacementname" value="<?= $clients->f_bride_mreplacementname ?>" placeholder="Nama Lengkap Pengganti Ibu" class="w-full px-4 py-2 border rounded mb-4">
 
-              <label class="block mb-2">Nama Panggilan Pengganti Ibu</label>
-              <input type="text" name="f_bride_mreplacementcname" value="<?= $clients->f_bride_mreplacementcname ?>" placeholder="Nama Panggilan Pengganti Ibu" class="w-full px-4 py-2 border rounded mb-4">
+                  <label class="block mb-2">Nama Panggilan Pengganti Ibu</label>
+                  <input type="text" name="f_bride_mreplacementcname" value="<?= $clients->f_bride_mreplacementcname ?>" placeholder="Nama Panggilan Pengganti Ibu" class="w-full px-4 py-2 border rounded mb-4">
+              </div>
+
+              <div id="fibu-original" class="<?= empty($clients->f_bride_mreplacementname) ? '' : 'hidden' ?>">
+                  <label class="block mb-2">Nama Lengkap Ibu</label>
+                  <input type="text" name="f_bride_mothername" value="<?= $clients->f_bride_mothername ?>" placeholder="Nama Lengkap Ibu" class="w-full px-4 py-2 border rounded mb-4">
+
+                  <label class="block mb-2">Nama Panggilan Ibu</label>
+                  <input type="text" name="f_bride_mothercname" value="<?= $clients->f_bride_mothercname ?>" placeholder="Ibu/Mamah/Bunda/Umi" class="w-full px-4 py-2 border rounded mb-4">
               </div>
 
               <label class="block mb-2">Nama Saudara Kandung</label>
@@ -159,20 +163,14 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
               <label class="block mb-2">Berapa Bersaudara (2/3/... bersaudara)</label>
               <input type="number" name="m_bride_hsibling" value="<?= $clients->m_bride_hsibling ?>" placeholder="2/3/..." class="w-full px-4 py-2 border rounded mb-4">
               
-              <label class="block mb-2">Nama Lengkap Ayah</label>
-              <input type="text" name="m_bride_fathername" value="<?= $clients->m_bride_fathername ?>" placeholder="Nama Lengkap Ayah" class="w-full px-4 py-2 border rounded mb-4" required>
-              
-              <label class="block mb-2">Nama Panggilan Ayah</label>
-              <input type="text" name="m_bride_fathercname" value="<?= $clients->m_bride_fathercname ?>" placeholder="Bapak/Papa/Ayah/Abi" class="w-full px-4 py-2 border rounded mb-4">
-
               <label class="block mb-2">Ayah Mempelai Pria</label>
               <div class="flex gap-4 mb-4">
                   <label>
-                      <input type="radio" name="mayah_status" id="masihAdaMayah" onclick="toggleReplacementFields('mayah', false)"
+                      <input type="radio" name="mayah_status" value="Masih Ada" id="masihAdaMayah" onclick="toggleReplacementFields('mayah', false)"
                       <?= empty($clients->m_bride_freplacementname) ? 'checked' : '' ?>> Masih Ada
                   </label>
                   <label>
-                      <input type="radio" name="mayah_status" id="tidakAdaMayah" onclick="toggleReplacementFields('mayah', true)"
+                      <input type="radio" name="mayah_status" value="Tidak Ada" id="tidakAdaMayah" onclick="toggleReplacementFields('mayah', true)"
                       <?= !empty($clients->m_bride_freplacementname) ? 'checked' : '' ?>> Tidak Ada
                   </label>
               </div>
@@ -185,30 +183,40 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
               <input type="text" name="m_bride_freplacementcname" value="<?= $clients->m_bride_freplacementcname ?>" placeholder="Nama Panggilan Pengganti Ayah" class="w-full px-4 py-2 border rounded mb-4">
               </div>
 
-              <label class="block mb-2">Nama Lengkap Ibu</label>
-              <input type="text" name="m_bride_mothername" value="<?= $clients->m_bride_mothername ?>" placeholder="Nama Lengkap Ibu" class="w-full px-4 py-2 border rounded mb-4" required>
-              
-              <label class="block mb-2">Nama Panggilan Ibu</label>
-              <input type="text" name="m_bride_mothercname" value="<?= $clients->m_bride_mothercname ?>" placeholder="Ibu/Mamah/Bunda/Umi" class="w-full px-4 py-2 border rounded mb-4">
+              <div id="mayah-original" class="<?= empty($clients->m_bride_freplacementname) ? '' : 'hidden' ?>">
+                  <label class="block mb-2">Nama Lengkap Ayah</label>
+                  <input type="text" name="m_bride_fathername" value="<?= $clients->m_bride_fathername ?>" placeholder="Nama Lengkap Ayah" class="w-full px-4 py-2 border rounded mb-4">
+
+                  <label class="block mb-2">Nama Panggilan Ayah</label>
+                  <input type="text" name="m_bride_fathercname" value="<?= $clients->m_bride_fathercname ?>" placeholder="Bapak/Papa/Ayah/Abi" class="w-full px-4 py-2 border rounded mb-4">
+              </div>
 
               <label class="block mb-2">Ibu Mempelai Pria</label>
               <div class="flex gap-4 mb-4">
                   <label>
-                      <input type="radio" name="mibu_status" id="masihAdaMibu" onclick="toggleReplacementFields('mibu', false)"
+                      <input type="radio" name="mibu_status" value="Masih Ada" id="masihAdaMibu" onclick="toggleReplacementFields('mibu', false)"
                       <?= empty($clients->m_bride_mreplacementname) ? 'checked' : '' ?>> Masih Ada
                   </label>
                   <label>
-                      <input type="radio" name="mibu_status" id="tidakAdaMibu" onclick="toggleReplacementFields('mibu', true)"
+                      <input type="radio" name="mibu_status" value="Tidak Ada" id="tidakAdaMibu" onclick="toggleReplacementFields('mibu', true)"
                       <?= !empty($clients->m_bride_mreplacementname) ? 'checked' : '' ?>> Tidak Ada
                   </label>
               </div>
 
               <div id="mibu" class="<?= !empty($clients->m_bride_mreplacementname) ? '' : 'hidden' ?>">
-              <label class="block mb-2">Nama Lengkap Pengganti Ibu</label>
-              <input type="text" name="m_bride_mreplacementname" value="<?= $clients->m_bride_mreplacementname ?>" placeholder="Nama Lengkap Pengganti Ibu" class="w-full px-4 py-2 border rounded mb-4">
+                  <label class="block mb-2">Nama Lengkap Pengganti Ibu</label>
+                  <input type="text" name="m_bride_mreplacementname" value="<?= $clients->m_bride_mreplacementname ?>" placeholder="Nama Lengkap Pengganti Ibu" class="w-full px-4 py-2 border rounded mb-4">
 
-              <label class="block mb-2">Nama Panggilan Pengganti Ibu</label>
-              <input type="text" name="m_bride_mreplacementcname" value="<?= $clients->m_bride_mreplacementcname ?>" placeholder="Nama Panggilan Pengganti Ibu" class="w-full px-4 py-2 border rounded mb-4">
+                  <label class="block mb-2">Nama Panggilan Pengganti Ibu</label>
+                  <input type="text" name="m_bride_mreplacementcname" value="<?= $clients->m_bride_mreplacementcname ?>" placeholder="Nama Panggilan Pengganti Ibu" class="w-full px-4 py-2 border rounded mb-4">
+              </div>
+
+              <div id="mibu-original" class="<?= empty($clients->m_bride_mreplacementname) ? '' : 'hidden' ?>">
+                  <label class="block mb-2">Nama Lengkap Ibu</label>
+                  <input type="text" name="m_bride_mothername" value="<?= $clients->m_bride_mothername ?>" placeholder="Nama Lengkap Ibu" class="w-full px-4 py-2 border rounded mb-4">
+
+                  <label class="block mb-2">Nama Panggilan Ibu</label>
+                  <input type="text" name="m_bride_mothercname" value="<?= $clients->m_bride_mothercname ?>" placeholder="Ibu/Mamah/Bunda/Umi" class="w-full px-4 py-2 border rounded mb-4">
               </div>
 
               <label class="block mb-2">Nama Saudara Kandung</label>
@@ -320,6 +328,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
   <script>
 function toggleReplacementFields(type, show) {
     document.getElementById(type).classList.toggle("hidden", !show);
+    document.getElementById(type + '-original').classList.toggle("hidden", show);
 }
 </script>
 </body>
