@@ -152,6 +152,39 @@ class Crud_clients extends CI_Controller {
             'create_day'            => date('l') // Simpan hari otomatis
         ];
 
+        // Clear unused fields based on radio button selection
+        if ($this->input->post('fayah_status') === 'Masih Ada') {
+            $data['f_bride_freplacementname'] = null;
+            $data['f_bride_freplacementcname'] = null;
+        } else {
+            $data['f_bride_fathername'] = null;
+            $data['f_bride_fathercname'] = null;
+        }
+
+        if ($this->input->post('fibu_status') === 'Masih Ada') {
+            $data['f_bride_mreplacementname'] = null;
+            $data['f_bride_mreplacementcname'] = null;
+        } else {
+            $data['f_bride_mothername'] = null;
+            $data['f_bride_mothercname'] = null;
+        }
+
+        if ($this->input->post('mayah_status') === 'Masih Ada') {
+            $data['m_bride_freplacementname'] = null;
+            $data['m_bride_freplacementcname'] = null;
+        } else {
+            $data['m_bride_fathername'] = null;
+            $data['m_bride_fathercname'] = null;
+        }
+
+        if ($this->input->post('mibu_status') === 'Masih Ada') {
+            $data['m_bride_mreplacementname'] = null;
+            $data['m_bride_mreplacementcname'] = null;
+        } else {
+            $data['m_bride_mothername'] = null;
+            $data['m_bride_mothercname'] = null;
+        }
+
         $this->Clients_model->insert_client($data); // Ubah pemanggilan model
 
         $client_id = $this->db->insert_id();  // Mendapatkan id auto-increment
@@ -334,6 +367,39 @@ class Crud_clients extends CI_Controller {
             'location'              => $this->input->post('location'),
             'maps'                  => $this->input->post('maps'),
         );
+
+        // Clear unused fields based on radio button selection
+        if ($this->input->post('fayah_status') === 'Masih Ada') {
+            $data['f_bride_freplacementname'] = null;
+            $data['f_bride_freplacementcname'] = null;
+        } else {
+            $data['f_bride_fathername'] = null;
+            $data['f_bride_fathercname'] = null;
+        }
+
+        if ($this->input->post('fibu_status') === 'Masih Ada') {
+            $data['f_bride_mreplacementname'] = null;
+            $data['f_bride_mreplacementcname'] = null;
+        } else {
+            $data['f_bride_mothername'] = null;
+            $data['f_bride_mothercname'] = null;
+        }
+
+        if ($this->input->post('mayah_status') === 'Masih Ada') {
+            $data['m_bride_freplacementname'] = null;
+            $data['m_bride_freplacementcname'] = null;
+        } else {
+            $data['m_bride_fathername'] = null;
+            $data['m_bride_fathercname'] = null;
+        }
+
+        if ($this->input->post('mibu_status') === 'Masih Ada') {
+            $data['m_bride_mreplacementname'] = null;
+            $data['m_bride_mreplacementcname'] = null;
+        } else {
+            $data['m_bride_mothername'] = null;
+            $data['m_bride_mothercname'] = null;
+        }
 
         $this->Clients_model->update_client($id_session, $data);
 
@@ -570,7 +636,7 @@ class Crud_clients extends CI_Controller {
         $this->load->view('clients/c_concept', $data);
     }
     
-    public function c_update($id_session){
+    public function c_update($id_session) {
 
         if ($this->agent->is_browser()) // Agent untuk fitur di log activity
         {
@@ -640,6 +706,39 @@ class Crud_clients extends CI_Controller {
             'location'              => $this->input->post('location'),
         );
 
+        // Clear unused fields based on radio button selection
+        if ($this->input->post('fayah_status') === 'Masih Ada') {
+            $data['f_bride_freplacementname'] = null;
+            $data['f_bride_freplacementcname'] = null;
+        } else {
+            $data['f_bride_fathername'] = null;
+            $data['f_bride_fathercname'] = null;
+        }
+
+        if ($this->input->post('fibu_status') === 'Masih Ada') {
+            $data['f_bride_mreplacementname'] = null;
+            $data['f_bride_mreplacementcname'] = null;
+        } else {
+            $data['f_bride_mothername'] = null;
+            $data['f_bride_mothercname'] = null;
+        }
+
+        if ($this->input->post('mayah_status') === 'Masih Ada') {
+            $data['m_bride_freplacementname'] = null;
+            $data['m_bride_freplacementcname'] = null;
+        } else {
+            $data['m_bride_fathername'] = null;
+            $data['m_bride_fathercname'] = null;
+        }
+
+        if ($this->input->post('mibu_status') === 'Masih Ada') {
+            $data['m_bride_mreplacementname'] = null;
+            $data['m_bride_mreplacementcname'] = null;
+        } else {
+            $data['m_bride_mothername'] = null;
+            $data['m_bride_mothercname'] = null;
+        }
+
         $this->Clients_model->update_client($id_session, $data);
 
         // Update juga di tabel project
@@ -648,30 +747,28 @@ class Crud_clients extends CI_Controller {
             'location' => $this->input->post('location'),
         );
 
-            $this->db->where('id_session', $id_session);
-            $this->db->update('project', $project_data);
+        $this->db->where('id_session', $id_session);
+        $this->db->update('project', $project_data);
 
-        $status = 'Update Data Client' ;
+        $status = 'Update Data Client';
         $ip = $this->input->ip_address();
         $location = get_location_from_ip($ip);
         $ip_with_location = $ip . "<br>(" . $location . ")";
 
         $data_log = array(
-
-            'log_activity_user_id'=>$this->session->id_session,
+            'log_activity_user_id' => $this->session->id_session,
             'log_activity_modul' => 'clients/c_edit',
             'log_activity_document_no' => $id_session,
             'log_activity_status' => $status,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
-            'log_activity_platform'=> $agent,
-             'log_activity_ip'=> $ip_with_location
-            
+            'log_activity_platform' => $agent,
+            'log_activity_ip' => $ip_with_location
         );
 
         $this->Clients_model->insert_log_activity($data_log);
 
         $this->session->set_flashdata('Success', 'Client berhasil diupdate');
-        redirect('clients/c_lihat/'.$id_session);
+        redirect('clients/c_lihat/' . $id_session);
     }
 
     public function c_edit($id_session) {
