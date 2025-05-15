@@ -76,26 +76,31 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                   <li><a href="<?= site_url('clients/edit/'. $clients->id_session) ?>" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4">Edit</a></li>
                   <li><a href="<?= site_url('project/lihat/'. $clients->id_session) ?>" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4">Kembali</a></li>
 
-                  <?php if ($islam) : ?>
-                    <li><a href="<?= site_url('naskah/jubir_cpp/'. $clients->id_session) ?>" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Jubir CPP</a></li>
-                    <li><a href="<?= site_url('naskah/jubir_cpw/'. $clients->id_session) ?>" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Jubir CPW</a></li>
-                    <li><a href="<?= site_url('naskah/izin_menikah/'. $clients->id_session) ?>" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Izin Menikah</a></li>
-                    <li><a href="<?= site_url('naskah/terima_kasih/'. $clients->id_session) ?>" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Ucapan Terimakasih</a></li>
-                  <?php else : ?>
-                    <li><a href="<?= site_url('naskah/terima_kasih2/'. $clients->id_session) ?>" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Ucapan Terimakasih</a></li>
-                  <?php endif; ?>
+                    <?php if ($islam) : ?>
+                    <li><a href="<?= site_url('naskah/jubir_cpp/'. $clients->id_session) ?>" target="_blank" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Jubir CPP</a></li>
+                    <li><a href="<?= site_url('naskah/jubir_cpw/'. $clients->id_session) ?>" target="_blank" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Jubir CPW</a></li>
+                    <li><a href="<?= site_url('naskah/izin_menikah/'. $clients->id_session) ?>" target="_blank" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Izin Menikah</a></li>
+                    <li><a href="<?= site_url('naskah/terima_kasih/'. $clients->id_session) ?>" target="_blank" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Ucapan Terimakasih</a></li>
+                    <?php else : ?>
+                    <li><a href="<?= site_url('naskah/terima_kasih2/'. $clients->id_session) ?>" target="_blank" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Ucapan Terimakasih</a></li>
+                    <?php endif; ?>
 
-                  <li><a href="<?= site_url('naskah/data_pengantin/'. $clients->id_session) ?>" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Data Pengantin</a></li>
-                  <li><a href="<?= site_url('naskah/list_vendor/'. $clients->id_session) ?>" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">List Vendor</a></li>
+                    <li><a href="<?= site_url('naskah/data_pengantin/'. $clients->id_session) ?>" target="_blank" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Data Pengantin</a></li>
+                    <li><a href="<?= site_url('naskah/list_vendor/'. $clients->id_session) ?>" target="_blank" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">List Vendor</a></li>
 
-                  <?php if (!$islam && $project->religion != 'Islam') : ?>
+                    <?php if (!$islam && $project->religion != 'Islam' && !empty($clients->wedding_ceremony)) : ?>
                     <li><a href="<?= $clients->wedding_ceremony ?>" target="_blank" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Susunan Pemberkatan</a></li>
-                  <?php else : ?>
+                    <?php elseif (!empty($clients->wedding_ceremony)) : ?>
                     <li><a href="<?= $clients->wedding_ceremony ?>" target="_blank" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Susunan Akad</a></li>
-                  <?php endif; ?>
+                    <?php endif; ?>
 
-                  <li><a href="<?= $clients->reception_afterward ?>" target="_blank" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Susunan Resepsi</a></li>
-                  <li><a href="<?= $clients->list_photo ?>" target="_blank" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">List Foto</a></li>
+                    <?php if (!empty($clients->reception_afterward)) : ?>
+                    <li><a href="<?= $clients->reception_afterward ?>" target="_blank" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Susunan Resepsi</a></li>
+                    <?php endif; ?>
+
+                    <?php if (!empty($clients->list_photo)) : ?>
+                    <li><a href="<?= $clients->list_photo ?>" target="_blank" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">List Foto</a></li>
+                    <?php endif; ?>
                   <li><a href="<?= site_url('clients/c_lihat/'. $clients->id_session) ?>" target="_blank" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Lihat Profile</a></li>
                   <li><a href="https://wa.me/<?= $clients->phone?>?text=Halo Kami dari Mantenbaru Organizer!%0A%0AKami%20ingin%20membagikan%20data%20profil%20pengantin%20yang%20sudah%20kami%20buat.%20Silakan%20klik%20link%20di%20bawah%20ini%20untuk%20melihat%20dan%20mengedit%20data%20sesuai%20kebutuhan.%0A%0A<?= site_url('clients/c_lihat/'. $clients->id_session) ?>%0A%0AJika%20anda%20membutuhkan%20username%20dan%20password%20untuk%20mengedit%20data%20sesuai%20kebutuhan,%20jangan%20ragu%20untuk%20menghubungi%20kami.%20Terima%20kasih!" target="_blank" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Share Profile</a></li>
                     <li>
@@ -121,13 +126,17 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                 <label class="block mb-2"><strong>Nama Lengkap : </strong><?= $clients->f_bride_fname ?></label>
                 <label class="block mb-2"><strong>Nama Panggilan : </strong><?= $clients->f_bride_cname ?></label>
                 <label class="block mb-2"><strong>Anak Keberapa : </strong><?= $clients->f_bride_nchild ?> dari <?= $clients->f_bride_hsibling ?> Bersaudara</label>
-                <label class="block mb-2"><strong>Nama Lengkap Ayah : </strong><?= $clients->f_bride_fathername ?></label>
-                <label class="block mb-2"><strong>Nama Panggilan Ayah : </strong><?= $clients->f_bride_fathercname ?></label>
+                <?php if (!empty($clients->f_bride_fathername)) : ?>
+                  <label class="block mb-2"><strong>Nama Lengkap Ayah : </strong><?= $clients->f_bride_fathername ?></label>
+                <?php endif; ?>
+                <?php if (!empty($clients->f_bride_fathercname)) : ?>
+                  <label class="block mb-2"><strong>Nama Panggilan Ayah : </strong><?= $clients->f_bride_fathercname ?></label>
+                <?php endif; ?>
                 <?php if (!empty($clients->f_bride_freplacementname)) : ?>
-                <label class="block mb-2"><strong>Nama Lengkap Pengganti : </strong><?= $clients->f_bride_freplacementname ?></label>
+                  <label class="block mb-2"><strong>Nama Lengkap Pengganti : </strong><?= $clients->f_bride_freplacementname ?></label>
                 <?php endif; ?>
                 <?php if (!empty($clients->f_bride_freplacementcname)) : ?>
-                <label class="block mb-2"><strong>Nama Panggilan Pengganti : </strong><?= $clients->f_bride_freplacementcname ?></label>
+                  <label class="block mb-2"><strong>Nama Panggilan Pengganti : </strong><?= $clients->f_bride_freplacementcname ?></label>
                 <?php endif; ?>
                 <label class="block mb-2"><strong>Nama Lengkap Ibu : </strong><?= $clients->f_bride_mothername ?></label>
                 <label class="block mb-2"><strong>Nama Panggilan Ibu : </strong><?= $clients->f_bride_mothercname ?></label>
