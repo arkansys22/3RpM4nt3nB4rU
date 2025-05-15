@@ -85,10 +85,19 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
         <tbody>
             <tr>
                 <td class="border border-black p-1 text-xs w-2/5">CPW (Anak ke <?= $client->f_bride_nchild; ?> dari <?= $client->f_bride_hsibling; ?> bersaudara)</td>
-                <td class="border border-black p-1 text-xs"><?= $client->f_bride_fname; ?> (<?= $client->f_bride_cname; ?>)</td>
+                <td class="border border-black p-1 text-xs">
+                    <?= $client->f_bride_fname; ?> 
+                    <?php if (!empty($client->f_bride_cname)): ?>
+                        (<?= $client->f_bride_cname; ?>)
+                    <?php endif; ?>
+                </td>
             </tr>
             <tr>
+                <?php if (!empty($client->f_bride_fathercname)): ?>
                 <td class="border border-black p-1 text-xs w-2/5">Bapak CPW (<?= $client->f_bride_fathercname; ?>)</td>
+                <?php else: ?>
+                <td class="border border-black p-1 text-xs w-2/5">Bapak CPW</td>
+                <?php endif; ?>
                 <td class="border border-black p-1 text-xs"><?= $client->f_bride_fathername; ?>
                 <?php if (!empty($client->f_bride_freplacementname)): ?>
                 <br>Pengganti: <?= $client->f_bride_freplacementname; ?> (<?= $client->f_bride_freplacementcname; ?>)
@@ -96,7 +105,11 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
             </td>
             </tr>
             <tr>
+                <?php if (!empty($client->f_bride_mothercname)): ?>
                 <td class="border border-black p-1 text-xs w-2/5">Ibu CPW (<?= $client->f_bride_mothercname; ?>)</td>
+                <?php else: ?>
+                <td class="border border-black p-1 text-xs w-2/5">Ibu CPW</td>
+                <?php endif; ?>
                 <td class="border border-black p-1 text-xs"><?= $client->f_bride_mothername; ?>
                 <?php if (!empty($client->f_bride_mreplacementname)): ?>
                 <br>Pengganti: <?= $client->f_bride_mreplacementname; ?> (<?= $client->f_bride_mreplacementcname; ?>)
@@ -123,10 +136,19 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
         <tbody>
             <tr>
                 <td class="border border-black p-1 text-xs w-2/5">CPP (Anak ke <?= $client->m_bride_nchild; ?> dari <?= $client->m_bride_hsibling; ?> bersaudara)</td>
-                <td class="border border-black p-1 text-xs"><?= $client->m_bride_fname; ?> (<?= $client->m_bride_cname; ?>)</td>
+                <td class="border border-black p-1 text-xs">
+                    <?= $client->m_bride_fname; ?>
+                    <?php if (!empty($client->m_bride_cname)): ?>
+                        (<?= $client->m_bride_cname; ?>)
+                    <?php endif; ?>
+                </td>
             </tr>
             <tr>
+                <?php if (!empty($client->m_bride_fathercname)): ?>
                 <td class="border border-black p-1 text-xs w-2/5">Bapak CPP (<?= $client->m_bride_fathercname; ?>)</td>
+                <?php else: ?>
+                <td class="border border-black p-1 text-xs w-2/5">Bapak CPP</td>
+                <?php endif; ?>
                 <td class="border border-black p-1 text-xs"><?= $client->m_bride_fathername; ?>
                 <?php if (!empty($client->m_bride_freplacementname)): ?>
                 <br>Pengganti: <?= $client->m_bride_freplacementname; ?> (<?= $client->m_bride_freplacementcname; ?>)
@@ -134,7 +156,11 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
             </td>
             </tr>
             <tr>
+                <?php if (!empty($client->m_bride_mothercname)): ?>
                 <td class="border border-black p-1 text-xs w-2/5">Ibu CPP (<?= $client->m_bride_mothercname; ?>)</td>
+                <?php else: ?>
+                <td class="border border-black p-1 text-xs w-2/5">Ibu CPP</td>
+                <?php endif; ?>
                 <td class="border border-black p-1 text-xs"><?= $client->m_bride_mothername; ?>
                 <?php if (!empty($client->m_bride_mreplacementname)): ?>
                 <br>Pengganti: <?= $client->m_bride_mreplacementname; ?> (<?= $client->m_bride_mreplacementcname; ?>)
