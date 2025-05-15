@@ -180,14 +180,18 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 												<span class="title">Nama Panggilan : </span>
 												<span class="value"><?= $clients->f_bride_cname ?></span>
 											</li>
+											<?php if (!empty($clients->f_bride_fathername)) : ?>
 											<li>
 												<span class="title">Nama Ayah : </span>
 												<span class="value"><?= $clients->f_bride_fathername ?></span>
 											</li>
+											<?php endif; ?>
+											<?php if (!empty($clients->f_bride_fathercname)) : ?>
 											<li>
 												<span class="title">Nama Panggilan Ayah : </span>
 												<span class="value"><?= $clients->f_bride_fathercname ?></span>
 											</li>
+											<?php endif; ?>
 											<?php if (!empty($clients->f_bride_freplacementname)) : ?>
 											<li>
 												<span class="title">Nama Pengganti Ayah : </span>
@@ -200,14 +204,18 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 												<span class="value"><?= $clients->f_bride_freplacementcname ?></span>
 											</li>
 											<?php endif; ?>
+											<?php if (!empty($clients->f_bride_mothername)) : ?>
 											<li>
 												<span class="title">Nama Ibu : </span>
 												<span class="value"><?= $clients->f_bride_mothername ?></span>
 											</li>
+											<?php endif; ?>
+											<?php if (!empty($clients->f_bride_mothercname)) : ?>
 											<li>
 												<span class="title">Nama Panggilan Ibu : </span>
 												<span class="value"><?= $clients->f_bride_mothercname ?></span>
 											</li>
+											<?php endif; ?>
 											<?php if (!empty($clients->f_bride_mreplacementname)) : ?>
 											<li>
 												<span class="title">Nama Pengganti Ibu : </span>
@@ -251,14 +259,18 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 												<span class="title">Nama Panggilan : </span>
 												<span class="value"><?= $clients->m_bride_cname ?></span>
 											</li>
+											<?php if (!empty($clients->m_bride_fathername)) : ?>
 											<li>
 												<span class="title">Nama Ayah : </span>
 												<span class="value"><?= $clients->m_bride_fathername ?></span>
 											</li>
+											<?php endif; ?>
+											<?php if (!empty($clients->m_bride_fathercname)) : ?>
 											<li>
 												<span class="title">Nama Panggilan Ayah : </span>
 												<span class="value"><?= $clients->m_bride_fathercname ?></span>
 											</li>
+											<?php endif; ?>
 											<?php if (!empty($clients->m_bride_freplacementname)) : ?>
 											<li>
 												<span class="title">Nama Pengganti Ayah : </span>
@@ -271,14 +283,18 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 												<span class="value"><?= $clients->m_bride_freplacementcname ?></span>
 											</li>
 											<?php endif; ?>
+											<?php if (!empty($clients->m_bride_mothername)) : ?>
 											<li>
 												<span class="title">Nama Ibu : </span>
 												<span class="value"><?= $clients->m_bride_mothername ?></span>
 											</li>
+											<?php endif; ?>
+											<?php if (!empty($clients->m_bride_mothercname)) : ?>
 											<li>
 												<span class="title">Nama Panggilan Ibu : </span>
 												<span class="value"><?= $clients->m_bride_mothercname ?></span>
 											</li>
+											<?php endif; ?>
 											<?php if (!empty($clients->m_bride_mreplacementname)) : ?>
 											<li>
 												<span class="title">Nama Pengganti Ibu : </span>
