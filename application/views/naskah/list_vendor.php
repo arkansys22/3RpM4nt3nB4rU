@@ -62,10 +62,18 @@
             <tr>
                 <td class="border border-black p-1 text-xs w-3/6"><?= $vendor->type; ?><br>
                 <?= nl2br($vendor->detail); ?></td>
-                <td class="border border-black p-1 text-xs w-2/6"><?= $vendor->vendor; ?><br>
-                ig: @<?= $vendor->social_media; ?></td>
-                <td class="border border-black p-1 text-xs w-2/6"><?= $vendor->contact_name; ?><br>
-                (<?= $vendor->phone; ?>)</td>
+                <td class="border border-black p-1 text-xs w-2/6">
+                    <?= $vendor->vendor; ?><br>
+                    <?php if (!empty($vendor->social_media)): ?>
+                        ig: @<?= $vendor->social_media; ?>
+                    <?php endif; ?>
+                </td>
+                <?php if (!empty($vendor->contact_name) || !empty($vendor->phone)): ?>
+                <td class="border border-black p-1 text-xs w-2/6">
+                    <?= !empty($vendor->contact_name) ? $vendor->contact_name : ''; ?><br>
+                    <?= !empty($vendor->phone) ? '(' . $vendor->phone . ')' : ''; ?>
+                </td>
+                <?php endif; ?>
             </tr>
             <?php endforeach; ?>
         </tbody>
