@@ -279,7 +279,6 @@ class crud_user extends CI_Controller {
         if ($crews_idsession) {
             // Update crews table
             $crews_data = array(
-                'crew_name' => $this->input->post('nama'),
                 'gender' => $this->input->post('gender'),
                 'religion' => $this->input->post('religion'),
                 'phone' => $this->input->post('phone'),
