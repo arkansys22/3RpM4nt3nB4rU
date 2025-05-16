@@ -753,7 +753,6 @@ Kami berdoa agar kasih Tuhan senantiasa menyertai setiap langkah hidup kita, dan
 									<?php if(empty($vendor->photo1)){?>
 										<img src="<?php echo base_url()?>assets/frontend/blank.png?>" alt="" style="width: 100%; height: 300px; object-fit: cover;">
 									<?php } else { 
-										// Cek apakah file ada di uploads/partner/
 										$partner_path = FCPATH . 'uploads/partner/' . $vendor->photo1;
 										if (file_exists($partner_path)) { ?>
 											<img src="<?php echo base_url()?>uploads/partner/<?= $vendor->photo1 ?>" alt="" style="width: 100%; height: 300px; object-fit: cover;">
