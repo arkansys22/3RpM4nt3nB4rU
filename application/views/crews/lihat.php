@@ -95,7 +95,10 @@
                 </div>
               <form action="<?= site_url('crews/update/'.$crews->id_session) ?>" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
                 <label class="block mb-2"><strong>Nama Crew : </strong><?= $crews->crew_name ?></label>        
-                <label class="block mb-2"><strong>Gender : </strong><?= $crews->gender ?></label>        
+                <label class="block mb-2">
+                  <strong>Gender : </strong>
+                  <?= $crews->gender == 'Male' ? 'Laki-laki' : ($crews->gender == 'Female' ? 'Perempuan' : '-') ?>
+                </label>
                 <label class="block mb-2"><strong>Agama : </strong><?= $crews->religion ?></label>
                 <label class="block mb-2"><strong>No HP : </strong><?= $crews->phone ?></label>
                 <label class="block mb-2"><strong>Alamat : </strong><?= $crews->address ?></label>
