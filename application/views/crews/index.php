@@ -379,7 +379,7 @@
                     <?php $no = 1; foreach ($crews as $c) : ?>
                       <tr>
                         <td><?= $c->crew_name ?></td>
-                        <td><?= $c->gender ?></td>
+                        <td><?= $c->gender === 'Male' ? 'Laki-laki' : ($c->gender === 'Female' ? 'Perempuan' : $c->gender) ?></td>
                         <td><?= $c->religion ?></td>
                         <td><a href="https://wa.me/<?= $c->phone?>"><?= $c->phone ?></a></td>
                         <td><?= $c->address ?></td>
