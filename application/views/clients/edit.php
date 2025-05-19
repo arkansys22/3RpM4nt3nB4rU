@@ -102,18 +102,20 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                   </label>
               </div>
 
+              <div id="fayah-nama-ayah">
+                  <label class="block mb-2">Nama Lengkap Ayah</label>
+                  <input type="text" name="f_bride_fathername" value="<?= $clients->f_bride_fathername ?>" placeholder="Nama Lengkap Ayah" class="w-full px-4 py-2 border rounded mb-4">
+              </div>
+
               <div id="fayah" class="<?= !empty($clients->f_bride_freplacementname) ? '' : 'hidden' ?>">
                   <label class="block mb-2">Nama Lengkap Pengganti Ayah</label>
                   <input type="text" name="f_bride_freplacementname" value="<?= $clients->f_bride_freplacementname ?>" placeholder="Nama Lengkap Pengganti Ayah" class="w-full px-4 py-2 border rounded mb-4">
 
                   <label class="block mb-2">Nama Panggilan Pengganti Ayah</label>
-                  <input type="text" name="f_bride_freplacementcname" value="<?= $clients->f_bride_freplacementcname ?>" placeholder="Nama Panggilan Pengganti Ayah" class="w-full px-4 py-2 border rounded mb-4">
+                  <input type="text" name="f_bride_freplacementcname" value="<?= $clients->f_bride_freplacementcname ?>" placeholder="Bapak/Papa/Ayah/Abi/Kaka" class="w-full px-4 py-2 border rounded mb-4">
               </div>
 
               <div id="fayah-original" class="<?= empty($clients->f_bride_freplacementname) ? '' : 'hidden' ?>">
-                  <label class="block mb-2">Nama Lengkap Ayah</label>
-                  <input type="text" name="f_bride_fathername" value="<?= $clients->f_bride_fathername ?>" placeholder="Nama Lengkap Ayah" class="w-full px-4 py-2 border rounded mb-4">
-
                   <label class="block mb-2">Nama Panggilan Ayah</label>
                   <input type="text" name="f_bride_fathercname" value="<?= $clients->f_bride_fathercname ?>" placeholder="Bapak/Papa/Ayah/Abi" class="w-full px-4 py-2 border rounded mb-4">
               </div>
@@ -135,7 +137,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                   <input type="text" name="f_bride_mreplacementname" value="<?= $clients->f_bride_mreplacementname ?>" placeholder="Nama Lengkap Pengganti Ibu" class="w-full px-4 py-2 border rounded mb-4">
 
                   <label class="block mb-2">Nama Panggilan Pengganti Ibu</label>
-                  <input type="text" name="f_bride_mreplacementcname" value="<?= $clients->f_bride_mreplacementcname ?>" placeholder="Nama Panggilan Pengganti Ibu" class="w-full px-4 py-2 border rounded mb-4">
+                  <input type="text" name="f_bride_mreplacementcname" value="<?= $clients->f_bride_mreplacementcname ?>" placeholder="Ibu/Mamah/Bunda/Umi/Kaka" class="w-full px-4 py-2 border rounded mb-4">
               </div>
 
               <div id="fibu-original" class="<?= empty($clients->f_bride_mreplacementname) ? '' : 'hidden' ?>">
@@ -180,7 +182,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
               <input type="text" name="m_bride_freplacementname" value="<?= $clients->m_bride_freplacementname ?>" placeholder="Nama Lengkap Pengganti Ayah" class="w-full px-4 py-2 border rounded mb-4">
 
               <label class="block mb-2">Nama Panggilan Pengganti Ayah</label>
-              <input type="text" name="m_bride_freplacementcname" value="<?= $clients->m_bride_freplacementcname ?>" placeholder="Nama Panggilan Pengganti Ayah" class="w-full px-4 py-2 border rounded mb-4">
+              <input type="text" name="m_bride_freplacementcname" value="<?= $clients->m_bride_freplacementcname ?>" placeholder="Bapak/Papa/Ayah/Abi/Kaka" class="w-full px-4 py-2 border rounded mb-4">
               </div>
 
               <div id="mayah-original" class="<?= empty($clients->m_bride_freplacementname) ? '' : 'hidden' ?>">
@@ -208,7 +210,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                   <input type="text" name="m_bride_mreplacementname" value="<?= $clients->m_bride_mreplacementname ?>" placeholder="Nama Lengkap Pengganti Ibu" class="w-full px-4 py-2 border rounded mb-4">
 
                   <label class="block mb-2">Nama Panggilan Pengganti Ibu</label>
-                  <input type="text" name="m_bride_mreplacementcname" value="<?= $clients->m_bride_mreplacementcname ?>" placeholder="Nama Panggilan Pengganti Ibu" class="w-full px-4 py-2 border rounded mb-4">
+                  <input type="text" name="m_bride_mreplacementcname" value="<?= $clients->m_bride_mreplacementcname ?>" placeholder="Ibu/Mamah/Bunda/Umi/Kaka" class="w-full px-4 py-2 border rounded mb-4">
               </div>
 
               <div id="mibu-original" class="<?= empty($clients->m_bride_mreplacementname) ? '' : 'hidden' ?>">
@@ -327,8 +329,14 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
   <script>
 function toggleReplacementFields(type, show) {
-    document.getElementById(type).classList.toggle("hidden", !show);
-    document.getElementById(type + '-original').classList.toggle("hidden", show);
+    if (type === 'fayah') {
+        document.getElementById('fayah-nama-ayah').classList.remove('hidden');
+        document.getElementById('fayah-original').classList.toggle('hidden', show);
+        document.getElementById('fayah').classList.toggle('hidden', !show);
+    } else {
+        document.getElementById(type).classList.toggle("hidden", !show);
+        document.getElementById(type + '-original').classList.toggle("hidden", show);
+    }
 }
 </script>
 </body>
