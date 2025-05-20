@@ -284,17 +284,18 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
     </div>
 
     <div class="mt-6 flex justify-between no-print">
-    <div class="flex">
-        <a href="<?= base_url('naskah/data_pengantin/pdf/' . $client->id_session); ?>" 
-           class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-           Download PDF
-        </a>
-        <button onclick="window.print()" 
-                class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-2">
-            Print
-        </button>
-    </div>
-    <a href="<?= base_url('clients/lihat/' . $client->id_session); ?>" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a>
+        <div>
+            <a href="<?= base_url('naskah/data_pengantin/pdf/' . $client->id_session); ?>" 
+               class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+               Download PDF
+            </a>
+        </div>
+        <div>
+            <button onclick="window.print()" 
+                    class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                Print
+            </button>
+        </div>
     </div>
     </div>
 </body>
