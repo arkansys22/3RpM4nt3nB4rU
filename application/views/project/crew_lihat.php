@@ -81,6 +81,10 @@
                     <a href="<?= $clients->reception_afterward ?>" target="_blank" class="block sm:inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 text-center">Lihat Susunan Resepsi</a>
                     <?php endif; ?>
 
+                    <?php if (!empty($clients->list_photo)) : ?>
+                    <a href="<?= $clients->list_photo ?>" target="_blank" class="block sm:inline-block bg-blue-500 text-white px-4 py-2 mb-2 rounded hover:bg-blue-600 text-center">List Foto</a>
+                    <?php endif; ?>
+
                 <?php
                 // Ensure $roles is defined
                 $roles = [
@@ -94,8 +98,7 @@
                 ];
                 ?>
 
-                <h2 class="text-lg font-bold mb-2"><br>Job Description</h2>
-                  <div x-data="{ modalOpen: false }" class="border p-4 mb-4">
+                  <div x-data="{ modalOpen: false }" class="block mb-2">
                     <?php if (!empty($crew_role)): ?>
                       <p><strong>Role:</strong> <?= htmlspecialchars($crew_role->role) ?></p>
                       <button
@@ -133,7 +136,7 @@
                             <button
                               type="button"
                               @click="modalOpen = false"
-                              class="block w-full rounded border border-stroke bg-gray p-3 text-center font-medium text-black transition hover:border-meta-1 hover:bg-meta-1 hover:text-white dark:border-strokedark dark:bg-meta-4 dark:text-white dark:hover:border-meta-1 dark:hover:bg-meta-1"
+                              class="block w-full rounded border border-stroke bg-gray p-3 text-center font-medium text-black transition hover:border-meta-1 hover:bg-meta-1 dark:border-strokedark dark:bg-meta-4 dark:text-white dark:hover:border-meta-1 dark:hover:bg-meta-1"
                             >
                               Tutup
                             </button>
