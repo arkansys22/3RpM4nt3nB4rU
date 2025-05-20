@@ -136,9 +136,9 @@
                         <div class="-mx-3 flex flex-wrap gap-y-4 mt-6">
                           <div class="w-full px-3">
                             <button
-                              type="button"
+                                type="button"
                                 @click="modalOpen = false"
-                                :class="block w-full rounded border border-stroke bg-gray p-3 text-center font-medium text-black transition hover:border-meta-1 hover:bg-meta-1 hover:text-white dark:border-strokedark dark:bg-meta-4 dark:text-white dark:hover:border-meta-1 dark:hover:bg-meta-1"
+                                :class="`block w-full rounded border border-stroke bg-gray p-3 text-center font-medium transition hover:border-meta-1 hover:bg-meta-1 dark:border-strokedark dark:bg-meta-4 dark:hover:border-meta-1 dark:hover:bg-meta-1 ${darkMode ? 'text-white' : 'text-black'}`"
                             >
                               Tutup
                             </button>
