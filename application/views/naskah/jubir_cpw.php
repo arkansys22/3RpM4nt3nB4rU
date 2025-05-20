@@ -43,18 +43,15 @@
         <p class="indent text-lg text-justify">Itulah yang dapat kami sampaikan, kami akhiri, Billahi taufik wal hidayah</p>
         <p class="text-lg">Wassalamu’alaikum. Wr.Wb</p>
 
-        <div class="mt-6 flex justify-between no-print">
-    <div class="flex">
-        <a href="<?= base_url('naskah/jubir_cpw/pdf/' . $client->id_session); ?>" 
-           class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-           Download PDF
-        </a>
-        <button onclick="window.print()" 
-                class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-2">
-            Print
-        </button>
-    </div>
-    <a href="<?= base_url('clients/lihat/' . $client->id_session); ?>" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a>
+        <div class="mt-6 flex justify-between items-center no-print">
+            <a href="<?= base_url('naskah/jubir_cpw/pdf/' . $client->id_session); ?>" 
+               class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+               Download PDF
+            </a>
+            <button onclick="window.print()" 
+                    class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                Print
+            </button>
         </div>
     </div>
 </body>
