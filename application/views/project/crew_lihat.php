@@ -124,7 +124,7 @@
                         @click.outside="modalOpen = false"
                         class="w-full max-w-142.5 rounded-lg bg-white px-8 py-12 text-center dark:bg-boxdark md:px-17.5 md:py-15"
                       >
-                        <h3 class="pb-2 text-xl font-bold text-black dark:text-white sm:text-2xl">
+                        <h3 class="pb-2 text-xl font-bold sm:text-2xl">
                           Job Description
                         </h3>
                         <span
