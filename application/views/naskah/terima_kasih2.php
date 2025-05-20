@@ -26,20 +26,17 @@
 </br></br>
         <p class="indent text-lg text-justify">Dengan penuh rasa syukur, kami mengucapkan terima kasih yang sebesar-besarnya kepada semua saudara dan saudari yang telah hadir dalam perayaan pernikahan kami. Kehadiran dan doa-doa yang tulus dari Anda semua sangat berarti bagi kami. Kami merasa diberkati karena dikelilingi oleh orang-orang yang begitu mengasihi dan mendukung kami.
 Kami berdoa agar kasih Tuhan senantiasa menyertai setiap langkah hidup kita, dan semoga kita semua selalu diberkati dengan kedamaian, kebahagiaan, serta keberhasilan dalam segala hal. Terima kasih telah menjadi bagian dari hari yang sangat istimewa ini.</p>
-<p>Tuhan memberkati kita semua.</p>
+<p class="text-lg">Tuhan memberkati kita semua.</p>
 
         <div class="mt-6 flex justify-between no-print">
-    <div class="flex">
-        <a href="<?= base_url('naskah/terima_kasih2/pdf/' . $client->id_session); ?>" 
-           class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-           Download PDF
-        </a>
-        <button onclick="window.print()" 
-                class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-2">
-            Print
-        </button>
-    </div>
-    <a href="<?= base_url('clients/lihat/' . $client->id_session); ?>" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a>
+            <a href="<?= base_url('naskah/terima_kasih2/pdf/' . $client->id_session); ?>" 
+               class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+               Download PDF
+            </a>
+            <button onclick="window.print()" 
+                    class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+                Print
+            </button>
         </div>
     </div>
 </body>
