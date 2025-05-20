@@ -11,8 +11,8 @@
 <body
     x-data="{ page: 'project', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
     x-init="
-         darkMode = JSON.parse(localStorage.getItem('darkMode'));
-         $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+        darkMode = JSON.parse(localStorage.getItem('darkMode'));
+        $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
     :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}"
   >
   <!-- ===== Preloader Start ===== -->
@@ -23,11 +23,11 @@
   <!-- ===== Preloader End ===== -->
   <!-- ===== Page Wrapper Start ===== -->
   <div class="flex h-screen overflow-hidden">
-    <?php $this->load->view('backend/sidebar')?>
+  <?php $this->load->view('backend/sidebar')?>
 
-    <!-- ===== Content Area Start ===== -->
-    <div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
-      <?php $this->load->view('backend/header')?>
+  <!-- ===== Content Area Start ===== -->
+  <div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
+  <?php $this->load->view('backend/header')?>
 
       <!-- ===== Main Content Start ===== -->
       <main>
@@ -69,21 +69,23 @@
                   <?php endif; ?>
                 </label>
 
-                    <?php if (!empty($clients->wedding_ceremony)): ?>
-                    <?php if ($project->religion == 'Islam'): ?>
-                    <a href="<?= $clients->wedding_ceremony ?>" target="_blank" class="block sm:inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-2 sm:mb-0 text-center">Lihat Susunan Akad</a>
-                    <?php else: ?>
-                    <a href="<?= $clients->wedding_ceremony ?>" target="_blank" class="block sm:inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-2 sm:mb-0 text-center">Lihat Susunan Pemberkatan</a>
-                    <?php endif; ?>
-                    <?php endif; ?>
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:gap-2 mb-2">
+                      <?php if (!empty($clients->wedding_ceremony)): ?>
+                        <?php if ($project->religion == 'Islam'): ?>
+                          <a href="<?= $clients->wedding_ceremony ?>" target="_blank" class="w-full sm:w-auto block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-2 sm:mb-0 text-center">Lihat Susunan Akad</a>
+                        <?php else: ?>
+                          <a href="<?= $clients->wedding_ceremony ?>" target="_blank" class="w-full sm:w-auto block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-2 sm:mb-0 text-center">Lihat Susunan Pemberkatan</a>
+                        <?php endif; ?>
+                      <?php endif; ?>
 
-                    <?php if (!empty($clients->reception_afterward)): ?>
-                    <a href="<?= $clients->reception_afterward ?>" target="_blank" class="block sm:inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 text-center">Lihat Susunan Resepsi</a>
-                    <?php endif; ?>
+                      <?php if (!empty($clients->reception_afterward)): ?>
+                        <a href="<?= $clients->reception_afterward ?>" target="_blank" class="w-full sm:w-auto block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-2 sm:mb-0 text-center">Lihat Susunan Resepsi</a>
+                      <?php endif; ?>
 
-                    <?php if (!empty($clients->list_photo)) : ?>
-                    <a href="<?= $clients->list_photo ?>" target="_blank" class="block sm:inline-block bg-blue-500 text-white px-4 py-2 mb-2 rounded hover:bg-blue-600 text-center">List Foto</a>
-                    <?php endif; ?>
+                      <?php if (!empty($clients->list_photo)) : ?>
+                        <a href="<?= $clients->list_photo ?>" target="_blank" class="w-full sm:w-auto block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 text-center">List Foto</a>
+                      <?php endif; ?>
+                    </div>
 
                 <?php
                 // Ensure $roles is defined
@@ -135,8 +137,8 @@
                           <div class="w-full px-3">
                             <button
                               type="button"
-                              @click="modalOpen = false"
-                              class="block w-full rounded border border-stroke bg-gray p-3 text-center font-medium text-black transition hover:border-meta-1 hover:bg-meta-1 dark:border-strokedark dark:bg-meta-4 dark:text-white dark:hover:border-meta-1 dark:hover:bg-meta-1"
+                                @click="modalOpen = false"
+                                :class="block w-full rounded border border-stroke bg-gray p-3 text-center font-medium text-black transition hover:border-meta-1 hover:bg-meta-1 hover:text-white dark:border-strokedark dark:bg-meta-4 dark:text-white dark:hover:border-meta-1 dark:hover:bg-meta-1"
                             >
                               Tutup
                             </button>
