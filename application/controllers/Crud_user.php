@@ -259,11 +259,12 @@ class crud_user extends CI_Controller {
             $agent = 'Unidentified User Agent';
         }
 
-        // Update user table
+        $user_lama = $this->Users2_model->get_users_by_session($id_session);
+
         $user_data = array(
-            'username' => $this->input->post('username'),
-            'nama' => $this->input->post('nama'),
-            'email' => $this->input->post('email'),
+            'username' => $this->input->post('username') !== null ? $this->input->post('username') : $user_lama->username,
+            'nama' => $this->input->post('nama') !== null ? $this->input->post('nama') : $user_lama->nama,
+            'email' => $this->input->post('email') !== null ? $this->input->post('email') : $user_lama->email,
         );
 
         if ($this->input->post('password') != '') {
@@ -277,13 +278,16 @@ class crud_user extends CI_Controller {
         $crews_idsession = $user->crews_idsession;
 
         if ($crews_idsession) {
-            // Update crews table
+            // Ambil data crews lama
+            $crews_lama = $this->Users2_model->get_crew_by_id_session($crews_idsession);
+
+            // Update crews table, gunakan data lama jika input kosong
             $crews_data = array(
-                'gender' => $this->input->post('gender'),
-                'religion' => $this->input->post('religion'),
-                'phone' => $this->input->post('phone'),
-                'birth_date' => $this->input->post('birth_date'),
-                'address' => $this->input->post('address'),
+                'gender' => $this->input->post('gender') !== null ? $this->input->post('gender') : $crews_lama->gender,
+                'religion' => $this->input->post('religion') !== null ? $this->input->post('religion') : $crews_lama->religion,
+                'phone' => $this->input->post('phone') !== null ? $this->input->post('phone') : $crews_lama->phone,
+                'birth_date' => $this->input->post('birth_date') !== null ? $this->input->post('birth_date') : $crews_lama->birth_date,
+                'address' => $this->input->post('address') !== null ? $this->input->post('address') : $crews_lama->address,
             );
 
             $this->Users2_model->update_crews($crews_idsession, $crews_data);
