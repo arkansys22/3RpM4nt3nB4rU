@@ -24,6 +24,17 @@ class Aspanel extends CI_Controller {
 					$this->session->set_userdata('crews_idsession', $user->crews_idsession);
 				}
 			}
+
+			$user = $this->db->get_where('user', ['id_session' => $this->session->userdata('id_session')])->row();
+			$level = $this->session->userdata('level');
+			$data['tampilkan_button_event'] = false;
+
+			if ($user && in_array($level, ['1', '2', '3', '4'])) {
+				if (!empty($user->crews_idsession) && $user->crews_idsession !== '-') {
+					$data['tampilkan_button_event'] = true;
+				}
+			}
+
 			if ($this->session->level == '1') {
 				cek_session_akses_developer('panel', $this->session->id_session);
 				$month_now = date('Y-m');
