@@ -243,11 +243,7 @@
 
 				<div class="col-span-12">
 					<div class="flex flex-wrap justify-center gap-4">
-						<!-- Tombol 1 -->
-						<?php if (
-							in_array($this->session->userdata('level'), ['1', '2', '3', '4']) &&
-							$this->session->userdata('crews_idsession') != ''
-						) : ?>
+						<?php if (isset($tampilkan_button_event) && $tampilkan_button_event): ?>
 							<a href="<?= base_url('panel/staff') ?>">
 								<button class="w-40 h-40 bg-[#ed126b] text-white font-semibold rounded-none hover:bg-pink-800 focus:outline-none flex flex-col items-center justify-center">
 									<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mb-2">
@@ -257,42 +253,33 @@
 								</button>
 							</a>
 						<?php endif; ?>
-						<!-- Tombol 2 -->
 						<button class="w-40 h-40 bg-[#ed126b] text-white font-semibold rounded-none hover:bg-pink-800 focus:outline-none">
 							Button 2
 						</button>
-						<!-- Tombol 3 -->
-						<button class="w-40 h-40 bg-[#ed126b] text-white font-semibold rounded-none hover:bg-pink-800 focus:outline-none">
+						<!-- <button class="w-40 h-40 bg-[#ed126b] text-white font-semibold rounded-none hover:bg-pink-800 focus:outline-none">
 							Button 3
 						</button>
-						<!-- Tombol 4 -->
 						<button class="w-40 h-40 bg-[#ed126b] text-white font-semibold rounded-none hover:bg-pink-800 focus:outline-none">
 							Button 4
 						</button>
-						<!-- Tombol 5 -->
 						<button class="w-40 h-40 bg-[#ed126b] text-white font-semibold rounded-none hover:bg-pink-800 focus:outline-none">
 							Button 5
 						</button>
-						<!-- Tombol 6 -->
 						<button class="w-40 h-40 bg-[#ed126b] text-white font-semibold rounded-none hover:bg-pink-800 focus:outline-none">
 							Button 6
 						</button>
-						<!-- Tombol 7 -->
 						<button class="w-40 h-40 bg-[#ed126b] text-white font-semibold rounded-none hover:bg-pink-800 focus:outline-none">
 							Button 7
 						</button>
-						<!-- Tombol 8 -->
 						<button class="w-40 h-40 bg-[#ed126b] text-white font-semibold rounded-none hover:bg-pink-800 focus:outline-none">
 							Button 8
 						</button>
-						<!-- Tombol 9 -->
 						<button class="w-40 h-40 bg-[#ed126b] text-white font-semibold rounded-none hover:bg-pink-800 focus:outline-none">
 							Button 9
 						</button>
-						<!-- Tombol 10 -->
 						<button class="w-40 h-40 bg-[#ed126b] text-white font-semibold rounded-none hover:bg-pink-800 focus:outline-none">
 							Button 10
-						</button>
+						</button> -->
 					</div><br>
 				  
 				</div>
