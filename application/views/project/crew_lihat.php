@@ -100,15 +100,15 @@
                 ];
                 ?>
 
-                  <div x-data="{ modalOpen: false }" class="block mb-2">
+                    <div x-data="{ modalOpen: false }" class="block mb-2">
                     <?php if (!empty($crew_role)): ?>
                       <p><strong>Role:</strong> <?= htmlspecialchars($crew_role->role) ?></p>
                       <button
-                        type="button"
-                        @click.prevent="modalOpen = true"
-                        class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+                      type="button"
+                      @click.prevent="modalOpen = true"
+                      class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 w-full sm:w-auto"
                       >
-                        Lihat Jobdesc
+                      Lihat Jobdesc
                       </button>
                     <?php else: ?>
                       <p class="text-red-500 font-semibold">Job description belum tersedia</p>
