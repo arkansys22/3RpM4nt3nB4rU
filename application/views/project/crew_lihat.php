@@ -130,9 +130,9 @@
                         <span
                           class="mx-auto mb-6 inline-block h-1 w-22.5 rounded bg-primary"
                         ></span>
-                        <p class="whitespace-pre-line">
+                        <div class="whitespace-pre-line max-h-96 overflow-y-auto text-left mb-6 px-2">
                           <?= $jobdesc ? nl2br(htmlspecialchars($jobdesc)) : "Tidak ada deskripsi pekerjaan." ?>
-                        </p>
+                    </div>
                         <div class="-mx-3 flex flex-wrap gap-y-4 mt-6">
                           <div class="w-full px-3">
                             <button
