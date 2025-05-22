@@ -112,15 +112,15 @@
                         <span
                           class="mx-auto mb-6 inline-block h-1 w-22.5 rounded bg-primary"
                         ></span>
-                        <p class="whitespace-pre-line">
+                        <div class="whitespace-pre-line max-h-96 overflow-y-auto text-left mb-6 px-2">
                           <?= $detail ? nl2br(htmlspecialchars($detail)) : "Belum ada detail." ?>
-                        </p>
+                        </div>
                         <div class="-mx-3 flex flex-wrap gap-y-4 mt-6">
                           <div class="w-full px-3">
                             <button
                               type="button"
                               @click="modalOpen = false"
-                                :class="`block w-full rounded border border-stroke bg-gray p-3 text-center font-medium transition hover:border-meta-1 hover:bg-meta-1 dark:border-strokedark dark:bg-meta-4 dark:hover:border-meta-1 dark:hover:bg-meta-1 ${darkMode ? 'text-white' : 'text-black'}`"
+                              :class="`block w-full rounded border border-stroke bg-gray p-3 text-center font-medium transition hover:border-meta-1 hover:bg-meta-1 dark:border-strokedark dark:bg-meta-4 dark:hover:border-meta-1 dark:hover:bg-meta-1 ${darkMode ? 'text-white' : 'text-black'}`"
                             >
                               Tutup
                             </button>
