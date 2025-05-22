@@ -6,13 +6,13 @@ class Crud_project extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('project_model');
-        $this->load->model('clients_model');
         $this->load->model('CrewProjects_model');
         $this->load->model('Crews_model');
         $this->load->model('Payment_model');
         $this->load->model('Vendor_model');
         $this->load->model('Agenda_model');
         $this->load->model('Clients_model');
+        $this->load->model('Partner_model');
         $this->load->helper('url');
     }
 
@@ -42,9 +42,9 @@ class Crud_project extends CI_Controller {
             cek_session_akses_client('project',$this->session->id_session);
             $data['aaa'] = '';
             $this->load->view('backend/v_home', $data);
-            
+
         }else if($this->session->level=='7'){
-            cek_session_akses_special_role('project',$this->session->id_session);
+            cek_session_akses_staff('project',$this->session->id_session);
             $data['project'] = $this->project_model->get_all_project();
             $this->load->view('project/index', $data);
 
@@ -74,7 +74,7 @@ class Crud_project extends CI_Controller {
         }else if($this->session->level=='5'){
             cek_session_akses_client('project',$this->session->id_session);
             redirect(base_url());
-            
+
         }else{
             redirect(base_url());
             }       
@@ -102,7 +102,7 @@ class Crud_project extends CI_Controller {
                 {
                     $agent = 'Unidentified User Agent';
                 }
-    
+
         $data = array(
             'id_session'    => $id_session,
             'project_name'  => $this->input->post('project_name'),
@@ -116,16 +116,16 @@ class Crud_project extends CI_Controller {
             'religion'      => $this->input->post('religion'),
             'create_date'   => $date_create
         );
-    
+
         // Insert ke tabel project
         $this->project_model->insert_project($data);
 
          // Ambil id yang baru disimpan di tabel project
         $project_id = $this->db->insert_id();  // Mendapatkan id auto-increment
-    
+
         // Ambil nama hari dari create_date
         $create_day = date('l', strtotime($date_create));
-    
+
         // Data untuk tabel clients
         $client_data = array(
             'id'           => $project_id,  // Gunakan id yang sama di clients
@@ -138,7 +138,7 @@ class Crud_project extends CI_Controller {
             'create_by'    => $this->session->id_session,
             'status'       => 'create'
         );
-    
+
         // Insert ke tabel clients
         $this->db->insert('clients', $client_data);
 
@@ -176,7 +176,7 @@ class Crud_project extends CI_Controller {
             redirect(base_url());
             return;
         }
-        
+
         $data['paid'] = $this->db->select_sum('total_paid')
                     ->where('id_session', $id_session)
                     ->where('status', 'Paid')
@@ -209,7 +209,7 @@ class Crud_project extends CI_Controller {
         }
 
         $data['project'] = $this->project_model->get_project_by_session($id_session);
-        $data['clients'] = $this->clients_model->get_client_by_session($id_session);
+        $data['clients'] = $this->Clients_model->get_client_by_session($id_session);
         $data['crew_list'] = $this->CrewProjects_model->get_crew_by_project($id_session);
         $data['vendors'] = $this->Vendor_model->get_vendor_by_id($id_session);
         $data['logactivity'] = $this->project_model->get_logactivity_by_session($id_session);
@@ -227,6 +227,43 @@ class Crud_project extends CI_Controller {
         $data['user'] = $crew_details['user'];
 
         $this->load->view('project/crew_lihat', $data);
+    }
+
+    public function partner_lihat($id_session) {
+        if ($this->session->level == '1') {
+            cek_session_akses_developer('project', $this->session->id_session);
+        } else if ($this->session->level == '2') {
+            cek_session_akses_administrator('project', $this->session->id_session);
+        } else if ($this->session->level == '4') {
+            cek_session_akses_staff_admin('project', $this->session->id_session);
+        } else if ($this->session->level == '7') {
+            cek_session_akses_staff('project', $this->session->id_session);
+        } else if ($this->session->level == '8') {
+            cek_session_akses_partner('project', $this->session->id_session);
+        } else {
+
+            redirect(base_url());
+            return;
+        }
+
+        $data['project'] = $this->project_model->get_project_by_session($id_session);
+        $data['clients'] = $this->Clients_model->get_client_by_session($id_session);
+        $data['vendors'] = $this->Vendor_model->get_vendor_by_id($id_session);
+        $data['logactivity'] = $this->project_model->get_logactivity_by_session($id_session);
+
+        if (!$data['project']) {
+            show_error('Project not found.', 404);
+        }
+
+        $id_session_user = $this->session->userdata('id_session');
+        $partner_details = $this->Partner_model->get_partner_login_details($id_session, $id_session_user);
+
+        $data['partner_login'] = $partner_details['partner_login'];
+        $data['partner_detail'] = $partner_details['partner_detail'];
+        $data['detail'] = $partner_details['detail'];
+        $data['user'] = $partner_details['user'];
+
+        $this->load->view('project/partner_lihat', $data);
     }
 
     public function edit($id_session) {
@@ -290,7 +327,7 @@ class Crud_project extends CI_Controller {
             redirect('project/lihat/'.$id_session);
             return;
         }
-    
+
         $data = array(
             'project_name'  => $this->input->post('project_name'),
             'client_name'   => $this->input->post('client_name'),
@@ -300,7 +337,7 @@ class Crud_project extends CI_Controller {
             'religion'      => $this->input->post('religion'),
             'location'      => $this->input->post('location'),
         );
-    
+
         $this->project_model->update_project($id_session, $data);
     
         // Update juga di tabel clients
@@ -309,7 +346,7 @@ class Crud_project extends CI_Controller {
             'wedding_date' => $this->input->post('event_date'),
             'location' => $this->input->post('location'),
         );
-    
+
         $this->db->where('id_session', $id_session);
         $this->db->update('clients', $client_data);
     
@@ -343,24 +380,24 @@ class Crud_project extends CI_Controller {
 
         if ($this->agent->is_browser()) // Agent untuk fitur di log activity
                 {
-                      $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
+                    $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
                 }
                 elseif ($this->agent->is_robot())
                 {
-                      $agent = $this->agent->robot();
+                    $agent = $this->agent->robot();
                 }
                 elseif ($this->agent->is_mobile())
                 {
-                      $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
+                    $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
                 }
                 else
                 {
-                      $agent = 'Unidentified User Agent';
+                    $agent = 'Unidentified User Agent';
                 }
 
         $data = ['status' => 'delete'];
         $this->project_model->update_project($id_session, $data);
-    
+
         // Update juga di tabel clients
         $this->db->where('id_session', $id_session);
         $this->db->update('clients', $data);
@@ -383,10 +420,9 @@ class Crud_project extends CI_Controller {
 
         $this->project_model->insert_log_activity($data_log);
 
-
         $this->session->set_flashdata('Success', 'Project berhasil dihapus');
         redirect('project');
-         }else{
+            }else{
                 redirect(base_url());
             }
     }
@@ -425,19 +461,19 @@ class Crud_project extends CI_Controller {
 
         if ($this->agent->is_browser()) // Agent untuk fitur di log activity
                 {
-                      $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
+                    $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
                 }
                 elseif ($this->agent->is_robot())
                 {
-                      $agent = $this->agent->robot();
+                    $agent = $this->agent->robot();
                 }
                 elseif ($this->agent->is_mobile())
                 {
-                      $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
+                    $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
                 }
                 else
                 {
-                      $agent = 'Unidentified User Agent';
+                    $agent = 'Unidentified User Agent';
                 }
 
         $data = ['status' => 'create'];
@@ -460,7 +496,6 @@ class Crud_project extends CI_Controller {
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
             'log_activity_ip'=> $ip_with_location
-            
         );
 
         $this->project_model->insert_log_activity($data_log);      
@@ -473,19 +508,19 @@ class Crud_project extends CI_Controller {
 
         if ($this->agent->is_browser()) // Agent untuk fitur di log activity
                 {
-                      $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
+                    $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
                 }
                 elseif ($this->agent->is_robot())
                 {
-                      $agent = $this->agent->robot();
+                    $agent = $this->agent->robot();
                 }
                 elseif ($this->agent->is_mobile())
                 {
-                      $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
+                    $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
                 }
                 else
                 {
-                      $agent = 'Unidentified User Agent';
+                    $agent = 'Unidentified User Agent';
                 }
 
         // Hapus project permanen
@@ -512,7 +547,6 @@ class Crud_project extends CI_Controller {
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
             'log_activity_ip'=> $ip_with_location
-            
         );
 
         $this->project_model->insert_log_activity($data_log);
@@ -524,12 +558,12 @@ class Crud_project extends CI_Controller {
     public function detail_project($id_session) {
         $this->load->model('Projects_model'); 
         $this->load->model('Payment_model');  
-    
+
         $data['project'] = $this->Projects_model->get_by_session($id_session);
         $data['payments'] = $this->Payment_model->get_by_project($id_session); 
-    
+
         if (!$data['project']) show_404();
-    
+
         $this->load->view('projects/detail', $data);
     }
     
