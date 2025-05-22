@@ -49,4 +49,36 @@ class Partner_model extends CI_Model {
         return $this->db->get_where('log_activity', ['log_activity_document_no' => $id_session])->result();
     }
 
+    public function get_partner_login_details($project_id_session, $user_id_session) {
+        $user = $this->db->get_where('user', ['id_session' => $user_id_session])->row();
+        $partner_idsession = $user->partner_idsession ?? null;
+
+        $partner_login = null;
+        $partner_detail = null;
+        $detail = null;
+
+        if ($partner_idsession) {
+            $partner_login = $this->db->get_where('vendor', [
+                'id_session' => $project_id_session,
+                'vendor_id' => $partner_idsession
+            ])->row();
+
+            if ($partner_login) {
+                $partner_detail = $this->db->get_where('vendor', [
+                    'detail' => $partner_login->detail
+                ])->row();
+
+                if ($partner_detail) {
+                    $detail = $partner_detail->detail;
+                }
+            }
+        }
+
+        return [
+            'partner_login' => $partner_login,
+            'partner_detail' => $partner_detail,
+            'detail' => $detail,
+            'user' => $user
+        ];
+    }
 }
