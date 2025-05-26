@@ -62,22 +62,22 @@
                         <textarea name="partner_detail" id="partner_detail" class="w-full px-4 py-2 border rounded mb-4"><?= $vendors->detail ?></textarea>
                         <label class="block mb-2"><strong>Photo/Concept 1</strong></label>
                         <?php if ($vendors->photo2): ?>
-                          <img src="<?= base_url('uploads/' . $vendors->photo2) ?>" alt="Photo 2" class="block w-full mb-4">
+                          <img src="<?= base_url('uploads/' . $vendors->photo2) ?>" alt="Photo 2" class="mb-2 rounded border block w-full">
                         <?php endif; ?>
                         <input type="file" name="partner_photo2" id="partner_photo1" class="w-full px-4 py-2 border rounded mb-4">
                         <label class="block mb-2"><strong>Photo/Concept 2</strong></label>
                         <?php if ($vendors->photo3): ?>
-                          <img src="<?= base_url('uploads/' . $vendors->photo3) ?>" alt="Photo 3" class="block w-full mb-4">
+                          <img src="<?= base_url('uploads/' . $vendors->photo3) ?>" alt="Photo 3" class="mb-2 rounded border block w-full">
                         <?php endif; ?>
                         <input type="file" name="partner_photo3" id="partner_photo2" class="w-full px-4 py-2 border rounded mb-4">
                         <label class="block mb-2"><strong>Photo/Concept 3</strong></label>
                         <?php if ($vendors->photo4): ?>
-                          <img src="<?= base_url('uploads/' . $vendors->photo4) ?>" alt="Photo 4" class="block w-full mb-4">
+                          <img src="<?= base_url('uploads/' . $vendors->photo4) ?>" alt="Photo 4" class="mb-2 rounded border block w-full">
                         <?php endif; ?>
                         <input type="file" name="partner_photo4" id="partner_photo3" class="w-full px-4 py-2 border rounded mb-4">
                         <label class="block mb-2"><strong>Photo/Concept 4</strong></label>
                         <?php if ($vendors->photo5): ?>
-                          <img src="<?= base_url('uploads/' . $vendors->photo5) ?>" alt="Photo 5" class="block w-full mb-4">
+                          <img src="<?= base_url('uploads/' . $vendors->photo5) ?>" alt="Photo 5" class="mb-2 rounded border block w-full">
                         <?php endif; ?>
                         <input type="file" name="partner_photo5" id="partner_photo4" class="w-full px-4 py-2 border rounded mb-4">
                     </div>
@@ -111,29 +111,29 @@
                     <textarea name="detail" class="w-full px-4 py-2 border rounded mb-4"><?= $vendors->detail ?></textarea>
                     <label class="block mb-2"><strong>Logo/Photo Close up (Wedding Concept)</strong></label>
                     <?php if ($vendors->photo1): ?>
-                      <img src="<?= base_url('uploads/' . $vendors->photo1) ?>" alt="Photo 1" class="block w-full mb-4">
+                      <img src="<?= base_url('uploads/' . $vendors->photo1) ?>" alt="Photo 1" class="mb-2 rounded border block w-full">
                     <?php endif; ?>
-                    <input type="file" name="photo1" class="w-full px-4 py-2 border rounded mb-4">
+                    <input type="file" name="photo1" class="w-full px-4 py-2 border rounded mb-4 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                     <label class="block mb-2"><strong>Photo/Concept 1</strong></label>
                     <?php if ($vendors->photo2): ?>
-                      <img src="<?= base_url('uploads/' . $vendors->photo2) ?>" alt="Photo 2" class="block w-full mb-4">
+                      <img src="<?= base_url('uploads/' . $vendors->photo2) ?>" alt="Photo 2" class="mb-2 rounded border block w-full">
                     <?php endif; ?>
-                    <input type="file" name="photo2" class="w-full px-4 py-2 border rounded mb-4">
+                    <input type="file" name="photo2" class="w-full px-4 py-2 border rounded mb-4 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                     <label class="block mb-2"><strong>Photo/Concept 2</strong></label>
                     <?php if ($vendors->photo3): ?>
-                      <img src="<?= base_url('uploads/' . $vendors->photo3) ?>" alt="Photo 3" class="block w-full mb-4">
+                      <img src="<?= base_url('uploads/' . $vendors->photo3) ?>" alt="Photo 3" class="mb-2 rounded border block w-full">
                     <?php endif; ?>
-                    <input type="file" name="photo3" class="w-full px-4 py-2 border rounded mb-4">
+                    <input type="file" name="photo3" class="w-full px-4 py-2 border rounded mb-4 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                     <label class="block mb-2"><strong>Photo/Concept 3</strong></label>
                     <?php if ($vendors->photo4): ?>
-                      <img src="<?= base_url('uploads/' . $vendors->photo4) ?>" alt="Photo 4" class="block w-full mb-4">
+                      <img src="<?= base_url('uploads/' . $vendors->photo4) ?>" alt="Photo 4" class="mb-2 rounded border block w-full">
                     <?php endif; ?>
-                    <input type="file" name="photo4" class="w-full px-4 py-2 border rounded mb-4">
+                    <input type="file" name="photo4" class="w-full px-4 py-2 border rounded mb-4 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                     <label class="block mb-2"><strong>Photo/Concept 4</strong></label>
                     <?php if ($vendors->photo5): ?>
-                      <img src="<?= base_url('uploads/' . $vendors->photo5) ?>" alt="Photo 5" class="block w-full mb-4">
+                      <img src="<?= base_url('uploads/' . $vendors->photo5) ?>" alt="Photo 5" class="mb-2 rounded border block w-full">
                     <?php endif; ?>
-                    <input type="file" name="photo5" class="w-full px-4 py-2 border rounded mb-4">
+                    <input type="file" name="photo5" class="w-full px-4 py-2 border rounded mb-4 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                 </div>
 
                 <div class="flex flex-col sm:flex-row justify-end">
