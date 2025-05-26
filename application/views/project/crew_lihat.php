@@ -121,32 +121,52 @@
                       class="fixed left-0 top-0 z-999999 flex h-full min-h-screen w-full items-center justify-center bg-black/90 px-4 py-5"
                     >
                       <div
-                        @click.outside="modalOpen = false"
-                        class="w-full max-w-142.5 rounded-lg bg-white px-8 py-12 text-center dark:bg-boxdark md:px-17.5 md:py-15"
+                      @click.outside="modalOpen = false"
+                      class="w-full max-w-142.5 rounded-lg bg-white px-8 py-12 text-center dark:bg-boxdark md:px-17.5 md:py-15"
                       >
-                        <h3 class="pb-2 text-xl font-bold sm:text-2xl">
-                          Job Description
-                        </h3>
-                        <span
-                          class="mx-auto mb-6 inline-block h-1 w-22.5 rounded bg-primary"
-                        ></span>
-                        <div class="whitespace-pre-line max-h-96 overflow-y-auto text-left mb-6 px-2">
-                          <?= $jobdesc ? nl2br(htmlspecialchars($jobdesc)) : "Tidak ada deskripsi pekerjaan." ?>
-                    </div>
-                        <div class="-mx-3 flex flex-wrap gap-y-4 mt-6">
-                          <div class="w-full px-3">
-                            <button
-                                type="button"
-                                @click="modalOpen = false"
-                                :class="`block w-full rounded border border-stroke bg-gray p-3 text-center font-medium transition hover:border-meta-1 hover:bg-meta-1 dark:border-strokedark dark:bg-meta-4 dark:hover:border-meta-1 dark:hover:bg-meta-1 ${darkMode ? 'text-white' : 'text-black'}`"
-                            >
-                              Tutup
-                            </button>
-                          </div>
+                      <h3 class="pb-2 text-xl font-bold sm:text-2xl">
+                        Job Description
+                      </h3>
+                      <span
+                        class="mx-auto mb-6 inline-block h-1 w-22.5 rounded bg-blue-500 dark:bg-primary"
+                      ></span>
+                      <div 
+                        class="whitespace-pre-line max-h-96 overflow-y-auto text-left mb-6 px-2 scrollbar-thin"
+                        :class="darkMode ? 'scrollbar-thumb-white' : 'scrollbar-thumb-gray-400'"
+                        style="scrollbar-width: thin; scrollbar-color: #9ca3af transparent;"
+                      >
+                        <?= $jobdesc ? nl2br(htmlspecialchars($jobdesc)) : "Tidak ada deskripsi pekerjaan." ?>
+                      </div>
+                      <style>
+                        .scrollbar-thin::-webkit-scrollbar {
+                        width: 4px;
+                        }
+                        .scrollbar-thin::-webkit-scrollbar-thumb {
+                        background: #9ca3af;
+                        border-radius: 2px;
+                        }
+                        .dark .scrollbar-thin::-webkit-scrollbar-thumb {
+                        background: #fff;
+                        }
+                        .scrollbar-thin::-webkit-scrollbar-track {
+                        background: transparent;
+                        }
+                      </style>
+                      <div class="-mx-3 flex flex-wrap gap-y-4 mt-6">
+                        <div class="w-full px-3">
+                        <button
+                          type="button"
+                          @click="modalOpen = false"
+                          :class="darkMode 
+                          ? 'block w-full rounded border border-stroke bg-gray p-3 text-center font-medium transition hover:border-meta-1 hover:bg-meta-1 dark:border-strokedark dark:bg-meta-4 dark:hover:border-meta-1 dark:hover:bg-meta-1 text-white'
+                          : 'block w-full rounded border border-gray-300 bg-gray-100 p-3 text-center font-medium transition hover:border-blue-500 hover:bg-blue-500 hover:text-white text-black'"
+                        >
+                          Tutup
+                        </button>
                         </div>
                       </div>
+                      </div>
                     </div>
-                  </div>
 
                 <?php
                 $hasCrew = false;
