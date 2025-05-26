@@ -82,15 +82,15 @@
                       <?php endif; ?>
                     </div>
 
-                  <div x-data="{ modalOpen: false }" class="block mb-2">
+                    <div x-data="{ modalOpen: false }" class="block mb-2">
                     <?php if (!empty($partner_detail)): ?>
                       <p><strong>Yang Didapat Client</strong></p>
                       <button
-                        type="button"
-                        @click.prevent="modalOpen = true"
-                        class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 w-full sm:w-auto"
+                      type="button"
+                      @click.prevent="modalOpen = true"
+                      class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 w-full sm:w-auto"
                       >
-                        Lihat Detail
+                      Lihat Detail
                       </button>
                     <?php else: ?>
                       <p class="text-red-500 font-semibold">Detail belum tersedia.</p>
@@ -110,17 +110,38 @@
                           Detail
                         </h3>
                         <span
-                          class="mx-auto mb-6 inline-block h-1 w-22.5 rounded bg-primary"
+                          class="mx-auto mb-6 inline-block h-1 w-22.5 rounded bg-blue-500 dark:bg-primary"
                         ></span>
-                        <div class="whitespace-pre-line max-h-96 overflow-y-auto text-left mb-6 px-2">
+                        <div 
+                          class="whitespace-pre-line max-h-96 overflow-y-auto text-left mb-6 px-2 scrollbar-thin"
+                          :class="darkMode ? 'scrollbar-thumb-white' : 'scrollbar-thumb-gray-400'"
+                          style="scrollbar-width: thin; scrollbar-color: #9ca3af transparent;"
+                        >
                           <?= $detail ? nl2br(htmlspecialchars($detail)) : "Belum ada detail." ?>
                         </div>
+                        <style>
+                          .scrollbar-thin::-webkit-scrollbar {
+                            width: 4px;
+                          }
+                          .scrollbar-thin::-webkit-scrollbar-thumb {
+                            background: #9ca3af;
+                            border-radius: 2px;
+                          }
+                          .dark .scrollbar-thin::-webkit-scrollbar-thumb {
+                            background: #fff;
+                          }
+                          .scrollbar-thin::-webkit-scrollbar-track {
+                            background: transparent;
+                          }
+                        </style>
                         <div class="-mx-3 flex flex-wrap gap-y-4 mt-6">
                           <div class="w-full px-3">
                             <button
                               type="button"
                               @click="modalOpen = false"
-                              :class="`block w-full rounded border border-stroke bg-gray p-3 text-center font-medium transition hover:border-meta-1 hover:bg-meta-1 dark:border-strokedark dark:bg-meta-4 dark:hover:border-meta-1 dark:hover:bg-meta-1 ${darkMode ? 'text-white' : 'text-black'}`"
+                              :class="darkMode 
+                                ? 'block w-full rounded border border-stroke bg-gray p-3 text-center font-medium transition hover:border-meta-1 hover:bg-meta-1 dark:border-strokedark dark:bg-meta-4 dark:hover:border-meta-1 dark:hover:bg-meta-1 text-white'
+                                : 'block w-full rounded border border-gray-300 bg-gray-100 p-3 text-center font-medium transition hover:border-blue-500 hover:bg-blue-500 hover:text-white text-black'"
                             >
                               Tutup
                             </button>
@@ -128,7 +149,6 @@
                         </div>
                       </div>
                     </div>
-                  </div>
 
                 <h2 class="text-lg font-bold mb-2">List Vendor</h2>
                   <?php
