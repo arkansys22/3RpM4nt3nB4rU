@@ -65,9 +65,9 @@
 
                             <label class="block mb-2">Logo</label>
                             <?php if ($partner->logo): ?>
-                                <img src="<?= base_url('uploads/partner/' . $partner->logo) ?>" alt="Logo" class="block w-full mb-4">
+                                <img src="<?= base_url('uploads/partner/' . $partner->logo) ?>" alt="Logo" class="mb-2 rounded border block w-full">
                             <?php endif; ?>
-                            <input type="file" name="logo" class="w-full px-4 py-2 border rounded mb-4">
+                            <input type="file" name="logo" class="w-full px-4 py-2 border rounded mb-4 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
 
                             <div class="flex flex-col sm:flex-row justify-end">
                                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded w-full hover:bg-blue-600 sm:w-24 mb-2 sm:mb-0 text-center">Update</button>
