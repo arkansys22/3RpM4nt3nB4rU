@@ -64,13 +64,13 @@
                     <label class="block mb-2"><strong>Detail</strong></label>
                     <textarea name="partner_detail" id="partner_detail" class="w-full px-4 py-2 border rounded mb-4"></textarea>
                     <label class="block mb-2"><strong>Photo/Concept 1</strong></label>
-                    <input type="file" name="partner_photo2" id="partner_photo1" class="w-full px-4 py-2 border rounded mb-4">
+                    <input type="file" name="partner_photo2" id="partner_photo1" class="w-full px-4 py-2 border rounded mb-4 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                     <label class="block mb-2"><strong>Photo/Concept 2</strong></label>
-                    <input type="file" name="partner_photo3" id="partner_photo2" class="w-full px-4 py-2 border rounded mb-4">
+                    <input type="file" name="partner_photo3" id="partner_photo2" class="w-full px-4 py-2 border rounded mb-4 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                     <label class="block mb-2"><strong>Photo/Concept 3</strong></label>
-                    <input type="file" name="partner_photo4" id="partner_photo3" class="w-full px-4 py-2 border rounded mb-4">
+                    <input type="file" name="partner_photo4" id="partner_photo3" class="w-full px-4 py-2 border rounded mb-4 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                     <label class="block mb-2"><strong>Photo/Concept 4</strong></label>
-                    <input type="file" name="partner_photo5" id="partner_photo4" class="w-full px-4 py-2 border rounded mb-4">
+                    <input type="file" name="partner_photo5" id="partner_photo4" class="w-full px-4 py-2 border rounded mb-4 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                   </div>
                 </div>
 
@@ -108,19 +108,19 @@
                   <textarea name="detail" id="detail" class="w-full px-4 py-2 border rounded mb-4"></textarea>
 
                   <label class="block mb-2"><strong>Logo/Photo Close up</strong></label>
-                  <input type="file" name="photo1" id="photo1" class="w-full px-4 py-2 border rounded mb-4">
+                  <input type="file" name="photo1" id="photo1" class="w-full px-4 py-2 border rounded mb-4 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
 
                   <label class="block mb-2"><strong>Photo/Concept 1</strong></label>
-                  <input type="file" name="photo2" id="photo2" class="w-full px-4 py-2 border rounded mb-4">
+                  <input type="file" name="photo2" id="photo2" class="w-full px-4 py-2 border rounded mb-4 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
 
                   <label class="block mb-2"><strong>Photo/Concept 2</strong></label>
-                  <input type="file" name="photo3" id="photo3" class="w-full px-4 py-2 border rounded mb-4">
+                  <input type="file" name="photo3" id="photo3" class="w-full px-4 py-2 border rounded mb-4 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
 
                   <label class="block mb-2"><strong>Photo/Concept 3</strong></label>
-                  <input type="file" name="photo4" id="photo4" class="w-full px-4 py-2 border rounded mb-4">
+                  <input type="file" name="photo4" id="photo4" class="w-full px-4 py-2 border rounded mb-4 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
 
                   <label class="block mb-2"><strong>Photo/Concept 4</strong></label>
-                  <input type="file" name="photo5" id="photo5" class="w-full px-4 py-2 border rounded mb-4">
+                  <input type="file" name="photo5" id="photo5" class="w-full px-4 py-2 border rounded mb-4 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                 </div>
 
                 <div class="flex flex-col sm:flex-row justify-end">
