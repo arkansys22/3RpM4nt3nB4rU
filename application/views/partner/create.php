@@ -65,8 +65,8 @@
                             <label class="block mb-2">No HP</label>
                             <input type="text" name="phone" class="w-full px-4 py-2 border rounded mb-4" required>
 
-                            <label class="block mb-2">Logo (Max 20MB)</label>
-                            <input type="file" name="logo" class="w-full px-4 py-2 border rounded mb-4">
+                            <label class="block mb-2">Logo</label>
+                            <input type="file" name="logo" class="w-full px-4 py-2 border rounded mb-4 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
 
                             <div class="flex flex-col sm:flex-row justify-end">
                                 <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded w-full hover:bg-green-600 sm:w-24 mb-2 sm:mb-0 text-center">Simpan</button>
