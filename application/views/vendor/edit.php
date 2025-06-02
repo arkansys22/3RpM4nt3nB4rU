@@ -108,7 +108,7 @@
                     <label class="block mb-2"><strong>Phone:</strong></label>
                     <input type="text" name="phone" id="phone" value="<?= $vendors->phone ?>" class="w-full px-4 py-2 border rounded mb-4">
                     <label class="block mb-2"><strong>Detail:</strong></label>
-                    <textarea name="detail" rows="50" cols="100%" class="w-full px-4 py-2 border rounded mb-4"><?= $vendors->detail ?></textarea>
+                    <textarea name="detail" rows="30" cols="100%" class="w-full px-4 py-2 border rounded mb-4"><?= $vendors->detail ?></textarea>
                     <label class="block mb-2"><strong>Logo/Photo Close up (Wedding Concept)</strong></label>
                     <?php if ($vendors->photo1): ?>
                       <img src="<?= base_url('uploads/' . $vendors->photo1) ?>" alt="Photo 1" class="mb-2 rounded border block w-full">
