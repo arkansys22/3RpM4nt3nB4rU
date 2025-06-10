@@ -161,7 +161,8 @@ class crud_finance_operational extends CI_Controller {
             'nama_transaksi'  => $this->input->post('nama_transaksi'),
             'tanggal_transaksi'  => $this->input->post('tanggal_transaksi'),
             'nominal_transaksi'        => str_replace('.', '', $this->input->post('nominal_transaksi')), 
-            'kategori'    => $this->input->post('kategori')                
+            'kategori'    => $this->input->post('kategori') 
+            'periode'    => $this->input->post('periode')                        
             );
          
         $this->Operational_model->update_operational($id_session, $data);
