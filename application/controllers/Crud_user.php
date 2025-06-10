@@ -17,7 +17,7 @@ class crud_user extends CI_Controller {
 
         }else if ($this->session->level=='4'){
             cek_session_akses_staff_admin('user',$this->session->id_session);
-            $data['users'] = $this->Users2_model->get_all_user();
+            $data['users'] = $this->Users2_model->get_all_user_admin();
             $this->load->view('user/index', $data);
 
         }else{
