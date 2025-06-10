@@ -64,7 +64,7 @@
                               echo"
                                 <option value=''>-</option>
                                 <option value='$p[operational_acc_periode_id]'> $p[operational_acc_periode_nama]</option> ";
-                            }else ($pc->periode == $p['operational_acc_periode_id']){
+                            }elseif ($pc->periode == $p['operational_acc_periode_id']){
                               echo"<option selected='selected' value='$p[operational_acc_periode_id]'> $p[operational_acc_periode_nama] ";                          
                            
                       }} ?>                    
