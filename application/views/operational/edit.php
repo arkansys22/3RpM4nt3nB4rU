@@ -58,12 +58,10 @@
 
                 <label class="block mb-2">Periode</label>
                 <select name="periode" class="w-full px-4 py-2 border rounded mb-4" required> 
-                      <?php foreach ($periode as $p) {
-                            echo "<option value=''>-</option>";
+                      <?php foreach ($periode as $p) {                           
 
                             if(empty($pc->periode)){
-                              echo"
-                                
+                              echo"                                
                                 <option value='$p[operational_acc_periode_id]'> $p[operational_acc_periode_nama]</option> ";
                             }elseif ($pc->periode == $p['operational_acc_periode_id']){
                               echo"<option selected='selected' value='$p[operational_acc_periode_id]'> $p[operational_acc_periode_nama] ";                          
