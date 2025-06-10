@@ -121,6 +121,7 @@ class crud_finance_operational extends CI_Controller {
         if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='5'){
             cek_session_akses_developer('user',$this->session->id_session);
             $data['kategori'] = $this->Crud_m->view_ordering('operational_kategori','nomer_kategori','asc');
+            $data['periode'] = $this->Crud_m->view_ordering('operational_acc_periode','operational_acc_periode_id','asc');
             $data['pc'] = $this->Operational_model->get_operational_by_session($id_session);
             $this->load->view('operational/edit', $data);
             

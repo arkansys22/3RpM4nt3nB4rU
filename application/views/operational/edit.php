@@ -56,6 +56,17 @@
                       } ?>                    
                 </select>
 
+                <label class="block mb-2">Periode</label>
+                <select name="periode" class="w-full px-4 py-2 border rounded mb-4" required> 
+                      <?php foreach ($periode as $p) {
+                            if ($pc->periode == $p['operational_acc_periode_id']){
+                              echo"<option selected='selected' value='$p[operational_acc_periode_id]'> $p[operational_acc_periode_nama] ";
+                            }else{
+                              echo"<option value='$p[operational_acc_periode_id]'> $p[operational_acc_periode_nama]</option>";
+                         }
+                      } ?>                    
+                </select>
+
                 <div class="flex flex-col sm:flex-row justify-end">
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded w-full hover:bg-blue-600 sm:w-24 mb-2 sm:mb-0 text-center">Update</button>
                 <a href="<?= site_url('finance-operational') ?>" class="sm:ml-2 bg-gray-500 text-white px-4 py-2 rounded w-full hover:bg-gray-600 sm:w-24 text-center">Batal</a>
