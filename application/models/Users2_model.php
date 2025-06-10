@@ -11,7 +11,7 @@ class Users2_model extends CI_Model {
 
 
     public function get_all_user_admin() {
-        return $this->db->get_where('user',['user_stat' => 'Publish'], ['level' => '1' AND 'level' => '7'] )->result();
+        return $this->db->get_where('user',['user_stat' => 'Publish'], ['level' => '1' && '7'] )->result();
     }
 
     public function get_deleted_user() {
