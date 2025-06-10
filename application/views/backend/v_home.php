@@ -168,6 +168,8 @@
 									<p class="text-sm font-medium">Total Expenses</p>
 										<p id="total_expense_all" class="text-sm font-medium">Rp 0</p>
 								</div>
+								<!-- asdasdsadas -->
+								<?php  if($this->session->level=='1' OR $this->session->level=='2'){ ?>
 								<div class="flex items-center justify-between gap-1">
 									<p class="text-sm font-medium">
 										<a href="<?= base_url('expense/lebih_lengkap') ?>">
@@ -177,6 +179,9 @@
 				                    </a>				                      
 									</p>
 								</div>
+								<?php }else{ ?>
+								<?php }?>
+
 							</div>
 
 
