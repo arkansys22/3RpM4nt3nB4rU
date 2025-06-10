@@ -31,12 +31,12 @@ class crud_finance_operational extends CI_Controller {
         if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='5'){
             cek_session_akses_developer('user',$this->session->id_session);
             $data['kategori'] = $this->Operational_model->view_ordering('operational_kategori','nomer_kategori','asc');
+            $data['periode'] = $this->Operational_model->view_ordering('operational_acc_periode','operational_acc_periode_id','asc');
             $this->load->view('operational/create', $data);
 
         }else if($this->session->level=='4'){
             cek_session_akses_staff_admin('user',$this->session->id_session);
             $data['kategori'] = $this->Operational_model->view_ordering('operational_kategori','nomer_kategori','asc');
-            $data['periode'] = $this->Operational_model->view_ordering('operational_acc_periode','operational_acc_periode_id','asc');
             $this->load->view('operational/create', $data);
 
         }else{
