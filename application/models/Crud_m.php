@@ -152,7 +152,7 @@ class Crud_m extends CI_model{
 
   public function view_ordering_admin($table,$order,$ordering)
   {
-      $this->db->select('*');
+      
       $this->db->from($table);
       $this->db->where_in('level', [3,4,5,6,7,8]);
       $this->db->order_by($order,$ordering);
