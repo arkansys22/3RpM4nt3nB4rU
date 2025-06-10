@@ -62,7 +62,10 @@
                             if ($pc->periode == $p['operational_acc_periode_id']){
                               echo"<option selected='selected' value='$p[operational_acc_periode_id]'> $p[operational_acc_periode_nama] ";
                             }else{
-                              echo"<option value='$p[operational_acc_periode_id]'> $p[operational_acc_periode_nama]</option>";
+
+                              echo"
+                              <option value=''>-</option>
+                              <option value='$p[operational_acc_periode_id]'> $p[operational_acc_periode_nama]</option>";
                          }
                       } ?>                    
                 </select>
