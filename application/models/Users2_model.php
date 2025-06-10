@@ -12,6 +12,7 @@ class Users2_model extends CI_Model {
 
     public function get_all_user_admin() {
         $this->db->where_in('level', [3,4,5,6,7,8]);
+        $this->db->order_by('level', 'DESC');
         $this->db->where('user_stat', 'Publish');
         return $this->db->get('user')->result();
     }
