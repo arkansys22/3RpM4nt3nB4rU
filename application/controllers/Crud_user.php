@@ -145,7 +145,7 @@ class crud_user extends CI_Controller {
             }
         } else if ($this->session->level == '4') {
             cek_session_akses_staff_admin('user', $this->session->id_session);
-            $data['level'] = $this->Crud_m->view_ordering('user_level', 'user_level_id', 'asc');
+            $data['level'] = $this->Crud_m->view_ordering_admin('user_level', 'user_level_id', 'asc');
             $data['clients'] = $this->Crud_m->view_ordering('clients', 'id', 'asc');
             $data['partner'] = $this->Crud_m->view_ordering('partner', 'id', 'asc'); // Fetch partner
             $data['pc'] = $this->Users2_model->get_users_by_session($id_session);
