@@ -154,7 +154,7 @@ class Crud_m extends CI_model{
   {
       
       $this->db->from($table);
-      $this->db->where_in('level', [3,4,5,6,7,8]);
+      $this->db->where_in('user_level_id', [3,4,5,6,7,8]);
       $this->db->order_by($order,$ordering);
       return $this->db->get()->result_array();
   }
