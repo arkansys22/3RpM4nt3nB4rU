@@ -108,6 +108,12 @@
                         >
                           Tahunan
                         </a>
+                        <a
+                          href="<?= site_url('finance-operational/') ?>"
+                          class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
+                        >
+                          Semua
+                        </a>
                         </li>
                       </ul>
                     </div>
