@@ -84,32 +84,32 @@
                     @click.outside="openDropDown = false"
                     class="absolute left-0 top-full z-40 mt-2 w-full rounded-md border border-stroke bg-white py-3 shadow-card dark:border-strokedark dark:bg-boxdark"
                     >
-                    <ul class="flex flex-col">
-                      <li>
-                      <a
-                        href="<?= site_url('clients/lihat/' ) ?>"
-                        class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
-                      >
-                        Sekali Bayar
-                      </a>
-                      </li>
-                      <li>
-                      <a
-                        href="<?= site_url('project/edit/') ?>"
-                        class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
-                      >
-                        Bulanan
-                      </a>
-                      </li>
-                      <li>
-                      <a
-                        href="<?= site_url('project') ?>"
-                        class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
-                      >
-                        Tahunan
-                      </a>
-                      </li>
-                    </ul>
+                      <ul class="flex flex-col">
+                        <li>
+                        <a
+                          href="<?= site_url('finance-operational/periode/1' ) ?>"
+                          class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
+                        >
+                          Sekali Bayar
+                        </a>
+                        </li>
+                        <li>
+                        <a
+                          href="<?= site_url('finance-operational/periode/2') ?>"
+                          class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
+                        >
+                          Bulanan
+                        </a>
+                        </li>
+                        <li>
+                        <a
+                          href="<?= site_url('finance-operational/periode/3') ?>"
+                          class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
+                        >
+                          Tahunan
+                        </a>
+                        </li>
+                      </ul>
                     </div>
                   </div>
                 </div>
