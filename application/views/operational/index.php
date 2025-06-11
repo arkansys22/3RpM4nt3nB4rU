@@ -87,7 +87,7 @@
                     <ul class="flex flex-col">
                       <li>
                       <a
-                        href="<?= site_url('clients/lihat/' ) ?>"
+                        href="<?= site_url('finance-operational/periode/1' ) ?>"
                         class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
                       >
                         Sekali Bayar
@@ -95,7 +95,7 @@
                       </li>
                       <li>
                       <a
-                        href="<?= site_url('project/edit/') ?>"
+                        href="<?= site_url('finance-operational/periode/2') ?>"
                         class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
                       >
                         Bulanan
@@ -103,7 +103,7 @@
                       </li>
                       <li>
                       <a
-                        href="<?= site_url('project') ?>"
+                        href="<?= site_url('finance-operational/periode/3') ?>"
                         class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
                       >
                         Tahunan
