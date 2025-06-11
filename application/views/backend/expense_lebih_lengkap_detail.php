@@ -69,7 +69,7 @@
                             <td><?= tgl_indo($expense->transaction_date) ?></td>
                             <td>
                             <?php $period= $this->Crud_m->view_where('operational_acc_periode', array('operational_acc_periode_id'=> $expense->periode))->row(); ?>
-                            <?= $period->operational_acc_periode_nama ?>
+                            <?= $expense->periode ?>
                             </td>
                           </tr>
                         <?php endforeach; ?>
