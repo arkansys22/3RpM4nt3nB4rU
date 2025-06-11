@@ -54,7 +54,7 @@
                         <th>Kategori</th>
                         <th>Nominal</th>
                         <th>Tanggal Transaksi</th>
-                        <th>Aksi</th>
+                        <th>Periode</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -63,13 +63,13 @@
                       
                           <tr>
                             <td><?= $expense->nama_transaksi ?></td>
-                            <td><?= $expense->kategori ?></td>
+                            <?php $kat= $this->Crud_m->view_where('operational_kategori', array('nomer_kategori'=> $expense->kategori))->row(); ?>
+                            <td><?= $kat->kategori ?></td>
                             <td>Rp <?= number_format($expense->nominal_transaksi, 0, ',', '.') ?></td>
                             <td><?= tgl_indo($expense->transaction_date) ?></td>
                             <td>
-                              <a href="#" class="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600">
-                                Lihat
-                              </a>
+                            <?php $period= $this->Crud_m->view_where('operational_acc_periode', array('operational_acc_periode_id'=> $expense->periode))->row(); ?>
+                            <?= $period->operational_acc_periode_nama ?>
                             </td>
                           </tr>
                         <?php endforeach; ?>
