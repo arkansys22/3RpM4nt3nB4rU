@@ -30,7 +30,7 @@ $route['user/restore/(:any)'] = 'crud_user/restore/$1'; // Restore user
 $route['user/permanent_delete/(:any)'] = 'crud_user/permanent_delete/$1'; // Hapus permanen user
 
 $route['finance-operational'] = 'crud_finance_operational/index'; // Menampilkan daftar user
-$route['finance-operational/periode/(:any)'] = 'crud_finance_operational/lihat/$1'; // Menampilkan detail user
+$route['finance-operational/periode/(:any)'] = 'crud_finance_operational/periode/$1'; // Menampilkan detail user
 $route['finance-operational/lihat/(:any)'] = 'crud_finance_operational/lihat/$1'; // Menampilkan detail user
 $route['finance-operational/create'] = 'crud_finance_operational/create'; // Menampilkan form tambah user
 $route['finance-operational/store'] = 'crud_finance_operational/store'; // Menyimpan data user baru
