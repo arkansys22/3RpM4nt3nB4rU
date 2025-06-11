@@ -27,6 +27,27 @@ class crud_finance_operational extends CI_Controller {
     }
 
 
+    public function periode($id_session) {
+        if ($this->session->level=='1' OR $this->session->level=='2'){
+            cek_session_akses_developer('finance-operational',$this->session->id_session);
+            $data['periode'] = $this->Operational_model->get_periode_by_session($id_session);
+            $this->load->view('operational/index_periode', $data);
+
+
+        }else if($this->session->level=='4'){
+            cek_session_akses_staff_admin('finance-operational',$this->session->id_session);
+            $data['pc'] = $this->Users2_model->get_users_by_session($id_session);
+            $data['logactivity'] = $this->Users2_model->get_logactivity_by_session($id_session);
+            $this->load->view('user/lihat', $data);
+
+        }else{
+                    redirect(base_url());
+                }
+    }
+
+
+
+
     public function create() {
         if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='5'){
             cek_session_akses_developer('user',$this->session->id_session);

@@ -28,6 +28,11 @@ class Operational_model extends CI_Model {
 
     }
 
+    public function get_periode_by_session($id_session) {
+        $this->db->order_by('tanggal_transaksi', 'DESC');
+        return $this->db->get_where('operational_acc', ['periode' => $id_session])->result();
+    }
+
     public function get_logactivity_by_session($id_session) {
         $this->db->order_by('log_activity_id', 'DESC');
         $this->db->limit(5,0);

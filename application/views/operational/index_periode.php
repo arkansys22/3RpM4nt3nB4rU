@@ -298,7 +298,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                    <?php $no = 1; foreach ($ops as $p): ?>
+                    <?php $no = 1; foreach ($periode as $p): ?>
                       <tr>
                         <td><?= $p->tanggal_transaksi ?></td>
                         <?php $kat= $this->Crud_m->view_where('operational_kategori', array('nomer_kategori'=> $p->kategori))->row(); ?>
