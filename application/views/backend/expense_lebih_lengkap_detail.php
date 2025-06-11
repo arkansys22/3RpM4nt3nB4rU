@@ -69,7 +69,7 @@
                             <td><?= tgl_indo($expense->transaction_date) ?></td>
                             <td>
                           
-                            <?= $expense->periode ?>
+                            [belum jelas]
                             </td>
                           </tr>
                         <?php endforeach; ?>
