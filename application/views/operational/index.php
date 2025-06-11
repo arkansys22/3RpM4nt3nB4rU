@@ -40,7 +40,6 @@
               <div class="col-span-12 flex flex-wrap items-center justify-between gap-3">
 
                 <div class="relative">
-
                   <!-- Tombol tambah potensial clients-->
                   <a href="<?= site_url('finance-operational/create') ?>">
                     <button class="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none">                    
@@ -49,7 +48,17 @@
                         </svg>                    
                     </button>
                   </a>
-                </div>  
+                </div>
+                <div class="relative">
+                  <!-- Tombol tambah potensial clients-->
+                  <a href="<?= site_url('finance-operational/create') ?>">
+                    <button class="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none">                    
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m7-7H5"></path>
+                        </svg>                    
+                    </button>
+                  </a>
+                </div>    
               </div>
 
 
