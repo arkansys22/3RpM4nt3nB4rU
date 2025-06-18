@@ -159,6 +159,81 @@ class crud_finance_operational extends CI_Controller {
             }
     }
 
+
+    public function edit2($id_session) {
+        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='5'){
+            cek_session_akses_developer('user',$this->session->id_session);
+            $data['kategori'] = $this->Crud_m->view_ordering('operational_kategori','nomer_kategori','asc');
+            $data['periode'] = $this->Crud_m->view_ordering('operational_acc_periode','operational_acc_periode_id','asc');
+            $data['pc'] = $this->Operational_model->get_operational_by_session($id_session);
+            $this->load->view('operational/edit2', $data);
+            
+        }else if($this->session->level=='4'){
+            cek_session_akses_staff_admin('user',$this->session->id_session);
+            $data['level'] = $this->Crud_m->view_ordering('user_level','user_level_id','asc');
+            $data['crews'] = $this->Crud_m->view_ordering('crews','id','asc');
+            $data['clients'] = $this->Crud_m->view_ordering('clients','id','asc');
+            $data['pc'] = $this->Users2_model->get_users_by_session($id_session);
+            $this->load->view('operational/edit2', $data);
+
+        }else{
+                redirect(base_url());
+            }
+    }
+
+    public function update2($id_session) {
+
+        if ($this->agent->is_browser()) // Agent untuk fitur di log activity
+                {
+                      $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
+                }
+                elseif ($this->agent->is_robot())
+                {
+                      $agent = $this->agent->robot();
+                }
+                elseif ($this->agent->is_mobile())
+                {
+                      $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
+                }
+                else
+                {
+                      $agent = 'Unidentified User Agent';
+                }
+        
+        $data = array(
+            'nama_transaksi'  => $this->input->post('nama_transaksi'),
+            'tanggal_transaksi'  => $this->input->post('tanggal_transaksi'),
+            'nominal_transaksi'        => str_replace('.', '', $this->input->post('nominal_transaksi')), 
+            'kategori'    => $this->input->post('kategori'), 
+            'periode'    => $this->input->post('periode')                        
+            );
+         
+        $this->Operational_model->update_operational($id_session, $data);
+
+        $status = 'Edit Operational';
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
+        $data_log = array(
+
+            'log_activity_user_id'=>$this->session->id_session,
+            'log_activity_modul' => 'Operational/edit',
+            'log_activity_document_no' => $id_session,
+            'log_activity_status' => $status,
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
+            'log_activity_platform'=> $agent,
+            'log_activity_ip'=> $ip_with_location
+            
+        );
+
+        $this->Operational_model->insert_log_activity($data_log);
+    
+        $this->session->set_flashdata('Success', 'Operational berhasil diupdate');
+        redirect('expense/lebih_lengkap/detail/'. $id_session);
+       
+    }
+
     public function update($id_session) {
 
         if ($this->agent->is_browser()) // Agent untuk fitur di log activity

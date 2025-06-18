@@ -76,7 +76,7 @@
                             </td>
                             <td>
                               <div class="flex flex-col items-start gap-2 w-max">
-                                <a href="<?= site_url('finance-operational/edit/'. $expense->id_session) ?>" class="inline-flex justify-center px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600 min-w-full text-center">
+                                <a href="<?= site_url('finance-operational/edit2/'. $expense->id_session) ?>" class="inline-flex justify-center px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600 min-w-full text-center">
                                   Edit
                                 </a>
                               </div>
