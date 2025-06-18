@@ -230,7 +230,7 @@ class crud_finance_operational extends CI_Controller {
         $this->Operational_model->insert_log_activity($data_log);
     
         $this->session->set_flashdata('Success', 'Operational berhasil diupdate');
-        redirect('expense/lebih_lengkap/detail/'. $id_session);
+        redirect('expense/lebih_lengkap/detail/'. $year '/' $month);
        
     }
 
