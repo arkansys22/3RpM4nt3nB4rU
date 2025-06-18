@@ -228,9 +228,9 @@ class crud_finance_operational extends CI_Controller {
         );
 
         $this->Operational_model->insert_log_activity($data_log);
-    
+        
         $this->session->set_flashdata('Success', 'Operational berhasil diupdate');
-        redirect($_SERVER['HTTP_REFERER']);
+        redirect(isset($_SERVER['HTTP_REFERER']) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : '');
        
     }
 
