@@ -208,9 +208,9 @@ class crud_finance_operational extends CI_Controller {
         );
 
         $this->Operational_model->insert_log_activity($data_log);
-        $last_url = $this->session->userdata('last_url');
+        $redirect_url = $this->input->post('redirect_url');
         $this->session->set_flashdata('Success', 'Operational berhasil diupdate');
-        redirect($last_url ? $last_url : '');
+        redirect($redirect_url);
     }
 
     public function delete($id_session) {
