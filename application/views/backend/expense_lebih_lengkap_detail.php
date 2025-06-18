@@ -55,6 +55,7 @@
                         <th>Nominal</th>
                         <th>Tanggal Transaksi</th>
                         <th>Periode</th>
+                        <th>Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -72,7 +73,15 @@
                             <?php if(!empty($ped->operational_acc_periode_nama)) :?>                        
                               <?= $ped->operational_acc_periode_nama ?>
                             <?php endif; ?>
-
+                            </td>
+                            <td>
+                              <div class="flex flex-col items-start gap-2 w-max">
+                                <a href="<?= site_url('finance-operational/edit/'. $expense->id_session) ?>" class="inline-flex justify-center px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600 min-w-full text-center">
+                                  Edit
+                                </a>
+                                <a href="<?= site_url('finance-operational/permanent_delete/'.$expense->id_session) ?>" class="inline-flex justify-center bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 min-w-full text-center" onclick="return confirm('Yakin ingin menghapus <?= $expense->nama_transaksi ?> ?')">Hapus
+                                </a>
+                              </div>
                             </td>
                           </tr>
                         <?php endforeach; ?>
