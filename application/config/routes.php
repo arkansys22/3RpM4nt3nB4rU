@@ -37,6 +37,7 @@ $route['finance-operational/store'] = 'crud_finance_operational/store'; // Menyi
 $route['finance-operational/edit/(:any)'] = 'crud_finance_operational/edit/$1'; // Menampilkan form edit user
 $route['finance-operational/edit2/(:any)'] = 'crud_finance_operational/edit2/$1'; // Menampilkan form edit user
 $route['finance-operational/update/(:any)'] = 'crud_finance_operational/update/$1'; // Mengupdate user
+$route['finance-operational/update2/(:any)'] = 'crud_finance_operational/update2/$1'; // Mengupdate user
 $route['finance-operational/permanent_delete/(:any)'] = 'crud_finance_operational/permanent_delete/$1'; // Hapus permanen user
 
 $route['project'] = 'crud_project/index'; // Menampilkan daftar project
