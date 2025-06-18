@@ -84,7 +84,7 @@ class Payment_model extends CI_Model {
     }
 
     public function get_paid_expense_with_transaction_id($month, $year) {
-        $this->db->select('id_session, nama_transaksi, kategori, nominal_transaksi, tanggal_transaksi as transaction_date');
+        $this->db->select('id_session, nama_transaksi, kategori, nominal_transaksi, periode, tanggal_transaksi as transaction_date');
         $this->db->from('operational_acc');
         $this->db->where('MONTH(tanggal_transaksi)', $month);
         $this->db->where('YEAR(tanggal_transaksi)', $year);

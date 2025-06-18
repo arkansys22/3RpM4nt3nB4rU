@@ -68,8 +68,8 @@
                             <td>Rp <?= number_format($expense->nominal_transaksi, 0, ',', '.') ?></td>
                             <td><?= tgl_indo($expense->transaction_date) ?></td>
                             <td>
-                          
-                            [belum jelas]
+                            <?php $ped= $this->Crud_m->view_where('operational_acc_periode', array('operational_acc_periode_id'=> $expense->periode))->row(); ?>
+                            <?= $ped->operational_acc_periode_nama ?>
                             </td>
                           </tr>
                         <?php endforeach; ?>
