@@ -143,6 +143,7 @@ class crud_finance_operational extends CI_Controller {
             cek_session_akses_developer('user',$this->session->id_session);
             $data['kategori'] = $this->Crud_m->view_ordering('operational_kategori','nomer_kategori','asc');
             $data['periode'] = $this->Crud_m->view_ordering('operational_acc_periode','operational_acc_periode_id','asc');
+            $this->session->set_userdata('last_url', current_url());
             $data['pc'] = $this->Operational_model->get_operational_by_session($id_session);
             $this->load->view('operational/edit', $data);
             
@@ -185,6 +186,7 @@ class crud_finance_operational extends CI_Controller {
             'kategori'    => $this->input->post('kategori'), 
             'periode'    => $this->input->post('periode')                        
             );
+        $last_url = $this->session->userdata('last_url');
          
         $this->Operational_model->update_operational($id_session, $data);
 
@@ -208,7 +210,7 @@ class crud_finance_operational extends CI_Controller {
         $this->Operational_model->insert_log_activity($data_log);
     
         $this->session->set_flashdata('Success', 'Operational berhasil diupdate');
-        redirect($_SERVER['HTTP_REFERER']);
+        redirect($last_url ? $last_url : );
     }
 
     public function delete($id_session) {
