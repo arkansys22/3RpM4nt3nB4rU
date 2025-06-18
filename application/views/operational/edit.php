@@ -37,7 +37,7 @@
               <h1 class="text-2xl font-bold mb-4">Edit Operational Finance</h1>
               <form action="<?= site_url('finance-operational/update/'.$pc->id_session) ?>" method="post" class="bg-white p-6 shadow-md rounded">
 
-                <input type="hidden" name="redirect_url" value="<?= current_url() ?>">
+                <?= current_url() ?>
                 <label class="block mb-2">Nama Transaksi</label>
                 <input type="text" name="nama_transaksi" value="<?= $pc->nama_transaksi ?>" class="w-full px-4 py-2 border rounded mb-4" required>
 
