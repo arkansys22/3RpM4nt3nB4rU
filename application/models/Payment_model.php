@@ -91,6 +91,7 @@ class Payment_model extends CI_Model {
         $this->db->group_start(); // Start grouping conditions
         $this->db->where('nominal_transaksi IS NOT NULL'); // Include if total_bill exists        
         $this->db->group_end(); // End grouping conditions
+        $this->db->order_by('tanggal_transaksi','DESC');
         return $this->db->get()->result();
     }
 
