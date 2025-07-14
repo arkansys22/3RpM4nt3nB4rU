@@ -267,6 +267,14 @@ class Crud_m extends CI_model{
       $query = $this->db->get($table);
       return $query->result_array();
   }
+
+  public function view_where_user_ordering($table,$order,$ordering)
+  {   
+      $this->db->where_in('level', [1,2,3,4,8]);
+      $this->db->order_by($order,$ordering);
+      $query = $this->db->get($table);
+      return $query->result_array();
+  }
   public function view_where_like_ordering($table,$data,$data2,$order,$ordering)
   {
       $this->db->select('*');
