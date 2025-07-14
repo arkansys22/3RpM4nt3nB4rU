@@ -66,7 +66,8 @@
                 <?php  if($this->session->level=='1' OR $this->session->level=='2'){ ?>
                 <label class="block mb-2">Detail Biaya Vendor</label>
                 <textarea name="detail_biaya" rows="20" cols="100%" class="w-full px-4 py-2 border rounded mb-4" required><?= $project->detail_biaya ?></textarea>
-
+                <?php } else{ ?>
+                
                 <?php } ?>
                 
                 <label class="block mb-2">Agama</label>
