@@ -107,7 +107,9 @@
           <?php 
             $user = $this->Crud_m->view_where('user', array('id_session' => $project->closing_user_idsession))->row();
           ?>
-          <label class="block mb-2"><strong>Closingan : </strong><?= $user->nama ?></label>          
+          <?php if(!empty($user->nama)){?>
+          <label class="block mb-2"><strong>Closingan : </strong><?= $user->nama ?></label>   
+          <?php }?>       
           <label class="block mb-2"><strong>Agama : </strong><?= $project->religion ?></label>        
           <label class="block mb-2"><strong>Nilai Project : </strong><?= "Rp " . number_format($project->value, 0, ',', '.'); ?></label>
           <label class="block mb-2"><strong>Telah Dibayar : </strong><?= "Rp " . number_format($paid->total_paid, 0, ',', '.'); ?></label>
