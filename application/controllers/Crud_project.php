@@ -270,6 +270,7 @@ class Crud_project extends CI_Controller {
         if ($this->session->level=='1'){
             cek_session_akses_developer('project',$this->session->id_session);
             $data['project'] = $this->project_model->get_project_by_session($id_session);
+            $data['user'] = $this->Crud_m->view_where_ordering('user', array('level' => '4'),'id_user', 'asc');
             $data['crews_list'] = $this->Crews_model->get_all_crews();
             $data['selected_crews'] = $this->CrewProjects_model->get_crew_by_project($id_session);
             $this->load->view('project/edit', $data);
@@ -330,10 +331,12 @@ class Crud_project extends CI_Controller {
 
         $data = array(
             'project_name'  => $this->input->post('project_name'),
+            'closing_user_idsession'  => $this->input->post('closing_user_idsession'),
             'client_name'   => $this->input->post('client_name'),
             'event_date'    => $this->input->post('event_date'),
             'value'         => str_replace('.', '', $this->input->post('value')),
             'detail'        => $this->input->post('detail'),
+            'detail_biaya'  => $this->input->post('detail_biaya'),
             'religion'      => $this->input->post('religion'),
             'location'      => $this->input->post('location'),
         );
