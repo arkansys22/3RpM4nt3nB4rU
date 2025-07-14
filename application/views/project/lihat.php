@@ -123,7 +123,10 @@
           <label class="block mb-2"><strong>Tanggal Pernikahan : </strong><?= hari($project->event_date) ?>, <?= tgl_indo($project->event_date) ?></label>
           <label class="block mb-2"><strong>Lokasi : </strong><?= $project->location ?></label>
           <label class="block mb-2"><strong>Detail : </strong><?= $project->detail ?></label>
+
+          <?php  if($this->session->level=='1' OR $this->session->level=='2'){ ?>
           <label class="block mb-2"><strong>Detail Biaya : </strong><?= $project->detail_biaya ?></label>
+          <?php } ?>
 
           <?php
           $roles = [
