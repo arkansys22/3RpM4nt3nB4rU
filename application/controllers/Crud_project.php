@@ -278,6 +278,7 @@ class Crud_project extends CI_Controller {
         }else if($this->session->level=='2'){
             cek_session_akses_administrator('project',$this->session->id_session);
             $data['project'] = $this->project_model->get_project_by_session($id_session);
+            $data['user'] = $this->Crud_m->view_where_user_ordering('user','id_user', 'asc');
             $data['crews_list'] = $this->Crews_model->get_all_crews();
             $data['selected_crews'] = $this->CrewProjects_model->get_crew_by_project($id_session);
             $this->load->view('project/edit', $data);
@@ -289,6 +290,7 @@ class Crud_project extends CI_Controller {
         }else if($this->session->level=='4'){
             cek_session_akses_staff_admin('project',$this->session->id_session);
             $data['project'] = $this->project_model->get_project_by_session($id_session);
+            $data['user'] = $this->Crud_m->view_where_user_ordering('user','id_user', 'asc');
             $data['crews_list'] = $this->Crews_model->get_all_crews();
             $data['selected_crews'] = $this->CrewProjects_model->get_crew_by_project($id_session);
             $this->load->view('project/edit', $data);
