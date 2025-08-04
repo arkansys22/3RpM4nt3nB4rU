@@ -62,7 +62,7 @@
 
                   <div id="partner-details" class="hidden">
                     <label class="block mb-2"><strong>Detail</strong></label>
-                    <textarea name="partner_detail" id="partner_detail" class="w-full px-4 py-2 border rounded mb-4"></textarea>
+                    <textarea name="partner_detail" rows="20" cols="100%" id="partner_detail" class="w-full px-4 py-2 border rounded mb-4"></textarea>
                     <label class="block mb-2"><strong>Photo/Concept 1</strong></label>
                     <input type="file" name="partner_photo2" id="partner_photo1" class="w-full px-4 py-2 border rounded mb-4 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                     <label class="block mb-2"><strong>Photo/Concept 2</strong></label>
