@@ -59,7 +59,7 @@
 
                     <div id="partner-details">
                         <label class="block mb-2"><strong>Detail</strong></label>
-                        <textarea name="partner_detail" id="partner_detail" class="w-full px-4 py-2 border rounded mb-4"><?= $vendors->detail ?></textarea>
+                        <textarea name="partner_detail" id="partner_detail" rows="20" cols="100%" class="w-full px-4 py-2 border rounded mb-4"><?= $vendors->detail ?></textarea>
                         <label class="block mb-2"><strong>Photo/Concept 1</strong></label>
                         <?php if ($vendors->photo2): ?>
                           <img src="<?= base_url('uploads/' . $vendors->photo2) ?>" alt="Photo 2" class="mb-2 rounded border block w-full">
