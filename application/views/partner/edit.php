@@ -45,13 +45,17 @@
                                 <option value="MC Akad" <?= $partner->type == 'MC Akad' ? 'selected' : '' ?>>MC Akad</option>
                                 <option value="MC Pemberkatan" <?= $partner->type == 'MC Pemberkatan' ? 'selected' : '' ?>>MC Pemberkatan</option>
                                 <option value="MC Resepsi" <?= $partner->type == 'MC Resepsi' ? 'selected' : '' ?>>MC Resepsi</option>
+                                <option value="MC Adat Sunda" <?= $partner->type == 'MC Adat Sunda' ? 'selected' : '' ?>>MC Adat Sunda</option>
+                                <option value="MC Adat Jawa" <?= $partner->type == 'MC Adat Jawa' ? 'selected' : '' ?>>MC Adat Jawa</option>
                                 <option value="Wedding Organizer" <?= $partner->type == 'Wedding Organizer' ? 'selected' : '' ?>>WO</option>
                                 <option value="MUA" <?= $partner->type == 'MUA' ? 'selected' : '' ?>>MUA</option>
                                 <option value="Perlengkapan Catering" <?= $partner->type == 'Perlengkapan Catering' ? 'selected' : '' ?>>Perlengkapan Catering</option>
+                                <option value="Penyewaan Peralatan" <?= $partner->type == 'Penyewaan Peralatan' ? 'selected' : '' ?>>Penyewaan Peralatan</option>
                                 <option value="Catering" <?= $partner->type == 'Catering' ? 'selected' : '' ?>>Catering</option>
                                 <option value="Dokumentasi" <?= $partner->type == 'Dokumentasi' ? 'selected' : '' ?>>Dokumentasi</option>
                                 <option value="Dekorasi" <?= $partner->type == 'Dekorasi' ? 'selected' : '' ?>>Dekorasi</option>
                                 <option value="Entertainment" <?= $partner->type == 'Entertainment' ? 'selected' : '' ?>>Entertainment</option>
+                                <option value="Pendukung Pernikahan Lainnya" <?= $partner->type == 'Pendukung Pernikahan Lainnya' ? 'selected' : '' ?>>Pendukung Pernikahan Lainnya</option>
                             </select>
 
                             <label class="block mb-2">Social Media</label>
