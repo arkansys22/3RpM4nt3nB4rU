@@ -93,13 +93,17 @@
                         <option value="MC Akad" <?= $vendors->type == 'MC Akad' ? 'selected' : '' ?>>MC Akad</option>
                         <option value="MC Pemberkatan" <?= $vendors->type == 'MC Pemberkatan' ? 'selected' : '' ?>>MC Pemberkatan</option>
                         <option value="MC Resepsi" <?= $vendors->type == 'MC Resepsi' ? 'selected' : '' ?>>MC Resepsi</option>
+                        <option value="MC Adat Sunda" <?= $vendors->type == 'MC Adat Sunda' ? 'selected' : '' ?>>MC Adat Sunda</option>
+                        <option value="MC Adat Jawa" <?= $vendors->type == 'MC Adat Jawa' ? 'selected' : '' ?>>MC Adat Jawa</option>
                         <option value="Wedding Organizer" <?= $vendors->type == 'Wedding Organizer' ? 'selected' : '' ?>>WO</option>
                         <option value="MUA" <?= $vendors->type == 'MUA' ? 'selected' : '' ?>>MUA</option>
                         <option value="Perlengkapan Catering" <?= $vendors->type == 'Perlengkapan Catering' ? 'selected' : '' ?>>Perlengkapan Catering</option>
+                        <option value="Penyewaan Peralatan" <?= $vendors->type == 'Penyewaan Peralatan' ? 'selected' : '' ?>>Penyewaan Peralatan</option>                        
                         <option value="Catering" <?= $vendors->type == 'Catering' ? 'selected' : '' ?>>Catering</option>
                         <option value="Dokumentasi" <?= $vendors->type == 'Dokumentasi' ? 'selected' : '' ?>>Dokumentasi</option>
                         <option value="Dekorasi" <?= $vendors->type == 'Dekorasi' ? 'selected' : '' ?>>Dekorasi</option>
                         <option value="Entertainment" <?= $vendors->type == 'Entertainment' ? 'selected' : '' ?>>Entertainment</option>
+                        <option value="Pendukung Pernikahan Lainnya" <?= $vendors->type == 'Pendukung Pernikahan Lainnya' ? 'selected' : '' ?>>Pendukung Pernikahan Lainnya</option>
                     </select>
                     <label class="block mb-2"><strong>Social Media:</strong></label>
                     <input type="text" name="social_media" id="social_media" value="<?= $vendors->social_media ?>" class="w-full px-4 py-2 border rounded mb-4">
