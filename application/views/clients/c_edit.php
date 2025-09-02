@@ -93,7 +93,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
             <div class="flex flex-col md:flex-row gap-4 mb-4">
                 <!-- Nama Lengkap Ayah -->
                 <div id="fayah-nama-ayah" class="flex-1">
-                    <label class="block mb-2" style="color: #000;">Nama Lengkap Ayah</label>
+                    <label class="block mb-2" style="color: #000;">Nama Lengkap Ayah Kandung</label>
                     <input type="text" name="f_bride_fathername" value="<?= $clients->f_bride_fathername ?>" placeholder="Nama Lengkap Ayah" class="w-full px-4 py-2 border rounded mb-4" style="color: #000;">
                 </div>
 
@@ -108,7 +108,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
 
                 <!-- Nama Panggilan Ayah -->
                 <div id="fayah-original" class="flex-1 <?= empty($clients->f_bride_freplacementname) ? '' : 'hidden' ?>">
-                    <label class="block mb-2" style="color: #000;">Nama Panggilan Ayah</label>
+                    <label class="block mb-2" style="color: #000;">Nama Panggilan Ayah Kandung</label>
                     <input type="text" name="f_bride_fathercname" value="<?= $clients->f_bride_fathercname ?>" placeholder="Bapak/Papa/Ayah/Abi" class="w-full px-4 py-2 border rounded" style="color: #000;">
                 </div>
             </div>
@@ -144,11 +144,11 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                 <div id="fibu-original" class="<?= empty($clients->f_bride_mreplacementname) ? '' : 'hidden' ?>">
                     <div class="flex flex-col md:flex-row gap-4">
                         <div class="w-full md:w-1/2">
-                            <label class="block mb-2" style="color: #000;">Nama Lengkap Ibu</label>
+                            <label class="block mb-2" style="color: #000;">Nama Lengkap Ibu Kandung</label>
                             <input type="text" name="f_bride_mothername" value="<?= $clients->f_bride_mothername ?>" placeholder="Nama Lengkap Ibu" class="w-full px-4 py-2 border rounded" style="color: #000;">
                         </div>
                         <div class="w-full md:w-1/2">
-                            <label class="block mb-2" style="color: #000;">Nama Panggilan Ibu</label>
+                            <label class="block mb-2" style="color: #000;">Nama Panggilan Ibu Kandung</label>
                             <input type="text" name="f_bride_mothercname" value="<?= $clients->f_bride_mothercname ?>" placeholder="Ibu/Mamah/Bunda/Umi" class="w-full px-4 py-2 border rounded" style="color: #000;">
                         </div>
                     </div>
@@ -225,11 +225,11 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                 <div id="mayah-original" class="<?= empty($clients->m_bride_freplacementname) ? '' : 'hidden' ?>">
                     <div class="flex flex-col md:flex-row gap-4">
                         <div class="w-full md:w-1/2">
-                            <label class="block mb-2" style="color: #000;">Nama Lengkap Ayah</label>
+                            <label class="block mb-2" style="color: #000;">Nama Lengkap Ayah Kandung</label>
                             <input type="text" name="m_bride_fathername" value="<?= $clients->m_bride_fathername ?>" placeholder="Nama Lengkap Ayah" class="w-full px-4 py-2 border rounded" style="color: #000;">
                         </div>
                         <div class="w-full md:w-1/2">
-                            <label class="block mb-2" style="color: #000;">Nama Panggilan Ayah</label>
+                            <label class="block mb-2" style="color: #000;">Nama Panggilan Ayah Kandung</label>
                             <input type="text" name="m_bride_fathercname" value="<?= $clients->m_bride_fathercname ?>" placeholder="Bapak/Papa/Ayah/Abi" class="w-full px-4 py-2 border rounded" style="color: #000;">
                         </div>
                     </div>
@@ -267,11 +267,11 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                 <div id="mibu-original" class="<?= empty($clients->m_bride_mreplacementname) ? '' : 'hidden' ?>">
                     <div class="flex flex-col md:flex-row gap-4">
                         <div class="w-full md:w-1/2">
-                            <label class="block mb-2" style="color: #000;">Nama Lengkap Ibu</label>
+                            <label class="block mb-2" style="color: #000;">Nama Lengkap Ibu Kandung</label>
                             <input type="text" name="m_bride_mothername" value="<?= $clients->m_bride_mothername ?>" placeholder="Nama Lengkap Ibu" class="w-full px-4 py-2 border rounded" style="color: #000;">
                         </div>
                         <div class="w-full md:w-1/2">
-                            <label class="block mb-2" style="color: #000;">Nama Panggilan Ibu</label>
+                            <label class="block mb-2" style="color: #000;">Nama Panggilan Ibu Kandung</label>
                             <input type="text" name="m_bride_mothercname" value="<?= $clients->m_bride_mothercname ?>" placeholder="Ibu/Mamah/Bunda/Umi" class="w-full px-4 py-2 border rounded" style="color: #000;">
                         </div>
                     </div>
