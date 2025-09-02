@@ -89,7 +89,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                       <?= !empty($clients->f_bride_freplacementname) ? 'checked' : '' ?>> Meninggal
                   </label>
                   <label>
-                      <input type="radio" name="fayah_status" value="Tidak Ada" id="tidakAdaFayah" onclick="toggleReplacementFields('fayah2', true)"
+                      <input type="radio" name="fayah_status" value="Tidak Ada" id="tidakAdaFayah" onclick="toggleReplacementFields('fayah', true)"
                       <?= !empty($clients->f_bride_freplacementname) ? 'checked' : '' ?>> Tidak Ada
                   </label>
               </div>
@@ -103,24 +103,6 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
 
                 <!-- Nama Lengkap Pengganti Ayah & Nama Panggilan Pengganti Ayah -->
                 <div id="fayah" class="flex-1 <?= !empty($clients->f_bride_freplacementname) ? '' : 'hidden' ?>">
-
-                    <label class="block mb-2" style="color: #000;">Nama Almarhum Ayah Kandung</label>
-                    <input type="text" name="f_bride_fathername" value="<?= $clients->f_bride_fathername ?>" placeholder="Nama Lengkap Ayah" class="w-full px-4 py-2 border rounded mb-4" style="color: #000;">
-
-                    <label class="block mb-2" style="color: #000;">Nama Lengkap Pengganti Ayah</label>
-                    <input type="text" name="f_bride_freplacementname" value="<?= $clients->f_bride_freplacementname ?>" placeholder="Nama Lengkap Pengganti Ayah" class="w-full px-4 py-2 border rounded mb-2" style="color: #000;">
-
-                    <label class="block mb-2" style="color: #000;">Nama Panggilan Pengganti Ayah</label>
-                    <input type="text" name="f_bride_freplacementcname" value="<?= $clients->f_bride_freplacementcname ?>" placeholder="Bapak/Papa/Ayah/Abi/Kaka" class="w-full px-4 py-2 border rounded" style="color: #000;">
-                </div>
-
-
-                <!-- Nama Lengkap Pengganti Ayah & Nama Panggilan Pengganti Ayah -->
-                <div id="fayah2" class="flex-1 <?= !empty($clients->f_bride_freplacementname) ? '' : 'hidden' ?>">
-
-                    <label class="block mb-2" style="color: #000;">Nama Lengkap Ayah Kandung</label>
-                    <input type="text" name="f_bride_fathername" value="<?= $clients->f_bride_fathername ?>" placeholder="Nama Lengkap Ayah" class="w-full px-4 py-2 border rounded mb-4" style="color: #000;">
-
                     <label class="block mb-2" style="color: #000;">Nama Lengkap Pengganti Ayah</label>
                     <input type="text" name="f_bride_freplacementname" value="<?= $clients->f_bride_freplacementname ?>" placeholder="Nama Lengkap Pengganti Ayah" class="w-full px-4 py-2 border rounded mb-2" style="color: #000;">
 
@@ -491,7 +473,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
   <script>
 function toggleReplacementFields(type, show) {
     if (type === 'fayah') {
-        document.getElementById('fayah-nama-ayah').classList.remove('hidden', show);
+        document.getElementById('fayah-nama-ayah').classList.remove('hidden');
         document.getElementById('fayah-original').classList.toggle('hidden', show);
         document.getElementById('fayah').classList.toggle('hidden', !show);
     } else {
