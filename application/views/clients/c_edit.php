@@ -96,8 +96,8 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
 
             <div class="flex flex-col md:flex-row gap-4 mb-4">
                 <!-- Nama Lengkap Ayah -->
-                <div id="fayah-nama-ayah" class="flex-1">
-                    <label class="block mb-2" style="color: #000;">Nama Lengkap Ayah</label>
+                <div id="fayah-nama-ayah" class="flex-1 <?= !empty($clients->f_bride_freplacementname) ? '' : 'hidden' ?>">
+                    <label class="block mb-2" style="color: #000;">Nama Lengkap Ayah Kandung</label>
                     <input type="text" name="f_bride_fathername" value="<?= $clients->f_bride_fathername ?>" placeholder="Nama Lengkap Ayah" class="w-full px-4 py-2 border rounded mb-4" style="color: #000;">
                 </div>
 
