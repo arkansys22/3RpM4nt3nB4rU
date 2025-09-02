@@ -491,7 +491,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
   <script>
 function toggleReplacementFields(type, show) {
     if (type === 'fayah') {
-        document.getElementById('fayah-nama-ayah').classList.toggle('hidden', show);
+        document.getElementById('fayah-nama-ayah').classList.remove('hidden', show);
         document.getElementById('fayah-original').classList.toggle('hidden', show);
         document.getElementById('fayah').classList.toggle('hidden', !show);
     } else {
