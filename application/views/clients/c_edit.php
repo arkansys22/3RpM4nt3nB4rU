@@ -494,6 +494,9 @@ function toggleReplacementFields(type, show) {
         document.getElementById('fayah-nama-ayah').classList.toggle('hidden', show);
         document.getElementById('fayah-original').classList.toggle('hidden', show);
         document.getElementById('fayah').classList.toggle('hidden', !show);
+    }else if (type === 'fayah2') {
+        document.getElementById('fayah-nama-ayah').classList.toggle('hidden', show);
+        document.getElementById('fayah-original').classList.toggle('hidden', show);
         document.getElementById('fayah2').classList.toggle('hidden', !show);
     } else {
         document.getElementById(type).classList.toggle("hidden", !show);
