@@ -137,15 +137,6 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
               </div>
 
             <div class="flex flex-col gap-4 mb-4">
-
-                <div id="fibu-nama-ibu" class="<?= empty($clients->f_bride_mreplacementname) ? '' : 'hidden' ?>">
-                    <div class="flex flex-col md:flex-row gap-4">
-                        <div class="w-full md:w-1/2">
-                            <label class="block mb-2" style="color: #000;">Nama Lengkap Ibu Kandung</label>
-                            <input type="text" name="f_bride_mothername" value="<?= $clients->f_bride_mothername ?>" placeholder="Nama Lengkap Ibu | Jika sudah meninggal tambahkan kata Almh." class="w-full px-4 py-2 border rounded" style="color: #000;">
-                        </div>
-                    </div>
-                </div>
                 <!-- Nama Lengkap Pengganti Ibu & Nama Panggilan Pengganti Ibu -->
                 <div id="fibu" class="<?= !empty($clients->f_bride_mreplacementname) ? '' : 'hidden' ?>">
                     <div class="flex flex-col md:flex-row gap-4">
@@ -168,6 +159,12 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
 
                 <!-- Nama Lengkap Ibu & Nama Panggilan Ibu -->
                 <div id="fibu-original" class="<?= empty($clients->f_bride_mreplacementname) ? '' : 'hidden' ?>">
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <div class="w-full md:w-1/2">
+                            <label class="block mb-2" style="color: #000;">Nama Lengkap Ibu Kandung</label>
+                            <input type="text" name="f_bride_mothername" value="<?= $clients->f_bride_mothername ?>" placeholder="Nama Lengkap Ibu | Jika sudah meninggal tambahkan kata Almh." class="w-full px-4 py-2 border rounded" style="color: #000;">
+                        </div>
+                    </div>
                     <div class="flex flex-col md:flex-row gap-4">
                         <div class="w-full md:w-1/2">
                             <label class="block mb-2" style="color: #000;">Nama Panggilan Ibu Kandung</label>
@@ -502,7 +499,7 @@ function toggleReplacementFields(type, show) {
 
 function toggleReplacementFieldsibu(type, show) {
     if (type === 'fibu') {
-        document.getElementById('fibu-nama-ibu').classList.remove('hidden');
+        
         document.getElementById('fibu-original').classList.toggle('hidden', show);
         document.getElementById('fibu').classList.toggle('hidden', !show);
     } else {
