@@ -380,7 +380,6 @@ class Crud_clients extends CI_Controller {
             $data['f_bride_mreplacementname'] = null;
             $data['f_bride_mreplacementcname'] = null;
         } else {
-            $data['f_bride_mothername'] = null;
             $data['f_bride_mothercname'] = null;
         }
 
@@ -717,7 +716,7 @@ class Crud_clients extends CI_Controller {
             $data['f_bride_mreplacementname'] = null;
             $data['f_bride_mreplacementcname'] = null;
         } else {
-            $data['f_bride_mothername'] = null;
+            
             $data['f_bride_mothercname'] = null;
         }
 
