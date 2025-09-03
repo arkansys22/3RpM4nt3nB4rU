@@ -500,7 +500,6 @@ function toggleReplacementFields(type, show) {
 function toggleReplacementFieldsibu(type, show) {
     if (type === 'fibu') {
         document.getElementById('fibu-original').classList.remove('hidden');
-        document.getElementById('fibu-original').classList.toggle('hidden', show);
         document.getElementById('fibu').classList.toggle('hidden', !show);
     } else {
         document.getElementById(type).classList.toggle("hidden", !show);
