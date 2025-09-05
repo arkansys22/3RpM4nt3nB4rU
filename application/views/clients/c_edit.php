@@ -91,9 +91,6 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
               </div>
             <div class="flex flex-col gap-4 mb-4">
 
-                <div id="fayah-nama-ayah" class="<?= empty($clients->f_bride_freplacementname) ? '' : 'hidden' ?>">
-                    
-                </div>
                 <!-- Nama Lengkap Pengganti Ayah & Nama Panggilan Pengganti Ayah -->
                 <div id="fayah" class="<?= !empty($clients->f_bride_freplacementname) ? '' : 'hidden' ?>">
                     <div class="flex flex-col md:flex-row gap-4">
@@ -144,15 +141,6 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
               </div>
 
             <div class="flex flex-col gap-4 mb-4">
-
-                <div id="fibu-nama-ibu" class="<?= empty($clients->f_bride_mreplacementname) ? '' : 'hidden' ?>">
-                    <div class="flex flex-col md:flex-row gap-4">
-                        <div class="w-full md:w-1/2">
-                            <label class="block mb-2" style="color: #000;">Nama Lengkap Ibu Kandung</label>
-                            <input type="text" name="f_bride_mothername" value="<?= $clients->f_bride_mothername ?>" placeholder="Nama Lengkap Ibu | Jika sudah meninggal tambahkan kata Almh." class="w-full px-4 py-2 border rounded" style="color: #000;">
-                        </div>
-                    </div>
-                </div>
                 <!-- Nama Lengkap Pengganti Ibu & Nama Panggilan Pengganti Ibu -->
                 <div id="fibu" class="<?= !empty($clients->f_bride_mreplacementname) ? '' : 'hidden' ?>">
                     <div class="flex flex-col md:flex-row gap-4">
@@ -175,7 +163,12 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
 
                 <!-- Nama Lengkap Ibu & Nama Panggilan Ibu -->
                 <div id="fibu-original" class="<?= empty($clients->f_bride_mreplacementname) ? '' : 'hidden' ?>">
-
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <div class="w-full md:w-1/2">
+                            <label class="block mb-2" style="color: #000;">Nama Lengkap Ibu Kandung</label>
+                            <input type="text" name="f_bride_mothername" value="<?= $clients->f_bride_mothername ?>" placeholder="Nama Lengkap Ibu | Jika sudah meninggal tambahkan kata Almh." class="w-full px-4 py-2 border rounded" style="color: #000;">
+                        </div>
+                    </div>
                     <div class="flex flex-col md:flex-row gap-4">
                         <div class="w-full md:w-1/2">
                             <label class="block mb-2" style="color: #000;">Nama Panggilan Ibu Kandung</label>
@@ -237,16 +230,6 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
               </div>
 
             <div class="flex flex-col gap-4 mb-4">
-
-
-                <div id="mayah-nama-ayah" class="<?= empty($clients->m_bride_freplacementname) ? '' : 'hidden' ?>">
-                    <div class="flex flex-col md:flex-row gap-4">
-                        <div class="w-full md:w-1/2">
-                            <label class="block mb-2" style="color: #000;">Nama Lengkap Ayah Kandung</label>
-                            <input type="text" name="m_bride_fathername" value="<?= $clients->m_bride_fathername ?>" placeholder="Nama Lengkap Ayah | Jika sudah meninggal tambahkan kata Alm." class="w-full px-4 py-2 border rounded" style="color: #000;">
-                        </div>
-                    </div>
-                </div>
                 <!-- Nama Lengkap Pengganti Ayah & Nama Panggilan Pengganti Ayah -->
                 <div id="mayah" class="<?= !empty($clients->m_bride_freplacementname) ? '' : 'hidden' ?>">
                     <div class="flex flex-col md:flex-row gap-4">
@@ -268,6 +251,12 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                 </div>
                 <!-- Nama Lengkap Ibu & Nama Panggilan Ibu -->
                 <div id="mayah-original" class="<?= empty($clients->m_bride_freplacementname) ? '' : 'hidden' ?>">
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <div class="w-full md:w-1/2">
+                            <label class="block mb-2" style="color: #000;">Nama Lengkap Ayah Kandung</label>
+                            <input type="text" name="m_bride_fathername" value="<?= $clients->m_bride_fathername ?>" placeholder="Nama Lengkap Ayah | Jika sudah meninggal tambahkan kata Alm." class="w-full px-4 py-2 border rounded" style="color: #000;">
+                        </div>
+                    </div>
                     <div class="flex flex-col md:flex-row gap-4">
                         <div class="w-full md:w-1/2">
                             <label class="block mb-2" style="color: #000;">Nama Panggilan Ayah Kandung</label>
@@ -294,6 +283,10 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                 <!-- Nama Lengkap Pengganti Ibu & Nama Panggilan Pengganti Ibu -->
                 <div id="mibu" class="<?= !empty($clients->m_bride_mreplacementname) ? '' : 'hidden' ?>">
                     <div class="flex flex-col md:flex-row gap-4">
+                        <div class="w-full md:w-1/2">
+                            <label class="block mb-2" style="color: #000;">Nama Lengkap Ibu Kandung</label>
+                            <input type="text" name="m_bride_mothername" value="<?= $clients->m_bride_mothername ?>" placeholder="Nama Lengkap Ibu | Jika sudah meninggal tambahkan kata Almh." class="w-full px-4 py-2 border rounded" style="color: #000;">
+                        </div>
                         <div class="w-full md:w-1/2">
                             <label class="block mb-2" style="color: #000;">Nama Lengkap Pengganti Ibu</label>
                             <input type="text" name="m_bride_mreplacementname" value="<?= $clients->m_bride_mreplacementname ?>" placeholder="Nama Lengkap Pengganti Ibu" class="w-full px-4 py-2 border rounded" style="color: #000;">
