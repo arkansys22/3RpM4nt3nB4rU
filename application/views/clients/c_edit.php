@@ -81,11 +81,11 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
               <label class="block mb-2" style="color: #000;">Ayah Mempelai Wanita</label>
               <div class="flex gap-4 mb-4">
                   <label>
-                      <input type="radio" name="fayah_status" value="Masih Ada" id="masihAdaFayah" onclick="toggleReplacementFields('fayah', false)"
+                      <input type="radio" name="fayah_status" value="Masih Ada" id="masihAdaFayah" onclick="toggleReplacementFieldsf('fayah', false)"
                       <?= empty($clients->f_bride_freplacementname) ? 'checked' : '' ?>> Masih Ada
                   </label>
                   <label>
-                      <input type="radio" name="fayah_status" value="Tidak Ada" id="tidakAdaFayah" onclick="toggleReplacementFields('fayah', true)"
+                      <input type="radio" name="fayah_status" value="Tidak Ada" id="tidakAdaFayah" onclick="toggleReplacementFieldsf('fayah', true)"
                       <?= !empty($clients->f_bride_freplacementname) ? 'checked' : '' ?>> Tidak Ada
                   </label>
               </div>
@@ -131,11 +131,11 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
               <label class="block mb-2" style="color: #000;">Ibu Mempelai Wanita</label>
               <div class="flex gap-4 mb-4">
                   <label>
-                      <input type="radio" name="fibu_status" value="Masih Ada" id="masihAdaFibu" onclick="toggleReplacementFieldsibu('fibu', false)"
+                      <input type="radio" name="fibu_status" value="Masih Ada" id="masihAdaFibu" onclick="toggleReplacementFieldsibuf('fibu', false)"
                       <?= empty($clients->f_bride_mreplacementname) ? 'checked' : '' ?>> Masih Ada
                   </label>
                   <label>
-                      <input type="radio" name="fibu_status" value="Tidak Ada" id="tidakAdaFibu" onclick="toggleReplacementFieldsibu('fibu', true)"
+                      <input type="radio" name="fibu_status" value="Tidak Ada" id="tidakAdaFibu" onclick="toggleReplacementFieldsibuf('fibu', true)"
                       <?= !empty($clients->f_bride_mreplacementname) ? 'checked' : '' ?>> Tidak Ada
                   </label>
               </div>
@@ -270,11 +270,11 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
               <label class="block mb-2" style="color: #000;">Ibu Mempelai Pria</label>
               <div class="flex gap-4 mb-4">
                   <label>
-                      <input type="radio" name="mibu_status" value="Masih Ada" id="masihAdaMibu" onclick="toggleReplacementFields('mibu', false)"
+                      <input type="radio" name="mibu_status" value="Masih Ada" id="masihAdaMibu" onclick="toggleReplacementFieldsibu('mibu', false)"
                       <?= empty($clients->m_bride_mreplacementname) ? 'checked' : '' ?>> Masih Ada
                   </label>
                   <label>
-                      <input type="radio" name="mibu_status" value="Tidak Ada" id="tidakAdaMibu" onclick="toggleReplacementFields('mibu', true)"
+                      <input type="radio" name="mibu_status" value="Tidak Ada" id="tidakAdaMibu" onclick="toggleReplacementFieldsibu('mibu', true)"
                       <?= !empty($clients->m_bride_mreplacementname) ? 'checked' : '' ?>> Tidak Ada
                   </label>
               </div>
@@ -502,7 +502,8 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
   </div>
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
   <script>
-function toggleReplacementFields(type, show) {
+    <script>
+function toggleReplacementFieldsf(type, show) {
     if (type === 'fayah') {
         document.getElementById('fayah-nama-ayah').classList.remove('hidden');
         document.getElementById('fayah-original').classList.toggle('hidden', show);
@@ -512,12 +513,31 @@ function toggleReplacementFields(type, show) {
         document.getElementById(type + '-original').classList.toggle("hidden", show);
     }
 }
+function toggleReplacementFields(type, show) {
+    if (type === 'mayah') {
+        document.getElementById('mayah-nama-ayah').classList.remove('hidden');
+        document.getElementById('mayah-original').classList.toggle('hidden', show);
+        document.getElementById('mayah').classList.toggle('hidden', !show);
+    } else {
+        document.getElementById(type).classList.toggle("hidden", !show);
+        document.getElementById(type + '-original').classList.toggle("hidden", show);
+    }
+}
 
-function toggleReplacementFieldsibu(type, show) {
+function toggleReplacementFieldsibuf(type, show) {
     if (type === 'fibu') {
         document.getElementById('fibu-nama-ibu').classList.remove('hidden');
         document.getElementById('fibu-original').classList.toggle('hidden', show);
         document.getElementById('fibu').classList.toggle('hidden', !show);
+    } else {
+        document.getElementById(type).classList.toggle("hidden", !show);
+        document.getElementById(type + '-original').classList.toggle("hidden", show);
+    }
+function toggleReplacementFieldsibu(type, show) {
+    if (type === 'mibu') {
+        document.getElementById('mibu-nama-ibu').classList.remove('hidden');
+        document.getElementById('mibu-original').classList.toggle('hidden', show);
+        document.getElementById('mibu').classList.toggle('hidden', !show);
     } else {
         document.getElementById(type).classList.toggle("hidden", !show);
         document.getElementById(type + '-original').classList.toggle("hidden", show);
