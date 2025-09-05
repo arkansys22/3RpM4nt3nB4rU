@@ -81,16 +81,19 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
               <label class="block mb-2" style="color: #000;">Ayah Mempelai Wanita</label>
               <div class="flex gap-4 mb-4">
                   <label>
-                      <input type="radio" name="fayah_status" value="Masih Ada" id="masihAdaFayah" onclick="toggleReplacementFieldsf('fayah', false)"
+                      <input type="radio" name="fayah_status" value="Masih Ada" id="masihAdaFayah" onclick="toggleReplacementFields('fayah', false)"
                       <?= empty($clients->f_bride_freplacementname) ? 'checked' : '' ?>> Masih Ada
                   </label>
                   <label>
-                      <input type="radio" name="fayah_status" value="Tidak Ada" id="tidakAdaFayah" onclick="toggleReplacementFieldsf('fayah', true)"
+                      <input type="radio" name="fayah_status" value="Tidak Ada" id="tidakAdaFayah" onclick="toggleReplacementFields('fayah', true)"
                       <?= !empty($clients->f_bride_freplacementname) ? 'checked' : '' ?>> Tidak Ada
                   </label>
               </div>
             <div class="flex flex-col gap-4 mb-4">
 
+                <div id="fayah-nama-ayah" class="<?= empty($clients->f_bride_freplacementname) ? '' : 'hidden' ?>">
+                    
+                </div>
                 <!-- Nama Lengkap Pengganti Ayah & Nama Panggilan Pengganti Ayah -->
                 <div id="fayah" class="<?= !empty($clients->f_bride_freplacementname) ? '' : 'hidden' ?>">
                     <div class="flex flex-col md:flex-row gap-4">
@@ -131,16 +134,25 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
               <label class="block mb-2" style="color: #000;">Ibu Mempelai Wanita</label>
               <div class="flex gap-4 mb-4">
                   <label>
-                      <input type="radio" name="fibu_status" value="Masih Ada" id="masihAdaFibu" onclick="toggleReplacementFieldsibuf('fibu', false)"
+                      <input type="radio" name="fibu_status" value="Masih Ada" id="masihAdaFibu" onclick="toggleReplacementFieldsibu('fibu', false)"
                       <?= empty($clients->f_bride_mreplacementname) ? 'checked' : '' ?>> Masih Ada
                   </label>
                   <label>
-                      <input type="radio" name="fibu_status" value="Tidak Ada" id="tidakAdaFibu" onclick="toggleReplacementFieldsibuf('fibu', true)"
+                      <input type="radio" name="fibu_status" value="Tidak Ada" id="tidakAdaFibu" onclick="toggleReplacementFieldsibu('fibu', true)"
                       <?= !empty($clients->f_bride_mreplacementname) ? 'checked' : '' ?>> Tidak Ada
                   </label>
               </div>
 
             <div class="flex flex-col gap-4 mb-4">
+
+                <div id="fibu-nama-ibu" class="<?= empty($clients->f_bride_mreplacementname) ? '' : 'hidden' ?>">
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <div class="w-full md:w-1/2">
+                            <label class="block mb-2" style="color: #000;">Nama Lengkap Ibu Kandung</label>
+                            <input type="text" name="f_bride_mothername" value="<?= $clients->f_bride_mothername ?>" placeholder="Nama Lengkap Ibu | Jika sudah meninggal tambahkan kata Almh." class="w-full px-4 py-2 border rounded" style="color: #000;">
+                        </div>
+                    </div>
+                </div>
                 <!-- Nama Lengkap Pengganti Ibu & Nama Panggilan Pengganti Ibu -->
                 <div id="fibu" class="<?= !empty($clients->f_bride_mreplacementname) ? '' : 'hidden' ?>">
                     <div class="flex flex-col md:flex-row gap-4">
@@ -163,12 +175,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
 
                 <!-- Nama Lengkap Ibu & Nama Panggilan Ibu -->
                 <div id="fibu-original" class="<?= empty($clients->f_bride_mreplacementname) ? '' : 'hidden' ?>">
-                    <div class="flex flex-col md:flex-row gap-4">
-                        <div class="w-full md:w-1/2">
-                            <label class="block mb-2" style="color: #000;">Nama Lengkap Ibu Kandung</label>
-                            <input type="text" name="f_bride_mothername" value="<?= $clients->f_bride_mothername ?>" placeholder="Nama Lengkap Ibu | Jika sudah meninggal tambahkan kata Almh." class="w-full px-4 py-2 border rounded" style="color: #000;">
-                        </div>
-                    </div>
+
                     <div class="flex flex-col md:flex-row gap-4">
                         <div class="w-full md:w-1/2">
                             <label class="block mb-2" style="color: #000;">Nama Panggilan Ibu Kandung</label>
@@ -230,6 +237,16 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
               </div>
 
             <div class="flex flex-col gap-4 mb-4">
+
+
+                <div id="mayah-nama-ayah" class="<?= empty($clients->m_bride_freplacementname) ? '' : 'hidden' ?>">
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <div class="w-full md:w-1/2">
+                            <label class="block mb-2" style="color: #000;">Nama Lengkap Ayah Kandung</label>
+                            <input type="text" name="m_bride_fathername" value="<?= $clients->m_bride_fathername ?>" placeholder="Nama Lengkap Ayah | Jika sudah meninggal tambahkan kata Alm." class="w-full px-4 py-2 border rounded" style="color: #000;">
+                        </div>
+                    </div>
+                </div>
                 <!-- Nama Lengkap Pengganti Ayah & Nama Panggilan Pengganti Ayah -->
                 <div id="mayah" class="<?= !empty($clients->m_bride_freplacementname) ? '' : 'hidden' ?>">
                     <div class="flex flex-col md:flex-row gap-4">
@@ -253,12 +270,6 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                 <div id="mayah-original" class="<?= empty($clients->m_bride_freplacementname) ? '' : 'hidden' ?>">
                     <div class="flex flex-col md:flex-row gap-4">
                         <div class="w-full md:w-1/2">
-                            <label class="block mb-2" style="color: #000;">Nama Lengkap Ayah Kandung</label>
-                            <input type="text" name="m_bride_fathername" value="<?= $clients->m_bride_fathername ?>" placeholder="Nama Lengkap Ayah | Jika sudah meninggal tambahkan kata Alm." class="w-full px-4 py-2 border rounded" style="color: #000;">
-                        </div>
-                    </div>
-                    <div class="flex flex-col md:flex-row gap-4">
-                        <div class="w-full md:w-1/2">
                             <label class="block mb-2" style="color: #000;">Nama Panggilan Ayah Kandung</label>
                             <input type="text" name="m_bride_fathercname" value="<?= $clients->m_bride_fathercname ?>" placeholder="Bapak/Papa/Ayah/Abi/Kaka" class="w-full px-4 py-2 border rounded" style="color: #000;">
                         </div>
@@ -270,11 +281,11 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
               <label class="block mb-2" style="color: #000;">Ibu Mempelai Pria</label>
               <div class="flex gap-4 mb-4">
                   <label>
-                      <input type="radio" name="mibu_status" value="Masih Ada" id="masihAdaMibu" onclick="toggleReplacementFieldsibu('mibu', false)"
+                      <input type="radio" name="mibu_status" value="Masih Ada" id="masihAdaMibu" onclick="toggleReplacementFields('mibu', false)"
                       <?= empty($clients->m_bride_mreplacementname) ? 'checked' : '' ?>> Masih Ada
                   </label>
                   <label>
-                      <input type="radio" name="mibu_status" value="Tidak Ada" id="tidakAdaMibu" onclick="toggleReplacementFieldsibu('mibu', true)"
+                      <input type="radio" name="mibu_status" value="Tidak Ada" id="tidakAdaMibu" onclick="toggleReplacementFields('mibu', true)"
                       <?= !empty($clients->m_bride_mreplacementname) ? 'checked' : '' ?>> Tidak Ada
                   </label>
               </div>
@@ -283,10 +294,6 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                 <!-- Nama Lengkap Pengganti Ibu & Nama Panggilan Pengganti Ibu -->
                 <div id="mibu" class="<?= !empty($clients->m_bride_mreplacementname) ? '' : 'hidden' ?>">
                     <div class="flex flex-col md:flex-row gap-4">
-                        <div class="w-full md:w-1/2">
-                            <label class="block mb-2" style="color: #000;">Nama Lengkap Ibu Kandung</label>
-                            <input type="text" name="m_bride_mothername" value="<?= $clients->m_bride_mothername ?>" placeholder="Nama Lengkap Ibu | Jika sudah meninggal tambahkan kata Almh." class="w-full px-4 py-2 border rounded" style="color: #000;">
-                        </div>
                         <div class="w-full md:w-1/2">
                             <label class="block mb-2" style="color: #000;">Nama Lengkap Pengganti Ibu</label>
                             <input type="text" name="m_bride_mreplacementname" value="<?= $clients->m_bride_mreplacementname ?>" placeholder="Nama Lengkap Pengganti Ibu" class="w-full px-4 py-2 border rounded" style="color: #000;">
@@ -502,8 +509,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
   </div>
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
   <script>
-    <script>
-function toggleReplacementFieldsf(type, show) {
+function toggleReplacementFields(type, show) {
     if (type === 'fayah') {
         document.getElementById('fayah-nama-ayah').classList.remove('hidden');
         document.getElementById('fayah-original').classList.toggle('hidden', show);
@@ -513,31 +519,12 @@ function toggleReplacementFieldsf(type, show) {
         document.getElementById(type + '-original').classList.toggle("hidden", show);
     }
 }
-function toggleReplacementFields(type, show) {
-    if (type === 'mayah') {
-        document.getElementById('mayah-nama-ayah').classList.remove('hidden');
-        document.getElementById('mayah-original').classList.toggle('hidden', show);
-        document.getElementById('mayah').classList.toggle('hidden', !show);
-    } else {
-        document.getElementById(type).classList.toggle("hidden", !show);
-        document.getElementById(type + '-original').classList.toggle("hidden", show);
-    }
-}
 
-function toggleReplacementFieldsibuf(type, show) {
+function toggleReplacementFieldsibu(type, show) {
     if (type === 'fibu') {
         document.getElementById('fibu-nama-ibu').classList.remove('hidden');
         document.getElementById('fibu-original').classList.toggle('hidden', show);
         document.getElementById('fibu').classList.toggle('hidden', !show);
-    } else {
-        document.getElementById(type).classList.toggle("hidden", !show);
-        document.getElementById(type + '-original').classList.toggle("hidden", show);
-    }
-function toggleReplacementFieldsibu(type, show) {
-    if (type === 'mibu') {
-        document.getElementById('mibu-nama-ibu').classList.remove('hidden');
-        document.getElementById('mibu-original').classList.toggle('hidden', show);
-        document.getElementById('mibu').classList.toggle('hidden', !show);
     } else {
         document.getElementById(type).classList.toggle("hidden", !show);
         document.getElementById(type + '-original').classList.toggle("hidden", show);
