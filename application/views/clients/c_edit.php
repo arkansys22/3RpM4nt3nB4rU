@@ -236,9 +236,23 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
               </div>
 
             <div class="flex flex-col gap-4 mb-4">
+
+                <!-- Nama Lengkap Ayah & Nama Panggilan Ayah -->
+                <div id="mayah-original" class="<?= empty($clients->m_bride_freplacementname) ? '' : 'hidden' ?>">
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <div class="w-full md:w-1/2">
+                            <label class="block mb-2" style="color: #000;">Nama Lengkap Ayah Kandung</label>
+                            <input type="text" name="m_bride_fathername" value="<?= $clients->m_bride_fathername ?>" placeholder="Nama Lengkap Ayah | Jika sudah meninggal tambahkan kata Alm." class="w-full px-4 py-2 border rounded" style="color: #000;">
+                        </div>
+                    </div>
+                </div>
                 <!-- Nama Lengkap Pengganti Ayah & Nama Panggilan Pengganti Ayah -->
                 <div id="mayah" class="<?= !empty($clients->m_bride_freplacementname) ? '' : 'hidden' ?>">
                     <div class="flex flex-col md:flex-row gap-4">
+                        <div class="w-full md:w-1/2">
+                            <label class="block mb-2" style="color: #000;">Nama Lengkap Ayah Kandung</label>
+                            <input type="text" name="m_bride_fathername" value="<?= $clients->m_bride_fathername ?>" placeholder="Nama Lengkap Ayah | Jika sudah meninggal tambahkan kata Alm." class="w-full px-4 py-2 border rounded" style="color: #000;">
+                        </div>
                         <div class="w-full md:w-1/2">
                             <label class="block mb-2" style="color: #000;">Nama Lengkap Pengganti Ayah</label>
                             <input type="text" name="m_bride_freplacementname" value="<?= $clients->m_bride_freplacementname ?>" placeholder="Nama Lengkap Pengganti Ayah" class="w-full px-4 py-2 border rounded" style="color: #000;">
@@ -253,10 +267,6 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                 <!-- Nama Lengkap Ayah & Nama Panggilan Ayah -->
                 <div id="mayah-original" class="<?= empty($clients->m_bride_freplacementname) ? '' : 'hidden' ?>">
                     <div class="flex flex-col md:flex-row gap-4">
-                        <div class="w-full md:w-1/2">
-                            <label class="block mb-2" style="color: #000;">Nama Lengkap Ayah Kandung</label>
-                            <input type="text" name="m_bride_fathername" value="<?= $clients->m_bride_fathername ?>" placeholder="Nama Lengkap Ayah | Jika sudah meninggal tambahkan kata Alm." class="w-full px-4 py-2 border rounded" style="color: #000;">
-                        </div>
                         <div class="w-full md:w-1/2">
                             <label class="block mb-2" style="color: #000;">Nama Panggilan Ayah Kandung</label>
                             <input type="text" name="m_bride_fathercname" value="<?= $clients->m_bride_fathercname ?>" placeholder="Bapak/Papa/Ayah/Abi" class="w-full px-4 py-2 border rounded" style="color: #000;">
