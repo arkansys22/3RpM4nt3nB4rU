@@ -105,7 +105,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                     <div class="flex flex-col md:flex-row gap-4">
                         <div class="w-full md:w-1/2">
                             <label class="block mb-2" style="color: #000;">Nama Lengkap Pengganti Ayah</label>
-                            <input type="text" name="f_bride_freplacementname" value="<?= $clients->f_bride_freplacementname ?>" placeholder="Nama Lengkap Pengganti Ibu" class="w-full px-4 py-2 border rounded" style="color: #000;">
+                            <input type="text" name="f_bride_freplacementname" value="<?= $clients->f_bride_freplacementname ?>" placeholder="Nama Lengkap Pengganti Ayah" class="w-full px-4 py-2 border rounded" style="color: #000;">
                         </div>
                         <div class="w-full md:w-1/2">
                             <label class="block mb-2" style="color: #000;">Nama Panggilan Pengganti Ayah</label>
@@ -299,6 +299,10 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                 <!-- Nama Lengkap Pengganti Ibu & Nama Panggilan Pengganti Ibu -->
                 <div id="mibu" class="<?= !empty($clients->m_bride_mreplacementname) ? '' : 'hidden' ?>">
                     <div class="flex flex-col md:flex-row gap-4">
+                        <div class="w-full md:w-1/2">
+                            <label class="block mb-2" style="color: #000;">Nama Lengkap Ibu Kandung</label>
+                            <input type="text" name="m_bride_mothername" value="<?= $clients->m_bride_mothername ?>" placeholder="Nama Lengkap Ibu | Jika sudah meninggal tambahkan kata Almh." class="w-full px-4 py-2 border rounded" style="color: #000;">
+                        </div>
                         <div class="w-full md:w-1/2">
                             <label class="block mb-2" style="color: #000;">Nama Lengkap Pengganti Ibu</label>
                             <input type="text" name="m_bride_mreplacementname" value="<?= $clients->m_bride_mreplacementname ?>" placeholder="Nama Lengkap Pengganti Ibu" class="w-full px-4 py-2 border rounded" style="color: #000;">
