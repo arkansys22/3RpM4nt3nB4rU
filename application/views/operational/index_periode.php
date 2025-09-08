@@ -6,12 +6,6 @@
     <title>Operational Finance</title>
     <link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
     <link href="<?php echo base_url()?>assets/backend/style.css" rel="stylesheet" type="text/css"/>
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" rel="stylesheet" type="text/css"/>
-    <link href="https://cdn.datatables.net/2.3.3/css/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
-    <link href="https://cdn.datatables.net/responsive/3.0.6/css/responsive.bootstrap4.css" rel="stylesheet" type="text/css"/>
-
-
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body
@@ -342,33 +336,6 @@
     </div>
     <!-- ===== Content Area End ===== -->
   </div>
-
-
-  <script type="text/javascript">
-    $(function () {
-      $("#example23").DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": true,
-        "ordering": true,
-        "info": true,
-        "autoWidth": true,
-
-      });
-    });
-
-    new DataTable('#example', {
-    responsive: true
-    });
-  </script>
-  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="https://cdn.datatables.net/2.3.3/js/dataTables.js"></script>
-  <script src="https://cdn.datatables.net/2.3.3/js/dataTables.bootstrap4.js"></script>
-  <script src="https://cdn.datatables.net/responsive/3.0.6/js/dataTables.responsive.js"></script>
-  <script src="https://cdn.datatables.net/responsive/3.0.6/js/responsive.bootstrap4.js"></script>
-
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
 </body>
 </html>
