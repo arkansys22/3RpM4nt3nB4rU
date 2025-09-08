@@ -6,6 +6,12 @@
     <title>Operational Finance</title>
     <link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
     <link href="<?php echo base_url()?>assets/backend/style.css" rel="stylesheet" type="text/css"/>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+    <link href="https://cdn.datatables.net/2.3.3/css/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
+    <link href="https://cdn.datatables.net/responsive/3.0.6/css/responsive.bootstrap4.css" rel="stylesheet" type="text/css"/>
+
+
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body
@@ -123,11 +129,40 @@
               </div>
 
 
+              <table id="example" class="table table-striped table-bordered nowrap">
+                  <thead>
+                      <tr>
+                          <th>First name</th>
+                          <th>Last name</th>
+                          <th>Position</th>
+                          <th>Office</th>
+                          <th>Age</th>
+                          <th>Start date</th>
+                          <th>Salary</th>
+                          <th>Extn.</th>
+                          <th>E-mail</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td>Tiger</td>
+                          <td>Nixon</td>
+                          <td>System Architect</td>
+                          <td>Edinburgh</td>
+                          <td>61</td>
+                          <td>2011-04-25</td>
+                          <td>$320,800</td>
+                          <td>5421</td>
+                          <td>t.nixon@datatables.net</td>
+                      </tr>           
+                  </tbody>
+              </table>
+
               <!-- ====== Data Table Two Start --><br><br>
               <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                 <div class="data-table-common data-table-two max-w-full overflow-x-auto">
 
-                  <table class="table w-full table-auto" id="dataTableTwo2">
+                  <table class="table w-full table-auto" id="dataTableTwo">
                     <thead>
                       <tr>
                       <th>
@@ -336,6 +371,29 @@
     </div>
     <!-- ===== Content Area End ===== -->
   </div>
+
+
+  <script type="text/javascript">
+    $(function () {
+      $("#example").DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": true,
+
+      });
+    });
+  </script>
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://cdn.datatables.net/2.3.3/js/dataTables.js"></script>
+  <script src="https://cdn.datatables.net/2.3.3/js/dataTables.bootstrap4.js"></script>
+  <script src="https://cdn.datatables.net/responsive/3.0.6/js/dataTables.responsive.js"></script>
+  <script src="https://cdn.datatables.net/responsive/3.0.6/js/responsive.bootstrap4.js"></script>
+
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
 </body>
 </html>
