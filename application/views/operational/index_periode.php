@@ -128,7 +128,7 @@
 
               </div>
 
-
+              <br><br>
               <table id="example" class="table table-striped table-bordered nowrap">
                   <thead>
                       <tr>
