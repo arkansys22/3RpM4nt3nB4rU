@@ -1,3 +1,5 @@
 new DataTable('#example', {
-    responsive: true
+    responsive: true,
+    deferRender: true,
+    pageLength: 25
 });
