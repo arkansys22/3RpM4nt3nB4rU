@@ -181,11 +181,9 @@
 <script defer src="https://cdn.datatables.net/responsive/3.0.6/js/dataTables.responsive.js"></script>
 <script defer src="https://cdn.datatables.net/responsive/3.0.6/js/responsive.bootstrap5.js"></script>
 <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
-<script>
-  
-  new DataTable('#example', {
-    responsive: true
-  });
+
+
+<script src="<?php echo base_url()?>assets/backend/script.js">
 </script>
   
 </body>
