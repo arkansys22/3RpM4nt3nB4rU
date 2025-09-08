@@ -129,6 +129,8 @@
               </div>
 
               <br><br>
+              <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                <div class="data-table-common data-table-two max-w-full overflow-x-auto">
               <table id="example" class="table table-responsive-xl col-12 table-bordered table-striped p-0">
                   <thead>
                       <tr>
@@ -232,9 +234,10 @@
                           <td>5421</td>
                           <td>t.nixon@datatables.net</td>
                       </tr>  
-                      
+
                   </tbody>
               </table>
+              </div></div>
 
               <!-- ====== Data Table Two Start --><br><br>
               <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
