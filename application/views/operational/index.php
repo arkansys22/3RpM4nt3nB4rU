@@ -330,5 +330,18 @@
     <!-- ===== Content Area End ===== -->
   </div>
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
+  <script type="text/javascript">
+  $(function () {
+      $("#dataTableTwo").DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": true,
+
+      });
+  });
+</script>
 </body>
 </html>
