@@ -127,7 +127,7 @@
               <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                 <div class="data-table-common data-table-two max-w-full overflow-x-auto">
 
-                  <table class="table w-full table-auto" id="dataTableTwo">
+                  <table class="table w-full table-auto" id="dataTableTwo2">
                     <thead>
                       <tr>
                       <th>
