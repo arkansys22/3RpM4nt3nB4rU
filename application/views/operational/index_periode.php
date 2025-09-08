@@ -6,9 +6,6 @@
     <title>Operational Finance</title>
     <link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
     <link href="<?php echo base_url()?>assets/backend/style.css" rel="stylesheet" type="text/css"/>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="https://cdn.datatables.net/2.3.3/css/dataTables.bootstrap5.css" rel="stylesheet" type="text/css"/>
-    <link href="https://cdn.datatables.net/responsive/3.0.6/css/responsive.bootstrap5.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body
@@ -130,9 +127,7 @@
               <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                 <div class="data-table-common data-table-two max-w-full overflow-x-auto">
 
-
-
-                  <table class="table w-full table-auto" id="dataTableTwo2">
+                  <table class="table w-full table-auto" id="dataTableTwo">
                     <thead>
                       <tr>
                       <th>
@@ -341,14 +336,6 @@
     </div>
     <!-- ===== Content Area End ===== -->
   </div>
-
-<script defer src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
-<script defer src="https://cdn.datatables.net/2.3.3/js/dataTables.js"></script>
-<script defer src="https://cdn.datatables.net/2.3.3/js/dataTables.bootstrap5.js"></script>
-<script defer src="https://cdn.datatables.net/responsive/3.0.6/js/dataTables.responsive.js"></script>
-<script defer src="https://cdn.datatables.net/responsive/3.0.6/js/responsive.bootstrap5.js"></script>
-<script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
-  
+  <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
 </body>
 </html>
