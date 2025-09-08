@@ -232,7 +232,7 @@
                           <td>5421</td>
                           <td>t.nixon@datatables.net</td>
                       </tr>  
-                      
+
                   </tbody>
               </table>
 
@@ -453,7 +453,7 @@
 
   <script type="text/javascript">
     $(function () {
-      $("#example").DataTable({
+      $("#example23").DataTable({
         "paging": true,
         "lengthChange": false,
         "searching": true,
@@ -462,6 +462,10 @@
         "autoWidth": true,
 
       });
+    });
+
+    new DataTable('#example', {
+    responsive: true
     });
   </script>
   <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
