@@ -27,6 +27,33 @@ class crud_finance_operational extends CI_Controller {
     }
 
 
+    public function get_data() {
+        $list = $this->Operational_model->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+
+        foreach ($list as $p) {
+            $no++;
+            $row = array();
+            $row[] = $p->tanggal_transaksi;
+            $row[] = $p->kategori;
+            $row[] = $p->nama_transaksi;
+            $row[] = $p->nominal_transaksi;
+            $row[] = $p->nominal_transaksi;
+
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->Operational_model->count_all(),
+            "recordsFiltered" => $this->Operational_model->count_filtered(),
+            "data" => $data,
+        );
+        echo json_encode($output);
+    }
+
+
     public function periode($id_session) {
         if ($this->session->level=='1' OR $this->session->level=='2'){
             cek_session_akses_developer('finance-operational',$this->session->id_session);

@@ -140,25 +140,6 @@
                               <th>Aksi</th>
                           </tr>
                       </thead>
-                      <tbody>
-                          <?php $no = 1; foreach ($periode as $p): ?>
-                          <tr>
-                              <td><?= $p->tanggal_transaksi ?></td>
-                              <?php $kat= $this->Crud_m->view_where('operational_kategori', array('nomer_kategori'=> $p->kategori))->row(); ?>
-                              <td><?= $kat->nama_kategori ?></td>
-                              <td><?= $p->nama_transaksi ?></td>
-                              <td><?= "Rp " . number_format($p->nominal_transaksi, 0, ',', '.'); ?></td>
-                              <td>
-                                <div class="flex flex-col items-start gap-2 w-max">
-                                  <a href="<?= site_url('finance-operational/edit/'. $p->id_session) ?>" class="inline-flex justify-center px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600 min-w-full text-center">
-                                    Edit
-                                  </a>
-                                  <a href="<?= site_url('finance-operational/permanent_delete/'.$p->id_session) ?>" class="inline-flex justify-center bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 min-w-full text-center" onclick="return confirm('Yakin ingin menghapus <?= $p->nama_transaksi ?> ?')">Hapus</a>
-                                </div>
-                              </td>
-                          </tr>
-                          <?php endforeach; ?>                            
-                      </tbody>
                   </table>
 
 
@@ -173,6 +154,21 @@
     </div>
     <!-- ===== Content Area End ===== -->
   </div>
+
+<script>
+$(document).ready(function() {
+    $('#example').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: "<?= site_url('crud_finance_operational/get_data') ?>",
+            type: "POST"
+        },
+        pageLength: 25
+    });
+});
+</script>
+
 
 <script defer src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
