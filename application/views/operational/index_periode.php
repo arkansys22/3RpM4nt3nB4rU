@@ -18,6 +18,11 @@
          $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
     :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}"
   >
+  <!-- ===== Preloader Start ===== -->
+  <div x-show="loaded" x-init="window.addEventListener('DOMContentLoaded', () => {setTimeout(() => loaded = false, 500)})" class="fixed left-0 top-0 z-999999 flex h-screen w-screen items-center justify-center bg-white dark:bg-black">
+    <div class="h-16 w-16 animate-spin rounded-full border-4 border-solid border-primary border-t-transparent">
+    </div>
+  </div>
   <!-- ===== Preloader End ===== -->
   <!-- ===== Page Wrapper Start ===== -->
   <div class="flex h-screen overflow-hidden">
@@ -175,6 +180,7 @@
 <script defer src="https://cdn.datatables.net/2.3.3/js/dataTables.bootstrap5.js"></script>
 <script defer src="https://cdn.datatables.net/responsive/3.0.6/js/dataTables.responsive.js"></script>
 <script defer src="https://cdn.datatables.net/responsive/3.0.6/js/responsive.bootstrap5.js"></script>
+<script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
   
 </body>
 </html>
