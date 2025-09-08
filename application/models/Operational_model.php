@@ -9,6 +9,10 @@ class Operational_model extends CI_Model {
         return $this->db->get('operational_acc')->result();
     }
 
+    public function get_all_operational_acc() {
+        $this->db->order_by('tanggal_transaksi', 'DESC');
+        return $this->db->get('operational_acc')->result();
+    }
     
     public function insert($data) {
         return $this->db->insert('operational_acc', $data);        

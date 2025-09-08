@@ -13,12 +13,12 @@ class crud_finance_operational extends CI_Controller {
     public function index() {
         if ($this->session->level=='1'){
         cek_session_akses_developer('finance-operational',$this->session->id_session);
-        $data['ops'] = $this->Operational_model->get_all(); // Ubah pemanggilan model
+        $data['ops'] = $this->Operational_model->get_all_operational_acc(); // Ubah pemanggilan model
         $this->load->view('operational/index', $data);
 
         }else if ($this->session->level=='3'){
         cek_session_akses_staff_accounting('finance-operational',$this->session->id_session);
-        $data['ops'] = $this->Operational_model->get_all(); // Ubah pemanggilan model
+        $data['ops'] = $this->Operational_model->get_all_operational_acc(); // Ubah pemanggilan model
         $this->load->view('operational/index', $data);
 
         }else{
