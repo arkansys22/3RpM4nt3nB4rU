@@ -6,6 +6,9 @@
     <title>Operational Finance</title>
     <link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
     <link href="<?php echo base_url()?>assets/backend/style.css" rel="stylesheet" type="text/css"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="https://cdn.datatables.net/2.3.3/css/dataTables.bootstrap5.css" rel="stylesheet" type="text/css"/>
+    <link href="https://cdn.datatables.net/responsive/3.0.6/css/responsive.bootstrap5.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body
@@ -127,204 +130,38 @@
               <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                 <div class="data-table-common data-table-two max-w-full overflow-x-auto">
 
-                  <table class="table w-full table-auto" id="dataTableTwo2">
-                    <thead>
-                      <tr>
-                      <th>
-                          <div class="flex items-center justify-between gap-1.5">
-                            <p>Date</p>
-                            <div class="inline-flex flex-col space-y-[2px]">
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path d="M5 0L0 5H10L5 0Z" fill="" />
-                                </svg>
-                              </span>
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
-                                    fill=""
-                                  />
-                                </svg>
-                              </span>
-                            </div>
-                          </div>
-                        </th>
-                        <th>
-                          <div class="flex items-center justify-between gap-1.5">
-                            <p>Kategori</p>
-                            <div class="inline-flex flex-col space-y-[2px]">
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path d="M5 0L0 5H10L5 0Z" fill="" />
-                                </svg>
-                              </span>
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
-                                    fill=""
-                                  />
-                                </svg>
-                              </span>
-                            </div>
-                          </div>
-                        </th>
-                        <th>
-                          <div class="flex items-center justify-between gap-1.5">
-                            <p>Nama Transaksi</p>
-                            <div class="inline-flex flex-col space-y-[2px]">
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path d="M5 0L0 5H10L5 0Z" fill="" />
-                                </svg>
-                              </span>
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
-                                    fill=""
-                                  />
-                                </svg>
-                              </span>
-                            </div>
-                          </div>
-                        </th>
-                        <th>
-                          <div class="flex items-center justify-between gap-1.5">
-                            <p>Nominal</p>
-                            <div class="inline-flex flex-col space-y-[2px]">
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path d="M5 0L0 5H10L5 0Z" fill="" />
-                                </svg>
-                              </span>
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
-                                    fill=""
-                                  />
-                                </svg>
-                              </span>
-                            </div>
-                          </div>
-                        </th>                        
-                        <th>
-                          <div class="flex items-center justify-between gap-1.5">
-                            <p></p>
-                            <div class="inline-flex flex-col space-y-[2px]">
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path d="M5 0L0 5H10L5 0Z" fill="" />
-                                </svg>
-                              </span>
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
-                                    fill=""
-                                  />
-                                </svg>
-                              </span>
-                            </div>
-                          </div>
-                        </th>
-                        
-                      </tr>
-                    </thead>
-                    <tbody>
-                    <?php $no = 1; foreach ($periode as $p): ?>
-                      <tr>
-                        <td><?= $p->tanggal_transaksi ?></td>
-                        <?php $kat= $this->Crud_m->view_where('operational_kategori', array('nomer_kategori'=> $p->kategori))->row(); ?>
-                        <td><?= $kat->nama_kategori ?></td>
-                        
-                        <td><?= $p->nama_transaksi ?></td>
-                        <td><?= "Rp " . number_format($p->nominal_transaksi, 0, ',', '.'); ?></td>                
-                        <td>
-                        <div class="flex flex-col items-start gap-2 w-max">
-                          <a href="<?= site_url('finance-operational/edit/'. $p->id_session) ?>" class="inline-flex justify-center px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600 min-w-full text-center">
-                            Edit
-                          </a>
-                          <a href="<?= site_url('finance-operational/permanent_delete/'.$p->id_session) ?>" class="inline-flex justify-center bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 min-w-full text-center" onclick="return confirm('Yakin ingin menghapus <?= $p->nama_transaksi ?> ?')">Hapus</a>
-                        </div>
-                        </td>
-                      </tr>
-                      
-                      <?php endforeach; ?>                      
-                    </tbody>
+                  <table id="example" class="table table-striped nowrap">
+                      <thead>
+                          <tr>
+                              <th>Date</th>
+                              <th>Kategori</th>
+                              <th>Nama Transaksi</th>
+                              <th>Nominal</th>
+                              <th>Aksi</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <?php $no = 1; foreach ($periode as $p): ?>
+                          <tr>
+                              <td><?= $p->tanggal_transaksi ?></td>
+                              <?php $kat= $this->Crud_m->view_where('operational_kategori', array('nomer_kategori'=> $p->kategori))->row(); ?>
+                              <td><?= $kat->nama_kategori ?></td>
+                              <td><?= $p->nama_transaksi ?></td>
+                              <td><?= "Rp " . number_format($p->nominal_transaksi, 0, ',', '.'); ?></td>
+                              <td>
+                                <div class="flex flex-col items-start gap-2 w-max">
+                                  <a href="<?= site_url('finance-operational/edit/'. $p->id_session) ?>" class="inline-flex justify-center px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600 min-w-full text-center">
+                                    Edit
+                                  </a>
+                                  <a href="<?= site_url('finance-operational/permanent_delete/'.$p->id_session) ?>" class="inline-flex justify-center bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 min-w-full text-center" onclick="return confirm('Yakin ingin menghapus <?= $p->nama_transaksi ?> ?')">Hapus</a>
+                                </div>
+                              </td>
+                          </tr>
+                          <?php endforeach; ?>                            
+                      </tbody>
                   </table>
+
+
                 </div>
               </div>
               <!-- ====== Data Table Two End -->                
@@ -336,6 +173,13 @@
     </div>
     <!-- ===== Content Area End ===== -->
   </div>
-  <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
+
+<script defer src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script defer src="https://cdn.datatables.net/2.3.3/js/dataTables.js"></script>
+<script defer src="https://cdn.datatables.net/2.3.3/js/dataTables.bootstrap5.js"></script>
+<script defer src="https://cdn.datatables.net/responsive/3.0.6/js/dataTables.responsive.js"></script>
+<script defer src="https://cdn.datatables.net/responsive/3.0.6/js/responsive.bootstrap5.js"></script>
+  
 </body>
 </html>
