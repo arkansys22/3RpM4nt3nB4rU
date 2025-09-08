@@ -129,7 +129,7 @@
               </div>
 
               <br><br>
-              <table id="example" class="table table-striped table-bordered nowrap">
+              <table id="example" class="table table-responsive-xl col-12 table-bordered table-striped p-0">
                   <thead>
                       <tr>
                           <th>First name</th>
