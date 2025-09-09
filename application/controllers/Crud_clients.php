@@ -710,7 +710,7 @@ class Crud_clients extends CI_Controller {
             $data['f_bride_freplacementcname'] = null;            
         } else {
             $data['f_bride_fathercname'] = null;
-            $data['f_bride_fathername'] = null;
+            $data['f_bride_fathername'];
         }
 
         if ($this->input->post('fibu_status') === 'Masih Ada') {
