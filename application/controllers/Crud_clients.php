@@ -707,10 +707,10 @@ class Crud_clients extends CI_Controller {
         // Clear unused fields based on radio button selection
         if ($this->input->post('fayah_status') === 'Masih Ada') {
             $data['f_bride_freplacementname'] = null;
-            $data['f_bride_freplacementcname'] = null;
-            $data['f_bride_fathername'] = null;
+            $data['f_bride_freplacementcname'] = null;            
         } else {
             $data['f_bride_fathercname'] = null;
+            $data['f_bride_fathername'] = null;
         }
 
         if ($this->input->post('fibu_status') === 'Masih Ada') {
