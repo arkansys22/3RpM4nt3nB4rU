@@ -333,6 +333,6 @@
     </div>
     <!-- ===== Content Area End ===== -->
   </div>
-  <script src="<?php echo base_url()?>assets/backend/bundles.js"></script>
+  <script src="<?php echo base_url()?>assets/backend/bundle.js"></script>
 </body>
 </html>
