@@ -16,10 +16,7 @@
     :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}"
   >
   <!-- ===== Preloader Start ===== -->
-  <div x-show="loaded" x-init="window.addEventListener('DOMContentLoaded', () => {setTimeout(() => loaded = false, 500)})" class="fixed left-0 top-0 z-999999 flex h-screen w-screen items-center justify-center bg-white dark:bg-black">
-    <div class="h-16 w-16 animate-spin rounded-full border-4 border-solid border-primary border-t-transparent">
-    </div>
-  </div>
+  
   <!-- ===== Preloader End ===== -->
   <!-- ===== Page Wrapper Start ===== -->
   <div class="flex h-screen overflow-hidden">
@@ -336,6 +333,6 @@
     </div>
     <!-- ===== Content Area End ===== -->
   </div>
-  <script src="<?php echo base_url()?>assets/backend/bundle.js"></script>
+  <script src="<?php echo base_url()?>assets/backend/bundles.js"></script>
 </body>
 </html>
