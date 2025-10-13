@@ -293,7 +293,7 @@
 
                     <?php $persentase = ($profit / $data['terbayar_ops']->total_dibayarkan) * 100 ?>
 
-                    <td><?= "Rp " . number_format($profit, 0, ',', '.'); ?> (<?= $persentase ?> %)</td>
+                    <td><?= "Rp " . number_format($profit, 0, ',', '.'); ?> (<?= round($persentase) ?> %)</td>
                     <td><?= $p->religion ?></td>                    
                     <td>
                     <div class="flex flex-col items-start gap-2 w-max">
