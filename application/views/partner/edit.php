@@ -47,7 +47,7 @@
                                 <option value="MC Resepsi" <?= $partner->type == 'MC Resepsi' ? 'selected' : '' ?>>MC Resepsi</option>
                                 <option value="MC Adat Sunda" <?= $partner->type == 'MC Adat Sunda' ? 'selected' : '' ?>>MC Adat Sunda</option>
                                 <option value="MC Adat Jawa" <?= $partner->type == 'MC Adat Jawa' ? 'selected' : '' ?>>MC Adat Jawa</option>
-                                <option value="Wedding Organizer" <?= $partner->type == 'Wedding Organizer' ? 'selected' : '' ?>>WO</option>
+                                <option value="Wedding Organizer" <?= $partner->type == 'Wedding Organizer' ? 'selected' : '' ?>>Wedding Organizer</option>
                                 <option value="MUA" <?= $partner->type == 'MUA' ? 'selected' : '' ?>>MUA</option>
                                 <option value="Attire" <?= $partner->type == 'Attire' ? 'selected' : '' ?>>Attire</option>
                                 <option value="Perlengkapan Catering" <?= $partner->type == 'Perlengkapan Catering' ? 'selected' : '' ?>>Perlengkapan Catering</option>
