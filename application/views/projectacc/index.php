@@ -290,7 +290,7 @@
     
                     
 
-                    <td><?= $modal_ops->total_finance_out ?> </td>
+                    <td><?= $data['modal_ops']->total_finance_out ?> </td>
                     <td><?= $p->religion ?></td>                    
                     <td>
                     <div class="flex flex-col items-start gap-2 w-max">
