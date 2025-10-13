@@ -740,7 +740,7 @@ Kami berdoa agar kasih Tuhan senantiasa menyertai setiap langkah hidup kita, dan
 					<div class="col-lg-12">
 						<div class="row project-gallery-item">
 							<?php 
-							$order = ['Venue', 'MC Akad', 'MC Pemberkatan', 'MC Resepsi', 'Wedding Organizer', 'MUA', 'Perlengkapan Catering', 'Catering', 'Dokumentasi', 'Dekorasi', 'Entertainment'];
+							$order = ['Venue', 'MC Akad', 'MC Pemberkatan', 'MC Resepsi', 'Wedding Organizer', 'MUA', 'Perlengkapan Catering', 'Catering', 'Dokumentasi', 'Dekorasi', 'Entertainment', 'Penyewaan Peralatan', 'Pendukung Pernikahan Lainnya'];
 							usort($vendors, function($a, $b) use ($order) {
 								$pos_a = array_search($a->type, $order);
 								$pos_b = array_search($b->type, $order);
