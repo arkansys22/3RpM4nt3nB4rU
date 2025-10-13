@@ -108,6 +108,10 @@
                 <label class="block mb-2"><strong>Lokasi : </strong><?= $project->location ?></label>
                 <label class="block mb-2"><strong>Nilai Project : </strong><?= "Rp " . number_format($project->value, 0, ',', '.'); ?></label>
 
+                <label class="block mb-2"><strong>Sudah Dibayar Klien : </strong>
+                <?= "Rp " . number_format($terbayar_ops->total_dibayarkan, 0, ',', '.'); ?>
+                </label>
+
                 <label class="block mb-2"><strong>Biaya Pokok : </strong>
                 <?= "Rp " . number_format($modal_ops->total_finance_out, 0, ',', '.'); ?>
                 </label>
