@@ -123,7 +123,7 @@
                 <?php $profit = $project->value - $modal_ops->total_finance_out ?>
                 <?= "Rp " . number_format($profit, 0, ',', '.'); ?></label>
 
-                <?php $presentase = ($profit / $project->value)*100% ?>
+                <?php $presentase = ($profit / $project->value) ?>
                 <label class="block mb-2"><strong>Presentase Profit : </strong>
                 <?= $presentase ?>
                 </label>
