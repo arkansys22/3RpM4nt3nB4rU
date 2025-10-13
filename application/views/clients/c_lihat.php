@@ -766,7 +766,7 @@ Kami berdoa agar kasih Tuhan senantiasa menyertai setiap langkah hidup kita, dan
 												<h4 class="project-title">
 													<?= $vendor->type ?>
 												</h4>
-												<span class="project-category"><?= $vendor->vendor ?></span>
+												<span class="project-category"><?= $vendor->vendor ?>ssss</span>
 											</div>
 										</div>
 									</div>
