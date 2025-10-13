@@ -54,13 +54,7 @@ class Finance_project_model extends CI_Model {
     }
 
 
-    public function get_finance_out2($table,$data){
-      $this->db->select('SUM(nominal_transaksi) as total_finance_out');
-      $this->db->from($table);
-      $this->db->where('project_id_session',$data);
-      $query = $this->db->get();
-      return $query->row();
-  }
+ 
 
 
 

@@ -286,11 +286,13 @@
                     <td><?= "Rp " . number_format($p->value, 0, ',', '.'); ?></td>
 
 
-                    <?php $data['modal_ops'] = $this->finance_project_model->get_finance_out($p->id_session); ?>
-    
-                    
+                    <?php 
+                    $data['terbayar_ops'] = $this->finance_project_model->get_finance_dibayarklien($p->id_session);
+                    $data['modal_ops'] = $this->finance_project_model->get_finance_out($p->id_session); ?>
+                    <?php $profit = $data['terbayar_ops']->total_dibayarkan - $data['modal_ops']->total_finance_out?>
 
-                    <td><?= $data['modal_ops']->total_finance_out ?> </td>
+
+                    <td><?= $profit ?> </td>
                     <td><?= $p->religion ?></td>                    
                     <td>
                     <div class="flex flex-col items-start gap-2 w-max">
