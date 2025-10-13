@@ -3,6 +3,8 @@ class project_model extends CI_Model {
 
     public function __construct() {
         parent::__construct();
+        $this->load->model('project_model');
+        $this->load->model('finance_project_model');
     }
 
     public function get_all_project() {

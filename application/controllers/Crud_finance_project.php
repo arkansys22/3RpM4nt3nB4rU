@@ -15,7 +15,7 @@ class Crud_finance_project extends CI_Controller {
 
         if ($this->session->level=='1'){
             cek_session_akses_developer('project-acc',$this->session->id_session);
-            $data['project'] = $this->project_model->get_all_project(); // Ubah pemanggilan model
+            $data['project'] = $this->project_model->get_all_project(); // Ubah pemanggilan model       
             $this->load->view('projectacc/index', $data);
 
         }else if($this->session->level=='2'){
