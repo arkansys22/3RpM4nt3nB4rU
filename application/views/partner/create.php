@@ -47,13 +47,19 @@
                                 <option value="MC Akad">MC Akad</option>
                                 <option value="MC Pemberkatan">MC Pemberkatan</option>
                                 <option value="MC Resepsi">MC Resepsi</option>
+                                <option value="MC Adat Sunda">MC Adat Sunda</option>
+                                <option value="MC Adat Jawa">MC Adat Jawa</option>
                                 <option value="Wedding Organizer">Wedding Organizer</option>
                                 <option value="MUA">MUA</option>
+                                <option value="Attire">Attire</option>
                                 <option value="Perlengkapan Catering">Perlengkapan Catering</option>
+                                <option value="Penyewaan Peralatan">Penyewaan Peralatan</option>
                                 <option value="Catering">Catering</option>
                                 <option value="Dokumentasi">Dokumentasi</option>
                                 <option value="Dekorasi">Dekorasi</option>
                                 <option value="Entertainment">Entertainment</option>
+                                <option value="Pendukung Pernikahan Lainnya">Pendukung Pernikahan Lainnya</option>
+
                             </select>
 
                             <label class="block mb-2">Social Media</label>

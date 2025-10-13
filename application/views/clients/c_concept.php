@@ -13,15 +13,21 @@ $info = '';
 switch ($vendor->type) {
     case 'Venue': $info = $vendor->detail; break;
     case 'MC Akad': $info = $vendor->detail; break;
+    case 'MC Pemberkatan': $info = $vendor->detail; break;
     case 'MC Resepsi': $info = $vendor->detail; break;
+    case 'MC Adat Sunda': $info = $vendor->detail; break;
+    case 'MC Adat Jawa': $info = $vendor->detail; break;
     case 'Wedding Organizer': $info = $vendor->detail; break;
     case 'MUA': $info = $vendor->detail; break;
+    case 'Attire': $info = $vendor->detail; break;
     case 'Perlengkapan Catering': $info = $vendor->detail; break;
     case 'Catering': $info = $vendor->detail; break;
     case 'Dokumentasi': $info = $vendor->detail; break;
     case 'Dekorasi': $info = $vendor->detail; break;
-    case 'Pendukung Pernikahan Lainnya': $info = $vendor->detail; break;
     case 'Entertainment': $info = $vendor->detail; break;
+    case 'Pendukung Pernikahan Lainnya': $info = $vendor->detail; break;
+    case 'Penyewaan Peralatan': $info = $vendor->detail; break;
+    
 }
 
 // Periksa apakah foto tersedia
