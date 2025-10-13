@@ -284,11 +284,13 @@
                     <td><?= tgl_indo($p->event_date) ?></td>
                     <td><?= $p->location ?></td>
                     <td><?= "Rp " . number_format($p->value, 0, ',', '.'); ?></td>
-                    <?php $pengeluaran = $this->finance_project_model->get_finance_out($p->id_session); ?>
+
+
+                    <?php $data['modal_ops'] = $this->finance_project_model->get_finance_out($p->id_session); ?>
                     <?php $terbayarkan = $this->finance_project_model->get_finance_dibayarklien($p->id_session); ?>
 
 
-                    <td><?= $pengeluaran | $terbayarkan ?> </td>
+                    <td><?= $modal_ops->total_finance_out | $terbayarkan ?> </td>
                     <td><?= $p->religion ?></td>                    
                     <td>
                     <div class="flex flex-col items-start gap-2 w-max">
