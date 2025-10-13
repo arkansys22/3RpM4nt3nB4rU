@@ -177,6 +177,40 @@
                               </span>
                             </div>
                           </div>
+                        </th>
+                        <th>
+                          <div class="flex items-center justify-between gap-1.5">
+                            <p>% Profit</p>
+                            <div class="inline-flex flex-col space-y-[2px]">
+                              <span class="inline-block">
+                                <svg
+                                  class="fill-current"
+                                  width="10"
+                                  height="5"
+                                  viewBox="0 0 10 5"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path d="M5 0L0 5H10L5 0Z" fill="" />
+                                </svg>
+                              </span>
+                              <span class="inline-block">
+                                <svg
+                                  class="fill-current"
+                                  width="10"
+                                  height="5"
+                                  viewBox="0 0 10 5"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
+                                    fill=""
+                                  />
+                                </svg>
+                              </span>
+                            </div>
+                          </div>
                         </th>                        
                         <th>
                           <div class="flex items-center justify-between gap-1.5">
@@ -254,6 +288,12 @@
                     <td><?= $p->project_name ?></td>
                     <td><?= tgl_indo($p->event_date) ?></td>
                     <td><?= $p->location ?></td>
+
+                    <?= $pengeluaran = $this->finance_project_model->get_finance_out($p->id_session); ?>
+                    <?= $terbayarkan = $this->finance_project_model->get_finance_dibayarklien($p->id_session); ?>
+
+
+                    <td><?= $pengeluaran | $terbayarkan ?> </td>
                     <td><?= "Rp " . number_format($p->value, 0, ',', '.'); ?></td>
                     <td><?= $p->religion ?></td>                    
                     <td>
