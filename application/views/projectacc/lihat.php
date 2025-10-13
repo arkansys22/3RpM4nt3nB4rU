@@ -109,7 +109,10 @@
                 <label class="block mb-2"><strong>Nilai Project : </strong><?= "Rp " . number_format($project->value, 0, ',', '.'); ?></label>
 
                 <label class="block mb-2"><strong>Sudah Dibayar Klien : </strong>
-                <?= "Rp " . number_format($terbayar_ops->total_dibayarkan, 0, ',', '.'); ?>
+                <?= "Rp " . number_format($terbayar_ops->total_dibayarkan, 0, ',', '.'); ?> 
+
+                Kurang Bayar <?php $kurang = $project->value - $terbayar_ops->total_dibayarkan  ?>
+                <?= "Rp " . number_format($kurang, 0, ',', '.'); ?>
                 </label>
 
                 <label class="block mb-2"><strong>Biaya Pokok : </strong>
