@@ -108,10 +108,10 @@
                 <label class="block mb-2"><strong>Lokasi : </strong><?= $project->location ?></label>
                 <label class="block mb-2"><strong>Nilai Project : </strong><?= "Rp " . number_format($project->value, 0, ',', '.'); ?></label>
 
-                <label class="block mb-2"><strong>Sudah Dibayar Klien : </strong>
+                <label class="block mb-2"><strong>Sudah Dibayar : </strong>
                 <?= "Rp " . number_format($terbayar_ops->total_dibayarkan, 0, ',', '.'); ?> 
 
-                Kurang Bayar <?php $kurang = $project->value - $terbayar_ops->total_dibayarkan  ?>
+                <strong>Kekurangan</strong> <?php $kurang = $project->value - $terbayar_ops->total_dibayarkan  ?>
                 <?= "Rp " . number_format($kurang, 0, ',', '.'); ?>
                 </label>
 
@@ -120,9 +120,14 @@
                 </label>
 
                 <label class="block mb-2"><strong>Gross Profit : </strong>
-
                 <?php $profit = $project->value - $modal_ops->total_finance_out ?>
                 <?= "Rp " . number_format($profit, 0, ',', '.'); ?></label>
+
+                <?php $presentase = ($profit / $project->value)*100% ?>
+                <label class="block mb-2"><strong>Presentase Profit : </strong>
+                <?= $presentase ?>
+                </label>
+
                 <label class="block mb-2"><strong>Detail : </strong><?= $project->detail ?></label>
 
                 <?php
