@@ -287,10 +287,10 @@
 
 
                     <?php $data['modal_ops'] = $this->finance_project_model->get_finance_out($p->id_session); ?>
-                    <?php $terbayarkan = $this->finance_project_model->get_finance_dibayarklien($p->id_session); ?>
+    
+                    
 
-
-                    <td><?= $modal_ops->total_finance_out | $terbayarkan ?> </td>
+                    <td><?= $modal_ops->total_finance_out ?> </td>
                     <td><?= $p->religion ?></td>                    
                     <td>
                     <div class="flex flex-col items-start gap-2 w-max">
