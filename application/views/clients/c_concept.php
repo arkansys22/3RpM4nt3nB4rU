@@ -20,6 +20,7 @@ switch ($vendor->type) {
     case 'Catering': $info = $vendor->detail; break;
     case 'Dokumentasi': $info = $vendor->detail; break;
     case 'Dekorasi': $info = $vendor->detail; break;
+    case 'Pendukung Pernikahan Lainnya': $info = $vendor->detail; break;
     case 'Entertainment': $info = $vendor->detail; break;
 }
 
