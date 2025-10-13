@@ -294,6 +294,8 @@
 
                     <?php if(!empty($profit)){?>
                     <td><?= "Rp " . number_format($profit, 0, ',', '.'); ?> (<?= round($persentase) ?> %)</td>
+                    <?php }else{ ?>
+                    <td>Belum Ada</td>
                     <?php }?>
 
                     
