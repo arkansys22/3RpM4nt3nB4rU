@@ -125,7 +125,7 @@
 
                 <?php $presentase = ($profit / $project->value) * '100' ?>
                 <label class="block mb-2"><strong>Presentase Profit : </strong>
-                <?= $presentase ?> %
+                <?= round($presentase) ?> %
                 </label>
 
                 <label class="block mb-2"><strong>Detail : </strong><?= $project->detail ?></label>
