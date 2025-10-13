@@ -49,6 +49,7 @@ class Finance_project_model extends CI_Model {
         $this->db->select('SUM(total_paid) as total_dibayarkan');
         $this->db->from('payment');
         $this->db->where('id_session', $project_id_session);  // Tahun
+        $this->db->where('status', 'Paid');
         $query = $this->db->get();
         return $query->row();
     }
