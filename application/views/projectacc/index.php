@@ -291,7 +291,7 @@
                     $data['modal_ops'] = $this->finance_project_model->get_finance_out($p->id_session); ?>
                     <?php $profit = $data['terbayar_ops']->total_dibayarkan - $data['modal_ops']->total_finance_out?>
 
-                    <?php $presentase = ($profit / $data['terbayar_ops']->total_dibayarkan) * '100' ?>
+                    <?php $presentase = ($profit / $data['terbayar_ops']->total_dibayarkan) * 100 ?>
 
                     <td><?= "Rp " . number_format($profit, 0, ',', '.'); ?> (<?php $persentase ?> %)</td>
                     <td><?= $p->religion ?></td>                    
