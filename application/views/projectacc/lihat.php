@@ -102,33 +102,77 @@
                   </div>
                 </div>
               <form action="<?= site_url('project/update/'.$project->id_session) ?>" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
-                <label class="block mb-2"><strong>Nama Project : </strong><?= $project->project_name ?></label>        
-                <label class="block mb-2"><strong>Agama : </strong><?= $project->religion ?></label> 
-                <label class="block mb-2"><strong>Tanggal Pernikahan : </strong><?= hari($project->event_date) ?>, <?= tgl_indo($project->event_date) ?></label>
-                <label class="block mb-2"><strong>Lokasi : </strong><?= $project->location ?></label>
-                <label class="block mb-2"><strong>Nilai Project : </strong><?= "Rp " . number_format($project->value, 0, ',', '.'); ?></label>
+                <br>
+                <div class="mb-4.5 flex flex-col md:flex-row">
+                  <h1 class="text-xl font-bold">Informasi Project</h1>
+                </div>
+                <div class="mb-4.5 flex flex-col md:flex-row">
+                  <label class="block mb-2">Nama Project <p><h1 class="text-lg font-bold"><?= $project->project_name ?></h1></p></label>  
+                </div>
+                <div class="mb-4.5 flex flex-col md:flex-row">
+                  <div class="w-full md:w-1/2">
+                  <label class="block mb-2">
+                  Lokasi <p><h1 class="text-lg font-bold"><?= $project->location ?></h1></p>
+                  </label> 
+                  </div>
+                  <div class="w-full md:w-1/2">
+                  <label class="block mb-2">
+                  Tanggal <p><h1 class="text-lg font-bold"><?= hari($project->event_date) ?>, <?= tgl_indo($project->event_date) ?></h1></p>
+                  </label>
+                  </div>                  
+                </div>
+                <div class="mb-4.5 flex flex-col md:flex-row">
+                  <label class="block mb-2">
+                  Detail Project <p><h1 class="text-lg font-bold"><?= $project->detail ?></h1></p>
+                  </label>
+                </div>
+                <hr>
+                <br>
+                <div class="mb-4.5 flex flex-col md:flex-row">
+                  <h1 class="text-xl font-bold">Valuasi Project</h1>
+                </div>
+                <div class="mb-4.5 flex flex-col md:flex-row">
+                  <div class="w-full md:w-1/2">
+                  <label class="block mb-2">
+                  Nilai Project <p><h1 class="text-lg font-bold"><?= "Rp " . number_format($project->value, 0, ',', '.'); ?></h1></p>
+                  </label>
+                  </div>
+                  <div class="w-full md:w-1/2">
+                  <label class="block mb-2">
+                  Biaya Operasional
+                  <p><h1 class="text-lg font-bold"><?= "Rp " . number_format($modal_ops->total_finance_out, 0, ',', '.'); ?></h1></p>
+                  </label> </div>
 
-                <label class="block mb-2"><strong>Sudah Dibayar : </strong>
-                <?= "Rp " . number_format($terbayar_ops->total_dibayarkan, 0, ',', '.'); ?> 
+                </div>
+                <div class="mb-4.5 flex flex-col md:flex-row">
+                  <div class="w-full md:w-1/2">
+                    <label class="block mb-2 ">Sudah Dibayar 
+                    <p><h1 class="text-lg font-bold"><?= "Rp " . number_format($terbayar_ops->total_dibayarkan, 0, ',', '.'); ?></h1></p>
+                    </label>  
+                  </div>
+                  <div class="w-full md:w-1/2">
+                    <label class="block mb-2">
+                    Belum Dibayar 
+                    <?php $kurang = $project->value - $terbayar_ops->total_dibayarkan  ?>
+                    <p><h1 class="text-lg font-bold"><?= "Rp " . number_format($kurang, 0, ',', '.'); ?></h1></p>
+                    </label>
+                  </div>
+                </div>                
+                
+                <hr>
+                <br>
+                <div class="mb-4.5 flex flex-col md:flex-row">
+                  <h1 class="text-xl font-bold">Profit / Loss</h1>
+                </div>
+                <div class="mb-4.5 flex flex-col md:flex-row">
+                  <label class="block mb-2">Nominal
+                  <?php $profit = $project->value - $modal_ops->total_finance_out ?>
+                  <p><h1 class="text-lg font-bold"><?= "Rp " . number_format($profit, 0, ',', '.'); ?> 
+                  <?php $presentase = ($profit / $project->value) * '100' ?>                
+                  (<?= round($presentase) ?> %)</h1></p>
+                  </label>
+                </div>
 
-                <strong>Kekurangan</strong> <?php $kurang = $project->value - $terbayar_ops->total_dibayarkan  ?>
-                <?= "Rp " . number_format($kurang, 0, ',', '.'); ?>
-                </label>
-
-                <label class="block mb-2"><strong>Biaya Pokok : </strong>
-                <?= "Rp " . number_format($modal_ops->total_finance_out, 0, ',', '.'); ?>
-                </label>
-
-                <label class="block mb-2"><strong>Gross Profit : </strong>
-                <?php $profit = $project->value - $modal_ops->total_finance_out ?>
-                <?= "Rp " . number_format($profit, 0, ',', '.'); ?></label>
-
-                <?php $presentase = ($profit / $project->value) * '100' ?>
-                <label class="block mb-2"><strong>Presentase Profit : </strong>
-                <?= round($presentase) ?> %
-                </label>
-
-                <label class="block mb-2"><strong>Detail : </strong><?= $project->detail ?></label>
 
                 <?php
                 $roles = [
