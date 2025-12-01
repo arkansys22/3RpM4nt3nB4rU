@@ -45,7 +45,7 @@
                       @click.prevent="openDropDown = !openDropDown"
                       class="inline-flex items-center gap-2.5 rounded-md bg-primary px-5.5 py-3 font-medium text-white hover:bg-opacity-95"
                     >
-                      Menu
+                      Tambah Transaksi
                       <svg
                         class="fill-current duration-200 ease-linear"
                         :class="openDropDown && 'rotate-180'"
@@ -78,7 +78,7 @@
                             href="<?= site_url('finance-project/create/' . $project->id_session) ?>"
                             class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
                           >
-                            Tambah Transaksi
+                            Operasional
                           </a>
                         </li>
                         <li>
@@ -86,7 +86,7 @@
                             href="<?= site_url('finance-project/create2/' . $project->id_session) ?>"
                             class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
                           >
-                            Tambah Crew
+                            Fee Crew
                           </a>
                         </li>
                         <li>
