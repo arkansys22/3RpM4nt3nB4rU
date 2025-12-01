@@ -39,9 +39,9 @@ class Aspanel extends CI_Controller {
 				cek_session_akses_developer('panel', $this->session->id_session);
 				$month_now = date('Y-m');
 				$month_last = date('Y-m', strtotime('last month'));
-				$data['client_bulan_ini'] = $this->Clients_model->get_clients_by_month(date('Y-m'));  // Client bulan ini
-				$data['client_bulan_lalu'] = $this->Clients_model->get_clients_by_month(date('Y-m', strtotime('last month'))); // Client bulan lalu
-				$data['client_bulan_depan'] = $this->Clients_model->get_clients_by_month(date('Y-m', strtotime('next month'))); // Client bulan depan
+				$data['client_tahun_ini'] = $this->Clients_model->get_clients_by_year(date('Y'));  // Client tahun ini
+				$data['client_tahun_lalu'] = $this->Clients_model->get_clients_by_year(date('Y', strtotime('last year'))); // Client tahun lalu
+				$data['client_tahun_depan'] = $this->Clients_model->get_clients_by_year(date('Y', strtotime('next year'))); // Client tahun depan
 				$data['total_client'] = $this->Clients_model->get_total_clients(); // Total client
 
 				
@@ -86,10 +86,10 @@ class Aspanel extends CI_Controller {
 				cek_session_akses_administrator('panel', $this->session->id_session);
 				$month_now = date('Y-m');
 				$month_last = date('Y-m', strtotime('last month'));
-				$data['client_bulan_ini'] = $this->Clients_model->get_clients_by_month(date('Y-m'));
-				$data['client_bulan_lalu'] = $this->Clients_model->get_clients_by_month(date('Y-m', strtotime('last month')));
-				$data['client_bulan_depan'] = $this->Clients_model->get_clients_by_month(date('Y-m', strtotime('next month'))); // Client bulan depan
-				$data['total_client'] = $this->Clients_model->get_total_clients();
+				$data['client_tahun_ini'] = $this->Clients_model->get_clients_by_year(date('Y'));  // Client tahun ini
+				$data['client_tahun_lalu'] = $this->Clients_model->get_clients_by_year(date('Y', strtotime('last year'))); // Client tahun lalu
+				$data['client_tahun_depan'] = $this->Clients_model->get_clients_by_year(date('Y', strtotime('next year'))); // Client tahun depan
+				$data['total_client'] = $this->Clients_model->get_total_clients(); // Total client
 				
 				// Revenue bulan ini
 				$data['revenue_bulan_ini'] = $this->db->select_sum('total_paid')
@@ -130,10 +130,10 @@ class Aspanel extends CI_Controller {
 				cek_session_akses_staff_accounting('panel', $this->session->id_session);
 				$month_now = date('Y-m');
 				$month_last = date('Y-m', strtotime('last month'));
-				$data['client_bulan_ini'] = $this->Clients_model->get_clients_by_month(date('Y-m'));
-				$data['client_bulan_lalu'] = $this->Clients_model->get_clients_by_month(date('Y-m', strtotime('last month')));
-				$data['client_bulan_depan'] = $this->Clients_model->get_clients_by_month(date('Y-m', strtotime('next month'))); // Client bulan depan
-				$data['total_client'] = $this->Clients_model->get_total_clients();
+				$data['client_tahun_ini'] = $this->Clients_model->get_clients_by_year(date('Y'));  // Client tahun ini
+				$data['client_tahun_lalu'] = $this->Clients_model->get_clients_by_year(date('Y', strtotime('last year'))); // Client tahun lalu
+				$data['client_tahun_depan'] = $this->Clients_model->get_clients_by_year(date('Y', strtotime('next year'))); // Client tahun depan
+				$data['total_client'] = $this->Clients_model->get_total_clients(); // Total client
 				
 				// Revenue bulan ini
 				$data['revenue_bulan_ini'] = $this->db->select_sum('total_paid')
@@ -174,10 +174,10 @@ class Aspanel extends CI_Controller {
 				cek_session_akses_staff_admin('panel', $this->session->id_session);
 				$month_now = date('Y-m');
 				$month_last = date('Y-m', strtotime('last month'));
-				$data['client_bulan_ini'] = $this->Clients_model->get_clients_by_month(date('Y-m'));
-				$data['client_bulan_lalu'] = $this->Clients_model->get_clients_by_month(date('Y-m', strtotime('last month')));
-				$data['client_bulan_depan'] = $this->Clients_model->get_clients_by_month(date('Y-m', strtotime('next month'))); // Client bulan depan
-				$data['total_client'] = $this->Clients_model->get_total_clients();
+				$data['client_tahun_ini'] = $this->Clients_model->get_clients_by_year(date('Y'));  // Client tahun ini
+				$data['client_tahun_lalu'] = $this->Clients_model->get_clients_by_year(date('Y', strtotime('last year'))); // Client tahun lalu
+				$data['client_tahun_depan'] = $this->Clients_model->get_clients_by_year(date('Y', strtotime('next year'))); // Client tahun depan
+				$data['total_client'] = $this->Clients_model->get_total_clients(); // Total client
 				
 				
 				// Revenue bulan ini
