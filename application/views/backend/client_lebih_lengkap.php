@@ -35,7 +35,7 @@
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
                 <div class="flex justify-between items-center mb-4">
-                <h1 class="text-2xl font-bold">Detail Total Client</h1>
+                <h1 class="text-2xl font-bold">Detail Total Client2</h1>
                 <!-- Tombol Kembali -->
                 <a href="<?= site_url('panel') ?>" class="flex items-center gap-2 bg-blue-500 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
