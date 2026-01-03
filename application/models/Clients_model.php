@@ -103,4 +103,13 @@ class Clients_model extends CI_Model {
         }
         return $clients_per_year;
     }
+
+    public function get_client_with_transaction_id($month, $year) {
+        $this->db->select('id_session, client_name, location, tanggal_transaksi as transaction_date');
+        $this->db->from('clients');
+        $this->db->where('MONTH(wedding_date)', $month);
+        $this->db->where('YEAR(wedding_date)', $year);       
+        $this->db->order_by('wedding_date','DESC');
+        return $this->db->get()->result();
+    }
 }

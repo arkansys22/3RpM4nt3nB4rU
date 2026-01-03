@@ -793,11 +793,8 @@ class Aspanel extends CI_Controller {
 	}
 
 	public function client_lebih_lengkap_detail($year, $month) {
-	    // Format bulan dan tahun
-	    $formatted_month = sprintf('%04d-%02d', $year, $month);
-
 	    // Ambil data client berdasarkan bulan dan tahun
-	    $data['clients'] = $this->Clients_model->get_clients_by_month($formatted_month);
+	    $data['clients'] = $this->Clients_model->get_client_with_transaction_id($month, $year);
 
 	    // Tambahkan informasi bulan dan tahun ke data
 	    $data['year'] = $year;
