@@ -757,12 +757,7 @@ class Aspanel extends CI_Controller {
 	    $date_end_of_last_month = date('Y-m-t', strtotime('last month')); // End of last month
 
 	    // Revenue bulan ini
-	    $revenue_bulan_ini = $this->db->select_sum('total_paid')
-	        ->where('DATE(date) >=', $date_start_of_month)
-	        ->where('DATE(date) <=', $date_now)
-	        ->where('status', 'Paid')
-	        ->get('payment')
-	        ->row();
+	    
 
 	    $estimasi_revenue_bulan_ini = $this->db
 	    	->select_sum('project.value')	    	
@@ -772,6 +767,15 @@ class Aspanel extends CI_Controller {
 	        ->where('DATE(date) <=', $date_now)
 	        ->where('user.id_session', $this->session->id_session)
 	        ->where('payment.status', 'Paid')
+	        ->get('payment')
+	        ->row();
+
+	    $estimasi_komisi_bulan_ini = $estimasi_revenue_bulan_ini->value * 2.5 / 100;
+
+	    $revenue_bulan_ini = $this->db->select_sum('total_paid')
+	        ->where('DATE(date) >=', $date_start_of_month)
+	        ->where('DATE(date) <=', $date_now)
+	        ->where('status', 'Paid')
 	        ->get('payment')
 	        ->row();
 
@@ -799,6 +803,8 @@ class Aspanel extends CI_Controller {
 	        ->row();
 
 	    $total_net_revenue = $total_revenue_all->total_paid - $total_project_acc->nominal_transaksi;
+
+
 
 
 	    $expense_bulan_ini = $this->db->select_sum('nominal_transaksi')
@@ -832,9 +838,10 @@ class Aspanel extends CI_Controller {
 	    }
 
 	    echo json_encode([
+	    	'estimasi_revenue_bulan_ini' => $estimasi_revenue_bulan_ini->value ?? 0,
+	        'estimasi_komisi_bulan_ini' => $estimasi_komisi_bulan_ini->value ?? 0,
 	        'revenue_bulan_ini' => $revenue_bulan_ini->total_paid ?? 0,
 	        'revenue_bulan_lalu' => $revenue_bulan_lalu->total_paid ?? 0,
-	        'estimasi_revenue_bulan_ini' => $estimasi_revenue_bulan_ini->value ?? 0,
 	        'total_revenue_all' => $total_revenue_all->total_paid ?? 0,
 	        'total_pending_revenue' => $total_pending_revenue->total_paid ?? 0,
 	        'total_project_acc' => $total_project_acc->nominal_transaksi ?? 0,
