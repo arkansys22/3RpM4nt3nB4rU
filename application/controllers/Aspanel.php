@@ -770,7 +770,6 @@ class Aspanel extends CI_Controller {
 			->join('user', 'user.id_session = project.closing_user_idsession')
 	        ->where('DATE(date) >=', $date_start_of_month)
 	        ->where('DATE(date) <=', $date_now)
-	        ->where('status', 'Paid')
 	        ->where('user.id_session', $this->session->id_session)
 	        ->get('payment')
 	        ->row();
