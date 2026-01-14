@@ -771,6 +771,7 @@ class Aspanel extends CI_Controller {
 	        ->where('DATE(date) >=', $date_start_of_month)
 	        ->where('DATE(date) <=', $date_now)
 	        ->where('user.id_session', $this->session->id_session)
+	        ->where('payment.status', 'Paid')
 	        ->get('payment')
 	        ->row();
 
