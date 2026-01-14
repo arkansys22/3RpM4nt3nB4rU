@@ -231,7 +231,7 @@ class Aspanel extends CI_Controller {
 					->from('payment')
 					->join('project', 'project.id_session = payment.id_session', 'inner')
 					->join('user', 'user.id_session = project.closing_user_idsession', 'inner')
-					->where('DATE_FORMAT(payment.date, "%Y-%m") =', $month_now)
+					->where('DATE_FORMAT(date, "%Y-%m") =', $month_now)
 					->where('user.id_session', $this->session->id_session)				
 					->get()
 					->row();
