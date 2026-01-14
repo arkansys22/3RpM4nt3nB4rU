@@ -225,10 +225,15 @@ class Aspanel extends CI_Controller {
 				$data['total_client'] = $this->Clients_model->get_total_clients(); // Total client
 				
 				
-				// Revenue bulan ini
-				$data['revenue_bulan_ini'] = $this->db->select_sum('total_paid')
-					->where('DATE_FORMAT(date, "%Y-%m") =', $month_now)
-					->get('payment')
+				// Estimasi Revenue bulan ini
+				$data['estimasi_revenue_bulan_ini'] = $this->db
+					->select_sum('total_paid')
+					->from('payment')
+					->join('project', 'project.id_session = payment.id_session', 'inner')
+					->join('user', 'user.id_session = project.closing_user_idsession', 'inner')
+					->where('DATE_FORMAT(payment.date, "%Y-%m") =', $month_now)
+					->where('user.id_session', $id_session)				
+					->get()
 					->row();
 
 				// Revenue bulan lalu
