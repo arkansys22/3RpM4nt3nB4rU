@@ -228,8 +228,12 @@ class Aspanel extends CI_Controller {
 				// Estimasi Revenue bulan ini
 				$data['estimasi_revenue_bulan_ini'] = $this->db
 					->select_sum('total_paid')
-					->where('DATE_FORMAT(date, "%Y-%m") =', $month_now)			
-					->get('payment')
+					->from('payment')
+					->join('project', 'project.id_session = payment.id_session', 'inner')
+					->join('user', 'user.id_session = project.closing_user_idsession', 'inner')
+					->where('DATE_FORMAT(date, "%Y-%m") =', $month_now)
+					->where('user.id_session', $this->session->id_session)				
+					->get()
 					->row();
 
 				// Revenue bulan lalu
@@ -754,6 +758,13 @@ class Aspanel extends CI_Controller {
 
 	    // Revenue bulan ini
 	    $revenue_bulan_ini = $this->db->select_sum('total_paid')
+	        ->where('DATE(date) >=', $date_start_of_month)
+	        ->where('DATE(date) <=', $date_now)
+	        ->where('status', 'Paid')
+	        ->get('payment')
+	        ->row();
+
+	    $estimasi_revenue_bulan_ini = $this->db->select_sum('total_paid')
 	        ->where('DATE(date) >=', $date_start_of_month)
 	        ->where('DATE(date) <=', $date_now)
 	        ->where('status', 'Paid')
