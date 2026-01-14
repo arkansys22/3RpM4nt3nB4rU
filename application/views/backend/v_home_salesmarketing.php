@@ -123,7 +123,7 @@
 								</div>
 								<div class="flex items-center justify-between gap-1">
 									<p class="text-sm font-medium">Estimasi Komisi</p>
-										<p id="estimasi_komisi" class="text-sm font-medium">Rp 0</p>
+										<p id="estimasi_komisi_bulan_ini" class="text-sm font-medium">Rp 0</p>
 								</div>
 								<div class="flex items-center justify-between gap-1">
 								    <p class="text-sm font-medium">
@@ -283,6 +283,7 @@
             .then(data => {
                 document.querySelector('#revenue_bulan_ini').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.revenue_bulan_ini)}`;
                 document.querySelector('#estimasi_revenue_bulan_ini').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.estimasi_revenue_bulan_ini)}`;
+                document.querySelector('#estimasi_komisi_bulan_ini').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.estimasi_komisi_bulan_ini)}`;
                 document.querySelector('#revenue_bulan_lalu').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.revenue_bulan_lalu)}`;
                 document.querySelector('#total_revenue_all').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.total_revenue_all)}`;
                 document.querySelector('#total_net_revenue').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.total_net_revenue)}`;
