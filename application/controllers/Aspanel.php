@@ -228,9 +228,8 @@ class Aspanel extends CI_Controller {
 				// Estimasi Revenue bulan ini
 				$data['estimasi_revenue_bulan_ini'] = $this->db
 					->select_sum('total_paid')
-					->from('payment')
 					->where('DATE_FORMAT(date, "%Y-%m") =', $month_now)			
-					->get()
+					->get('payment')
 					->row();
 
 				// Revenue bulan lalu
