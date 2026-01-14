@@ -227,7 +227,7 @@ class Aspanel extends CI_Controller {
 				
 				// Estimasi Revenue bulan ini
 				$data['estimasi_revenue_bulan_ini'] = $this->db
-					->select_sum('total_paid')
+					->select_sum('project.value')
 					->from('payment')
 					->join('project', 'project.id_session = payment.id_session', 'inner')
 					->join('user', 'user.id_session = project.closing_user_idsession', 'inner')
@@ -834,7 +834,7 @@ class Aspanel extends CI_Controller {
 	    echo json_encode([
 	        'revenue_bulan_ini' => $revenue_bulan_ini->total_paid ?? 0,
 	        'revenue_bulan_lalu' => $revenue_bulan_lalu->total_paid ?? 0,
-	        'estimasi_revenue_bulan_ini' => $estimasi_revenue_bulan_ini->total_paid ?? 0,
+	        'estimasi_revenue_bulan_ini' => $estimasi_revenue_bulan_ini->value ?? 0,
 	        'total_revenue_all' => $total_revenue_all->total_paid ?? 0,
 	        'total_pending_revenue' => $total_pending_revenue->total_paid ?? 0,
 	        'total_project_acc' => $total_project_acc->nominal_transaksi ?? 0,
