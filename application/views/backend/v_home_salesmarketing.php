@@ -111,7 +111,6 @@
 									<p class="text-sm font-medium">Target</p>
 										<p id="revenue_bulan_ini" class="text-sm font-medium">Rp 0</p>
 								</div>
-
 								<!-- Pemasukan Bulan Lalu -->
 								<div class="flex items-center justify-between gap-1">
 									<p class="text-sm font-medium">Pencapaian</p>
@@ -120,6 +119,10 @@
 								<!-- Total Revenue Semua -->
 								<div class="flex items-center justify-between gap-1">
 									<p class="text-sm font-medium">Hasil Pencapaian</p>
+										<p id="total_revenue_all" class="text-sm font-medium">Rp 0</p>
+								</div>
+								<div class="flex items-center justify-between gap-1">
+									<p class="text-sm font-medium">Etimasi Komisi</p>
 										<p id="total_revenue_all" class="text-sm font-medium">Rp 0</p>
 								</div>
 								<div class="flex items-center justify-between gap-1">
