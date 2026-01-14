@@ -230,7 +230,6 @@ class Aspanel extends CI_Controller {
 					->select_sum('total_paid')
 					->from('payment')
 					->join('project', 'project.id_session = payment.id_session', 'inner')
-					->join('user', 'user.id_session = project.closing_user_idsession', 'inner')
 					->where('DATE_FORMAT(date, "%Y-%m") =', $month_now)			
 					->get()
 					->row();
