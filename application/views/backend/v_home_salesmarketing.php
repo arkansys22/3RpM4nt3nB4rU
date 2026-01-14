@@ -114,7 +114,7 @@
 								<!-- Pemasukan Bulan Lalu -->
 								<div class="flex items-center justify-between gap-1">
 									<p class="text-sm font-medium">Pencapaian</p>
-										<p id="revenue_bulan_lalu" class="text-sm font-medium">Rp 0</p>
+										<p id="estimasi_revenue_bulan_ini" class="text-sm font-medium">Rp 0</p>
 								</div>
 								<!-- Total Revenue Semua -->
 								<div class="flex items-center justify-between gap-1">
