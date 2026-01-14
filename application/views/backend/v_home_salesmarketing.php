@@ -100,7 +100,7 @@
 							<div class="flex items-center justify-between">
 								<div class="flex items-center gap-2.5">
 									<h4 class="text-xl font-bold">
-										Estimation Revenue Bulan Ini
+										Estimasi Revenue Bulan Ini
 									</h4>
 								</div>
 							</div>
@@ -139,14 +139,14 @@
 		                          <h4
 		                            class="text-xl font-bold"
 		                          >
-		                            Expenses 
+		                            Pencapaian Revenue
 		                          </h4>
 		                        </div>		                        
 	                      	</div>
 	                      	<div class="mt-5.5 flex flex-col gap-1.5">
 								<!-- Total Revenue Bulan Ini -->
 								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium">Bulan Ini</p>
+									<p class="text-sm font-medium">Tahun Ini</p>
 										<p id="expense_bulan_ini" class="text-sm font-medium">
 
 										</p>
@@ -154,14 +154,14 @@
 
 								<!-- Pemasukan Bulan Lalu -->
 								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium">Bulan Lalu</p>
+									<p class="text-sm font-medium">Tahun Lalu</p>
 										<p id="expense_bulan_lalu" class="text-sm font-medium">
 
 										</p>
 								</div>
 								<!-- Total Revenue Semua -->
 								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium">Total Expenses</p>
+									<p class="text-sm font-medium">Total</p>
 										<p id="total_expense_all" class="text-sm font-medium">Rp 0</p>
 								</div>
 								<!-- asdasdsadas -->
