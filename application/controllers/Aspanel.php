@@ -257,7 +257,7 @@ class Aspanel extends CI_Controller {
 					$data['events'] = $this->db->get()->result_array();
 					$this->load->view('backend/v_home_staff', $data);
 				} else {
-					$this->load->view('backend/v_home', $data);
+					$this->load->view('backend/v_home_salesmarketing', $data);
 				}
 		
 			} else if ($this->session->level == '5') {
