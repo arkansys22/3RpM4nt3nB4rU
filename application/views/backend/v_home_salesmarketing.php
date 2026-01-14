@@ -122,7 +122,7 @@
 										<p id="total_revenue_all" class="text-sm font-medium">Rp 0</p>
 								</div>
 								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium">Etimasi Komisi</p>
+									<p class="text-sm font-medium">Estimasi Komisi</p>
 										<p id="total_revenue_all" class="text-sm font-medium">Rp 0</p>
 								</div>
 								<div class="flex items-center justify-between gap-1">
