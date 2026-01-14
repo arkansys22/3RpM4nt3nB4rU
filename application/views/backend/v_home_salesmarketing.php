@@ -182,29 +182,7 @@
 
 
 	                    </div>
-
-	                    <div class="swiper-slide border-r border-stroke px-10 last:border-r-0 dark:border-strokedark">
-	                      	<div class="flex items-center justify-between">
-		                        <div class="flex items-center gap-2.5">
-		                          <h4 class="text-xl font-bold">
-		                            Profit
-		                          </h4>
-		                        </div>		                        
-	                      	</div>
-			                <div class="mt-5.5 flex flex-col gap-1.5">
-									<!-- Total Revenue Bulan Ini -->
-									<div class="flex items-center justify-between gap-1">
-										<p class="text-sm font-medium">Gross Profit</p>
-											<p id="total_gross_profit" class="text-sm font-medium">Rp 0</p>
-									</div>
-
-									<!-- Pemasukan Bulan Lalu -->
-									<div class="flex items-center justify-between gap-1">
-										<p class="text-sm font-medium">Net Profit</p>
-											<p id="total_net_profit" class="text-sm font-medium">Rp 0</p>
-									</div>
-							</div>
-	                    </div>                  
+	                                      
 	                  </div>
 	                </div>
 
