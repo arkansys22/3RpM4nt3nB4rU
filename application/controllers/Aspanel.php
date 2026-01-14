@@ -215,6 +215,51 @@ class Aspanel extends CI_Controller {
 					$this->load->view('backend/v_home', $data);
 				}
 		
+			}else if ($this->session->level == '9') {
+				cek_session_akses_staff_sales('panel', $this->session->id_session);
+				$month_now = date('Y-m');
+				$month_last = date('Y-m', strtotime('last month'));
+				$data['client_tahun_ini'] = $this->Clients_model->get_clients_by_year(date('Y'));  // Client tahun ini
+				$data['client_tahun_lalu'] = $this->Clients_model->get_clients_by_year(date('Y', strtotime('last year'))); // Client tahun lalu
+				$data['client_tahun_depan'] = $this->Clients_model->get_clients_by_year(date('Y', strtotime('next year'))); // Client tahun depan
+				$data['total_client'] = $this->Clients_model->get_total_clients(); // Total client
+				
+				
+				// Revenue bulan ini
+				$data['revenue_bulan_ini'] = $this->db->select_sum('total_paid')
+					->where('DATE_FORMAT(date, "%Y-%m") =', $month_now)
+					->get('payment')
+					->row();
+
+				// Revenue bulan lalu
+				$data['revenue_bulan_lalu'] = $this->db->select_sum('total_paid')
+					->where('DATE_FORMAT(date, "%Y-%m") =', $month_last)
+					->get('payment')
+					->row();
+
+				// Total revenue all
+				$data['total_revenue_all'] = $this->db->select_sum('total_bill')
+					->get('payment')
+					->row();
+
+				// Hitung persentase perubahan revenue
+				$data['percent_change'] = null;
+				if ($data['revenue_bulan_ini'] && $data['revenue_bulan_lalu'] && $data['revenue_bulan_lalu']->total_paid != 0) {
+					$data['percent_change'] = (($data['revenue_bulan_ini']->total_paid - $data['revenue_bulan_lalu']->total_paid) / $data['revenue_bulan_lalu']->total_paid) * 100;
+				}
+				if ($view === 'staff') {
+					$this->db->select('project.event_date, project.location, project.client_name, crew_projects.role, crew_projects.project_id');
+					$this->db->from('user');
+					$this->db->join('crew_projects', 'user.crews_idsession = crew_projects.crew_id');
+					$this->db->join('project', 'crew_projects.project_id = project.id_session');
+					$this->db->where('user.id_session', $this->session->id_session);
+					$this->db->order_by('project.event_date', 'DESC');
+					$data['events'] = $this->db->get()->result_array();
+					$this->load->view('backend/v_home_staff', $data);
+				} else {
+					$this->load->view('backend/v_home', $data);
+				}
+		
 			} else if ($this->session->level == '5') {
 				cek_session_akses_client('panel', $this->session->id_session);
 				$data['aaa'] = '';

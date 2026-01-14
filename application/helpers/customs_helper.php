@@ -31,6 +31,14 @@ function cek_session_akses_staff_admin($id){
   }
 }
 
+function cek_session_akses_staff_sales($id){
+  $ci = & get_instance();
+  $session = $ci->db->query("SELECT * FROM user WHERE user.id_session='$id'")->num_rows();
+  if ($session == '0' AND $ci->session->userdata('level') != '9'){
+    redirect(base_url().'panel');
+  }
+}
+
 function cek_session_akses_client($id){
   $ci = & get_instance();
   $session = $ci->db->query("SELECT * FROM user WHERE user.id_session='$id'")->num_rows();

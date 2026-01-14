@@ -59,6 +59,21 @@ class crud_potensial_clients extends CI_Controller {
             $data['potensial_clients_batal'] = $this->Potensial_model->get_clients_by_status('Batal');
     
             $this->load->view('potensial_clients/index', $data);
+        } else if ($this->session->level == '9') {
+            cek_session_akses_staff_sales('potensial-clients', $this->session->id_session);
+            
+            // Ambil semua data potensial clients
+            $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients();
+    
+            // Ambil data berdasarkan status tertentu
+            $data['potensial_clients_tanya'] = $this->Potensial_model->get_clients_by_status('Tanya-tanya');
+            $data['potensial_clients_hot'] = $this->Potensial_model->get_clients_by_status('Hot');
+            $data['potensial_clients_konsul'] = $this->Potensial_model->get_clients_by_status('Konsul');
+            $data['potensial_clients_deal'] = $this->Potensial_model->get_clients_by_status('Deal');
+            $data['potensial_clients_ghosting'] = $this->Potensial_model->get_clients_by_status('Ghosting');
+            $data['potensial_clients_batal'] = $this->Potensial_model->get_clients_by_status('Batal');
+    
+            $this->load->view('potensial_clients/index', $data);
         } else if ($this->session->level == '5') {
             cek_session_akses_client('potensial-clients', $this->session->id_session);
             $data['aaa'] = '';
@@ -88,6 +103,12 @@ class crud_potensial_clients extends CI_Controller {
 
             }else if($this->session->level=='4'){
                 cek_session_akses_staff_admin('potensial-clients',$this->session->id_session);
+                $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_hot(); // Ubah pemanggilan model
+                $data['potensial_clients_hot'] = $this->Potensial_model->get_clients_by_status('Hot');
+                $this->load->view('potensial_clients/index_hot', $data);
+
+            }else if($this->session->level=='9'){
+                cek_session_akses_staff_sales('potensial-clients',$this->session->id_session);
                 $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_hot(); // Ubah pemanggilan model
                 $data['potensial_clients_hot'] = $this->Potensial_model->get_clients_by_status('Hot');
                 $this->load->view('potensial_clients/index_hot', $data);
@@ -126,6 +147,12 @@ class crud_potensial_clients extends CI_Controller {
                 $data['potensial_clients_konsul'] = $this->Potensial_model->get_clients_by_status('Konsul');
                 $this->load->view('potensial_clients/index_konsul', $data);
 
+            }else if($this->session->level=='9'){
+                cek_session_akses_staff_sales('potensial-clients',$this->session->id_session);
+                $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_konsul(); // Ubah pemanggilan model
+                $data['potensial_clients_konsul'] = $this->Potensial_model->get_clients_by_status('Konsul');
+                $this->load->view('potensial_clients/index_konsul', $data);
+
             }else if($this->session->level=='5'){
                 cek_session_akses_client('potensial-clients',$this->session->id_session);
                 redirect(base_url());
@@ -155,6 +182,12 @@ class crud_potensial_clients extends CI_Controller {
 
             }else if($this->session->level=='4'){
                 cek_session_akses_staff_admin('potensial-clients',$this->session->id_session);
+                $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_bayar(); // Ubah pemanggilan model
+                $data['potensial_clients_deal'] = $this->Potensial_model->get_clients_by_status('Deal');
+                $this->load->view('potensial_clients/index_bayar', $data);
+
+            }else if($this->session->level=='9'){
+                cek_session_akses_staff_sales('potensial-clients',$this->session->id_session);
                 $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_bayar(); // Ubah pemanggilan model
                 $data['potensial_clients_deal'] = $this->Potensial_model->get_clients_by_status('Deal');
                 $this->load->view('potensial_clients/index_bayar', $data);
@@ -193,6 +226,12 @@ class crud_potensial_clients extends CI_Controller {
                 $data['potensial_clients_ghosting'] = $this->Potensial_model->get_clients_by_status('Ghosting');
                 $this->load->view('potensial_clients/index_ghosting', $data);
 
+            }else if($this->session->level=='9'){
+                cek_session_akses_staff_sales('potensial-clients',$this->session->id_session);
+                $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_ghosting(); // Ubah pemanggilan model
+                $data['potensial_clients_ghosting'] = $this->Potensial_model->get_clients_by_status('Ghosting');
+                $this->load->view('potensial_clients/index_ghosting', $data);
+
             }else if($this->session->level=='5'){
                 cek_session_akses_client('potensial-clients',$this->session->id_session);
                 redirect(base_url());
@@ -226,6 +265,12 @@ class crud_potensial_clients extends CI_Controller {
                 $data['potensial_clients_batal'] = $this->Potensial_model->get_clients_by_status('Batal');
                 $this->load->view('potensial_clients/index_batal', $data);
 
+            }else if($this->session->level=='9'){
+                cek_session_akses_staff_sales('potensial-clients',$this->session->id_session);
+                $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_batal(); // Ubah pemanggilan model
+                $data['potensial_clients_batal'] = $this->Potensial_model->get_clients_by_status('Batal');
+                $this->load->view('potensial_clients/index_batal', $data);
+
             }else if($this->session->level=='5'){
                 cek_session_akses_client('potensial-clients',$this->session->id_session);
                 redirect(base_url());
@@ -251,6 +296,10 @@ class crud_potensial_clients extends CI_Controller {
 
             }else if($this->session->level=='4'){
                 cek_session_akses_staff_admin('potensial-clients',$this->session->id_session);
+                $this->load->view('potensial_clients/create');
+
+            }else if($this->session->level=='9'){
+                cek_session_akses_staff_sales('potensial-clients',$this->session->id_session);
                 $this->load->view('potensial_clients/create');
 
             }else if($this->session->level=='5'){
@@ -344,6 +393,12 @@ class crud_potensial_clients extends CI_Controller {
                 $data['logactivity'] = $this->Potensial_model->get_logactivity_by_session($id_session);
                 $this->load->view('potensial_clients/lihat', $data);
 
+            }else if($this->session->level=='9'){
+                cek_session_akses_staff_sales('potensial-clients',$this->session->id_session);
+                $data['pc'] = $this->Potensial_model->get_potensial_clients_by_session($id_session);
+                $data['logactivity'] = $this->Potensial_model->get_logactivity_by_session($id_session);
+                $this->load->view('potensial_clients/lihat', $data);
+
             }else if($this->session->level=='5'){
                 cek_session_akses_client('potensial-clients',$this->session->id_session);
                 redirect(base_url());
@@ -371,6 +426,11 @@ class crud_potensial_clients extends CI_Controller {
 
             }else if($this->session->level=='4'){
                 cek_session_akses_staff_admin('potensial-clients',$this->session->id_session);
+                $data['pc'] = $this->Potensial_model->get_potensial_clients_by_session($id_session);
+                $this->load->view('potensial_clients/edit', $data);
+
+            }else if($this->session->level=='9'){
+                cek_session_akses_staff_sales('potensial-clients',$this->session->id_session);
                 $data['pc'] = $this->Potensial_model->get_potensial_clients_by_session($id_session);
                 $this->load->view('potensial_clients/edit', $data);
 
@@ -438,7 +498,7 @@ class crud_potensial_clients extends CI_Controller {
 
     public function delete($id_session) {
 
-        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
+        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='9'){
 
         
 
@@ -506,6 +566,11 @@ class crud_potensial_clients extends CI_Controller {
 
             }else if($this->session->level=='4'){
                 cek_session_akses_staff_admin('potensial-clients',$this->session->id_session);
+                $data['potensial_clients'] = $this->Potensial_model->get_deleted_potensial_clients();  // Get projects with status 'delete'
+                $this->load->view('potensial_clients/recycle_bin', $data);
+
+            }else if($this->session->level=='9'){
+                cek_session_akses_staff_sales('potensial-clients',$this->session->id_session);
                 $data['potensial_clients'] = $this->Potensial_model->get_deleted_potensial_clients();  // Get projects with status 'delete'
                 $this->load->view('potensial_clients/recycle_bin', $data);
 
