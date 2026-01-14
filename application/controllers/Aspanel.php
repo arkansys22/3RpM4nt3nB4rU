@@ -765,7 +765,7 @@ class Aspanel extends CI_Controller {
 	        ->row();
 
 	    $estimasi_revenue_bulan_ini = $this->db
-	    	->select_sum('total_paid')	    	
+	    	->select_sum('project.value')	    	
 			->join('project', 'project.id_session = payment.id_session')
 			->join('user', 'user.id_session = project.closing_user_idsession')
 	        ->where('DATE(date) >=', $date_start_of_month)
