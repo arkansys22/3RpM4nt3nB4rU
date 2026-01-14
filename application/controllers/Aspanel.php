@@ -830,6 +830,7 @@ class Aspanel extends CI_Controller {
 	    echo json_encode([
 	        'revenue_bulan_ini' => $revenue_bulan_ini->total_paid ?? 0,
 	        'revenue_bulan_lalu' => $revenue_bulan_lalu->total_paid ?? 0,
+	        'estimasi_revenue_bulan_ini' => $estimasi_revenue_bulan_ini->total_paid ?? 0,
 	        'total_revenue_all' => $total_revenue_all->total_paid ?? 0,
 	        'total_pending_revenue' => $total_pending_revenue->total_paid ?? 0,
 	        'total_project_acc' => $total_project_acc->nominal_transaksi ?? 0,
