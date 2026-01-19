@@ -265,7 +265,7 @@
                     <tbody>
                     <?php $no = 1; foreach ($ops as $p): ?>
                       <tr>
-                        <td><?= $p->tanggal_transaksi ?></td>
+                        <td><?= $p->tanggal_transaksi ?></td> 
                         
                         <td><?= $p->nama_transaksi ?></td>
                         <td><?= "Rp " . number_format($p->nominal_transaksi, 0, ',', '.'); ?></td>                
