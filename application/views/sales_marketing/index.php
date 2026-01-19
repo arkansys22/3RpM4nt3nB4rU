@@ -266,8 +266,12 @@
                     <?php $no = 1; foreach ($ops as $p): ?>
                       <tr>
                         <td><?= $p->targetsales_periode ?></td> 
+
+                        <?php 
+                          $user = $this->Crud_m->view_where('user', array('id_session' => $p->user_id_session))->row();
+                        ?>
                         
-                        <td><?= $p->user_id_session ?></td>
+                        <td><?= $user->nama ?></td>
                         <td><?= "Rp " . number_format($p->targetsales_nominal, 0, ',', '.'); ?></td>                
                         <td>
                         <div class="flex flex-col items-start gap-2 w-max">
