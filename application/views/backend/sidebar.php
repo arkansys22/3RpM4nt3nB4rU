@@ -585,7 +585,7 @@
 					              		<li>
 						                  <a
 						                    class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
-						                    href="<?= base_url('setting-target'); ?>"
+						                    href="<?= base_url('sales-setting-target'); ?>"
 						                    :class="page === 'kanban' && '!text-white'"
 						                    >Setting Target</a>
 						                </li>
