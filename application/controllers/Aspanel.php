@@ -751,12 +751,8 @@ class Aspanel extends CI_Controller {
 	    $date_start_of_last_month = date('Y-m-01', strtotime('first day of last month')); // Start of last month
 	    $date_end_of_last_month = date('Y-m-t', strtotime('last month')); // End of last month
 
-
-
-	  
-
-
 	    // Revenue bulan ini  
+
 	    $estimasi_revenue_bulan_ini = $this->db
 	    	->select_sum('project.value')	    	
 			->join('project', 'project.id_session = payment.id_session')
@@ -836,10 +832,8 @@ class Aspanel extends CI_Controller {
 	    }
 
 	    echo json_encode([
-	    	
 	    	'estimasi_revenue_bulan_ini' => $estimasi_revenue_bulan_ini->value ?? 0,
 	        'estimasi_komisi_bulan_ini' => $estimasi_komisi_bulan_ini,
-
 	        'revenue_bulan_ini' => $revenue_bulan_ini->total_paid ?? 0,
 	        'revenue_bulan_lalu' => $revenue_bulan_lalu->total_paid ?? 0,
 	        'total_revenue_all' => $total_revenue_all->total_paid ?? 0,
@@ -849,7 +843,6 @@ class Aspanel extends CI_Controller {
 	        'expense_bulan_ini' => $expense_bulan_ini->nominal_transaksi ?? 0,
 	        'expense_bulan_lalu' => $expense_bulan_lalu->nominal_transaksi ?? 0,
 	        'total_expense_all' => $total_expense_all->nominal_transaksi ?? 0,
-
 	        'total_gross_profit' => $total_gross_profit,
 	        'total_net_profit' => $total_net_profit,
 	        'percent_change' => $percent_change
