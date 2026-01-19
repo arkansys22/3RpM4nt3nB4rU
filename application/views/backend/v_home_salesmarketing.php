@@ -155,8 +155,12 @@
 								</div>
 								<!-- Total Revenue Semua -->
 								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium">Total</p>
-										<p id="total_capaian" class="text-sm font-medium">Rp 0</p>
+									<p class="text-sm font-medium">Keseluruhan</p>
+										<p id="estimasi_revenue_all_time" class="text-sm font-medium">Rp 0</p>
+								</div>
+								<div class="flex items-center justify-between gap-1">
+									<p class="text-sm font-medium">Komisi Total</p>
+										<p id="estimasi_komisi_total" class="text-sm font-medium">Rp 0</p>
 								</div>
 								<!-- asdasdsadas -->
 								<?php  if($this->session->level=='1' OR $this->session->level=='2'){ ?>
@@ -279,6 +283,8 @@
 
                 document.querySelector('#estimasi_revenue_tahun_ini').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.estimasi_revenue_tahun_ini)}`;
                 document.querySelector('#estimasi_revenue_tahun_lalu').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.estimasi_revenue_tahun_lalu)}`;
+                document.querySelector('#estimasi_revenue_all_time').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.estimasi_revenue_all_time)}`;
+                document.querySelector('#estimasi_komisi_total').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.estimasi_komisi_total)}`;
 
                  document.querySelector('#revenue_bulan_ini').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.revenue_bulan_ini)}`;
                 document.querySelector('#revenue_bulan_lalu').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.revenue_bulan_lalu)}`;

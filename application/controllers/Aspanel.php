@@ -841,6 +841,18 @@ class Aspanel extends CI_Controller {
 		    ->row();
 
 
+
+		$estimasi_revenue_all_time = $this->db
+		    ->select_sum('project.value', 'value')
+		    ->join('project', 'project.id_session = payment.id_session')
+		    ->join('user', 'user.id_session = project.closing_user_idsession')
+		    ->where('user.id_session', $this->session->id_session)
+		    ->where('payment.status', 'Paid')
+		    ->get('payment')
+		    ->row();
+
+		$estimasi_komisi_total = $estimasi_revenue_all_time->value * 2.5 / 100;
+
 	    $expense_bulan_ini = $this->db->select_sum('nominal_transaksi')
 	    	->where('DATE(tanggal_transaksi) >=', $date_start_of_month)
 	        ->where('DATE(tanggal_transaksi) <=', $date_now)
@@ -876,9 +888,10 @@ class Aspanel extends CI_Controller {
 	    	'target_nominal' => $target_nominal,
 	        'hasil_target' => $hasil_target,
 	        'estimasi_komisi_bulan_ini' => $estimasi_komisi_bulan_ini,
+	        'estimasi_komisi_total' => $estimasi_komisi_total,
 	        'estimasi_revenue_tahun_ini' => $estimasi_revenue_tahun_ini->value ?? 0,
 	        'estimasi_revenue_tahun_lalu' => $estimasi_revenue_tahun_lalu->value ?? 0,
-
+	        'estimasi_revenue_all_time' => $estimasi_revenue_all_time->value ?? 0,
 	        'revenue_bulan_ini' => $revenue_bulan_ini->total_paid ?? 0,
 	        'revenue_bulan_lalu' => $revenue_bulan_lalu->total_paid ?? 0,
 	        'total_revenue_all' => $total_revenue_all->total_paid ?? 0,
