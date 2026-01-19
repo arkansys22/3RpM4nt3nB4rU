@@ -22,9 +22,9 @@ class Salesmarketing_model extends CI_Model {
         return $this->db->get_where('targetsales', ['targetsales_idsession' => $id_session])->row();
     }
 
-    public function update_operational($id_session, $data) {
-        $this->db->where('id_session', $id_session);
-        return $this->db->update('operational_acc', $data);
+    public function update_salesmarketing($id_session, $data) {
+        $this->db->where('targetsales_idsession', $id_session);
+        return $this->db->update('targetsales', $data);
     }
 
     public function insert_log_activity($data_log) {
@@ -106,8 +106,8 @@ class Salesmarketing_model extends CI_Model {
     }
 
     public function delete_permanent($id_session) {
-        $this->db->where('id_session', $id_session);
-        return $this->db->delete('operational_acc');
+        $this->db->where('targetsales_idsession', $id_session);
+        return $this->db->delete('targetsales');
     }
 
 

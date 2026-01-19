@@ -54,7 +54,7 @@
                 <input type="text"  value="<?= number_format($pc->targetsales_nominal ?? 0, 0, ',', '.') ?>"  class="w-full px-4 py-2 border rounded mb-4" oninput="formatNumber(this)" name="nominal"  required>
                 
                 <label class="block mb-2">Periode</label>
-                <select name="nama" class="w-full px-4 py-2 border rounded mb-4" required> 
+                <select name="periode" class="w-full px-4 py-2 border rounded mb-4" required> 
                         <option value="-">-</option>
                         <?php foreach ($periode as $p) {
 
