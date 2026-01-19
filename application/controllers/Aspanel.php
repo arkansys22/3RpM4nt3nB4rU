@@ -29,7 +29,7 @@ class Aspanel extends CI_Controller {
 			$level = $this->session->userdata('level');
 			$data['tampilkan_button_event'] = false;
 
-			if ($user && in_array($level, ['1', '2', '3', '4'])) {
+			if ($user && in_array($level, ['1', '2', '3', '4','9'])) {
 				if (!empty($user->crews_idsession) && $user->crews_idsession !== '-') {
 					$data['tampilkan_button_event'] = true;
 				}
