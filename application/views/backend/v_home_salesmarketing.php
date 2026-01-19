@@ -1,7 +1,3 @@
-<?php var_dump($bulan_ini);
-var_dump($target);
-die; ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
