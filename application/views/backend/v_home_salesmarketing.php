@@ -1,3 +1,7 @@
+<?php var_dump($bulan_ini);
+var_dump($target);
+die; ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
@@ -290,7 +294,7 @@
     document.querySelector('#hasil_target').textContent = rupiah(data.hasil_target);
     document.querySelector('#estimasi_komisi_bulan_ini').textContent = rupiah(data.estimasi_komisi_bulan_ini);
             	
-            	         
+
                 document.querySelector('#revenue_bulan_lalu').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.revenue_bulan_lalu)}`;
                 document.querySelector('#total_revenue_all').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.total_revenue_all)}`;
                 document.querySelector('#total_net_revenue').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.total_net_revenue)}`;
