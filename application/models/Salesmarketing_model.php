@@ -18,8 +18,8 @@ class Salesmarketing_model extends CI_Model {
         return $this->db->insert('targetsales', $data);        
     }
 
-    public function get_operational_by_session($id_session) {
-        return $this->db->get_where('operational_acc', ['id_session' => $id_session])->row();
+    public function get_salesmarketing_by_session($id_session) {
+        return $this->db->get_where('targetsales', ['targetsales_idsession' => $id_session])->row();
     }
 
     public function update_operational($id_session, $data) {

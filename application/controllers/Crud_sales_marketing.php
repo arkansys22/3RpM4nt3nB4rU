@@ -79,9 +79,6 @@ class crud_sales_marketing extends CI_Controller {
         if ($this->session->level=='1' OR $this->session->level=='2'){
             cek_session_akses_developer('sales-setting-target',$this->session->id_session);
             $data['user'] = $this->Crud_m->view_where_user_orderingss('user','id_user', 'asc');
-
-
-
             $year = date('Y');
             $periode = [];
             for ($m = 1; $m <= 12; $m++) {
@@ -92,8 +89,6 @@ class crud_sales_marketing extends CI_Controller {
                 ];
             }
             $data['periode'] = $periode;
-
-
          
             $this->load->view('sales_marketing/create', $data);
 
@@ -174,21 +169,23 @@ class crud_sales_marketing extends CI_Controller {
     }
 
     public function edit($id_session) {
-        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='5'){
-            cek_session_akses_developer('user',$this->session->id_session);
-            $data['kategori'] = $this->Crud_m->view_ordering('operational_kategori','nomer_kategori','asc');
-            $data['periode'] = $this->Crud_m->view_ordering('operational_acc_periode','operational_acc_periode_id','asc');
-            $data['pc'] = $this->Operational_model->get_operational_by_session($id_session);
+        if ($this->session->level=='1' OR $this->session->level=='2'){
+            cek_session_akses_developer('sales-setting-target',$this->session->id_session);
+            $data['user'] = $this->Crud_m->view_where_user_orderingss('user','id_user', 'asc');
+            $year = date('Y');
+            $periode = [];
+            for ($m = 1; $m <= 12; $m++) {
+                $periode[] = [
+                    'bulan' => $m,
+                    'label' => date('F', mktime(0, 0, 0, $m, 1)),
+                    'tahun' => $year
+                ];
+            }
+            $data['periode'] = $periode;
+
+            $data['pc'] = $this->Salesmarketing_model->get_salesmarketing_by_session($id_session);
             $this->load->view('operational/edit', $data);
             
-        }else if($this->session->level=='4'){
-            cek_session_akses_staff_admin('user',$this->session->id_session);
-            $data['level'] = $this->Crud_m->view_ordering('user_level','user_level_id','asc');
-            $data['crews'] = $this->Crud_m->view_ordering('crews','id','asc');
-            $data['clients'] = $this->Crud_m->view_ordering('clients','id','asc');
-            $data['pc'] = $this->Users2_model->get_users_by_session($id_session);
-            $this->load->view('operational/edit', $data);
-
         }else{
                 redirect(base_url());
             }
