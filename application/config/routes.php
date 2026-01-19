@@ -29,6 +29,18 @@ $route['user/recycle_bin'] = 'crud_user/recycle_bin'; // Halaman recycle bin
 $route['user/restore/(:any)'] = 'crud_user/restore/$1'; // Restore user
 $route['user/permanent_delete/(:any)'] = 'crud_user/permanent_delete/$1'; // Hapus permanen user
 
+$route['sales-setting-target'] = 'crud_sales_marketing/index'; // Menampilkan daftar user
+$route['finance-operational/periode/(:any)'] = 'crud_finance_operational/periode/$1'; // Menampilkan detail user
+$route['finance-operational/lihat/(:any)'] = 'crud_finance_operational/lihat/$1'; // Menampilkan detail user
+$route['finance-operational/create'] = 'crud_finance_operational/create'; // Menampilkan form tambah user
+$route['finance-operational/store'] = 'crud_finance_operational/store'; // Menyimpan data user baru
+$route['finance-operational/edit/(:any)'] = 'crud_finance_operational/edit/$1'; // Menampilkan form edit user
+$route['finance-operational/edit2/(:any)'] = 'crud_finance_operational/edit2/$1'; // Menampilkan form edit user
+$route['finance-operational/update/(:any)'] = 'crud_finance_operational/update/$1'; // Mengupdate user
+$route['finance-operational/update2/(:any)'] = 'crud_finance_operational/update2/$1'; // Mengupdate user
+$route['finance-operational/permanent_delete/(:any)'] = 'crud_finance_operational/permanent_delete/$1'; // Hapus permanen user
+
+
 $route['finance-operational'] = 'crud_finance_operational/index'; // Menampilkan daftar user
 $route['finance-operational/periode/(:any)'] = 'crud_finance_operational/periode/$1'; // Menampilkan detail user
 $route['finance-operational/lihat/(:any)'] = 'crud_finance_operational/lihat/$1'; // Menampilkan detail user
@@ -39,6 +51,8 @@ $route['finance-operational/edit2/(:any)'] = 'crud_finance_operational/edit2/$1'
 $route['finance-operational/update/(:any)'] = 'crud_finance_operational/update/$1'; // Mengupdate user
 $route['finance-operational/update2/(:any)'] = 'crud_finance_operational/update2/$1'; // Mengupdate user
 $route['finance-operational/permanent_delete/(:any)'] = 'crud_finance_operational/permanent_delete/$1'; // Hapus permanen user
+
+
 
 $route['project'] = 'crud_project/index'; // Menampilkan daftar project
 $route['project/create'] = 'crud_project/create'; // Menampilkan form tambah project
