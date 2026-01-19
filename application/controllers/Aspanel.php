@@ -778,7 +778,7 @@ class Aspanel extends CI_Controller {
 
 	    $estimasi_komisi_bulan_ini = $estimasi_revenue_bulan_ini->value * 2.5 / 100;
 
-	    $hasil_target = $target_nominal - $estimasi_revenue_bulan_ini->value;
+	    $hasil_target = $estimasi_revenue_bulan_ini->value - $target_nominal ;
 
 	    $revenue_bulan_ini = $this->db->select_sum('total_paid')
 	        ->where('DATE(date) >=', $date_start_of_month)
