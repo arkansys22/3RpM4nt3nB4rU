@@ -266,8 +266,8 @@
                     <?php $no = 1; foreach ($ops as $p): ?>
                       <tr>
                         <td><?= $p->tanggal_transaksi ?></td>
-                        <?php $kat= $this->Crud_m->view_where('operational_kategori', array('nomer_kategori'=> $p->kategori))->row(); ?>
-                        <td><?= $kat->nama_kategori ?></td>
+                        
+                        <td><?= $p->nama_transaksi ?></td>
                         <td><?= "Rp " . number_format($p->nominal_transaksi, 0, ',', '.'); ?></td>                
                         <td>
                         <div class="flex flex-col items-start gap-2 w-max">
