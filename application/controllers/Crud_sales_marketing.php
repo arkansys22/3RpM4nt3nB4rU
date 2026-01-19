@@ -184,7 +184,7 @@ class crud_sales_marketing extends CI_Controller {
             $data['periode'] = $periode;
 
             $data['pc'] = $this->Salesmarketing_model->get_salesmarketing_by_session($id_session);
-            $this->load->view('operational/edit', $data);
+            $this->load->view('sales_marketing/edit', $data);
             
         }else{
                 redirect(base_url());
