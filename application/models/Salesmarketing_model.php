@@ -10,7 +10,7 @@ class Salesmarketing_model extends CI_Model {
     }
 
     public function get_all_salesmarketing() {
-        $this->db->order_by('tanggalsales_periode', 'DESC');
+        $this->db->order_by('targetsales_periode', 'DESC');
         return $this->db->get('targetsales')->result();
     }
     
