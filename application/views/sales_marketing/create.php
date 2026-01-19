@@ -58,14 +58,10 @@
                 <label class="block mb-2">Periode</label>
                 <select name="periode" class="w-full px-4 py-2 border rounded mb-4" required> 
                         <option value="-">-</option>
-                        <?php foreach ($periode as $p) {
-                              if (empty($periode)){
-                                echo"
-                                <option value=''>-</option>
-                                <option value='$p[operational_acc_periode_id]'> $p[operational_acc_periode_nama]</option> ";
-                              }else{
-                                echo"<option value='$p[operational_acc_periode_id]'>$p[operational_acc_periode_nama]</option>";
-                           }
+                        <?php foreach ($periode as $p) { 
+                          
+                                echo"<option value='$p[tahun] $p[bulan]'>$p[tahun] $p[bulan]</option>";
+                         
                         } ?>
                 </select>
 

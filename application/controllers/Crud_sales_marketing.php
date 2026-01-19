@@ -79,6 +79,21 @@ class crud_sales_marketing extends CI_Controller {
         if ($this->session->level=='1' OR $this->session->level=='2'){
             cek_session_akses_developer('sales-setting-target',$this->session->id_session);
             $data['user'] = $this->Crud_m->view_where_user_orderingss('user','id_user', 'asc');
+
+
+
+            $year = date('Y');
+            $periode = [];
+            for ($m = 1; $m <= 12; $m++) {
+                $periode[] = [
+                    'bulan' => $m,
+                    'label' => date('F', mktime(0, 0, 0, $m, 1)),
+                    'tahun' => $year
+                ];
+            }
+            $data['periode'] = $periode;
+
+
          
             $this->load->view('sales_marketing/create', $data);
 
