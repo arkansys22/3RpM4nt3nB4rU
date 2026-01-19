@@ -846,6 +846,7 @@ class Aspanel extends CI_Controller {
 	    	
 	    	'estimasi_revenue_bulan_ini' => $estimasi_revenue_bulan_ini->value ?? 0,
 	        'estimasi_komisi_bulan_ini' => $estimasi_komisi_bulan_ini,
+	        'target_bulan_ini' => $target_bulan_ini->targetsales_nominal ?? 0,
 	        'revenue_bulan_ini' => $revenue_bulan_ini->total_paid ?? 0,
 	        'revenue_bulan_lalu' => $revenue_bulan_lalu->total_paid ?? 0,
 	        'total_revenue_all' => $total_revenue_all->total_paid ?? 0,
@@ -855,7 +856,7 @@ class Aspanel extends CI_Controller {
 	        'expense_bulan_ini' => $expense_bulan_ini->nominal_transaksi ?? 0,
 	        'expense_bulan_lalu' => $expense_bulan_lalu->nominal_transaksi ?? 0,
 	        'total_expense_all' => $total_expense_all->nominal_transaksi ?? 0,
-	        'target_bulan_ini' => $target_bulan_ini->targetsales_nominal ?? 0,
+
 	        'total_gross_profit' => $total_gross_profit,
 	        'total_net_profit' => $total_net_profit,
 	        'percent_change' => $percent_change
