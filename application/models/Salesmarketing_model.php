@@ -15,7 +15,7 @@ class Salesmarketing_model extends CI_Model {
     }
     
     public function insert($data) {
-        return $this->db->insert('operational_acc', $data);        
+        return $this->db->insert('targetsales', $data);        
     }
 
     public function get_operational_by_session($id_session) {

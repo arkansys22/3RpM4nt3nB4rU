@@ -124,18 +124,16 @@ class crud_sales_marketing extends CI_Controller {
                 }
 
         $data = array(
-            'id_session'    => $id_session2,
-            'nama_transaksi'  => $this->input->post('nama_transaksi'),
-            'tanggal_transaksi'  => $this->input->post('tgl_transaksi'),
-            'nominal_transaksi'        => str_replace('.', '', $this->input->post('nominal')),
-            'kategori'    => $this->input->post('kategori'),     
-            'periode'    => $this->input->post('periode'),         
+            'targetsales_idsession'    => $id_session2,
+            'user_id_session'  => $this->input->post('nama'),
+            'targetsales_periode'  => $this->input->post('periode'),
+            'targetsales_nominal'        => str_replace('.', '', $this->input->post('nominal')),               
             'create_by'     => $this->session->id_session,
             'create_date'   => $date_create
         );
     
         // Insert ke tabel projects
-        $this->Operational_model->insert($data);
+        $this->Salesmarketing_model->insert($data);
 
         $ip = $this->input->ip_address();
         $location = get_location_from_ip($ip);
@@ -143,9 +141,9 @@ class crud_sales_marketing extends CI_Controller {
 
         $data_log = array(
             'log_activity_user_id'=>$this->session->id_session,
-            'log_activity_modul' => 'finance-operational/create',
+            'log_activity_modul' => 'sales-setting-target/create',
             'log_activity_document_no' => $id_session2,
-            'log_activity_status' => 'Tambah Transaksi Operational',
+            'log_activity_status' => 'Tambah Target Sales',
             'log_activity_platform'=> $agent,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_ip'=> $ip_with_location            
@@ -153,7 +151,7 @@ class crud_sales_marketing extends CI_Controller {
         $this->Users2_model->insert_log_activity($data_log);   
     
         $this->session->set_flashdata('Success', 'Berhasil dibuat');
-        redirect('finance-operational');
+        redirect('sales-setting-target');
     }
 
     public function lihat($id_session) {
