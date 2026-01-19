@@ -338,7 +338,7 @@ class crud_potensial_clients extends CI_Controller {
             'pc_nowa'  => $this->input->post('pc_nowa'),
             'status'        => $this->input->post('status'),
             'note'      => $this->input->post('note'),
-            'nomeradmin'      => $this->input->post('nomoradmin'),
+            'nomeradmin'      => $this->input->post('nomeradmin'),
             'create_by'     => $this->session->id_session,
             'event_date'    => $this->input->post('event_date'),
             'chat_date'    => $this->input->post('chat_date'),
@@ -466,6 +466,7 @@ class crud_potensial_clients extends CI_Controller {
         $data = array(
             'pc_name'  => $this->input->post('pc_name'),
             'pc_nowa'  => $this->input->post('pc_nowa'),
+            'nomeradmin'    => $this->input->post('nomeradmin'),
             'event_date'    => $this->input->post('event_date'),
             'chat_date'    => $this->input->post('chat_date'),
             'location'      => $this->input->post('location'),

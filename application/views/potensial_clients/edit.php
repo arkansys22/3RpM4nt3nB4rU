@@ -65,11 +65,11 @@
                 <input type="date" name="chat_date" value="<?= $pc->chat_date ?>" class="w-full px-4 py-2 border rounded mb-4" required>
 
                 <label class="block mb-2">Dari Nomer Admin</label>
-                <select name="nomoradmin" class="w-full px-4 py-2 border rounded mb-4" required>
+                <select name="nomeradmin" class="w-full px-4 py-2 border rounded mb-4" required>
                     <option value="" >---</option>
-                    <option value="Pink" <?= $pc->nomoradmin == 'Pink' ? 'selected' : '' ?> >Pink</option>
-                    <option value="Putih" <?= $pc->nomoradmin == 'Putih' ? 'selected' : '' ?>>Putih</option>
-                    <option value="Hitam" <?= $pc->nomoradmin == 'Hitam' ? 'selected' : '' ?> >Hitam</option>
+                    <option value="Pink" <?= $pc->nomeradmin == 'Pink' ? 'selected' : '' ?> >Pink</option>
+                    <option value="Putih" <?= $pc->nomeradmin == 'Putih' ? 'selected' : '' ?>>Putih</option>
+                    <option value="Hitam" <?= $pc->nomeradmin == 'Hitam' ? 'selected' : '' ?> >Hitam</option>
                 </select>
                 
 

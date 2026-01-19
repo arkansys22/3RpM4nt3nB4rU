@@ -66,7 +66,7 @@
                 <input type="date" name="chat_date" class="w-full px-4 py-2 border rounded mb-4" required>
 
                 <label class="block mb-2">Dari Nomer Admin</label>
-                <select name="nomoradmin" class="w-full px-4 py-2 border rounded mb-4" required>
+                <select name="nomeradmin" class="w-full px-4 py-2 border rounded mb-4" required>
                     <option value="" >---</option>
                     <option value="Pink" >Pink</option>
                     <option value="Putih" >Putih</option>
