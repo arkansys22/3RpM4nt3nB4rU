@@ -282,8 +282,9 @@
             .then(response => response.json())
             .then(data => {
 
-            	document.querySelector('#target_nominal').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.target_nominal)}`;
+            	
                 document.querySelector('#revenue_bulan_ini').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.revenue_bulan_ini)}`;
+                document.querySelector('#target_nominal').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.target_nominal)}`;
                 document.querySelector('#estimasi_revenue_bulan_ini').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.estimasi_revenue_bulan_ini)}`;
                 document.querySelector('#estimasi_komisi_bulan_ini').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.estimasi_komisi_bulan_ini)}`;             
                 document.querySelector('#revenue_bulan_lalu').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.revenue_bulan_lalu)}`;
