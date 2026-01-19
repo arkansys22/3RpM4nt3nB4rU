@@ -149,7 +149,7 @@
 								<!-- Pemasukan Bulan Lalu -->
 								<div class="flex items-center justify-between gap-1">
 									<p class="text-sm font-medium">Tahun Lalu</p>
-										<p id="capaian_tahun_lalu" class="text-sm font-medium">
+										<p id="estimasi_revenue_tahun_lalu" class="text-sm font-medium">
 											Rp 0
 										</p>
 								</div>
@@ -278,6 +278,7 @@
                 document.querySelector('#estimasi_komisi_bulan_ini').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.estimasi_komisi_bulan_ini)}`;
 
                 document.querySelector('#estimasi_revenue_tahun_ini').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.estimasi_revenue_tahun_ini)}`;
+                document.querySelector('#estimasi_revenue_tahun_lalu').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.estimasi_revenue_tahun_lalu)}`;
 
                  document.querySelector('#revenue_bulan_ini').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.revenue_bulan_ini)}`;
                 document.querySelector('#revenue_bulan_lalu').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.revenue_bulan_lalu)}`;
