@@ -271,10 +271,10 @@
                         <td><?= "Rp " . number_format($p->targetsales_nominal, 0, ',', '.'); ?></td>                
                         <td>
                         <div class="flex flex-col items-start gap-2 w-max">
-                          <a href="<?= site_url('sales-setting-target/edit/'. $p->id_session) ?>" class="inline-flex justify-center px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600 min-w-full text-center">
+                          <a href="<?= site_url('sales-setting-target/edit/'. $p->targetsales_idsession) ?>" class="inline-flex justify-center px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600 min-w-full text-center">
                             Edit
                           </a>
-                          <a href="<?= site_url('sales-setting-target/permanent_delete/'.$p->id_session) ?>" class="inline-flex justify-center bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 min-w-full text-center" onclick="return confirm('Yakin ingin menghapus <?= $p->nama_transaksi ?> ?')">Hapus</a>
+                          <a href="<?= site_url('sales-setting-target/permanent_delete/'.$p->targetsales_idsession) ?>" class="inline-flex justify-center bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 min-w-full text-center" onclick="return confirm('Yakin ingin menghapus ?')">Hapus</a>
                         </div>
                         </td>
                       </tr>
