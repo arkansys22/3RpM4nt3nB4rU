@@ -57,7 +57,7 @@
                 <select name="nama" class="w-full px-4 py-2 border rounded mb-4" required> 
                         <option value="-">-</option>
                         <?php foreach ($periode as $p) {
-                           if ($pc->targetsales_periode == $p['tahun']){
+                           if ($pc->targetsales_periode == $p['tahun'] && $p['label']){
                               echo"<option selected='selected' value='$p[tahun] $p[label]'>$p[tahun] $p[label]</option> ";
                             }else{
                               echo"<option value='$p[tahun] $p[label]'>$p[tahun] $p[label]</option>";
