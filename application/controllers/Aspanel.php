@@ -247,11 +247,6 @@ class Aspanel extends CI_Controller {
 					->get('payment')
 					->row();
 
-				// Hitung persentase perubahan revenue
-				$data['percent_change'] = null;
-				if ($data['revenue_bulan_ini'] && $data['revenue_bulan_lalu'] && $data['revenue_bulan_lalu']->total_paid != 0) {
-					$data['percent_change'] = (($data['revenue_bulan_ini']->total_paid - $data['revenue_bulan_lalu']->total_paid) / $data['revenue_bulan_lalu']->total_paid) * 100;
-				}
 				if ($view === 'staff') {
 					$this->db->select('project.event_date, project.location, project.client_name, crew_projects.role, crew_projects.project_id');
 					$this->db->from('user');
