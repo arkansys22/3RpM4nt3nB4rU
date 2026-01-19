@@ -785,7 +785,7 @@ class Aspanel extends CI_Controller {
 
 	    // ====== TARGET BULAN INI (VARCHAR YYYY-MM) ======
 	    $target = $this->db
-        ->select_sum('targetsales_nominal')
+        ->select('targetsales_nominal')
         ->where('targetsales_periode', $bulan_ini)
         ->where('user_id_session', $this->session->id_session)
         ->get('targetsales')
