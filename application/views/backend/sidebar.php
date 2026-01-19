@@ -75,7 +75,7 @@
 					        </li>
 					        <!-- Menu Item Dashboard -->
 
-					    <?php  if($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='4'){ ?>
+					    <?php  if($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='4' OR $this->session->level=='9'){ ?>
 					        <!-- Menu Item potensial clients -->
 					        <li>
 					            <a
