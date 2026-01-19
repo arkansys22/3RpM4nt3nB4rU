@@ -109,7 +109,7 @@
 								<!-- Total Revenue Bulan Ini -->
 								<div class="flex items-center justify-between gap-1">
 									<p class="text-sm font-medium">Target</p>
-										<p id="revenue_bulan_ini" class="text-sm font-medium">Rp 0</p>
+										<p id="target_bulan_ini" class="text-sm font-medium">Rp 0</p>
 								</div>
 								<!-- Pemasukan Bulan Lalu -->
 								<div class="flex items-center justify-between gap-1">
@@ -281,6 +281,7 @@
         fetch('<?= base_url('Aspanel/get_revenue_data') ?>')
             .then(response => response.json())
             .then(data => {
+            	document.querySelector('#target_bulan_ini').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.target_bulan_ini)}`;
                 document.querySelector('#revenue_bulan_ini').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.revenue_bulan_ini)}`;
                 document.querySelector('#estimasi_revenue_bulan_ini').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.estimasi_revenue_bulan_ini)}`;
                 document.querySelector('#estimasi_komisi_bulan_ini').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.estimasi_komisi_bulan_ini)}`;
