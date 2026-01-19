@@ -60,7 +60,7 @@
                         <option value="-">-</option>
                         <?php foreach ($periode as $p) { 
                           
-                                echo"<option value='$p[tahun]-$p[bulan]'>$p[tahun] $p[label]</option>";
+                                echo"<option value='$p[periode]'>$p[tahun] $p[label]</option>";
                          
                         } ?>
                 </select>

@@ -83,8 +83,9 @@ class crud_sales_marketing extends CI_Controller {
             $periode = [];
             for ($m = 1; $m <= 12; $m++) {
                 $periode[] = [
-                    'bulan' => $m,
-                    'label' => date('F', mktime(0, 0, 0, $m, 1)),
+                    'bulan' => str_pad($m, 2, '0', STR_PAD_LEFT),
+                    'label'      => strftime('%B %Y', mktime(0, 0, 0, $m, 1, $year)) // Januari 2026
+                    'periode'    => $year . '-' . str_pad($m, 2, '0', STR_PAD_LEFT), // YYYY-MM
                     'tahun' => $year
                 ];
             }
