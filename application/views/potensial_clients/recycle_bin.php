@@ -221,6 +221,40 @@
                                 </th>
                                 <th>
                                   <div class="flex items-center justify-between gap-1.5">
+                                    <p>Nomer Admin</p>
+                                    <div class="inline-flex flex-col space-y-[2px]">
+                                      <span class="inline-block">
+                                        <svg
+                                          class="fill-current"
+                                          width="10"
+                                          height="5"
+                                          viewBox="0 0 10 5"
+                                          fill="none"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                          <path d="M5 0L0 5H10L5 0Z" fill="" />
+                                        </svg>
+                                      </span>
+                                      <span class="inline-block">
+                                        <svg
+                                          class="fill-current"
+                                          width="10"
+                                          height="5"
+                                          viewBox="0 0 10 5"
+                                          fill="none"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                          <path
+                                            d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
+                                            fill=""
+                                          />
+                                        </svg>
+                                      </span>
+                                    </div>
+                                  </div>
+                                </th>
+                                <th>
+                                  <div class="flex items-center justify-between gap-1.5">
                                     <p>Aksi</p>
                                     <div class="inline-flex flex-col space-y-[2px]">
                                       <span class="inline-block">
@@ -264,6 +298,7 @@
                                 <td><a href="https://wa.me/<?= $p->pc_nowa?>"><?= $p->pc_nowa ?></a></td>
                                 <td><?= tgl_indo($p->event_date)?>, <?= $p->location ?></td>
                                 <td><?= tgl_indo($p->chat_date)?></td>
+                                <td><?= $p->nomeradmin ?></td>
                                 <td>
                                     <div class="flex flex-col items-start gap-2 w-max">
                                       <a href="<?= site_url('potensial-clients/restore/'.$p->id_session) ?>" class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 text-center w-full">Restore</a>
