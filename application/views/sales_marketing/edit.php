@@ -58,11 +58,10 @@
                         <option value="-">-</option>
                         <?php foreach ($periode as $p) {
 
-                          $aaa = $p['tahun'].' '.$p['label'];
-                           if ($pc->targetsales_periode == $aaa){
-                              echo"<option selected='selected' value='$p[tahun] $p[label]'>$p[tahun] $p[label]</option> ";
+                           if ($pc->targetsales_periode == $p['periode']){
+                              echo"<option selected='selected' value='$p[periode]'>$p[label]</option> ";
                             }else{
-                              echo"<option value='$p[tahun] $p[label]'>$p[tahun] $p[label]</option>";
+                              echo"<option value='$p[periode]'>$p[label]</option>";
                             }
 
                         } ?>
