@@ -751,8 +751,20 @@ class Aspanel extends CI_Controller {
 	    $date_start_of_last_month = date('Y-m-01', strtotime('first day of last month')); // Start of last month
 	    $date_end_of_last_month = date('Y-m-t', strtotime('last month')); // End of last month
 
-	    // Revenue bulan ini  
 
+	     // ====== TARGET BULAN INI (VARCHAR YYYY-MM) ======
+    
+	    $bulan_ini = date('Y-m');
+    	$target = $this->db
+        ->select_sum('targetsales_nominal')
+        ->where('targetsales_periode', $bulan_ini)
+        ->where('user_id_session', $this->session->id_session)
+        ->get('targetsales')
+        ->row();
+
+    	$target_nominal = (int) ($target->targetsales_nominal ?? 0);
+
+	    // Revenue bulan ini  
 	    $estimasi_revenue_bulan_ini = $this->db
 	    	->select_sum('project.value')	    	
 			->join('project', 'project.id_session = payment.id_session')
@@ -835,6 +847,7 @@ class Aspanel extends CI_Controller {
 
 	    echo json_encode([
 	    	'estimasi_revenue_bulan_ini' => $estimasi_revenue_bulan_ini->value ?? 0,
+	    	'target_nominal' => $target_nominal,
 	        'hasil_target' => $hasil_target,
 	        'estimasi_komisi_bulan_ini' => $estimasi_komisi_bulan_ini,
 	        'revenue_bulan_ini' => $revenue_bulan_ini->total_paid ?? 0,
