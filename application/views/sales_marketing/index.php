@@ -265,16 +265,16 @@
                     <tbody>
                     <?php $no = 1; foreach ($ops as $p): ?>
                       <tr>
-                        <td><?= $p->tanggal_transaksi ?></td> 
+                        <td><?= $p->targetsales_periode ?></td> 
                         
-                        <td><?= $p->nama_transaksi ?></td>
-                        <td><?= "Rp " . number_format($p->nominal_transaksi, 0, ',', '.'); ?></td>                
+                        <td><?= $p->user_id_session ?></td>
+                        <td><?= "Rp " . number_format($p->targetsales_nominal, 0, ',', '.'); ?></td>                
                         <td>
                         <div class="flex flex-col items-start gap-2 w-max">
-                          <a href="<?= site_url('finance-operational/edit/'. $p->id_session) ?>" class="inline-flex justify-center px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600 min-w-full text-center">
+                          <a href="<?= site_url('sales-setting-target/edit/'. $p->id_session) ?>" class="inline-flex justify-center px-2 py-1 bg-green-500 text-white rounded hover:bg-green-600 min-w-full text-center">
                             Edit
                           </a>
-                          <a href="<?= site_url('finance-operational/permanent_delete/'.$p->id_session) ?>" class="inline-flex justify-center bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 min-w-full text-center" onclick="return confirm('Yakin ingin menghapus <?= $p->nama_transaksi ?> ?')">Hapus</a>
+                          <a href="<?= site_url('sales-setting-target/permanent_delete/'.$p->id_session) ?>" class="inline-flex justify-center bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 min-w-full text-center" onclick="return confirm('Yakin ingin menghapus <?= $p->nama_transaksi ?> ?')">Hapus</a>
                         </div>
                         </td>
                       </tr>
