@@ -753,41 +753,20 @@ class Aspanel extends CI_Controller {
 
 	    // Revenue bulan ini  
 
-	    $today = date('Y-m-d');
-    $start_month = date('Y-m-01');
-    $bulan_ini = date('Y-m');
+	    $estimasi_revenue_bulan_ini = $this->db
+	    	->select_sum('project.value')	    	
+			->join('project', 'project.id_session = payment.id_session')
+			->join('user', 'user.id_session = project.closing_user_idsession')
+	        ->where('DATE(date) >=', $date_start_of_month)
+	        ->where('DATE(date) <=', $date_now)
+	        ->where('user.id_session', $this->session->id_session)
+	        ->where('payment.status', 'Paid')
+	        ->get('payment')
+	        ->row();
 
-    // ====== ESTIMASI REVENUE BULAN INI ======
-    $estimasi = $this->db
-        ->select_sum('project.value')
-        ->join('project', 'project.id_session = payment.id_session')
-        ->join('user', 'user.id_session = project.closing_user_idsession')
-        ->where('payment.date >=', $start_month)
-        ->where('payment.date <=', $today)
-        ->where('payment.status', 'Paid')
-        ->where('user.id_session', $this->session->id_session)
-        ->get('payment')
-        ->row();
+	    $estimasi_komisi_bulan_ini = $estimasi_revenue_bulan_ini->value * 2.5 / 100;
 
-    $estimasi_revenue = (int) ($estimasi->value ?? 0);
-    $estimasi_komisi  = (int) ($estimasi_revenue * 2.5 / 100);
-
-	    
-
-
-	    $bulan_ini = date('Y-m');
-
-		$target_bulan_ini = $this->db
-		    ->select_sum('targetsales.targetsales_nominal')
-		    ->join('user', 'user.id_session = targetsales.user_id_session')
-		    ->where('targetsales.targetsales_periode', $bulan_ini)
-		    ->where('user.id_session', $this->session->id_session)
-		    ->get('targetsales')
-		    ->row();
-
-
-
-		$revenue_bulan_ini = $this->db->select_sum('total_paid')
+	    $revenue_bulan_ini = $this->db->select_sum('total_paid')
 	        ->where('DATE(date) >=', $date_start_of_month)
 	        ->where('DATE(date) <=', $date_now)
 	        ->where('status', 'Paid')
@@ -852,14 +831,10 @@ class Aspanel extends CI_Controller {
 	        $percent_change = (($revenue_bulan_ini->total_paid - $revenue_bulan_lalu->total_paid) / $revenue_bulan_lalu->total_paid) * 100;
 	    }
 
-
-	    $target_nominal = (int) ($target_bulan_ini->targetsales_nominal ?? 0);
 	    echo json_encode([
 	    	'estimasi_revenue_bulan_ini' => $estimasi_revenue_bulan_ini->value ?? 0,
 	        'estimasi_komisi_bulan_ini' => $estimasi_komisi_bulan_ini,
-	        'target_nominal' => $target_nominal,
-	        
-	        'revenue_bulan_ini' => $revenue_bulan_ini->total_paid ?? 0,	        
+	        'revenue_bulan_ini' => $revenue_bulan_ini->total_paid ?? 0,
 	        'revenue_bulan_lalu' => $revenue_bulan_lalu->total_paid ?? 0,
 	        'total_revenue_all' => $total_revenue_all->total_paid ?? 0,
 	        'total_pending_revenue' => $total_pending_revenue->total_paid ?? 0,
