@@ -777,7 +777,7 @@ class Aspanel extends CI_Controller {
 	    $bulan_ini = date('Y-m');
 
 		$target_bulan_ini = $this->db
-		    ->select('targetsales.targetsales_nominal')
+		    ->select_sum('targetsales.targetsales_nominal')
 		    ->join('user', 'user.id_session = targetsales.user_id_session')
 		    ->where('targetsales.targetsales_periode', $bulan_ini)
 		    ->where('user.id_session', $this->session->id_session)
@@ -843,12 +843,7 @@ class Aspanel extends CI_Controller {
 	    }
 
 
-	    $target_nominal = 0;
-		if ($target_bulan_ini && isset($target_bulan_ini->targetsales_nominal)) {
-		    $target_nominal = (int) $target_bulan_ini->targetsales_nominal;
-		}
-
-
+	    $target_nominal = (int) ($target_bulan_ini->targetsales_nominal ?? 0);
 	    echo json_encode([
 	    	'estimasi_revenue_bulan_ini' => $estimasi_revenue_bulan_ini->value ?? 0,
 	        'estimasi_komisi_bulan_ini' => $estimasi_komisi_bulan_ini,
