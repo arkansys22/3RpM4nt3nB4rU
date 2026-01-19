@@ -754,49 +754,45 @@ class Aspanel extends CI_Controller {
 	    // Revenue bulan ini  
 
 	    $today = date('Y-m-d');
-	    $start_month = date('Y-m-01');
+    $start_month = date('Y-m-01');
+    $bulan_ini = date('Y-m');
+
+    // ====== ESTIMASI REVENUE BULAN INI ======
+    $estimasi = $this->db
+        ->select_sum('project.value')
+        ->join('project', 'project.id_session = payment.id_session')
+        ->join('user', 'user.id_session = project.closing_user_idsession')
+        ->where('payment.date >=', $start_month)
+        ->where('payment.date <=', $today)
+        ->where('payment.status', 'Paid')
+        ->where('user.id_session', $this->session->id_session)
+        ->get('payment')
+        ->row();
+
+    $estimasi_revenue = (int) ($estimasi->value ?? 0);
+    $estimasi_komisi  = (int) ($estimasi_revenue * 2.5 / 100);
+
+	    
+
+
 	    $bulan_ini = date('Y-m');
 
-	    // ====== ESTIMASI REVENUE BULAN INI ======
-	    $estimasi = $this->db
-	        ->select_sum('project.value')
-	        ->join('project', 'project.id_session = payment.id_session')
-	        ->join('user', 'user.id_session = project.closing_user_idsession')
-	        ->where('payment.date >=', $start_month)
-	        ->where('payment.date <=', $today)
-	        ->where('payment.status', 'Paid')
-	        ->where('user.id_session', $this->session->id_session)
-	        ->get('payment')
-	        ->row();
+		$target_bulan_ini = $this->db
+		    ->select_sum('targetsales.targetsales_nominal')
+		    ->join('user', 'user.id_session = targetsales.user_id_session')
+		    ->where('targetsales.targetsales_periode', $bulan_ini)
+		    ->where('user.id_session', $this->session->id_session)
+		    ->get('targetsales')
+		    ->row();
 
-	    $estimasi_revenue = (int) ($estimasi->value ?? 0);
-	    $estimasi_komisi  = (int) ($estimasi_revenue * 2.5 / 100);
 
-	     // ====== REAL REVENUE BULAN INI ======
-	    $revenue_bulan_ini = $this->db
-	        ->select_sum('total_paid')
-	        ->where('date >=', $start_month)
-	        ->where('date <=', $today)
+
+		$revenue_bulan_ini = $this->db->select_sum('total_paid')
+	        ->where('DATE(date) >=', $date_start_of_month)
+	        ->where('DATE(date) <=', $date_now)
 	        ->where('status', 'Paid')
 	        ->get('payment')
 	        ->row();
-
-	    $revenue_bulan_ini_val = (int) ($revenue_bulan_ini->total_paid ?? 0);
-
-	    // ====== TARGET BULAN INI (VARCHAR YYYY-MM) ======
-	    $target = $this->db
-        ->select('targetsales_nominal')
-        ->where('YEAR(targetsales_periode)', date('Y'))
-    ->where('MONTH(targetsales_periode)', date('m'))
-        ->where('user_id_session', $this->session->id_session)
-        ->get('targetsales')
-        ->row();
-
-    	$target_nominal = (int) ($target->targetsales_nominal ?? 0);
-
-
-    	 // ====== HASIL TARGET = REALISASI ======
-    	$hasil_target = $revenue_bulan_ini_val;
 
 	    // Revenue bulan lalu
 	    $revenue_bulan_lalu = $this->db->select_sum('total_paid')
@@ -859,10 +855,11 @@ class Aspanel extends CI_Controller {
 
 	    $target_nominal = (int) ($target_bulan_ini->targetsales_nominal ?? 0);
 	    echo json_encode([
-	    	'target_nominal' => $target_nominal,
-	        'estimasi_revenue_bulan_ini' => $estimasi_revenue,
-	        'hasil_target' => $hasil_target,
-	        'estimasi_komisi_bulan_ini' => $estimasi_komisi,
+	    	'estimasi_revenue_bulan_ini' => $estimasi_revenue_bulan_ini->value ?? 0,
+	        'estimasi_komisi_bulan_ini' => $estimasi_komisi_bulan_ini,
+	        'target_nominal' => $target_nominal,
+	        
+	        'revenue_bulan_ini' => $revenue_bulan_ini->total_paid ?? 0,	        
 	        'revenue_bulan_lalu' => $revenue_bulan_lalu->total_paid ?? 0,
 	        'total_revenue_all' => $total_revenue_all->total_paid ?? 0,
 	        'total_pending_revenue' => $total_pending_revenue->total_paid ?? 0,
