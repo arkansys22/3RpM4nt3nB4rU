@@ -33,6 +33,7 @@ $route['sales-setting-target'] = 'crud_sales_marketing/index'; // Menampilkan da
 $route['sales-setting-target/periode/(:any)'] = 'crud_sales_marketing/periode/$1'; // Menampilkan detail user
 $route['sales-setting-target/lihat/(:any)'] = 'crud_sales_marketing/lihat/$1'; // Menampilkan detail user
 $route['sales-setting-target/create'] = 'crud_sales_marketing/create'; // Menampilkan form tambah user
+$route['sales-setting-target/store'] = 'crud_sales_marketing/store'; // Menyimpan data user baru
 $route['sales-setting-target/edit/(:any)'] = 'crud_sales_marketing/edit/$1'; // Menampilkan form edit user
 $route['sales-setting-target/update/(:any)'] = 'crud_sales_marketing/update/$1'; // Mengupdate user
 $route['sales-setting-target/permanent_delete/(:any)'] = 'crud_sales_marketing/permanent_delete/$1'; // Hapus permanen user
