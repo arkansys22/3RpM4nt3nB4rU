@@ -41,7 +41,7 @@
                 <select name="nama" class="w-full px-4 py-2 border rounded mb-4" required> 
                         <option value="-">-</option>
                         <?php foreach ($user as $p) {
-                           if ($pc->targetsales_idsession == $p['id_session']){
+                           if ($pc->user_id_session == $p['id_session']){
                               echo"<option selected='selected' value='$p[id_session]'>$p[nama]</option> ";
                             }else{
                               echo"<option value='$p[id_session]'>$p[nama]</option>";
