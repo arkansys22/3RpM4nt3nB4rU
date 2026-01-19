@@ -766,6 +766,8 @@ class Aspanel extends CI_Controller {
 
 	    $estimasi_komisi_bulan_ini = $estimasi_revenue_bulan_ini->value * 2.5 / 100;
 
+	    $hasil_target = $estimasi_revenue_bulan_ini->value - 200000000;
+
 	    $revenue_bulan_ini = $this->db->select_sum('total_paid')
 	        ->where('DATE(date) >=', $date_start_of_month)
 	        ->where('DATE(date) <=', $date_now)
@@ -833,6 +835,7 @@ class Aspanel extends CI_Controller {
 
 	    echo json_encode([
 	    	'estimasi_revenue_bulan_ini' => $estimasi_revenue_bulan_ini->value ?? 0,
+	        'hasil_target' => $hasil_target,
 	        'estimasi_komisi_bulan_ini' => $estimasi_komisi_bulan_ini,
 	        'revenue_bulan_ini' => $revenue_bulan_ini->total_paid ?? 0,
 	        'revenue_bulan_lalu' => $revenue_bulan_lalu->total_paid ?? 0,
