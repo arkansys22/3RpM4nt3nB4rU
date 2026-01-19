@@ -100,6 +100,7 @@
                 <label class="block mb-2"><strong>Lokasi Pernikahan : </strong><?= $pc->location ?></label>
                 <label class="block mb-2"><strong>Pertama Chat : </strong><?= hari($pc->chat_date) ?>, <?= tgl_indo($pc->chat_date) ?></label>
                 <label class="block mb-2"><strong>Catatan : </strong><?= $pc->note ?></label>
+                <label class="block mb-2"><strong>Dari Nomer Admin : </strong><?= $pc->nomeradmin ?></label>
                 <!-- <br>
                 <a href="<?= site_url('potensial-clients/edit/'. $pc->id_session) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Edit</a>
                 <a href="<?= site_url('potensial-clients') ?>" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a> -->
