@@ -846,7 +846,7 @@ class Aspanel extends CI_Controller {
 	    	'estimasi_revenue_bulan_ini' => $estimasi_revenue_bulan_ini->value ?? 0,
 	        'estimasi_komisi_bulan_ini' => $estimasi_komisi_bulan_ini,
 	        'revenue_bulan_ini' => $revenue_bulan_ini->total_paid ?? 0,
-	        'target_nominal' => $target_bulan_ini->targetsales_nominal ?? 0;
+	        'target_nominal' => $target_bulan_ini->targetsales_nominal ?? 0,
 	        'revenue_bulan_lalu' => $revenue_bulan_lalu->total_paid ?? 0,
 	        'total_revenue_all' => $total_revenue_all->total_paid ?? 0,
 	        'total_pending_revenue' => $total_pending_revenue->total_paid ?? 0,
