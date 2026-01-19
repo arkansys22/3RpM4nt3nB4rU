@@ -755,7 +755,7 @@ class Aspanel extends CI_Controller {
 
 	    $bulan_ini = date('Y-m');
 		$target_bulan_ini = $this->db
-		    ->select('targetsales.targetsales_nominal')
+		    ->select_sum('targetsales.targetsales_nominal')
 		    ->join('user', 'user.id_session = targetsales.user_id_session')
 		    ->where('targetsales.targetsales_periode', $bulan_ini)
 		    ->where('user.id_session', $this->session->id_session)
