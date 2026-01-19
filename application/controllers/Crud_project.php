@@ -201,7 +201,9 @@ class Crud_project extends CI_Controller {
             cek_session_akses_administrator('project', $this->session->id_session);
         } else if ($this->session->level == '4') {
             cek_session_akses_staff_admin('project', $this->session->id_session);
-        } else if ($this->session->level == '7') {
+        } else if ($this->session->level == '9') {
+            cek_session_akses_staff_sales('project', $this->session->id_session);
+        }  else if ($this->session->level == '7') {
             cek_session_akses_staff('project', $this->session->id_session);
         } else {
             redirect(base_url());
