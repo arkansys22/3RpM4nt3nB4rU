@@ -30,15 +30,15 @@ $route['user/restore/(:any)'] = 'crud_user/restore/$1'; // Restore user
 $route['user/permanent_delete/(:any)'] = 'crud_user/permanent_delete/$1'; // Hapus permanen user
 
 $route['sales-setting-target'] = 'crud_sales_marketing/index'; // Menampilkan daftar user
-$route['finance-operational/periode/(:any)'] = 'crud_finance_operational/periode/$1'; // Menampilkan detail user
-$route['finance-operational/lihat/(:any)'] = 'crud_finance_operational/lihat/$1'; // Menampilkan detail user
-$route['finance-operational/create'] = 'crud_finance_operational/create'; // Menampilkan form tambah user
-$route['finance-operational/store'] = 'crud_finance_operational/store'; // Menyimpan data user baru
-$route['finance-operational/edit/(:any)'] = 'crud_finance_operational/edit/$1'; // Menampilkan form edit user
-$route['finance-operational/edit2/(:any)'] = 'crud_finance_operational/edit2/$1'; // Menampilkan form edit user
-$route['finance-operational/update/(:any)'] = 'crud_finance_operational/update/$1'; // Mengupdate user
-$route['finance-operational/update2/(:any)'] = 'crud_finance_operational/update2/$1'; // Mengupdate user
-$route['finance-operational/permanent_delete/(:any)'] = 'crud_finance_operational/permanent_delete/$1'; // Hapus permanen user
+$route['sales-setting-target/periode/(:any)'] = 'crud_sales_marketing/periode/$1'; // Menampilkan detail user
+$route['sales-setting-target/lihat/(:any)'] = 'crud_sales_marketing/lihat/$1'; // Menampilkan detail user
+$route['sales-setting-target/create'] = 'crud_sales_marketing/create'; // Menampilkan form tambah user
+$route['sales-setting-target/store'] = 'crud_sales_marketing/store'; // Menyimpan data user baru
+$route['sales-setting-target/edit/(:any)'] = 'crud_sales_marketing/edit/$1'; // Menampilkan form edit user
+$route['sales-setting-target/edit2/(:any)'] = 'crud_sales_marketing/edit2/$1'; // Menampilkan form edit user
+$route['sales-setting-target/update/(:any)'] = 'crud_sales_marketing/update/$1'; // Mengupdate user
+$route['sales-setting-target/update2/(:any)'] = 'crud_sales_marketing/update2/$1'; // Mengupdate user
+$route['sales-setting-target/permanent_delete/(:any)'] = 'crud_sales_marketing/permanent_delete/$1'; // Hapus permanen user
 
 
 $route['finance-operational'] = 'crud_finance_operational/index'; // Menampilkan daftar user

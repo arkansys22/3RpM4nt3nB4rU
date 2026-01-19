@@ -13,13 +13,13 @@ class crud_sales_marketing extends CI_Controller {
     public function index() {
         if ($this->session->level=='1'){
         cek_session_akses_developer('sales-setting-target',$this->session->id_session);
-        $data['ops'] = $this->Operational_model->get_all_operational_acc(); // Ubah pemanggilan model
+        $data['ops'] = $this->Salesmarketing_model->get_all_salesmarketing(); // Ubah pemanggilan model
         $this->load->view('sales_marketing/index', $data);
 
-        }else if ($this->session->level=='3'){
-        cek_session_akses_staff_accounting('sales-setting-target',$this->session->id_session);
-        $data['ops'] = $this->Operational_model->get_all_operational_acc(); // Ubah pemanggilan model
-        $this->load->view('ales_marketing/index', $data);
+        }else if ($this->session->level=='9'){
+        cek_session_akses_staff_sales('sales-setting-target',$this->session->id_session);
+        $data['ops'] = $this->Salesmarketing_model->get_all_salesmarketing(); // Ubah pemanggilan model
+        $this->load->view('sales_marketing/index', $data);
 
         }else{
                 redirect(base_url());
@@ -76,16 +76,11 @@ class crud_sales_marketing extends CI_Controller {
 
 
     public function create() {
-        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='5'){
-            cek_session_akses_developer('user',$this->session->id_session);
-            $data['kategori'] = $this->Operational_model->view_ordering('operational_kategori','nomer_kategori','asc');
-            $data['periode'] = $this->Operational_model->view_ordering('operational_acc_periode','operational_acc_periode_id','asc');
-            $this->load->view('operational/create', $data);
-
-        }else if($this->session->level=='4'){
-            cek_session_akses_staff_admin('user',$this->session->id_session);
-            $data['kategori'] = $this->Operational_model->view_ordering('operational_kategori','nomer_kategori','asc');
-            $this->load->view('operational/create', $data);
+        if ($this->session->level=='1' OR $this->session->level=='2'){
+            cek_session_akses_developer('sales-setting-target',$this->session->id_session);
+            $data['user'] = $this->Crud_m->view_where_user_orderingss('user','id_user', 'asc');
+         
+            $this->load->view('sales_marketing/create', $data);
 
         }else{
                 redirect(base_url());
