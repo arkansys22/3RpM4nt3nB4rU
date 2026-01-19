@@ -124,16 +124,7 @@
 								<div class="flex items-center justify-between gap-1">
 									<p class="text-sm font-medium">Estimasi Komisi</p>
 										<p id="estimasi_komisi_bulan_ini" class="text-sm font-medium">Rp 0</p>
-								</div>
-								<div class="flex items-center justify-between gap-1">
-								    <p class="text-sm font-medium">
-								        <a href="<?= base_url('revenue/lebih_lengkap') ?>">
-								            <span class="text-sm font-medium text-primary">
-								                Lebih Lengkap >>
-								            </span>
-								        </a>
-								    </p>
-								</div>
+								</div>					
 							</div>
 						</div>
 	                   	<div class="swiper-slide border-r border-stroke px-10 last:border-r-0 dark:border-strokedark">
@@ -150,22 +141,22 @@
 								<!-- Total Revenue Bulan Ini -->
 								<div class="flex items-center justify-between gap-1">
 									<p class="text-sm font-medium">Tahun Ini</p>
-										<p id="expense_bulan_ini" class="text-sm font-medium">
-
+										<p id="estimasi_revenue_tahun_ini" class="text-sm font-medium">
+											Rp 0
 										</p>
 								</div>
 
 								<!-- Pemasukan Bulan Lalu -->
 								<div class="flex items-center justify-between gap-1">
 									<p class="text-sm font-medium">Tahun Lalu</p>
-										<p id="expense_bulan_lalu" class="text-sm font-medium">
-
+										<p id="capaian_tahun_lalu" class="text-sm font-medium">
+											Rp 0
 										</p>
 								</div>
 								<!-- Total Revenue Semua -->
 								<div class="flex items-center justify-between gap-1">
 									<p class="text-sm font-medium">Total</p>
-										<p id="total_expense_all" class="text-sm font-medium">Rp 0</p>
+										<p id="total_capaian" class="text-sm font-medium">Rp 0</p>
 								</div>
 								<!-- asdasdsadas -->
 								<?php  if($this->session->level=='1' OR $this->session->level=='2'){ ?>
@@ -285,6 +276,8 @@
                 document.querySelector('#estimasi_revenue_bulan_ini').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.estimasi_revenue_bulan_ini)}`;
                 document.querySelector('#hasil_target').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.hasil_target)}`;
                 document.querySelector('#estimasi_komisi_bulan_ini').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.estimasi_komisi_bulan_ini)}`;
+
+                document.querySelector('#estimasi_revenue_tahun_ini').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.estimasi_revenue_tahun_ini)}`;
 
                  document.querySelector('#revenue_bulan_ini').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.revenue_bulan_ini)}`;
                 document.querySelector('#revenue_bulan_lalu').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.revenue_bulan_lalu)}`;
