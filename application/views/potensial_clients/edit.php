@@ -48,8 +48,8 @@
                 <label class="block mb-2">Lokasi Pernikahan</label>
                 <input type="text" name="location" value="<?= $pc->location ?>" class="w-full px-4 py-2 border rounded mb-4w-full px-4 py-2 border rounded mb-4" required>
 
-                <label class="block mb-2">Pertama Chat</label>
-                <input type="date" name="chat_date" value="<?= $pc->chat_date ?>" class="w-full px-4 py-2 border rounded mb-4" required>
+                <label class="block mb-2">Catatan</label>
+                <textarea name="note" class="w-full px-4 py-2 border rounded mb-4" required><?= $pc->note ?></textarea>
 
                 <label class="block mb-2">Status</label>
                 <select name="status" class="w-full px-4 py-2 border rounded mb-4" required>
@@ -61,9 +61,19 @@
                     <option value="Batal" <?= $pc->status == 'Batal' ? 'selected' : '' ?>>Batal</option>
                 </select>
 
-                <label class="block mb-2">Catatan</label>
-                <textarea name="note" class="w-full px-4 py-2 border rounded mb-4" required><?= $pc->note ?></textarea>
+                <label class="block mb-2">Pertama Chat</label>
+                <input type="date" name="chat_date" value="<?= $pc->chat_date ?>" class="w-full px-4 py-2 border rounded mb-4" required>
 
+                <label class="block mb-2">Dari Nomer Admin</label>
+                <select name="nomoradmin" class="w-full px-4 py-2 border rounded mb-4" required>
+                    <option value="" >---</option>
+                    <option value="Pink" <?= $pc->nomoradmin == 'Pink' ? 'selected' : '' ?> >Pink</option>
+                    <option value="Putih" <?= $pc->nomoradmin == 'Putih' ? 'selected' : '' ?>>Putih</option>
+                    <option value="Hitam" <?= $pc->nomoradmin == 'Hitam' ? 'selected' : '' ?> >Hitam</option>
+                </select>
+                
+
+                
                 <div class="flex flex-col sm:flex-row justify-end">
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded w-full hover:bg-blue-600 sm:w-24 mb-2 sm:mb-0 text-center">Update</button>
                 <a href="<?= site_url('potensial-clients') ?>" class="sm:ml-2 bg-gray-500 text-white px-4 py-2 rounded w-full hover:bg-gray-600 sm:w-24 text-center">Batal</a>

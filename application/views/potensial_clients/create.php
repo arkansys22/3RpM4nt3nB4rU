@@ -48,8 +48,33 @@
                 <label class="block mb-2">Lokasi Pernikahan</label>
                 <input type="text" name="location" class="w-full px-4 py-2 border rounded mb-4" required>
 
+                <label class="block mb-2">Catatan</label>
+                <textarea name="note" class="w-full px-4 py-2 border rounded mb-4" required></textarea>
+
+                <label class="block mb-2">Status</label>
+                <select name="status" class="w-full px-4 py-2 border rounded mb-4" required>
+                    <option value="" >---</option>
+                    <option value="Tanya-tanya" >Tanya-tanya</option>
+                    <option value="Hot" >Hot</option>
+                    <option value="Konsul">Konsul Offline</option>
+                    <option value="Deal">Deal</option>
+                    <option value="Ghosting" >Ghosting</option>
+                    <option value="Batal" >Batal</option>
+                </select>
+
                 <label class="block mb-2">Pertama Chat</label>
                 <input type="date" name="chat_date" class="w-full px-4 py-2 border rounded mb-4" required>
+
+                <label class="block mb-2">Dari Nomer Admin</label>
+                <select name="nomoradmin" class="w-full px-4 py-2 border rounded mb-4" required>
+                    <option value="" >---</option>
+                    <option value="Pink" >Pink</option>
+                    <option value="Putih" >Putih</option>
+                    <option value="Hitam" >Hitam</option>
+                </select>
+
+
+                
 
                 <div class="flex flex-col sm:flex-row justify-end">
                     <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded w-full hover:bg-green-600 sm:w-24 mb-2 sm:mb-0 text-center">Simpan</button>
