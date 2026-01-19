@@ -753,6 +753,17 @@ class Aspanel extends CI_Controller {
 
 
 
+	    $bulan = date('m');
+		$tahun = date('Y');
+
+		$target_bulan_ini = $this->db
+		    ->select('targetsales.targetsales_nominal')
+		    ->join('user', 'user.id_session = targetsales.user_id_session')
+		    ->where('MONTH(targetsales.targetsales_periode)', $bulan)
+		    ->where('YEAR(targetsales.targetsales_periode)', $tahun)
+		    ->where('user.id_session', $this->session->id_session)
+		    ->get('targetsales')
+		    ->row();
 
 
 	    // Revenue bulan ini  
