@@ -516,8 +516,8 @@
 								<a
 									  class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
 									  href="#"
-									  @click="selected = (selected === 'FinAcc') ? '' : 'FinAcc'"
-									  :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'FinAcc') || (page === 'list' || page === 'kanban') }">
+									  @click="selected = (selected === 'SalesMark') ? '' : 'SalesMark'"
+									  :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'SalesMark') || (page === 'list' || page === 'kanban') }">
 										  <svg
 											class="fill-current"
 											width="18"
@@ -563,7 +563,7 @@
 
 										  <svg
 											class="absolute right-4 top-1/2 -translate-y-1/2 fill-current"
-											:class="{ 'rotate-180': (selected === 'FinAcc') }"
+											:class="{ 'rotate-180': (selected === 'SalesMark') }"
 											width="20"
 											height="20"
 											viewBox="0 0 20 20"
@@ -580,7 +580,7 @@
 								</a>
 					            <!-- Dropdown Menu Start -->
 					            <div 
-					            	class="translate transform overflow-hidden" :class="(selected === 'FinAcc') ? 'block' :'hidden'" >
+					            	class="translate transform overflow-hidden" :class="(selected === 'SalesMark') ? 'block' :'hidden'" >
 					              	<ul class="mb-5.5 mt-4 flex flex-col gap-2.5 pl-6">
 					              		<li>
 						                  <a
