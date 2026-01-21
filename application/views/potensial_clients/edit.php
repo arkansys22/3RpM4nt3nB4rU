@@ -67,9 +67,9 @@
                 <label class="block mb-2">Dari Nomer Admin</label>
                 <select name="nomeradmin" class="w-full px-4 py-2 border rounded mb-4" required>
                     <option value="" >---</option>
-                    <option value="Pink" <?= $pc->nomeradmin == 'Pink' ? 'selected' : '' ?> >Pink</option>
-                    <option value="Putih" <?= $pc->nomeradmin == 'Putih' ? 'selected' : '' ?>>Putih</option>
-                    <option value="Hitam" <?= $pc->nomeradmin == 'Hitam' ? 'selected' : '' ?> >Hitam</option>
+                    <option value="Pink 081210126196" <?= $pc->nomeradmin == 'Pink 081210126196' ? 'selected' : '' ?> >Pink 081210126196</option>
+                    <option value="Putih 081292929396" <?= $pc->nomeradmin == 'Putih 081292929396' ? 'selected' : '' ?>>Putih 081292929396</option>
+                    <option value="Hitam 085189961691" <?= $pc->nomeradmin == 'Hitam 085189961691' ? 'selected' : '' ?> >Hitam 085189961691</option>
                 </select>
                 
 
