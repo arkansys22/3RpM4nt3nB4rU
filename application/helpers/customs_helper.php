@@ -103,7 +103,7 @@ function tgl_indo($tgl){
 }
 
 
-<?php
+
 function time_ago($datetime)
 {
     $time = strtotime($datetime);
