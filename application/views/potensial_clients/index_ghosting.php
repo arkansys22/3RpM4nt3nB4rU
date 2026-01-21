@@ -404,7 +404,7 @@
                         <td><?= $p->pc_name ?></td>
                         <td><a href="https://wa.me/<?= $p->pc_nowa?>"><?= $p->pc_nowa ?></a></td>
                         <td><?= tgl_indo($p->event_date)?>, <?= $p->location ?></td>
-                        <td><?= tgl_indo($p->chat_date)?></td>
+                        <td><?= tgl_indo($p->chat_date)?><p><small><?= time_ago($p->chat_date)?></small></p></td>
                         <td><?= $p->nomeradmin ?></td>
                         <td>
                         <div class="flex flex-col items-start gap-2 w-max">
