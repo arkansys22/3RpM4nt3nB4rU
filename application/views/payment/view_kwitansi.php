@@ -152,6 +152,7 @@
                         </td>
                     </tr>
                 </table>
+                <small>*uang yang sudah dibayar tidak dapat dikembalikan</small>
             </div>
         </div>
 
