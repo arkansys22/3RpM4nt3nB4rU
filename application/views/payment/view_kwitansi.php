@@ -153,7 +153,7 @@
                     </tr>
                 </table>                
             </div>
-            <span style="padding-left: 55px; font-size:10px">*uang yang sudah dibayar tidak dapat dikembalikan</span>
+            <span style="padding-left: 55px; font-size:10px">*Uang yang sudah dibayarkan tidak dapat dikembalikan</span>
         </div>
 
         <div class="mt-6 flex justify-between no-print">
