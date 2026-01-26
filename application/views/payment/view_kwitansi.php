@@ -151,9 +151,9 @@
                             <strong>Rp <?= number_format($unit_price, 0, ',', '.') ?></strong>
                         </td>
                     </tr>
-                </table>
-                <small>*uang yang sudah dibayar tidak dapat dikembalikan</small>
+                </table>                
             </div>
+            <small>*uang yang sudah dibayar tidak dapat dikembalikan</small>
         </div>
 
         <div class="mt-6 flex justify-between no-print">
