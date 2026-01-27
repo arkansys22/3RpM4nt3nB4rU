@@ -202,6 +202,46 @@ class crud_potensial_clients extends CI_Controller {
         
     }
 
+
+    public function index_kalkulator() {
+
+        if ($this->session->level=='1'){
+                cek_session_akses_developer('potensial-clients-kalkulator',$this->session->id_session);
+                $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_ghosting(); // Ubah pemanggilan model
+                $data['potensial_clients_ghosting'] = $this->Potensial_model->get_clients_by_status('Ghosting');
+                $this->load->view('potensial_clients/index_kalkulator', $data);
+
+            }else if($this->session->level=='2'){
+                cek_session_akses_administrator('potensial-clients-kalkulator',$this->session->id_session);
+                $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_ghosting(); // Ubah pemanggilan model
+                $data['potensial_clients_ghosting'] = $this->Potensial_model->get_clients_by_status('Ghosting');
+                $this->load->view('potensial_clients/index_kalkulator', $data);
+
+            }else if($this->session->level=='3'){
+                cek_session_akses_staff_accounting('potensial-clients-kalkulator',$this->session->id_session);
+                redirect(base_url());
+
+            }else if($this->session->level=='4'){
+                cek_session_akses_staff_admin('potensial-clients-kalkulator',$this->session->id_session);
+                $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_ghosting(); // Ubah pemanggilan model
+                $data['potensial_clients_ghosting'] = $this->Potensial_model->get_clients_by_status('Ghosting');
+                $this->load->view('potensial_clients/index_kalkulator', $data);
+
+            }else if($this->session->level=='9'){
+                cek_session_akses_staff_sales('potensial-clients-kalkulator',$this->session->id_session);
+                $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_ghosting(); // Ubah pemanggilan model
+                $data['potensial_clients_ghosting'] = $this->Potensial_model->get_clients_by_status('Ghosting');
+                $this->load->view('potensial_clients/index_kalkulator', $data);
+
+            }else if($this->session->level=='5'){
+                cek_session_akses_client('potensial-clients-kalkulator',$this->session->id_session);
+                redirect(base_url());
+                
+            }else{
+                redirect(base_url());
+                }
+    }
+
     public function index_ghosting() {
 
         if ($this->session->level=='1'){
