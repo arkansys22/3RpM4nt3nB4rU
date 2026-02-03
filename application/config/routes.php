@@ -138,6 +138,8 @@ $route['potensial-clients-pricelist'] = 'crud_potensial_clients/index_pricelist'
 $route['potensial-clients-pricelist/create'] = 'crud_potensial_clients/create_pricelist'; // Menampilkan daftar create pricelist
 $route['potensial-clients-pricelist/store'] = 'crud_potensial_clients/store_pricelist'; // Menampilkan daftar create pricelist
 $route['potensial-clients-penawaranklien'] = 'crud_potensial_clients/index_penawaranklien'; // Menampilkan daftar penawaran ke klien
+$route['potensial-clients-pricelist/delete/(:any)'] = 'crud_potensial_clients/delete_pricelist/$1'; // Menghapus Potensial Clients
+
 $route['potensial-clients/create'] = 'crud_potensial_clients/create'; // Menampilkan form tambah Potensial Clients
 $route['potensial-clients/store'] = 'crud_potensial_clients/store'; // Menyimpan data Potensial Clients baru
 $route['potensial-clients/lihat/(:any)'] = 'crud_potensial_clients/lihat/$1'; // Menampilkan lihat Potensial Clients

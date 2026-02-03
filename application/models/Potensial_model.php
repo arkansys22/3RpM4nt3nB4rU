@@ -75,6 +75,12 @@ class potensial_model extends CI_Model {
         return $this->db->update('potensial_clients', $data);
     }
 
+
+    public function update_pricelist($id_session, $data) {
+        $this->db->where('data_pricelist_idsession', $id_session);
+        return $this->db->update('data_pricelist', $data);
+    }
+
     public function delete_potensial_clients($id_session, $data) {
         $this->db->where('id_session', $id_session);
         return $this->db->update('potensial_clients', $data);
