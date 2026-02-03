@@ -69,6 +69,12 @@ class potensial_model extends CI_Model {
         return $this->db->get_where('potensial_clients', ['id_session' => $id_session])->row();
     }
 
+
+    public function get_pricelist_by_session($id_session) {
+        return $this->db->get_where('data_pricelist', ['data_pricelist_idsession' => $id_session])->row();
+    }
+
+
     public function get_logactivity_by_session($id_session) {
         $this->db->order_by('log_activity_id', 'DESC');
         $this->db->limit(5,0);
