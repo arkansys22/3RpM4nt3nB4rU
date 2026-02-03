@@ -184,7 +184,7 @@
                         </th>
                         <th>
                           <div class="flex items-center justify-between gap-1.5">
-                            <p>Judul Penawarans</p>
+                            <p>Judul Penawaran</p>
                             <div class="inline-flex flex-col space-y-[2px]">
                               <span class="inline-block">
                                 <svg
