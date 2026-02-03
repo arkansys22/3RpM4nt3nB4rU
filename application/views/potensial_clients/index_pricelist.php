@@ -346,15 +346,15 @@
                     <?php $no = 1; foreach ($potensial_clients_pl as $p): ?>
                       <tr>
                         <td><?=$no++?></td>
-                        <td><?= $p->data_pricelist_judul ?></td>
+                        <td><?= $p->data_pricelist_judul?></td>
                         <td><s><?= "Rp " . number_format($p->data_pricelist_harga, 0, ',', '.'); ?></s></td>
-                        <td><?= $p->data_pricelist_hargapromo ?></td>
+                        <td><?= "Rp " . number_format($p->data_pricelist_hargapromo, 0, ',', '.'); ?></td>
                         <td><?= $p->data_pricelist_type ?></td>
                         <td><?= tgl_indo($p->data_pricelist_lastupdate)?> <p><small><?= time_ago($p->data_pricelist_lastupdate)?></small></p></td>
                         <td>
                         <div class="flex flex-col items-start gap-2 w-max">
-                          <a href="<?= site_url('potensial-clients/lihat/'. $p->id_session) ?>" class="inline-flex justify-center bg-yellow-500 text-white px-2 py-1 rounded-md hover:bg-yellow-600 text-center w-full">Lihat</a>
-                          <a href="<?= site_url('potensial-clients/delete/'.$p->id_session) ?>" class="inline-flex justify-center bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 min-w-full text-center" onclick="return confirm('Yakin ingin menghapus potensial clients <?= $p->pc_name ?>?')">Hapus</a>
+                          <a href="<?= site_url('potensial-clients-pricelist/lihat/'. $p->data_pricelist_idsession) ?>" class="inline-flex justify-center bg-yellow-500 text-white px-2 py-1 rounded-md hover:bg-yellow-600 text-center w-full">Lihat</a>
+                          <a href="<?= site_url('potensial-clients-pricelist/delete/'.$p->data_pricelist_idsession) ?>" class="inline-flex justify-center bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 min-w-full text-center" onclick="return confirm('Yakin ingin menghapus potensial clients <?= $p->pc_name ?>?')">Hapus</a>
                         </div>
                         </td>
                       </tr>
