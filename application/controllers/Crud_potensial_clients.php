@@ -814,7 +814,7 @@ class crud_potensial_clients extends CI_Controller {
 
         if ($this->session->level=='1'){
                 cek_session_akses_developer('recycle_bin_pricelist',$this->session->id_session);
-                $data['potensial_clients'] = $this->Potensial_model->get_deleted_pricelist();  // Get projects with status 'delete'
+                $data['pricelist_deleted'] = $this->Potensial_model->get_deleted_pricelist();  // Get projects with status 'delete'
                 $this->load->view('potensial_clients/recycle_bin_pricelist', $data);
 
             }else if($this->session->level=='2'){
