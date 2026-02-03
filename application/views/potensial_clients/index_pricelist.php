@@ -101,7 +101,7 @@
                   <table class="table w-full table-auto" id="dataTableTwo">
                     <thead>
                       <tr>
-                      <th>
+                        <th>
                           <div class="flex items-center justify-between gap-1.5">
                             <p>No</p>
                             <div class="inline-flex flex-col space-y-[2px]">

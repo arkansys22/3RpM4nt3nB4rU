@@ -39,7 +39,12 @@ class potensial_model extends CI_Model {
 
     public function get_deleted_potensial_clients() {
         $this->db->order_by('chat_date', 'DESC');    
-        return $this->db->get_where('potensial_clients', ['status' => 'Delete'])->result();
+        return $this->db->get_where('potensial_clients', ['status' => 'delete'])->result();
+    }
+
+    public function get_deleted_pricelist() {
+        $this->db->order_by('data_pricelist_type', 'DESC');    
+        return $this->db->get_where('data_pricelist', ['data_pricelist_status' => 'Delete'])->result();
     }
 
     public function insert_potensial_clients($data) {

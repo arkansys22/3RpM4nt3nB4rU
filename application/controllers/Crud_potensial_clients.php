@@ -807,6 +807,42 @@ class crud_potensial_clients extends CI_Controller {
             }else{
                 redirect(base_url());
                 }
+    }
+
+
+    public function recycle_bin_pricelist() {
+
+        if ($this->session->level=='1'){
+                cek_session_akses_developer('recycle_bin_pricelist',$this->session->id_session);
+                $data['potensial_clients'] = $this->Potensial_model->get_deleted_pricelist();  // Get projects with status 'delete'
+                $this->load->view('potensial_clients/recycle_bin_pricelist', $data);
+
+            }else if($this->session->level=='2'){
+                cek_session_akses_administrator('recycle_bin_pricelist',$this->session->id_session);
+                $data['pricelist_deleted'] = $this->Potensial_model->get_deleted_pricelist();  // Get projects with status 'delete'
+                $this->load->view('potensial_clients/recycle_bin_pricelist', $data);
+
+            }else if($this->session->level=='3'){
+                cek_session_akses_staff_accounting('potensial-clients',$this->session->id_session);
+                redirect(base_url());
+
+            }else if($this->session->level=='4'){
+                cek_session_akses_staff_admin('recycle_bin_pricelist',$this->session->id_session);
+                $data['pricelist_deleted'] = $this->Potensial_model->get_deleted_pricelist();  // Get projects with status 'delete'
+                $this->load->view('potensial_clients/recycle_bin_pricelist', $data);
+
+            }else if($this->session->level=='9'){
+                cek_session_akses_staff_sales('recycle_bin_pricelist',$this->session->id_session);
+                $data['pricelist_deleted'] = $this->Potensial_model->get_deleted_pricelist();  // Get projects with status 'delete'
+                $this->load->view('potensial_clients/recycle_bin_pricelist', $data);
+
+            }else if($this->session->level=='5'){
+                cek_session_akses_client('recycle_bin_pricelist',$this->session->id_session);
+                redirect(base_url());
+                
+            }else{
+                redirect(base_url());
+                }
     }    
 
     public function restore($id_session) {

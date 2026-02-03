@@ -134,11 +134,6 @@ $route['potensial-clients-konsul'] = 'crud_potensial_clients/index_konsul'; // M
 $route['potensial-clients-bayar'] = 'crud_potensial_clients/index_deal'; // Menampilkan daftar Potensial Clients bayar
 $route['potensial-clients-batal'] = 'crud_potensial_clients/index_batal'; // Menampilkan daftar Potensial Clients batal
 $route['potensial-clients-ghosting'] = 'crud_potensial_clients/index_ghosting'; // Menampilkan daftar Potensial Clients Ghosting
-$route['potensial-clients-pricelist'] = 'crud_potensial_clients/index_pricelist'; // Menampilkan daftar pricelist
-$route['potensial-clients-pricelist/create'] = 'crud_potensial_clients/create_pricelist'; // Menampilkan daftar create pricelist
-$route['potensial-clients-pricelist/store'] = 'crud_potensial_clients/store_pricelist'; // Menampilkan daftar create pricelist
-$route['potensial-clients-penawaranklien'] = 'crud_potensial_clients/index_penawaranklien'; // Menampilkan daftar penawaran ke klien
-$route['potensial-clients-pricelist/delete/(:any)'] = 'crud_potensial_clients/delete_pricelist/$1'; // Menghapus Potensial Clients
 
 $route['potensial-clients/create'] = 'crud_potensial_clients/create'; // Menampilkan form tambah Potensial Clients
 $route['potensial-clients/store'] = 'crud_potensial_clients/store'; // Menyimpan data Potensial Clients baru
@@ -149,6 +144,17 @@ $route['potensial-clients/delete/(:any)'] = 'crud_potensial_clients/delete/$1'; 
 $route['potensial-clients/recycle_bin'] = 'crud_potensial_clients/recycle_bin'; // Halaman recycle bin
 $route['potensial-clients/restore/(:any)'] = 'crud_potensial_clients/restore/$1'; // Restore Potensial Clients
 $route['potensial-clients/permanent_delete/(:any)'] = 'crud_potensial_clients/permanent_delete/$1'; // Hapus permanen Potensial Clients
+
+
+
+$route['potensial-clients-pricelist'] = 'crud_potensial_clients/index_pricelist'; // Menampilkan daftar pricelist
+$route['potensial-clients-pricelist/create'] = 'crud_potensial_clients/create_pricelist'; // Menampilkan daftar create pricelist
+$route['potensial-clients-pricelist/store'] = 'crud_potensial_clients/store_pricelist'; // Menampilkan daftar create pricelist
+$route['potensial-clients-penawaranklien'] = 'crud_potensial_clients/index_penawaranklien'; // Menampilkan daftar penawaran ke klien
+$route['potensial-clients-pricelist/delete/(:any)'] = 'crud_potensial_clients/delete_pricelist/$1'; // Menghapus Pricelist Clients
+$route['potensial-clients-pricelist/recycle_bin'] = 'crud_potensial_clients/recycle_bin_pricelist'; // Halaman recycle bin
+
+
 
 $route['naskah/jubir_cpp/(:any)'] = 'Jubir_cpp/view/$1';
 $route['naskah/jubir_cpp/pdf/(:any)'] = 'Jubir_cpp/generate_pdf/$1';
