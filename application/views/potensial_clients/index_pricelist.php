@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Potensial Clients Kalkulator</title>
+    <title>Daftar Harga</title>
     <link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
     <link href="<?php echo base_url()?>assets/backend/style.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -41,7 +41,7 @@
                     <div class="swiper-slide border-r border-stroke px-10 last:border-r-0 dark:border-strokedark">
                       <div class="flex items-center justify-between">
                         <div class="flex items-center gap-2.5">
-                          <h4 class="text-xl font-bold">Client Ghosting</h4>
+                          <h4 class="text-xl font-bold">Daftar Harga</h4>
                         </div>
                       </div>
                       <div class="mt-5.5 flex flex-col gap-1.5">
@@ -58,7 +58,7 @@
                 <div class="flex flex-col items-center justify-center">
                   <!-- Clients Ghosting -->
                   <div class="text-center">
-                    <h4 class="text-xl font-bold mb-2">Client Ghosting</h4>
+                    <h4 class="text-xl font-bold mb-2">Daftar Harga</h4>
                     <p class="text-lg font-medium">Total</p>
                     <p class="text-2xl font-bold"><?= count($potensial_clients_ghosting); ?></p>
                   </div>
@@ -66,13 +66,11 @@
               </div>
             </div>
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-              <h1 class="text-2xl font-bold mb-4">Daftar Potensial Klien Ghosting</h1>
+              <h1 class="text-2xl font-bold mb-4">Daftar Harga</h1>
 
               <div class="col-span-12 flex flex-wrap items-center justify-center gap-3 md:justify-between">
-
                 <div class="relative">
-
-                  <!-- Tombol tambah potensial clients-->
+                  <!-- Tombol Tambah harga-->
                   <a href="<?= site_url('potensial-clients/create') ?>">
                     <button class="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none">
                       
@@ -82,62 +80,9 @@
                       
                     </button>
                   </a>
-
-                  <!-- Tombol tanya-tanya potensial clients-->
-                  <a href="<?= site_url('potensial-clients') ?>">
-                    <button class="bg-red-500 p-3 rounded-md hover:bg-primary hover:text-white dark:hover:bg-primary  hover:bg-red-700 focus:outline-none">                      
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" stroke="currentColor" viewBox="0 0 384 512" stroke-width="2">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M320 576C461.4 576 576 461.4 576 320C576 178.6 461.4 64 320 64C178.6 64 64 178.6 64 320C64 461.4 178.6 576 320 576zM320 240C302.3 240 288 254.3 288 272C288 285.3 277.3 296 264 296C250.7 296 240 285.3 240 272C240 227.8 275.8 192 320 192C364.2 192 400 227.8 400 272C400 319.2 364 339.2 344 346.5L344 350.3C344 363.6 333.3 374.3 320 374.3C306.7 374.3 296 363.6 296 350.3L296 342.2C296 321.7 310.8 307 326.1 302C332.5 299.9 339.3 296.5 344.3 291.7C348.6 287.5 352 281.7 352 272.1C352 254.4 337.7 240.1 320 240.1zM288 432C288 414.3 302.3 400 320 400C337.7 400 352 414.3 352 432C352 449.7 337.7 464 320 464C302.3 464 288 449.7 288 432z"  fill="#FFFFFF"/>
-                        </svg>                        
-                    </button>
-                  </a>
-
-                  <!-- Tombol Hot potensial clients-->
-                  <a href="<?= site_url('potensial-clients-hot') ?>">
-                    <button class="bg-red-500 p-3 rounded-md hover:bg-primary hover:text-white dark:hover:bg-primary  hover:bg-red-700 focus:outline-none">                      
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" stroke="currentColor" viewBox="0 0 384 512" stroke-width="2"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M414.9 161.5C340.2 29 121.1 0 121.1 0S222.2 110.4 93 197.7C11.3 252.8-21 324.4 14 402.6c26.8 59.9 83.5 84.3 144.6 93.4-29.2-55.1-6.6-122.4-4.1-129.6 57.1 86.4 165 0 110.8-93.9 71 15.4 81.6 138.6 27.1 215.5 80.5-25.3 134.1-88.9 148.8-145.6 15.5-59.3 3.7-127.9-26.3-180.9z"  fill="#FFFFFF"/></svg>                        
-                    </button>
-                  </a>
-
-                  <!-- Tombol konsul potensial clients-->
-                  <a href="<?= site_url('potensial-clients-konsul') ?>">
-                    <button class="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none">                      
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6"  stroke="currentColor" viewBox="0 0 384 512" stroke-width="2"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M208 352c-2.4 0-4.8 .4-7.1 1.1C188 357.3 174.4 360 160 360c-14.4 0-28-2.7-41-6.9-2.3-.7-4.7-1.1-7.1-1.1C49.9 352-.3 402.5 0 464.6 .1 490.9 21.7 512 48 512h224c26.3 0 47.9-21.1 48-47.4 .3-62.1-49.9-112.6-112-112.6zm-48-32c53 0 96-43 96-96s-43-96-96-96-96 43-96 96 43 96 96 96zM592 0H208c-26.5 0-48 22.3-48 49.6V96c23.4 0 45.1 6.8 64 17.8V64h352v288h-64v-64H384v64h-76.2c19.1 16.7 33.1 38.7 39.7 64H592c26.5 0 48-22.3 48-49.6V49.6C640 22.3 618.5 0 592 0z" fill="#FFFFFF"/></svg>                        
-                    </button>
-                  </a>
-
-                  <!-- Tombol bayar potensial clients-->
-                  <a href="<?= site_url('potensial-clients-bayar') ?>">
-                    <button class="bg-red-500 text-white p-3 rounded-md hover:bg-red-700 focus:outline-none">                      
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6"  stroke="currentColor" viewBox="0 0 384 512" stroke-width="2"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M377 105L279.1 7c-4.5-4.5-10.6-7-17-7H256v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-153 31V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zM64 72c0-4.4 3.6-8 8-8h80c4.4 0 8 3.6 8 8v16c0 4.4-3.6 8-8 8H72c-4.4 0-8-3.6-8-8V72zm0 80v-16c0-4.4 3.6-8 8-8h80c4.4 0 8 3.6 8 8v16c0 4.4-3.6 8-8 8H72c-4.4 0-8-3.6-8-8zm144 263.9V440c0 4.4-3.6 8-8 8h-16c-4.4 0-8-3.6-8-8v-24.3c-11.3-.6-22.3-4.5-31.4-11.4-3.9-2.9-4.1-8.8-.6-12.1l11.8-11.2c2.8-2.6 6.9-2.8 10.1-.7 3.9 2.4 8.3 3.7 12.8 3.7h28.1c6.5 0 11.8-5.9 11.8-13.2 0-6-3.6-11.2-8.8-12.7l-45-13.5c-18.6-5.6-31.6-23.4-31.6-43.4 0-24.5 19.1-44.4 42.7-45.1V232c0-4.4 3.6-8 8-8h16c4.4 0 8 3.6 8 8v24.3c11.3 .6 22.3 4.5 31.4 11.4 3.9 2.9 4.1 8.8 .6 12.1l-11.8 11.2c-2.8 2.6-6.9 2.8-10.1 .7-3.9-2.4-8.3-3.7-12.8-3.7h-28.1c-6.5 0-11.8 5.9-11.8 13.2 0 6 3.6 11.2 8.8 12.7l45 13.5c18.6 5.6 31.6 23.4 31.6 43.4 0 24.5-19.1 44.4-42.7 45.1z" fill="#FFFFFF"/></svg>                        
-                    </button>
-                  </a>
                 </div>  
                 <div class="relative z-20">
-
-                  <!-- Tombol ghosting potensial clients-->
-                  
-                    <button class="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none">  
-                      <a href="<?= site_url('potensial-clients-ghosting') ?>">
-
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 512 512" ><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
-                          <path  d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm33.8 189.7l80-48c11.6-6.9 24 7.7 15.4 18L343.6 208l33.6 40.3c8.7 10.4-3.9 24.8-15.4 18l-80-48c-7.7-4.7-7.7-15.9 0-20.6zm-163-30c-8.6-10.3 3.8-24.9 15.4-18l80 48c7.8 4.7 7.8 15.9 0 20.6l-80 48c-11.5 6.8-24-7.6-15.4-18l33.6-40.3-33.6-40.3zM248 288c51.9 0 115.3 43.8 123.2 106.7 1.7 13.6-8 24.6-17.7 20.4-25.9-11.1-64.4-17.4-105.5-17.4s-79.6 6.3-105.5 17.4c-9.8 4.2-19.4-7-17.7-20.4C132.7 331.8 196.1 288 248 288z" fill="#FFFFFF"/></svg>
-                      </a>                         
-                    </button> 
-                       
-
-                  <!-- Tombol batal potensial clients-->
-                  <a href="<?= site_url('potensial-clients-batal') ?>">
-                  <button class="bg-red-500 text-white p-3 rounded-md hover:bg-red-700 focus:outline-none">                    
-                      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6"  stroke="currentColor" viewBox="0 0 512 512" stroke-width="2"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm130.1 117.9c65.4 65.4 70 165.5 20.7 235.6L150.5 105.2c70.2-49.4 170.2-44.7 235.6 20.7zM125.9 386.1c-65.4-65.4-70-165.5-20.7-235.6L361.5 406.8c-70.2 49.4-170.2 44.7-235.6-20.7z" fill="#FFFFFF"/></svg>                      
-                  </button>
-                  </a>
-
-                  <!-- Tombol batal potensial sampah-->
+                  <!-- Tombol harga sampah-->
                   <a href="<?= site_url('potensial-clients/recycle_bin') ?>">
                     <button class="bg-red-500 text-white p-3 rounded-md hover:bg-red-700 focus:outline-none">                    
                       <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
@@ -192,7 +137,7 @@
                         </th>
                         <th>
                           <div class="flex items-center justify-between gap-1.5">
-                            <p>Nama Klien</p>
+                            <p>Judul</p>
                             <div class="inline-flex flex-col space-y-[2px]">
                               <span class="inline-block">
                                 <svg
@@ -226,7 +171,7 @@
                         </th>
                         <th>
                           <div class="flex items-center justify-between gap-1.5">
-                            <p>Nomer WhatsApp</p>
+                            <p>Harga Asli</p>
                             <div class="inline-flex flex-col space-y-[2px]">
                               <span class="inline-block">
                                 <svg
@@ -260,7 +205,7 @@
                         </th>
                         <th>
                           <div class="flex items-center justify-between gap-1.5">
-                            <p>Tanggal & Lokasi Acara</p>
+                            <p>Harga Promo</p>
                             <div class="inline-flex flex-col space-y-[2px]">
                               <span class="inline-block">
                                 <svg
@@ -294,41 +239,7 @@
                         </th>
                         <th>
                           <div class="flex items-center justify-between gap-1.5">
-                            <p>Chat Pertama</p>
-                            <div class="inline-flex flex-col space-y-[2px]">
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path d="M5 0L0 5H10L5 0Z" fill="" />
-                                </svg>
-                              </span>
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
-                                    fill=""
-                                  />
-                                </svg>
-                              </span>
-                            </div>
-                          </div>
-                        </th>
-                        <th>
-                          <div class="flex items-center justify-between gap-1.5">
-                            <p>Nomer Admin</p>
+                            <p>Kategori</p>
                             <div class="inline-flex flex-col space-y-[2px]">
                               <span class="inline-block">
                                 <svg
@@ -404,7 +315,6 @@
                         <td><?= $p->pc_name ?></td>
                         <td><a href="https://wa.me/<?= $p->pc_nowa?>"><?= $p->pc_nowa ?></a></td>
                         <td><?= tgl_indo($p->event_date)?>, <?= $p->location ?></td>
-                        <td><?= tgl_indo($p->chat_date)?><p><small><?= time_ago($p->chat_date)?></small></p></td>
                         <td><?= $p->nomeradmin ?></td>
                         <td>
                         <div class="flex flex-col items-start gap-2 w-max">
