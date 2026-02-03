@@ -744,6 +744,61 @@ class crud_potensial_clients extends CI_Controller {
         redirect('potensial-clients/lihat/' .$id_session);
     }
 
+
+
+    public function update_pricelist($id_session) {
+
+        if ($this->agent->is_browser()) // Agent untuk fitur di log activity
+                {
+                      $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
+                }
+                elseif ($this->agent->is_robot())
+                {
+                      $agent = $this->agent->robot();
+                }
+                elseif ($this->agent->is_mobile())
+                {
+                      $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
+                }
+                else
+                {
+                      $agent = 'Unidentified User Agent';
+                }
+        $data = array(
+            'data_pricelist_judul'  => $this->input->post('judul'),
+            'data_pricelist_harga'  => $this->input->post('harga'),
+            'data_pricelist_hargapromo'    => $this->input->post('promo'),
+            'data_pricelist_diskonmax'    => $this->input->post('diskon'),
+            'data_pricelist_deskripsi'    => $this->input->post('deskripsi'),
+            'data_pricelist_type'      => $this->input->post('kategori'),
+        );
+    
+        $this->Potensial_model->update_pricelist($id_session, $data);
+
+        $status = 'Update Pricelist';
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
+        $data_log = array(
+
+            'log_activity_user_id'=>$this->session->id_session,
+            'log_activity_modul' => 'potensial-clients-pricelist/edit',
+            'log_activity_document_no' => $id_session,
+            'log_activity_status' => $status,
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
+            'log_activity_platform'=> $agent,
+            'log_activity_ip'=> $ip_with_location
+            
+        );
+
+        $this->Potensial_model->insert_log_activity($data_log);
+    
+        $this->session->set_flashdata('Success', 'Pricelist berhasil diupdate');
+        redirect('potensial-clients-pricelist/lihat/' .$id_session);
+    }
+
+
     public function delete($id_session) {
 
         if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='9'){
@@ -962,7 +1017,6 @@ class crud_potensial_clients extends CI_Controller {
         $this->session->set_flashdata('Success', 'Potensial klien berhasil dipulihkan');
         redirect('potensial-clients');
     }
-
 
     public function restore_pricelist($id_session) {
 
