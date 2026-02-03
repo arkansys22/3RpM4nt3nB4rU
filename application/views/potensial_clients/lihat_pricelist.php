@@ -75,7 +75,7 @@
                   <ul class="flex flex-col">
                     <li>
                     <a
-                      href="<?= site_url('potensial-clients/edit/'. $pc->data_pricelist_idsession) ?>"
+                      href="<?= site_url('potensial-clients-pricelist/edit/'. $pc->data_pricelist_idsession) ?>"
                       class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
                     >
                       Edit
@@ -83,7 +83,7 @@
                     </li>
                     <li>
                     <a
-                        href="<?= $pc->status === 'Tanya-tanya' ? site_url('potensial-clients') : ($pc->status === 'Deal' ? site_url('potensial-clients-bayar') : site_url('potensial-clients-'.strtolower($pc->status))) ?>"
+                        href="<?= $pc->data_pricelist_status === 'Tanya-tanya' ? site_url('potensial-clients-pricelist') : ($pc->data_pricelist_status === 'Deal' ? site_url('potensial-clients-bayar') : site_url('potensial-clients-pricelist'.strtolower($pc->data_pricelist_status))) ?>"
                       class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
                     >
                       Kembali
