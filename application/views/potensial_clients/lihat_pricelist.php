@@ -95,12 +95,12 @@
                 </div>
               <form action="<?= site_url('potensial-clients-pricelist/update/'.$pc->data_pricelist_idsession) ?>" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
                 <label class="block mb-2"><strong>Judul : </strong><?= $pc->data_pricelist_judul ?></label>        
-                <label class="block mb-2"><strong>Harga Asli : </strong><?= number_format($pc->data_pricelist_harga) ?></label>        
-                <label class="block mb-2"><strong>Harga Promo : </strong><?= number_format($pc->data_pricelist_hargapromo) ?></label>
+                <label class="block mb-2"><strong>Harga Asli : </strong>Rp <?= number_format($pc->data_pricelist_harga) ?></label>        
+                <label class="block mb-2"><strong>Harga Promo : </strong>Rp <?= number_format($pc->data_pricelist_hargapromo) ?></label>
                 <label class="block mb-2"><strong>Kategori : </strong><?= $pc->data_pricelist_type ?></label>
-                <label class="block mb-2"><strong>Terakhir Update : </strong><?= tgl_indo($pc->data_pricelist_lastupdate)?> <?= time_ago($pc->data_pricelist_lastupdate)?></label>
+                <label class="block mb-2"><strong>Terakhir Update : </strong><?= tgl_indo($pc->data_pricelist_lastupdate)?> ( <?= time_ago($pc->data_pricelist_lastupdate)?> )</label>
                 <label class="block mb-2"><strong>Detail : </strong><?= $pc->data_pricelist_deskripsi ?></label>
-                <label class="block mb-2"><strong>Maks. Diskon : </strong><?= number_format($pc->data_pricelist_diskonmax) ?></label>
+                <label class="block mb-2"><strong>Maks. Diskon : </strong>Rp <?= number_format($pc->data_pricelist_diskonmax) ?></label>
                 <!-- <br>
                 <a href="<?= site_url('potensial-clients/edit/'. $pc->data_pricelist_idsession) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Edit</a>
                 <a href="<?= site_url('potensial-clients') ?>" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a> -->
