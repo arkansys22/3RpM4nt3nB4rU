@@ -83,7 +83,7 @@
                     </li>
                     <li>
                     <a
-                        href="<?= $pc->data_pricelist_status === 'Tanya-tanya' ? site_url('potensial-clients-pricelist') : ($pc->data_pricelist_status === 'Deal' ? site_url('potensial-clients-bayar') : site_url('potensial-clients-pricelist'.strtolower($pc->data_pricelist_status))) ?>"
+                        href="<?= site_url('potensial-clients-pricelist') ?>"
                       class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
                     >
                       Kembali
