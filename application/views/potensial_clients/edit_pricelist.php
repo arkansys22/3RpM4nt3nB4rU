@@ -78,6 +78,13 @@
     </div>
     <!-- ===== Content Area End ===== -->
   </div>
+  <script>
+    function formatNumber(input) {
+        let value = input.value.replace(/\D/g, ''); // Hanya angka
+        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Tambah titik setiap 3 digit
+        input.value = value;
+    }
+  </script>
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
 </body>
 </html>
