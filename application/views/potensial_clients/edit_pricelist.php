@@ -40,13 +40,13 @@
                 <input type="text" name="judul" value="<?= $pc->data_pricelist_judul ?>" class="w-full px-4 py-2 border rounded mb-4" required>
 
                 <label class="block mb-2">Harga</label>
-                <input type="text" name="harga" id="formattedNumber" value="<?= $pc->data_pricelist_harga ?>" class="w-full px-4 py-2 border rounded mb-4" oninput="formatNumber(this)" required>
+                <input type="text" name="harga" id="formattedNumber" value="<?= number_format($pc->data_pricelist_harga ?? 0, 0, ',', '.') ?>" class="w-full px-4 py-2 border rounded mb-4" oninput="formatNumber(this)" required>
 
                 <label class="block mb-2">HargaPromo</label>
-                <input type="text" name="promo" id="formattedNumber" value="<?= $pc->data_pricelist_hargapromo ?>" class="w-full px-4 py-2 border rounded mb-4" oninput="formatNumber(this)" required>
+                <input type="text" name="promo" id="formattedNumber" value="<?= number_format($pc->data_pricelist_hargapromo  ?? 0, 0, ',', '.') ?>" class="w-full px-4 py-2 border rounded mb-4" oninput="formatNumber(this)" required>
 
                 <label class="block mb-2">Diskon Max</label>
-                <input type="text" name="diskon" id="formattedNumber" value="<?= $pc->data_pricelist_diskonmax ?>" class="w-full px-4 py-2 border rounded mb-4" oninput="formatNumber(this)" required>
+                <input type="text" name="diskon" id="formattedNumber" value="<?= number_format($pc->data_pricelist_diskonmax ?? 0, 0, ',', '.') ?>" class="w-full px-4 py-2 border rounded mb-4" oninput="formatNumber(this)" required>
 
                 <label class="block mb-2">Deskripsi</label>
                 <textarea name="deskripsi" class="w-full px-4 py-2 border rounded mb-4" required><?= $pc->data_pricelist_deskripsi?></textarea>
