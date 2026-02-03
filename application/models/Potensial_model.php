@@ -114,6 +114,12 @@ class potensial_model extends CI_Model {
         return $this->db->get_where('data_pricelist',['data_pricelist_status' => 'aktif'])->result();
     }
 
+
+    public function delete_pricelist_permanent($id_session) {
+        $this->db->where('data_pricelist_idsession', $id_session);
+        return $this->db->delete('data_pricelist');
+    }
+
     public function get_pricelist_by_status($status)
     {   
         $this->db->order_by('data_pricelist_type', 'DESC');    
