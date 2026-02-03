@@ -47,7 +47,7 @@
                       <div class="mt-5.5 flex flex-col gap-1.5">
                         <div class="flex items-center justify-between gap-1">
                           <p class="text-sm font-medium">Total</p>
-                          <p class="font-medium"><?= count($potensial_clients_ghosting); ?></p>
+                          <p class="font-medium"><?= count($potensial_clients_pricelist); ?></p>
                         </div>
                       </div>
                     </div>
@@ -60,7 +60,7 @@
                   <div class="text-center">
                     <h4 class="text-xl font-bold mb-2">Daftar Harga</h4>
                     <p class="text-lg font-medium">Total</p>
-                    <p class="text-2xl font-bold"><?= count($potensial_clients_ghosting); ?></p>
+                    <p class="text-2xl font-bold"><?= count($potensial_clients_pricelist); ?></p>
                   </div>
                 </div>
               </div>
@@ -273,6 +273,40 @@
                         </th>
                         <th>
                           <div class="flex items-center justify-between gap-1.5">
+                            <p>Last Update</p>
+                            <div class="inline-flex flex-col space-y-[2px]">
+                              <span class="inline-block">
+                                <svg
+                                  class="fill-current"
+                                  width="10"
+                                  height="5"
+                                  viewBox="0 0 10 5"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path d="M5 0L0 5H10L5 0Z" fill="" />
+                                </svg>
+                              </span>
+                              <span class="inline-block">
+                                <svg
+                                  class="fill-current"
+                                  width="10"
+                                  height="5"
+                                  viewBox="0 0 10 5"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
+                                    fill=""
+                                  />
+                                </svg>
+                              </span>
+                            </div>
+                          </div>
+                        </th>
+                        <th>
+                          <div class="flex items-center justify-between gap-1.5">
                             <p>Aksi</p>
                             <div class="inline-flex flex-col space-y-[2px]">
                               <span class="inline-block">
@@ -309,13 +343,14 @@
                       </tr>
                     </thead>
                     <tbody>
-                    <?php $no = 1; foreach ($potensial_clients as $p): ?>
+                    <?php $no = 1; foreach ($potensial_clients_pl as $p): ?>
                       <tr>
                         <td><?=$no++?></td>
-                        <td><?= $p->pc_name ?></td>
-                        <td><a href="https://wa.me/<?= $p->pc_nowa?>"><?= $p->pc_nowa ?></a></td>
-                        <td><?= tgl_indo($p->event_date)?>, <?= $p->location ?></td>
-                        <td><?= $p->nomeradmin ?></td>
+                        <td><?= $p->data_pricelist_judul ?></td>
+                        <td><s><?= "Rp " . number_format($p->data_pricelist_harga, 0, ',', '.'); ?></s></td>
+                        <td><?= $p->data_pricelist_hargapromo ?></td>
+                        <td><?= $p->data_pricelist_type ?></td>
+                        <td><?= tgl_indo($p->data_pricelist_lastupdate)?> <p><small><?= time_ago($p->data_pricelist_lastupdate)?></small></p></td>
                         <td>
                         <div class="flex flex-col items-start gap-2 w-max">
                           <a href="<?= site_url('potensial-clients/lihat/'. $p->id_session) ?>" class="inline-flex justify-center bg-yellow-500 text-white px-2 py-1 rounded-md hover:bg-yellow-600 text-center w-full">Lihat</a>

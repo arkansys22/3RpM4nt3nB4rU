@@ -207,8 +207,8 @@ class crud_potensial_clients extends CI_Controller {
 
         if ($this->session->level=='1'){
                 cek_session_akses_developer('potensial-clients-pricelist',$this->session->id_session);
-                $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_ghosting(); // Ubah pemanggilan model
-                $data['potensial_clients_ghosting'] = $this->Potensial_model->get_clients_by_status('Ghosting');
+                $data['potensial_clients_pl'] = $this->Potensial_model->get_all_potensial_clients_ghosting(); // Ubah pemanggilan model
+                $data['potensial_clients_pricelist'] = $this->Potensial_model->get_pricelist_by_status('Aktif');
                 $this->load->view('potensial_clients/index_pricelist', $data);
 
             }else if($this->session->level=='2'){
@@ -448,6 +448,38 @@ class crud_potensial_clients extends CI_Controller {
 
         $this->session->set_flashdata('Success', 'Potensial klien berhasil dibuat');
         redirect('potensial-clients');
+    }
+
+
+    public function create_pricelist() {
+
+        if ($this->session->level=='1'){
+                cek_session_akses_developer('potensial-clients-pricelist',$this->session->id_session);
+                $this->load->view('potensial_clients/create_pricelist');
+
+            }else if($this->session->level=='2'){
+                cek_session_akses_administrator('potensial-clients-pricelist',$this->session->id_session);
+                $this->load->view('potensial_clients/create_pricelist');
+
+            }else if($this->session->level=='3'){
+                cek_session_akses_staff_accounting('potensial-clients-pricelist',$this->session->id_session);
+                redirect(base_url());
+
+            }else if($this->session->level=='4'){
+                cek_session_akses_staff_admin('potensial-clients-pricelist',$this->session->id_session);
+                $this->load->view('potensial_clients/create_pricelist');
+
+            }else if($this->session->level=='9'){
+                cek_session_akses_staff_sales('potensial-clients-pricelist',$this->session->id_session);
+                $this->load->view('potensial_clients/create_pricelist');
+
+            }else if($this->session->level=='5'){
+                cek_session_akses_client('potensial-clients-pricelist',$this->session->id_session);
+                redirect(base_url());
+                
+            }else{
+                redirect(base_url());
+                }       
     }
 
     public function lihat($id_session) {
