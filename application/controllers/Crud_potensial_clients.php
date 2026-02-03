@@ -207,7 +207,7 @@ class crud_potensial_clients extends CI_Controller {
 
         if ($this->session->level=='1'){
                 cek_session_akses_developer('potensial-clients-pricelist',$this->session->id_session);
-                $data['potensial_clients_pl'] = $this->Potensial_model->get_all_potensial_clients_ghosting(); // Ubah pemanggilan model
+                $data['potensial_clients_pl'] = $this->Potensial_model->get_all_pricelist(); // Ubah pemanggilan model
                 $data['potensial_clients_pricelist'] = $this->Potensial_model->get_pricelist_by_status('Aktif');
                 $this->load->view('potensial_clients/index_pricelist', $data);
 
