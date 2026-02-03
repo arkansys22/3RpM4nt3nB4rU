@@ -482,6 +482,64 @@ class crud_potensial_clients extends CI_Controller {
                 }       
     }
 
+
+    public function store_pricelist() {
+        $id_session2 = hash('sha256', bin2hex(random_bytes(16)));
+        $date_create = date('Y-m-d H:i:s');  // tanggal dan waktu
+        
+        if ($this->agent->is_browser()) // Agent untuk fitur di log activity
+                {
+                      $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
+                }
+                elseif ($this->agent->is_robot())
+                {
+                      $agent = $this->agent->robot();
+                }
+                elseif ($this->agent->is_mobile())
+                {
+                      $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
+                }
+                else
+                {
+                      $agent = 'Unidentified User Agent';
+                }
+
+        $data = array(
+            'data_pricelist_idsession'    => $id_session2,
+            'data_pricelist_judul'  => $this->input->post('judul'),
+            'data_pricelist_harga'  => $this->input->post('harga'),
+            'data_pricelist_hargapromo'        => $this->input->post('promo'),
+            'data_pricelist_diskonmax'      => $this->input->post('diskon'),
+            'data_pricelist_deskripsi'      => $this->input->post('deskripsi'),
+            'data_pricelist_type'      => $this->input->post('kategori'),         
+            'data_pricelist_lastupdate'   => $date_create
+        );
+    
+        // Insert ke tabel projects
+        $this->Potensial_model->insert_pricelist($data);
+
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
+        $data_log = array(
+
+            'log_activity_user_id'=>$this->session->id_session,
+            'log_activity_modul' => 'potensial-clients-pricelist/create',
+            'log_activity_document_no' => $id_session2,
+            'log_activity_status' => 'Tambah Pricelist',
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
+            'log_activity_platform'=> $agent,
+            'log_activity_ip'=> $ip_with_location
+            
+        );
+
+        $this->Potensial_model->insert_log_activity($data_log);
+
+        $this->session->set_flashdata('Success', 'Potensial klien berhasil dibuat');
+        redirect('potensial-clients');
+    }
+
     public function lihat($id_session) {
 
         if ($this->session->level=='1'){

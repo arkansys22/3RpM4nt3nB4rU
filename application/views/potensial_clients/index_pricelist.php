@@ -71,7 +71,7 @@
               <div class="col-span-12 flex flex-wrap items-center justify-center gap-3 md:justify-between">
                 <div class="relative">
                   <!-- Tombol Tambah harga-->
-                  <a href="<?= site_url('potensial-clients/create') ?>">
+                  <a href="<?= site_url('potensial-clients-pricelist/create') ?>">
                     <button class="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none">
                       
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
@@ -83,7 +83,7 @@
                 </div>  
                 <div class="relative z-20">
                   <!-- Tombol harga sampah-->
-                  <a href="<?= site_url('potensial-clients/recycle_bin') ?>">
+                  <a href="<?= site_url('potensial-clients-pricelist/recycle_bin') ?>">
                     <button class="bg-red-500 text-white p-3 rounded-md hover:bg-red-700 focus:outline-none">                    
                       <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-2 14H7L5 7M12 4v-2m4 2h-8m5 2l1-1m3 1l-1-1m0 0h6l-1 2m-7-5h2m6 5H5"></path>
@@ -273,7 +273,7 @@
                         </th>
                         <th>
                           <div class="flex items-center justify-between gap-1.5">
-                            <p>Last Update</p>
+                            <p>Terakhir Diupdate</p>
                             <div class="inline-flex flex-col space-y-[2px]">
                               <span class="inline-block">
                                 <svg

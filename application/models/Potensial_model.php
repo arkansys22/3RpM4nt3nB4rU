@@ -48,6 +48,12 @@ class potensial_model extends CI_Model {
         return $insert;
     }
 
+    public function insert_pricelist($data) {
+        return $this->db->insert('data_pricelist', $data);
+    
+        return $insert;
+    }
+
     public function insert_log_activity($data_log) {
         return $this->db->insert('log_activity', $data_log);
     
