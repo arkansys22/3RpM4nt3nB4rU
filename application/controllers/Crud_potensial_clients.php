@@ -537,7 +537,7 @@ class crud_potensial_clients extends CI_Controller {
         $this->Potensial_model->insert_log_activity($data_log);
 
         $this->session->set_flashdata('Success', 'Potensial klien berhasil dibuat');
-        redirect('potensial-clients');
+        redirect('potensial-clients-pricelist');
     }
 
     public function lihat($id_session) {
