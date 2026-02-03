@@ -505,14 +505,14 @@ class crud_potensial_clients extends CI_Controller {
                 }
 
         $data = array(
-            'data_pricelist_idsession'    => $id_session2,
-            'data_pricelist_judul'  => $this->input->post('judul'),
-            'data_pricelist_harga'  => $this->input->post('harga'),
-            'data_pricelist_hargapromo'        => $this->input->post('promo'),
-            'data_pricelist_diskonmax'      => $this->input->post('diskon'),
+            'data_pricelist_idsession'      => $id_session2,
+            'data_pricelist_judul'          => $this->input->post('judul'),
+            'data_pricelist_harga'          => str_replace('.', '', $this->input->post('harga')),
+            'data_pricelist_hargapromo'     => str_replace('.', '', $this->input->post('promo')), 
+            'data_pricelist_diskonmax'      => str_replace('.', '', $this->input->post('diskon')),
             'data_pricelist_deskripsi'      => $this->input->post('deskripsi'),
-            'data_pricelist_type'      => $this->input->post('kategori'),         
-            'data_pricelist_lastupdate'   => $date_create
+            'data_pricelist_type'           => $this->input->post('kategori'),         
+            'data_pricelist_lastupdate'     => $date_create
         );
     
         // Insert ke tabel projects
