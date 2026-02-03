@@ -40,13 +40,13 @@
                 <input type="text" name="judul" class="w-full px-4 py-2 border rounded mb-4" required>
 
                 <label class="block mb-2">Harga</label>
-                <input type="text" name="harga" class="w-full px-4 py-2 border rounded mb-4" required>
+                <input type="text" name="harga" id="formattedNumber" class="w-full px-4 py-2 border rounded mb-4" oninput="formatNumber(this)" required>
 
                 <label class="block mb-2">HargaPromo</label>
-                <input type="text" name="promo" class="w-full px-4 py-2 border rounded mb-4" required>
+                <input type="text" name="promo" id="formattedNumber" class="w-full px-4 py-2 border rounded mb-4" oninput="formatNumber(this)" required>
 
                 <label class="block mb-2">Diskon Max</label>
-                <input type="text" name="diskon" class="w-full px-4 py-2 border rounded mb-4" required>
+                <input type="text" name="diskon" id="formattedNumber" class="w-full px-4 py-2 border rounded mb-4" oninput="formatNumber(this)" required>
 
                 <label class="block mb-2">Deskripsi</label>
                 <textarea name="deskripsi" class="w-full px-4 py-2 border rounded mb-4" required></textarea>
@@ -77,6 +77,13 @@
     </div>
     <!-- ===== Content Area End ===== -->
   </div>
+  <script>
+    function formatNumber(input) {
+        let value = input.value.replace(/\D/g, ''); // Hanya angka
+        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Tambah titik setiap 3 digit
+        input.value = value;
+    }
+  </script>
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
 </body>
 </html>
