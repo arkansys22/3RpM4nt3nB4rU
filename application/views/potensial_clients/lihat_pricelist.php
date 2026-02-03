@@ -93,7 +93,7 @@
                   </div>
                 </div>
                 </div>
-              <form action="<?= site_url('potensial-clients-pricelist/update/'.$pc->data_pricelist_idsession) ?>" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
+              <form action="" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
                 <label class="block mb-2"><strong>Judul : </strong><?= $pc->data_pricelist_judul ?></label>        
                 <label class="block mb-2"><strong>Harga Asli : </strong>Rp <?= number_format($pc->data_pricelist_harga) ?></label>        
                 <label class="block mb-2"><strong>Harga Promo : </strong>Rp <?= number_format($pc->data_pricelist_hargapromo) ?></label>
