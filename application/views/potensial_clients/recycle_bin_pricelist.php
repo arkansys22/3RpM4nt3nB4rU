@@ -298,8 +298,9 @@
                                 <td><s><?= "Rp " . number_format($p->data_pricelist_harga, 0, ',', '.'); ?></s></td>
                                 <td><?= "Rp " . number_format($p->data_pricelist_hargapromo, 0, ',', '.'); ?></td>
                                 <td><?= $p->data_pricelist_type ?></td>
-                                <td><?= tgl_indo($p->data_pricelist_lastupdate)?> <p><small><?= time_ago($p->data_pricelist_lastupdate)?></small></p></td>
-                                <td>
+                                <td><?= tgl_indo($p->data_pricelist_lastupdate)?> <p><small><?= time_ago($p->data_pricelist_lastupdate)?></small></p>
+                                </td>
+                               
                                 <td>
                                     <div class="flex flex-col items-start gap-2 w-max">
                                       <a href="<?= site_url('potensial-clients-pricelist/restore/'.$p->data_pricelist_idsession) ?>" class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 text-center w-full">Restore</a>
