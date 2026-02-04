@@ -159,7 +159,9 @@ $route['potensial-clients-pricelist/permanent_delete/(:any)'] = 'crud_potensial_
 $route['potensial-clients-pricelist/restore/(:any)'] = 'crud_potensial_clients/restore_pricelist/$1'; // Restore Potensial Clients
 
 
-$route['potensial-clients-penawaranklien'] = 'crud_potensial_clients/index_penawaranklien'; // Menampilkan daftar penawaran ke klien
+$route['potensial-clients-penawaran/edit/(:any)'] = 'crud_potensial_clients/edit_penawaran/$1';
+
+
 
 
 

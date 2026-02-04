@@ -242,45 +242,7 @@ class crud_potensial_clients extends CI_Controller {
                 }
     }
 
-    public function index_penawaranklien() {
-
-        if ($this->session->level=='1'){
-                cek_session_akses_developer('potensial-clients-penawaranklien',$this->session->id_session);
-                $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_ghosting(); // Ubah pemanggilan model
-                $data['potensial_clients_ghosting'] = $this->Potensial_model->get_clients_by_status('Ghosting');
-                $this->load->view('potensial_clients/index_penawaranklien', $data);
-
-            }else if($this->session->level=='2'){
-                cek_session_akses_administrator('potensial-clients-penawaranklien',$this->session->id_session);
-                $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_ghosting(); // Ubah pemanggilan model
-                $data['potensial_clients_ghosting'] = $this->Potensial_model->get_clients_by_status('Ghosting');
-                $this->load->view('potensial_clients/index_penawaranklien', $data);
-
-            }else if($this->session->level=='3'){
-                cek_session_akses_staff_accounting('potensial-clients-penawaranklien',$this->session->id_session);
-                redirect(base_url());
-
-            }else if($this->session->level=='4'){
-                cek_session_akses_staff_admin('potensial-clients-penawaranklien',$this->session->id_session);
-                $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_ghosting(); // Ubah pemanggilan model
-                $data['potensial_clients_ghosting'] = $this->Potensial_model->get_clients_by_status('Ghosting');
-                $this->load->view('potensial_clients/index_penawaranklien', $data);
-
-            }else if($this->session->level=='9'){
-                cek_session_akses_staff_sales('potensial-clients-penawaranklien',$this->session->id_session);
-                $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients_ghosting(); // Ubah pemanggilan model
-                $data['potensial_clients_ghosting'] = $this->Potensial_model->get_clients_by_status('Ghosting');
-                $this->load->view('potensial_clients/index_penawaranklien', $data);
-
-            }else if($this->session->level=='5'){
-                cek_session_akses_client('potensial-clients-penawaranklien',$this->session->id_session);
-                redirect(base_url());
-                
-            }else{
-                redirect(base_url());
-                }
-    }
-
+   
     public function index_ghosting() {
 
         if ($this->session->level=='1'){
@@ -683,6 +645,42 @@ class crud_potensial_clients extends CI_Controller {
 
             }else if($this->session->level=='5'){
                 cek_session_akses_client('potensial-clients-pricelist',$this->session->id_session);
+                redirect(base_url());
+                
+            }else{
+                redirect(base_url());
+                }
+    }
+
+
+    public function edit_penawaran($id_session) {
+
+        if ($this->session->level=='1'){
+                cek_session_akses_developer('potensial-clients',$this->session->id_session);
+                $data['pc'] = $this->Potensial_model->get_potensial_clients_by_session($id_session);
+                $this->load->view('potensial_clients/edit_penawaran', $data);
+
+            }else if($this->session->level=='2'){
+                cek_session_akses_administrator('potensial-clients',$this->session->id_session);
+                $data['pc'] = $this->Potensial_model->get_potensial_clients_by_session($id_session);
+                $this->load->view('potensial_clients/edit_penawaran', $data);
+
+            }else if($this->session->level=='3'){
+                cek_session_akses_staff_accounting('potensial-clients',$this->session->id_session);
+                redirect(base_url());
+
+            }else if($this->session->level=='4'){
+                cek_session_akses_staff_admin('potensial-clients',$this->session->id_session);
+                $data['pc'] = $this->Potensial_model->get_potensial_clients_by_session($id_session);
+                $this->load->view('potensial_clients/edit_penawaran', $data);
+
+            }else if($this->session->level=='9'){
+                cek_session_akses_staff_sales('potensial-clients',$this->session->id_session);
+                $data['pc'] = $this->Potensial_model->get_potensial_clients_by_session($id_session);
+                $this->load->view('potensial_clients/edit_penawaran', $data);
+
+            }else if($this->session->level=='5'){
+                cek_session_akses_client('potensial-clients',$this->session->id_session);
                 redirect(base_url());
                 
             }else{
