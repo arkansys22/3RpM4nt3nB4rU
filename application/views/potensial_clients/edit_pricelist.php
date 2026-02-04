@@ -62,6 +62,7 @@
                     <option value="Entertainment" <?= $pc->data_pricelist_type == 'Entertainment' ? 'selected' : '' ?> >Entertainment</option>
                     <option value="Makeup & Busana" <?= $pc->data_pricelist_type == 'Makeup & Busana' ? 'selected' : '' ?> >Makeup & Busana</option>
                     <option  value="Venue Pernikahan" <?= $pc->data_pricelist_type == 'Venue Pernikahan' ? 'selected' : '' ?> >Venue Pernikahan</option>
+                    <option  value="Paket Pernikahan" <?= $pc->data_pricelist_type == 'Paket Pernikahan' ? 'selected' : '' ?> >Paket Pernikahan</option>
                 </select>      
 
                 

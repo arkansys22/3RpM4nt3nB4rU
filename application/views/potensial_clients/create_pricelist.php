@@ -62,6 +62,7 @@
                     <option value="Entertainment">Entertainment</option>
                     <option value="Makeup & Busana">Makeup & Busana</option>
                     <option value="Venue Pernikahan">Venue Pernikahan</option>
+                    <option value="Paket Pernikahan">Paket Pernikahan</option>
                 </select>
 
                 <div class="flex flex-col sm:flex-row justify-end">
