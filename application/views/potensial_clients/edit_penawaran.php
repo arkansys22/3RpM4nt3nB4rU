@@ -36,41 +36,140 @@
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
               <h1 class="text-2xl font-bold mb-4">Edit Penawaran Klien</h1>
               <form action="<?= site_url('potensial-clients/update/'.$pc->id_session) ?>" method="post" class="bg-white p-6 shadow-md rounded">
-                <label class="block mb-2">Nama Klien</label>
-                <input type="text" name="pc_name" value="<?= $pc->pc_name ?>" class="w-full px-4 py-2 border rounded mb-4" required>
 
-                <label class="block mb-2">Nomer WhatsApp</label>
-                <input type="text" name="pc_nowa" value="<?= $pc->pc_nowa ?>" class="w-full px-4 py-2 border rounded mb-4" required>
-
-                <label class="block mb-2">Tanggal Pernikahan</label>
-                <input type="date" name="event_date" value="<?= $pc->event_date ?>" class="w-full px-4 py-2 border rounded mb-4" required>
-
-                <label class="block mb-2">Lokasi Pernikahan</label>
-                <input type="text" name="location" value="<?= $pc->location ?>" class="w-full px-4 py-2 border rounded mb-4w-full px-4 py-2 border rounded mb-4" required>
-
-                <label class="block mb-2">Catatan</label>
-                <textarea name="note" class="w-full px-4 py-2 border rounded mb-4" required><?= $pc->note ?></textarea>
-
-                <label class="block mb-2">Status</label>
-                <select name="status" class="w-full px-4 py-2 border rounded mb-4" required>
-                    <option value="Tanya-tanya" <?= $pc->status == 'Tanya-tanya' ? 'selected' : '' ?>>Tanya-tanya</option>
-                    <option value="Hot" <?= $pc->status == 'Hot' ? 'selected' : '' ?>>Hot</option>
-                    <option value="Konsul" <?= $pc->status == 'Konsul' ? 'selected' : '' ?>>Konsul Offline</option>
-                    <option value="Deal" <?= $pc->status == 'Deal' ? 'selected' : '' ?>>Deal</option>
-                    <option value="Ghosting" <?= $pc->status == 'Ghosting' ? 'selected' : '' ?>>Ghosting</option>
-                    <option value="Batal" <?= $pc->status == 'Batal' ? 'selected' : '' ?>>Batal</option>
-                </select>
-
-                <label class="block mb-2">Pertama Chat</label>
-                <input type="date" name="chat_date" value="<?= $pc->chat_date ?>" class="w-full px-4 py-2 border rounded mb-4" required>
-
-                <label class="block mb-2">Dari Nomer Admin</label>
-                <select name="nomeradmin" class="w-full px-4 py-2 border rounded mb-4" required>
-                    <option value="" >---</option>
-                    <option value="Pink 081210126196" <?= $pc->nomeradmin == 'Pink 081210126196' ? 'selected' : '' ?> >Pink 081210126196</option>
-                    <option value="Putih 081292929396" <?= $pc->nomeradmin == 'Putih 081292929396' ? 'selected' : '' ?>>Putih 081292929396</option>
-                    <option value="Hitam 085189961691" <?= $pc->nomeradmin == 'Hitam 085189961691' ? 'selected' : '' ?> >Hitam 085189961691</option>
-                </select>
+                <div class="mb-4.5 flex flex-col md:flex-row">
+                  <h1 class="text-xl font-bold">Informasi Potensial Klien</h1>
+                </div>
+                <div class="mb-4.5 flex flex-col md:flex-row">
+                  <div class="w-full md:w-1/2">
+                  <label class="block mb-2">
+                  Nama Klien <p><h1 class="text-lg font-bold"><?= $pc->pc_name ?></h1></p>
+                  </label> 
+                  </div>
+                  <div class="w-full md:w-1/2">
+                  <label class="block mb-2">
+                  Nomer WhatsApp <p><h1 class="text-lg font-bold"><?= $pc->pc_nowa ?></h1></p>
+                  </label>
+                  </div>                  
+                </div>
+                <div class="mb-4.5 flex flex-col md:flex-row">
+                  <div class="w-full md:w-1/2">
+                  <label class="block mb-2">
+                  Lokasi Acara <p><h1 class="text-lg font-bold"><?= $pc->location ?></h1></p>
+                  </label> 
+                  </div>
+                  <div class="w-full md:w-1/2">
+                  <label class="block mb-2">
+                  Tanggal Acara<p><h1 class="text-lg font-bold"><?= hari($pc->event_date) ?>, <?= tgl_indo($pc->event_date) ?></h1></p>
+                  </label>
+                  </div>                  
+                </div>
+                <div class="mb-4.5 flex flex-col md:flex-row">
+                  <div class="w-full md:w-1/2">
+                  <label class="block mb-2">
+                  Wedding Planner & Organizer <p><h1 class="text-lg font-bold">Pilihan Produk</h1></p>
+                  </label> 
+                  </div>
+                  <div class="w-full md:w-1/2">
+                  <label class="block mb-2">
+                  Harga<p><h1 class="text-lg font-bold">Rp 8.888.888</h1></p>
+                  </label>
+                  </div>                  
+                </div>
+                <div class="flex gap-4 mb-4">
+                  <label>
+                      <input type="radio" name="fayah_status" value="Tidak" id="masihAdaFayah" onclick="toggleReplacementFields('fayah', false)"
+                      <?= empty($clients->f_bride_freplacementname) ? 'checked' : '' ?>> Tidak
+                  </label>
+                  <label>
+                      <input type="radio" name="fayah_status" value="Pakai" id="tidakAdaFayah" onclick="toggleReplacementFields('fayah', true)"
+                      <?= !empty($clients->f_bride_freplacementname) ? 'checked' : '' ?>> Pakai
+                  </label>
+                </div>
+                <div class="mb-4.5 flex flex-col md:flex-row">
+                  <div class="w-full md:w-1/2">
+                  <label class="block mb-2">
+                  Dekorasi <p><h1 class="text-lg font-bold">Pilihan Produk</h1></p>
+                  </label> 
+                  </div>
+                  <div class="w-full md:w-1/2">
+                  <label class="block mb-2">
+                  Harga<p><h1 class="text-lg font-bold">Rp 8.888.888</h1></p>
+                  </label>
+                  </div>                  
+                </div>
+                <div class="mb-4.5 flex flex-col md:flex-row">
+                  <div class="w-full md:w-1/2">
+                  <label class="block mb-2">
+                  Catering <p><h1 class="text-lg font-bold">Pilihan Produk</h1></p>
+                  </label> 
+                  </div>
+                  <div class="w-full md:w-1/2">
+                  <label class="block mb-2">
+                  Harga<p><h1 class="text-lg font-bold">Rp 8.888.888</h1></p>
+                  </label>
+                  </div>                  
+                </div>
+                <div class="mb-4.5 flex flex-col md:flex-row">
+                  <div class="w-full md:w-1/2">
+                  <label class="block mb-2">
+                  Dokumentasi 1<p><h1 class="text-lg font-bold">Pilihan Produk</h1></p>
+                  </label> 
+                  </div>
+                  <div class="w-full md:w-1/2">
+                  <label class="block mb-2">
+                  Harga<p><h1 class="text-lg font-bold">Rp 8.888.888</h1></p>
+                  </label>
+                  </div>                  
+                </div>
+                <div class="mb-4.5 flex flex-col md:flex-row">
+                  <div class="w-full md:w-1/2">
+                  <label class="block mb-2">
+                  Dokumentasi 2 <p><h1 class="text-lg font-bold">Pilihan Produk</h1></p>
+                  </label> 
+                  </div>
+                  <div class="w-full md:w-1/2">
+                  <label class="block mb-2">
+                  Harga<p><h1 class="text-lg font-bold">Rp 8.888.888</h1></p>
+                  </label>
+                  </div>                  
+                </div>
+                <div class="mb-4.5 flex flex-col md:flex-row">
+                  <div class="w-full md:w-1/2">
+                  <label class="block mb-2">
+                  MC <p><h1 class="text-lg font-bold">Pilihan Produk</h1></p>
+                  </label> 
+                  </div>
+                  <div class="w-full md:w-1/2">
+                  <label class="block mb-2">
+                  Harga<p><h1 class="text-lg font-bold">Rp 8.888.888</h1></p>
+                  </label>
+                  </div>                  
+                </div>
+                <div class="mb-4.5 flex flex-col md:flex-row">
+                  <div class="w-full md:w-1/2">
+                  <label class="block mb-2">
+                  Entertainment <p><h1 class="text-lg font-bold">Pilihan Produk</h1></p>
+                  </label> 
+                  </div>
+                  <div class="w-full md:w-1/2">
+                  <label class="block mb-2">
+                  Harga<p><h1 class="text-lg font-bold">Rp 8.888.888</h1></p>
+                  </label>
+                  </div>                  
+                </div>
+                <div class="mb-4.5 flex flex-col md:flex-row">
+                  <div class="w-full md:w-1/2">
+                  <label class="block mb-2">
+                  MUA & Attire <p><h1 class="text-lg font-bold">Pilihan Produk</h1></p>
+                  </label> 
+                  </div>
+                  <div class="w-full md:w-1/2">
+                  <label class="block mb-2">
+                  Harga<p><h1 class="text-lg font-bold">Rp 8.888.888</h1></p>
+                  </label>
+                  </div>                  
+                </div>
                 
 
                 
@@ -87,6 +186,29 @@
     </div>
     <!-- ===== Content Area End ===== -->
   </div>
+    <script>
+    function toggleReplacementFields(type, show) {
+        if (type === 'fayah') {
+            document.getElementById('fayah-nama-ayah').classList.remove('hidden');
+            document.getElementById('fayah-original').classList.toggle('hidden', show);
+            document.getElementById('fayah').classList.toggle('hidden', !show);
+        } else {
+            document.getElementById(type).classList.toggle("hidden", !show);
+            document.getElementById(type + '-original').classList.toggle("hidden", show);
+        }
+    }
+
+    function toggleReplacementFieldsibu(type, show) {
+        if (type === 'fibu') {
+            document.getElementById('fibu-nama-ibu').classList.remove('hidden');
+            document.getElementById('fibu-original').classList.toggle('hidden', show);
+            document.getElementById('fibu').classList.toggle('hidden', !show);
+        } else {
+            document.getElementById(type).classList.toggle("hidden", !show);
+            document.getElementById(type + '-original').classList.toggle("hidden", show);
+        }
+    }
+    </script>
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
 </body>
 </html>
