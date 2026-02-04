@@ -83,6 +83,14 @@
                     </li>
                     <li>
                     <a
+                      href="<?= site_url('potensial-clients-penawaran/edit/'. $pc->id_session) ?>"
+                      class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
+                    >
+                      Buat Penawaran
+                    </a>
+                    </li>
+                    <li>
+                    <a
                         href="<?= $pc->status === 'Tanya-tanya' ? site_url('potensial-clients') : ($pc->status === 'Deal' ? site_url('potensial-clients-bayar') : site_url('potensial-clients-'.strtolower($pc->status))) ?>"
                       class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
                     >
