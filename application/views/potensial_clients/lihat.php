@@ -265,22 +265,50 @@
                   </button>
 
                   <!-- Title -->
-                  <h2 class="text-lg font-semibold mb-4">Form Input Data</h2>
+                  <h2 class="text-lg font-semibold mb-4">Rencana Vendor</h2>
 
                   <!-- Form -->
-                  <form>
+                  <form action="<?= site_url('potensial-clients/update/'.$pc->id_session) ?>" method="post">
+
                     <div class="mb-4">
-                      <label class="block text-sm font-medium mb-1">Nama</label>
+                    <label class="block text-sm font-medium mb-1">Pilih Kategori</label>
+                      <select name="kategori" class="w-full px-4 py-2 border rounded mb-4" required>
+                          <option value="">---</option>
+                          <option value="MC">MC</option>
+                          <option value="WP dan WO">WP dan WO</option>
+                          <option value="Dokumentasi">Dokumentasi</option>
+                          <option value="Dekorasi">Dekorasi</option>
+                          <option value="Catering">Catering</option>
+                          <option value="Entertainment">Entertainment</option>
+                          <option value="Makeup & Busana">Makeup & Busana</option>
+                          <option value="Venue Pernikahan">Venue Pernikahan</option>
+                          <option value="Paket Pernikahan">Paket Pernikahan</option>
+                      </select>
+                    </div>
+                    <div class="mb-4">
+                      <label class="block text-sm font-medium mb-1">Pilihan Produk</label>
                       <input type="text"
                         class="w-full rounded border px-3 py-2 focus:outline-none focus:ring focus:border-primary"
                         placeholder="Masukkan nama">
                     </div>
 
                     <div class="mb-4">
-                      <label class="block text-sm font-medium mb-1">Email</label>
-                      <input type="email"
+                      <label class="block text-sm font-medium mb-1">Harga Asli</label>
+                      <input type="text" id="harga_asli" name="harga_asli"
+                        class="w-full rounded border px-3 py-2" readonly>
+                        
+                    </div>
+                    <div class="mb-4">
+                      <label class="block text-sm font-medium mb-1">Harga Promo</label>
+                      <input type="text"
                         class="w-full rounded border px-3 py-2 focus:outline-none focus:ring focus:border-primary"
-                        placeholder="Masukkan email">
+                        >
+                    </div>
+                    <div class="mb-4">
+                      <label class="block text-sm font-medium mb-1">Detail</label>
+                      <input type="text"
+                        class="w-full rounded border px-3 py-2 focus:outline-none focus:ring focus:border-primary"
+                        >
                     </div>
 
                     <div class="flex justify-end gap-2">
