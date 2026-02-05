@@ -284,9 +284,10 @@
                     </div>
                     <div class="mb-4">
                       <label class="block text-sm font-medium mb-1">Pilihan Produk</label>
-                      <input type="text"
-                        class="w-full rounded border px-3 py-2 focus:outline-none focus:ring focus:border-primary"
-                        placeholder="Masukkan nama">
+                      <select id="produk" name="produk_id"
+                        class="w-full px-4 py-2 border rounded" required>
+                        <option value="">Pilih kategori dulu</option>
+                      </select>
                     </div>
 
                     <div class="mb-4">
