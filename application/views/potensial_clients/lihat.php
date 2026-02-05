@@ -375,7 +375,7 @@
 
         produk.innerHTML = '<option>Loading...</option>';
 
-        fetch(`<?= site_url('Crud_potensial-clients/getProdukByKategori/'. $kategoriId) ?>`)
+        fetch(`<?= site_url('Crud_potensial_clients/getProdukByKategori/') ?>?kategori_id=${kategoriId}`)
           .then(res => {
               if (!res.ok) {
                 throw new Error('HTTP error ' + res.status);
