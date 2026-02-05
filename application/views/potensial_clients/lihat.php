@@ -360,7 +360,7 @@
       }
   </script>
   <script>
-      const kategori = document.getElementById('data_pricelist_kategori');
+      const kategori = document.getElementById('kategori');
       const produk = document.getElementById('data_pricelist');
 
       kategori.addEventListener('change', function () {
