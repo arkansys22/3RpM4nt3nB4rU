@@ -103,7 +103,7 @@
                 </div>
 
 
-              <form action="" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded sm:hidden">
+              <form action="" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded xs:hidden">
                 <label class="block mb-2"><strong>Nama Klien : </strong><?= $pc->pc_name ?></label>        
                 <label class="block mb-2"><strong>Nomer WhatsApp : </strong><?= $pc->pc_nowa ?></label>        
                 <label class="block mb-2"><strong>Tanggal Pernikahan : </strong><?= hari($pc->event_date) ?>, <?= tgl_indo($pc->event_date) ?></label>
