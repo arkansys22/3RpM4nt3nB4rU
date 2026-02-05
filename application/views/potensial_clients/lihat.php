@@ -361,7 +361,7 @@
   </script>
   <script>
       const kategori = document.getElementById('kategori');
-      const produk = document.getElementById('data_pricelist');
+      const produk = document.getElementById('produk');
 
       kategori.addEventListener('change', function () {
         const kategoriId = this.value;
