@@ -1158,8 +1158,8 @@ class crud_potensial_clients extends CI_Controller {
       }
 
       $produk = $this->db
-        ->where('data_pricelist_type', $kategori_id)
-        ->get('data_pricelist')
+        ->where('data_pricelist_kategori_nama', $kategori_id)
+        ->get('data_pricelist_kategori')
         ->result_array();
 
       echo json_encode($produk);
