@@ -272,7 +272,7 @@
 
                     <div class="mb-4">
                     <label class="block text-sm font-medium mb-1">Pilih Kategori</label>
-                      <select id="kategori" name="kategori"
+                      <select id="kategori" name="kategori_id"
                         class="w-full px-4 py-2 border rounded" required>
                         <option value="">---</option>
                         <?php foreach ($kategori as $k): ?>
@@ -375,7 +375,7 @@
 
         produk.innerHTML = '<option>Loading...</option>';
 
-        fetch(`<?= site_url('potensial-clients/getprodukbykategori') ?>/${kategoriId}`)
+        fetch(`<?= site_url('potensial-clients/getprodukbykategori/') ?>/${kategoriId}`)
           .then(res => res.json())
           .then(data => {
             let html = '<option value="">Pilih Produk</option>';
