@@ -101,7 +101,7 @@
                   </div>
                 </div>
                 </div>
-              <div class="mb-4.5 flex flex-col md:flex-row">
+                <div class="mb-4.5 flex flex-col md:flex-row">
                   <div class="w-full md:w-1/2">
                   <label class="block mb-2">
                   Nama Klien <p><h1 class="text-lg font-bold"><?= $pc->pc_name ?></h1></p>
@@ -142,8 +142,8 @@
                   Catatan <p><h1 class="text-lg font-bold"><?= $pc->note ?></h1></p>
                   </label>
                 </div>
-
-              <form action="" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded block md:hidden">
+              <div class="block md:hidden">
+              <form action="" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
                 <label class="block mb-2">Nama Klien : <strong><?= $pc->pc_name ?></strong></label>        
                 <label class="block mb-2">Nomer WhatsApp : <strong><a href="https://wa.me/<?= $pc->pc_nowa ?>"><?= $pc->pc_nowa ?></a></label>        
                 <label class="block mb-2">Tanggal Pernikahan : <strong><?= hari($pc->event_date) ?>, <?= tgl_indo($pc->event_date) ?></label>
@@ -155,6 +155,7 @@
                 <a href="<?= site_url('potensial-clients/edit/'. $pc->id_session) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Edit</a>
                 <a href="<?= site_url('potensial-clients') ?>" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a> -->
               </form>
+              </div>
 
               <!-- ====== Table Three Start -->
               <div class="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default  dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1" >
