@@ -101,6 +101,7 @@
                   </div>
                 </div>
                 </div>
+                <div class="hidden md:block">
                 <div class="mb-4.5 flex flex-col md:flex-row">
                   <div class="w-full md:w-1/2">
                   <label class="block mb-2">
@@ -142,6 +143,7 @@
                   Catatan <p><h1 class="text-lg font-bold"><?= $pc->note ?></h1></p>
                   </label>
                 </div>
+              </div>
               <div class="block md:hidden">
               <form action="" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
                 <label class="block mb-2">Nama Klien : <strong><?= $pc->pc_name ?></strong></label>        
