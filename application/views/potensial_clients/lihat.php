@@ -145,7 +145,7 @@
               <div class="block md:hidden">
               <form action="" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
                 <label class="block mb-2">Nama Klien : <strong><?= $pc->pc_name ?></strong></label>        
-                <label class="block mb-2">Nomer WhatsApp : <strong><a href="https://wa.me/<?= $pc->pc_nowa ?>"><?= $pc->pc_nowa ?></a></label>        
+                <label class="block mb-2">Nomer WhatsApp : <strong><a href="https://wa.me/<?= $pc->pc_nowa ?>"><?= $pc->pc_nowa ?></a></strong></label>        
                 <label class="block mb-2">Tanggal Pernikahan : <strong><?= hari($pc->event_date) ?>, <?= tgl_indo($pc->event_date) ?></label>
                 <label class="block mb-2">Lokasi Pernikahan : <strong><?= $pc->location ?></strong></label>
                 <label class="block mb-2">Pertama Chat : <strong><?= hari($pc->chat_date) ?>, <?= tgl_indo($pc->chat_date) ?></strong></label>
