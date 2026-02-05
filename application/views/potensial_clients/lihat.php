@@ -158,6 +158,12 @@
                 <a href="<?= site_url('potensial-clients') ?>" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a> -->
               </form>
               </div>
+              
+              <button onclick="openModal()"
+                class="px-4 py-2 bg-primary text-white rounded-md shadow">
+                Tambah Data
+              </button>
+              <br>
 
               <!-- ====== Table Three Start -->
               <div class="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default  dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1" >
