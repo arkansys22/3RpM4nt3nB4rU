@@ -150,9 +150,9 @@
                 <label class="block mb-2">Nomer WhatsApp : <strong><a href="https://wa.me/<?= $pc->pc_nowa ?>"><?= $pc->pc_nowa ?></a></strong></label>        
                 <label class="block mb-2">Tanggal Pernikahan : <strong><?= hari($pc->event_date) ?>, <?= tgl_indo($pc->event_date) ?></strong></label>
                 <label class="block mb-2">Lokasi Pernikahan : <strong><?= $pc->location ?></strong></label>
-                <label class="block mb-2">Pertama Chat : <strong><?= hari($pc->chat_date) ?>, <?= tgl_indo($pc->chat_date) ?></strong></label>
-                <label class="block mb-2">Catatan : <strong><?= $pc->note ?></strong></label>
+                <label class="block mb-2">Pertama Chat : <strong><?= hari($pc->chat_date) ?>, <?= tgl_indo($pc->chat_date) ?></strong></label>                
                 <label class="block mb-2">Dari Nomer Admin : <strong><?= $pc->nomeradmin ?></strong></label>
+                <label class="block mb-2">Catatan : <strong><?= $pc->note ?></strong></label>
                 <!-- <br>
                 <a href="<?= site_url('potensial-clients/edit/'. $pc->id_session) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Edit</a>
                 <a href="<?= site_url('potensial-clients') ?>" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a> -->
