@@ -158,7 +158,7 @@
                 <a href="<?= site_url('potensial-clients') ?>" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a> -->
               </form>
               </div>
-              
+
               <button onclick="openModal()"
                 class="px-4 py-2 bg-primary text-white rounded-md shadow">
                 Tambah Data
@@ -230,7 +230,52 @@
 
               <!-- ====== Table Three End -->
 
+              <!-- Overlay -->
+              <div id="modal"
+                class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
 
+                <!-- Modal Box -->
+                <div class="bg-white w-full max-w-md rounded-lg shadow-lg p-6 relative">
+
+                  <!-- Close Button -->
+                  <button onclick="closeModal()"
+                    class="absolute top-3 right-3 text-gray-400 hover:text-gray-600">
+                    ✕
+                  </button>
+
+                  <!-- Title -->
+                  <h2 class="text-lg font-semibold mb-4">Form Input Data</h2>
+
+                  <!-- Form -->
+                  <form>
+                    <div class="mb-4">
+                      <label class="block text-sm font-medium mb-1">Nama</label>
+                      <input type="text"
+                        class="w-full rounded border px-3 py-2 focus:outline-none focus:ring focus:border-primary"
+                        placeholder="Masukkan nama">
+                    </div>
+
+                    <div class="mb-4">
+                      <label class="block text-sm font-medium mb-1">Email</label>
+                      <input type="email"
+                        class="w-full rounded border px-3 py-2 focus:outline-none focus:ring focus:border-primary"
+                        placeholder="Masukkan email">
+                    </div>
+
+                    <div class="flex justify-end gap-2">
+                      <button type="button" onclick="closeModal()"
+                        class="px-4 py-2 border rounded-md">
+                        Batal
+                      </button>
+                      <button type="submit"
+                        class="px-4 py-2 bg-primary text-white rounded-md">
+                        Simpan
+                      </button>
+                    </div>
+                  </form>
+
+                </div>
+              </div>
 
             </div>
           </div>
@@ -240,6 +285,17 @@
     </div>
     <!-- ===== Content Area End ===== -->
   </div>
+  <script>
+  function openModal() {
+    document.getElementById('modal').classList.remove('hidden');
+    document.getElementById('modal').classList.add('flex');
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.add('hidden');
+    document.getElementById('modal').classList.remove('flex');
+  }
+</script>
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
 </body>
 </html>
