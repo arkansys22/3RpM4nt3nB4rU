@@ -101,7 +101,47 @@
                   </div>
                 </div>
                 </div>
-
+              <div class="mb-4.5 flex flex-col md:flex-row">
+                  <div class="w-full md:w-1/2">
+                  <label class="block mb-2">
+                  Nama Klien <p><h1 class="text-lg font-bold"><?= $pc->pc_name ?></h1></p>
+                  </label> 
+                  </div>
+                  <div class="w-full md:w-1/2">
+                  <label class="block mb-2">
+                  Nomer WhatsApp <p><h1 class="text-lg font-bold"><?= $pc->pc_nowa ?></h1></p>
+                  </label>
+                  </div>                  
+                </div>
+                <div class="mb-4.5 flex flex-col md:flex-row">
+                  <div class="w-full md:w-1/2">
+                  <label class="block mb-2">
+                  Lokasi Acara <p><h1 class="text-lg font-bold"><?= $pc->location ?></h1></p>
+                  </label> 
+                  </div>
+                  <div class="w-full md:w-1/2">
+                  <label class="block mb-2">
+                  Tanggal Acara<p><h1 class="text-lg font-bold"><?= hari($pc->event_date) ?>, <?= tgl_indo($pc->event_date) ?></h1></p>
+                  </label>
+                  </div>                  
+                </div>
+                <div class="mb-4.5 flex flex-col md:flex-row">
+                  <div class="w-full md:w-1/2">
+                  <label class="block mb-2">
+                  Pertama Chat <p><h1 class="text-lg font-bold"><?= hari($pc->chat_date) ?>, <?= tgl_indo($pc->chat_date) ?></h1></p>
+                  </label> 
+                  </div>
+                  <div class="w-full md:w-1/2">
+                  <label class="block mb-2">
+                  Dari Nomer Admin <p><h1 class="text-lg font-bold"><?= $pc->nomeradmin ?></h1></p>
+                  </label>
+                  </div>                  
+                </div>
+                <div class="mb-4.5 flex flex-col md:flex-row">
+                  <label class="block mb-2">
+                  Catatan <p><h1 class="text-lg font-bold"><?= $pc->note ?></h1></p>
+                  </label>
+                </div>
 
               <form action="" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded block md:hidden">
                 <label class="block mb-2">Nama Klien : <strong><?= $pc->pc_name ?></strong></label>        
