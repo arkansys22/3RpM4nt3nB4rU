@@ -175,7 +175,7 @@
                   onclick="toggleTable()"
                   class="flex items-center gap-2 text-sm font-medium text-primary hover:opacity-80">
 
-                  <span id="toggleText">Roll Up</span>
+                  <span id="toggleText">Roll Down</span>
 
                   <svg id="toggleIcon"
                     class="h-4 w-4 transition-transform duration-300"
@@ -188,7 +188,7 @@
 
               <!-- ====== Table Three Start -->
               <div class="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default  dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1" >
-                <div id="tableWrapper" class="max-w-full overflow-x-auto transition-all duration-300">
+                <div id="tableWrapper" class="max-w-full overflow-x-auto hidden transition-all duration-300">
                   <table class="w-full table-auto">
                     <thead>
                       <tr class="bg-gray-2 text-left dark:bg-meta-4">
