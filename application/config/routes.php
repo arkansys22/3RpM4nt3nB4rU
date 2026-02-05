@@ -145,7 +145,7 @@ $route['potensial-clients/recycle_bin'] = 'crud_potensial_clients/recycle_bin'; 
 $route['potensial-clients/restore/(:any)'] = 'crud_potensial_clients/restore/$1'; // Restore Potensial Clients
 $route['potensial-clients/permanent_delete/(:any)'] = 'crud_potensial_clients/permanent_delete/$1'; // Hapus permanen Potensial Clients
 
-
+$route['potensial-clients/getprodukbykategori'] = 'crud_potensial_clients/getProdukByKategori'; // Hapus 
 
 $route['potensial-clients-pricelist'] = 'crud_potensial_clients/index_pricelist'; // Menampilkan daftar pricelist
 $route['potensial-clients-pricelist/create'] = 'crud_potensial_clients/create_pricelist'; // Menampilkan daftar create pricelist
