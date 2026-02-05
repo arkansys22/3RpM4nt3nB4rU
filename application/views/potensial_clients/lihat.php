@@ -376,16 +376,21 @@
         produk.innerHTML = '<option>Loading...</option>';
 
         fetch(`<?= site_url('potensial-clients/getprodukbykategori/') ?>/${kategoriId}`)
-          .then(res => res.json())
+          .then(res => {
+              if (!res.ok) {
+                throw new Error('HTTP error ' + res.status);
+              }
+              return res.json();
+            })
           .then(data => {
             let html = '<option value="">Pilih Produk</option>';
             data.forEach(p => {
               html += `<option value="${p.data_pricelist_idsession}">${p.data_pricelist_judul}</option>`;
             });
             produk.innerHTML = html;
-          })
+            })
           .catch(err => {
-            console.error(err);
+            console.error('FETCH ERROR:', err);
             produk.innerHTML = '<option>Error load data</option>';
           });
       });
