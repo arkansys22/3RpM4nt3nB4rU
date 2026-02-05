@@ -329,36 +329,36 @@
     <!-- ===== Content Area End ===== -->
   </div>
   <script>
-  function openModal() {
-    document.getElementById('modal').classList.remove('hidden');
-    document.getElementById('modal').classList.add('flex');
-  }
+    function openModal() {
+      document.getElementById('modal').classList.remove('hidden');
+      document.getElementById('modal').classList.add('flex');
+    }
 
-  function closeModal() {
-    document.getElementById('modal').classList.add('hidden');
-    document.getElementById('modal').classList.remove('flex');
-  }
-  </script>
-  <script>
-  let isOpen = false;
+    function closeModal() {
+      document.getElementById('modal').classList.add('hidden');
+      document.getElementById('modal').classList.remove('flex');
+    }
+    </script>
+    <script>
+    let isOpen = false;
 
-      function toggleTable() {
-        const table = document.getElementById('tableWrapper');
-        const icon = document.getElementById('toggleIcon');
-        const text = document.getElementById('toggleText');
+        function toggleTable() {
+          const table = document.getElementById('tableWrapper');
+          const icon = document.getElementById('toggleIcon');
+          const text = document.getElementById('toggleText');
 
-        isOpen = !isOpen;
+          isOpen = !isOpen;
 
-        if (isOpen) {
-          table.classList.remove('hidden');
-          icon.classList.remove('rotate-180');
-          text.innerText = 'Roll Up';
-        } else {
-          table.classList.add('hidden');
-          icon.classList.add('rotate-180');
-          text.innerText = 'Roll Down';
+          if (isOpen) {
+            table.classList.remove('hidden');
+            icon.classList.remove('rotate-180');
+            text.innerText = 'Roll Up';
+          } else {
+            table.classList.add('hidden');
+            icon.classList.add('rotate-180');
+            text.innerText = 'Roll Down';
+          }
         }
-      }
   </script>
   <script>
       const kategori = document.getElementById('kategori');
@@ -368,7 +368,7 @@
         const kategoriId = this.value;
         produk.innerHTML = '<option>Loading...</option>';
 
-        fetch(`<?= site_url('crud_potensial-clients/getProdukByKategori') ?>/${kategoriId}`)
+        fetch(`<?= site_url('Crud_potensial-clients/getProdukByKategori') ?>/${kategoriId}`)
           .then(res => res.json())
           .then(data => {
             let options = '<option value="">Pilih Produk</option>';
