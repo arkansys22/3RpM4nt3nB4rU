@@ -188,108 +188,108 @@
 					</div>
 				</div> -->
 	            <div class="data-stats-slider-outer relative col-span-12 rounded-sm border border-stroke bg-white py-10 shadow-default dark:border-strokedark dark:bg-boxdark">
-  <!-- ===== Main Content Start ===== -->
-  <main>
-    <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
-      <div class="mx-auto max-w-7xl">
-        <!-- Header / Filter -->
-        <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <h2 class="text-title-md2 font-bold">Calendar</h2>
-          <div class="flex gap-4">
-            <select id="month-select" class="border rounded p-2">
-              <?php for ($m = 1; $m <= 12; $m++): ?>
-                <option value="<?php echo $m; ?>" <?php echo $m == date('n') ? 'selected' : ''; ?>>
-                  <?php echo date('F', mktime(0, 0, 0, $m, 1)); ?>
-                </option>
-              <?php endfor; ?>
-            </select>
-            <select id="year-select" class="border rounded p-2">
-              <?php for ($y = date('Y') - 5; $y <= date('Y') + 5; $y++): ?>
-                <option value="<?php echo $y; ?>" <?php echo $y == date('Y') ? 'selected' : ''; ?>>
-                  <?php echo $y; ?>
-                </option>
-              <?php endfor; ?>
-            </select>
-          </div>
-        </div>
+				  <!-- ===== Main Content Start ===== -->
+				  <main>
+				    <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+				      <div class="mx-auto max-w-7xl">
+				        <!-- Header / Filter -->
+				        <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+				          <h2 class="text-title-md2 font-bold">Calendar</h2>
+				          <div class="flex gap-4">
+				            <select id="month-select" class="border rounded p-2">
+				              <?php for ($m = 1; $m <= 12; $m++): ?>
+				                <option value="<?php echo $m; ?>" <?php echo $m == date('n') ? 'selected' : ''; ?>>
+				                  <?php echo date('F', mktime(0, 0, 0, $m, 1)); ?>
+				                </option>
+				              <?php endfor; ?>
+				            </select>
+				            <select id="year-select" class="border rounded p-2">
+				              <?php for ($y = date('Y') - 5; $y <= date('Y') + 5; $y++): ?>
+				                <option value="<?php echo $y; ?>" <?php echo $y == date('Y') ? 'selected' : ''; ?>>
+				                  <?php echo $y; ?>
+				                </option>
+				              <?php endfor; ?>
+				            </select>
+				          </div>
+				        </div>
 
-        <!-- ====== Calendar Section Start -->
-        <div class="w-full rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark overflow-x-auto">
-          <table class="w-full min-w-[700px] text-center">
-            <thead>
-              <tr class="grid grid-cols-7 bg-primary text-white text-xs sm:text-sm font-semibold">
-                <th class="p-2 sm:p-4">Min</th>
-                <th class="p-2 sm:p-4">Sen</th>
-                <th class="p-2 sm:p-4">Sel</th>
-                <th class="p-2 sm:p-4">Rab</th>
-                <th class="p-2 sm:p-4">Kam</th>
-                <th class="p-2 sm:p-4">Jum</th>
-                <th class="p-2 sm:p-4">Sab</th>
-              </tr>
-            </thead>
-            <tbody id="calendar-body">
-              <!-- Calendar rows will be dynamically generated here -->
-            </tbody>
-          </table>
-        </div>
-        <!-- ====== Calendar Section End -->
+				        <!-- ====== Calendar Section Start -->
+				        <div class="w-full rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark overflow-x-auto">
+				          <table class="w-full min-w-[700px] text-center">
+				            <thead>
+				              <tr class="grid grid-cols-7 bg-primary text-white text-xs sm:text-sm font-semibold">
+				                <th class="p-2 sm:p-4">Min</th>
+				                <th class="p-2 sm:p-4">Sen</th>
+				                <th class="p-2 sm:p-4">Sel</th>
+				                <th class="p-2 sm:p-4">Rab</th>
+				                <th class="p-2 sm:p-4">Kam</th>
+				                <th class="p-2 sm:p-4">Jum</th>
+				                <th class="p-2 sm:p-4">Sab</th>
+				              </tr>
+				            </thead>
+				            <tbody id="calendar-body">
+				              <!-- Calendar rows will be dynamically generated here -->
+				            </tbody>
+				          </table>
+				        </div>
+				        <!-- ====== Calendar Section End -->
 
-        <script>
-          const monthSelect = document.getElementById('month-select');
-          const yearSelect = document.getElementById('year-select');
-          const calendarBody = document.getElementById('calendar-body');
+				        <script>
+				          const monthSelect = document.getElementById('month-select');
+				          const yearSelect = document.getElementById('year-select');
+				          const calendarBody = document.getElementById('calendar-body');
 
-          // Event data passed from the controller
-          const events = <?php echo json_encode($events); ?>;
+				          // Event data passed from the controller
+				          const events = <?php echo json_encode($events); ?>;
 
-          function generateCalendar(month, year) {
-            const firstDay = new Date(year, month - 1, 1).getDay();
-            const daysInMonth = new Date(year, month, 0).getDate();
-            let calendarHTML = '';
-            let date = 1;
+				          function generateCalendar(month, year) {
+				            const firstDay = new Date(year, month - 1, 1).getDay();
+				            const daysInMonth = new Date(year, month, 0).getDate();
+				            let calendarHTML = '';
+				            let date = 1;
 
-            for (let i = 0; i < 6; i++) {
-              let rowHTML = '<tr class="grid grid-cols-7 text-xs sm:text-sm">';
-              for (let j = 0; j < 7; j++) {
-                if (i === 0 && j < firstDay) {
-                  rowHTML += '<td class="border border-stroke p-2 sm:p-4 dark:border-strokedark"></td>';
-                } else if (date > daysInMonth) {
-                  rowHTML += '<td class="border border-stroke p-2 sm:p-4 dark:border-strokedark"></td>';
-                } else {
-                  const currentDate = `${year}-${String(month).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
-                  const event = events.find(e => e.event_date === currentDate);
+				            for (let i = 0; i < 6; i++) {
+				              let rowHTML = '<tr class="grid grid-cols-7 text-xs sm:text-sm">';
+				              for (let j = 0; j < 7; j++) {
+				                if (i === 0 && j < firstDay) {
+				                  rowHTML += '<td class="border border-stroke p-2 sm:p-4 dark:border-strokedark"></td>';
+				                } else if (date > daysInMonth) {
+				                  rowHTML += '<td class="border border-stroke p-2 sm:p-4 dark:border-strokedark"></td>';
+				                } else {
+				                  const currentDate = `${year}-${String(month).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
+				                  const event = events.find(e => e.event_date === currentDate);
 
-                  rowHTML += `<td class="border border-stroke p-2 sm:p-4 dark:border-strokedark ${event ? 'bg-green-200 dark:bg-green-700' : ''}">
-                                <span class="font-medium block">${date}</span>
-                                ${event ? `<p class="text-[10px] text-gray-600 dark:text-gray-300 truncate">Client: ${event.client_name}</p><p class="text-[10px] text-gray-600 dark:text-gray-300 truncate">Lokasi: ${event.location}</p>` : ''}
-                              </td>`;
-                  date++;
-                }
-              }
-              rowHTML += '</tr>';
-              calendarHTML += rowHTML;
-              if (date > daysInMonth) break;
-            }
+				                  rowHTML += `<td class="border border-stroke p-2 sm:p-4 dark:border-strokedark ${event ? 'bg-green-200 dark:bg-green-700' : ''}">
+				                                <span class="font-medium block">${date}</span>
+				                                ${event ? `<p class="text-[10px] text-gray-600 dark:text-gray-300 truncate">Client: ${event.client_name}</p><p class="text-[10px] text-gray-600 dark:text-gray-300 truncate">Lokasi: ${event.location}</p>` : ''}
+				                              </td>`;
+				                  date++;
+				                }
+				              }
+				              rowHTML += '</tr>';
+				              calendarHTML += rowHTML;
+				              if (date > daysInMonth) break;
+				            }
 
-            calendarBody.innerHTML = calendarHTML;
-          }
+				            calendarBody.innerHTML = calendarHTML;
+				          }
 
-          monthSelect.addEventListener('change', () => {
-            generateCalendar(monthSelect.value, yearSelect.value);
-          });
+				          monthSelect.addEventListener('change', () => {
+				            generateCalendar(monthSelect.value, yearSelect.value);
+				          });
 
-          yearSelect.addEventListener('change', () => {
-            generateCalendar(monthSelect.value, yearSelect.value);
-          });
+				          yearSelect.addEventListener('change', () => {
+				            generateCalendar(monthSelect.value, yearSelect.value);
+				          });
 
-          // Initial load
-          generateCalendar(monthSelect.value, yearSelect.value);
-        </script>
-      </div>
-    </div>
-  </main>
-  <!-- ===== Main Content End ===== -->
-</div>
+				          // Initial load
+				          generateCalendar(monthSelect.value, yearSelect.value);
+				        </script>
+				      </div>
+				    </div>
+				  </main>
+				  <!-- ===== Main Content End ===== -->
+				</div>
 
 
 	            <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">

@@ -101,7 +101,9 @@
                   </div>
                 </div>
                 </div>
-              <form action="<?= site_url('potensial-clients/update/'.$pc->id_session) ?>" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
+
+
+              <form action="" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded block md:hidden">
                 <label class="block mb-2"><strong>Nama Klien : </strong><?= $pc->pc_name ?></label>        
                 <label class="block mb-2"><strong>Nomer WhatsApp : </strong><?= $pc->pc_nowa ?></label>        
                 <label class="block mb-2"><strong>Tanggal Pernikahan : </strong><?= hari($pc->event_date) ?>, <?= tgl_indo($pc->event_date) ?></label>
