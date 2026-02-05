@@ -1144,5 +1144,26 @@ class crud_potensial_clients extends CI_Controller {
         $this->session->set_flashdata('Success', 'Pricelist berhasil dihapus permanent');
         redirect('potensial-clients-pricelist/recycle_bin');
     }
+
+
+    public function getProdukByKategori($kategori_id)
+    {
+      $produk = $this->db
+        ->where('data_pricelist_kategori_nama', $kategori_id)
+        ->get('data_pricelist_kategori')
+        ->result();
+
+      echo json_encode($produk);
+    }
+
+    public function getProdukDetail($produk_id)
+    {
+      $produk = $this->db
+        ->where('data_pricelist_type', $produk_id)
+        ->get('data_pricelist')
+        ->row();
+
+      echo json_encode($produk);
+    }
     
 }

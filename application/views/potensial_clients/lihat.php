@@ -272,17 +272,14 @@
 
                     <div class="mb-4">
                     <label class="block text-sm font-medium mb-1">Pilih Kategori</label>
-                      <select name="kategori" class="w-full px-4 py-2 border rounded mb-4" required>
-                          <option value="">---</option>
-                          <option value="MC">MC</option>
-                          <option value="WP dan WO">WP dan WO</option>
-                          <option value="Dokumentasi">Dokumentasi</option>
-                          <option value="Dekorasi">Dekorasi</option>
-                          <option value="Catering">Catering</option>
-                          <option value="Entertainment">Entertainment</option>
-                          <option value="Makeup & Busana">Makeup & Busana</option>
-                          <option value="Venue Pernikahan">Venue Pernikahan</option>
-                          <option value="Paket Pernikahan">Paket Pernikahan</option>
+                      <select id="kategori" name="kategori_id"
+                        class="w-full px-4 py-2 border rounded" required>
+                        <option value="">---</option>
+                        <?php foreach ($kategori as $k): ?>
+                          <option value="<?= $k->data_pricelist_kategori_nama ?>">
+                            <?= $k->data_pricelist_kategori_nama ?>
+                          </option>
+                        <?php endforeach; ?>
                       </select>
                     </div>
                     <div class="mb-4">
@@ -300,15 +297,11 @@
                     </div>
                     <div class="mb-4">
                       <label class="block text-sm font-medium mb-1">Harga Promo</label>
-                      <input type="text"
-                        class="w-full rounded border px-3 py-2 focus:outline-none focus:ring focus:border-primary"
-                        >
+                       <input type="text" id="harga_promo" name="harga_promo" class="w-full rounded border px-3 py-2" readonly>
                     </div>
                     <div class="mb-4">
                       <label class="block text-sm font-medium mb-1">Detail</label>
-                      <input type="text"
-                        class="w-full rounded border px-3 py-2 focus:outline-none focus:ring focus:border-primary"
-                        >
+                      <input type="text" id="detail" name="detail" class="w-full rounded border px-3 py-2" readonly>
                     </div>
 
                     <div class="flex justify-end gap-2">
@@ -366,6 +359,37 @@
         }
       }
   </script>
+  <script>
+      const kategori = document.getElementById('data_pricelist_kategori');
+      const produk = document.getElementById('data_pricelist');
+
+      kategori.addEventListener('change', function () {
+        const kategoriId = this.value;
+        produk.innerHTML = '<option>Loading...</option>';
+
+        fetch(`<?= site_url('crud_potensial-clients/getProdukByKategori') ?>/${kategoriId}`)
+          .then(res => res.json())
+          .then(data => {
+            let options = '<option value="">Pilih Produk</option>';
+            data.forEach(p => {
+              options += `<option value="${p.data_pricelist_idsession}">${p.data_pricelist_judul}</option>`;
+            });
+            produk.innerHTML = options;
+          });
+      });
+
+      produk.addEventListener('change', function () {
+        const produkId = this.value;
+
+        fetch(`<?= site_url('crud_potensial-clients/getProdukDetail') ?>/${produkId}`)
+          .then(res => res.json())
+          .then(p => {
+            document.getElementById('data_pricelist_harga').value = p.data_pricelist_harga;
+            document.getElementById('data_pricelist_hargapromo').value = p.data_pricelist_hargapromo;
+            document.getElementById('data_pricelist_deskripsi').value = p.data_pricelist_deskripsi;
+          });
+      });
+    </script>
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
 </body>
 </html>
