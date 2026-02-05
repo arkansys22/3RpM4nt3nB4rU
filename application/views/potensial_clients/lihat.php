@@ -361,36 +361,36 @@
         }
   </script>
   <script>
+    document.addEventListener('DOMContentLoaded', function () {
       const kategori = document.getElementById('kategori');
       const produk = document.getElementById('produk');
 
       kategori.addEventListener('change', function () {
         const kategoriId = this.value;
+
+        if (!kategoriId) {
+          produk.innerHTML = '<option value="">Pilih kategori dulu</option>';
+          return;
+        }
+
         produk.innerHTML = '<option>Loading...</option>';
 
-        fetch(`<?= site_url('Crud_potensial-clients/getProdukByKategori') ?>/${kategoriId}`)
+        fetch(`<?= site_url('potensial-clients/getprodukbykategori') ?>/${kategoriId}`)
           .then(res => res.json())
           .then(data => {
-            let options = '<option value="">Pilih Produk</option>';
+            let html = '<option value="">Pilih Produk</option>';
             data.forEach(p => {
-              options += `<option value="${p.data_pricelist_idsession}">${p.data_pricelist_judul}</option>`;
+              html += `<option value="${p.data_pricelist_idsession}">${p.data_pricelist_judul}</option>`;
             });
-            produk.innerHTML = options;
+            produk.innerHTML = html;
+          })
+          .catch(err => {
+            console.error(err);
+            produk.innerHTML = '<option>Error load data</option>';
           });
       });
-
-      produk.addEventListener('change', function () {
-        const produkId = this.value;
-
-        fetch(`<?= site_url('crud_potensial-clients/getProdukDetail') ?>/${produkId}`)
-          .then(res => res.json())
-          .then(p => {
-            document.getElementById('data_pricelist_harga').value = p.data_pricelist_harga;
-            document.getElementById('data_pricelist_hargapromo').value = p.data_pricelist_hargapromo;
-            document.getElementById('data_pricelist_deskripsi').value = p.data_pricelist_deskripsi;
-          });
-      });
-    </script>
+    });
+  </script>
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
 </body>
 </html>
