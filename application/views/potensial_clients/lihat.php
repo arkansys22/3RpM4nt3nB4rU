@@ -158,16 +158,37 @@
                 <a href="<?= site_url('potensial-clients') ?>" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a> -->
               </form>
               </div>
-              
+
               <button onclick="openModal()"
                 class="px-4 py-2 bg-primary text-white rounded-md shadow">
                 Tambah Data
               </button>
               <br><br>
 
+
+              <div class="mb-4 flex items-center justify-between">
+                <h3 class="text-lg font-semibold text-black dark:text-white">
+                  Log Activity
+                </h3>
+
+                <button
+                  onclick="toggleTable()"
+                  class="flex items-center gap-2 text-sm font-medium text-primary hover:opacity-80">
+
+                  <span id="toggleText">Roll Up</span>
+
+                  <svg id="toggleIcon"
+                    class="h-4 w-4 transition-transform duration-300"
+                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+              </div>
+
               <!-- ====== Table Three Start -->
               <div class="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default  dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1" >
-                <div class="max-w-full overflow-x-auto">
+                <div id="tableWrapper" class="max-w-full overflow-x-auto transition-all duration-300">
                   <table class="w-full table-auto">
                     <thead>
                       <tr class="bg-gray-2 text-left dark:bg-meta-4">
@@ -295,7 +316,28 @@
     document.getElementById('modal').classList.add('hidden');
     document.getElementById('modal').classList.remove('flex');
   }
-</script>
+  </script>
+  <script>
+  let isOpen = true;
+
+      function toggleTable() {
+        const table = document.getElementById('tableWrapper');
+        const icon = document.getElementById('toggleIcon');
+        const text = document.getElementById('toggleText');
+
+        isOpen = !isOpen;
+
+        if (isOpen) {
+          table.classList.remove('hidden');
+          icon.classList.remove('rotate-180');
+          text.innerText = 'Roll Up';
+        } else {
+          table.classList.add('hidden');
+          icon.classList.add('rotate-180');
+          text.innerText = 'Roll Down';
+        }
+      }
+  </script>
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
 </body>
 </html>
