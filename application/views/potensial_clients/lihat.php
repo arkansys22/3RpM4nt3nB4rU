@@ -272,7 +272,7 @@
 
                     <div class="mb-4">
                     <label class="block text-sm font-medium mb-1">Pilih Kategori</label>
-                      <select id="kategori" name="kategori_id"
+                      <select id="kategori" name="kategori"
                         class="w-full px-4 py-2 border rounded" required>
                         <option value="">---</option>
                         <?php foreach ($kategori as $k): ?>
