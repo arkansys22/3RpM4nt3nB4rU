@@ -178,7 +178,7 @@
                   <span id="toggleText">Roll Down</span>
 
                   <svg id="toggleIcon"
-                    class="h-4 w-4 transition-transform duration-300"
+                    class="h-4 w-4 rotate-180 transition-transform duration-300"
                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="M19 9l-7 7-7-7" />
