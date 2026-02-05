@@ -318,7 +318,7 @@
   }
   </script>
   <script>
-  let isOpen = true;
+  let isOpen = false;
 
       function toggleTable() {
         const table = document.getElementById('tableWrapper');
