@@ -1150,6 +1150,25 @@ class crud_potensial_clients extends CI_Controller {
     }
 
 
+    public function update_penawaran($id_session)
+    {
+        $data = [
+            'penawaran_klien_potensial_idsession' => $id_session,
+            'penawaran_klien_pricelist_kategori'      => $this->input->post('kategori'),
+            'penawaran_klien_idpricelist'     => $this->input->post('produk_id'),
+            'penawaran_klien_harga'    => $this->input->post('harga_asli'),
+            'penawaran_klien_hargapromo'   => $this->input->post('harga_promo'),
+            'penawaran_klien_diskon'   => $this->input->post('maks_diskon'),
+            'penawaran_klien_deskripsi'     => $this->input->post('detail'),
+            'penawaran_klien_qty'     => $this->input->post('qty'),
+            'created_at'    => date('Y-m-d H:i:s')
+        ];
+
+        $this->db->insert('penawaran_klien', $data);
+
+        redirect('potensial-clients/lihat/'.$id_session);
+    }
+
 
 
     public function get_pricelist_by_kategori()

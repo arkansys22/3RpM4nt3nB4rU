@@ -268,11 +268,11 @@
                   <h2 class="text-lg font-semibold mb-4">Rencana Vendor</h2>
 
                   <!-- Form -->
-                  <form action="<?= site_url('potensial-clients/update/'.$pc->id_session) ?>" method="post">
+                  <form action="<?= site_url('potensial-clients/update_penawaran/'.$pc->id_session) ?>" method="post">
 
                     <div class="mb-4">
                     <label class="block text-sm font-medium mb-1">Pilih Kategori</label>
-                      <select id="kategori" name="kategori_id"
+                      <select id="kategori" name="kategori"
                         class="w-full px-4 py-2 border rounded" required>
                         <option value="">---</option>
                         <?php foreach ($kategori as $k): ?>
