@@ -239,7 +239,7 @@
                         </div>
                       </div>
                       <!-- product item -->
-                      <?php endforeach; ?>     
+                      
 
 
                     </div>
@@ -307,6 +307,8 @@
                     </div>
                   </div>
                   <!-- total price end -->
+
+                    <?php endforeach; ?>   
                 </div>
 
 
