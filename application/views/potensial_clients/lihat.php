@@ -206,7 +206,7 @@
                         </div>
                       </div>
                       <!-- table header end -->
-                      <?php $no = 1; foreach ($penawaran as $p): ?>
+                      <?php $no = 1; $subTotal = 0; foreach ($penawaran as $p): ?>
                       <!-- product item -->
                       <div
                         class="grid grid-cols-12 border-b border-stroke py-3.5 pl-5 pr-6 dark:border-strokedark"
@@ -233,9 +233,11 @@
                           <p class="font-medium"><?= "Rp " . number_format($total, 0, ',', '.') ?></p>
                         </div>
                         <div class="col-span-1">
-                          <p class="font-medium">Hapus</p>
+                          <p class="font-medium"><a href="">Hapus</a></p>
                         </div>
                       </div>
+
+                      <?php $subTotal += $total; ?>
                       <!-- product item -->
                       <?php endforeach; ?>     
 
@@ -251,7 +253,7 @@
                           class="flex justify-between font-medium text-black dark:text-white"
                         >
                           <span> Sub Total </span>
-                          <span> Rp 4700 </span>
+                          <span> Rp <?= number_format($subTotal, 0, ',', '.') ?></span>
                         </p>
 
                         <p
