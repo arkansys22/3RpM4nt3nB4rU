@@ -81,6 +81,12 @@ class potensial_model extends CI_Model {
         return $this->db->get_where('log_activity', ['log_activity_document_no' => $id_session])->result();
     }
 
+    public function get_penawaran_by_session($id_session) {
+        $this->db->order_by('created_at', 'DESC');
+       
+        return $this->db->get_where('penawaran_klien', ['penawaran_klien_potensial_idsession' => $id_session])->result();
+    }
+
     public function update_potensial_clients($id_session, $data) {
         $this->db->where('id_session', $id_session);
         return $this->db->update('potensial_clients', $data);

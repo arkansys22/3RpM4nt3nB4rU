@@ -212,36 +212,38 @@
                         </div>
                       </div>
                       <!-- table header end -->
-
+                      <?php $no = 1; foreach ($penawaran as $p): ?>
                       <!-- product item -->
                       <div
                         class="grid grid-cols-12 border-b border-stroke py-3.5 pl-5 pr-6 dark:border-strokedark"
                       >
+                      <?php $namaproduk = $this->Crud_m->view_where('data_pricelist', array('data_pricelist_idsession'=> $p->penawaran_klien_idpricelist))->row(); ?>
+
                         <div class="col-span-4">
-                          <p class="font-medium">Techno  <p><small>Deskripsi Produk</small></p></p>
+                          <p class="font-medium"><?= $namaproduk ?>  <p><small><?= $p->penawaran_klien_deskripsi ?></small></p></p>
                         </div>
 
                         <div class="col-span-2">
-                          <p class="font-medium"><s>Rp 999.000</s></p>
+                          <p class="font-medium"><s><?= $p->penawaran_klien_harga ?></s></p>
                         </div>
 
                         <div class="col-span-2">
-                          <p class="font-medium">Rp 88.000</p>
+                          <p class="font-medium"><?= $p->penawaran_klien_hargapromo ?></p>
                         </div>
 
                         <div class="col-span-1">
-                          <p class="font-medium">1</p>
+                          <p class="font-medium"><?= $p->penawaran_klien_qty ?></p>
                         </div>
-
+                        <?php $total = $p->penawaran_klien_hargapromo * $p->penawaran_klien_qty ?>
                         <div class="col-span-2">
-                          <p class="font-medium">Rp 200.000</p>
+                          <p class="font-medium"><?= $total ?></p>
                         </div>
                         <div class="col-span-1">
                           <p class="font-medium">Hapus</p>
                         </div>
                       </div>
-
                       <!-- product item -->
+                      <?php endforeach; ?>     
 
 
                     </div>
