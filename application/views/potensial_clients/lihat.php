@@ -206,7 +206,7 @@
                         </div>
                       </div>
                       <!-- table header end -->
-                      <?php $no = 1; foreach ($penawaran as $p): ?>
+                      <?php $no = 1; $subTotal = 0;  foreach ($penawaran as $p): ?>
                       <!-- product item -->
                       <div
                         class="grid grid-cols-12 border-b border-stroke py-3.5 pl-5 pr-6 dark:border-strokedark"
