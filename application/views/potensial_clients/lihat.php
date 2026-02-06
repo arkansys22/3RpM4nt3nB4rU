@@ -165,6 +165,253 @@
               </button>
               <br><br>
 
+              <div class="border border-stroke dark:border-strokedark">
+                  <div class="max-w-full overflow-x-auto">
+                    <div class="min-w-[670px]">
+                      <!-- table header start -->
+                      <div
+                        class="grid grid-cols-12 border-b border-stroke py-3.5 pl-5 pr-6 dark:border-strokedark"
+                      >
+                        <div class="col-span-3">
+                          <h5 class="font-medium text-black dark:text-white">
+                            Brand name
+                          </h5>
+                        </div>
+
+                        <div class="col-span-4">
+                          <h5 class="font-medium text-black dark:text-white">
+                            Description
+                          </h5>
+                        </div>
+
+                        <div class="col-span-2">
+                          <h5 class="font-medium text-black dark:text-white">
+                            Quantity
+                          </h5>
+                        </div>
+
+                        <div class="col-span-2">
+                          <h5 class="font-medium text-black dark:text-white">
+                            Price Per Unit
+                          </h5>
+                        </div>
+
+                        <div class="col-span-1">
+                          <h5
+                            class="text-right font-medium text-black dark:text-white"
+                          >
+                            Total
+                          </h5>
+                        </div>
+                      </div>
+                      <!-- table header end -->
+
+                      <!-- product item -->
+                      <div
+                        class="grid grid-cols-12 border-b border-stroke py-3.5 pl-5 pr-6 dark:border-strokedark"
+                      >
+                        <div class="col-span-3">
+                          <p class="font-medium">Techno</p>
+                        </div>
+
+                        <div class="col-span-4">
+                          <p class="font-medium">Kemon 24 smart phone</p>
+                        </div>
+
+                        <div class="col-span-2">
+                          <p class="font-medium">1</p>
+                        </div>
+
+                        <div class="col-span-2">
+                          <p class="font-medium">$200</p>
+                        </div>
+
+                        <div class="col-span-1">
+                          <p class="text-right font-medium">$200</p>
+                        </div>
+                      </div>
+
+                      <!-- product item -->
+                      <div
+                        class="grid grid-cols-12 border-b border-stroke py-3.5 pl-5 pr-6 dark:border-strokedark"
+                      >
+                        <div class="col-span-3">
+                          <p class="font-medium">Vivo</p>
+                        </div>
+
+                        <div class="col-span-4">
+                          <p class="font-medium">Vivo 32 smart phone</p>
+                        </div>
+
+                        <div class="col-span-2">
+                          <p class="font-medium">3</p>
+                        </div>
+
+                        <div class="col-span-2">
+                          <p class="font-medium">$300</p>
+                        </div>
+
+                        <div class="col-span-1">
+                          <p class="text-right font-medium">$900</p>
+                        </div>
+                      </div>
+
+                      <!-- product item -->
+                      <div
+                        class="grid grid-cols-12 border-b border-stroke py-3.5 pl-5 pr-6 dark:border-strokedark"
+                      >
+                        <div class="col-span-3">
+                          <p class="font-medium">Samsung</p>
+                        </div>
+
+                        <div class="col-span-4">
+                          <p class="font-medium">S23 Ultra</p>
+                        </div>
+
+                        <div class="col-span-2">
+                          <p class="font-medium">1</p>
+                        </div>
+
+                        <div class="col-span-2">
+                          <p class="font-medium">$1300</p>
+                        </div>
+
+                        <div class="col-span-1">
+                          <p class="text-right font-medium">$1300</p>
+                        </div>
+                      </div>
+
+                      <!-- product item -->
+                      <div
+                        class="grid grid-cols-12 border-b border-stroke py-3.5 pl-5 pr-6 dark:border-strokedark"
+                      >
+                        <div class="col-span-3">
+                          <p class="font-medium">Apple</p>
+                        </div>
+
+                        <div class="col-span-4">
+                          <p class="font-medium">iPhone 15Pro Max</p>
+                        </div>
+
+                        <div class="col-span-2">
+                          <p class="font-medium">2</p>
+                        </div>
+
+                        <div class="col-span-2">
+                          <p class="font-medium">$1200</p>
+                        </div>
+
+                        <div class="col-span-1">
+                          <p class="text-right font-medium">$2400</p>
+                        </div>
+                      </div>
+
+                      <!-- product item -->
+                      <div
+                        class="grid grid-cols-12 border-b border-stroke py-3.5 pl-5 pr-6 dark:border-strokedark"
+                      >
+                        <div class="col-span-3">
+                          <p class="font-medium">Oppo</p>
+                        </div>
+
+                        <div class="col-span-4">
+                          <p class="font-medium">Fold X</p>
+                        </div>
+
+                        <div class="col-span-2">
+                          <p class="font-medium">1</p>
+                        </div>
+
+                        <div class="col-span-2">
+                          <p class="font-medium">$900</p>
+                        </div>
+
+                        <div class="col-span-1">
+                          <p class="text-right font-medium">$900</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- total price start -->
+                  <div class="flex justify-end p-6">
+                    <div class="w-full max-w-65">
+                      <div class="flex flex-col gap-4">
+                        <p
+                          class="flex justify-between font-medium text-black dark:text-white"
+                        >
+                          <span> Subtotal </span>
+                          <span> $4700 </span>
+                        </p>
+
+                        <p
+                          class="flex justify-between font-medium text-black dark:text-white"
+                        >
+                          <span> Shipping Cost (+) </span>
+                          <span> $10.00 </span>
+                        </p>
+
+                        <p
+                          class="flex justify-between font-medium text-black dark:text-white"
+                        >
+                          <span>
+                            Coupon Discount
+                            <span class="text-meta-3">(10%)</span>
+                          </span>
+                          <span> $470 </span>
+                        </p>
+
+                        <p
+                          class="flex justify-between font-medium text-black dark:text-white"
+                        >
+                          <span> Vat <span class="text-red">(5%)</span> </span>
+                          <span> $235 </span>
+                        </p>
+                      </div>
+
+                      <p
+                        class="mt-4 flex justify-between border-t border-stroke pt-5 dark:border-strokedark"
+                      >
+                        <span class="font-medium text-black dark:text-white">
+                          Total
+                        </span>
+                        <span class="font-bold text-meta-3"> $4475 </span>
+                      </p>
+
+                      <button
+                        class="float-right mt-10 inline-flex items-center gap-2.5 rounded bg-primary px-7.5 py-2.5 font-medium text-white hover:bg-opacity-90"
+                      >
+                        Download
+                        <svg
+                          class="fill-current"
+                          width="18"
+                          height="18"
+                          viewBox="0 0 18 18"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <g clip-path="url(#clip0_1878_13706)">
+                            <path
+                              d="M16.8754 12.375C16.5379 12.375 16.2285 12.6562 16.2285 13.0219V15.525C16.2285 15.7781 16.0316 15.975 15.7785 15.975H2.22227C1.96914 15.975 1.77227 15.7781 1.77227 15.525V13.0219C1.77227 12.6562 1.46289 12.375 1.12539 12.375C0.787891 12.375 0.478516 12.6562 0.478516 13.0219V15.525C0.478516 16.4812 1.23789 17.2406 2.19414 17.2406H15.7785C16.7348 17.2406 17.4941 16.4812 17.4941 15.525V13.0219C17.5223 12.6562 17.2129 12.375 16.8754 12.375Z"
+                              fill=""
+                            />
+                            <path
+                              d="M8.55055 13.078C8.66305 13.1905 8.8318 13.2468 9.00055 13.2468C9.1693 13.2468 9.30992 13.1905 9.45054 13.078L13.5287 9.1124C13.7818 8.85928 13.7818 8.46553 13.5287 8.2124C13.2755 7.95928 12.8818 7.95928 12.6287 8.2124L9.64742 11.1374V1.40615C9.64742 1.06865 9.36617 0.759277 9.00055 0.759277C8.66305 0.759277 8.35367 1.04053 8.35367 1.40615V11.1374L5.37242 8.2124C5.1193 7.95928 4.72555 7.9874 4.47242 8.2124C4.2193 8.46553 4.24742 8.85928 4.47242 9.1124L8.55055 13.078Z"
+                              fill=""
+                            />
+                          </g>
+                          <defs>
+                            <clipPath id="clip0_1878_13706">
+                              <rect width="18" height="18" fill="white" />
+                            </clipPath>
+                          </defs>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  <!-- total price end -->
+                </div>
+
 
               <div class="mb-4 flex items-center justify-between">
                 <h3 class="text-lg font-semibold text-black dark:text-white">
