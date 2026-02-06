@@ -214,7 +214,7 @@
                       <?php $namaproduk = $this->Crud_m->view_where('data_pricelist', array('data_pricelist_idsession'=> $p->penawaran_klien_idpricelist))->row(); ?>
 
                         <div class="col-span-4">
-                          <p class="font-medium"><?= $namaproduk ?>  <p><small><?= $p->penawaran_klien_deskripsi ?></small></p></p>
+                          <p class="font-medium">  <p><small><?= $p->penawaran_klien_deskripsi ?></small></p></p>
                         </div>
 
                         <div class="col-span-2">
