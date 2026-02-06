@@ -239,7 +239,7 @@
                         </div>
                       </div>
                       <!-- product item -->
-                      
+                      <?php endforeach; ?>     
 
 
                     </div>
@@ -253,9 +253,9 @@
                           class="flex justify-between font-medium text-black dark:text-white"
                         >
 
-                        <?php $subTotal += $total; ?>
+                        
                           <span> Sub Total </span>
-                          <span> Rp <?= number_format($subTotal, 0, ',', '.') ?> </span>
+                          <span> Rp 4700 </span>
                         </p>
 
                         <p
@@ -307,8 +307,6 @@
                     </div>
                   </div>
                   <!-- total price end -->
-
-                    <?php endforeach; ?>   
                 </div>
 
 
