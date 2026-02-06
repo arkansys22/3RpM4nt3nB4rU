@@ -222,7 +222,7 @@
                         </div>
 
                         <div class="col-span-2">
-                          <p class="font-medium">Rp 999.000</p>
+                          <p class="font-medium"><s>Rp 999.000</s></p>
                         </div>
 
                         <div class="col-span-2">
