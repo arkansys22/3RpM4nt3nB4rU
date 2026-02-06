@@ -233,9 +233,7 @@
                           <p class="font-medium"><?= "Rp " . number_format($total, 0, ',', '.') ?></p>
                         </div>
                         <div class="col-span-1">
-                          <p class="font-medium">
-                            <a href ="" >
-                          Hapus</p>
+                          <p class="font-medium">Hapus</p>
                         </div>
                       </div>
                       <!-- product item -->
