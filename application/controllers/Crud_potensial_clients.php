@@ -1185,8 +1185,8 @@ class crud_potensial_clients extends CI_Controller {
 
         if ($data) {
             echo json_encode([
-                'harga_asli'  => $data['data_pricelist_harga_asli'],
-                'harga_promo' => $data['data_pricelist_harga_promo'],
+                'harga_asli'  => $data['data_pricelist_harga'],
+                'harga_promo' => $data['data_pricelist_hargapromo'],
                 'deskripsi'   => $data['data_pricelist_deskripsi']
             ]);
         } else {
