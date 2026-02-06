@@ -1181,13 +1181,13 @@ class crud_potensial_clients extends CI_Controller {
         $data = $this->db
             ->where('data_pricelist_idsession', $produk_id)
             ->get('data_pricelist')
-            ->row();
+            ->row_array();
 
         if ($data) {
             echo json_encode([
-                'harga_asli'  => $data->data_pricelist_harga_asli,
-                'harga_promo' => $data->data_pricelist_harga_promo,
-                'detail'      => $data->data_pricelist_deskripsi
+                'harga_asli'  => $data['data_pricelist_harga_asli'],
+                'harga_promo' => $data['data_pricelist_harga_promo'],
+                'deskripsi'   => $data['data_pricelist_deskripsi']
             ]);
         } else {
             echo json_encode(null);

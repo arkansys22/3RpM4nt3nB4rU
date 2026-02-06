@@ -399,39 +399,38 @@
     });
   </script>
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const produk = document.getElementById('produk');
-      const hargaAsli = document.getElementById('harga_asli');
-      const hargaPromo = document.getElementById('harga_promo');
-      const detail = document.getElementById('detail');
+  document.addEventListener('DOMContentLoaded', function () {
+    const produk = document.getElementById('produk');
+    const hargaAsli = document.getElementById('harga_asli');
+    const hargaPromo = document.getElementById('harga_promo');
+    const detail = document.getElementById('detail');
 
-      produk.addEventListener('change', function () {
-        const produkId = this.value;
+    produk.addEventListener('change', function () {
+      const produkId = this.value;
 
-        if (!produkId) {
-          hargaAsli.value = '';
-          hargaPromo.value = '';
-          detail.value = '';
-          return;
-        }
+      if (!produkId) {
+        hargaAsli.value = '';
+        hargaPromo.value = '';
+        detail.value = '';
+        return;
+      }
 
-        fetch(`<?= site_url('crud_potensial_clients/get_pricelist_detail') ?>?produk_id=${produkId}`)
-          .then(res => res.json())
-          .then(data => {
-            if (!data) return;
+      fetch(`<?= site_url('crud_potensial_clients/get_pricelist_detail') ?>?produk_id=${produkId}`)
+        .then(res => res.json())
+        .then(data => {
+          console.log('DETAIL:', data); // 🔥 WAJIB ADA DI CONSOLE
 
-            hargaAsli.value  = data.harga_asli;
-            hargaPromo.value = data.harga_promo;
-            detail.value     = data.detail;
-          })
-          .catch(err => {
-            console.error(err);
-            hargaAsli.value = '';
-            hargaPromo.value = '';
-            detail.value = '';
-            });
-          });
+          if (!data) return;
+
+          hargaAsli.value  = data.harga_asli ?? '';
+          hargaPromo.value = data.harga_promo ?? '';
+          detail.value     = data.deskripsi ?? '';
+        })
+        .catch(err => {
+          console.error('ERROR:', err);
+        });
     });
+  });
   </script>
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
 </body>
