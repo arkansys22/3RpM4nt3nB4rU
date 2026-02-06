@@ -375,24 +375,26 @@
 
         produk.innerHTML = '<option>Loading...</option>';
 
-        fetch(`<?= site_url('Crud_potensial_clients/getProdukByKategori/') ?>?kategori_id=${kategoriId}`)
-          .then(res => {
-              if (!res.ok) {
-                throw new Error('HTTP error ' + res.status);
-              }
-              return res.json();
-            })
-          .then(data => {
-            let html = '<option value="">Pilih Produk</option>';
-            data.forEach(p => {
-              html += `<option value="${p.data_pricelist_idsession}">${p.data_pricelist_judul}</option>`;
-            });
-            produk.innerHTML = html;
-            })
-          .catch(err => {
-            console.error('FETCH ERROR:', err);
-            produk.innerHTML = '<option>Error load data</option>';
+       fetch(`<?= site_url('crud_potensial_clients/get_pricelist_by_kategori') ?>?kategori_id=${kategoriId}`)
+        .then(res => res.text())
+        .then(text => {
+          console.log('RAW:', text);
+
+          const data = JSON.parse(text);
+          let html = '<option value="">Pilih Produk</option>';
+
+          data.forEach(p => {
+            html += `<option value="${p.data_pricelist_idsession}">
+                      ${p.data_pricelist_judul}
+                    </option>`;
           });
+
+          produkSelect.innerHTML = html;
+        })
+        .catch(err => {
+          console.error(err);
+          produkSelect.innerHTML = '<option>Error load data</option>';
+        });
       });
     });
   </script>

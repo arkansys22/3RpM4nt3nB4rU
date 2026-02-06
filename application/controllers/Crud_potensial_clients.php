@@ -1175,5 +1175,27 @@ class crud_potensial_clients extends CI_Controller {
 
       echo json_encode($produk);
     }
+
+
+    public function get_pricelist_by_kategori()
+    {
+        header('Content-Type: application/json');
+
+        $kategori_id = $this->input->get('kategori_id');
+
+        if (!$kategori_id) {
+            echo json_encode([]);
+            exit;
+        }
+
+        $produk = $this->db
+            ->where('data_pricelist_type', $kategori_id)
+            ->where('data_pricelist_status', 'Aktif')
+            ->get('data_pricelist')
+            ->result_array();
+
+        echo json_encode($produk);
+        exit;
+    }
     
 }
