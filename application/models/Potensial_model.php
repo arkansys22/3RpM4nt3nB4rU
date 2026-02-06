@@ -113,6 +113,11 @@ class potensial_model extends CI_Model {
         return $this->db->delete('potensial_clients');
     }
 
+    public function delete_permanent_penawaran($id_session) {
+        $this->db->where('penawaran_klien_id ', $id_session);
+        return $this->db->delete('penawaran_klien');
+    }
+
     public function get_clients_by_status($status)
     {   
         $this->db->order_by('chat_date', 'DESC');    
@@ -145,6 +150,6 @@ class potensial_model extends CI_Model {
     }
 
 
-    
+
 
 }
