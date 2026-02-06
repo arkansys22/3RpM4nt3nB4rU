@@ -228,7 +228,10 @@
                         <div class="col-span-1">
                           <p class="font-medium"><?= $p->penawaran_klien_qty ?></p>
                         </div>
-                        <?php $total = $p->penawaran_klien_hargapromo * $p->penawaran_klien_qty ?>
+                        <?php $total = $p->penawaran_klien_hargapromo * $p->penawaran_klien_qty 
+                        $subTotal += $total;
+                        ?>
+
                         <div class="col-span-2">
                           <p class="font-medium"><?= "Rp " . number_format($total, 0, ',', '.') ?></p>
                         </div>
@@ -253,9 +256,9 @@
                           class="flex justify-between font-medium text-black dark:text-white"
                         >
 
-                        
+
                           <span> Sub Total </span>
-                          <span> Rp 4700 </span>
+                          <span> Rp <?= number_format($subTotal, 0, ',', '.') ?></span>
                         </p>
 
                         <p
