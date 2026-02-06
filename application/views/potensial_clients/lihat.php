@@ -178,7 +178,7 @@
                           </h5>
                         </div>
 
-                        <div class="col-span-4">
+                        <div class="col-span-2">
                           <h5 class="font-medium text-black dark:text-white">
                             Harga Asli
                           </h5>
@@ -196,7 +196,7 @@
                           </h5>
                         </div>
 
-                        <div class="col-span-1">
+                        <div class="col-span-2">
                           <h5
                             class="text-right font-medium text-black dark:text-white"
                           >
@@ -207,7 +207,7 @@
                           <h5
                             class="text-right font-medium text-black dark:text-white"
                           >
-                            &nbsp
+                            Aksi
                           </h5>
                         </div>
                       </div>
@@ -221,20 +221,20 @@
                           <p class="font-medium">Techno  <p><small>Deskripsi Produk</small></p></p>
                         </div>
 
-                        <div class="col-span-4">
-                          <p class="font-medium">Kemon 24 smart phone</p>
+                        <div class="col-span-2">
+                          <p class="font-medium">Rp 999.000</p>
+                        </div>
+
+                        <div class="col-span-2">
+                          <p class="font-medium">Rp 88.000</p>
                         </div>
 
                         <div class="col-span-2">
                           <p class="font-medium">1</p>
                         </div>
 
-                        <div class="col-span-2">
-                          <p class="font-medium">$200</p>
-                        </div>
-
                         <div class="col-span-1">
-                          <p class="text-right font-medium">$200</p>
+                          <p class="text-right font-medium">Rp 200.000</p>
                         </div>
                         <div class="col-span-1">
                           <p class="text-right font-medium">Hapus</p>
