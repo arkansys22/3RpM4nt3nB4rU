@@ -174,13 +174,19 @@
                       >
                         <div class="col-span-3">
                           <h5 class="font-medium text-black dark:text-white">
-                            Brand name
-                          </h5>
+                            Nama Produk
+                          </h5> <p><small>Deskripsi Produk</small></p>
                         </div>
 
                         <div class="col-span-4">
                           <h5 class="font-medium text-black dark:text-white">
-                            Description
+                            Harga Asli
+                          </h5>
+                        </div>
+
+                        <div class="col-span-2">
+                          <h5 class="font-medium text-black dark:text-white">
+                            Harga Promo
                           </h5>
                         </div>
 
@@ -190,17 +196,18 @@
                           </h5>
                         </div>
 
-                        <div class="col-span-2">
-                          <h5 class="font-medium text-black dark:text-white">
-                            Price Per Unit
-                          </h5>
-                        </div>
-
                         <div class="col-span-1">
                           <h5
                             class="text-right font-medium text-black dark:text-white"
                           >
                             Total
+                          </h5>
+                        </div>
+                        <div class="col-span-1">
+                          <h5
+                            class="text-right font-medium text-black dark:text-white"
+                          >
+                            
                           </h5>
                         </div>
                       </div>
@@ -229,107 +236,14 @@
                         <div class="col-span-1">
                           <p class="text-right font-medium">$200</p>
                         </div>
-                      </div>
-
-                      <!-- product item -->
-                      <div
-                        class="grid grid-cols-12 border-b border-stroke py-3.5 pl-5 pr-6 dark:border-strokedark"
-                      >
-                        <div class="col-span-3">
-                          <p class="font-medium">Vivo</p>
-                        </div>
-
-                        <div class="col-span-4">
-                          <p class="font-medium">Vivo 32 smart phone</p>
-                        </div>
-
-                        <div class="col-span-2">
-                          <p class="font-medium">3</p>
-                        </div>
-
-                        <div class="col-span-2">
-                          <p class="font-medium">$300</p>
-                        </div>
-
                         <div class="col-span-1">
-                          <p class="text-right font-medium">$900</p>
+                          <p class="text-right font-medium">Hapus</p>
                         </div>
                       </div>
 
                       <!-- product item -->
-                      <div
-                        class="grid grid-cols-12 border-b border-stroke py-3.5 pl-5 pr-6 dark:border-strokedark"
-                      >
-                        <div class="col-span-3">
-                          <p class="font-medium">Samsung</p>
-                        </div>
 
-                        <div class="col-span-4">
-                          <p class="font-medium">S23 Ultra</p>
-                        </div>
 
-                        <div class="col-span-2">
-                          <p class="font-medium">1</p>
-                        </div>
-
-                        <div class="col-span-2">
-                          <p class="font-medium">$1300</p>
-                        </div>
-
-                        <div class="col-span-1">
-                          <p class="text-right font-medium">$1300</p>
-                        </div>
-                      </div>
-
-                      <!-- product item -->
-                      <div
-                        class="grid grid-cols-12 border-b border-stroke py-3.5 pl-5 pr-6 dark:border-strokedark"
-                      >
-                        <div class="col-span-3">
-                          <p class="font-medium">Apple</p>
-                        </div>
-
-                        <div class="col-span-4">
-                          <p class="font-medium">iPhone 15Pro Max</p>
-                        </div>
-
-                        <div class="col-span-2">
-                          <p class="font-medium">2</p>
-                        </div>
-
-                        <div class="col-span-2">
-                          <p class="font-medium">$1200</p>
-                        </div>
-
-                        <div class="col-span-1">
-                          <p class="text-right font-medium">$2400</p>
-                        </div>
-                      </div>
-
-                      <!-- product item -->
-                      <div
-                        class="grid grid-cols-12 border-b border-stroke py-3.5 pl-5 pr-6 dark:border-strokedark"
-                      >
-                        <div class="col-span-3">
-                          <p class="font-medium">Oppo</p>
-                        </div>
-
-                        <div class="col-span-4">
-                          <p class="font-medium">Fold X</p>
-                        </div>
-
-                        <div class="col-span-2">
-                          <p class="font-medium">1</p>
-                        </div>
-
-                        <div class="col-span-2">
-                          <p class="font-medium">$900</p>
-                        </div>
-
-                        <div class="col-span-1">
-                          <p class="text-right font-medium">$900</p>
-                        </div>
-                      </div>
                     </div>
                   </div>
 
@@ -340,32 +254,15 @@
                         <p
                           class="flex justify-between font-medium text-black dark:text-white"
                         >
-                          <span> Subtotal </span>
-                          <span> $4700 </span>
+                          <span> Sub Total </span>
+                          <span> Rp 4700 </span>
                         </p>
 
                         <p
                           class="flex justify-between font-medium text-black dark:text-white"
                         >
-                          <span> Shipping Cost (+) </span>
-                          <span> $10.00 </span>
-                        </p>
-
-                        <p
-                          class="flex justify-between font-medium text-black dark:text-white"
-                        >
-                          <span>
-                            Coupon Discount
-                            <span class="text-meta-3">(10%)</span>
-                          </span>
-                          <span> $470 </span>
-                        </p>
-
-                        <p
-                          class="flex justify-between font-medium text-black dark:text-white"
-                        >
-                          <span> Vat <span class="text-red">(5%)</span> </span>
-                          <span> $235 </span>
+                          <span> Promo Diskon (-) </span>
+                          <span> Rp 10.00 </span>
                         </p>
                       </div>
 
@@ -375,7 +272,7 @@
                         <span class="font-medium text-black dark:text-white">
                           Total
                         </span>
-                        <span class="font-bold text-meta-3"> $4475 </span>
+                        <span class="font-bold text-meta-3"> Rp 4475 </span>
                       </p>
 
                       <button
