@@ -228,7 +228,7 @@
                         <div class="col-span-1">
                           <p class="font-medium"><?= $p->penawaran_klien_qty ?></p>
                         </div>
-                        <?php $total = $p->penawaran_klien_hargapromo * $p->penawaran_klien_qty 
+                        <?php $total = $p->penawaran_klien_hargapromo * $p->penawaran_klien_qty; 
                         $subTotal += $total;
                         ?>
 
