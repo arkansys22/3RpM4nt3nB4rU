@@ -207,7 +207,7 @@
                           <h5
                             class="text-right font-medium text-black dark:text-white"
                           >
-                            Aksi
+                            
                           </h5>
                         </div>
                       </div>
