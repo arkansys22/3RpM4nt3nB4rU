@@ -308,7 +308,7 @@
                     </div>
                     <div class="mb-4">
                       <label class="block text-sm font-medium mb-1">Quantity</label>
-                       <input type="number" id="qty" name="qty" class="w-full rounded border px-3 py-2" readonly>
+                       <input type="number" id="qty" name="qty" class="w-full rounded border px-3 py-2">
                     </div>
                     <div class="flex justify-end gap-2">
                       <button type="button" onclick="closeModal()"
