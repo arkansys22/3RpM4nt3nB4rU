@@ -236,6 +236,7 @@
                           <p class="font-medium"><a href="">Hapus</a></p>
                         </div>
                       </div>
+                      <?php $diskonTotal += $p->penawaran_klien_diskon; ?>
 
                       <?php $subTotal += $total; ?>
                       <!-- product item -->
@@ -260,7 +261,7 @@
                           class="flex justify-between font-medium text-black dark:text-white"
                         >
                           <span> Promo Diskon (-) </span>
-                          <span> Rp 10.00 </span>
+                          <span> Rp <?= number_format($diskonTotal, 0, ',', '.') ?> </span>
                         </p>
                       </div>
 
