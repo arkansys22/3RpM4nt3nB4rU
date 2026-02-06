@@ -233,7 +233,7 @@
                           <p class="font-medium">1</p>
                         </div>
 
-                        <div class="col-span-1">
+                        <div class="col-span-2">
                           <p class="text-right font-medium">Rp 200.000</p>
                         </div>
                         <div class="col-span-1">
