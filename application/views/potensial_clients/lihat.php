@@ -218,11 +218,11 @@
                         </div>
 
                         <div class="col-span-2">
-                          <p class="font-medium"><s><?= $p->penawaran_klien_harga ?></s></p>
+                          <p class="font-medium"><s><?= "Rp " . number_format($p->penawaran_klien_harga, 0, ',', '.'); ?></s></p>
                         </div>
 
                         <div class="col-span-2">
-                          <p class="font-medium"><?= $p->penawaran_klien_hargapromo ?></p>
+                          <p class="font-medium"><?= "Rp " . number_format($p->penawaran_klien_hargapromo, 0, ',', '.') ?></p>
                         </div>
 
                         <div class="col-span-1">
@@ -230,7 +230,7 @@
                         </div>
                         <?php $total = $p->penawaran_klien_hargapromo * $p->penawaran_klien_qty ?>
                         <div class="col-span-2">
-                          <p class="font-medium"><?= $total ?></p>
+                          <p class="font-medium"><?= "Rp " . number_format($total, 0, ',', '.') ?></p>
                         </div>
                         <div class="col-span-1">
                           <p class="font-medium">Hapus</p>

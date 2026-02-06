@@ -82,7 +82,7 @@ class potensial_model extends CI_Model {
     }
 
     public function get_penawaran_by_session($id_session) {
-        $this->db->order_by('created_at', 'DESC');
+        $this->db->order_by('created_at', 'ASC');
        
         return $this->db->get_where('penawaran_klien', ['penawaran_klien_potensial_idsession' => $id_session])->result();
     }
