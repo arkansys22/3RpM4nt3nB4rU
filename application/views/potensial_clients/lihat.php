@@ -175,7 +175,7 @@
                         <div class="col-span-3">
                           <h5 class="font-medium text-black dark:text-white">
                             Nama Produk
-                          </h5> <p><small>Deskripsi Produk</small></p>
+                          </h5>
                         </div>
 
                         <div class="col-span-4">
@@ -207,7 +207,7 @@
                           <h5
                             class="text-right font-medium text-black dark:text-white"
                           >
-                            
+                            &nbsp
                           </h5>
                         </div>
                       </div>
@@ -218,7 +218,7 @@
                         class="grid grid-cols-12 border-b border-stroke py-3.5 pl-5 pr-6 dark:border-strokedark"
                       >
                         <div class="col-span-3">
-                          <p class="font-medium">Techno</p>
+                          <p class="font-medium">Techno  <p><small>Deskripsi Produk</small></p></p>
                         </div>
 
                         <div class="col-span-4">
