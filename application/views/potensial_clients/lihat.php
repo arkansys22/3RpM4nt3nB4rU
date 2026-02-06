@@ -198,14 +198,14 @@
 
                         <div class="col-span-2">
                           <h5
-                            class="text-right font-medium text-black dark:text-white"
+                            class="font-medium text-black dark:text-white"
                           >
                             Total
                           </h5>
                         </div>
                         <div class="col-span-1">
                           <h5
-                            class="text-right font-medium text-black dark:text-white"
+                            class="font-medium text-black dark:text-white"
                           >
                             
                           </h5>
