@@ -269,9 +269,10 @@
                         class="mt-4 flex justify-between border-t border-stroke pt-5 dark:border-strokedark"
                       >
                         <span class="font-medium text-black dark:text-white">
+                        <?php $total = $subTotal - $diskonTotal?>
                           Total
                         </span>
-                        <span class="font-bold text-meta-3"> Rp 4475 </span>
+                        <span class="font-bold text-meta-3"> Rp <?= number_format($total, 0, ',', '.') ?> </span>
                       </p>
 
                       <button
