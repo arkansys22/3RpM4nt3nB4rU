@@ -1150,31 +1150,6 @@ class crud_potensial_clients extends CI_Controller {
     }
 
 
-    public function getProdukByKategori($kategori_id = null)
-    {
-      if (!$kategori_id) {
-        echo json_encode([]);
-        return;
-      }
-
-      $produk = $this->db
-        ->where('data_pricelist_type', $kategori_id)
-        ->get('data_pricelist')
-        ->result_array();
-
-      echo json_encode($produk);
-    }
-
-
-    public function getProdukDetail($produk_id)
-    {
-      $produk = $this->db
-        ->where('data_pricelist_type', $produk_id)
-        ->get('data_pricelist')
-        ->row();
-
-      echo json_encode($produk);
-    }
 
 
     public function get_pricelist_by_kategori()
@@ -1197,5 +1172,29 @@ class crud_potensial_clients extends CI_Controller {
         echo json_encode($produk);
         exit;
     }
+
+
+    public function get_pricelist_detail()
+    {
+        $produk_id = $this->input->get('produk_id');
+
+        $data = $this->db
+            ->where('data_pricelist_idsession', $produk_id)
+            ->get('data_pricelist')
+            ->row();
+
+        if ($data) {
+            echo json_encode([
+                'harga_asli'  => $data->data_pricelist_harga_asli,
+                'harga_promo' => $data->data_pricelist_harga_promo,
+                'detail'      => $data->data_pricelist_deskripsi
+            ]);
+        } else {
+            echo json_encode(null);
+        }
+    }
+
+
+
     
 }

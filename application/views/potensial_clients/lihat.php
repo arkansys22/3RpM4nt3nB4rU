@@ -398,6 +398,41 @@
       });
     });
   </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const produk = document.getElementById('produk');
+      const hargaAsli = document.getElementById('harga_asli');
+      const hargaPromo = document.getElementById('harga_promo');
+      const detail = document.getElementById('detail');
+
+      produk.addEventListener('change', function () {
+        const produkId = this.value;
+
+        if (!produkId) {
+          hargaAsli.value = '';
+          hargaPromo.value = '';
+          detail.value = '';
+          return;
+        }
+
+        fetch(`<?= site_url('crud_potensial_clients/get_pricelist_detail') ?>?produk_id=${produkId}`)
+          .then(res => res.json())
+          .then(data => {
+            if (!data) return;
+
+            hargaAsli.value  = data.harga_asli;
+            hargaPromo.value = data.harga_promo;
+            detail.value     = data.detail;
+          })
+          .catch(err => {
+            console.error(err);
+            hargaAsli.value = '';
+            hargaPromo.value = '';
+            detail.value = '';
+            });
+          });
+    });
+  </script>
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
 </body>
 </html>
