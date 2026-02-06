@@ -233,7 +233,9 @@
                           <p class="font-medium"><?= "Rp " . number_format($total, 0, ',', '.') ?></p>
                         </div>
                         <div class="col-span-1">
-                          <p class="font-medium">Hapus</p>
+                          <p class="font-medium">
+                            <a href ="" />
+                          Hapus</p>
                         </div>
                       </div>
                       <!-- product item -->
@@ -250,8 +252,10 @@
                         <p
                           class="flex justify-between font-medium text-black dark:text-white"
                         >
+
+                        <?php $subTotal += $total; ?>
                           <span> Sub Total </span>
-                          <span> Rp 4700 </span>
+                          <span> Rp <?= number_format($subTotal, 0, ',', '.') ?> </span>
                         </p>
 
                         <p
