@@ -147,7 +147,7 @@ class potensial_model extends CI_Model {
 
     public function get_total_penawaran($id_session)
     {
-        $this->db->select('SUM(nominal_transaksi) as total_finance_out');
+        $this->db->select('SUM(penawaran_klien_hargapromo) as total_finance_out');
         $this->db->from('penawaran_klien');
         $this->db->where('penawaran_klien_potensial_idsession', $id_session);  // Tahun
         $query = $this->db->get();
