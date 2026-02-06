@@ -301,6 +301,10 @@
                        <input type="text" id="harga_promo" name="harga_promo" class="w-full rounded border px-3 py-2" readonly>
                     </div>
                     <div class="mb-4">
+                      <label class="block text-sm font-medium mb-1">Maks. Diskon</label>
+                       <input type="text" id="maks_diskon" name="maks_diskon" class="w-full rounded border px-3 py-2" readonly>
+                    </div>
+                    <div class="mb-4">
                       <label class="block text-sm font-medium mb-1">Detail</label>
                       <input type="text" id="detail" name="detail" class="w-full rounded border px-3 py-2" readonly>
                     </div>
@@ -403,6 +407,7 @@
     const produk = document.getElementById('produk');
     const hargaAsli = document.getElementById('harga_asli');
     const hargaPromo = document.getElementById('harga_promo');
+    const maksDiskon = document.getElementById('maks_diskon');
     const detail = document.getElementById('detail');
 
     produk.addEventListener('change', function () {
@@ -411,6 +416,7 @@
       if (!produkId) {
         hargaAsli.value = '';
         hargaPromo.value = '';
+        maksDiskon.value = '';
         detail.value = '';
         return;
       }
@@ -424,6 +430,7 @@
 
           hargaAsli.value  = data.harga_asli ?? '';
           hargaPromo.value = data.harga_promo ?? '';
+          maksDiskon.value = data.maks_diskon ?? '';
           detail.value     = data.deskripsi ?? '';
         })
         .catch(err => {
