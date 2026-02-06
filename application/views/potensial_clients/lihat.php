@@ -289,12 +289,10 @@
                         <option value="">Pilih kategori dulu</option>
                       </select>
                     </div>
-
                     <div class="mb-4">
                       <label class="block text-sm font-medium mb-1">Harga Asli</label>
                       <input type="text" id="harga_asli" name="harga_asli"
-                        class="w-full rounded border px-3 py-2" readonly>
-                        
+                        class="w-full rounded border px-3 py-2" readonly>                        
                     </div>
                     <div class="mb-4">
                       <label class="block text-sm font-medium mb-1">Harga Promo</label>
@@ -308,7 +306,10 @@
                       <label class="block text-sm font-medium mb-1">Detail</label>
                       <input type="text" id="detail" name="detail" class="w-full rounded border px-3 py-2" readonly>
                     </div>
-
+                    <div class="mb-4">
+                      <label class="block text-sm font-medium mb-1">Quantity</label>
+                       <input type="number" id="qty" name="qty" class="w-full rounded border px-3 py-2" readonly>
+                    </div>
                     <div class="flex justify-end gap-2">
                       <button type="button" onclick="closeModal()"
                         class="px-4 py-2 border rounded-md">
