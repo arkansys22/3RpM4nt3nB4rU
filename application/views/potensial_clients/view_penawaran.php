@@ -72,9 +72,9 @@
             <table class="table-auto w-full border border-black">
                 <thead>
                     <tr>
-                        <th class="border border-black p-2 w-3/5 text-sm">Nama Produk</th>
+                        <th class="border border-black p-2 w-3/5 text-sm" style="width: auto;">Nama Produk</th>
                         <th class="border border-black p-2 w-1/5 text-sm">Harga Asli</th>
-                        <th class="border border-black p-2 text-sm" style="width: auto;">Harga Promo</th>
+                        <th class="border border-black p-2 w-1/5 text-sm">Harga Promo</th>
                         <th class="border border-black p-2 text-sm" style="width: auto;">Qty</th>
                         <th class="border border-black p-2 text-sm" style="width: auto;">Total</th>
                     </tr>
@@ -83,10 +83,10 @@
                     <?php $no = 1; $subTotal = 0; $diskonTotal = 0;foreach ($penawaran as $p): ?>
                     <tr>                  
                         <?php $namaproduk = $this->Crud_m->view_where('data_pricelist', array('data_pricelist_idsession'=> $p->penawaran_klien_idpricelist))->row(); ?>
-                        <td class="border border-black p-2 text-justify text-xs">
-                            <div class="flex justify-center items-center h-full">                     
+                        <td class="border border-black p-2 text-left text-xs">
+                                             
                                 <span><?= $namaproduk->data_pricelist_judul ?>  <p><small><?= $p->penawaran_klien_deskripsi ?></small></p></span>
-                            </div>
+                           
                            
                         </td>
                         <td class="border border-black p-2 text-center text-xs">
