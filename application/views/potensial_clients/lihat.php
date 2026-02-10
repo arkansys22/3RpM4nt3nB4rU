@@ -414,7 +414,6 @@
                       <label class="block text-sm font-medium mb-1">Pilihan Promo</label>
                       <select id="promo" name="promo"  x-model="promo"
                         class="w-full px-4 py-2 border rounded" required>
-                        <option value="">Pilih Promo</option>
                         <option value="default">Default</option>
                         <option value="0">Tidak Ada</option>
                         <option value="custom">Promo Custom</option>
