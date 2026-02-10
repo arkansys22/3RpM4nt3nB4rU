@@ -147,10 +147,15 @@
 
               <button onclick="openModal()"
                 class="px-4 py-2 bg-primary text-white rounded-md shadow">
-                Tambah Data
+                Tambah Penawaran Produk 
+              </button>
+              <button onclick="openModals()"
+                class="px-4 py-2 bg-primary text-white rounded-md shadow">
+                Setting Diskon 
               </button>
               <br><br>
-
+              <span>Format Promo Diskon : Default / Tidak Ada / Rp 99.000.000</span>
+              <br><br>
               <div class="border border-stroke dark:border-strokedark">
                   <div class="max-w-full overflow-x-auto">
                     <div class="min-w-[670px]">
