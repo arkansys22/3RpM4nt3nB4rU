@@ -1114,6 +1114,21 @@ class crud_potensial_clients extends CI_Controller {
     }
 
 
+    public function view_penawaran($id_session) {
+        // Ambil data pembayaran berdasarkan id_session dan transactions_id
+       
+
+        $data['penawaran'] = $this->Potensial_model->get_penawaran_by_session($id_session);
+    
+        // Ambil data project berdasarkan id_session
+        $data['pc'] = $this->Potensial_model->get_potensial_clients_by_session($id_session);  
+    
+    
+        // Kirim data ke view
+        $this->load->view('potensial-clients/view_penawaran', $data);
+    }
+
+
     public function permanent_delete_pricelist($id_session) {
         $this->Potensial_model->delete_pricelist_permanent($id_session);
 

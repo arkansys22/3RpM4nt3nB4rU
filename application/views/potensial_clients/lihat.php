@@ -278,7 +278,7 @@
                       <button
                         class="float-right mt-10 inline-flex items-center gap-2.5 rounded bg-primary px-7.5 py-2.5 font-medium text-white hover:bg-opacity-90"
                       >
-                        Cetak PDF
+                        Cetak Penawaran
                         <svg
                           class="fill-current"
                           width="18"
