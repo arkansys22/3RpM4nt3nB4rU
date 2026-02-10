@@ -110,7 +110,7 @@
                         <th colspan="4" class="border border-black text-right text-sm p-1">
                             <strong>Sub Total</strong>
                         </th>
-                        <td class="border border-black p-2 text-center text-sm">
+                        <td class="border border-black p-2 text-center text-xs">
                             <div class="flex justify-center items-center h-full">
                                 <strong>
                                    Rp <?= number_format($subTotal, 0, ',', '.') ?>
@@ -122,7 +122,7 @@
                         <th colspan="4" class="border border-black text-right text-sm p-1">
                             <strong>Promo Diskon</strong>
                         </th>
-                        <td class="border border-black p-2 text-center text-sm">
+                        <td class="border border-black p-2 text-center text-xs">
                             <div class="flex justify-center items-center h-full">
                                 <strong>
                                    Rp <?= number_format($diskonTotal, 0, ',', '.') ?>
@@ -135,7 +135,7 @@
                         <th colspan="4" class="border border-black text-right text-sm p-1">
                             <strong>Total</strong>
                         </th>
-                        <td class="border border-black p-2 text-center text-sm">
+                        <td class="border border-black p-2 text-center text-xs">
                             <div class="flex justify-center items-center h-full">                                
                                 <strong>
                                    Rp <?= number_format($total, 0, ',', '.') ?>
