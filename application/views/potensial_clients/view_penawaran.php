@@ -112,7 +112,6 @@
                         </th>
                         <td class="border border-black p-2 text-center text-sm">
                             <div class="flex justify-center items-center h-full">
-                                <span class="mr-1"><strong>Rp</strong></span>
                                 <strong>
                                    Rp <?= number_format($subTotal, 0, ',', '.') ?>
                                 </strong>
@@ -125,7 +124,6 @@
                         </th>
                         <td class="border border-black p-2 text-center text-sm">
                             <div class="flex justify-center items-center h-full">
-                                <span class="mr-1"><strong>Rp</strong></span>
                                 <strong>
                                    Rp <?= number_format($diskonTotal, 0, ',', '.') ?>
                                 </strong>
@@ -138,8 +136,7 @@
                             <strong>Total</strong>
                         </th>
                         <td class="border border-black p-2 text-center text-sm">
-                            <div class="flex justify-center items-center h-full">
-                                <span class="mr-1"><strong>Rp</strong></span>
+                            <div class="flex justify-center items-center h-full">                                
                                 <strong>
                                    Rp <?= number_format($total, 0, ',', '.') ?>
                                 </strong>
