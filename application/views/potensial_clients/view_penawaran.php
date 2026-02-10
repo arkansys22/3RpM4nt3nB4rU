@@ -112,9 +112,9 @@
                         </th>
                         <td class="border border-black p-2 text-center text-xs">
                             <div class="flex justify-center items-center h-full">
-                                <strong>
+                                
                                    Rp <?= number_format($subTotal, 0, ',', '.') ?>
-                                </strong>
+                                
                             </div>
                         </td>
                     </tr>
@@ -135,9 +135,9 @@
                         </th>
                         <td class="border border-black p-2 text-center text-xs">
                             <div class="flex justify-center items-center h-full">                                
-                                <strong>
+                           
                                    Rp <?= number_format($total, 0, ',', '.') ?>
-                                </strong>
+                               
                             </div>
                         </td>
                     </tr>
