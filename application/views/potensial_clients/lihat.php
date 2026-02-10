@@ -149,7 +149,7 @@
                 class="px-4 py-2 bg-primary text-white rounded-md shadow">
                 Tambah Penawaran Produk 
               </button>
-              <button onclick="openModals()"
+              <button @click="open = true"
                 class="px-4 py-2 bg-primary text-white rounded-md shadow">
                 Setting Diskon 
               </button>
@@ -391,15 +391,15 @@
               </div>
 
               <!-- ====== Table Three End -->
-              <div id="modal"
-              x-data="{ promo: '' }"
+              <div x-data="{ open: false, promo: 'default' }"
                 class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
 
                 <!-- Modal Box -->
                 <div class="bg-white w-full max-w-md rounded-lg shadow-lg p-6 relative">
 
                   <!-- Close Button -->
-                  <button onclick="closeModals()"
+                  <button type="button"
+                    @click="open = false"
                     class="absolute top-3 right-3 text-gray-400 hover:text-gray-600">
                     ✕
                   </button>
@@ -419,13 +419,14 @@
                         <option value="custom">Promo Custom</option>
                       </select>
                     </div>
-                    <div class="mb-4" x-show="promo === 'custom'"x-transition>
+                    <div class="mb-4" x-show="promo === 'custom'" x-transition>
                       <label class="block text-sm font-medium mb-1">Masukan Nilai Promo</label>
                       <input type="number" id="nilai_promo" name="nilai_promo"
                         class="w-full rounded border px-3 py-2">                        
                     </div>       
                     <div class="flex justify-end gap-2">
-                      <button type="button" onclick="closeModals()"
+                      <button type="button"  type="button"
+                           @click="open = false"
                         class="px-4 py-2 border rounded-md">
                         Batal
                       </button>
