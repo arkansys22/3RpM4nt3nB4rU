@@ -233,7 +233,7 @@
                           <p class="font-medium"><?= "Rp " . number_format($total, 0, ',', '.') ?></p>
                         </div>
                         <div class="col-span-1">
-                          <p class="font-medium"><a href="<?= site_url('potensial-clients/permanent_delete_penawaran/'.$p->penawaran_klien_id ) ?>">Hapus</a></p>
+                          <p class="font-medium"><a href="<?= site_url('potensial-clients/permanent_delete_penawaran/'.$p->penawaran_klien_id.'/'.$pc->id_session ) ?>">Hapus</a></p>
                         </div>
                       </div>
                       <?php $diskonTotal += $p->penawaran_klien_diskon; ?>
