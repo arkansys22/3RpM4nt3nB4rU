@@ -110,42 +110,96 @@
                     </tr>
                     <?php $diskonTotal += $p->penawaran_klien_diskon; ?>
                     <?php $subTotal += $total; ?>
-                    <?php endforeach; ?>   
-                    <tr>
-                        <th colspan="4" class="border border-black text-right text-sm p-1">
-                            Sub Total
-                        </th>
-                        <td class="border border-black p-2 text-center text-xs">
-                            <div class="flex justify-center items-center h-full">
+                    <?php endforeach; ?> 
+
+                    <?php if ($pc->promo === 'default'){?>
+                        <tr>
+                            <th colspan="4" class="border border-black text-right text-sm p-1">
+                                Sub Total
+                            </th>
+                            <td class="border border-black p-2 text-center text-xs">
+                                <div class="flex justify-center items-center h-full">
                                 
                                    Rp <?= number_format($subTotal, 0, ',', '.') ?>
-                                
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th colspan="4" class="border border-black text-right text-sm p-1">
-                            Promo Diskon
-                        </th>
-                        <td class="border border-black p-2 text-center text-xs">
-                            <div class="flex justify-center items-center h-full">                            
-                                   Rp <?= number_format($diskonTotal, 0, ',', '.') ?>                               
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                    <?php $total = $subTotal - $diskonTotal?>
-                        <th colspan="4" class="border border-black text-right text-sm p-1">
-                            Total
-                        </th>
-                        <td class="border border-black p-2 text-center text-xs">
-                            <div class="flex justify-center items-center h-full">                                
-                           
-                                   Rp <?= number_format($total, 0, ',', '.') ?>
+                                    
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="4" class="border border-black text-right text-sm p-1">
+                                Promo Diskon
+                            </th>
+                            <td class="border border-black p-2 text-center text-xs">
+                                <div class="flex justify-center items-center h-full">                            
+                                       Rp <?= number_format($diskonTotal, 0, ',', '.') ?>                               
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                        <?php $total = $subTotal - $diskonTotal?>
+                            <th colspan="4" class="border border-black text-right text-sm p-1">
+                                Total
+                            </th>
+                            <td class="border border-black p-2 text-center text-xs">
+                                <div class="flex justify-center items-center h-full">                                
                                
-                            </div>
-                        </td>
-                    </tr>
+                                       Rp <?= number_format($total, 0, ',', '.') ?>
+                                   
+                                </div>
+                            </td>
+                        </tr>
+                    <?php }else if($pc->promo === 'tidak'){?>
+                        <tr>
+                            <th colspan="4" class="border border-black text-right text-sm p-1">
+                                Total
+                            </th>
+                            <td class="border border-black p-2 text-center text-xs">
+                                <div class="flex justify-center items-center h-full">
+                                
+                                   Rp <?= number_format($subTotal, 0, ',', '.') ?>
+                                    
+                                </div>
+                            </td>
+                        </tr>                       
+                    <?php }else if($pc->promo === 'custom' ){ ?>
+                        <tr>
+                            <th colspan="4" class="border border-black text-right text-sm p-1">
+                                Sub Total
+                            </th>
+                            <td class="border border-black p-2 text-center text-xs">
+                                <div class="flex justify-center items-center h-full">
+                                
+                                   Rp <?= number_format($subTotal, 0, ',', '.') ?>
+                                    
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="4" class="border border-black text-right text-sm p-1">
+                                Promo Diskon
+                            </th>
+                            <td class="border border-black p-2 text-center text-xs">
+                                <div class="flex justify-center items-center h-full">                            
+                                       Rp <?= number_format($pc->promo_value, 0, ',', '.') ?>                               
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                        <?php $total = $subTotal - $pc->promo_value?>
+                            <th colspan="4" class="border border-black text-right text-sm p-1">
+                                Total
+                            </th>
+                            <td class="border border-black p-2 text-center text-xs">
+                                <div class="flex justify-center items-center h-full">                                
+                               
+                                       Rp <?= number_format($total, 0, ',', '.') ?>
+                                   
+                                </div>
+                            </td>
+                        </tr>
+                    <?php }?>
+
+                    
                 </tbody>
             </table>
         </div>
