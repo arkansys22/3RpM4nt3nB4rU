@@ -108,7 +108,7 @@
                     <?php endforeach; ?>   
                     <tr>
                         <th colspan="4" class="border border-black text-right text-sm p-1">
-                            <strong>Sub Total</strong>
+                            Sub Total
                         </th>
                         <td class="border border-black p-2 text-center text-xs">
                             <div class="flex justify-center items-center h-full">
@@ -131,7 +131,7 @@
                     <tr>
                     <?php $total = $subTotal - $diskonTotal?>
                         <th colspan="4" class="border border-black text-right text-sm p-1">
-                            <strong>Total</strong>
+                            Total
                         </th>
                         <td class="border border-black p-2 text-center text-xs">
                             <div class="flex justify-center items-center h-full">                                
