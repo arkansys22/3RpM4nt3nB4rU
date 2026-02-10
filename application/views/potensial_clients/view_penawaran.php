@@ -107,7 +107,7 @@
                     <?php $subTotal += $total; ?>
                     <?php endforeach; ?>   
                     <tr>
-                        <th colspan="3" class="border border-black text-right text-sm p-1">
+                        <th colspan="4" class="border border-black text-right text-sm p-1">
                             <strong>Sub Total</strong>
                         </th>
                         <td class="border border-black p-2 text-center text-sm">
@@ -120,7 +120,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th colspan="3" class="border border-black text-right text-sm p-1">
+                        <th colspan="4" class="border border-black text-right text-sm p-1">
                             <strong>Promo Diskon</strong>
                         </th>
                         <td class="border border-black p-2 text-center text-sm">
@@ -134,7 +134,7 @@
                     </tr>
                     <tr>
                     <?php $total = $subTotal - $diskonTotal?>
-                        <th colspan="3" class="border border-black text-right text-sm p-1">
+                        <th colspan="4" class="border border-black text-right text-sm p-1">
                             <strong>Total</strong>
                         </th>
                         <td class="border border-black p-2 text-center text-sm">
