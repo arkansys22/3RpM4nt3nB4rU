@@ -1108,7 +1108,8 @@ class crud_potensial_clients extends CI_Controller {
     }
 
     public function permanent_delete_penawaran($id, $id_session) {
-        $this->Potensial_model->delete_permanent_penawaran($id);
+        $this->db->where('penawaran_klien_id', $id)->delete('penawaran_klien');
+
         redirect('potensial-clients/lihat/'.$id_session);
     }
 
