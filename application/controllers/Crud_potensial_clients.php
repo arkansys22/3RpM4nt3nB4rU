@@ -1125,7 +1125,7 @@ class crud_potensial_clients extends CI_Controller {
     
     
         // Kirim data ke view
-        $this->load->view('potensial-clients/view_penawaran', $data);
+        $this->load->view('potensial_clients/view_penawaran', $data);
     }
 
 
