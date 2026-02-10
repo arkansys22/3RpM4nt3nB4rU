@@ -148,7 +148,8 @@
         <!-- Payment Terms -->
         <div class="mb-6">
             <p class="text-xs"><strong>Ketentuan Pembayaran </strong></p>
-            <?php $p1= $total * 10%?> <?php $p2= $total * 45%?> <?php $p3= $total * 30%?> <?php $p4= $total * 15%?>
+            <?php $p1= $total * 10/100?> 
+            <?php $p2= $total * 45/100?> <?php $p3= $total * 30/100?> <?php $p4= $total * 15/100 ?>
             <p class="text-xs">Pembayaran pertama lock tanggal Rp <?= number_format($p1, 0, ',', '.') ?> </p>
             <p class="text-xs">Pembayaran kedua H-60 Rp <?= number_format($p2, 0, ',', '.') ?></p>
             <p class="text-xs">Pembayaran ketiga H-30 Rp <?= number_format($p3, 0, ',', '.') ?></p>
