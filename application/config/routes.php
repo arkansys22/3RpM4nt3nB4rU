@@ -149,7 +149,7 @@ $route['potensial-clients/update_penawaran/(:any)'] = 'crud_potensial_clients/up
 $route['potensial-clients/permanent_delete_penawaran/(:any)/(:any)'] = 'crud_potensial_clients/permanent_delete_penawaran/$1/$2'; // Hapus permanen
 
 $route['potensial-clients/view_penawaran/(:any)'] = 'crud_potensial_clients/view_penawaran/$1';
-
+$route['potensial-clients/update_promo/(:any)'] = 'crud_potensial_clients/update_promo/$1'; // Mengupdate Potensial Clients
 
 
 $route['potensial-clients-pricelist'] = 'crud_potensial_clients/index_pricelist'; // Menampilkan daftar pricelist

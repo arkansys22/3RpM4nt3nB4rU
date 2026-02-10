@@ -1192,6 +1192,20 @@ class crud_potensial_clients extends CI_Controller {
     }
 
 
+    public function update_promo($id_session)
+    {
+        $data = [
+           
+            'promo'      => $this->input->post('promo'),
+            'promo_value'     => $this->input->post('nilai_promo')
+        ];
+
+        $this->Potensial_model->update_potensial_clients($id_session, $data);
+
+        redirect('potensial-clients/lihat/'.$id_session);
+    }
+
+
 
     public function get_pricelist_by_kategori()
     {

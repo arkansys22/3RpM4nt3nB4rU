@@ -154,7 +154,15 @@
                 Setting Diskon 
               </button>
               <br><br>
-              <span>Format Promo Diskon : Default / Tidak Ada / Rp 99.000.000</span>
+
+              <?php if ($pc->promo="default"){?>
+                <span>Format Promo Diskon : Default</span>
+              <?php }else if($pc->promo ="tidak"){?>
+                <span>Format Promo Diskon : Tidak Ada</span>
+              <?php }else if($pc->promo = "custom" ) ?>
+                <span>Format Promo Diskon : Custom Rp 99.000.000</span>
+            <?php }?>
+              
               <br><br>
               <div class="border border-stroke dark:border-strokedark">
                   <div class="max-w-full overflow-x-auto">
@@ -407,21 +415,20 @@
                   <h2 class="text-lg font-semibold mb-4">Format Diskon</h2>
 
                   <!-- Form -->
-                  <form action="<?= site_url('potensial-clients/update_penawaran/'.$pc->id_session) ?>" method="post">
+                  <form action="<?= site_url('potensial-clients/update_promo/'.$pc->id_session) ?>" method="post">
 
                     <div class="mb-4">
                       <label class="block text-sm font-medium mb-1">Pilihan Promo</label>
-                      <select id="promo" name="promo"  x-model="promo"
-                        class="w-full px-4 py-2 border rounded" required>
-                        <option value="">Pilih Promo</option>
+                      <select id="promo" name="promo"
+                        class="w-full px-4 py-2 border rounded" required>                        
                         <option value="default">Default</option>
-                        <option value="0">Tidak Ada</option>
+                        <option value="tidak">Tidak Ada</option>
                         <option value="custom">Promo Custom</option>
                       </select>
                     </div>
                     <div class="mb-4 hidden" id="promoCustom">
                       <label class="block text-sm font-medium mb-1">Masukan Nilai Promo</label>
-                      <input type="number" id="nilai_promo" name="nilai_promo"
+                      <input type="number" name="nilai_promo"
                         class="w-full rounded border px-3 py-2">                        
                     </div>       
                     <div class="flex justify-end gap-2">
@@ -521,8 +528,6 @@
     </div>
     <!-- ===== Content Area End ===== -->
   </div>
-  <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-
     <script>
       document.addEventListener('DOMContentLoaded', function () {
         const promoSelect = document.getElementById('promo');
