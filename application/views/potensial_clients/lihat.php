@@ -161,7 +161,7 @@
                 <span>Format Promo Diskon : Tidak Ada</span>
               <?php }else if($pc->promo === 'custom' ){ ?>
                 <span>Format Promo Diskon : Custom Rp <?= number_format($pc->promo_value, 0, ',', '.'); ?></span>
-            <?php }?>
+              <?php }?>
               
               <br><br>
               <div class="border border-stroke dark:border-strokedark">
@@ -254,31 +254,77 @@
                   <!-- total price start -->
                   <div class="flex justify-end p-6">
                     <div class="w-full max-w-65">
-                      <div class="flex flex-col gap-4">
-                        <p
-                          class="flex justify-between font-medium text-black dark:text-white"
-                        >
-                          <span> Sub Total </span>
-                          <span> Rp <?= number_format($subTotal, 0, ',', '.') ?></span>
-                        </p>
+                      <?php if ($pc->promo === 'default'){?>
+                        <div>
+                          <div class="flex flex-col gap-4">
+                            <p
+                              class="flex justify-between font-medium text-black dark:text-white"
+                            >
+                              <span> Sub Total </span>
+                              <span> Rp <?= number_format($subTotal, 0, ',', '.') ?></span>
+                            </p>
 
-                        <p
-                          class="flex justify-between font-medium text-black dark:text-white"
-                        >
-                          <span> Promo Diskon (-) </span>
-                          <span> Rp <?= number_format($diskonTotal, 0, ',', '.') ?> </span>
-                        </p>
-                      </div>
+                            <p
+                              class="flex justify-between font-medium text-black dark:text-white"
+                            >
+                              <span> Promo Diskon (-) </span>
+                              <span> Rp <?= number_format($diskonTotal, 0, ',', '.') ?> </span>
+                            </p>
+                          </div>
 
-                      <p
-                        class="mt-4 flex justify-between border-t border-stroke pt-5 dark:border-strokedark"
-                      >
-                        <span class="font-medium text-black dark:text-white">
-                        <?php $total = $subTotal - $diskonTotal?>
-                          Total
-                        </span>
-                        <span class="font-bold text-meta-3"> Rp <?= number_format($total, 0, ',', '.') ?> </span>
-                      </p>
+                          <p
+                            class="mt-4 flex justify-between border-t border-stroke pt-5 dark:border-strokedark"
+                          >
+                            <span class="font-medium text-black dark:text-white">
+                            <?php $total = $subTotal - $diskonTotal?>
+                              Total
+                            </span>
+                            <span class="font-bold text-meta-3"> Rp <?= number_format($total, 0, ',', '.') ?> </span>
+                          </p>
+                        </div>
+                      <?php }else if($pc->promo === 'tidak'){?>
+                        <div>
+                          <div class="flex flex-col gap-4">
+                            <p
+                              class="flex justify-between font-medium text-black dark:text-white"
+                            >
+                              <span> Total </span>
+                              <span> Rp <?= number_format($subTotal, 0, ',', '.') ?></span>
+                            </p>
+                          </div>
+                        </div>
+                      <?php }else if($pc->promo === 'custom' ){ ?>
+
+                        <div>
+                          <div class="flex flex-col gap-4">
+                            <p
+                              class="flex justify-between font-medium text-black dark:text-white"
+                            >
+                              <span> Sub Total </span>
+                              <span> Rp <?= number_format($subTotal, 0, ',', '.') ?></span>
+                            </p>
+
+                            <p
+                              class="flex justify-between font-medium text-black dark:text-white"
+                            >
+                              <span> Promo Diskon (-) </span>
+                              <span> Rp <?= number_format($pc->promo_value, 0, ',', '.') ?> </span>
+                            </p>
+                          </div>
+
+                          <p
+                            class="mt-4 flex justify-between border-t border-stroke pt-5 dark:border-strokedark"
+                          >
+                            <span class="font-medium text-black dark:text-white">
+                            <?php $total = $subTotal - $pc->promo_value?>
+                              Total
+                            </span>
+                            <span class="font-bold text-meta-3"> Rp <?= number_format($total, 0, ',', '.') ?> </span>
+                          </p>
+                        </div>
+                      <?php }?>
+
+                      
 
                       <button onclick="window.location.href='<?= base_url('potensial-clients/view_penawaran/'.$pc->id_session) ?>'"
                         class="float-right mt-10 inline-flex items-center gap-2.5 rounded bg-primary px-7.5 py-2.5 font-medium text-white hover:bg-opacity-90"
