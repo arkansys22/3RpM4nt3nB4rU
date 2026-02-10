@@ -30,7 +30,7 @@
             height: 100vh;
         }
         .print-wrapper {
-            width: 80%;
+            width: 100%;
             margin: auto;
         }
         }
