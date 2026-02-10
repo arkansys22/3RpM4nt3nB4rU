@@ -120,13 +120,11 @@
                     </tr>
                     <tr>
                         <th colspan="4" class="border border-black text-right text-sm p-1">
-                            <strong>Promo Diskon</strong>
+                            Promo Diskon
                         </th>
                         <td class="border border-black p-2 text-center text-xs">
-                            <div class="flex justify-center items-center h-full">
-                                <strong>
-                                   Rp <?= number_format($diskonTotal, 0, ',', '.') ?>
-                                </strong>
+                            <div class="flex justify-center items-center h-full">                            
+                                   Rp <?= number_format($diskonTotal, 0, ',', '.') ?>                               
                             </div>
                         </td>
                     </tr>
@@ -149,10 +147,12 @@
 
         <!-- Payment Terms -->
         <div class="mb-6">
-            <p class="text-xs">Ketentuan Pembayaran :</p>
-            <p class="text-xs">Syarat Pembayaran adalah DP sebesar Rp </p>
-            <p class="text-xs">sebagai booking tanggal dan pelunasan H-7</p>
-            <p class="text-xs">sebelum acara.</p>
+            <p class="text-xs"><strong>Ketentuan Pembayaran </strong></p>
+            <?php $p1= $total * 10%?> <?php $p2= $total * 45%?> <?php $p3= $total * 30%?> <?php $p4= $total * 15%?>
+            <p class="text-xs">Pembayaran pertama lock tanggal Rp <?= number_format($p1, 0, ',', '.') ?> </p>
+            <p class="text-xs">Pembayaran kedua H-60 Rp <?= number_format($p2, 0, ',', '.') ?></p>
+            <p class="text-xs">Pembayaran ketiga H-30 Rp <?= number_format($p3, 0, ',', '.') ?></p>
+            <p class="text-xs">Pembayaran keempat H-14 Rp <?= number_format($p4, 0, ',', '.') ?></p>
         </div>
 
         <!-- Grand Total -->
