@@ -76,7 +76,7 @@
                         <th class="border border-black p-2 w-1/5 text-sm">Harga Asli</th>
                         <th class="border border-black p-2 w-1/5 text-sm">Harga Promo</th>
                         <th class="border border-black p-2 text-sm" style="width: auto;">Qty</th>
-                        <th class="border border-black p-2 text-sm" style="width: auto;">Total</th>
+                        <th class="border border-black p-2 w-1/5 text-sm" style="width: auto;">Total</th>
                     </tr>
                 </thead>
                 <tbody>
