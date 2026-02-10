@@ -156,9 +156,23 @@
             <p class="text-xs">Pembayaran keempat H-14 Rp <?= number_format($p4, 0, ',', '.') ?></p>
         </div>
 
+
+        <div class="mb-6">
+            <p class="text-xs"><strong>Syarat Dan Ketentuan Promo Diskon </strong></p>
+      
+            <p class="text-xs">Diskon berlaku hanya sampai H+5 setelah penawaran ini diberikan. Dan besaran diskon setiap harinya berkurang Rp 300.000.</p>
+            <p class="text-xs">
+                Simulasi diskon contoh pertama : 
+                Calon pengantin baru melakukan pembayaran pertama pada H+3 setelah surat penawaran ini diberikan, maka kamu hanya dapat mengklaim diskon sebesar Rp 600.000.
+
+                Contoh kedua :
+                Calon pengantin baru melakukan pembayaran pertama pada H+7 setelah surat penawaran ini diberikan, maka kamu tidak dapat mengklaim diskon sama sekali karena diskon sudah kadaluarsa. 
+            </p>
+        </div>
+
         <!-- Grand Total -->
         <div class="mb-6">
-            <p class="text-xs">Pembayaran :</p>
+            <p class="text-xs"><strong>Pembayaran Transfer</strong></p>
             <p class="text-xs">No.rek 167-2468421</p>
             <p class="text-xs">Bank Central Asia</p>
             <p class="text-xs">a/n Nadi Sukses Berkarya PT</p>
