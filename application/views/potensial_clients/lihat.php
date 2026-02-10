@@ -391,51 +391,53 @@
               </div>
 
               <!-- ====== Table Three End -->
-              <div id="modal"
-              x-data="{ promo: '' }"
-                class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
+              <div x-data="{ promo: '<?= $pc->promo ?: 'default' ?>' }">
+                <div id="modal"
+                
+                  class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
 
-                <!-- Modal Box -->
-                <div class="bg-white w-full max-w-md rounded-lg shadow-lg p-6 relative">
+                  <!-- Modal Box -->
+                  <div class="bg-white w-full max-w-md rounded-lg shadow-lg p-6 relative">
 
-                  <!-- Close Button -->
-                  <button onclick="closeModals()"
-                    class="absolute top-3 right-3 text-gray-400 hover:text-gray-600">
-                    ✕
-                  </button>
+                    <!-- Close Button -->
+                    <button onclick="closeModals()"
+                      class="absolute top-3 right-3 text-gray-400 hover:text-gray-600">
+                      ✕
+                    </button>
 
-                  <!-- Title -->
-                  <h2 class="text-lg font-semibold mb-4">Format Diskon</h2>
+                    <!-- Title -->
+                    <h2 class="text-lg font-semibold mb-4">Format Diskon</h2>
 
-                  <!-- Form -->
-                  <form action="<?= site_url('potensial-clients/update_penawaran/'.$pc->id_session) ?>" method="post">
+                    <!-- Form -->
+                    <form action="<?= site_url('potensial-clients/update_penawaran/'.$pc->id_session) ?>" method="post">
 
-                    <div class="mb-4">
-                      <label class="block text-sm font-medium mb-1">Pilihan Promo</label>
-                      <select id="promo" name="promo"  x-model="promo"
-                        class="w-full px-4 py-2 border rounded" required>
-                        <option value="default">Default</option>
-                        <option value="0">Tidak Ada</option>
-                        <option value="custom">Promo Custom</option>
-                      </select>
-                    </div>
-                    <div class="mb-4" x-show="promo === 'custom'" x-transition>
-                      <label x-ref="nilai" ... class="block text-sm font-medium mb-1">Masukan Nilai Promo</label>
-                      <input type="number" id="nilai_promo" name="nilai_promo"
-                        class="w-full rounded border px-3 py-2">                        
-                    </div>       
-                    <div class="flex justify-end gap-2">
-                      <button type="button" onclick="closeModals()"
-                        class="px-4 py-2 border rounded-md">
-                        Batal
-                      </button>
-                      <button type="submit"
-                        class="px-4 py-2 bg-primary text-white rounded-md">
-                        Simpan
-                      </button>
-                    </div>
-                  </form>
+                      <div class="mb-4">
+                        <label class="block text-sm font-medium mb-1">Pilihan Promo</label>
+                        <select id="promo" name="promo"  x-model="promo"
+                          class="w-full px-4 py-2 border rounded" required>
+                          <option value="default">Default</option>
+                          <option value="0">Tidak Ada</option>
+                          <option value="custom">Promo Custom</option>
+                        </select>
+                      </div>
+                      <div class="mb-4" x-show="promo === 'custom'" x-transition>
+                        <label x-ref="nilai" ... class="block text-sm font-medium mb-1">Masukan Nilai Promo</label>
+                        <input type="number" id="nilai_promo" name="nilai_promo"
+                          class="w-full rounded border px-3 py-2">                        
+                      </div>       
+                      <div class="flex justify-end gap-2">
+                        <button type="button" onclick="closeModals()"
+                          class="px-4 py-2 border rounded-md">
+                          Batal
+                        </button>
+                        <button type="submit"
+                          class="px-4 py-2 bg-primary text-white rounded-md">
+                          Simpan
+                        </button>
+                      </div>
+                    </form>
 
+                  </div>
                 </div>
               </div>
 
