@@ -1107,8 +1107,8 @@ class crud_potensial_clients extends CI_Controller {
         redirect('potensial-clients/recycle_bin');
     }
 
-    public function permanent_delete_penawaran($id_session) {
-        $this->Potensial_model->delete_permanent_penawaran($id_session);
+    public function permanent_delete_penawaran($id, $id_session) {
+        $this->Potensial_model->delete_permanent_penawaran($id);
         redirect('potensial-clients/lihat/'.$id_session);
     }
 

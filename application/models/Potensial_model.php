@@ -113,8 +113,8 @@ class potensial_model extends CI_Model {
         return $this->db->delete('potensial_clients');
     }
 
-    public function delete_permanent_penawaran($id_session) {
-        $this->db->where('penawaran_klien_id ', $id_session);
+    public function delete_permanent_penawaran($id) {
+        $this->db->where('penawaran_klien_id ', $id);
         return $this->db->delete('penawaran_klien');
     }
 
