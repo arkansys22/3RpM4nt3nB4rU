@@ -149,7 +149,7 @@
                 class="px-4 py-2 bg-primary text-white rounded-md shadow">
                 Tambah Penawaran Produk 
               </button>
-              <button onclick="openModals()"
+              <button @click="open = true"
                 class="px-4 py-2 bg-primary text-white rounded-md shadow">
                 Setting Diskon 
               </button>
@@ -391,8 +391,12 @@
               </div>
 
               <!-- ====== Table Three End -->
-              <div x-data="{ promo: '<?= $pc->promo ?: 'default' ?>' }">
-                <div id="modal"
+              <div  x-data="{ 
+                  open: false,
+                  promo: '<?= $pc->promo ?? 'default' ?>'
+                }">
+                <div x-show="open"
+                  x-transition
                 
                   class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
 
@@ -426,7 +430,7 @@
                           class="w-full rounded border px-3 py-2">                        
                       </div>       
                       <div class="flex justify-end gap-2">
-                        <button type="button" onclick="closeModals()"
+                        <button type="button" @click="open = false"
                           class="px-4 py-2 border rounded-md">
                           Batal
                         </button>
