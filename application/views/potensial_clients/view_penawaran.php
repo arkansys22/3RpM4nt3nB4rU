@@ -159,7 +159,7 @@
             $d  = clone $aa;
             $d->modify('-14 days');
             ?>
-            <?= tgl_indo($b->format('Y-m-d')) ?> 
+           
 
         <!-- Payment Terms -->
         <div class="mb-6">
