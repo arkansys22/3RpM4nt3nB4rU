@@ -72,7 +72,7 @@
             <table class="table-auto w-full border border-black">
                 <thead>
                     <tr>
-                        <th class="border border-black p-2 w-3/5 text-sm" style="width: auto;">Nama Produk</th>
+                        <th class="border border-black p-2 w-2/5 text-sm" style="width: auto;">Nama Produk</th>
                         <th class="border border-black p-2 w-1/5 text-sm">Harga Asli</th>
                         <th class="border border-black p-2 w-1/5 text-sm">Harga Promo</th>
                         <th class="border border-black p-2 text-sm" style="width: auto;">Qty</th>
