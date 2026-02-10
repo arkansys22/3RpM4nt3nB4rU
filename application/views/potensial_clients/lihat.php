@@ -159,8 +159,8 @@
                 <span>Format Promo Diskon : Default</span>
               <?php }else if($pc->promo ="tidak"){?>
                 <span>Format Promo Diskon : Tidak Ada</span>
-              <?php }else if($pc->promo = "custom" ) ?>
-                <span>Format Promo Diskon : Custom Rp 99.000.000</span>
+              <?php }else if($pc->promo = "custom" ){ ?>
+                <span>Format Promo Diskon : Custom Rp <?= number_format($pc->promo_value, 0, ',', '.'); ?></span>
             <?php }?>
               
               <br><br>
