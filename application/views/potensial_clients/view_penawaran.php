@@ -66,12 +66,7 @@
             <p class="text-xs">Waktu acara :</p>
             <p class="text-xs"><?= hari($pc->event_date) ?>, <?= tgl_indo($pc->event_date) ?>
 
-            <?php
-            $aa = new DateTime($pc->event_date);
-            $b  = clone $aa;
-            $b->modify('-60 days');
-            ?>
-            <?= tgl_indo($b->format('Y-m-d')) ?> 
+
             
 
             </p>
@@ -155,15 +150,26 @@
             </table>
         </div>
 
+        <?php
+            $aa = new DateTime($pc->event_date);
+            $b  = clone $aa;
+            $b->modify('-60 days');
+            $c  = clone $aa;
+            $c->modify('-30 days');
+            $d  = clone $aa;
+            $d->modify('-14 days');
+            ?>
+            <?= tgl_indo($b->format('Y-m-d')) ?> 
+
         <!-- Payment Terms -->
         <div class="mb-6">
             <p class="text-xs"><strong>Ketentuan Pembayaran </strong></p>
             <?php $p1= $total * 20/100?> 
             <?php $p2= $total * 35/100?> <?php $p3= $total * 30/100?> <?php $p4= $total * 15/100 ?>
             <p class="text-xs">Pembayaran pertama lock tanggal Rp <?= number_format($p1, 0, ',', '.') ?> </p>
-            <p class="text-xs">Pembayaran kedua H-60 acara Rp <?= number_format($p2, 0, ',', '.') ?></p>
-            <p class="text-xs">Pembayaran ketiga H-30 acara Rp <?= number_format($p3, 0, ',', '.') ?></p>
-            <p class="text-xs">Pembayaran keempat H-14 acara Rp <?= number_format($p4, 0, ',', '.') ?></p>
+            <p class="text-xs">Pembayaran kedua H-60 acara (<?= tgl_indo($b->format('Y-m-d')) ?>) sebesar Rp <?= number_format($p2, 0, ',', '.') ?></p>
+            <p class="text-xs">Pembayaran ketiga H-30 acara (<?= tgl_indo($c->format('Y-m-d')) ?>) sebesar Rp <?= number_format($p3, 0, ',', '.') ?></p>
+            <p class="text-xs">Pembayaran keempat H-14 acara (<?= tgl_indo($d->format('Y-m-d')) ?>) sebesar Rp <?= number_format($p4, 0, ',', '.') ?></p>
         </div>
 
 
