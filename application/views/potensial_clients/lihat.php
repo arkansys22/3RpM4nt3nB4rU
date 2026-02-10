@@ -392,7 +392,7 @@
 
               <!-- ====== Table Three End -->
               <div id="modal"
-              x-data="{ promo: '' }"
+              x-data="{ promo: '<?= $pc->promo ?: 'default' ?>' }"
                 class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
 
                 <!-- Modal Box -->
@@ -414,7 +414,6 @@
                       <label class="block text-sm font-medium mb-1">Pilihan Promo</label>
                       <select id="promo" name="promo"  x-model="promo" @change="if(promo !== 'custom') $refs.nilai.value=''"
                         class="w-full px-4 py-2 border rounded" required>
-                        <option value="">Pilih Promo</option>
                         <option value="default">Default</option>
                         <option value="0">Tidak Ada</option>
                         <option value="custom">Promo Custom</option>
