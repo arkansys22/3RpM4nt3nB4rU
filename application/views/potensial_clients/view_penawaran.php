@@ -66,10 +66,12 @@
             <p class="text-xs">Waktu acara :</p>
             <p class="text-xs"><?= hari($pc->event_date) ?>, <?= tgl_indo($pc->event_date) ?>
 
-            <?php $aa = $pc->event_date 
-            $b = $aa->modify('-60 days');
+            <?php
+            $aa = new DateTime($pc->event_date);
+            $b  = clone $aa;
+            $b->modify('-60 days');
             ?>
-            <?= tgl_indo($b) ?>    
+            <?= tgl_indo($b->format('Y-m-d')) ?> 
             
 
             </p>
