@@ -64,7 +64,15 @@
             <p class="text-xs">Untuk acara yang rencana berlokasi di</p>
             <p class="text-xs"><?= $pc->location; ?></p>
             <p class="text-xs">Waktu acara :</p>
-            <p class="text-xs"><?= hari($pc->event_date) ?>, <?= tgl_indo($pc->event_date) ?></p>
+            <p class="text-xs"><?= hari($pc->event_date) ?>, <?= tgl_indo($pc->event_date) ?>
+
+            <?php $aa = $pc->event_date 
+            $b = $aa->modify('-60 days');
+            ?>
+            <?= tgl_indo($b) ?>    
+            
+
+            </p>
         </div>
 
         <!-- Payment Details -->
@@ -148,12 +156,12 @@
         <!-- Payment Terms -->
         <div class="mb-6">
             <p class="text-xs"><strong>Ketentuan Pembayaran </strong></p>
-            <?php $p1= $total * 10/100?> 
-            <?php $p2= $total * 45/100?> <?php $p3= $total * 30/100?> <?php $p4= $total * 15/100 ?>
+            <?php $p1= $total * 20/100?> 
+            <?php $p2= $total * 35/100?> <?php $p3= $total * 30/100?> <?php $p4= $total * 15/100 ?>
             <p class="text-xs">Pembayaran pertama lock tanggal Rp <?= number_format($p1, 0, ',', '.') ?> </p>
-            <p class="text-xs">Pembayaran kedua H-60 Rp <?= number_format($p2, 0, ',', '.') ?></p>
-            <p class="text-xs">Pembayaran ketiga H-30 Rp <?= number_format($p3, 0, ',', '.') ?></p>
-            <p class="text-xs">Pembayaran keempat H-14 Rp <?= number_format($p4, 0, ',', '.') ?></p>
+            <p class="text-xs">Pembayaran kedua H-60 acara Rp <?= number_format($p2, 0, ',', '.') ?></p>
+            <p class="text-xs">Pembayaran ketiga H-30 acara Rp <?= number_format($p3, 0, ',', '.') ?></p>
+            <p class="text-xs">Pembayaran keempat H-14 acara Rp <?= number_format($p4, 0, ',', '.') ?></p>
         </div>
 
 
@@ -163,10 +171,10 @@
             <p class="text-xs">Diskon berlaku hanya sampai H+5 setelah penawaran ini diberikan. Dan besaran diskon setiap harinya berkurang Rp 300.000.</p>
             <p class="text-xs">
                 Simulasi diskon contoh pertama : <br>
-                Calon pengantin baru melakukan pembayaran pertama pada H+3 setelah surat penawaran ini diberikan, maka kamu hanya dapat mengklaim diskon sebesar Rp 600.000.
+                Pembayaran pertama pada H+3 setelah surat penawaran ini diberikan, maka kamu hanya dapat mengklaim diskon sebesar Rp 600.000.
                 <br>
                 Simulasi diskon contoh kedua :<br>
-                Calon pengantin baru melakukan pembayaran pertama pada H+7 setelah surat penawaran ini diberikan, maka kamu tidak dapat mengklaim diskon sama sekali karena diskon sudah kadaluarsa.
+                Pembayaran pertama pada H+7 setelah surat penawaran ini diberikan, maka kamu tidak dapat mengklaim diskon sama sekali karena diskon sudah kadaluarsa.
             </p>
         </div>
 
