@@ -213,20 +213,33 @@
             $d  = clone $aa;
             $d->modify('-14 days');
             ?>
-           
 
+
+           <?php if($pc->promo === 'tidak' ){ ?>
+            <?php $p1= $subTotal * 20/100?> 
+            <?php $p2= $subTotal * 35/100?> 
+            <?php $p3= $subTotal * 30/100?> 
+            <?php $p4= $subTotal * 15/100 ?>
+            <?php }else{ ?>
+            <?php $p1= $total * 20/100?> 
+            <?php $p2= $total * 35/100?> 
+            <?php $p3= $total * 30/100?> 
+            <?php $p4= $total * 15/100 ?>
+
+            <?php }?>
         <!-- Payment Terms -->
         <div class="mb-6">
             <p class="text-xs"><strong>Ketentuan Pembayaran </strong></p>
-            <?php $p1= $total * 20/100?> 
-            <?php $p2= $total * 35/100?> <?php $p3= $total * 30/100?> <?php $p4= $total * 15/100 ?>
+            
             <p class="text-xs">Pembayaran pertama lock tanggal Rp <?= number_format($p1, 0, ',', '.') ?> </p>
             <p class="text-xs">Pembayaran kedua H-60 acara (<?= tgl_indo($b->format('Y-m-d')) ?>) sebesar Rp <?= number_format($p2, 0, ',', '.') ?></p>
             <p class="text-xs">Pembayaran ketiga H-30 acara (<?= tgl_indo($c->format('Y-m-d')) ?>) sebesar Rp <?= number_format($p3, 0, ',', '.') ?></p>
             <p class="text-xs">Pembayaran keempat H-14 acara (<?= tgl_indo($d->format('Y-m-d')) ?>) sebesar Rp <?= number_format($p4, 0, ',', '.') ?></p>
         </div>
 
-
+        <?php if($pc->promo === 'tidak' ){ ?>
+        
+        <?php }else{ ?>
         <div class="mb-6">
             <p class="text-xs"><strong>Syarat Dan Ketentuan Promo Diskon </strong></p>
       
@@ -238,7 +251,8 @@
                 Simulasi diskon contoh kedua :<br>
                 Pembayaran pertama pada H+7 setelah surat penawaran ini diberikan, maka kamu tidak dapat mengklaim diskon sama sekali karena diskon sudah kadaluarsa.
             </p>
-        </div>
+        </div>    
+        <?php }?>
 
         <!-- Grand Total -->
         <div class="mb-6">
