@@ -77,14 +77,6 @@
                     </li>
                     <li>
                     <a
-                      href="<?= site_url('potensial-clients-penawaran/edit/'. $pc->id_session) ?>"
-                      class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
-                    >
-                      Buat Penawaran
-                    </a>
-                    </li>
-                    <li>
-                    <a
                         href="<?= $pc->status === 'Tanya-tanya' ? site_url('potensial-clients') : ($pc->status === 'Deal' ? site_url('potensial-clients-bayar') : site_url('potensial-clients-'.strtolower($pc->status))) ?>"
                       class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
                     >
@@ -275,7 +267,7 @@
                         <span class="font-bold text-meta-3"> Rp <?= number_format($total, 0, ',', '.') ?> </span>
                       </p>
 
-                      <button
+                      <button onclick="window.location.href='<?= base_url('potensial-clients/view_penawaran/'.$pc->id_session) ?>'"
                         class="float-right mt-10 inline-flex items-center gap-2.5 rounded bg-primary px-7.5 py-2.5 font-medium text-white hover:bg-opacity-90"
                       >
                         Cetak Penawaran
