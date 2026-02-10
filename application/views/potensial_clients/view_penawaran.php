@@ -243,10 +243,10 @@
         <div class="mb-6">
             <p class="text-xs"><strong>Syarat Dan Ketentuan Promo Diskon </strong></p>
       
-            <p class="text-xs">Diskon berlaku hanya sampai H+5 setelah penawaran ini diberikan. Dan besaran diskon setiap harinya berkurang Rp 300.000.</p>
+            <p class="text-xs">Diskon berlaku hanya sampai H+5 setelah penawaran ini diberikan. Dan besaran diskon setiap harinya berkurang Rp 200.000.</p>
             <p class="text-xs">
                 Simulasi diskon contoh pertama : <br>
-                Pembayaran pertama pada H+3 setelah surat penawaran ini diberikan, maka diskon kamu sudah berkurang sebesar Rp 600.000.
+                Pembayaran pertama pada H+2 setelah surat penawaran ini diberikan, maka kamu telah kehilangan promo diskon sebesar Rp 400.000.
                 <br>
                 Simulasi diskon contoh kedua :<br>
                 Pembayaran pertama pada H+7 setelah surat penawaran ini diberikan, maka kamu tidak dapat mengklaim diskon sama sekali karena promo diskon sudah hangus.
