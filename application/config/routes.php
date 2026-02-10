@@ -146,7 +146,7 @@ $route['potensial-clients/restore/(:any)'] = 'crud_potensial_clients/restore/$1'
 $route['potensial-clients/permanent_delete/(:any)'] = 'crud_potensial_clients/permanent_delete/$1'; // Hapus permanen Potensial Clients
 
 $route['potensial-clients/update_penawaran/(:any)'] = 'crud_potensial_clients/update_penawaran/$1'; // Mengupdate Potensial Clients
-$route['potensial-clients/permanent_delete_penawaran/(:any)'] = 'crud_potensial_clients/permanent_delete_penawaran/$1'; // Hapus permanen
+$route['potensial-clients/permanent_delete_penawaran/(:any)/(:any)'] = 'crud_potensial_clients/permanent_delete_penawaran/$1/$2'; // Hapus permanen
 
 
 
