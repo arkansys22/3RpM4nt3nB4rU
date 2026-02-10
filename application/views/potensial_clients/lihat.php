@@ -392,6 +392,7 @@
 
               <!-- ====== Table Three End -->
               <div id="modal"
+              x-data="{ promo: '' }"
                 class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
 
                 <!-- Modal Box -->
@@ -411,16 +412,16 @@
 
                     <div class="mb-4">
                       <label class="block text-sm font-medium mb-1">Pilihan Promo</label>
-                      <select id="promo" name="promo"
+                      <select id="promo" name="promo"  x-model="promo" @change="if(promo !== 'custom') $refs.nilai.value=''"
                         class="w-full px-4 py-2 border rounded" required>
                         <option value="">Pilih Promo</option>
-                        <option value="">Default</option>
+                        <option value="default">Default</option>
                         <option value="0">Tidak Ada</option>
-                        <option value="">Promo Custom</option>
+                        <option value="custom">Promo Custom</option>
                       </select>
                     </div>
-                    <div class="mb-4">
-                      <label class="block text-sm font-medium mb-1">Masukan Nilai Promo</label>
+                    <div class="mb-4" x-show="promo === 'custom'" x-transition>
+                      <label x-ref="nilai" ... class="block text-sm font-medium mb-1">Masukan Nilai Promo</label>
                       <input type="number" id="nilai_promo" name="nilai_promo"
                         class="w-full rounded border px-3 py-2">                        
                     </div>       
@@ -521,6 +522,7 @@
     </div>
     <!-- ===== Content Area End ===== -->
   </div>
+  <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <script>
       function openModal() {
         document.getElementById('modal').classList.remove('hidden');
