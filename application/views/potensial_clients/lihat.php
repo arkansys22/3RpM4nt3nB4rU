@@ -149,7 +149,7 @@
                 class="px-4 py-2 bg-primary text-white rounded-md shadow">
                 Tambah Penawaran Produk 
               </button>
-              <button @click="open = true"
+              <button onclick="openModals()"
                 class="px-4 py-2 bg-primary text-white rounded-md shadow">
                 Setting Diskon 
               </button>
@@ -391,15 +391,14 @@
               </div>
 
               <!-- ====== Table Three End -->
-              <div x-data="{ open: false, promo: 'default' }"
+              <div id="modal"
                 class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
 
                 <!-- Modal Box -->
                 <div class="bg-white w-full max-w-md rounded-lg shadow-lg p-6 relative">
 
                   <!-- Close Button -->
-                  <button type="button"
-                    @click="open = false"
+                  <button onclick="closeModals()"
                     class="absolute top-3 right-3 text-gray-400 hover:text-gray-600">
                     ✕
                   </button>
@@ -414,19 +413,19 @@
                       <label class="block text-sm font-medium mb-1">Pilihan Promo</label>
                       <select id="promo" name="promo"  x-model="promo"
                         class="w-full px-4 py-2 border rounded" required>
+                        <option value="">Pilih Promo</option>
                         <option value="default">Default</option>
                         <option value="0">Tidak Ada</option>
                         <option value="custom">Promo Custom</option>
                       </select>
                     </div>
-                    <div class="mb-4" x-show="promo === 'custom'" x-transition>
+                    <div class="mb-4 hidden" id="promoCustom">
                       <label class="block text-sm font-medium mb-1">Masukan Nilai Promo</label>
                       <input type="number" id="nilai_promo" name="nilai_promo"
                         class="w-full rounded border px-3 py-2">                        
                     </div>       
                     <div class="flex justify-end gap-2">
-                      <button type="button"  type="button"
-                           @click="open = false"
+                      <button type="button" onclick="closeModals()"
                         class="px-4 py-2 border rounded-md">
                         Batal
                       </button>
@@ -523,6 +522,27 @@
     <!-- ===== Content Area End ===== -->
   </div>
   <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const promoSelect = document.getElementById('promo');
+        const promoCustom = document.getElementById('promoCustom');
+
+        function togglePromo() {
+          if (promoSelect.value === 'custom') {
+            promoCustom.classList.remove('hidden');
+          } else {
+            promoCustom.classList.add('hidden');
+          }
+        }
+
+        // Saat berubah
+        promoSelect.addEventListener('change', togglePromo);
+
+        // Saat halaman pertama kali load
+        togglePromo();
+      });
+    </script>
     <script>
       function openModal() {
         document.getElementById('modal').classList.remove('hidden');
