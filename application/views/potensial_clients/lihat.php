@@ -445,7 +445,7 @@
               </div>
 
               <!-- ====== Table Three End -->
-              <div id="modal"
+              <div id="modaldiskon"
                 class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
 
                 <!-- Modal Box -->
@@ -608,13 +608,13 @@
 
     <script>
       function openModals() {
-        document.getElementById('modal').classList.remove('hidden');
-        document.getElementById('modal').classList.add('flex');
+        document.getElementById('modaldiskon').classList.remove('hidden');
+        document.getElementById('modaldiskon').classList.add('flex');
       }
 
       function closeModals() {
-        document.getElementById('modal').classList.add('hidden');
-        document.getElementById('modal').classList.remove('flex');
+        document.getElementById('modaldiskon').classList.add('hidden');
+        document.getElementById('modaldiskon').classList.remove('flex');
       }
     </script>
     <script>
