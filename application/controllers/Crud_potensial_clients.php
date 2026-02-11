@@ -517,6 +517,7 @@ class crud_potensial_clients extends CI_Controller {
                 cek_session_akses_administrator('potensial-clients',$this->session->id_session);
                 $data['pc'] = $this->Potensial_model->get_potensial_clients_by_session($id_session);
                 $data['logactivity'] = $this->Potensial_model->get_logactivity_by_session($id_session);
+                $data['penawaran'] = $this->Potensial_model->get_penawaran_by_session($id_session);
                 $data['kategori'] = $this->db->get('data_pricelist_kategori')->result();
                 $this->load->view('potensial_clients/lihat', $data);
 
@@ -528,6 +529,7 @@ class crud_potensial_clients extends CI_Controller {
                 cek_session_akses_staff_admin('potensial-clients',$this->session->id_session);
                 $data['pc'] = $this->Potensial_model->get_potensial_clients_by_session($id_session);
                 $data['logactivity'] = $this->Potensial_model->get_logactivity_by_session($id_session);
+                $data['penawaran'] = $this->Potensial_model->get_penawaran_by_session($id_session);
                 $data['kategori'] = $this->db->get('data_pricelist_kategori')->result();
                 $this->load->view('potensial_clients/lihat', $data);
 
@@ -535,6 +537,7 @@ class crud_potensial_clients extends CI_Controller {
                 cek_session_akses_staff_sales('potensial-clients',$this->session->id_session);
                 $data['pc'] = $this->Potensial_model->get_potensial_clients_by_session($id_session);
                 $data['logactivity'] = $this->Potensial_model->get_logactivity_by_session($id_session);
+                $data['penawaran'] = $this->Potensial_model->get_penawaran_by_session($id_session);
                 $data['kategori'] = $this->db->get('data_pricelist_kategori')->result();
                 $this->load->view('potensial_clients/lihat', $data);
 
