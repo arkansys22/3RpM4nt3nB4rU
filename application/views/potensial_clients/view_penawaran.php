@@ -223,10 +223,10 @@
             <?php $p5= ($subTotal - $p1) * 15/100 ?>
             <?php }else{ ?>
             <?php $p1= 1000000 ?> 
-            <?php $p1= ($total - $p1) * 20/100?> 
-            <?php $p2= ($total - $p1) * 35/100?> 
-            <?php $p3= ($total - $p1) * 30/100?> 
-            <?php $p4= ($total - $p1) * 15/100 ?>
+            <?php $p2= ($total - $p1) * 20/100?> 
+            <?php $p3= ($total - $p1) * 35/100?> 
+            <?php $p4= ($total - $p1) * 30/100?> 
+            <?php $p5= ($total - $p1) * 15/100 ?>
 
             <?php }?>
         <div class="mb-6">
