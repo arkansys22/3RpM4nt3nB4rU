@@ -216,25 +216,31 @@
 
 
            <?php if($pc->promo === 'tidak' ){ ?>
-            <?php $p1= $subTotal * 20/100?> 
-            <?php $p2= $subTotal * 35/100?> 
-            <?php $p3= $subTotal * 30/100?> 
-            <?php $p4= $subTotal * 15/100 ?>
+            <?php $p1= 1000000 ?> 
+            <?php $p2= ($subTotal - $p1) * 20/100?> 
+            <?php $p3= ($subTotal - $p1) * 35/100?> 
+            <?php $p4= ($subTotal - $p1) * 30/100?> 
+            <?php $p5= ($subTotal - $p1) * 15/100 ?>
             <?php }else{ ?>
-            <?php $p1= $total * 20/100?> 
-            <?php $p2= $total * 35/100?> 
-            <?php $p3= $total * 30/100?> 
-            <?php $p4= $total * 15/100 ?>
+            <?php $p1= 1000000 ?> 
+            <?php $p1= ($total - $p1) * 20/100?> 
+            <?php $p2= ($total - $p1) * 35/100?> 
+            <?php $p3= ($total - $p1) * 30/100?> 
+            <?php $p4= ($total - $p1) * 15/100 ?>
 
             <?php }?>
+        <div class="mb-6">
+            <p class="text-xs"><strong>Harga dapat berubah sewaktu-waktu jika belum melakukan pembayaran pertama untuk lock harga</strong></p></p>
+        </div>
         <!-- Payment Terms -->
         <div class="mb-6">
             <p class="text-xs"><strong>Ketentuan Pembayaran </strong></p>
             
-            <p class="text-xs">Pembayaran pertama lock tanggal Rp <?= number_format($p1, 0, ',', '.') ?> </p>
-            <p class="text-xs">Pembayaran kedua H-60 acara (<?= tgl_indo($b->format('Y-m-d')) ?>) sebesar Rp <?= number_format($p2, 0, ',', '.') ?></p>
-            <p class="text-xs">Pembayaran ketiga H-30 acara (<?= tgl_indo($c->format('Y-m-d')) ?>) sebesar Rp <?= number_format($p3, 0, ',', '.') ?></p>
-            <p class="text-xs">Pembayaran keempat H-14 acara (<?= tgl_indo($d->format('Y-m-d')) ?>) sebesar Rp <?= number_format($p4, 0, ',', '.') ?></p>
+            <p class="text-xs">Pembayaran pertama lock harga Rp <?= number_format($p1, 0, ',', '.') ?> </p>
+            <p class="text-xs">Pembayaran kedua lock tanggal H+14 setelah pembayaran pertama Rp <?= number_format($p2, 0, ',', '.') ?> </p>
+            <p class="text-xs">Pembayaran ketiga H-60 acara (<?= tgl_indo($b->format('Y-m-d')) ?>) sebesar Rp <?= number_format($p3, 0, ',', '.') ?></p>
+            <p class="text-xs">Pembayaran keempat H-30 acara (<?= tgl_indo($c->format('Y-m-d')) ?>) sebesar Rp <?= number_format($p4, 0, ',', '.') ?></p>
+            <p class="text-xs">Pembayaran kelima H-14 acara (<?= tgl_indo($d->format('Y-m-d')) ?>) sebesar Rp <?= number_format($p5, 0, ',', '.') ?></p>
         </div>
 
         <?php if($pc->promo === 'tidak' ){ ?>
