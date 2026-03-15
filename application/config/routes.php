@@ -128,6 +128,20 @@ $route['crews/restore/(:any)'] = 'Crud_crews/restore/$1'; // Mengembalikan data 
 $route['crews/delete_permanent/(:any)'] = 'Crud_crews/delete_permanent/$1'; // Menghapus permanen data crews dari Recycle Bin
 $route['crews/lihat/(:any)'] = 'Crud_crews/lihat/$1'; // Menampilkan lihat Crew
 
+
+$route['coa'] = 'Crud_coa/index'; // Menampilkan daftar crews yang masih aktif
+$route['coa/create'] = 'Crud_coa/create'; // Menampilkan halaman tambah crews
+$route['coa/store'] = 'Crud_coa/store'; // Menyimpan data crews yang baru dibuat
+$route['coa/edit/(:any)'] = 'Crud_coa/edit/$1'; // Menampilkan halaman edit crews berdasarkan id_session
+$route['coa/update/(:any)'] = 'Crud_coa/update/$1'; // Mengupdate data crews berdasarkan id_session
+$route['coa/recycle_bin'] = 'Crud_coa/recycle_bin'; // Menampilkan daftar crews yang telah dihapus (soft delete)
+$route['coa/soft_delete/(:any)'] = 'Crud_coa/soft_delete/$1'; // Menghapus data crews (soft delete, ubah status jadi 'delete')
+$route['coa/restore/(:any)'] = 'Crud_coa/restore/$1'; // Mengembalikan data crews dari Recycle Bin ke daftar aktif
+$route['coa/delete_permanent/(:any)'] = 'Crud_coa/delete_permanent/$1'; // Menghapus permanen data crews dari Recycle Bin
+$route['coa/lihat/(:any)'] = 'Crud_coa/lihat/$1'; // Menampilkan lihat Crew
+
+
+
 $route['potensial-clients'] = 'crud_potensial_clients/index'; // Menampilkan daftar Potensial Clients
 $route['potensial-clients-hot'] = 'crud_potensial_clients/index_hot'; // Menampilkan daftar Potensial Clients Hot
 $route['potensial-clients-konsul'] = 'crud_potensial_clients/index_konsul'; // Menampilkan daftar Potensial Clients konsul
