@@ -4,6 +4,7 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="format-detection" content="telephone=no">
 
 <title>Penawaran Potensial Clients</title>
 
@@ -11,6 +12,51 @@
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
 
 <style>
+
+/* PRINT SETTING */
+
+@page{
+size:A4;
+margin:0;
+}
+
+html, body{
+margin:0;
+padding:0;
+}
+
+/* PRINT MODE */
+
+@media print{
+
+body{
+background:white;
+margin:0;
+padding:0;
+-webkit-print-color-adjust:exact;
+print-color-adjust:exact;
+}
+
+/* HILANGKAN MARGIN BROWSER */
+
+@page{
+margin:0;
+}
+
+/* HALAMAN */
+
+.page{
+margin:0;
+box-shadow:none;
+}
+
+/* SEMBUNYIKAN ELEMENT TIDAK PERLU */
+
+.no-print{
+display:none;
+}
+
+}
 
 body{
 font-family:Arial, sans-serif;
@@ -375,7 +421,9 @@ Halaman
 
 function printPDF(){
 
+setTimeout(function(){
 window.print();
+},300);
 
 }
 
