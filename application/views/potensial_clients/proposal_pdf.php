@@ -77,6 +77,8 @@ color:#666;
 
 .footer table{
 width:100%;
+border:none;
+border-collapse:collapse;
 }
 
 .page-number:after{
