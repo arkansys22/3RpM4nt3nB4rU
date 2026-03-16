@@ -451,7 +451,7 @@ Ketentuan Pembayaran
 
 <?php if($days_to_event < 30){ ?>
 
-<li>Pembayaran kedua pelunasan Rp <?= number_format($p2,0,',','.') ?></li>
+<li>Pembayaran kedua <b>pelunasan</b> Rp <?= number_format($p2,0,',','.') ?></li>
 
 <?php }elseif($days_to_event < 60){ ?>
 
