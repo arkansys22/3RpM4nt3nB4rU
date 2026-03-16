@@ -212,7 +212,7 @@ margin-top:10px;
 Mantenbaru Wedding Organizer
 </div>
 <div class="sublogo">Teras Country Blok H No 38, Tonjong,Tajurhalang Bogor
-<br> Telp / WA : 0812-9292-9396 | Web : www.mantenbaru.com <br>
+<br> Telp / WA : 0812-9292-9396 | 0812-1012-6196 | 0851-8996-1691<br>Web : www.mantenbaru.com <br>
 </div>
 </td>
 
@@ -452,7 +452,7 @@ $days_to_event = $diff->days;
 	</div><br>
         
         <?php }else{ ?>		
-<div><i>Harga dapat berubah sewaktu-waktu jika belum melakukan pembayaran pertama untuk kunci harga. Bonus dan Cashback berlaku hanya sampai H+5 setelah penawaran ini diberikan. Dan besaran diskon setiap harinya berkurang Rp 200.000.</i></div><br>
+<div><i>Harga dapat berubah sewaktu-waktu jika belum melakukan pembayaran pertama untuk kunci harga. Bonus dan Cashback berlaku hanya sampai H+5 setelah penawaran ini diberikan. Dan besaran bonus dan cashback setiap harinya berkurang Rp 200.000. Jadi segera lakukan pembayaran pertama dan amankan bonus dan cashbacknya.</i></div><br>
 <?php }?>
 <div class="section-title">
 Ketentuan Pembayaran
