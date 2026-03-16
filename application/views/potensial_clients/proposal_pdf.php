@@ -234,7 +234,7 @@ Halaman <span class="page-number"></span>
 </table>
 
 </div>
-<br><br>
+<br><br><br><br><br><br>
 
 <!-- COVER -->
 
