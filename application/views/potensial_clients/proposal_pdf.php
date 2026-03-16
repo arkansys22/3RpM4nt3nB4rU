@@ -9,6 +9,10 @@
 margin:120px 40px 80px 40px;
 }
 
+img{
+max-height:60px;
+}
+
 body{
 font-family: DejaVu Sans, sans-serif;
 font-size:12px;
@@ -93,6 +97,8 @@ font-weight:bold;
 margin-bottom:10px;
 }
 
+
+
 .cover-date{
 font-size:14px;
 color:#555;
@@ -170,7 +176,7 @@ margin-top:10px;
 
 <td>
 <div class="logo">
-<img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-02.png') ?>" alt="Logo" style="width: 220px; margin-left: -12px;">
+<img src="<?= base_url('assets/backend/src/images/logo/logo%20mantenbaru%20merah-02.png') ?>" width="60">
 <br> Mantenbaru Wedding Organizer
 </div>
 <div class="sublogo">Teras Country Blok H No 38, Tonjong,Tajurhalang Bogor
