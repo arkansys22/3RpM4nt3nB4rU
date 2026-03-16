@@ -13,60 +13,45 @@
 <style>
 
 body{
-font-family: Arial, Helvetica, sans-serif;
+font-family:Arial, sans-serif;
 }
 
-/* WATERMARK */
-
-.watermark{
-position:fixed;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-opacity:0.05;
-z-index:-1;
-width:500px;
+.page{
+page-break-after:always;
+min-height:1000px;
+position:relative;
 }
 
-/* PRINT STYLE */
-
-@media print{
-
-.no-print{
-display:none!important;
-}
-
-@page{
-margin-top:140px;
-margin-bottom:120px;
-margin-left:40px;
-margin-right:40px;
+.last-page{
+page-break-after:auto;
 }
 
 /* HEADER */
 
-.print-header{
-position:fixed;
-top:-120px;
-left:0;
-right:0;
-height:120px;
-border-bottom:2px solid #ddd;
+@media print{
+
+@page{
+margin:120px 40px 100px 40px;
 }
 
-/* FOOTER */
-
-.print-footer{
+.print-header{
 position:fixed;
-bottom:-100px;
+top:-110px;
 left:0;
 right:0;
 height:100px;
+border-bottom:1px solid #ddd;
+}
+
+.print-footer{
+position:fixed;
+bottom:-80px;
+left:0;
+right:0;
+height:80px;
 border-top:1px solid #ddd;
 font-size:11px;
 }
-
-/* PAGE NUMBER */
 
 .page-number:after{
 content:counter(page);
@@ -76,29 +61,15 @@ content:counter(page);
 content:counter(pages);
 }
 
-/* TABLE FIX */
-
-table{
-page-break-inside:auto;
 }
 
-tr{
-page-break-inside:avoid;
-page-break-after:auto;
-}
-
-}
-
-/* HEADER STYLE */
-
-.company-name{
-font-weight:bold;
-font-size:15px;
-}
-
-.doc-title{
-font-size:18px;
-font-weight:bold;
+.watermark{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+opacity:0.04;
+width:500px;
 }
 
 </style>
@@ -108,84 +79,81 @@ font-weight:bold;
 
 <body class="bg-gray-100">
 
-<img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-03.png') ?>" class="watermark">
-
-<div class="max-w-6xl mx-auto p-6 bg-white">
-
-<!-- HEADER -->
-
-<div class="print-header flex justify-between items-center">
+<div class="print-header flex justify-between">
 
 <div>
 
-<img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-02.png') ?>" style="width:220px">
+<img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-02.png') ?>" width="200">
 
-<p class="company-name">MANTENBARU ORGANIZER</p>
-
-<p class="text-xs">Teras Country Blok H No 38, Tonjong</p>
-
-<p class="text-xs">Tajurhalang, Kabupaten Bogor</p>
-
-<p class="text-xs">Telp / WA : 0812-9292-9396</p>
-
-<p class="text-xs">www.mantenbaru.com</p>
+<p class="text-xs">
+Teras Country Blok H No 38<br>
+Tajurhalang Bogor<br>
+WA : 0812-9292-9396
+</p>
 
 </div>
 
 <div class="text-right">
 
-<p class="doc-title">LEMBAR PENAWARAN</p>
+<p class="text-lg font-bold">
+PROPOSAL PENAWARAN
+</p>
 
 <p class="text-xs">
-Tanggal :
-<?= date('d-m-Y') ?>
+Tanggal : <?= date('d-m-Y') ?>
 </p>
 
 </div>
 
 </div>
 
+<div class="page flex flex-col justify-center items-center text-center">
 
-<!-- CONTENT -->
+<img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-02.png') ?>" width="300">
 
-<div class="mt-4">
+<h1 class="text-3xl font-bold mt-6">
+Proposal Penawaran Wedding Organizer
+</h1>
 
-<p class="text-sm font-semibold">PENAWARAN KEPADA</p>
+<p class="mt-4 text-lg">
+Untuk
+</p>
 
-<p class="text-xs"><?= $pc->pc_name; ?></p>
+<h2 class="text-2xl font-semibold">
+<?= $pc->pc_name ?>
+</h2>
 
-<p class="text-xs">Lokasi acara :</p>
+<p class="mt-4">
+Lokasi Acara
+</p>
 
-<p class="text-xs"><?= $pc->location; ?></p>
+<p class="font-semibold">
+<?= $pc->location ?>
+</p>
 
-<p class="text-xs">
-Tanggal acara :
+<p class="mt-2">
 <?= hari($pc->event_date) ?>,
 <?= tgl_indo($pc->event_date) ?>
 </p>
 
 </div>
 
+<div class="page">
 
-<!-- TABEL LAYANAN -->
+<h2 class="text-lg font-bold mb-4">
+Detail Layanan
+</h2>
 
-<div class="mt-6">
-
-<table class="table-auto w-full border border-black">
+<table class="w-full border border-black">
 
 <thead>
 
 <tr class="bg-gray-100">
 
-<th class="border border-black p-2 text-sm w-2/5">Nama Produk</th>
-
-<th class="border border-black p-2 text-sm">Harga Asli</th>
-
-<th class="border border-black p-2 text-sm">Harga Promo</th>
-
-<th class="border border-black p-2 text-sm">Qty</th>
-
-<th class="border border-black p-2 text-sm">Total</th>
+<th class="border p-2">Layanan</th>
+<th class="border p-2">Harga</th>
+<th class="border p-2">Qty</th>
+<th class="border p-2">Total</th>
 
 </tr>
 
@@ -193,111 +161,49 @@ Tanggal acara :
 
 <tbody>
 
-<?php $subTotal=0; $diskonTotal=0; ?>
+<?php $subTotal=0; ?>
 
 <?php foreach($penawaran as $p): ?>
 
-<?php
-$namaproduk=$this->Crud_m->view_where(
-'data_pricelist',
-array('data_pricelist_idsession'=>$p->penawaran_klien_idpricelist)
-)->row();
-?>
+<?php $total=$p->penawaran_klien_hargapromo*$p->penawaran_klien_qty ?>
 
 <tr>
 
-<td class="border border-black p-2 text-xs">
-
-<?= $namaproduk->data_pricelist_judul ?>
-
-<p><small><?= $p->penawaran_klien_deskripsi ?></small></p>
-
+<td class="border p-2 text-xs">
+<?= $p->penawaran_klien_deskripsi ?>
 </td>
 
-<td class="border border-black text-center text-xs">
-
-<s>
-Rp <?= number_format($p->penawaran_klien_harga,0,',','.') ?>
-</s>
-
-</td>
-
-<td class="border border-black text-center text-xs">
-
+<td class="border text-center text-xs">
 Rp <?= number_format($p->penawaran_klien_hargapromo,0,',','.') ?>
-
 </td>
 
-<td class="border border-black text-center text-xs">
-
+<td class="border text-center text-xs">
 <?= $p->penawaran_klien_qty ?>
-
 </td>
 
-<?php $total=$p->penawaran_klien_hargapromo*$p->penawaran_klien_qty ?>
-
-<td class="border border-black text-center text-xs">
-
+<td class="border text-center text-xs">
 Rp <?= number_format($total,0,',','.') ?>
-
 </td>
 
 </tr>
 
-<?php
-$subTotal+=$total;
-$diskonTotal+=$p->penawaran_klien_diskon;
-?>
+<?php $subTotal+=$total ?>
 
 <?php endforeach ?>
 
 <tr>
 
-<th colspan="4" class="border border-black text-right text-sm p-2">
-
-SUB TOTAL
-
-</th>
-
-<td class="border border-black text-center text-xs">
-
-Rp <?= number_format($subTotal,0,',','.') ?>
-
-</td>
-
-</tr>
-
-<tr>
-
-<th colspan="4" class="border border-black text-right text-sm p-2">
-
-PROMO DISKON
-
-</th>
-
-<td class="border border-black text-center text-xs">
-
-Rp <?= number_format($diskonTotal,0,',','.') ?>
-
-</td>
-
-</tr>
-
-<tr>
-
-<?php $total=$subTotal-$diskonTotal ?>
-
-<th colspan="4" class="border border-black text-right text-sm p-2">
+<th colspan="3" class="border text-right p-2">
 
 TOTAL
 
 </th>
 
-<td class="border border-black text-center text-xs font-bold">
+<th class="border text-center">
 
-Rp <?= number_format($total,0,',','.') ?>
+Rp <?= number_format($subTotal,0,',','.') ?>
 
-</td>
+</th>
 
 </tr>
 
@@ -307,46 +213,101 @@ Rp <?= number_format($total,0,',','.') ?>
 
 </div>
 
+<div class="page">
 
-<!-- FOOTER -->
+<h2 class="text-lg font-bold mb-4">
+Ketentuan Pembayaran
+</h2>
 
-<div class="print-footer flex justify-between items-center">
+<p class="text-sm">
+
+DP pertama untuk lock tanggal
+
+</p>
+
+<p class="text-sm mt-2">
+
+Pembayaran dilakukan dalam 5 tahap sesuai kesepakatan.
+
+</p>
+
+<br>
+
+<h3 class="font-semibold">
+
+Transfer Pembayaran
+
+</h3>
+
+<p class="text-sm">
+
+Bank BCA  
+No Rek : 1672468421  
+a/n Nadi Sukses Berkarya PT
+
+</p>
+
+</div>
+
+<div class="page last-page">
+
+<h2 class="text-lg font-bold">
+Persetujuan Penawaran
+</h2>
+
+<p class="text-sm mt-4">
+
+Dengan melakukan pembayaran pertama, maka client dianggap telah menyetujui seluruh isi penawaran ini.
+
+</p>
+
+<br><br>
+
+<div class="flex justify-between">
 
 <div>
 
-<p>Mantenbaru Organizer</p>
+<p>Hormat Kami</p>
 
-<p>Wedding Organizer Profesional</p>
+<br><br><br>
+
+<p class="font-semibold">
+Mantenbaru Organizer
+</p>
 
 </div>
 
 <div>
+
+<p>Client</p>
+
+<br><br><br>
+
+<p class="font-semibold">
+<?= $pc->pc_name ?>
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="print-footer flex justify-between">
+
+<p>
+Mantenbaru Organizer
+</p>
+
+<p>
 
 Halaman
 <span class="page-number"></span>
 /
 <span class="total-pages"></span>
 
-</div>
-
-</div>
-
-
-<div class="mt-10 flex gap-2 no-print">
-
-<button onclick="window.print()" class="bg-gray-600 text-white px-4 py-2 rounded">
-
-Print
-
-</button>
-
-<a href="<?= base_url('potensial-clients/lihat/'.$pc->id_session) ?>" class="bg-gray-600 text-white px-4 py-2 rounded">
-
-Kembali
-
-</a>
-
-</div>
+</p>
 
 </div>
 
