@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -14,25 +15,51 @@
 
 body{
 font-family:Arial, sans-serif;
+background:#f3f4f6;
 }
+
+/* HALAMAN */
 
 .page{
 page-break-after:always;
-min-height:1000px;
-position:relative;
+padding-top:40px;
 }
 
 .last-page{
 page-break-after:auto;
 }
 
-/* HEADER */
+/* WATERMARK */
+
+.watermark{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+opacity:0.05;
+width:450px;
+z-index:-1;
+}
+
+/* PRINT STYLE */
 
 @media print{
 
-@page{
-margin:120px 40px 100px 40px;
+body{
+background:white;
 }
+
+.no-print{
+display:none!important;
+}
+
+/* margin halaman */
+
+@page{
+margin:130px 40px 100px 40px;
+}
+
+/* HEADER */
 
 .print-header{
 position:fixed;
@@ -40,8 +67,10 @@ top:-110px;
 left:0;
 right:0;
 height:100px;
-border-bottom:1px solid #ddd;
+border-bottom:1px solid #ccc;
 }
+
+/* FOOTER */
 
 .print-footer{
 position:fixed;
@@ -49,9 +78,11 @@ bottom:-80px;
 left:0;
 right:0;
 height:80px;
-border-top:1px solid #ddd;
+border-top:1px solid #ccc;
 font-size:11px;
 }
+
+/* PAGE NUMBER */
 
 .page-number:after{
 content:counter(page);
@@ -61,24 +92,32 @@ content:counter(page);
 content:counter(pages);
 }
 
+/* TABLE FIX */
+
+table{
+page-break-inside:auto;
 }
 
-.watermark{
-position:fixed;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-opacity:0.04;
-width:500px;
+tr{
+page-break-inside:avoid;
+page-break-after:auto;
+}
+
 }
 
 </style>
 
 </head>
 
+<body>
 
-<body class="bg-gray-100">
-<div class="print-header flex justify-between">
+<!-- WATERMARK -->
+
+<img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-03.png') ?>" class="watermark">
+
+<!-- HEADER -->
+
+<div class="print-header flex justify-between items-center">
 
 <div>
 
@@ -107,25 +146,23 @@ Tanggal : <?= date('d-m-Y') ?>
 </div>
 
 
+<!-- HALAMAN COVER -->
+
 <div class="page flex flex-col justify-center items-center text-center">
 
-<img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-02.png') ?>" width="300">
+<img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-02.png') ?>" width="280">
 
 <h1 class="text-3xl font-bold mt-6">
 Proposal Penawaran Wedding Organizer
 </h1>
 
-<p class="mt-4 text-lg">
-Untuk
-</p>
+<p class="mt-4 text-lg">Untuk</p>
 
 <h2 class="text-2xl font-semibold">
 <?= $pc->pc_name ?>
 </h2>
 
-<p class="mt-4">
-Lokasi Acara
-</p>
+<p class="mt-4">Lokasi Acara</p>
 
 <p class="font-semibold">
 <?= $pc->location ?>
@@ -138,6 +175,8 @@ Lokasi Acara
 
 </div>
 
+
+<!-- HALAMAN DETAIL LAYANAN -->
 
 <div class="page">
 
@@ -195,15 +234,11 @@ Rp <?= number_format($total,0,',','.') ?>
 <tr>
 
 <th colspan="3" class="border text-right p-2">
-
 TOTAL
-
 </th>
 
 <th class="border text-center">
-
 Rp <?= number_format($subTotal,0,',','.') ?>
-
 </th>
 
 </tr>
@@ -215,6 +250,7 @@ Rp <?= number_format($subTotal,0,',','.') ?>
 </div>
 
 
+<!-- HALAMAN PEMBAYARAN -->
 
 <div class="page">
 
@@ -223,29 +259,23 @@ Ketentuan Pembayaran
 </h2>
 
 <p class="text-sm">
-
-DP pertama untuk lock tanggal
-
+DP pertama untuk lock tanggal.
 </p>
 
 <p class="text-sm mt-2">
-
 Pembayaran dilakukan dalam 5 tahap sesuai kesepakatan.
-
 </p>
 
 <br>
 
 <h3 class="font-semibold">
-
 Transfer Pembayaran
-
 </h3>
 
 <p class="text-sm">
 
-Bank BCA  
-No Rek : 1672468421  
+Bank BCA<br>
+No Rek : 1672468421<br>
 a/n Nadi Sukses Berkarya PT
 
 </p>
@@ -253,6 +283,7 @@ a/n Nadi Sukses Berkarya PT
 </div>
 
 
+<!-- HALAMAN PERSETUJUAN -->
 
 <div class="page last-page">
 
@@ -299,23 +330,22 @@ Mantenbaru Organizer
 </div>
 
 
-<div class="print-footer flex justify-between">
+<!-- FOOTER -->
+
+<div class="print-footer flex justify-between items-center">
 
 <p>
 Mantenbaru Organizer
 </p>
 
 <p>
-
 Halaman
 <span class="page-number"></span>
 /
 <span class="total-pages"></span>
-
 </p>
 
 </div>
-
 
 </body>
 </html>
