@@ -319,7 +319,7 @@ Rp <?= number_format($total,0,',','.') ?>
 </tr>
 
 <?php $subTotal+=$total ?>
-<?php $diskonTotal += $p->penawaran_klien_diskon; ?>
+<?php $diskonTotal += $pc->penawaran_klien_diskon; ?>
 
 <?php endforeach ?>
 
