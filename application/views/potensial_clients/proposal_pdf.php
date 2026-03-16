@@ -465,7 +465,7 @@ Rp <?= number_format($p4,0,',','.') ?></li>
 
 <?php }else{ ?>
 
-<li>Pembayaran kedua lock tanggal H+14 setelah pembayaran pertama
+<li>Pembayaran kedua <b>lock tanggal</b> H+14 setelah pembayaran pertama
 Rp <?= number_format($p2,0,',','.') ?></li>
 
 <li>Pembayaran ketiga <b>H-60 acara (<?= tgl_indo($b->format('Y-m-d')) ?>)</b>
