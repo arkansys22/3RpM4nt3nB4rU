@@ -21,7 +21,7 @@ filter: none;
 }
 
 @page {
-margin:20px 40px 80px 40px;
+margin:50px 40px 80px 40px;
 }
 
 img{
