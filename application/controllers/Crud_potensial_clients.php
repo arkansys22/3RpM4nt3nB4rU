@@ -83,6 +83,10 @@ class crud_potensial_clients extends CI_Controller {
         }
     }
 
+
+
+    
+
     public function index_hot() {
 
         if ($this->session->level=='1'){
@@ -1129,6 +1133,50 @@ class crud_potensial_clients extends CI_Controller {
     
         // Kirim data ke view
         $this->load->view('potensial_clients/view_penawaran', $data);
+    }
+
+    use Dompdf\Dompdf;
+    use Dompdf\Options;
+
+    public function download_proposal($id){
+
+        $pc = $this->db->get_where('potential_clients',['id'=>$id])->row();
+        $penawaran = $this->db->get_where('penawaran_klien',['pc_id'=>$id])->result();
+
+        $data = [
+            'pc' => $pc,
+            'penawaran' => $penawaran
+        ];
+
+        $html = $this->load->view('potensial_clients/proposal_pdf',$data,true);
+
+        $options = new Options();
+        $options->set('isRemoteEnabled', TRUE);
+
+        $dompdf = new Dompdf($options);
+
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4','portrait');
+        $dompdf->render();
+
+        /* PAGE NUMBER */
+
+        $canvas = $dompdf->getCanvas();
+        $font = $dompdf->getFontMetrics()->get_font("Helvetica", "normal");
+
+        $canvas->page_text(
+        520, 
+        820, 
+        "Halaman {PAGE_NUM} / {PAGE_COUNT}",
+        $font,
+        10,
+        array(0,0,0)
+        );
+
+        $dompdf->stream(
+        "Proposal-".$pc->pc_name.".pdf",
+        array("Attachment"=>true)
+        );
     }
 
 
