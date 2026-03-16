@@ -27,7 +27,7 @@ top:-100px;
 left:0;
 right:0;
 height:80px;
-border-bottom:22px solid #caa45f;
+
 }
 
 .header table{
