@@ -16,6 +16,7 @@ z-index:-1000;
 
 .watermark img{
 width:350px;
+filter: none;
 }
 
 @page {
