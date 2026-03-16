@@ -358,7 +358,7 @@ Rp <?= number_format($total,0,',','.') ?>
 <?php }else if($pc->promo === 'tidak'){?>
 <tr class="total-row">
 <td colspan="3" class="text-right">
-Sub Total
+Total
 </td>
 <td class="text-right">
 Rp <?= number_format($subTotal,0,',','.') ?>
