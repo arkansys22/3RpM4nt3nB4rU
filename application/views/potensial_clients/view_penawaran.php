@@ -8,7 +8,6 @@
 <title>Penawaran Potensial Clients</title>
 
 <link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png">
-
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
 
 <style>
@@ -18,25 +17,48 @@ font-family:Arial, sans-serif;
 background:#f3f4f6;
 }
 
-/* CONTAINER DOKUMEN */
-
-.document{
-max-width:900px;
-margin:auto;
-background:white;
-padding:40px;
-}
-
-/* HALAMAN */
+/* UKURAN HALAMAN */
 
 .page{
-margin-top:120px;
-margin-bottom:100px;
+width:210mm;
+min-height:297mm;
+margin:auto;
+background:white;
+padding:140px 40px 100px 40px;
 page-break-after:always;
+position:relative;
 }
 
 .last-page{
 page-break-after:auto;
+}
+
+/* HEADER */
+
+.print-header{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:110px;
+padding:20px 40px;
+background:white;
+border-bottom:1px solid #ddd;
+z-index:1000;
+}
+
+/* FOOTER */
+
+.print-footer{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+height:70px;
+padding:15px 40px;
+background:white;
+border-top:1px solid #ddd;
+font-size:11px;
 }
 
 /* WATERMARK */
@@ -46,61 +68,19 @@ position:fixed;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
-opacity:0.04;
-width:450px;
+opacity:0.05;
+width:420px;
 z-index:-1;
 }
 
-/* HEADER */
+/* TABEL PRINT FIX */
 
-.print-header{
-position:fixed;
-top:0;
-left:0;
-right:0;
-height:100px;
-padding:20px 40px;
-background:white;
-border-bottom:1px solid #ddd;
+table{
+page-break-inside:auto;
 }
 
-/* FOOTER */
-
-.print-footer{
-position:fixed;
-bottom:0;
-left:0;
-right:0;
-height:60px;
-padding:10px 40px;
-background:white;
-border-top:1px solid #ddd;
-font-size:11px;
-}
-
-/* PRINT SETTING */
-
-@media print{
-
-body{
-background:white;
-}
-
-.document{
-padding:0;
-}
-
-.page{
-margin-top:120px;
-margin-bottom:80px;
-}
-
-.no-print{
-display:none!important;
-}
-
-@page{
-margin:0;
+tr{
+page-break-inside:avoid;
 }
 
 /* PAGE NUMBER */
@@ -113,14 +93,16 @@ content:counter(page);
 content:counter(pages);
 }
 
-/* TABLE FIX */
+/* PRINT */
 
-table{
-page-break-inside:auto;
+@media print{
+
+body{
+background:white;
 }
 
-tr{
-page-break-inside:avoid;
+.page{
+margin:0;
 }
 
 }
@@ -132,6 +114,7 @@ page-break-inside:avoid;
 <body>
 
 <img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-03.png') ?>" class="watermark">
+
 
 <!-- HEADER -->
 
@@ -164,29 +147,23 @@ Tanggal : <?= date('d-m-Y') ?>
 </div>
 
 
-<div class="document">
-
 <!-- COVER -->
 
-<div class="page text-center">
+<div class="page text-center flex flex-col justify-center">
 
 <img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-02.png') ?>" width="260" class="mx-auto">
 
-<h1 class="text-3xl font-bold mt-6">
+<h1 class="text-3xl font-bold mt-10">
 Proposal Penawaran Wedding Organizer
 </h1>
 
-<p class="mt-6 text-lg">
-Untuk
-</p>
+<p class="mt-6 text-lg">Untuk</p>
 
 <h2 class="text-2xl font-semibold">
 <?= $pc->pc_name ?>
 </h2>
 
-<p class="mt-6">
-Lokasi Acara
-</p>
+<p class="mt-6">Lokasi Acara</p>
 
 <p class="font-semibold">
 <?= $pc->location ?>
@@ -213,12 +190,10 @@ Detail Layanan
 <thead>
 
 <tr class="bg-gray-100">
-
 <th class="border p-2">Layanan</th>
 <th class="border p-2">Harga</th>
 <th class="border p-2">Qty</th>
 <th class="border p-2">Total</th>
-
 </tr>
 
 </thead>
@@ -297,11 +272,9 @@ Transfer Pembayaran
 </h3>
 
 <p class="text-sm">
-
 Bank BCA<br>
 No Rek : 1672468421<br>
 a/n Nadi Sukses Berkarya PT
-
 </p>
 
 </div>
@@ -344,8 +317,6 @@ Mantenbaru Organizer
 <p class="font-semibold">
 <?= $pc->pc_name ?>
 </p>
-
-</div>
 
 </div>
 
