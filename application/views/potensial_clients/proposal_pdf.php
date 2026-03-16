@@ -5,6 +5,19 @@
 
 <style>
 
+.watermark{
+position:fixed;
+top:35%;
+left:50%;
+transform:translate(-50%, -50%);
+opacity:0.08;
+z-index:-1000;
+}
+
+.watermark img{
+width:350px;
+}
+
 @page {
 margin:120px 40px 80px 40px;
 }
@@ -165,6 +178,10 @@ margin-top:10px;
 </head>
 
 <body>
+
+<div class="watermark">
+<img src="<?= FCPATH.'assets/backend/src/images/logo/logo%20mantenbaru%20merah-02.png' ?>">
+</div>
 
 <!-- HEADER -->
 
