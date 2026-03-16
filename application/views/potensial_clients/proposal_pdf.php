@@ -378,7 +378,7 @@ Rp <?= number_format($subTotal,0,',','.') ?>
 Bonus & Cashback
 </td>
 <td class="text-right">
-Rp <?= number_format($promo_value,0,',','.') ?>
+Rp <?= number_format($pc->promo_value,0,',','.') ?>
 </td>
 </tr>
 <?php $total = $subTotal - $pc->promo_value?>
