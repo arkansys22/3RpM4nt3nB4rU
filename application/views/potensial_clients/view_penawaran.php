@@ -78,7 +78,6 @@ width:500px;
 
 
 <body class="bg-gray-100">
-
 <div class="print-header flex justify-between">
 
 <div>
@@ -106,6 +105,7 @@ Tanggal : <?= date('d-m-Y') ?>
 </div>
 
 </div>
+
 
 <div class="page flex flex-col justify-center items-center text-center">
 
@@ -137,6 +137,7 @@ Lokasi Acara
 </p>
 
 </div>
+
 
 <div class="page">
 
@@ -213,6 +214,8 @@ Rp <?= number_format($subTotal,0,',','.') ?>
 
 </div>
 
+
+
 <div class="page">
 
 <h2 class="text-lg font-bold mb-4">
@@ -248,6 +251,8 @@ a/n Nadi Sukses Berkarya PT
 </p>
 
 </div>
+
+
 
 <div class="page last-page">
 
@@ -310,6 +315,7 @@ Halaman
 </p>
 
 </div>
+
 
 </body>
 </html>
