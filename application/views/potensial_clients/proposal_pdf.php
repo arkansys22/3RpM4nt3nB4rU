@@ -200,9 +200,6 @@ margin-top:10px;
 Mantenbaru Organizer
 </td>
 
-<td align="right">
-Halaman <span class="page-number"></span> / <span class="page-total"></span>
-</td>
 
 </tr>
 
