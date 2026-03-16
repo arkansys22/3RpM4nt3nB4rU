@@ -290,7 +290,7 @@ Detail Layanan
 <th width="25%">Total</th>
 </tr>
 
-<?php $subTotal=0; ?>
+<?php $subTotal=0; $diskonTotal = 0; ?>
 
 <?php foreach($penawaran as $p): ?>
 
