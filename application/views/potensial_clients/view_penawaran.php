@@ -107,11 +107,31 @@ margin:0;
 
 }
 
+.no-print{
+display:block;
+}
+
+@media print{
+
+.no-print{
+display:none;
+}
+
+}
+
 </style>
+
+
 
 </head>
 
 <body>
+<div class="no-print text-center my-6">
+<button onclick="printPDF()" 
+class="bg-red-600 hover:bg-red-700 text-white font-semibold px-8 py-3 rounded-lg shadow-lg">
+📄 Download PDF
+</button>
+</div>
 
 <img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-03.png') ?>" class="watermark">
 
@@ -341,6 +361,16 @@ Halaman
 </p>
 
 </div>
+
+<script>
+
+function printPDF(){
+
+window.print();
+
+}
+
+</script>
 
 </body>
 </html>
