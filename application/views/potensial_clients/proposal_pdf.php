@@ -52,7 +52,7 @@ width:100%;
 .logo{
 font-size:20px;
 font-weight:bold;
-color:#caa45f;
+color:#ed126b;
 }
 
 .sublogo{
