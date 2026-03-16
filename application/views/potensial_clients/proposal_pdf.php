@@ -169,6 +169,11 @@ background:#fafafa;
 font-weight:bold;
 }
 
+.total-cashback{
+background:#FFD700;
+font-weight:bold;
+}
+
 /* PAYMENT */
 
 .payment-box{
@@ -338,7 +343,7 @@ Sub Total
 Rp <?= number_format($subTotal,0,',','.') ?>
 </td>
 </tr>
-<tr class="total-row">
+<tr class="total-cashback">
 <td colspan="3" class="text-right">
 Bonus & Cashback
 </td>
@@ -373,7 +378,7 @@ Sub Total
 Rp <?= number_format($subTotal,0,',','.') ?>
 </td>
 </tr>
-<tr class="total-row">
+<tr class="total-cashback">
 <td colspan="3" class="text-right">
 Bonus & Cashback
 </td>
@@ -447,7 +452,7 @@ Ketentuan Pembayaran
 
 <ul>
 
-<li>Pembayaran pertama <b>lock harga</b> Rp <?= number_format($p1,0,',','.') ?></li>
+<li>Pembayaran pertama <b>kunci harga</b> Rp <?= number_format($p1,0,',','.') ?></li>
 
 <?php if($days_to_event < 30){ ?>
 
@@ -465,7 +470,7 @@ Rp <?= number_format($p4,0,',','.') ?></li>
 
 <?php }else{ ?>
 
-<li>Pembayaran kedua <b>lock tanggal</b> H+14 setelah pembayaran pertama
+<li>Pembayaran kedua <b>kunci tanggal</b> H+14 setelah pembayaran pertama
 Rp <?= number_format($p2,0,',','.') ?></li>
 
 <li>Pembayaran ketiga <b>H-60 acara (<?= tgl_indo($b->format('Y-m-d')) ?>)</b>
