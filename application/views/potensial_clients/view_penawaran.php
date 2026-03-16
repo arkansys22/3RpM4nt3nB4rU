@@ -12,6 +12,33 @@
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
 
 <style>
+/* PAGE COUNTER */
+
+body{
+font-family:Arial, sans-serif;
+background:#f3f4f6;
+counter-reset: page;
+}
+
+/* SETIAP HALAMAN MENAMBAH COUNTER */
+
+.page{
+width:210mm;
+min-height:297mm;
+margin:auto;
+background:white;
+padding:140px 40px 100px 40px;
+page-break-after:always;
+position:relative;
+
+counter-increment: page;
+}
+
+/* PAGE NUMBER */
+
+.page-number::after{
+content: counter(page);
+}
 
 /* PRINT SETTING */
 
