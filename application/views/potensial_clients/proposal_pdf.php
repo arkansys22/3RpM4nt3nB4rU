@@ -295,10 +295,12 @@ $total=$p->penawaran_klien_hargapromo*$p->penawaran_klien_qty;
 ?>
 
 <tr>
+<?php $namaproduk = $this->Crud_m->view_where('data_pricelist', array('data_pricelist_idsession'=> $p->penawaran_klien_idpricelist))->row(); ?>
 
-<td><?= $p->penawaran_klien_deskripsi ?></td>
+<td><?= $namaproduk->data_pricelist_judul ?><br><small><?= $p->penawaran_klien_deskripsi ?></small></td>
 
 <td class="text-right">
+<s>Rp <?= number_format($p->penawaran_klien_harga,0,',','.') ?></s><br>
 Rp <?= number_format($p->penawaran_klien_hargapromo,0,',','.') ?>
 </td>
 
