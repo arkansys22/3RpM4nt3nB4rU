@@ -62,10 +62,6 @@ width:100%;
 content: counter(page);
 }
 
-.page-total:after{
-content: counter(pages);
-}
-
 /* PAGE */
 
 .page{
@@ -200,6 +196,9 @@ margin-top:10px;
 Mantenbaru Organizer
 </td>
 
+<td align="right">
+Halaman <span class="page-number"></span>
+</td>
 
 </tr>
 

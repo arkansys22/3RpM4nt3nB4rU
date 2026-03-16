@@ -1164,10 +1164,10 @@ class crud_potensial_clients extends CI_Controller {
         /* PAGE NUMBER */
 
         $canvas = $dompdf->getCanvas();
-        $font = $dompdf->getFontMetrics()->get_font("Helvetica", "normal");
+        $font = $dompdf->getFontMetrics()->get_font("DejaVu Sans", "normal");
 
         $canvas->page_text(
-        520, 
+        480, 
         820, 
         "Halaman {PAGE_NUM} / {PAGE_COUNT}",
         $font,
