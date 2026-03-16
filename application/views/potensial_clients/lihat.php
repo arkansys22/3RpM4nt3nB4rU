@@ -326,7 +326,7 @@
 
                       
 
-                      <button onclick="window.location.href='<?= base_url('potensial-clients/view_penawaran/'.$pc->id_session) ?>'"
+                      <button onclick="window.location.href='<?= base_url('potensial-clients/download_proposal/'.$pc->id_session) ?>'"
                         class="float-right mt-10 inline-flex items-center gap-2.5 rounded bg-primary px-7.5 py-2.5 font-medium text-white hover:bg-opacity-90"
                       >
                         Cetak Penawaran
