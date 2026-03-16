@@ -18,11 +18,21 @@ font-family:Arial, sans-serif;
 background:#f3f4f6;
 }
 
+/* CONTAINER DOKUMEN */
+
+.document{
+max-width:900px;
+margin:auto;
+background:white;
+padding:40px;
+}
+
 /* HALAMAN */
 
 .page{
+margin-top:120px;
+margin-bottom:100px;
 page-break-after:always;
-padding-top:40px;
 }
 
 .last-page{
@@ -36,12 +46,39 @@ position:fixed;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
-opacity:0.05;
+opacity:0.04;
 width:450px;
 z-index:-1;
 }
 
-/* PRINT STYLE */
+/* HEADER */
+
+.print-header{
+position:fixed;
+top:0;
+left:0;
+right:0;
+height:100px;
+padding:20px 40px;
+background:white;
+border-bottom:1px solid #ddd;
+}
+
+/* FOOTER */
+
+.print-footer{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+height:60px;
+padding:10px 40px;
+background:white;
+border-top:1px solid #ddd;
+font-size:11px;
+}
+
+/* PRINT SETTING */
 
 @media print{
 
@@ -49,37 +86,21 @@ body{
 background:white;
 }
 
+.document{
+padding:0;
+}
+
+.page{
+margin-top:120px;
+margin-bottom:80px;
+}
+
 .no-print{
 display:none!important;
 }
 
-/* margin halaman */
-
 @page{
-margin:130px 40px 100px 40px;
-}
-
-/* HEADER */
-
-.print-header{
-position:fixed;
-top:-110px;
-left:0;
-right:0;
-height:100px;
-border-bottom:1px solid #ccc;
-}
-
-/* FOOTER */
-
-.print-footer{
-position:fixed;
-bottom:-80px;
-left:0;
-right:0;
-height:80px;
-border-top:1px solid #ccc;
-font-size:11px;
+margin:0;
 }
 
 /* PAGE NUMBER */
@@ -100,7 +121,6 @@ page-break-inside:auto;
 
 tr{
 page-break-inside:avoid;
-page-break-after:auto;
 }
 
 }
@@ -110,8 +130,6 @@ page-break-after:auto;
 </head>
 
 <body>
-
-<!-- WATERMARK -->
 
 <img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-03.png') ?>" class="watermark">
 
@@ -146,23 +164,29 @@ Tanggal : <?= date('d-m-Y') ?>
 </div>
 
 
-<!-- HALAMAN COVER -->
+<div class="document">
 
-<div class="page flex flex-col justify-center items-center text-center">
+<!-- COVER -->
 
-<img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-02.png') ?>" width="280">
+<div class="page text-center">
+
+<img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-02.png') ?>" width="260" class="mx-auto">
 
 <h1 class="text-3xl font-bold mt-6">
 Proposal Penawaran Wedding Organizer
 </h1>
 
-<p class="mt-4 text-lg">Untuk</p>
+<p class="mt-6 text-lg">
+Untuk
+</p>
 
 <h2 class="text-2xl font-semibold">
 <?= $pc->pc_name ?>
 </h2>
 
-<p class="mt-4">Lokasi Acara</p>
+<p class="mt-6">
+Lokasi Acara
+</p>
 
 <p class="font-semibold">
 <?= $pc->location ?>
@@ -176,7 +200,7 @@ Proposal Penawaran Wedding Organizer
 </div>
 
 
-<!-- HALAMAN DETAIL LAYANAN -->
+<!-- DETAIL LAYANAN -->
 
 <div class="page">
 
@@ -250,7 +274,7 @@ Rp <?= number_format($subTotal,0,',','.') ?>
 </div>
 
 
-<!-- HALAMAN PEMBAYARAN -->
+<!-- PEMBAYARAN -->
 
 <div class="page">
 
@@ -283,7 +307,7 @@ a/n Nadi Sukses Berkarya PT
 </div>
 
 
-<!-- HALAMAN PERSETUJUAN -->
+<!-- PERSETUJUAN -->
 
 <div class="page last-page">
 
@@ -292,9 +316,7 @@ Persetujuan Penawaran
 </h2>
 
 <p class="text-sm mt-4">
-
 Dengan melakukan pembayaran pertama, maka client dianggap telah menyetujui seluruh isi penawaran ini.
-
 </p>
 
 <br><br>
@@ -329,10 +351,12 @@ Mantenbaru Organizer
 
 </div>
 
+</div>
+
 
 <!-- FOOTER -->
 
-<div class="print-footer flex justify-between items-center">
+<div class="print-footer flex justify-between">
 
 <p>
 Mantenbaru Organizer
