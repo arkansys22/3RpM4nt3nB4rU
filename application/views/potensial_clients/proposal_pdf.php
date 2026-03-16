@@ -446,7 +446,14 @@ $days_to_event = $diff->days;
 
 			}
 		?>
-<div><strong>Harga dapat berubah sewaktu-waktu jika belum melakukan pembayaran pertama untuk lock harga</strong></div><br>
+
+	<?php if($pc->promo === 'tidak' ){ ?>
+	<div><i>Harga dapat berubah sewaktu-waktu jika belum melakukan pembayaran pertama untuk kunci harga.</i>
+	</div><br>
+        
+        <?php }else{ ?>		
+<div><i>Harga dapat berubah sewaktu-waktu jika belum melakukan pembayaran pertama untuk kunci harga. Bonus dan Cashback berlaku hanya sampai H+5 setelah penawaran ini diberikan. Dan besaran diskon setiap harinya berkurang Rp 200.000.</i></div><br>
+<?php }?>
 <div class="section-title">
 Ketentuan Pembayaran
 </div>
