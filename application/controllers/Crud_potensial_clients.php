@@ -1135,8 +1135,9 @@ class crud_potensial_clients extends CI_Controller {
         $this->load->view('potensial_clients/view_penawaran', $data);
     }
 
-    use application/third_party/dompdf/src/Dompdf;
-    use application/third_party/dompdf/src/Options;
+    require_once APPPATH . 'third_party/dompdf/autoload.inc.php';
+    use Dompdf\Dompdf;
+    use Dompdf\Options;
 
     public function download_proposal($id){
 
