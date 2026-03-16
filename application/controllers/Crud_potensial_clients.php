@@ -1141,8 +1141,8 @@ class crud_potensial_clients extends CI_Controller {
 
     public function download_proposal($id){
 
-        $pc = $this->Potensial_model->get_potensial_clients_by_session($id_session);  
-        $penawaran = $this->Potensial_model->get_penawaran_by_session($id_session);
+        $pc = $this->db->get_where('potential_clients',['id_session'=>$id])->row();
+        $penawaran = $this->db->get_where('penawaran_klien',['penawaran_klien_potensial_idsession'=>$id])->result();
 
         $data = [
             'pc' => $pc,
