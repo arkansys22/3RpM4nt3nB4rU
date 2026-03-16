@@ -169,8 +169,13 @@ margin-top:10px;
 <tr>
 
 <td>
-<div class="logo">Mantenbaru Organizer</div>
-<div class="sublogo">Tajurhalang Bogor</div>
+<div class="logo">
+<img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-02.png') ?>" alt="Logo" style="width: 220px; margin-left: -12px;">
+<br> Mantenbaru Wedding Organizer
+</div>
+<div class="sublogo">Teras Country Blok H No 38, Tonjong,Tajurhalang Bogor
+<br> Telp / WA : 0812-9292-9396 | Web : www.mantenbaru.com
+</div>
 </td>
 
 <td align="right">
