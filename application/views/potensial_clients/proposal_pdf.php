@@ -398,6 +398,13 @@ Rp <?= number_format($total,0,',','.') ?>
 
 <!-- PEMBAYARAN -->
 
+<?php
+$today = new DateTime();
+$event = new DateTime($pc->event_date);
+$diff  = $today->diff($event);
+$days_to_event = $diff->days;
+?>
+
 		<?php
             $aa = new DateTime($pc->event_date);
             $b  = clone $aa;
@@ -409,30 +416,69 @@ Rp <?= number_format($total,0,',','.') ?>
             ?>
 
 
-           <?php if($pc->promo === 'tidak' ){ ?>
-            <?php $p1= 1000000 ?> 
-            <?php $p2= ($subTotal - $p1) * 15/100?> 
-            <?php $p3= ($subTotal - $p1) * 35/100?> 
-            <?php $p4= ($subTotal - $p1) * 35/100?> 
-            <?php $p5= ($subTotal - $p1) * 15/100 ?>
-            <?php }else{ ?>
-            <?php $p1= 1000000 ?> 
-            <?php $p2= ($total - $p1) * 15/100?> 
-            <?php $p3= ($total - $p1) * 35/100?> 
-            <?php $p4= ($total - $p1) * 35/100?> 
-            <?php $p5= ($total - $p1) * 15/100 ?>
+        <?php
 
-        <?php }?>
+			$grandTotal = ($pc->promo === 'tidak') ? $subTotal : $total;
+
+			$p1 = 1000000;
+
+			if($days_to_event < 30){
+
+			    $p2 = $grandTotal - $p1;
+
+			}elseif($days_to_event < 60){
+
+			    $p2 = ($grandTotal - $p1) * 30/100;
+			    $p3 = ($grandTotal - $p1) * 30/100;
+			    $p4 = ($grandTotal - $p1) * 40/100;
+
+			}else{
+
+			    $p2 = ($grandTotal - $p1) * 15/100;
+			    $p3 = ($grandTotal - $p1) * 35/100;
+			    $p4 = ($grandTotal - $p1) * 35/100;
+			    $p5 = ($grandTotal - $p1) * 15/100;
+
+			}
+		?>
 <div class="section-title">
 Ketentuan Pembayaran
 </div>
 
 <ul>
-<li>Pembayaran pertama <b>lock harga</b> Rp <?= number_format($p1, 0, ',', '.') ?> </li>
-<li>Pembayaran kedua lock tanggal H+14 setelah pembayaran pertama Rp <?= number_format($p2, 0, ',', '.') ?></li>
-<li>Pembayaran ketiga <b>H-60 acara (<?= tgl_indo($b->format('Y-m-d')) ?>)</b> sebesar Rp <?= number_format($p3, 0, ',', '.') ?></li>
-<li>Pembayaran keempat <b>H-30 acara (<?= tgl_indo($c->format('Y-m-d')) ?>)</b> sebesar Rp <?= number_format($p4, 0, ',', '.') ?></li>
-<li>Pembayaran kelima <b>H-14 acara (<?= tgl_indo($d->format('Y-m-d')) ?>)</b> sebesar Rp <?= number_format($p5, 0, ',', '.') ?></li>
+
+<li>Pembayaran pertama <b>lock harga</b> Rp <?= number_format($p1,0,',','.') ?></li>
+
+<?php if($days_to_event < 30){ ?>
+
+<li>Pembayaran kedua pelunasan Rp <?= number_format($p2,0,',','.') ?></li>
+
+<?php }elseif($days_to_event < 60){ ?>
+
+<li>Pembayaran kedua Rp <?= number_format($p2,0,',','.') ?></li>
+
+<li>Pembayaran ketiga <b>H-30 acara (<?= tgl_indo($c->format('Y-m-d')) ?>)</b>
+Rp <?= number_format($p3,0,',','.') ?></li>
+
+<li>Pembayaran keempat <b>H-14 acara (<?= tgl_indo($d->format('Y-m-d')) ?>)</b>
+Rp <?= number_format($p4,0,',','.') ?></li>
+
+<?php }else{ ?>
+
+<li>Pembayaran kedua lock tanggal H+14 setelah pembayaran pertama
+Rp <?= number_format($p2,0,',','.') ?></li>
+
+<li>Pembayaran ketiga <b>H-60 acara (<?= tgl_indo($b->format('Y-m-d')) ?>)</b>
+Rp <?= number_format($p3,0,',','.') ?></li>
+
+<li>Pembayaran keempat <b>H-30 acara (<?= tgl_indo($c->format('Y-m-d')) ?>)</b>
+Rp <?= number_format($p4,0,',','.') ?></li>
+
+<li>Pembayaran kelima <b>H-14 acara (<?= tgl_indo($d->format('Y-m-d')) ?>)</b>
+Rp <?= number_format($p5,0,',','.') ?></li>
+
+<?php } ?>
+
 </ul>
 
 <div class="payment-box">
