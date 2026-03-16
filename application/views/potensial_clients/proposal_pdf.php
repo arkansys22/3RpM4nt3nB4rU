@@ -10,7 +10,7 @@ position:fixed;
 top:35%;
 left:45%;
 transform:translate(-50%, -50%);
-opacity:80;
+opacity:0.80;
 z-index:-1000;
 }
 
