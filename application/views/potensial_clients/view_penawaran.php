@@ -161,12 +161,6 @@ Tanggal : <?= date('d-m-Y') ?>
 
 </div>
 
-<div class="no-print text-center my-6">
-<button onclick="printPDF()" 
-class="bg-red-600 hover:bg-red-700 text-white font-semibold px-8 py-3 rounded-lg shadow-lg">
-📄 Download PDF
-</button>
-</div>
 
 
 <!-- COVER -->
@@ -341,6 +335,19 @@ Mantenbaru Organizer
 </p>
 
 </div>
+
+</div>
+
+<!-- TOMBOL PRINT PDF -->
+
+<div class="no-print text-center mt-16">
+
+<button onclick="printPDF()" 
+class="bg-red-600 hover:bg-red-700 text-white font-semibold px-10 py-3 rounded-lg shadow-lg">
+
+📄 Print / Download PDF
+
+</button>
 
 </div>
 
