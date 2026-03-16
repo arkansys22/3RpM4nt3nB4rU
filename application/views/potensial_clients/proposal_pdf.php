@@ -32,6 +32,8 @@ body{
 font-family: DejaVu Sans, sans-serif;
 font-size:12px;
 color:#333;
+margin:0;
+padding:0;
 }
 
 /* HEADER */
@@ -87,6 +89,9 @@ content: counter(page);
 page-break-after:always;
 }
 
+.page:last-child{
+page-break-after:avoid;
+}
 /* COVER */
 
 .cover{
