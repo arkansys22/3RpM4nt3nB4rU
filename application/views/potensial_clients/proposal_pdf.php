@@ -81,6 +81,11 @@ border:none;
 border-collapse:collapse;
 }
 
+.footer td{
+border:none;
+padding:0;
+}
+
 .page-number:after{
 content: counter(page);
 }
