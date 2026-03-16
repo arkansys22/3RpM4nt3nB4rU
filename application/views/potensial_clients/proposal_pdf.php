@@ -446,6 +446,7 @@ $days_to_event = $diff->days;
 
 			}
 		?>
+<div><strong>Harga dapat berubah sewaktu-waktu jika belum melakukan pembayaran pertama untuk lock harga</strong></div><br>
 <div class="section-title">
 Ketentuan Pembayaran
 </div>
