@@ -415,7 +415,7 @@ Mantenbaru Organizer
 
 <div class="no-print text-center mt-16">
 
-<a href="<?= base_url('proposal/download_proposal/'.$pc->id) ?>"
+<a href="<?= base_url('potensial-clients/download_proposal/'.$pc->id) ?>"
 class="bg-red-600 hover:bg-red-700 text-white font-semibold px-10 py-3 rounded-lg shadow-lg">
 
 📄 Print / Download PDF
