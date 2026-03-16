@@ -1,315 +1,272 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="format-detection" content="telephone=no">
-
-<title>Penawaran Potensial Clients</title>
-
-<link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png">
-<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
+<meta charset="utf-8">
 
 <style>
-/* PAGE COUNTER */
 
 body{
-font-family:Arial, sans-serif;
-background:#f3f4f6;
-counter-reset: page;
-}
-
-/* SETIAP HALAMAN MENAMBAH COUNTER */
-
-.page{
-width:210mm;
-min-height:297mm;
-margin:auto;
-background:white;
-padding:140px 40px 100px 40px;
-page-break-after:always;
-position:relative;
-
-counter-increment: page;
-}
-
-/* PAGE NUMBER */
-
-.page-number::after{
-content: "Halaman " counter(page);
-}
-
-/* PRINT SETTING */
-
-@page{
-size:A4;
-margin:0;
-}
-
-html, body{
+font-family: DejaVu Sans, sans-serif;
+font-size:12px;
+color:#333;
 margin:0;
 padding:0;
-}
-
-/* PRINT MODE */
-
-@media print{
-
-body{
-background:white;
-margin:0;
-padding:0;
--webkit-print-color-adjust:exact;
-print-color-adjust:exact;
-}
-
-/* HILANGKAN MARGIN BROWSER */
-
-@page{
-margin:0;
-}
-
-/* HALAMAN */
-
-.page{
-margin:0;
-box-shadow:none;
-}
-
-/* SEMBUNYIKAN ELEMENT TIDAK PERLU */
-
-.no-print{
-display:none;
-}
-
-}
-
-body{
-font-family:Arial, sans-serif;
-background:#f3f4f6;
-}
-
-/* UKURAN HALAMAN */
-
-.page{
-width:210mm;
-min-height:297mm;
-margin:auto;
-background:white;
-padding:140px 40px 100px 40px;
-page-break-after:always;
-position:relative;
-}
-
-.last-page{
-page-break-after:auto;
 }
 
 /* HEADER */
 
-.print-header{
+.header{
 position:fixed;
-top:0;
+top:-50px;
 left:0;
-width:100%;
-height:110px;
-padding:20px 40px;
-background:white;
-border-bottom:1px solid #ddd;
-z-index:1000;
+right:0;
+height:60px;
+border-bottom:2px solid #caa45f;
+}
+
+.logo{
+font-size:18px;
+font-weight:bold;
+color:#caa45f;
+}
+
+.sublogo{
+font-size:11px;
+color:#666;
 }
 
 /* FOOTER */
 
-.print-footer{
+.footer{
 position:fixed;
-bottom:0;
+bottom:-40px;
 left:0;
-width:100%;
-height:70px;
-padding:15px 40px;
-background:white;
-border-top:1px solid #ddd;
-font-size:11px;
+right:0;
+height:40px;
+border-top:1px solid #ccc;
+font-size:10px;
+color:#666;
 }
-
-/* WATERMARK */
-
-.watermark{
-position:fixed;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-opacity:0.05;
-width:420px;
-z-index:-1;
-}
-
-/* TABEL PRINT FIX */
-
-table{
-page-break-inside:auto;
-}
-
-tr{
-page-break-inside:avoid;
-}
-
-/* PAGE NUMBER */
 
 .page-number:after{
-content:counter(page);
+content: counter(page);
 }
 
-.total-pages:after{
-content:counter(pages);
+.page-total:after{
+content: counter(pages);
 }
 
-/* PRINT */
-
-@media print{
-
-body{
-background:white;
-}
+/* PAGE */
 
 .page{
-margin:0;
+page-break-after:always;
 }
 
+/* COVER */
+
+.cover{
+text-align:center;
+margin-top:150px;
 }
 
-.no-print{
-display:block;
+.cover-title{
+font-size:30px;
+font-weight:bold;
+color:#caa45f;
+margin-bottom:10px;
 }
 
-@media print{
-
-.no-print{
-display:none;
+.cover-sub{
+font-size:16px;
+margin-bottom:30px;
 }
 
+.cover-client{
+font-size:24px;
+font-weight:bold;
+margin-bottom:10px;
+}
+
+.cover-date{
+font-size:14px;
+color:#555;
+}
+
+/* SECTION */
+
+.section-title{
+font-size:16px;
+font-weight:bold;
+margin-bottom:10px;
+margin-top:20px;
+border-bottom:1px solid #ddd;
+padding-bottom:5px;
+}
+
+/* TABLE */
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:10px;
+}
+
+th{
+background:#f6f6f6;
+border:1px solid #ddd;
+padding:8px;
+font-size:12px;
+}
+
+td{
+border:1px solid #ddd;
+padding:7px;
+font-size:12px;
+}
+
+.text-right{
+text-align:right;
+}
+
+.total-row{
+background:#fafafa;
+font-weight:bold;
+}
+
+/* PAYMENT */
+
+.payment-box{
+border:1px solid #ddd;
+padding:15px;
+margin-top:20px;
+background:#fafafa;
+}
+
+.bank{
+font-weight:bold;
+font-size:14px;
+margin-top:10px;
 }
 
 </style>
-
-
 
 </head>
 
 <body>
 
-
-<img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-03.png') ?>" class="watermark">
-
-
 <!-- HEADER -->
 
-<div class="print-header flex justify-between items-center">
+<div class="header">
 
-<div>
+<table width="100%">
+<tr>
 
-<img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-02.png') ?>" width="200">
+<td>
+<div class="logo">Mantenbaru Organizer</div>
+<div class="sublogo">Tajurhalang Bogor</div>
+</td>
 
-<p class="text-xs">
-Teras Country Blok H No 38<br>
-Tajurhalang Bogor<br>
-WA : 0812-9292-9396
-</p>
+<td align="right">
+Proposal Penawaran<br>
+<?= date('d M Y') ?>
+</td>
 
-</div>
-
-<div class="text-right">
-
-<p class="text-lg font-bold">
-PROPOSAL PENAWARAN
-</p>
-
-<p class="text-xs">
-Tanggal : <?= date('d-m-Y') ?>
-</p>
+</tr>
+</table>
 
 </div>
 
+<!-- FOOTER -->
+
+<div class="footer">
+
+<table width="100%">
+<tr>
+
+<td>
+Mantenbaru Organizer
+</td>
+
+<td align="right">
+Halaman <span class="page-number"></span> / <span class="page-total"></span>
+</td>
+
+</tr>
+</table>
+
 </div>
-
-
 
 <!-- COVER -->
 
-<div class="page text-center flex flex-col justify-center">
+<div class="page">
 
-<img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-02.png') ?>" width="260" class="mx-auto">
+<div class="cover">
 
-<h1 class="text-3xl font-bold mt-10">
-Proposal Penawaran Wedding Organizer
-</h1>
+<div class="cover-title">
+Proposal Penawaran
+</div>
 
-<p class="mt-6 text-lg">Untuk</p>
+<div class="cover-sub">
+Wedding Organizer
+</div>
 
-<h2 class="text-2xl font-semibold">
+<div class="cover-client">
 <?= $pc->pc_name ?>
-</h2>
+</div>
 
-<p class="mt-6">Lokasi Acara</p>
-
-<p class="font-semibold">
+<div>
 <?= $pc->location ?>
-</p>
+</div>
 
-<p class="mt-2">
+<br>
+
+<div class="cover-date">
 <?= hari($pc->event_date) ?>,
 <?= tgl_indo($pc->event_date) ?>
-</p>
+</div>
 
 </div>
 
+</div>
 
 <!-- DETAIL LAYANAN -->
 
 <div class="page">
 
-<h2 class="text-lg font-bold mb-4">
+<div class="section-title">
 Detail Layanan
-</h2>
+</div>
 
-<table class="w-full border border-black">
+<table>
 
-<thead>
-
-<tr class="bg-gray-100">
-<th class="border p-2">Layanan</th>
-<th class="border p-2">Harga</th>
-<th class="border p-2">Qty</th>
-<th class="border p-2">Total</th>
+<tr>
+<th width="45%">Layanan</th>
+<th width="20%">Harga</th>
+<th width="10%">Qty</th>
+<th width="25%">Total</th>
 </tr>
-
-</thead>
-
-<tbody>
 
 <?php $subTotal=0; ?>
 
 <?php foreach($penawaran as $p): ?>
 
-<?php $total=$p->penawaran_klien_hargapromo*$p->penawaran_klien_qty ?>
+<?php 
+$total=$p->penawaran_klien_hargapromo*$p->penawaran_klien_qty;
+?>
 
 <tr>
 
-<td class="border p-2 text-xs">
-<?= $p->penawaran_klien_deskripsi ?>
-</td>
+<td><?= $p->penawaran_klien_deskripsi ?></td>
 
-<td class="border text-center text-xs">
+<td class="text-right">
 Rp <?= number_format($p->penawaran_klien_hargapromo,0,',','.') ?>
 </td>
 
-<td class="border text-center text-xs">
+<td class="text-right">
 <?= $p->penawaran_klien_qty ?>
 </td>
 
-<td class="border text-center text-xs">
+<td class="text-right">
 Rp <?= number_format($total,0,',','.') ?>
 </td>
 
@@ -319,126 +276,50 @@ Rp <?= number_format($total,0,',','.') ?>
 
 <?php endforeach ?>
 
-<tr>
+<tr class="total-row">
 
-<th colspan="3" class="border text-right p-2">
+<td colspan="3" class="text-right">
 TOTAL
-</th>
+</td>
 
-<th class="border text-center">
+<td class="text-right">
 Rp <?= number_format($subTotal,0,',','.') ?>
-</th>
+</td>
 
 </tr>
-
-</tbody>
 
 </table>
 
 </div>
 
-
 <!-- PEMBAYARAN -->
 
-<div class="page">
+<div>
 
-<h2 class="text-lg font-bold mb-4">
+<div class="section-title">
 Ketentuan Pembayaran
-</h2>
+</div>
 
-<p class="text-sm">
-DP pertama untuk lock tanggal.
-</p>
+<ul>
+<li>DP pertama untuk <b>lock tanggal acara</b>.</li>
+<li>Pembayaran dilakukan dalam <b>5 tahap</b>.</li>
+<li>Pembayaran terakhir maksimal <b>7 hari sebelum acara</b>.</li>
+</ul>
 
-<p class="text-sm mt-2">
-Pembayaran dilakukan dalam 5 tahap sesuai kesepakatan.
-</p>
+<div class="payment-box">
 
-<br>
+<div>Transfer Pembayaran :</div>
 
-<h3 class="font-semibold">
-Transfer Pembayaran
-</h3>
+<div class="bank">
+Bank BCA
+</div>
 
-<p class="text-sm">
-Bank BCA<br>
 No Rek : 1672468421<br>
 a/n Nadi Sukses Berkarya PT
-</p>
-
-</div>
-
-
-<!-- PERSETUJUAN -->
-
-<div class="page last-page">
-
-<h2 class="text-lg font-bold">
-Persetujuan Penawaran
-</h2>
-
-<p class="text-sm mt-4">
-Dengan melakukan pembayaran pertama, maka client dianggap telah menyetujui seluruh isi penawaran ini.
-</p>
-
-<br><br>
-
-<div class="flex justify-between">
-
-<div>
-
-<p>Hormat Kami</p>
-
-<br><br><br>
-
-<p class="font-semibold">
-Mantenbaru Organizer
-</p>
-
-</div>
-
-<div>
-
-<p>Client</p>
-
-<br><br><br>
-
-<p class="font-semibold">
-<?= $pc->pc_name ?>
-</p>
 
 </div>
 
 </div>
-
-<!-- TOMBOL PRINT PDF -->
-
-<div class="no-print text-center mt-16">
-
-<a href="<?= base_url('potensial-clients/download_proposal/'.$pc->id_session) ?>"
-class="bg-red-600 hover:bg-red-700 text-white font-semibold px-10 py-3 rounded-lg shadow-lg">
-
-📄 Print / Download PDF
-
-</a>
-
-</div>
-
-</div>
-
-
-<!-- FOOTER -->
-
-<div class="print-footer flex justify-between">
-
-<p>
-Mantenbaru Organizer
-</p>
-
-<p class="page-number"></p>
-
-</div>
-
 
 </body>
 </html>
