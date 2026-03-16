@@ -5,47 +5,57 @@
 
 <style>
 
+@page {
+margin:120px 40px 80px 40px;
+}
+
 body{
 font-family: DejaVu Sans, sans-serif;
 font-size:12px;
 color:#333;
-margin:0;
-padding:0;
 }
 
 /* HEADER */
 
 .header{
 position:fixed;
-top:-50px;
+top:-100px;
 left:0;
 right:0;
-height:60px;
+height:80px;
 border-bottom:2px solid #caa45f;
 }
 
+.header table{
+width:100%;
+}
+
 .logo{
-font-size:18px;
+font-size:20px;
 font-weight:bold;
 color:#caa45f;
 }
 
 .sublogo{
 font-size:11px;
-color:#666;
+color:#777;
 }
 
 /* FOOTER */
 
 .footer{
 position:fixed;
-bottom:-40px;
+bottom:-60px;
 left:0;
 right:0;
-height:40px;
+height:50px;
 border-top:1px solid #ccc;
 font-size:10px;
 color:#666;
+}
+
+.footer table{
+width:100%;
 }
 
 .page-number:after{
@@ -158,7 +168,8 @@ margin-top:10px;
 
 <div class="header">
 
-<table width="100%">
+<table>
+
 <tr>
 
 <td>
@@ -167,11 +178,12 @@ margin-top:10px;
 </td>
 
 <td align="right">
-Proposal Penawaran<br>
+<strong>Proposal Penawaran</strong><br>
 <?= date('d M Y') ?>
 </td>
 
 </tr>
+
 </table>
 
 </div>
@@ -180,7 +192,8 @@ Proposal Penawaran<br>
 
 <div class="footer">
 
-<table width="100%">
+<table>
+
 <tr>
 
 <td>
@@ -192,6 +205,7 @@ Halaman <span class="page-number"></span> / <span class="page-total"></span>
 </td>
 
 </tr>
+
 </table>
 
 </div>
