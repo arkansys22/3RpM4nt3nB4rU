@@ -428,8 +428,8 @@ $days_to_event = $diff->days;
 
 			}elseif($days_to_event < 60){
 
-			    $p2 = ($grandTotal - $p1) * 30/100;
-			    $p3 = ($grandTotal - $p1) * 30/100;
+			    $p2 = ($grandTotal - $p1) * 15/100;
+			    $p3 = ($grandTotal - $p1) * 45/100;
 			    $p4 = ($grandTotal - $p1) * 40/100;
 
 			}else{
