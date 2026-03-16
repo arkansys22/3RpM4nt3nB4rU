@@ -1161,19 +1161,7 @@ class crud_potensial_clients extends CI_Controller {
         $dompdf->setPaper('A4','portrait');
         $dompdf->render();
 
-        /* PAGE NUMBER */
-
-        $canvas = $dompdf->getCanvas();
-        $font = $dompdf->getFontMetrics()->get_font("DejaVu Sans", "normal");
-
-        $canvas->page_text(
-        480, 
-        820, 
-        "Halaman {PAGE_NUM} / {PAGE_COUNT}",
-        $font,
-        10,
-        array(0,0,0)
-        );
+      
 
         $dompdf->stream(
         "Proposal-".$pc->pc_name.".pdf",
