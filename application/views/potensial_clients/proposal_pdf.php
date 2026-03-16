@@ -246,14 +246,14 @@ Proposal Penawaran
 </div>
 
 <div class="cover-sub">
-Wedding Organizer
+Wedding Package
 </div>
 
 <div class="cover-client">
 <?= $pc->pc_name ?>
 </div>
 
-<div>
+<div class="cover-date">
 <?= $pc->location ?>
 </div>
 
