@@ -51,6 +51,11 @@ height:80px;
 width:100%;
 }
 
+.header td{
+border:none;
+padding:0;
+}
+
 .logo{
 font-size:20px;
 font-weight:bold;
