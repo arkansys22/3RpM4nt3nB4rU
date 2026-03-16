@@ -155,6 +155,10 @@ font-size:12px;
 text-align:right;
 }
 
+.text-center{
+text-align:center;
+}
+
 .total-row{
 background:#fafafa;
 font-weight:bold;
@@ -304,7 +308,7 @@ $total=$p->penawaran_klien_hargapromo*$p->penawaran_klien_qty;
 Rp <?= number_format($p->penawaran_klien_hargapromo,0,',','.') ?>
 </td>
 
-<td class="text-right">
+<td class="text-center">
 <?= $p->penawaran_klien_qty ?>
 </td>
 
@@ -315,20 +319,75 @@ Rp <?= number_format($total,0,',','.') ?>
 </tr>
 
 <?php $subTotal+=$total ?>
+<?php $diskonTotal += $p->penawaran_klien_diskon; ?>
 
 <?php endforeach ?>
 
+<?php if ($pc->promo === 'default'){?>
+
 <tr class="total-row">
-
 <td colspan="3" class="text-right">
-TOTAL
+Sub Total
 </td>
-
 <td class="text-right">
 Rp <?= number_format($subTotal,0,',','.') ?>
 </td>
-
 </tr>
+<tr class="total-row">
+<td colspan="3" class="text-right">
+Promo Diskon
+</td>
+<td class="text-right">
+Rp <?= number_format($diskonTotal,0,',','.') ?>
+</td>
+</tr>
+<?php $total = $subTotal - $diskonTotal?>
+<tr class="total-row">
+<td colspan="3" class="text-right">
+Total
+</td>
+<td class="text-right">
+Rp <?= number_format($total,0,',','.') ?>
+</td>
+</tr>
+<?php }else if($pc->promo === 'tidak'){?>
+<tr class="total-row">
+<td colspan="3" class="text-right">
+Sub Total
+</td>
+<td class="text-right">
+Rp <?= number_format($subTotal,0,',','.') ?>
+</td>
+</tr>
+<?php }else if($pc->promo === 'custom' ){ ?>
+<tr class="total-row">
+<td colspan="3" class="text-right">
+Sub Total
+</td>
+<td class="text-right">
+Rp <?= number_format($subTotal,0,',','.') ?>
+</td>
+</tr>
+<tr class="total-row">
+<td colspan="3" class="text-right">
+Promo Diskon
+</td>
+<td class="text-right">
+Rp <?= number_format($promo_value,0,',','.') ?>
+</td>
+</tr>
+<?php $total = $subTotal - $pc->promo_value?>
+<tr class="total-row">
+<td colspan="3" class="text-right">
+Total
+</td>
+<td class="text-right">
+Rp <?= number_format($total,0,',','.') ?>
+</td>
+</tr>
+
+<?php }?>
+
 
 </table>
 
