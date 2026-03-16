@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require_once APPPATH.'third_party/dompdf/autoload.inc.php';
+require_once APPPATH.'third_party/dompdf/autoloader.php';
 
 class crud_potensial_clients extends CI_Controller {
 
