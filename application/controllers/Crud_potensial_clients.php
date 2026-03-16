@@ -1177,7 +1177,7 @@ class crud_potensial_clients extends CI_Controller {
 
         $dompdf->stream(
         "Proposal-".$pc->pc_name.".pdf",
-        array("Attachment"=>true)
+        array("Attachment"=>false)
         );
     }
 
