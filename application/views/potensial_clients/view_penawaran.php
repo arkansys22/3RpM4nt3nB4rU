@@ -37,7 +37,7 @@ counter-increment: page;
 /* PAGE NUMBER */
 
 .page-number::after{
-content: counter(page);
+content: "Halaman " counter(page);
 }
 
 /* PRINT SETTING */
@@ -435,12 +435,7 @@ class="bg-red-600 hover:bg-red-700 text-white font-semibold px-10 py-3 rounded-l
 Mantenbaru Organizer
 </p>
 
-<p>
-Halaman
-<span class="page-number"></span>
-/
-<span class="total-pages"></span>
-</p>
+<p class="page-number"></p>
 
 </div>
 
