@@ -15,7 +15,7 @@ z-index:-1000;
 }
 
 .watermark img{
-width:350px;
+width:100%;
 filter: none;
 }
 
