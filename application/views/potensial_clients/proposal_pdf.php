@@ -181,7 +181,7 @@ margin-top:10px;
 <body>
 
 <div class="watermark">
-<img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-02.png') ?>">
+<img src="<?= base_url('assets/frontend/assets/images/logo%202021-01-01.png') ?>">
 </div>
 
 <!-- HEADER -->
