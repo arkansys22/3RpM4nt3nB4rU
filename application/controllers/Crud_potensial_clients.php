@@ -1152,10 +1152,10 @@ class crud_potensial_clients extends CI_Controller {
 
         $html = $this->load->view('potensial_clients/proposal_pdf',$data,true);
 
-        $options = new Options();
+        $options = new Dompdf\Options();
         $options->set('isRemoteEnabled', TRUE);
 
-        $dompdf = new Dompdf($options);
+        $dompdf = new Dompdf\Dompdf($options);
 
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4','portrait');
