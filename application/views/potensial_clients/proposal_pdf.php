@@ -176,7 +176,7 @@ margin-top:10px;
 
 <td>
 <div class="logo">
-<img src="<?= base_url('assets/backend/src/images/logo/logo%20mantenbaru%20merah-02.png') ?>" width="100%" >
+<img src="<?= base_url('assets/backend/src/images/logo/logo%20mantenbaru%20merah-02.png') ?>" width="300 px" >
 <br> Mantenbaru Wedding Organizer
 </div>
 <div class="sublogo">Teras Country Blok H No 38, Tonjong,Tajurhalang Bogor
