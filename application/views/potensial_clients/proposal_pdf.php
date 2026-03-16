@@ -317,9 +317,9 @@ Rp <?= number_format($total,0,',','.') ?>
 </td>
 
 </tr>
-
+<?php $diskonTotal+=$p->penawaran_klien_diskon ?>
 <?php $subTotal+=$total ?>
-<?php $diskonTotal += $p->penawaran_klien_diskon ?>
+
 
 <?php endforeach ?>
 
