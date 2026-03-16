@@ -16,7 +16,7 @@ z-index:-1000;
 
 .watermark img{
 width:100%;
-height: 100%;
+
 filter: none;
 }
 
@@ -25,7 +25,7 @@ margin:120px 40px 80px 40px;
 }
 
 img{
-max-height:60px;
+height: 100%;
 }
 
 body{
