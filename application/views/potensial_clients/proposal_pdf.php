@@ -335,7 +335,7 @@ Rp <?= number_format($subTotal,0,',','.') ?>
 </tr>
 <tr class="total-row">
 <td colspan="3" class="text-right">
-Promo Diskon
+Bonus & Cashback
 </td>
 <td class="text-right">
 Rp <?= number_format($diskonTotal,0,',','.') ?>
@@ -370,7 +370,7 @@ Rp <?= number_format($subTotal,0,',','.') ?>
 </tr>
 <tr class="total-row">
 <td colspan="3" class="text-right">
-Promo Diskon
+Bonus & Cashback
 </td>
 <td class="text-right">
 Rp <?= number_format($promo_value,0,',','.') ?>
@@ -395,6 +395,32 @@ Rp <?= number_format($total,0,',','.') ?>
 
 <!-- PEMBAYARAN -->
 
+		<?php
+            $aa = new DateTime($pc->event_date);
+            $b  = clone $aa;
+            $b->modify('-60 days');
+            $c  = clone $aa;
+            $c->modify('-30 days');
+            $d  = clone $aa;
+            $d->modify('-14 days');
+            ?>
+
+
+           <?php if($pc->promo === 'tidak' ){ ?>
+            <?php $p1= 1000000 ?> 
+            <?php $p2= ($subTotal - $p1) * 20/100?> 
+            <?php $p3= ($subTotal - $p1) * 35/100?> 
+            <?php $p4= ($subTotal - $p1) * 30/100?> 
+            <?php $p5= ($subTotal - $p1) * 15/100 ?>
+            <?php }else{ ?>
+            <?php $p1= 1000000 ?> 
+            <?php $p2= ($total - $p1) * 20/100?> 
+            <?php $p3= ($total - $p1) * 35/100?> 
+            <?php $p4= ($total - $p1) * 30/100?> 
+            <?php $p5= ($total - $p1) * 15/100 ?>
+
+        <?php }?>
+
 <div>
 
 <div class="section-title">
@@ -402,9 +428,11 @@ Ketentuan Pembayaran
 </div>
 
 <ul>
-<li>DP pertama untuk <b>lock tanggal acara</b>.</li>
-<li>Pembayaran dilakukan dalam <b>5 tahap</b>.</li>
-<li>Pembayaran terakhir maksimal <b>7 hari sebelum acara</b>.</li>
+<li>Pembayaran pertama <b>lock harga</b> Rp <?= number_format($p1, 0, ',', '.') ?> </li>
+<li>Pembayaran kedua lock tanggal H+14 setelah pembayaran pertama Rp <?= number_format($p2, 0, ',', '.') ?></li>
+<li>Pembayaran ketiga <b>H-60 acara (<?= tgl_indo($b->format('Y-m-d')) ?>)</b> sebesar Rp <?= number_format($p3, 0, ',', '.') ?></li>
+<li>Pembayaran keempat <b>H-30 acara (<?= tgl_indo($c->format('Y-m-d')) ?>)</b> sebesar Rp <?= number_format($p4, 0, ',', '.') ?></li>
+<li>Pembayaran kelima <b>H-14 acara (<?= tgl_indo($d->format('Y-m-d')) ?>)</b> sebesar Rp <?= number_format($p5, 0, ',', '.') ?></li>
 </ul>
 
 <div class="payment-box">
