@@ -97,7 +97,7 @@ margin-top:150px;
 .cover-title{
 font-size:30px;
 font-weight:bold;
-color:#caa45f;
+color:#ed126b;
 margin-bottom:10px;
 }
 
