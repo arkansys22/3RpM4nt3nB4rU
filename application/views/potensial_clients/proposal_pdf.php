@@ -179,7 +179,7 @@ margin-top:10px;
 Mantenbaru Wedding Organizer
 </div>
 <div class="sublogo">Teras Country Blok H No 38, Tonjong,Tajurhalang Bogor
-<br> Telp / WA : 0812-9292-9396 | Web : www.mantenbaru.com
+<br> Telp / WA : 0812-9292-9396 | Web : www.mantenbaru.com <br>
 </div>
 </td>
 
