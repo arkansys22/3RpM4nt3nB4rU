@@ -180,7 +180,7 @@ margin-top:10px;
 <body>
 
 <div class="watermark">
-<img src="<?= FCPATH.'assets/backend/src/images/logo/logo%20mantenbaru%20merah-02.png' ?>">
+<img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-02.png') ?>">
 </div>
 
 <!-- HEADER -->
