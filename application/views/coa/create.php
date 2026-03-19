@@ -64,8 +64,8 @@
                 </label>
                 <!-- Input tambahan -->
                 <div id="additional_input">
-                    <label>Data Account (Prefix Sama)</label>
-                    <input type="text" id="account_list" readonly>
+                    <label class="block mb-2">Data Account (Prefix Sama)</label>
+                    <input type="text" id="account_list" class="w-full px-4 py-2 border rounded mb-4">
                 </div>
                 
                 <label class="block mb-2">Account No.</label>
