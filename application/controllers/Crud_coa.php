@@ -81,9 +81,14 @@ class Crud_coa extends CI_Controller {
     public function get_account_by_prefix()
     {
         $prefix = $this->input->post('prefix');
+       
 
-        $this->db->like('nomer_kategori', $prefix, 'after');
-        $query = $this->db->get('operational_kategori')->result();
+        $this->db->select('nomer_kategori');
+        $this->db->from('operational_kategori');
+        $this->db->where("LEFT(nomer_kategori, 2) =", $prefix);
+
+        $query = $this->db->get()->result();
+
 
         echo json_encode($query);
     }

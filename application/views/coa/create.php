@@ -142,6 +142,7 @@
                         return;
                     }
 
+                    let prefix = code.substring(0,2);
                     $('#additional_input').show();
 
                     // AJAX ambil data dari server
@@ -154,7 +155,7 @@
                           let option = '<option value="">-- Pilih Account --</option>';
 
                           $.each(res, function(i, item){
-                          option += '<option value="'+item.account_code+'">'+item.account_code+'</option>';
+                          option += '<option value="'+item.nomer_kategori+'">'+item.nomer_kategori+'</option>';
                           });
                           $('#account_select').html(option);
                         }
