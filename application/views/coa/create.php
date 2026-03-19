@@ -71,7 +71,7 @@
                 </div>
                 
                 <label class="block mb-2">Account No.</label>
-                <input type="text" id="account_code" name="phone" class="w-full px-4 py-2 border rounded mb-4"  placeholder="Akan otomatis terisi">
+                <input type="text" id="account_code" name="account_code" class="w-full px-4 py-2 border rounded mb-4"  placeholder="Akan otomatis terisi">
 
                 <label class="block mb-2">Name</label>
                 <input type="text" name="name" class="w-full px-4 py-2 border rounded mb-4" required>
@@ -95,82 +95,96 @@
   <script>
     $(document).ready(function(){
 
-       
+        // hide awal
+        $('#additional_input').hide();
 
-            // mapping account type
-            let mapping = {
-                'Cash/Bank': '1000',
-                'Account Receivable': '1100',
-                'Inventory': '1200',
-                'Other Current Asset': '1300',
-                'Fixed Asset': '1700',
-                'Accumulated Depreciation': '1710',
-                'Account Payable': '2000',
-                'Other Current Liability': '2100',
-                'Long Term Liability': '0',
-                'Equity': '3000',
-                'Revenue': '4000',
-                'Cost Of Goods Sold': '5000',
-                'Expense': '6000',
-                'Other Income': '7100',
-                'Other Expense': '7200'
-            };
+        // mapping account type
+        let mapping = {
+            'Cash/Bank': '1000',
+            'Account Receivable': '1100',
+            'Inventory': '1200',
+            'Other Current Asset': '1300',
+            'Fixed Asset': '1700',
+            'Accumulated Depreciation': '1710',
+            'Account Payable': '2000',
+            'Other Current Liability': '2100',
+            'Long Term Liability': '2200',
+            'Equity': '3000',
+            'Revenue': '4000',
+            'Cost Of Goods Sold': '5000',
+            'Expense': '6000',
+            'Other Income': '7100',
+            'Other Expense': '7200'
+        };
 
-            // saat pilih account type
-            $('#account_type').change(function(){
-                let type = $(this).val();
-                let code = mapping[type] || '';
+        // saat pilih account type
+        $('#account_type').change(function(){
 
-                $('#account_code').val(code);
+            let type = $(this).val();
+            let code = mapping[type] || '';
 
-                // reset
-                $('#account_select').html('<option value="">-- Pilih Account --</option>');
-                $('#additional_input').hide();
-                $('#show_data').prop('checked', false);
-            });
+            $('#account_code').val(code);
+
+            // reset UI
+            $('#account_select').html('<option value="">-- Pilih Account --</option>');
+            $('#additional_input').hide();
+            $('#show_data').prop('checked', false);
+        });
 
 
-            // saat checkbox dicentang
-            $('#show_data').change(function(){
+        // checkbox
+        $('#show_data').change(function(){
 
-                if($(this).is(':checked')){
-                    let prefix = $('#account_code').val();
+            if($(this).is(':checked')){
 
-                    if(prefix === ''){
-                        alert('Pilih account type dulu!');
-                        $(this).prop('checked', false);
-                        return;
-                    }
+                let code = $('#account_code').val();
 
-                    let prefix = code.substring(0,2);
-                    $('#additional_input').show();
-
-                    // AJAX ambil data dari server
-                    $.ajax({
-                        url: "<?= base_url('Crud_coa/get_account_by_prefix'); ?>",
-                        type: "POST",
-                        data: {prefix: prefix},
-                        dataType: "json",
-                        success: function(res){
-                          let option = '<option value="">-- Pilih Account --</option>';
-
-                          $.each(res, function(i, item){
-                          option += '<option value="'+item.account_code+'">'+item.account_code+'</option>';
-                          });
-                          $('#account_select').html(option);
-                        }
-                    });
-
-                } else {
-                    $('#additional_input').hide();
-                    $('#account_select').html('<option value="">-- Pilih Account --</option>');
+                if(code === ''){
+                    alert('Pilih account type dulu!');
+                    $(this).prop('checked', false);
+                    return;
                 }
 
-            });
+                // ✅ ambil prefix (pakai 3 atau 4 digit sesuai kebutuhan)
+                let prefix = code.substring(0,4);
+
+                $('#additional_input').show();
+
+                // loading sementara
+                $('#account_select').html('<option>Loading...</option>');
+
+                $.ajax({
+                    url: "<?= base_url('Crud_coa/get_account_by_prefix'); ?>",
+                    type: "POST",
+                    data: {prefix: prefix},
+                    dataType: "json",
+                    success: function(res){
+
+                        let option = '<option value="">-- Pilih Account --</option>';
+
+                        if(res.length > 0){
+                            $.each(res, function(i, item){
+                                option += '<option value="'+item.account_code+'">'+item.account_code+'</option>';
+                            });
+                        } else {
+                            option = '<option value="">Data tidak ditemukan</option>';
+                        }
+
+                        $('#account_select').html(option);
+                    },
+                    error: function(){
+                        $('#account_select').html('<option>Error ambil data</option>');
+                    }
+                });
+
+            } else {
+                $('#additional_input').hide();
+                $('#account_select').html('<option value="">-- Pilih Account --</option>');
+            }
 
         });
 
-    
+    });
   </script>
 </body>
 </html>
