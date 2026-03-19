@@ -5,10 +5,9 @@ class coa_model extends CI_Model {
         parent::__construct();
     }
 
-    public function get_all_crews() {
-        $this->db->select("*, TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) AS age");
-        $this->db->from("crews");
-        $this->db->where("status", "active"); // Hanya ambil data crew yang aktif
+    public function get_all_coa() {
+        $this->db->select("*");
+        $this->db->from("operational_kategori");
         return $this->db->get()->result();
     }
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Crew</title>
+    <title>Daftar Chart Of Account</title>
     <link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
     <link href="<?php echo base_url()?>assets/backend/style.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -34,7 +34,7 @@
         <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-              <h1 class="text-2xl font-bold mb-4">Daftar Crew</h1>
+              <h1 class="text-2xl font-bold mb-4">Daftar Chart Of Account</h1>
                 <div class="flex justify-between mb-4">
                   <div class="flex space-x-2">
                     <a href="<?= site_url('crews/create') ?>">
@@ -69,7 +69,7 @@
                       <tr>
                       <th>
                           <div class="flex items-center justify-between gap-1.5">
-                            <p>Nama</p>
+                            <p>Nomer Account</p>
                             <div class="inline-flex flex-col space-y-[2px]">
                               <span class="inline-block">
                                 <svg
@@ -103,7 +103,7 @@
                         </th>
                         <th>
                           <div class="flex items-center justify-between gap-1.5">
-                            <p>Gender</p>
+                            <p>Deskripsi</p>
                             <div class="inline-flex flex-col space-y-[2px]">
                               <span class="inline-block">
                                 <svg
@@ -137,7 +137,7 @@
                         </th>
                         <th>
                           <div class="flex items-center justify-between gap-1.5">
-                            <p>Agama</p>
+                            <p>Detail</p>
                             <div class="inline-flex flex-col space-y-[2px]">
                               <span class="inline-block">
                                 <svg
@@ -169,176 +169,7 @@
                             </div>
                           </div>
                         </th>
-                        <th>
-                          <div class="flex items-center justify-between gap-1.5">
-                            <p>No HP</p>
-                            <div class="inline-flex flex-col space-y-[2px]">
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path d="M5 0L0 5H10L5 0Z" fill="" />
-                                </svg>
-                              </span>
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
-                                    fill=""
-                                  />
-                                </svg>
-                              </span>
-                            </div>
-                          </div>
-                        </th>
-                        <th>
-                          <div class="flex items-center justify-between gap-1.5">
-                            <p>Alamat</p>
-                            <div class="inline-flex flex-col space-y-[2px]">
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path d="M5 0L0 5H10L5 0Z" fill="" />
-                                </svg>
-                              </span>
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
-                                    fill=""
-                                  />
-                                </svg>
-                              </span>
-                            </div>
-                          </div>
-                        </th>
-                        <th>
-                          <div class="flex items-center justify-between gap-1.5">
-                            <p>Tanggal Lahir</p>
-                            <div class="inline-flex flex-col space-y-[2px]">
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path d="M5 0L0 5H10L5 0Z" fill="" />
-                                </svg>
-                              </span>
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
-                                    fill=""
-                                  />
-                                </svg>
-                              </span>
-                            </div>
-                          </div>
-                        </th>
-                        <th>
-                          <div class="flex items-center justify-between gap-1.5">
-                            <p>Usia</p>
-                            <div class="inline-flex flex-col space-y-[2px]">
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path d="M5 0L0 5H10L5 0Z" fill="" />
-                                </svg>
-                              </span>
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
-                                    fill=""
-                                  />
-                                </svg>
-                              </span>
-                            </div>
-                          </div>
-                        </th>
-                        <th>
-                          <div class="flex items-center justify-between gap-1.5">
-                            <p>Bergabung</p>
-                            <div class="inline-flex flex-col space-y-[2px]">
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path d="M5 0L0 5H10L5 0Z" fill="" />
-                                </svg>
-                              </span>
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
-                                    fill=""
-                                  />
-                                </svg>
-                              </span>
-                            </div>
-                          </div>
-                        </th>
+                       
                         <th>
                           <div class="flex items-center justify-between gap-1.5">
                             <p>Aksi</p>
@@ -376,20 +207,15 @@
                       </tr>
                     </thead>
                     <tbody>
-                    <?php $no = 1; foreach ($crews as $c) : ?>
+                    <?php $no = 1; foreach ($p as $c) : ?>
                       <tr>
-                        <td><?= $c->crew_name ?></td>
-                        <td><?= $c->gender === 'Male' ? 'Laki-laki' : ($c->gender === 'Female' ? 'Perempuan' : $c->gender) ?></td>
-                        <td><?= $c->religion ?></td>
-                        <td><a href="https://wa.me/<?= $c->phone?>"><?= $c->phone ?></a></td>
-                        <td><?= $c->address ?></td>
-                        <td><?= tgl_indo($c->birth_date) ?></td>
-                        <td><?= $c->age ?> Tahun</td>
-                        <td><?= tgl_indo($c->joining_date) ?></td>
+                        <td><?= $c->nomer_kategori ?></td>                        
+                        <td><?= $c->nama_kategori ?></td>
+                        <td><?= $c->detail_kategori ?></td>                        
                         <td>
                             <div class="flex flex-col items-start gap-2 w-max">
-                              <a href="<?= site_url('crews/lihat/'.$c->id_session) ?>" class="inline-flex justify-center bg-yellow-500 text-white px-2 py-1 rounded-md hover:bg-yellow-600 text-center w-full">Lihat</a>
-                              <a href="<?= site_url('crews/soft_delete/'.$c->id_session) ?>" class="inline-flex justify-center bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 min-w-full text-center" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
+                              <a href="<?= site_url('coa/lihat/'.$c->id) ?>" class="inline-flex justify-center bg-yellow-500 text-white px-2 py-1 rounded-md hover:bg-yellow-600 text-center w-full">Lihat</a>
+                              <a href="<?= site_url('coa/soft_delete/'.$c->id) ?>" class="inline-flex justify-center bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 min-w-full text-center" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
                             </div>
                         </td>
                       </tr>

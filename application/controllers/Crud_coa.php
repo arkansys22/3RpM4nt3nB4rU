@@ -12,17 +12,17 @@ class Crud_coa extends CI_Controller {
 
         if ($this->session->level=='1'){
             cek_session_akses_developer('coa',$this->session->id_session);
-            $data['crews'] = $this->crews_model->get_all_crews(); // Ubah pemanggilan model
+            $data['p'] = $this->coa_model->get_all_coa(); // Ubah pemanggilan model
             $this->load->view('coa/index', $data);
 
         }else if($this->session->level=='2'){
             cek_session_akses_administrator('coa',$this->session->id_session);
-            $data['crews'] = $this->crews_model->get_all_crews(); // Ubah pemanggilan model
+            $data['p'] = $this->coa_model->get_all_coa(); // Ubah pemanggilan model
             $this->load->view('coa/index', $data);
 
         }else if($this->session->level=='3'){
             cek_session_akses_staff_accounting('coa',$this->session->id_session);
-            $data['crews'] = $this->crews_model->get_all_crews(); // Ubah pemanggilan model
+            $data['p'] = $this->coa_model->get_all_coa(); // Ubah pemanggilan model
             $this->load->view('coa/index', $data);
 		}else{
             redirect(base_url());
