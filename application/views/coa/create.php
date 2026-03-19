@@ -164,7 +164,7 @@
 
                         if(res.length > 0){
                             $.each(res, function(i, item){
-                                option += '<option value="'+item.account_code+'">'+item.account_code+'</option>';
+                                option += '<option value="'+item.nomer_kategori+'">'+item.nomer_kategori+' - '+item.nama_kategori+'</option>';
                             });
                         } else {
                             option = '<option value="">Data tidak ditemukan</option>';
