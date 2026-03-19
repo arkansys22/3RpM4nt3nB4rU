@@ -146,7 +146,7 @@
                 }
 
                 // ✅ ambil prefix (pakai 3 atau 4 digit sesuai kebutuhan)
-                let prefix = code.substring(0,1);
+                let prefix = code.substring(0,2);
 
                 $('#additional_input').show();
 
