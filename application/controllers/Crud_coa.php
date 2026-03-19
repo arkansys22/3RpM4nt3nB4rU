@@ -62,25 +62,16 @@ class Crud_coa extends CI_Controller {
     public function create() {
 
         if ($this->session->level=='1'){
-            cek_session_akses_developer('crews',$this->session->id_session);
-            $this->load->view('crews/create');
+            cek_session_akses_developer('coa',$this->session->id_session);
+            $this->load->view('coa/create');
 
         }else if($this->session->level=='2'){
-            cek_session_akses_administrator('crews',$this->session->id_session);
-            $this->load->view('crews/create');
+            cek_session_akses_administrator('coa',$this->session->id_session);
+            $this->load->view('coa/create');
 
         }else if($this->session->level=='3'){
-            cek_session_akses_staff_accounting('crews',$this->session->id_session);
-            redirect(base_url());
-
-        }else if($this->session->level=='4'){
-            cek_session_akses_staff_admin('crews',$this->session->id_session);
-            $this->load->view('crews/create');
-
-        }else if($this->session->level=='5'){
-            cek_session_akses_client('crews',$this->session->id_session);
-            redirect(base_url());
-            
+            cek_session_akses_staff_accounting('coa',$this->session->id_session);
+            $this->load->view('coa/create');
         }else{
             redirect(base_url());
             }       
