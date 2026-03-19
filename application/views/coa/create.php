@@ -62,10 +62,12 @@
                 <label>
                     <input type="checkbox" id="show_data"> Tampilkan Data Serupa
                 </label>
-                <!-- Input tambahan -->
+                <!-- Select tambahan -->
                 <div id="additional_input">
-                    <label class="block mb-2">Data Account (Prefix Sama)</label>
-                    <input type="text" id="account_list" class="w-full px-4 py-2 border rounded mb-4">
+                    <label>Pilih Account (Prefix Sama)</label>
+                    <select id="account_select" class="w-full px-4 py-2 border rounded mb-4">
+                        <option value="">-- Pilih Account --</option>
+                    </select>
                 </div>
                 
                 <label class="block mb-2">Account No.</label>
@@ -122,7 +124,7 @@
                 $('#account_code').val(code);
 
                 // reset
-                $('#account_list').val('');
+                $('#account_select').html('<option value="">-- Pilih Account --</option>');
                 $('#additional_input').hide();
                 $('#show_data').prop('checked', false);
             });
@@ -149,20 +151,18 @@
                         data: {prefix: prefix},
                         dataType: "json",
                         success: function(res){
+                          let option = '<option value="">-- Pilih Account --</option>';
 
-                            let list = [];
-
-                            $.each(res, function(i, item){
-                                list.push(item.account_code);
-                            });
-
-                            $('#account_list').val(list.join(', '));
+                          $.each(res, function(i, item){
+                          option += '<option value="'+item.account_code+'">'+item.account_code+'</option>';
+                          });
+                          $('#account_select').html(option);
                         }
                     });
 
                 } else {
                     $('#additional_input').hide();
-                    $('#account_list').val('');
+                    $('#account_select').html('<option value="">-- Pilih Account --</option>');
                 }
 
             });
