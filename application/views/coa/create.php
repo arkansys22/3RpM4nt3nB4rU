@@ -57,6 +57,16 @@
                     <option value="Other Expense">Other Expense</option>
                     <option value="Other Income">Other Income</option>
                 </select>
+
+                <!-- Checkbox -->
+                <label>
+                    <input type="checkbox" id="show_data"> Tampilkan Data Serupa
+                </label>
+                <!-- Input tambahan -->
+                <div id="additional_input">
+                    <label>Data Account (Prefix Sama)</label>
+                    <input type="text" id="account_list" readonly>
+                </div>
                 
                 <label class="block mb-2">Account No.</label>
                 <input type="text" id="account_code" name="phone" class="w-full px-4 py-2 border rounded mb-4"  placeholder="Akan otomatis terisi">
@@ -83,47 +93,83 @@
   <script>
     $(document).ready(function(){
 
-        $('#account_type').change(function(){
+       
 
-            let type = $(this).val();
+            // mapping account type
+            let mapping = {
+                'Cash/Bank': '1000',
+                'Account Receivable': '1100',
+                'Inventory': '1200',
+                'Other Current Asset': '1300',
+                'Fixed Asset': '1700',
+                'Accumulated Depreciation': '1710',
+                'Account Payable': '2000',
+                'Other Current Liability': '2100',
+                'Long Term Liability': '0',
+                'Equity': '3000',
+                'Revenue': '4000',
+                'Cost Of Goods Sold': '5000',
+                'Expense': '6000',
+                'Other Income': '7100',
+                'Other Expense': '7200'
+            };
 
-            if(type === 'Cash/Bank'){
-                $('#account_code').val('1000');
-            } else if(type === 'Account Receivable'){
-                $('#account_code').val('1100');
-            } else if(type === 'Inventory'){
-                $('#account_code').val('1200');
-            } else if(type === 'Other Current Asset'){
-                $('#account_code').val('1300');
-            } else if(type === 'Fixed Asset'){
-                $('#account_code').val('1700');
-            } else if(type === 'Accumulated Depreciation'){
-                $('#account_code').val('1710');
-            } else if(type === 'Account Payable'){
-                $('#account_code').val('2000');
-            } else if(type === 'Other Current Liability'){
-                $('#account_code').val('2100');
-            } else if(type === 'Long Term Liability'){
-                $('#account_code').val('0');
-            } else if(type === 'Equity'){
-                $('#account_code').val('3000');
-            } else if(type === 'Revenue'){
-                $('#account_code').val('4000'); 
-            } else if(type === 'Cost Of Goods Sold'){
-                $('#account_code').val('5000');
-            } else if(type === 'Expense'){
-                $('#account_code').val('6000');
-            } else if(type === 'Other Income'){
-                $('#account_code').val('7100'); 
-            } else if(type === 'Other Expense'){
-                $('#account_code').val('7200'); 
-            } else {
-                $('#account_code').val('');
-            }
+            // saat pilih account type
+            $('#account_type').change(function(){
+                let type = $(this).val();
+                let code = mapping[type] || '';
+
+                $('#account_code').val(code);
+
+                // reset
+                $('#account_list').val('');
+                $('#additional_input').hide();
+                $('#show_data').prop('checked', false);
+            });
+
+
+            // saat checkbox dicentang
+            $('#show_data').change(function(){
+
+                if($(this).is(':checked')){
+                    let prefix = $('#account_code').val();
+
+                    if(prefix === ''){
+                        alert('Pilih account type dulu!');
+                        $(this).prop('checked', false);
+                        return;
+                    }
+
+                    $('#additional_input').show();
+
+                    // AJAX ambil data dari server
+                    $.ajax({
+                        url: "<?= base_url('Crud_coa/get_account_by_prefix'); ?>",
+                        type: "POST",
+                        data: {prefix: prefix},
+                        dataType: "json",
+                        success: function(res){
+
+                            let list = [];
+
+                            $.each(res, function(i, item){
+                                list.push(item.account_code);
+                            });
+
+                            $('#account_list').val(list.join(', '));
+                        }
+                    });
+
+                } else {
+                    $('#additional_input').hide();
+                    $('#account_list').val('');
+                }
+
+            });
 
         });
 
-    });
+    
   </script>
 </body>
 </html>

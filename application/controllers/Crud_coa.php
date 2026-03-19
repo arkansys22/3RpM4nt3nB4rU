@@ -77,6 +77,17 @@ class Crud_coa extends CI_Controller {
             }       
     }
 
+      // AJAX ambil data berdasarkan prefix
+    public function get_account_by_prefix()
+    {
+        $prefix = $this->input->post('prefix');
+
+        $this->db->like('nomer_kategori', $prefix, 'after');
+        $query = $this->db->get('operational_kategori')->result();
+
+        echo json_encode($query);
+    }
+
     public function store() {
 
         $id_session = hash('sha256', bin2hex(random_bytes(16)));
