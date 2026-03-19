@@ -37,7 +37,7 @@
               <h1 class="text-2xl font-bold mb-4">Daftar Chart Of Account</h1>
                 <div class="flex justify-between mb-4">
                   <div class="flex space-x-2">
-                    <a href="<?= site_url('crews/create') ?>">
+                    <a href="<?= site_url('coa/create') ?>">
                       <button class="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m7-7H5"></path>
