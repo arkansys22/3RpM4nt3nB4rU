@@ -155,7 +155,7 @@
                           let option = '<option value="">-- Pilih Account --</option>';
 
                           $.each(res, function(i, item){
-                          option += '<option value="'+item.nomer_kategori+'">'+item.nomer_kategori+'</option>';
+                          option += '<option value="'+item.account_code+'">'+item.account_code+'</option>';
                           });
                           $('#account_select').html(option);
                         }
