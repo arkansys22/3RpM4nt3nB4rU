@@ -85,7 +85,7 @@ class Crud_coa extends CI_Controller {
 
         $this->db->select('nomer_kategori');
         $this->db->from('operational_kategori');
-        $this->db->where("LEFT(nomer_kategori, 2) =", $prefix);
+        $this->db->where("LEFT(nomer_kategori, 1) =", $prefix);
 
         $query = $this->db->get()->result();
 
