@@ -67,13 +67,31 @@
                   </thead>
 
                   <!-- BODY -->
-                  <tbody class="bg-white">
-                    <?php foreach ($p as $c) : ?>
-                    <tr class="even:bg-gray-100 hover:bg-blue-50 transition">
-                      
+                  <tbody id="coaTable">
+                    <?php foreach ($p as $c) : 
+
+                      // hitung level berdasarkan jumlah titik
+                      $level = substr_count($c->nomer_kategori, '.');
+
+                    ?>
+                    <tr 
+                      data-parent="<?= $c->parent ?? '' ?>" 
+                      data-id="<?= $c->nomer_kategori ?>"
+                      class="even:bg-gray-100 hover:bg-blue-50 transition"
+                    >
+
                       <!-- ACCOUNT -->
                       <td class="px-3 py-2 border whitespace-nowrap">
-                        <?= $c->nomer_kategori ?>
+                        <div style="padding-left: <?= $level * 20 ?>px" class="flex items-center gap-2">
+
+                          <!-- BUTTON EXPAND -->
+                          <button onclick="toggleRow('<?= $c->nomer_kategori ?>')" 
+                                  class="text-blue-600 font-bold">
+                            +
+                          </button>
+
+                          <?= $c->nomer_kategori ?>
+                        </div>
                       </td>
 
                       <!-- NAME -->
@@ -86,23 +104,21 @@
                         <?= $c->detail_kategori ?>
                       </td>
 
-                      <? $balance=1000 ?>
-
-                      <!-- BALANCE (RATA KANAN) -->
+                      <!-- BALANCE -->
                       <td class="px-3 py-2 border text-right font-semibold">
-                        <?= number_format($balance ?? 0, 0, ',', '.') ?>
+                        <?= number_format($c->balance ?? 0, 0, ',', '.') ?>
                       </td>
 
                       <!-- AKSI -->
                       <td class="px-3 py-2 border">
                         <div class="flex flex-col gap-1">
                           <a href="<?= site_url('coa/lihat/'.$c->id) ?>" 
-                             class="bg-yellow-500 text-white px-2 py-1 rounded text-center hover:bg-yellow-600">
+                             class="bg-yellow-500 text-white px-2 py-1 rounded text-center">
                              Lihat
                           </a>
                           <a href="<?= site_url('coa/delete_permanent/'.$c->nomer_kategori) ?>" 
                              onclick="return confirm('Yakin ingin menghapus?')" 
-                             class="bg-red-500 text-white px-2 py-1 rounded text-center hover:bg-red-600">
+                             class="bg-red-500 text-white px-2 py-1 rounded text-center">
                              Hapus
                           </a>
                         </div>
@@ -124,28 +140,61 @@
   </div>
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
   <script>
+    function toggleRow(id) {
+      let rows = document.querySelectorAll(`#coaTable tr`);
+
+      rows.forEach(row => {
+        if (row.getAttribute("data-parent") === id) {
+          if (row.style.display === "none") {
+            row.style.display = "";
+          } else {
+            row.style.display = "none";
+
+            // hide child juga
+            hideChildren(row.getAttribute("data-id"));
+          }
+        }
+      });
+    }
+
+    function hideChildren(parentId) {
+      let rows = document.querySelectorAll(`#coaTable tr`);
+
+      rows.forEach(row => {
+        if (row.getAttribute("data-parent") === parentId) {
+          row.style.display = "none";
+          hideChildren(row.getAttribute("data-id"));
+        }
+      });
+    }
+  </script>
+  <script>
     function searchTable() {
-      let input = document.getElementById("searchInput");
-      let filter = input.value.toLowerCase();
-      let table = document.getElementById("dataTableTwo");
-      let tr = table.getElementsByTagName("tr");
+      let input = document.getElementById("searchInput").value.toLowerCase();
+      let rows = document.querySelectorAll("#coaTable tr");
 
-      for (let i = 1; i < tr.length; i++) { // mulai dari 1 skip header
-        let td = tr[i].getElementsByTagName("td");
-        let found = false;
+      rows.forEach(row => {
+        let text = row.innerText.toLowerCase();
 
-        for (let j = 0; j < td.length; j++) {
-          if (td[j]) {
-            let txtValue = td[j].textContent || td[j].innerText;
-            if (txtValue.toLowerCase().indexOf(filter) > -1) {
-              found = true;
+        if (text.includes(input)) {
+          row.style.display = "";
+          
+          // tampilkan parent juga
+          let parent = row.getAttribute("data-parent");
+          while (parent) {
+            let parentRow = document.querySelector(`[data-id='${parent}']`);
+            if (parentRow) {
+              parentRow.style.display = "";
+              parent = parentRow.getAttribute("data-parent");
+            } else {
               break;
             }
           }
-        }
 
-        tr[i].style.display = found ? "" : "none";
-      }
+        } else {
+          row.style.display = "none";
+        }
+      });
     }
   </script>
 </body>
