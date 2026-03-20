@@ -124,7 +124,7 @@
                             </div>
                         </td>
                         <td class="px-3 py-2 border">
-                            <a href="<?= site_url('coa/edit'.$c->nomer_kategori) ?>" class="hover:underline text-blue-700"><?= $c->nama_kategori ?></a>
+                            <a href="<?= site_url('coa/edit/'.$c->nomer_kategori) ?>" class="hover:underline text-blue-700"><?= $c->nama_kategori ?></a>
                         </td>
                         <td class="px-3 py-2 border"><?= $c->detail_kategori ?></td>
                         <td class="px-3 py-2 border text-right font-semibold balance-cell" data-value="<?= $c->balance ?? 0 ?>">
