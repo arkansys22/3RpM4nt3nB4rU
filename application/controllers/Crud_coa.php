@@ -181,28 +181,20 @@ class Crud_coa extends CI_Controller {
     public function edit($id_session) {
 
         if ($this->session->level=='1'){
-            cek_session_akses_developer('crews',$this->session->id_session);
-            $data['crews'] = $this->crews_model->get_by_id_session($id_session);
-            $this->load->view('crews/edit', $data);
+            cek_session_akses_developer('coa',$this->session->id_session);
+            $data['coa'] = $this->coa_model->get_by_id_session($id_session);
+            $this->load->view('coa/edit', $data);
 
         }else if($this->session->level=='2'){
-            cek_session_akses_administrator('crews',$this->session->id_session);
-            $data['crews'] = $this->crews_model->get_by_id_session($id_session);
-            $this->load->view('crews/edit', $data);
+            cek_session_akses_administrator('coa',$this->session->id_session);
+            $data['coa'] = $this->coa_model->get_by_id_session($id_session);
+            $this->load->view('coa/edit', $data);
 
         }else if($this->session->level=='3'){
-            cek_session_akses_staff_accounting('crews',$this->session->id_session);
-            redirect(base_url());
+            cek_session_akses_staff_accounting('coa',$this->session->id_session);
+            $data['coa'] = $this->coa_model->get_by_id_session($id_session);
+            $this->load->view('coa/edit', $data);
 
-        }else if($this->session->level=='4'){
-            cek_session_akses_staff_admin('crews',$this->session->id_session);
-            $data['crews'] = $this->crews_model->get_by_id_session($id_session);
-            $this->load->view('crews/edit', $data);
-
-        }else if($this->session->level=='5'){
-            cek_session_akses_client('crews',$this->session->id_session);
-            redirect(base_url());
-            
         }else{
             redirect(base_url());
             }
@@ -228,18 +220,14 @@ class Crud_coa extends CI_Controller {
                 }
 
         $data = [
-            'crew_name'   => $this->input->post('crew_name'),
-            'gender'      => $this->input->post('gender'),
-            'religion'    => $this->input->post('religion'),
-            'phone'       => $this->input->post('phone'),
-            'address'     => $this->input->post('address'),
-            'birth_date'  => $this->input->post('birth_date'),
-            'joining_date'=> $this->input->post('joining_date'),
+            'nomer_kategori'   => $this->input->post('account_code'),
+            'nama_kategori'      => $this->input->post('name'),
+            'detail_kategori'    => $this->input->post('account_type'),
         ];
 
-        $this->crews_model->update($id_session, $data);
+        $this->coa_model->update($id_session, $data);
 
-        $status = 'Update Data Crew' ;
+        $status = 'Update COA' ;
         $ip = $this->input->ip_address();
         $location = get_location_from_ip($ip);
         $ip_with_location = $ip . "<br>(" . $location . ")";
@@ -247,7 +235,7 @@ class Crud_coa extends CI_Controller {
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
-            'log_activity_modul' => 'crews/edit',
+            'log_activity_modul' => 'coa/edit',
             'log_activity_document_no' => $id_session,
             'log_activity_status' => $status,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
@@ -256,10 +244,10 @@ class Crud_coa extends CI_Controller {
             
         );
 
-        $this->crews_model->insert_log_activity($data_log);
+        $this->coa_model->insert_log_activity($data_log);
 
-        $this->session->set_flashdata('Success', 'Crew berhasil diupdate');
-        redirect('crews/lihat/'. $id_session);
+        $this->session->set_flashdata('Success', 'COA diupdate');
+        redirect('coa');
     }
 
     public function soft_delete($id_session) {

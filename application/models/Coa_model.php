@@ -20,9 +20,9 @@ class coa_model extends CI_Model {
     }
 
     public function get_by_id_session($id_session) {
-        $this->db->select("*, TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) AS age");
-        $this->db->from("crews");
-        $this->db->where("id_session", $id_session);
+        $this->db->select("*");
+        $this->db->from("operational_kategori");
+        $this->db->where("nomer_kategori", $id_session);
         return $this->db->get()->row();
     }
 
@@ -31,8 +31,8 @@ class coa_model extends CI_Model {
     }
 
     public function update($id_session, $data) {
-        $this->db->where('id_session', $id_session);
-        return $this->db->update('crews', $data);
+        $this->db->where('nomer_kategori', $id_session);
+        return $this->db->update('operational_kategori', $data);
     }
 
     public function soft_delete($id_session) {
