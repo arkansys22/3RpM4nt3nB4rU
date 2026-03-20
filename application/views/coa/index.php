@@ -12,6 +12,19 @@
         border-collapse: collapse;
       }
     </style>
+    <style>
+      #coaTable tr:nth-child(odd) {
+        background-color: #ffffff;
+      }
+
+      #coaTable tr:nth-child(even) {
+        background-color: #f2f7ff;
+      }
+
+      #coaTable tr:hover {
+        background-color: #cfe2ff !important;
+      }
+    </style>
 </head>
 <body
     x-data="{ page: 'crews', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
@@ -96,7 +109,7 @@
                     <tr 
                       data-parent="<?= $c->parent ?? '' ?>" 
                       data-id="<?= $c->nomer_kategori ?>"
-                      class="coa-row even:bg-gray-100 hover:bg-blue-50 transition"
+                      class="coa-row transition"
                     >
                       <!-- ACCOUNT -->
                       <td class="px-3 py-2 border whitespace-nowrap">
