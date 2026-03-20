@@ -87,7 +87,6 @@
                       <th class="px-3 py-2 text-left border">Name</th>
                       <th class="px-3 py-2 text-left border">Type</th>
                       <th class="px-3 py-2 text-right border">Balance</th>
-                      <th class="px-3 py-2 text-center border">Aksi</th>
                     </tr>
                   </thead>
 
@@ -99,55 +98,37 @@
                       $level = substr_count($c->nomer_kategori, '.');
 
                     ?>
-                    <tr 
-                      data-parent="<?= $c->parent ?? '' ?>" 
-                      data-id="<?= $c->nomer_kategori ?>"
-                      class="coa-row transition"
-                    >
-                      <!-- ACCOUNT -->
-                      <td class="px-3 py-2 border whitespace-nowrap">
-                        <div style="padding-left: <?= $level * 20 ?>px" class="flex items-center gap-2">
+                    <tr data-parent="<?= $c->parent ?? '' ?>" data-id="<?= $c->nomer_kategori ?>" class="coa-row transition">
+                      <a href="<?= site_url('coa/lihat/'.$c->id) ?>">
+                        <!-- ACCOUNT -->
+                        <td class="px-3 py-2 border whitespace-nowrap">
+                          <div style="padding-left: <?= $level * 20 ?>px" class="flex items-center gap-2">
 
-                          <!-- BUTTON EXPAND -->
-                          <button onclick="toggleRow('<?= $c->nomer_kategori ?>', this)" 
-                                  class="toggle-btn text-blue-600 w-4">
-                            ▶
-                          </button>
+                            <!-- BUTTON EXPAND -->
+                            <button onclick="toggleRow('<?= $c->nomer_kategori ?>', this)" 
+                                    class="toggle-btn text-blue-600 w-4">
+                              ▶
+                            </button>
 
-                          <?= $c->nomer_kategori ?>
-                        </div>
-                      </td>
+                            <?= $c->nomer_kategori ?>
+                          </div>
+                        </td>
 
-                      <!-- NAME -->
-                      <td class="px-3 py-2 border">
-                        <?= $c->nama_kategori ?>
-                      </td>
+                        <!-- NAME -->
+                        <td class="px-3 py-2 border">
+                          <?= $c->nama_kategori ?>
+                        </td>
 
-                      <!-- TYPE -->
-                      <td class="px-3 py-2 border">
-                        <?= $c->detail_kategori ?>
-                      </td>
+                        <!-- TYPE -->
+                        <td class="px-3 py-2 border">
+                          <?= $c->detail_kategori ?>
+                        </td>
 
-                      <!-- BALANCE -->
-                      <td class="px-3 py-2 border text-right font-semibold">
-                        <?= number_format($c->balance ?? 0, 0, ',', '.') ?>
-                      </td>
-
-                      <!-- AKSI -->
-                      <td class="px-3 py-2 border">
-                        <div class="flex flex-col gap-1">
-                          <a href="<?= site_url('coa/lihat/'.$c->id) ?>" 
-                             class="bg-yellow-500 text-white px-2 py-1 rounded text-center">
-                             Lihat
-                          </a>
-                          <a href="<?= site_url('coa/delete_permanent/'.$c->nomer_kategori) ?>" 
-                             onclick="return confirm('Yakin ingin menghapus?')" 
-                             class="bg-red-500 text-white px-2 py-1 rounded text-center">
-                             Hapus
-                          </a>
-                        </div>
-                      </td>
-
+                        <!-- BALANCE -->
+                        <td class="px-3 py-2 border text-right font-semibold">
+                          <?= number_format($c->balance ?? 0, 0, ',', '.') ?>
+                        </td>
+                        </a>
                     </tr>
                     <?php endforeach; ?>
                   </tbody>
