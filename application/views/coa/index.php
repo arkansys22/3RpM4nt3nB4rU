@@ -307,13 +307,18 @@
         rows.forEach(row => {
           let parent = row.getAttribute("data-parent");
 
-          // kalau punya parent → default hide
           if (parent) {
             row.style.display = "none";
+          } else {
+            row.style.display = "";
           }
+
+          // reset tombol
+          let btn = row.querySelector(".toggle-btn");
+          if (btn) btn.innerHTML = "▶";
         });
 
-        applyZebra(); // tetap jaga zebra
+        applyZebra();
       });
 
     });
