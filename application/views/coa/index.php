@@ -280,7 +280,38 @@
       });
     }
   </script>
-  
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+      let table = $('#dataTableTwo').DataTable({
+        paging: true,
+        searching: true,
+        info: true,
+        lengthChange: true,
+
+        // penting untuk struktur tree kamu
+        ordering: false
+      });
+
+      // setiap search / filter
+      table.on('draw', function () {
+
+        let rows = document.querySelectorAll("#coaTable tr");
+
+        rows.forEach(row => {
+          let parent = row.getAttribute("data-parent");
+
+          // kalau punya parent → default hide
+          if (parent) {
+            row.style.display = "none";
+          }
+        });
+
+        applyZebra(); // tetap jaga zebra
+      });
+
+    });
+  </script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       
