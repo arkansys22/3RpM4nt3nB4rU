@@ -99,7 +99,7 @@
 
                     ?>
                     <tr data-parent="<?= $c->parent ?? '' ?>" data-id="<?= $c->nomer_kategori ?>" class="coa-row transition">
-                      <a href="<?= site_url('coa/lihat/'.$c->id) ?>">
+                      
                         <!-- ACCOUNT -->
                         <td class="px-3 py-2 border whitespace-nowrap">
                           <div style="padding-left: <?= $level * 20 ?>px" class="flex items-center gap-2">
@@ -128,7 +128,7 @@
                         <td class="px-3 py-2 border text-right font-semibold">
                           <?= number_format($c->balance ?? 0, 0, ',', '.') ?>
                         </td>
-                        </a>
+                       
                     </tr>
                     <?php endforeach; ?>
                   </tbody>
