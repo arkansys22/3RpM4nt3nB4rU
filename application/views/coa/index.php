@@ -50,7 +50,9 @@
               <!-- ====== Data Table Two Start --><br>
               <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                 <div class="data-table-common data-table-two max-w-full overflow-x-auto">
-                  <div class="mb-4">
+                  
+                  <table class="table w-full table-auto" id="dataTableTwo">
+                    <div class="mb-4">
                     <input 
                       type="text" 
                       id="searchInput" 
@@ -59,7 +61,6 @@
                       onkeyup="searchTable()"
                     >
                   </div>
-                  <table class="table w-full table-auto" id="dataTableTwo">
                     <thead>
                       <tr>
                       <th>
