@@ -13,13 +13,6 @@
       }
     </style>
     <style>
-      #coaTable tr:nth-child(odd) {
-        background-color: #ffffff;
-      }
-
-      #coaTable tr:nth-child(even) {
-        background-color: #f2f7ff;
-      }
 
       #coaTable tr:hover {
         background-color: #cfe2ff !important;
@@ -171,6 +164,28 @@
   </div>
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
   <script>
+    function applyZebra() {
+      let rows = document.querySelectorAll("#coaTable tr");
+      let visibleIndex = 0;
+
+      rows.forEach(row => {
+        if (row.style.display !== "none") {
+
+          // reset dulu
+          row.style.backgroundColor = "";
+
+          if (visibleIndex % 2 === 0) {
+            row.style.backgroundColor = "#ffffff"; // putih
+          } else {
+            row.style.backgroundColor = "#f2f7ff"; // biru muda
+          }
+
+          visibleIndex++;
+        }
+      });
+    }
+  </script>
+  <script>
     document.querySelectorAll("#coaTable tr").forEach(row => {
 
       row.addEventListener("mouseenter", function () {
@@ -206,8 +221,10 @@
   </script>
   <script>
     function expandAll() {
+      applyZebra();
       document.querySelectorAll("#coaTable tr").forEach(row => {
         row.style.display = "";
+
       });
 
       document.querySelectorAll(".toggle-btn").forEach(btn => {
@@ -216,6 +233,7 @@
     }
 
     function collapseAll() {
+      applyZebra();
       document.querySelectorAll("#coaTable tr").forEach(row => {
         if (row.getAttribute("data-parent")) {
           row.style.display = "none";
@@ -242,6 +260,7 @@
     function toggleRow(id, btn) {
       let rows = document.querySelectorAll(`#coaTable tr`);
       let isOpen = btn.innerHTML === "▼";
+      applyZebra();
 
       btn.innerHTML = isOpen ? "▶" : "▼";
 
@@ -276,6 +295,7 @@
   </script>
   <script>
     function searchTable() {
+      applyZebra();
       let input = document.getElementById("searchInput").value.toLowerCase();
       let rows = document.querySelectorAll("#coaTable tr");
 
@@ -302,6 +322,7 @@
   </script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
+      applyZebra();
       calculateTotals();
     });
 
