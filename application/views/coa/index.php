@@ -78,8 +78,13 @@
                     Export Excel
                   </button>
 
-                </div>   
+                </div>  
+
               <div class="overflow-x-auto">
+                <input type="text" id="searchInput" 
+       onkeyup="searchTable()" 
+       class="border p-2 w-full mb-3" 
+       placeholder="Cari...">
                 <table id="dataTableTwo" class="min-w-full text-sm border border-gray-300">
 
                   <!-- HEADER -->
@@ -250,35 +255,46 @@
   </script>
   <script>
     function toggleRow(id, btn) {
-      let rows = document.querySelectorAll(`#coaTable tr`);
-      let isOpen = btn.innerHTML === "▼";
-      
+        let rows = document.querySelectorAll("#coaTable tr");
+        let isOpen = btn.innerHTML === "▼";
 
-      btn.innerHTML = isOpen ? "▶" : "▼";
+        btn.innerHTML = isOpen ? "▶" : "▼";
 
-      rows.forEach(row => {
-        if (row.getAttribute("data-parent") === id) {
-          if (isOpen) {
-            row.style.display = "none";
-            hideChildren(row.getAttribute("data-id"));
+        rows.forEach(row => {
+          let rowId = row.getAttribute("data-id");
 
-            let childBtn = row.querySelector(".toggle-btn");
-            if (childBtn) childBtn.innerHTML = "▶";
-          } else {
-            row.style.display = "";
+          if (rowId.startsWith(id + '.')) {
+
+            if (isOpen) {
+              row.style.display = "none";
+              hideChildren(rowId);
+
+              let childBtn = row.querySelector(".toggle-btn");
+              if (childBtn) childBtn.innerHTML = "▶";
+
+            } else {
+              // hanya tampilkan child level 1
+              let levelParent = id.split('.').length;
+              let levelRow = rowId.split('.').length;
+
+              if (levelRow === levelParent + 1) {
+                row.style.display = "";
+              }
+            }
           }
-        }
-      });
-      applyZebra();
+        });
+
+        applyZebra();
     }
 
     function hideChildren(parentId) {
-      let rows = document.querySelectorAll(`#coaTable tr`);
+      let rows = document.querySelectorAll("#coaTable tr");
 
       rows.forEach(row => {
-        if (row.getAttribute("data-parent") === parentId) {
+        let rowId = row.getAttribute("data-id");
+
+        if (rowId.startsWith(parentId + '.')) {
           row.style.display = "none";
-          hideChildren(row.getAttribute("data-id"));
 
           let btn = row.querySelector(".toggle-btn");
           if (btn) btn.innerHTML = "▶";
@@ -289,38 +305,7 @@
   <script>
     document.addEventListener("DOMContentLoaded", function () {
 
-      let table = $('#dataTableTwo').DataTable({
-        paging: true,
-        searching: true,
-        info: true,
-        lengthChange: true,
-
-        // penting untuk struktur tree kamu
-        ordering: false
-      });
-
-      // setiap search / filter
-      table.on('draw', function () {
-
-        let rows = document.querySelectorAll("#coaTable tr");
-
-        rows.forEach(row => {
-          let parent = row.getAttribute("data-parent");
-
-          if (parent) {
-            row.style.display = "none";
-          } else {
-            row.style.display = "";
-          }
-
-          // reset tombol
-          let btn = row.querySelector(".toggle-btn");
-          if (btn) btn.innerHTML = "▶";
-        });
-
-        applyZebra();
-      });
-
+      
     });
   </script>
   <script>
@@ -366,6 +351,35 @@
     function formatRupiah(angka) {
       return angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
+
+
+    function searchTable() {
+  let input = document.getElementById("searchInput").value.toLowerCase();
+  let rows = document.querySelectorAll("#coaTable tr");
+
+  rows.forEach(row => {
+    let text = row.innerText.toLowerCase();
+    let rowId = row.getAttribute("data-id");
+
+    if (text.includes(input)) {
+      row.style.display = "";
+
+      // tampilkan semua parent
+      let parts = rowId.split('.');
+      while (parts.length > 1) {
+        parts.pop();
+        let parentId = parts.join('.');
+        let parentRow = document.querySelector(`[data-id='${parentId}']`);
+        if (parentRow) parentRow.style.display = "";
+      }
+
+    } else {
+      row.style.display = "none";
+    }
+  });
+
+  applyZebra();
+}
   </script>
 </body>
 </html>
