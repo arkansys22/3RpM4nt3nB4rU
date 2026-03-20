@@ -8,6 +8,7 @@ class coa_model extends CI_Model {
     public function get_all_coa() {
         $this->db->select("*");
         $this->db->from("operational_kategori");
+        $this->db->order_by('nomer_kategori', 'DESC');
         return $this->db->get()->result();
     }
 
