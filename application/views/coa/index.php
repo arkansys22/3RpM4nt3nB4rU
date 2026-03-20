@@ -50,16 +50,7 @@
                       </button>
                     </a>
                   </div>
-                </div>                
-                <div class="flex justify-between mb-4">
-                    <input 
-                      type="text" 
-                      id="searchInput" 
-                      placeholder="Cari data..." 
-                      class="w-full border rounded-md p-2"
-                      onkeyup="searchTable()"
-                    >
-                </div>
+                </div>      
 
               <div class="overflow-x-auto">
                 <table id="dataTableTwo" class="min-w-full text-sm border border-gray-300">
