@@ -151,212 +151,95 @@
   </div>
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
   <script>
-    function applyZebra() {
-      let rows = document.querySelectorAll("#coaTable tr");
-      let visibleIndex = 0;
+document.addEventListener("DOMContentLoaded", function () {
+  initTree();
+  calculateTotals();
+  applyZebra();
+});
 
-      rows.forEach(row => {
-        if (row.style.display !== "none") {
-
-          // reset dulu
-          row.style.backgroundColor = "";
-
-          if (visibleIndex % 2 === 0) {
-            row.style.backgroundColor = "#ffffff"; // putih
-          } else {
-            row.style.backgroundColor = "#f2f7ff"; // biru muda
-          }
-
-          visibleIndex++;
-        }
-      });
+/* =========================
+   INIT TREE (HIDE CHILD)
+========================= */
+function initTree() {
+  document.querySelectorAll("#coaTable tr").forEach(row => {
+    if (row.getAttribute("data-parent")) {
+      row.style.display = "none";
     }
-  </script>
-  <script>
-    document.querySelectorAll("#coaTable tr").forEach(row => {
+  });
+}
 
-      row.addEventListener("mouseenter", function () {
-        let parent = row.getAttribute("data-parent");
+/* =========================
+   TOGGLE TREE
+========================= */
+function toggleRow(id, btn) {
+  let rows = document.querySelectorAll("#coaTable tr");
+  let isOpen = btn.innerHTML === "▼";
 
-        while (parent) {
-          let parentRow = document.querySelector(`[data-id='${parent}']`);
-          if (parentRow) {
-            parentRow.classList.add("bg-red-100");
-            parent = parentRow.getAttribute("data-parent");
-          } else break;
-        }
-      });
+  btn.innerHTML = isOpen ? "▶" : "▼";
 
-      row.addEventListener("mouseleave", function () {
-        document.querySelectorAll("#coaTable tr").forEach(r => {
-          r.classList.remove("bg-red-100");
-        });
-      });
+  rows.forEach(row => {
+    let parent = row.getAttribute("data-parent");
 
-    });
-  </script>
-  <script>
-    function exportTableToExcel() {
-      let table = document.getElementById("dataTableTwo").outerHTML;
-      let url = 'data:application/vnd.ms-excel,' + encodeURIComponent(table);
-
-      let link = document.createElement("a");
-      link.href = url;
-      link.download = "chart_of_account.xls";
-      link.click();
-    }
-  </script>
-  <script>
-    function expandAll() {
-      
-      document.querySelectorAll("#coaTable tr").forEach(row => {
+    if (parent === id) {
+      if (isOpen) {
+        hideRecursive(row);
+      } else {
         row.style.display = "";
-
-      });
-
-      document.querySelectorAll(".toggle-btn").forEach(btn => {
-        btn.innerHTML = "▼";
-      });
-      applyZebra();
+      }
     }
+  });
 
-    function collapseAll() {
-      
-      document.querySelectorAll("#coaTable tr").forEach(row => {
-        if (row.getAttribute("data-parent")) {
-          row.style.display = "none";
-        }
-      });
+  applyZebra();
+}
 
-      document.querySelectorAll(".toggle-btn").forEach(btn => {
-        btn.innerHTML = "▶";
-      });
-      applyZebra();
+function hideRecursive(row) {
+  row.style.display = "none";
+
+  let id = row.getAttribute("data-id");
+
+  let btn = row.querySelector(".toggle-btn");
+  if (btn) btn.innerHTML = "▶";
+
+  document.querySelectorAll("#coaTable tr").forEach(child => {
+    if (child.getAttribute("data-parent") === id) {
+      hideRecursive(child);
     }
-  </script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      let rows = document.querySelectorAll(".coa-row");
+  });
+}
 
-      rows.forEach(row => {
-        if (row.getAttribute("data-parent")) {
-          row.style.display = "none";
-        }
-      });
-      applyZebra();
-    });
-  </script>
-  <script>
-    function toggleRow(id, btn) {
-        const rows = document.querySelectorAll("#coaTable tr");
-        const isOpening = btn.innerHTML === "▶"; // Cek apakah sedang mau membuka
-        
-        btn.innerHTML = isOpening ? "▼" : "▶";
+/* =========================
+   EXPAND / COLLAPSE
+========================= */
+function expandAll() {
+  document.querySelectorAll("#coaTable tr").forEach(row => {
+    row.style.display = "";
+  });
 
-        rows.forEach(row => {
-            const rowParent = row.getAttribute("data-parent");
-            const rowId = row.getAttribute("data-id");
+  document.querySelectorAll(".toggle-btn").forEach(btn => {
+    btn.innerHTML = "▼";
+  });
 
-            if (rowParent === id) {
-                if (isOpening) {
-                    row.style.display = ""; // Tampilkan anak langsung
-                } else {
-                    row.style.display = "none"; // Sembunyikan anak
-                    recursiveHide(rowId); // Sembunyikan semua keturunannya
-                }
-            }
-        });
-        applyZebra();
+  applyZebra();
+}
+
+function collapseAll() {
+  document.querySelectorAll("#coaTable tr").forEach(row => {
+    if (row.getAttribute("data-parent")) {
+      row.style.display = "none";
     }
+  });
 
-    function recursiveHide(parentId) {
-        const rows = document.querySelectorAll("#coaTable tr");
-        rows.forEach(row => {
-            if (row.getAttribute("data-parent") === parentId) {
-                row.style.display = "none";
-                const childBtn = row.querySelector(".toggle-btn");
-                if (childBtn) childBtn.innerHTML = "▶";
-                recursiveHide(row.getAttribute("data-id"));
-            }
-        });
-    }
+  document.querySelectorAll(".toggle-btn").forEach(btn => {
+    btn.innerHTML = "▶";
+  });
 
-    // Perbaikan fungsi total agar tidak kacau karena format titik
-    function calculateTotals() {
-        const rows = Array.from(document.querySelectorAll("#coaTable tr")).reverse();
-        
-        // Kita proses dari bawah ke atas agar child terhitung dulu sebelum parent-nya
-        rows.forEach(row => {
-            const id = row.getAttribute("data-id");
-            const children = document.querySelectorAll(`[data-parent="${id}"]`);
-            
-            if (children.length > 0) {
-                let sum = 0;
-                children.forEach(child => {
-                    const val = parseFloat(child.querySelector(".balance-cell").getAttribute("data-value")) || 0;
-                    sum += val;
-                });
-                
-                const cell = row.querySelector(".balance-cell");
-                cell.setAttribute("data-value", sum);
-                cell.innerHTML = formatRupiah(sum);
-            }
-        });
-    }
+  applyZebra();
+}
 
-    function applyZebra() {
-        let visibleRows = Array.from(document.querySelectorAll("#coaTable tr")).filter(r => r.style.display !== "none");
-        visibleRows.forEach((row, index) => {
-            row.style.backgroundColor = (index % 2 === 0) ? "#ffffff" : "#f2f7ff";
-        });
-    }
-  </script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      
-      calculateTotals();
-    });
-
-    function calculateTotals() {
-      let rows = document.querySelectorAll("#coaTable tr");
-
-      rows.forEach(row => {
-        let id = row.getAttribute("data-id");
-
-        let total = sumChildren(id);
-
-        if (total > 0) {
-          let balanceCell = row.querySelector("td:nth-child(4)");
-          if (balanceCell) {
-            balanceCell.innerHTML = formatRupiah(total);
-          }
-        }
-      });
-    }
-
-    function sumChildren(parentId) {
-      let rows = document.querySelectorAll("#coaTable tr");
-      let total = 0;
-
-      rows.forEach(row => {
-        if (row.getAttribute("data-parent") === parentId) {
-          let balanceText = row.querySelector("td:nth-child(4)").innerText.replace(/\./g, '');
-          let balance = parseInt(balanceText) || 0;
-
-          total += balance;
-          total += sumChildren(row.getAttribute("data-id"));
-        }
-      });
-
-      return total;
-    }
-
-    function formatRupiah(angka) {
-      return angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    }
-
-
-    function searchTable() {
+/* =========================
+   SEARCH (FIXED)
+========================= */
+function searchTable() {
   let input = document.getElementById("searchInput").value.toLowerCase();
   let rows = document.querySelectorAll("#coaTable tr");
 
@@ -383,6 +266,63 @@
 
   applyZebra();
 }
-  </script>
+
+/* =========================
+   ZEBRA
+========================= */
+function applyZebra() {
+  let visibleRows = Array.from(document.querySelectorAll("#coaTable tr"))
+    .filter(r => r.style.display !== "none");
+
+  visibleRows.forEach((row, i) => {
+    row.style.backgroundColor = (i % 2 === 0) ? "#ffffff" : "#f2f7ff";
+  });
+}
+
+/* =========================
+   TOTAL (FIX AKURAT)
+========================= */
+function calculateTotals() {
+  let rows = Array.from(document.querySelectorAll("#coaTable tr")).reverse();
+
+  rows.forEach(row => {
+    let id = row.getAttribute("data-id");
+    let children = document.querySelectorAll(`[data-parent="${id}"]`);
+
+    if (children.length > 0) {
+      let total = 0;
+
+      children.forEach(child => {
+        let val = parseFloat(child.querySelector(".balance-cell").dataset.value) || 0;
+        total += val;
+      });
+
+      let cell = row.querySelector(".balance-cell");
+      cell.dataset.value = total;
+      cell.innerHTML = formatRupiah(total);
+    }
+  });
+}
+
+/* =========================
+   FORMAT
+========================= */
+function formatRupiah(angka) {
+  return angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
+/* =========================
+   EXPORT EXCEL
+========================= */
+function exportTableToExcel() {
+  let table = document.getElementById("dataTableTwo").outerHTML;
+  let url = 'data:application/vnd.ms-excel,' + encodeURIComponent(table);
+
+  let link = document.createElement("a");
+  link.href = url;
+  link.download = "chart_of_account.xls";
+  link.click();
+}
+</script>
 </body>
 </html>
