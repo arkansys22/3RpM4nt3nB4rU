@@ -46,8 +46,8 @@ class coa_model extends CI_Model {
     }
 
     public function delete_permanent($id_session) {
-        $this->db->where('id_session', $id_session);
-        return $this->db->delete('crews');
+        $this->db->where('nomer_kategori', $id_session);
+        return $this->db->delete('operational_kategori');
     }
 
     public function insert_log_activity($data_log) {

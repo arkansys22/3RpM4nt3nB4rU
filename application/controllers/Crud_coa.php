@@ -376,7 +376,7 @@ class Crud_coa extends CI_Controller {
               $agent = 'Unidentified User Agent';
         }
 
-        $this->crews_model->delete_permanent($id_session);
+        $this->coa_model->delete_permanent($id_session);
 
         $ip = $this->input->ip_address();
         $location = get_location_from_ip($ip);
@@ -385,19 +385,19 @@ class Crud_coa extends CI_Controller {
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
-            'log_activity_modul' => 'crews/delete_permanent',
+            'log_activity_modul' => 'coa/delete_permanent',
             'log_activity_document_no' => $id_session,
-            'log_activity_status' => 'Delete Permanent Crew',
+            'log_activity_status' => 'Delete Permanent Account',
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
             'log_activity_ip'=> $ip_with_location
             
         );
 
-        $this->crews_model->insert_log_activity($data_log);
+        $this->coa_model->insert_log_activity($data_log);
 
-        $this->session->set_flashdata('Success', 'Crew berhasil dihapus permanen');
-        redirect('crews/recycle_bin');
+        $this->session->set_flashdata('Success', 'Account berhasil dihapus permanen');
+        redirect('coa');
     }
 }
 ?>
