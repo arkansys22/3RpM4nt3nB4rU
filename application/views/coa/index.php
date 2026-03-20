@@ -124,16 +124,17 @@
                             <?= $c->nomer_kategori ?>
                           </div>
                         </td>
-
+                        <a href ="#">
                         <!-- NAME -->
                         <td class="px-3 py-2 border">
-                          <a href ="#"><?= $c->nama_kategori ?></a>
+                          <?= $c->nama_kategori ?>
                         </td>
 
                         <!-- TYPE -->
                         <td class="px-3 py-2 border">
                           <?= $c->detail_kategori ?>
                         </td>
+                        </a>
 
                         <!-- BALANCE -->
                         <td class="px-3 py-2 border text-right font-semibold">
