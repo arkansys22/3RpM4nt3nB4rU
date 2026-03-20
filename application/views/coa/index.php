@@ -78,16 +78,7 @@
                     Export Excel
                   </button>
 
-                </div>      
-                <div class="mb-4">
-                    <input 
-                    type="text" 
-                    id="searchInput" 
-                    placeholder="Cari Account..." 
-                    class="w-full border rounded-md p-2"
-                    oninput="searchTable()"
-                  >
-                </div>
+                </div>   
               <div class="overflow-x-auto">
                 <table id="dataTableTwo" class="min-w-full text-sm border border-gray-300">
 
@@ -289,50 +280,7 @@
       });
     }
   </script>
-  <script>
-    function searchTable() {
-      let input = document.getElementById("searchInput").value.toLowerCase().trim();
-      let rows = document.querySelectorAll("#coaTable tr");
-
-      // reset semua dulu
-      rows.forEach(row => {
-        row.style.display = "none";
-      });
-
-      // jika kosong → tampilkan default
-      if (input === "") {
-        rows.forEach(row => {
-          if (!row.getAttribute("data-parent")) {
-            row.style.display = "";
-          }
-        });
-
-        applyZebra();
-        return;
-      }
-
-      // filter
-      rows.forEach(row => {
-        let text = row.innerText.toLowerCase();
-
-        if (text.includes(input)) {
-          row.style.display = "";
-
-          // tampilkan parent
-          let parent = row.getAttribute("data-parent");
-          while (parent) {
-            let parentRow = document.querySelector(`[data-id='${parent}']`);
-            if (parentRow) {
-              parentRow.style.display = "";
-              parent = parentRow.getAttribute("data-parent");
-            } else break;
-          }
-        }
-      });
-
-      applyZebra();
-    }
-  </script>
+  
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       
