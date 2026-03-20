@@ -50,6 +50,25 @@
                       </button>
                     </a>
                   </div>
+                </div>
+
+                <div class="flex flex-wrap gap-2 mb-4">
+
+                  <button onclick="expandAll()" 
+                    class="bg-green-500 text-white px-3 py-2 rounded hover:bg-green-600">
+                    Expand All
+                  </button>
+
+                  <button onclick="collapseAll()" 
+                    class="bg-gray-500 text-white px-3 py-2 rounded hover:bg-gray-600">
+                    Collapse All
+                  </button>
+
+                  <button onclick="exportTableToExcel()" 
+                    class="bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-600">
+                    Export Excel
+                  </button>
+
                 </div>      
 
               <div class="overflow-x-auto">
@@ -138,6 +157,63 @@
     <!-- ===== Content Area End ===== -->
   </div>
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
+  <script>
+    document.querySelectorAll("#coaTable tr").forEach(row => {
+
+      row.addEventListener("mouseenter", function () {
+        let parent = row.getAttribute("data-parent");
+
+        while (parent) {
+          let parentRow = document.querySelector(`[data-id='${parent}']`);
+          if (parentRow) {
+            parentRow.classList.add("bg-red-100");
+            parent = parentRow.getAttribute("data-parent");
+          } else break;
+        }
+      });
+
+      row.addEventListener("mouseleave", function () {
+        document.querySelectorAll("#coaTable tr").forEach(r => {
+          r.classList.remove("bg-red-100");
+        });
+      });
+
+    });
+  </script>
+  <script>
+    function exportTableToExcel() {
+      let table = document.getElementById("dataTableTwo").outerHTML;
+      let url = 'data:application/vnd.ms-excel,' + encodeURIComponent(table);
+
+      let link = document.createElement("a");
+      link.href = url;
+      link.download = "chart_of_account.xls";
+      link.click();
+    }
+  </script>
+  <script>
+    function expandAll() {
+      document.querySelectorAll("#coaTable tr").forEach(row => {
+        row.style.display = "";
+      });
+
+      document.querySelectorAll(".toggle-btn").forEach(btn => {
+        btn.innerHTML = "▼";
+      });
+    }
+
+    function collapseAll() {
+      document.querySelectorAll("#coaTable tr").forEach(row => {
+        if (row.getAttribute("data-parent")) {
+          row.style.display = "none";
+        }
+      });
+
+      document.querySelectorAll(".toggle-btn").forEach(btn => {
+        btn.innerHTML = "▶";
+      });
+    }
+  </script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       let rows = document.querySelectorAll(".coa-row");
