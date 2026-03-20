@@ -124,17 +124,16 @@
                             <?= $c->nomer_kategori ?>
                           </div>
                         </td>
-                        <a href ="#">
+
                         <!-- NAME -->
                         <td class="px-3 py-2 border">
-                          <?= $c->nama_kategori ?>
+                          <a href ="#"><?= $c->nama_kategori ?></a>
                         </td>
 
                         <!-- TYPE -->
                         <td class="px-3 py-2 border">
                           <?= $c->detail_kategori ?>
                         </td>
-                        </a>
 
                         <!-- BALANCE -->
                         <td class="px-3 py-2 border text-right font-semibold">
@@ -155,7 +154,7 @@
     </div>
     <!-- ===== Content Area End ===== -->
   </div>
-  <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
+  
   <script>
     function applyZebra() {
       let rows = document.querySelectorAll("#coaTable tr");
