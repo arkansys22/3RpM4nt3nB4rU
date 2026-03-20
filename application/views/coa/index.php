@@ -56,172 +56,68 @@
                     >
                 </div>
 
-              <!-- ====== Data Table Two Start --><br>
-              <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                <div class="data-table-common data-table-two max-w-full overflow-x-auto">
-                  
-                  <table class="table w-full table-auto" id="dataTableTwo">
+              <div class="overflow-x-auto">
+                <table id="dataTableTwo" class="min-w-full text-sm border border-gray-300">
 
-                    <thead>
-                      <tr>
-                      <th>
-                          <div class="flex items-center justify-between gap-1.5">
-                            <p>Nomer Account</p>
-                            <div class="inline-flex flex-col space-y-[2px]">
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path d="M5 0L0 5H10L5 0Z" fill="" />
-                                </svg>
-                              </span>
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
-                                    fill=""
-                                  />
-                                </svg>
-                              </span>
-                            </div>
-                          </div>
-                        </th>
-                        <th>
-                          <div class="flex items-center justify-between gap-1.5">
-                            <p>Deskripsi</p>
-                            <div class="inline-flex flex-col space-y-[2px]">
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path d="M5 0L0 5H10L5 0Z" fill="" />
-                                </svg>
-                              </span>
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
-                                    fill=""
-                                  />
-                                </svg>
-                              </span>
-                            </div>
-                          </div>
-                        </th>
-                        <th>
-                          <div class="flex items-center justify-between gap-1.5">
-                            <p>Detail</p>
-                            <div class="inline-flex flex-col space-y-[2px]">
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path d="M5 0L0 5H10L5 0Z" fill="" />
-                                </svg>
-                              </span>
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
-                                    fill=""
-                                  />
-                                </svg>
-                              </span>
-                            </div>
-                          </div>
-                        </th>
-                       
-                        <th>
-                          <div class="flex items-center justify-between gap-1.5">
-                            <p>Aksi</p>
-                            <div class="inline-flex flex-col space-y-[2px]">
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path d="M5 0L0 5H10L5 0Z" fill="" />
-                                </svg>
-                              </span>
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
-                                    fill=""
-                                  />
-                                </svg>
-                              </span>
-                            </div>
-                          </div>
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                    <?php $no = 1; foreach ($p as $c) : ?>
-                      <tr>
-                        <td><?= $c->nomer_kategori ?></td>                        
-                        <td><?= $c->nama_kategori ?></td>
-                        <td><?= $c->detail_kategori ?></td>                        
-                        <td>
-                            <div class="flex flex-col items-start gap-2 w-max">
-                              <a href="<?= site_url('coa/lihat/'.$c->id) ?>" class="inline-flex justify-center bg-yellow-500 text-white px-2 py-1 rounded-md hover:bg-yellow-600 text-center w-full">Lihat</a>
-                              <a href="<?= site_url('coa/delete_permanent/'.$c->nomer_kategori) ?>" class="inline-flex justify-center bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 min-w-full text-center" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
-                            </div>
-                        </td>
-                      </tr>
-                      <?php endforeach; ?>                      
-                    </tbody>
-                  </table>
-                </div>
+                  <!-- HEADER -->
+                  <thead class="bg-blue-600 text-white">
+                    <tr>
+                      <th class="px-3 py-2 text-left border">Account No</th>
+                      <th class="px-3 py-2 text-left border">Name</th>
+                      <th class="px-3 py-2 text-left border">Type</th>
+                      <th class="px-3 py-2 text-right border">Balance</th>
+                      <th class="px-3 py-2 text-center border">Aksi</th>
+                    </tr>
+                  </thead>
+
+                  <!-- BODY -->
+                  <tbody class="bg-white">
+                    <?php foreach ($p as $c) : ?>
+                    <tr class="even:bg-gray-100 hover:bg-blue-50 transition">
+                      
+                      <!-- ACCOUNT -->
+                      <td class="px-3 py-2 border whitespace-nowrap">
+                        <?= $c->nomer_kategori ?>
+                      </td>
+
+                      <!-- NAME -->
+                      <td class="px-3 py-2 border">
+                        <?= $c->nama_kategori ?>
+                      </td>
+
+                      <!-- TYPE -->
+                      <td class="px-3 py-2 border">
+                        <?= $c->detail_kategori ?>
+                      </td>
+
+                      <?= $balance=1000 ?>
+
+                      <!-- BALANCE (RATA KANAN) -->
+                      <td class="px-3 py-2 border text-right font-semibold">
+                        <?= number_format($balance ?? 0, 0, ',', '.') ?>
+                      </td>
+
+                      <!-- AKSI -->
+                      <td class="px-3 py-2 border">
+                        <div class="flex flex-col gap-1">
+                          <a href="<?= site_url('coa/lihat/'.$c->id) ?>" 
+                             class="bg-yellow-500 text-white px-2 py-1 rounded text-center hover:bg-yellow-600">
+                             Lihat
+                          </a>
+                          <a href="<?= site_url('coa/delete_permanent/'.$c->nomer_kategori) ?>" 
+                             onclick="return confirm('Yakin ingin menghapus?')" 
+                             class="bg-red-500 text-white px-2 py-1 rounded text-center hover:bg-red-600">
+                             Hapus
+                          </a>
+                        </div>
+                      </td>
+
+                    </tr>
+                    <?php endforeach; ?>
+                  </tbody>
+
+                </table>
               </div>
-              <!-- ====== Data Table Two End -->
             </div>
           </div>
         </div>
