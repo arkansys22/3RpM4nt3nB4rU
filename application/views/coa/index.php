@@ -76,7 +76,15 @@
                   </button>
 
                 </div>      
-
+                <div class="mb-4">
+  <input 
+    type="text" 
+    id="searchInput" 
+    placeholder="Cari Account..." 
+    class="w-full border rounded-md p-2"
+    onkeyup="searchTable()"
+  >
+</div>
               <div class="overflow-x-auto">
                 <table id="dataTableTwo" class="min-w-full text-sm border border-gray-300">
 
@@ -280,8 +288,7 @@
   </script>
   <script>
     function searchTable() {
-      
-      let input = document.getElementById("searchInput").value.toLowerCase();
+      let input = document.getElementById("searchInput").value.toLowerCase().trim();
       let rows = document.querySelectorAll("#coaTable tr");
 
       rows.forEach(row => {
@@ -303,6 +310,7 @@
           row.style.display = "none";
         }
       });
+
       applyZebra();
     }
   </script>
