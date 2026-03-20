@@ -127,7 +127,7 @@
 
                         <!-- NAME -->
                         <td class="px-3 py-2 border">
-                          <?= $c->nama_kategori ?>
+                          <a href ="#"><?= $c->nama_kategori ?></a>
                         </td>
 
                         <!-- TYPE -->
