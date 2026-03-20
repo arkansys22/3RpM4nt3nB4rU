@@ -149,7 +149,7 @@
     </div>
     <!-- ===== Content Area End ===== -->
   </div>
-  <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
+  
   <script>
 document.addEventListener("DOMContentLoaded", function () {
   initTree();
@@ -158,33 +158,27 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 /* =========================
-   INIT TREE (HIDE CHILD)
+   INIT TREE
 ========================= */
 function initTree() {
   document.querySelectorAll("#coaTable tr").forEach(row => {
-    if (row.getAttribute("data-parent")) {
+    if (row.dataset.parent) {
       row.style.display = "none";
     }
   });
 }
 
 /* =========================
-   TOGGLE TREE
+   TOGGLE TREE (FIX STABIL)
 ========================= */
 function toggleRow(id, btn) {
-  let rows = document.querySelectorAll("#coaTable tr");
+  const isOpen = btn.dataset.open === "true";
 
-  // pakai state, bukan innerHTML
-  let isOpen = btn.getAttribute("data-open") === "true";
-
-  // toggle state
-  btn.setAttribute("data-open", !isOpen);
+  btn.dataset.open = !isOpen;
   btn.innerHTML = isOpen ? "▶" : "▼";
 
-  rows.forEach(row => {
-    let parent = row.getAttribute("data-parent");
-
-    if (parent === id) {
+  document.querySelectorAll("#coaTable tr").forEach(row => {
+    if (row.dataset.parent === id) {
       if (isOpen) {
         hideRecursive(row);
       } else {
@@ -199,23 +193,23 @@ function toggleRow(id, btn) {
 function hideRecursive(row) {
   row.style.display = "none";
 
-  let id = row.getAttribute("data-id");
+  const id = row.dataset.id;
 
-  let btn = row.querySelector(".toggle-btn");
+  const btn = row.querySelector(".toggle-btn");
   if (btn) {
-    btn.setAttribute("data-open", "false");
+    btn.dataset.open = "false";
     btn.innerHTML = "▶";
   }
 
   document.querySelectorAll("#coaTable tr").forEach(child => {
-    if (child.getAttribute("data-parent") === id) {
+    if (child.dataset.parent === id) {
       hideRecursive(child);
     }
   });
 }
 
 /* =========================
-   EXPAND / COLLAPSE
+   EXPAND / COLLAPSE GLOBAL
 ========================= */
 function expandAll() {
   document.querySelectorAll("#coaTable tr").forEach(row => {
@@ -223,7 +217,7 @@ function expandAll() {
   });
 
   document.querySelectorAll(".toggle-btn").forEach(btn => {
-    btn.setAttribute("data-open", "true");
+    btn.dataset.open = "true";
     btn.innerHTML = "▼";
   });
 
@@ -232,13 +226,13 @@ function expandAll() {
 
 function collapseAll() {
   document.querySelectorAll("#coaTable tr").forEach(row => {
-    if (row.getAttribute("data-parent")) {
+    if (row.dataset.parent) {
       row.style.display = "none";
     }
   });
 
   document.querySelectorAll(".toggle-btn").forEach(btn => {
-    btn.setAttribute("data-open", "false");
+    btn.dataset.open = "false";
     btn.innerHTML = "▶";
   });
 
@@ -246,25 +240,26 @@ function collapseAll() {
 }
 
 /* =========================
-   SEARCH (FIXED)
+   SEARCH (SUPER STABIL)
 ========================= */
 function searchTable() {
-  let input = document.getElementById("searchInput").value.toLowerCase();
-  let rows = document.querySelectorAll("#coaTable tr");
+  const keyword = document.getElementById("searchInput").value.toLowerCase();
+
+  const rows = document.querySelectorAll("#coaTable tr");
 
   rows.forEach(row => {
-    let text = row.innerText.toLowerCase();
-    let rowId = row.getAttribute("data-id");
+    const text = row.innerText.toLowerCase();
+    const id = row.dataset.id;
 
-    if (text.includes(input)) {
+    if (text.includes(keyword)) {
       row.style.display = "";
 
       // tampilkan semua parent
-      let parts = rowId.split('.');
+      let parts = id.split(".");
       while (parts.length > 1) {
         parts.pop();
-        let parentId = parts.join('.');
-        let parentRow = document.querySelector(`[data-id='${parentId}']`);
+        const parentId = parts.join(".");
+        const parentRow = document.querySelector(`[data-id="${parentId}"]`);
         if (parentRow) parentRow.style.display = "";
       }
 
@@ -277,10 +272,10 @@ function searchTable() {
 }
 
 /* =========================
-   ZEBRA
+   ZEBRA STRIPE
 ========================= */
 function applyZebra() {
-  let visibleRows = Array.from(document.querySelectorAll("#coaTable tr"))
+  const visibleRows = Array.from(document.querySelectorAll("#coaTable tr"))
     .filter(r => r.style.display !== "none");
 
   visibleRows.forEach((row, i) => {
@@ -289,24 +284,23 @@ function applyZebra() {
 }
 
 /* =========================
-   TOTAL (FIX AKURAT)
+   TOTAL (AKURAT TREE)
 ========================= */
 function calculateTotals() {
-  let rows = Array.from(document.querySelectorAll("#coaTable tr")).reverse();
+  const rows = Array.from(document.querySelectorAll("#coaTable tr")).reverse();
 
   rows.forEach(row => {
-    let id = row.getAttribute("data-id");
-    let children = document.querySelectorAll(`[data-parent="${id}"]`);
+    const id = row.dataset.id;
+    const children = document.querySelectorAll(`[data-parent="${id}"]`);
 
     if (children.length > 0) {
       let total = 0;
 
       children.forEach(child => {
-        let val = parseFloat(child.querySelector(".balance-cell").dataset.value) || 0;
-        total += val;
+        total += parseFloat(child.querySelector(".balance-cell").dataset.value) || 0;
       });
 
-      let cell = row.querySelector(".balance-cell");
+      const cell = row.querySelector(".balance-cell");
       cell.dataset.value = total;
       cell.innerHTML = formatRupiah(total);
     }
@@ -314,7 +308,7 @@ function calculateTotals() {
 }
 
 /* =========================
-   FORMAT
+   FORMAT RUPIAH
 ========================= */
 function formatRupiah(angka) {
   return angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
