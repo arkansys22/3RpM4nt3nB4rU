@@ -77,17 +77,16 @@
                     <tr 
                       data-parent="<?= $c->parent ?? '' ?>" 
                       data-id="<?= $c->nomer_kategori ?>"
-                      class="even:bg-gray-100 hover:bg-blue-50 transition"
+                      class="coa-row even:bg-gray-100 hover:bg-blue-50 transition"
                     >
-
                       <!-- ACCOUNT -->
                       <td class="px-3 py-2 border whitespace-nowrap">
                         <div style="padding-left: <?= $level * 20 ?>px" class="flex items-center gap-2">
 
                           <!-- BUTTON EXPAND -->
-                          <button onclick="toggleRow('<?= $c->nomer_kategori ?>')" 
-                                  class="text-blue-600 font-bold">
-                            +
+                          <button onclick="toggleRow('<?= $c->nomer_kategori ?>', this)" 
+                                  class="toggle-btn text-blue-600 w-4">
+                            ▶
                           </button>
 
                           <?= $c->nomer_kategori ?>
@@ -140,18 +139,33 @@
   </div>
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
   <script>
-    function toggleRow(id) {
+    document.addEventListener("DOMContentLoaded", function () {
+      let rows = document.querySelectorAll(".coa-row");
+
+      rows.forEach(row => {
+        if (row.getAttribute("data-parent")) {
+          row.style.display = "none";
+        }
+      });
+    });
+  </script>
+  <script>
+    function toggleRow(id, btn) {
       let rows = document.querySelectorAll(`#coaTable tr`);
+      let isOpen = btn.innerHTML === "▼";
+
+      btn.innerHTML = isOpen ? "▶" : "▼";
 
       rows.forEach(row => {
         if (row.getAttribute("data-parent") === id) {
-          if (row.style.display === "none") {
-            row.style.display = "";
-          } else {
+          if (isOpen) {
             row.style.display = "none";
-
-            // hide child juga
             hideChildren(row.getAttribute("data-id"));
+
+            let childBtn = row.querySelector(".toggle-btn");
+            if (childBtn) childBtn.innerHTML = "▶";
+          } else {
+            row.style.display = "";
           }
         }
       });
@@ -164,6 +178,9 @@
         if (row.getAttribute("data-parent") === parentId) {
           row.style.display = "none";
           hideChildren(row.getAttribute("data-id"));
+
+          let btn = row.querySelector(".toggle-btn");
+          if (btn) btn.innerHTML = "▶";
         }
       });
     }
@@ -178,23 +195,63 @@
 
         if (text.includes(input)) {
           row.style.display = "";
-          
-          // tampilkan parent juga
+
           let parent = row.getAttribute("data-parent");
           while (parent) {
             let parentRow = document.querySelector(`[data-id='${parent}']`);
             if (parentRow) {
               parentRow.style.display = "";
               parent = parentRow.getAttribute("data-parent");
-            } else {
-              break;
-            }
+            } else break;
           }
 
         } else {
           row.style.display = "none";
         }
       });
+    }
+  </script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      calculateTotals();
+    });
+
+    function calculateTotals() {
+      let rows = document.querySelectorAll("#coaTable tr");
+
+      rows.forEach(row => {
+        let id = row.getAttribute("data-id");
+
+        let total = sumChildren(id);
+
+        if (total > 0) {
+          let balanceCell = row.querySelector("td:nth-child(4)");
+          if (balanceCell) {
+            balanceCell.innerHTML = formatRupiah(total);
+          }
+        }
+      });
+    }
+
+    function sumChildren(parentId) {
+      let rows = document.querySelectorAll("#coaTable tr");
+      let total = 0;
+
+      rows.forEach(row => {
+        if (row.getAttribute("data-parent") === parentId) {
+          let balanceText = row.querySelector("td:nth-child(4)").innerText.replace(/\./g, '');
+          let balance = parseInt(balanceText) || 0;
+
+          total += balance;
+          total += sumChildren(row.getAttribute("data-id"));
+        }
+      });
+
+      return total;
+    }
+
+    function formatRupiah(angka) {
+      return angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
   </script>
 </body>
