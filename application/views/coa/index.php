@@ -14,8 +14,8 @@
     </style>
     <style>
 
-      #coaTable tr:hover {
-        background-color: #cfe2ff !important;
+      #coaTable tr {
+        transition: background-color 0.2s ease;
       }
     </style>
 </head>
@@ -221,7 +221,7 @@
   </script>
   <script>
     function expandAll() {
-      applyZebra();
+      
       document.querySelectorAll("#coaTable tr").forEach(row => {
         row.style.display = "";
 
@@ -230,10 +230,11 @@
       document.querySelectorAll(".toggle-btn").forEach(btn => {
         btn.innerHTML = "▼";
       });
+      applyZebra();
     }
 
     function collapseAll() {
-      applyZebra();
+      
       document.querySelectorAll("#coaTable tr").forEach(row => {
         if (row.getAttribute("data-parent")) {
           row.style.display = "none";
@@ -243,6 +244,7 @@
       document.querySelectorAll(".toggle-btn").forEach(btn => {
         btn.innerHTML = "▶";
       });
+      applyZebra();
     }
   </script>
   <script>
@@ -254,13 +256,14 @@
           row.style.display = "none";
         }
       });
+      applyZebra();
     });
   </script>
   <script>
     function toggleRow(id, btn) {
       let rows = document.querySelectorAll(`#coaTable tr`);
       let isOpen = btn.innerHTML === "▼";
-      applyZebra();
+      
 
       btn.innerHTML = isOpen ? "▶" : "▼";
 
@@ -277,6 +280,7 @@
           }
         }
       });
+      applyZebra();
     }
 
     function hideChildren(parentId) {
@@ -295,7 +299,7 @@
   </script>
   <script>
     function searchTable() {
-      applyZebra();
+      
       let input = document.getElementById("searchInput").value.toLowerCase();
       let rows = document.querySelectorAll("#coaTable tr");
 
@@ -318,11 +322,12 @@
           row.style.display = "none";
         }
       });
+      applyZebra();
     }
   </script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      applyZebra();
+      
       calculateTotals();
     });
 
