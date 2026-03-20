@@ -45,14 +45,8 @@
                       </button>
                     </a>
                   </div>
-                </div>
-
-              <!-- ====== Data Table Two Start --><br>
-              <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                <div class="data-table-common data-table-two max-w-full overflow-x-auto">
-                  
-                  <table class="table w-full table-auto" id="dataTableTwo">
-                    <div class="mb-4">
+                </div>                
+                <div class="flex justify-between mb-4">
                     <input 
                       type="text" 
                       id="searchInput" 
@@ -60,7 +54,14 @@
                       class="w-full border rounded-md p-2"
                       onkeyup="searchTable()"
                     >
-                  </div>
+                </div>
+
+              <!-- ====== Data Table Two Start --><br>
+              <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                <div class="data-table-common data-table-two max-w-full overflow-x-auto">
+                  
+                  <table class="table w-full table-auto" id="dataTableTwo">
+
                     <thead>
                       <tr>
                       <th>
