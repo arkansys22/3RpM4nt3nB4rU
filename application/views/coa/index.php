@@ -80,7 +80,7 @@
        onkeyup="searchTable()" 
        class="border p-2 w-full mb-3" 
        placeholder="Cari...">
-                <table id="dataTableTwo" class="min-w-full text-sm border border-gray-300">
+                <table id="coaCustomTable" class="min-w-full text-sm border border-gray-300">
 
                   <!-- HEADER -->
                   <thead class="bg-blue-600 text-white">
@@ -313,7 +313,7 @@ function formatRupiah(angka) {
    EXPORT EXCEL
 ========================= */
 function exportTableToExcel() {
-  let table = document.getElementById("dataTableTwo").outerHTML;
+  let table = document.getElementById("coaCustomTable").outerHTML;
   let url = 'data:application/vnd.ms-excel,' + encodeURIComponent(table);
 
   let link = document.createElement("a");
@@ -322,5 +322,6 @@ function exportTableToExcel() {
   link.click();
 }
 </script>
+<script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
 </body>
 </html>
