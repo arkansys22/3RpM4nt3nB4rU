@@ -26,7 +26,7 @@ class coa_model extends CI_Model {
     }
 
     public function insert($data) {
-        return $this->db->insert('crews', $data);
+        return $this->db->insert('operational_kategori', $data);
     }
 
     public function update($id_session, $data) {

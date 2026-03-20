@@ -95,9 +95,7 @@ class Crud_coa extends CI_Controller {
 
     public function store() {
 
-        $id_session = hash('sha256', bin2hex(random_bytes(16)));
-
-        $created_at = date('Y-m-d H:i:s'); // Waktu sekarang
+        $nama_kategori = $this->input->post('name');
 
         if ($this->agent->is_browser()) // Agent untuk fitur di log activity
                 {
@@ -117,18 +115,12 @@ class Crud_coa extends CI_Controller {
                 }
 
         $data = [
-            'id_session'  => $id_session,
-            'crew_name'   => $this->input->post('crew_name'),
-            'gender'      => $this->input->post('gender'),
-            'religion'    => $this->input->post('religion'),
-            'phone'       => $this->input->post('phone'),
-            'address'     => $this->input->post('address'),
-            'birth_date'  => $this->input->post('birth_date'),
-            'joining_date'=> $this->input->post('joining_date'),
-            'created_at'  => $created_at,
-            'status'      => 'active'
+        
+            'nomer_kategori'   => $this->input->post('account_code'),
+            'nama_kategori'      => $nama_kategori,
+            'detail_kategori'    => $this->input->post('account_type')
         ];
-        $this->crews_model->insert($data);
+        $this->coa_model->insert($data);
 
         $ip = $this->input->ip_address();
         $location = get_location_from_ip($ip);
@@ -137,20 +129,20 @@ class Crud_coa extends CI_Controller {
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
-            'log_activity_modul' => 'crews/create',
-            'log_activity_document_no' => $id_session,
-            'log_activity_status' => 'Tambah Crew',
+            'log_activity_modul' => 'coa/create',
+            'log_activity_document_no' => $nama_kategori,
+            'log_activity_status' => 'Tambah account coa',
             'log_activity_waktu' => date('Y-m-d H:i:s'),
             'log_activity_platform'=> $agent,
             'log_activity_ip'=> $ip_with_location
             
         );
 
-        $this->crews_model->insert_log_activity($data_log);
+        $this->coa_model->insert_log_activity($data_log);
 
-        $this->session->set_flashdata('Success', 'Crew berhasil dibuat');
+        $this->session->set_flashdata('Success', 'account coa berhasil dibuat');
 
-        redirect('crews');
+        redirect('coa');
     }
 
     public function lihat($id_session) {
