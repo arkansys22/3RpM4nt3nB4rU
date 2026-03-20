@@ -99,52 +99,45 @@
 
                   <!-- BODY -->
                   <tbody id="coaTable">
-                    <?php foreach ($p as $c) : 
+                    <?php 
+                    // Buat array bantuan untuk cek apakah sebuah ID adalah parent
+                    $all_ids = array_column($p, 'nomer_kategori');
+                    
+                    foreach ($p as $c) : 
+                        $level = substr_count($c->nomer_kategori, '.');
+                        $has_child = false;
+                        foreach($all_ids as $id) {
+                            if (strpos($id, $c->nomer_kategori . '.') === 0) {
+                                $has_child = true;
+                                break;
+                            }
+                        }
 
-                      // hitung level berdasarkan jumlah titik
-                      $level = substr_count($c->nomer_kategori, '.');
-
-                    ?>
-                    <?php
-                      $parent = '';
-                      if (strpos($c->nomer_kategori, '.') !== false) {
-                          $parent = substr($c->nomer_kategori, 0, strrpos($c->nomer_kategori, '.'));
-                      }
+                        $parent = '';
+                        if (strpos($c->nomer_kategori, '.') !== false) {
+                            $parent = substr($c->nomer_kategori, 0, strrpos($c->nomer_kategori, '.'));
+                        }
                     ?>
                     <tr data-parent="<?= $parent ?>" data-id="<?= $c->nomer_kategori ?>" class="coa-row transition">
-                      
-                        <!-- ACCOUNT -->
                         <td class="px-3 py-2 border whitespace-nowrap">
-                          <div style="padding-left: <?= $level * 20 ?>px" class="flex items-center gap-2">
-
-                            <!-- BUTTON EXPAND -->
-                            <button onclick="toggleRow('<?= $c->nomer_kategori ?>', this)" 
-                                    class="toggle-btn text-blue-600 w-4">
-                              ▶
-                            </button>
-
-                            <?= $c->nomer_kategori ?>
-                          </div>
+                            <div style="padding-left: <?= $level * 20 ?>px" class="flex items-center gap-2">
+                                <?php if ($has_child): ?>
+                                    <button onclick="toggleRow('<?= $c->nomer_kategori ?>', this)" class="toggle-btn text-blue-600 w-4">▶</button>
+                                <?php else: ?>
+                                    <span class="w-4"></span> <?php endif; ?>
+                                <?= $c->nomer_kategori ?>
+                            </div>
                         </td>
-
-                        <!-- NAME -->
                         <td class="px-3 py-2 border">
-                          <a href ="#"><?= $c->nama_kategori ?></a>
+                            <a href="#" class="hover:underline text-blue-700"><?= $c->nama_kategori ?></a>
                         </td>
-
-                        <!-- TYPE -->
-                        <td class="px-3 py-2 border">
-                          <?= $c->detail_kategori ?>
+                        <td class="px-3 py-2 border"><?= $c->detail_kategori ?></td>
+                        <td class="px-3 py-2 border text-right font-semibold balance-cell" data-value="<?= $c->balance ?? 0 ?>">
+                            <?= number_format($c->balance ?? 0, 0, ',', '.') ?>
                         </td>
-
-                        <!-- BALANCE -->
-                        <td class="px-3 py-2 border text-right font-semibold">
-                          <?= number_format($c->balance ?? 0, 0, ',', '.') ?>
-                        </td>
-                       
                     </tr>
                     <?php endforeach; ?>
-                  </tbody>
+                </tbody>
 
                 </table>
               </div>
@@ -157,28 +150,7 @@
     <!-- ===== Content Area End ===== -->
   </div>
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
-  <script>
-    function applyZebra() {
-      let rows = document.querySelectorAll("#coaTable tr");
-      let visibleIndex = 0;
-
-      rows.forEach(row => {
-        if (row.style.display !== "none") {
-
-          // reset dulu
-          row.style.backgroundColor = "";
-
-          if (visibleIndex % 2 === 0) {
-            row.style.backgroundColor = "#ffffff"; // putih
-          } else {
-            row.style.backgroundColor = "#f2f7ff"; // biru muda
-          }
-
-          visibleIndex++;
-        }
-      });
-    }
-  </script>
+  
   <script>
     document.querySelectorAll("#coaTable tr").forEach(row => {
 
@@ -255,81 +227,74 @@
   </script>
   <script>
     function toggleRow(id, btn) {
-        let rows = document.querySelectorAll("#coaTable tr");
-        let isOpen = btn.innerHTML === "▼";
-
-        btn.innerHTML = isOpen ? "▶" : "▼";
+        const rows = document.querySelectorAll("#coaTable tr");
+        const isOpening = btn.innerHTML === "▶"; // Cek apakah sedang mau membuka
+        
+        btn.innerHTML = isOpening ? "▼" : "▶";
 
         rows.forEach(row => {
-          let rowId = row.getAttribute("data-id");
+            const rowParent = row.getAttribute("data-parent");
+            const rowId = row.getAttribute("data-id");
 
-          if (rowId.startsWith(id + '.')) {
-
-            if (isOpen) {
-              row.style.display = "none";
-              hideChildren(rowId);
-
-              let childBtn = row.querySelector(".toggle-btn");
-              if (childBtn) childBtn.innerHTML = "▶";
-
-            } else {
-              // hanya tampilkan child level 1
-              let levelParent = id.split('.').length;
-              let levelRow = rowId.split('.').length;
-
-              if (levelRow === levelParent + 1) {
-                row.style.display = "";
-              }
+            if (rowParent === id) {
+                if (isOpening) {
+                    row.style.display = ""; // Tampilkan anak langsung
+                } else {
+                    row.style.display = "none"; // Sembunyikan anak
+                    recursiveHide(rowId); // Sembunyikan semua keturunannya
+                }
             }
-          }
         });
-
         applyZebra();
     }
 
-    function hideChildren(parentId) {
-      let rows = document.querySelectorAll("#coaTable tr");
-
-      rows.forEach(row => {
-        let rowId = row.getAttribute("data-id");
-
-        if (rowId.startsWith(parentId + '.')) {
-          row.style.display = "none";
-
-          let btn = row.querySelector(".toggle-btn");
-          if (btn) btn.innerHTML = "▶";
-        }
-      });
+    function recursiveHide(parentId) {
+        const rows = document.querySelectorAll("#coaTable tr");
+        rows.forEach(row => {
+            if (row.getAttribute("data-parent") === parentId) {
+                row.style.display = "none";
+                const childBtn = row.querySelector(".toggle-btn");
+                if (childBtn) childBtn.innerHTML = "▶";
+                recursiveHide(row.getAttribute("data-id"));
+            }
+        });
     }
-  </script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
 
-      
-    });
+    // Perbaikan fungsi total agar tidak kacau karena format titik
+    function calculateTotals() {
+        const rows = Array.from(document.querySelectorAll("#coaTable tr")).reverse();
+        
+        // Kita proses dari bawah ke atas agar child terhitung dulu sebelum parent-nya
+        rows.forEach(row => {
+            const id = row.getAttribute("data-id");
+            const children = document.querySelectorAll(`[data-parent="${id}"]`);
+            
+            if (children.length > 0) {
+                let sum = 0;
+                children.forEach(child => {
+                    const val = parseFloat(child.querySelector(".balance-cell").getAttribute("data-value")) || 0;
+                    sum += val;
+                });
+                
+                const cell = row.querySelector(".balance-cell");
+                cell.setAttribute("data-value", sum);
+                cell.innerHTML = formatRupiah(sum);
+            }
+        });
+    }
+
+    function applyZebra() {
+        let visibleRows = Array.from(document.querySelectorAll("#coaTable tr")).filter(r => r.style.display !== "none");
+        visibleRows.forEach((row, index) => {
+            row.style.backgroundColor = (index % 2 === 0) ? "#ffffff" : "#f2f7ff";
+        });
+    }
   </script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       
       calculateTotals();
     });
-
-    function calculateTotals() {
-      let rows = document.querySelectorAll("#coaTable tr");
-
-      rows.forEach(row => {
-        let id = row.getAttribute("data-id");
-
-        let total = sumChildren(id);
-
-        if (total > 0) {
-          let balanceCell = row.querySelector("td:nth-child(4)");
-          if (balanceCell) {
-            balanceCell.innerHTML = formatRupiah(total);
-          }
-        }
-      });
-    }
 
     function sumChildren(parentId) {
       let rows = document.querySelectorAll("#coaTable tr");
