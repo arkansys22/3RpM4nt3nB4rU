@@ -154,7 +154,7 @@
     </div>
     <!-- ===== Content Area End ===== -->
   </div>
-  
+  <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
   <script>
     function applyZebra() {
       let rows = document.querySelectorAll("#coaTable tr");
