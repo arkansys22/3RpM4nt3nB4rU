@@ -122,7 +122,7 @@
                         <td class="px-3 py-2 border whitespace-nowrap">
                             <div style="padding-left: <?= $level * 20 ?>px" class="flex items-center gap-2">
                                 <?php if ($has_child): ?>
-                                    <button onclick="toggleRow('<?= $c->nomer_kategori ?>', this)" class="toggle-btn text-blue-600 w-4">▶</button>
+                                    <button onclick="toggleRow('<?= $c->nomer_kategori ?>', this)" class="toggle-btn text-blue-600 w-4" data-open="false">▶</button>
                                 <?php else: ?>
                                     <span class="w-4"></span> <?php endif; ?>
                                 <?= $c->nomer_kategori ?>
@@ -173,8 +173,12 @@ function initTree() {
 ========================= */
 function toggleRow(id, btn) {
   let rows = document.querySelectorAll("#coaTable tr");
-  let isOpen = btn.innerHTML === "▼";
 
+  // pakai state, bukan innerHTML
+  let isOpen = btn.getAttribute("data-open") === "true";
+
+  // toggle state
+  btn.setAttribute("data-open", !isOpen);
   btn.innerHTML = isOpen ? "▶" : "▼";
 
   rows.forEach(row => {
@@ -198,7 +202,10 @@ function hideRecursive(row) {
   let id = row.getAttribute("data-id");
 
   let btn = row.querySelector(".toggle-btn");
-  if (btn) btn.innerHTML = "▶";
+  if (btn) {
+    btn.setAttribute("data-open", "false");
+    btn.innerHTML = "▶";
+  }
 
   document.querySelectorAll("#coaTable tr").forEach(child => {
     if (child.getAttribute("data-parent") === id) {
@@ -216,6 +223,7 @@ function expandAll() {
   });
 
   document.querySelectorAll(".toggle-btn").forEach(btn => {
+    btn.setAttribute("data-open", "true");
     btn.innerHTML = "▼";
   });
 
@@ -230,6 +238,7 @@ function collapseAll() {
   });
 
   document.querySelectorAll(".toggle-btn").forEach(btn => {
+    btn.setAttribute("data-open", "false");
     btn.innerHTML = "▶";
   });
 
