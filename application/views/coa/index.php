@@ -95,7 +95,7 @@
                         <?= $c->detail_kategori ?>
                       </td>
 
-                      <?= $balance=1000 ?>
+                      <? $balance=1000 ?>
 
                       <!-- BALANCE (RATA KANAN) -->
                       <td class="px-3 py-2 border text-right font-semibold">
