@@ -100,7 +100,13 @@
                       $level = substr_count($c->nomer_kategori, '.');
 
                     ?>
-                    <tr data-parent="<?= $c->parent ?? '' ?>" data-id="<?= $c->nomer_kategori ?>" class="coa-row transition">
+                    <?php
+                      $parent = '';
+                      if (strpos($c->nomer_kategori, '.') !== false) {
+                          $parent = substr($c->nomer_kategori, 0, strrpos($c->nomer_kategori, '.'));
+                      }
+                    ?>
+                    <tr data-parent="<?= $parent ?>" data-id="<?= $c->nomer_kategori ?>" class="coa-row transition">
                       
                         <!-- ACCOUNT -->
                         <td class="px-3 py-2 border whitespace-nowrap">
