@@ -94,6 +94,23 @@
 
                   <!-- BODY -->
                   <tbody id="coaTable">
+
+                    <?php
+                    function formatAccountNo($no) {
+                        // kalau ada titik (hierarki), jangan diubah
+                        if (strpos($no, '.') !== false) {
+                            return $no;
+                        }
+
+                        // kalau angka biasa → format ribuan
+                        if (is_numeric($no)) {
+                            return number_format($no, 0, ',', '.');
+                        }
+
+                        return $no;
+                    }
+                    ?>
+                    
                     <?php 
                     // Buat array bantuan untuk cek apakah sebuah ID adalah parent
                     $all_ids = array_column($p, 'nomer_kategori');
@@ -120,7 +137,7 @@
                                     <button onclick="toggleRow('<?= $c->nomer_kategori ?>', this)" class="toggle-btn text-blue-600 w-4" data-open="false">▶</button>
                                 <?php else: ?>
                                     <span class="w-4"></span> <?php endif; ?>
-                                <?= $c->nomer_kategori ?>
+                                <?= formatAccountNo($c->nomer_kategori) ?>
                             </div>
                         </td>
                         <td class="px-3 py-2 border">
