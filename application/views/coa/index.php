@@ -97,18 +97,20 @@
 
                     <?php
                     function formatAccountNo($no) {
-                        // kalau ada titik (hierarki), jangan diubah
-                        if (strpos($no, '.') !== false) {
-                            return $no;
-                        }
+                        // pecah berdasarkan titik (kalau ada)
+                        $parts = explode('.', $no);
 
-                        // kalau angka biasa → format ribuan
-                        if (is_numeric($no)) {
-                            return number_format($no, 0, ',', '.');
-                        }
+                        $formattedParts = array_map(function($part) {
+                            // hanya format kalau angka
+                            if (is_numeric($part)) {
+                                return number_format($part, 0, ',', '.');
+                            }
+                            return $part;
+                        }, $parts);
 
-                        return $no;
+                        return implode('.', $formattedParts);
                     }
+                    ?>
                     ?>
                     
                     <?php 
