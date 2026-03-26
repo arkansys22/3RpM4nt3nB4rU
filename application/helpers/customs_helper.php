@@ -39,6 +39,30 @@ function cek_session_akses_staff_sales($id){
   }
 }
 
+function cek_session_akses_affiliate_super($id){
+  $ci = & get_instance();
+  $session = $ci->db->query("SELECT * FROM user WHERE user.id_session='$id'")->num_rows();
+  if ($session == '0' AND $ci->session->userdata('level') != '10'){
+    redirect(base_url().'panel');
+  }
+}
+
+function cek_session_akses_affiliate_promax($id){
+  $ci = & get_instance();
+  $session = $ci->db->query("SELECT * FROM user WHERE user.id_session='$id'")->num_rows();
+  if ($session == '0' AND $ci->session->userdata('level') != '11'){
+    redirect(base_url().'panel');
+  }
+}
+
+function cek_session_akses_affiliate_vip($id){
+  $ci = & get_instance();
+  $session = $ci->db->query("SELECT * FROM user WHERE user.id_session='$id'")->num_rows();
+  if ($session == '0' AND $ci->session->userdata('level') != '12'){
+    redirect(base_url().'panel');
+  }
+}
+
 function cek_session_akses_client($id){
   $ci = & get_instance();
   $session = $ci->db->query("SELECT * FROM user WHERE user.id_session='$id'")->num_rows();
