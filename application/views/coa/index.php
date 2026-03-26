@@ -99,7 +99,11 @@
                     $all_ids = array_column($p, 'nomer_kategori');
                     
                     foreach ($p as $c) : 
-                        $level = substr_count($c->nomer_kategori, '.');
+                        if (strpos($c->nomer_kategori, '.') !== false) {
+                            $level = substr_count($c->nomer_kategori, '.');
+                        } else {
+                            $level = strlen($c->nomer_kategori) - 1;
+                        }
                         $has_child = false;
                         foreach($all_ids as $id) {
                             if (strpos($id, $c->nomer_kategori . '.') === 0) {
@@ -109,8 +113,15 @@
                         }
 
                         $parent = '';
+
+                        // kalau ada titik → tetap pakai parent normal
                         if (strpos($c->nomer_kategori, '.') !== false) {
                             $parent = substr($c->nomer_kategori, 0, strrpos($c->nomer_kategori, '.'));
+                        } else {
+                            // kalau tidak ada titik → pakai 1 digit pertama sebagai root
+                            if (strlen($c->nomer_kategori) > 1) {
+                                $parent = substr($c->nomer_kategori, 0, 1);
+                            }
                         }
                     ?>
                     <tr data-parent="<?= $parent ?>" data-id="<?= $c->nomer_kategori ?>" class="coa-row transition">
