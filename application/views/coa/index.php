@@ -111,8 +111,7 @@
                         return implode('.', $formattedParts);
                     }
                     ?>
-                    ?>
-                    
+
                     <?php 
                     // Buat array bantuan untuk cek apakah sebuah ID adalah parent
                     $all_ids = array_column($p, 'nomer_kategori');
