@@ -297,40 +297,43 @@
     });
 
    function uploadAJAX() {
-      const fileInput = document.getElementById('uploadImage');
-      const file = fileInput.files[0];
+    const fileInput = document.getElementById('uploadImage');
+    const file = fileInput.files[0];
 
-      if (!file) {
-          errorMsg.innerText = "Pilih gambar dulu!";
-          errorMsg.classList.remove('hidden');
-          return;
-      }
+    if (!file) {
+        errorMsg.innerText = "Pilih gambar dulu!";
+        errorMsg.classList.remove('hidden');
+        return;
+    }
 
-      let formData = new FormData();
-      formData.append('gambar', file);
-      formData.append('id', "<?= $pc->data_pricelist_idsession ?>");
+    let formData = new FormData();
+    formData.append('gambar', file);
+    formData.append('id', "<?= $pc->data_pricelist_idsession ?>");
 
-      fetch("<?= site_url('potensial-clients-pricelist/upload_gambar') ?>", {
-          method: "POST",
-          body: formData
-      })
-      .then(res => res.json()) // langsung parse JSON
-      .then(json => {
-          if (json.status === 'success') {
-              resultImage.src = json.url + '?t=' + new Date().getTime();
-              closeUploadPopup();
-          } else {
-              console.error("UPLOAD ERROR:", json.message);
-              errorMsg.innerText = json.message;
-              errorMsg.classList.remove('hidden');
-          }
-      })
-      .catch(err => {
-          console.error("FETCH ERROR:", err);
-          errorMsg.innerText = "Upload gagal! Cek console.";
-          errorMsg.classList.remove('hidden');
-      });
-  }
+    fetch("<?= site_url('potensial-clients-pricelist/upload_gambar') ?>", {
+        method: "POST",
+        body: formData
+    })
+    .then(res => res.json()) // parse JSON langsung
+    .then(json => {
+        if (json.status === 'success') {
+            // tampilkan gambar
+            const resultImage = document.getElementById('resultImage');
+            resultImage.src = json.url + '?t=' + new Date().getTime();
+            resultImage.classList.remove('hidden');
+            closeUploadPopup();
+        } else {
+            console.error("UPLOAD ERROR:", json.message);
+            errorMsg.innerText = json.message;
+            errorMsg.classList.remove('hidden');
+        }
+    })
+    .catch(err => {
+        console.error("FETCH ERROR:", err);
+        errorMsg.innerText = "Upload gagal! Cek console.";
+        errorMsg.classList.remove('hidden');
+    });
+}
 
 
   </script>
