@@ -127,7 +127,7 @@
                               class="rounded w-60 shadow">
 
                           <a 
-                            href="<?= site_url('potensial-clients-pricelist/permanent_delete_gambar/'.$img->data_pricelist_gambar_nama) ?>"
+                            href="<?= site_url('potensial-clients-pricelist/permanent_delete_gambar/'.$img->data_pricelist_idsession.$img->data_pricelist_gambar_nama) ?>"
                             onclick="return confirm('Yakin mau hapus gambar ini?')"
                             class="absolute top-1 right-1 bg-red-500 text-white px-2 rounded">
                             X

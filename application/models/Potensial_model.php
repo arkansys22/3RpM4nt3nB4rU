@@ -142,8 +142,8 @@ class potensial_model extends CI_Model {
     }
 
 
-    public function delete_gambar_permanent($id_session) {
-        $this->db->where('data_pricelist_idsession', $id_session);
+    public function delete_gambar_permanent($idgambar) {
+        $this->db->where('data_pricelist_gambar_nama', $idgambar);
         return $this->db->delete('data_pricelist_gambar');
     }
 
