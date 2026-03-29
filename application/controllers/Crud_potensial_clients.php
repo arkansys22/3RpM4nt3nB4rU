@@ -1315,92 +1315,87 @@ class crud_potensial_clients extends CI_Controller {
 
 
     public function upload_gambar()
-    {
-        // 🔹 Bersihkan semua buffer sebelumnya
-        while (ob_get_level()) ob_end_clean();
-        ob_start();
+{
+    // Hapus semua buffer sebelumnya
+    while (ob_get_level()) ob_end_clean();
 
-        // 🔹 Set header JSON
-        header('Content-Type: application/json; charset=utf-8');
+    header('Content-Type: application/json; charset=utf-8');
 
-        // 🔹 Fungsi bantu kirim JSON dan hentikan eksekusi
-        $sendJSON = function($data) {
-            // hapus output lain sebelum JSON
-            while (ob_get_level()) ob_end_clean();
-            echo json_encode($data);
-            exit;
-        };
+    $sendJSON = function($data) {
+        echo json_encode($data);
+        exit;
+    };
 
-        // 🔹 Tangkap semua warning/error dan ubah jadi JSON
-        set_error_handler(function($severity, $message, $file, $line) use ($sendJSON) {
-            $sendJSON([
-                'status' => 'error',
-                'message' => "PHP ERROR: $message in $file:$line"
-            ]);
-        });
-
-        $id = $this->input->post('id');
-        if (empty($id)) {
-            $sendJSON(['status' => 'error', 'message' => 'ID tidak ditemukan']);
-        }
-
-        if (empty($_FILES['gambar']['name'])) {
-            $sendJSON(['status' => 'error', 'message' => 'File tidak dipilih']);
-        }
-
-        $basePath = FCPATH . 'assets/uploads/pricelist/';
-
-        // 🔹 Buat folder kalau belum ada
-        if (!file_exists($basePath)) {
-            mkdir($basePath, 0777, true); // recursive
-        }
-
-        // 🔹 Pastikan path bisa ditulis
-        if (!is_dir($basePath) || !is_writable($basePath)) {
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Folder upload tidak valid atau tidak writable',
-                'path' => $basePath,
-                'is_dir' => is_dir($basePath),
-                'writable' => is_writable($basePath)
-            ]);
-            exit;
-        }
-
-        $config['upload_path'] = $basePath;
-        $config['allowed_types'] = 'jpg|jpeg|png|webp';
-        $config['file_name'] = 'pricelist_' . time();
-        $config['max_size'] = 1024;
-
-        $this->load->library('upload', $config);
-
-        if (!$this->upload->validate_upload_path()) {
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Path upload tidak valid',
-                'path_config' => $config['upload_path'],
-                'is_dir' => is_dir($config['upload_path']),
-                'writable' => is_writable($config['upload_path'])
-            ]);
-            exit;
-        }
-
-        if (!$this->upload->do_upload('gambar')) {
-            $sendJSON(['status' => 'error', 'message' => strip_tags($this->upload->display_errors())]);
-        }
-
-        $file = $this->upload->data();
-
-        $this->db->insert('data_pricelist_gambar', [
-            'data_pricelist_idsession' => $id,
-            'data_pricelist_gambar_nama' => $file['file_name']
-        ]);
-
+    // Tangkap semua warning/error
+    set_error_handler(function($severity, $message, $file, $line) use ($sendJSON) {
         $sendJSON([
-            'status' => 'success',
-            'url'    => base_url('assets/uploads/pricelist/' . $file['file_name'])
+            'status' => 'error',
+            'message' => "PHP ERROR: $message in $file:$line"
+        ]);
+    });
+
+    $id = $this->input->post('id');
+    if (empty($id)) $sendJSON(['status'=>'error','message'=>'ID tidak ditemukan']);
+
+    if (empty($_FILES['gambar']['name'])) $sendJSON(['status'=>'error','message'=>'File tidak dipilih']);
+
+    // 🔹 Absolute path tanpa trailing slash untuk CI
+    $basePath = FCPATH . 'assets/uploads/pricelist';
+
+    // 🔹 Buat folder jika belum ada
+    if (!is_dir($basePath)) {
+        if (!mkdir($basePath, 0777, true)) {
+            $sendJSON(['status'=>'error','message'=>'Gagal membuat folder upload']);
+        }
+    }
+
+    // 🔹 Pastikan folder writable
+    if (!is_writable($basePath)) {
+        $sendJSON(['status'=>'error','message'=>'Folder tidak writable','path'=>$basePath]);
+    }
+
+    // 🔹 Konfigurasi upload
+    $config = [
+        'upload_path'   => $basePath, // **tanpa trailing slash**
+        'allowed_types' => 'jpg|jpeg|png|webp',
+        'file_name'     => 'pricelist_' . time(),
+        'max_size'      => 1024
+    ];
+
+    $this->load->library('upload', $config);
+
+    // 🔹 Reset library untuk memastikan path valid
+    $this->upload->initialize($config);
+
+    // 🔹 Validasi path
+    if (!$this->upload->validate_upload_path()) {
+        $sendJSON([
+            'status'=>'error',
+            'message'=>'Path upload tidak valid',
+            'path_config'=>$config['upload_path'],
+            'is_dir'=>is_dir($config['upload_path']),
+            'writable'=>is_writable($config['upload_path'])
         ]);
     }
+
+    // 🔹 Upload file
+    if (!$this->upload->do_upload('gambar')) {
+        $sendJSON(['status'=>'error','message'=>strip_tags($this->upload->display_errors())]);
+    }
+
+    $file = $this->upload->data();
+
+    // 🔹 Simpan ke database
+    $this->db->insert('data_pricelist_gambar', [
+        'data_pricelist_idsession' => $id,
+        'data_pricelist_gambar_nama' => $file['file_name']
+    ]);
+
+    $sendJSON([
+        'status'=>'success',
+        'url'=>base_url('assets/uploads/pricelist/' . $file['file_name'])
+    ]);
+}
 
 
 
