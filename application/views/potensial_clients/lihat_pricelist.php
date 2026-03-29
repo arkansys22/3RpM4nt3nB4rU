@@ -314,18 +314,35 @@
         formData.append('id', "<?= $pc->data_pricelist_idsession ?>");
 
         fetch("<?= site_url('potensial-clients-pricelist/upload_gambar') ?>", {
-            method: "POST",
-            body: formData
-        })
-       .then(res => res.text())
-        .then(res => {
-            console.log("RESPONSE:", res);
-        })
-        .catch(err => {
-            console.log(err);
-            errorMsg.innerText = "Upload gagal!";
-            errorMsg.classList.remove('hidden');
-        });
+    method: "POST",
+    body: formData
+      })
+      .then(res => res.text())
+      .then(res => {
+          console.log("RAW:", res);
+
+          try {
+              let json = JSON.parse(res);
+
+              if (json.status === 'success') {
+                  resultImage.src = json.url + '?t=' + new Date().getTime();
+                  closeUploadPopup();
+              } else {
+                  errorMsg.innerText = json.message;
+                  errorMsg.classList.remove('hidden');
+              }
+
+          } catch (e) {
+              console.log("JSON ERROR:", e);
+              errorMsg.innerText = "Response bukan JSON!";
+              errorMsg.classList.remove('hidden');
+          }
+      })
+      .catch(err => {
+          console.log(err);
+          errorMsg.innerText = "Upload gagal!";
+          errorMsg.classList.remove('hidden');
+      });
     }
 
 
