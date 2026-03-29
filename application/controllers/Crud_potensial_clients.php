@@ -1302,6 +1302,22 @@ class crud_potensial_clients extends CI_Controller {
 
         if (!empty($_FILES['gambar']['name'])) {
 
+            if (empty($id)) {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'ID tidak ditemukan'
+                ]);
+                return;
+            }
+
+            if (empty($_FILES)) {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'File tidak terbaca'
+                ]);
+                return;
+            }
+
             // validasi ukuran
             if ($_FILES['gambar']['size'] > 1048576) {
                 echo json_encode([
@@ -1311,7 +1327,14 @@ class crud_potensial_clients extends CI_Controller {
                 return;
             }
 
-            $config['upload_path']   = FCPATH . 'assets/frontend/uploads/pricelist/';
+            $path = FCPATH . 'assets/frontend/uploads/pricelist/';
+
+            // buat folder jika belum ada
+            if (!is_dir($path)) {
+                mkdir($path, 0777, true);
+            }
+
+            $config['upload_path'] = $path;
             $config['allowed_types'] = 'jpg|jpeg|png|webp';
             $config['file_name']     = 'pricelist_' . time();
             $config['max_size']      = 1024; // KB
