@@ -1348,20 +1348,29 @@ class crud_potensial_clients extends CI_Controller {
             $sendJSON(['status' => 'error', 'message' => 'File tidak dipilih']);
         }
 
-        $basePath = FCPATH . 'assets/uploads/pricelist';
-        if (!is_dir($basePath)) mkdir($basePath, 0777, true);
+        $basePath = FCPATH . 'assets/uploads/pricelist/';
 
-        $path = realpath($basePath);
-        if ($path === false) $sendJSON(['status' => 'error', 'message' => 'realpath gagal']);
+        // 🔹 Buat folder kalau belum ada
+        if (!file_exists($basePath)) {
+            mkdir($basePath, 0777, true); // recursive
+        }
 
-        $path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        // 🔹 Pastikan path bisa ditulis
+        if (!is_dir($basePath) || !is_writable($basePath)) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Folder upload tidak valid atau tidak writable',
+                'path' => $basePath,
+                'is_dir' => is_dir($basePath),
+                'writable' => is_writable($basePath)
+            ]);
+            exit;
+        }
 
-        $config = [
-            'upload_path'   => $path,
-            'allowed_types' => 'jpg|jpeg|png|webp',
-            'file_name'     => 'pricelist_' . time(),
-            'max_size'      => 1024
-        ];
+        $config['upload_path'] = $basePath;
+        $config['allowed_types'] = 'jpg|jpeg|png|webp';
+        $config['file_name'] = 'pricelist_' . time();
+        $config['max_size'] = 1024;
 
         $this->load->library('upload', $config);
 
