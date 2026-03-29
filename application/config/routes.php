@@ -179,7 +179,7 @@ $route['potensial-clients-pricelist/recycle_bin'] = 'crud_potensial_clients/recy
 $route['potensial-clients-pricelist/permanent_delete/(:any)'] = 'crud_potensial_clients/permanent_delete_pricelist/$1'; // Hapus permanen Potensial Clients
 $route['potensial-clients-pricelist/restore/(:any)'] = 'crud_potensial_clients/restore_pricelist/$1'; // Restore Potensial Clients
 $route['potensial-clients-pricelist/upload_gambar'] = 'crud_potensial_clients/upload_gambar'; // Menambahkan gambar di pricelist
-
+$route['potensial-clients-pricelist/permanent_delete_gambar/(:any)'] = 'crud_potensial_clients/permanent_delete_gambar/$1'; // Hapus permanen Potensial Clients
 
 $route['potensial-clients-penawaran/edit/(:any)'] = 'crud_potensial_clients/edit_penawaran/$1';
 

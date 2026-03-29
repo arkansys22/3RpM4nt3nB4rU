@@ -141,6 +141,12 @@ class potensial_model extends CI_Model {
         return $this->db->delete('data_pricelist');
     }
 
+
+    public function delete_gambar_permanent($id_session) {
+        $this->db->where('data_pricelist_idsession', $id_session);
+        return $this->db->delete('data_pricelist_gambar');
+    }
+
     public function get_pricelist_by_status($status)
     {   
         $this->db->order_by('data_pricelist_type', 'DESC');    

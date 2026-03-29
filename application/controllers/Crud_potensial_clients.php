@@ -1222,6 +1222,14 @@ class crud_potensial_clients extends CI_Controller {
     }
 
 
+    public function permanent_delete_gambar($id_session) {
+        $this->Potensial_model->delete_gambar_permanent($id_session);
+
+        $this->session->set_flashdata('Success', 'Pricelist berhasil dihapus permanent');
+        redirect('potensial-clients-pricelist/lihat/'.$id_session);
+    }
+
+
     public function update_penawaran($id_session)
     {
         $data = [

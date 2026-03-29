@@ -126,11 +126,12 @@
                               src="<?= base_url('assets/uploads/pricelist/'.$img->data_pricelist_gambar_nama) ?>" 
                               class="rounded w-60 shadow">
 
-                          <button 
-                              onclick="hapusGambar('<?= $img->data_pricelist_gambar_nama ?>')"
-                              class="absolute top-1 right-1 bg-red-500 text-white px-2 rounded">
-                              X
-                          </button>
+                          <a 
+                            href="<?= site_url('potensial-clients-pricelist/permanent_delete_gambar/'.$img->data_pricelist_gambar_nama) ?>"
+                            onclick="return confirm('Yakin mau hapus gambar ini?')"
+                            class="absolute top-1 right-1 bg-red-500 text-white px-2 rounded">
+                            X
+                        </a>
                       </div>
                   <?php endforeach; ?>
 
