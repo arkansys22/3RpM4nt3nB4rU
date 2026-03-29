@@ -1364,7 +1364,7 @@ class crud_potensial_clients extends CI_Controller {
 
             echo json_encode([
                 'status' => 'success',
-                'url' => base_url('assets/uploads/pricelist/' . $file['file_name'])
+                'url' => base_url('public_html/assets/uploads/pricelist/' . $file['file_name'])
             ]);
         }
     }
