@@ -1300,66 +1300,64 @@ class crud_potensial_clients extends CI_Controller {
     {
         $id = $this->input->post('id');
 
-        if (!empty($_FILES['gambar']['name'])) {
+        if (empty($id)) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'ID tidak ditemukan'
+            ]);
+            return;
+        }
 
-            if (empty($id)) {
-                echo json_encode([
-                    'status' => 'error',
-                    'message' => 'ID tidak ditemukan'
-                ]);
-                return;
-            }
+        if (empty($_FILES['gambar']['name'])) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'File tidak dipilih'
+            ]);
+            return;
+        }
 
-            if (empty($_FILES)) {
-                echo json_encode([
-                    'status' => 'error',
-                    'message' => 'File tidak terbaca'
-                ]);
-                return;
-            }
+        // validasi ukuran
+        if ($_FILES['gambar']['size'] > 1048576) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Ukuran maksimal 1MB'
+            ]);
+            return;
+        }
 
-            // validasi ukuran
-            if ($_FILES['gambar']['size'] > 1048576) {
-                echo json_encode([
-                    'status' => 'error',
-                    'message' => 'Ukuran maksimal 1MB'
-                ]);
-                return;
-            }
+        // PATH
+        $path = FCPATH . 'assets/frontend/uploads/pricelist/';
 
-            $path = FCPATH . 'assets/frontend/uploads/pricelist/';
+        // auto buat folder
+        if (!is_dir($path)) {
+            mkdir($path, 0777, true);
+        }
 
-            // buat folder jika belum ada
-            if (!is_dir($path)) {
-                mkdir($path, 0777, true);
-            }
+        $config['upload_path']   = $path;
+        $config['allowed_types'] = 'jpg|jpeg|png|webp';
+        $config['file_name']     = 'pricelist_' . time();
+        $config['max_size']      = 1024;
 
-            $config['upload_path'] = $path;
-            $config['allowed_types'] = 'jpg|jpeg|png|webp';
-            $config['file_name']     = 'pricelist_' . time();
-            $config['max_size']      = 1024; // KB
+        $this->load->library('upload', $config);
 
-            $this->load->library('upload', $config);
+        if (!$this->upload->do_upload('gambar')) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => strip_tags($this->upload->display_errors())
+            ]);
+        } else {
+            $file = $this->upload->data();
 
-            if (!$this->upload->do_upload('gambar')) {
-                echo json_encode([
-                    'status' => 'error',
-                    'message' => strip_tags($this->upload->display_errors())
-                ]);
-            } else {
-                $file = $this->upload->data();
+            // simpan ke database
+            $this->db->insert('data_pricelist_gambar', [
+                'data_pricelist_idsession' => $id,
+                'data_pricelist_gambar_nama' => $file['file_name']
+            ]);
 
-                // simpan ke database
-                $this->db->insert('data_pricelist_gambar', [
-                    'data_pricelist_idsession' => $id,
-                    'data_pricelist_gambar_nama' => $file['file_name']
-                ]);
-
-                echo json_encode([
-                    'status' => 'success',
-                    'url' => base_url('assets/frontend/uploads/pricelist/'.$file['file_name'])
-                ]);
-            }
+            echo json_encode([
+                'status' => 'success',
+                'url' => base_url('assets/frontend/uploads/pricelist/'.$file['file_name'])
+            ]);
         }
     }
 
