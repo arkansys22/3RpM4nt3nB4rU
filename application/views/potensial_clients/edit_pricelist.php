@@ -49,7 +49,7 @@
                 <input type="text" name="diskon" id="formattedNumber" value="<?= number_format($pc->data_pricelist_diskonmax ?? 0, 0, ',', '.') ?>" class="w-full px-4 py-2 border rounded mb-4" oninput="formatNumber(this)" required>
 
                 <label class="block mb-2">Deskripsi</label>
-                <textarea name="deskripsi" class="w-full px-4 py-2 border rounded mb-4" required><?= $pc->data_pricelist_deskripsi?></textarea>
+                <textarea name="deskripsi" class="w-full px-4 py-2 border rounded mb-4" rows="15" required><?= $pc->data_pricelist_deskripsi?></textarea>
 
                 <label class="block mb-2">Kategori</label>
                 <select name="kategori" class="w-full px-4 py-2 border rounded mb-4" required>
@@ -63,6 +63,10 @@
                     <option value="Makeup & Busana" <?= $pc->data_pricelist_type == 'Makeup & Busana' ? 'selected' : '' ?> >Makeup & Busana</option>
                     <option  value="Venue Pernikahan" <?= $pc->data_pricelist_type == 'Venue Pernikahan' ? 'selected' : '' ?> >Venue Pernikahan</option>
                     <option  value="Paket Pernikahan" <?= $pc->data_pricelist_type == 'Paket Pernikahan' ? 'selected' : '' ?> >Paket Pernikahan</option>
+                    <option  value="Paket Wedding Organizer" <?= $pc->data_pricelist_type == 'Paket Wedding Organizer' ? 'selected' : '' ?> >Paket Wedding Organizer</option>
+                    <option  value="Paket Lamaran" <?= $pc->data_pricelist_type == 'Paket Lamaran' ? 'selected' : '' ?> >Paket Lamaran</option>
+                    <option  value="Paket Wedding Gedung" <?= $pc->data_pricelist_type == 'Paket Wedding Gedung' ? 'selected' : '' ?> >Paket Wedding Gedung</option>
+                    <option  value="Paket Wedding Rumah" <?= $pc->data_pricelist_type == 'Paket Wedding Rumah' ? 'selected' : '' ?> >Paket Wedding Rumah</option>
                 </select>
 
                 <label class="block mb-2">Visibilitas</label>

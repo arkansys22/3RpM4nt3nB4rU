@@ -49,7 +49,7 @@
                 <input type="text" name="diskon" id="formattedNumber" class="w-full px-4 py-2 border rounded mb-4" oninput="formatNumber(this)" required>
 
                 <label class="block mb-2">Deskripsi</label>
-                <textarea name="deskripsi" class="w-full px-4 py-2 border rounded mb-4" required></textarea>
+                <textarea name="deskripsi" class="w-full px-4 py-2 border rounded mb-4" rows="15" required></textarea>
 
                 <label class="block mb-2">Kategori</label>
                 <select name="kategori" class="w-full px-4 py-2 border rounded mb-4" required>
@@ -63,6 +63,11 @@
                     <option value="Makeup & Busana">Makeup & Busana</option>
                     <option value="Venue Pernikahan">Venue Pernikahan</option>
                     <option value="Paket Pernikahan">Paket Pernikahan</option>
+                    <option value="Paket Wedding Organizer">Paket Wedding Organizer</option>
+                    <option value="Paket Lamaran">Paket Lamaran</option>
+                    <option value="Paket Wedding Gedung">Paket Wedding Gedung</option>
+                    <option value="Paket Wedding Rumah">Paket Wedding Rumah</option>
+                    
                 </select>
 
 
