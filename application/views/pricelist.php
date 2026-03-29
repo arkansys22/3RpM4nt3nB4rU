@@ -874,12 +874,12 @@ body{
 <div class="section" id="gedung">
   <h2>Paket Wedding Gedung</h2>
   <div class="carousel">
- 
-
-    <div class="carousel-track" id="track">
-
-	<button class="carousel-btn prev-btn">&#10094;</button>
+ 	<button class="carousel-btn prev-btn">&#10094;</button>
     <button class="carousel-btn next-btn">&#10095;</button>
+
+    <div class="carousel-track">
+
+	
     	<?php $no = 1; foreach ($paketgedung as $p): ?>
 
 
@@ -928,9 +928,8 @@ body{
       <?php endforeach; ?> 
 
     </div> 
+    <div class="dots"></div> 
   </div>
-  <!-- DOT -->
-  <div class="dots" id="dots"></div>
 </div>
 
 <!-- RUMAH -->
