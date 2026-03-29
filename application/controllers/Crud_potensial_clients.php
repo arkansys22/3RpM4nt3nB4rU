@@ -1222,12 +1222,24 @@ class crud_potensial_clients extends CI_Controller {
     }
 
 
-    public function permanent_delete_gambar($id_session,$idgambar) {
-        $this->db->get_where('data_pricelist_gambar',['data_pricelist_gambar_nama' => $idgambar])->row();
-        $query = $this->db->delete('data_pricelist_gambar',['data_pricelist_gambar_nama'=>$idgambar]);
-        if($query){
-                    unlink("./assets/uploads/pricelist/".$idgambar->data_pricelist_gambar_nama);
-                 }
+    public function permanent_delete_gambar($id_session, $idgambar) {
+        // Ambil data file dari database
+        $file = $this->db->get_where('data_pricelist_gambar', [
+            'data_pricelist_gambar_nama' => $idgambar
+        ])->row();
+
+        if ($file) {
+            // Hapus dari database
+            $this->db->delete('data_pricelist_gambar', [
+                'data_pricelist_gambar_nama' => $idgambar
+            ]);
+
+            // Hapus file fisik dari server
+            $file_path = FCPATH . 'assets/uploads/pricelist/' . $file->data_pricelist_gambar_nama;
+            if (file_exists($file_path)) {
+                unlink($file_path);
+            }
+        }
 
         $this->session->set_flashdata('Success', 'Pricelist berhasil dihapus permanent');
         redirect('potensial-clients-pricelist/lihat/'.$id_session);
