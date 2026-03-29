@@ -738,10 +738,12 @@ body{
   <h2>Paket Wedding Organizer</h2>
 
   <div class="carousel">
-  	<button class="carousel-btn prev-btn">&#10094;</button>
-    <button class="carousel-btn next-btn">&#10095;</button>
 
     <div class="carousel-track">
+
+    <button class="carousel-btn prev-btn">&#10094;</button>
+    <button class="carousel-btn next-btn">&#10095;</button>
+
 
     	<?php $no = 1; foreach ($paketwo as $p): ?>
 
@@ -791,11 +793,11 @@ body{
 
       	<?php endforeach; ?> 
 
-  
+      	<div class="dots"></div>
 
     </div>
 
-   <div class="dots"></div>
+   
 
   </div>
 
@@ -809,10 +811,10 @@ body{
 <div class="section" id="lamaran">
   <h2>Paket Lamaran</h2>
   <div class="carousel">
-   <button class="carousel-btn prev-btn">&#10094;</button>
+   
+    <div class="carousel-track" id="track">
+    <button class="carousel-btn prev-btn">&#10094;</button>
     <button class="carousel-btn next-btn">&#10095;</button>
-    <div class="carousel-track">
-    
 
     	<?php $no = 1; foreach ($paketlamaran as $p): ?>
 
@@ -863,8 +865,9 @@ body{
       
 
     </div> 
-    <div class="dots"></div>
   </div>
+  <!-- DOT -->
+  <div class="dots" id="dots"></div>
 </div>
 
 <!-- GEDUNG -->
@@ -872,10 +875,11 @@ body{
   <h2>Paket Wedding Gedung</h2>
   <div class="carousel">
  
+
+    <div class="carousel-track" id="track">
+
 	<button class="carousel-btn prev-btn">&#10094;</button>
     <button class="carousel-btn next-btn">&#10095;</button>
-    <div class="carousel-track">
-
     	<?php $no = 1; foreach ($paketgedung as $p): ?>
 
 
@@ -922,22 +926,22 @@ body{
       </div>      
 
       <?php endforeach; ?> 
-     
 
     </div> 
-    <div class="dots"></div>
   </div>
+  <!-- DOT -->
+  <div class="dots" id="dots"></div>
 </div>
 
 <!-- RUMAH -->
 <div class="section" id="rumah">
   <h2>Paket Wedding Rumah</h2>
   <div class="carousel">
- 	<button class="carousel-btn prev-btn">&#10094;</button>
+ 
+
+    <div class="carousel-track" id="track">
+	<button class="carousel-btn prev-btn">&#10094;</button>
     <button class="carousel-btn next-btn">&#10095;</button>
-
-    <div class="carousel-track" >
-
     	<?php $no = 1; foreach ($paketrumah as $p): ?>
 
 
@@ -984,12 +988,11 @@ body{
       </div>      
 
       <?php endforeach; ?> 
-      
 
     </div> 
-    <div class="dots"></div>
   </div>
-  
+  <!-- DOT -->
+  <div class="dots" id="dots"></div>
 </div>
 
 <!-- VENDOR -->
@@ -997,10 +1000,10 @@ body{
   <h2>Vendor Pernikahan</h2>
   <div class="carousel">
     
-  	<button class="carousel-btn prev-btn">&#10094;</button>
+
+    <div class="carousel-track" id="track">
+    	<button class="carousel-btn prev-btn">&#10094;</button>
     <button class="carousel-btn next-btn">&#10095;</button>
-    <div class="carousel-track">
-  
 
     	<?php $no = 1; foreach ($paketvendor as $p): ?>
 
@@ -1048,10 +1051,11 @@ body{
       </div>      
 
       <?php endforeach; ?> 
-      
+
     </div> 
-    <div class="dots"></div>
   </div>
+  <!-- DOT -->
+  <div class="dots" id="dots"></div>
 </div>
 
 <!-- FOOTER -->
@@ -1120,14 +1124,6 @@ body{
   const popupPrice = document.getElementById("popup-price");
   const popupDesc = document.getElementById("popup-desc");
   const waBtn = document.getElementById("wa-btn");
-
-  // Tambahkan di sini
-	const popupOldPrice = document.getElementById("popup-old-price");
-	const popupDiscount = document.getElementById("popup-discount");
-
-	function formatRupiah(number){
-	  return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(number);
-	}
 
   // INIT ACCORDION (WAJIB JALAN SEKALI)
   function initAccordion(){
@@ -1239,66 +1235,44 @@ body{
   };
   </script>
   <script>
-document.querySelectorAll('.carousel').forEach(carousel => {
-  const track = carousel.querySelector('.carousel-track');
-  const cards = Array.from(track.children);
-  const nextBtn = carousel.querySelector('.next-btn');
-  const prevBtn = carousel.querySelector('.prev-btn');
-  const dotsContainer = carousel.querySelector('.dots');
-  let current = 0;
 
-  // buat dots
-  function createDots() {
-    dotsContainer.innerHTML = '';
-    cards.forEach((_, i) => {
-      const dot = document.createElement('span');
-      dot.onclick = () => { goToSlide(i); };
-      dotsContainer.appendChild(dot);
-    });
-  }
+  	document.querySelectorAll('.carousel').forEach(carousel => {
+		  const track = carousel.querySelector('.carousel-track');
+		  const cards = Array.from(track.children);
+		  const nextBtn = carousel.querySelector('.next-btn');
+		  const prevBtn = carousel.querySelector('.prev-btn');
+		  const dotsContainer = carousel.querySelector('.dots');
+		  let current = 0;
 
-  function updateSlider() {
-    const gap = parseInt(getComputedStyle(track).gap) || 20;
-    const width = cards[0].offsetWidth + gap;
-    track.style.transform = `translateX(-${current * width}px)`;
+		  function updateSlider(){
+		    const width = cards[0].offsetWidth + 20;
+		    track.style.transform = `translateX(-${current * width}px)`;
+		    cards.forEach(c => c.classList.remove('active'));
+		    cards[current].classList.add('active');
+		    const dots = dotsContainer.querySelectorAll('span');
+		    dots.forEach(d => d.classList.remove('active'));
+		    dots[current].classList.add('active');
+		  }
 
-    // aktifkan card tengah
-    cards.forEach(c => c.classList.remove('active'));
-    if(cards[current]) cards[current].classList.add('active');
+		  function createDots(){
+		    dotsContainer.innerHTML = '';
+		    cards.forEach((_, i) => {
+		      const dot = document.createElement('span');
+		      if(i===0) dot.classList.add('active');
+		      dot.onclick = ()=>{ current = i; updateSlider(); };
+		      dotsContainer.appendChild(dot);
+		    });
+		  }
 
-    // update dots
-    const dots = dotsContainer.querySelectorAll('span');
-    dots.forEach(d => d.classList.remove('active'));
-    if(dots[current]) dots[current].classList.add('active');
-  }
+		  nextBtn.onclick = ()=>{ current = (current+1) % cards.length; updateSlider(); };
+		  prevBtn.onclick = ()=>{ current = (current-1+cards.length) % cards.length; updateSlider(); };
 
-  function goToSlide(index) {
-    if(index < 0) index = 0;
-    if(index >= cards.length) index = cards.length -1;
-    current = index;
-    updateSlider();
-  }
+		  createDots();
+		  updateSlider();
+	});
 
-  nextBtn.onclick = () => { goToSlide(current + 1); };
-  prevBtn.onclick = () => { goToSlide(current - 1); };
 
-  // swipe support (optional)
-  let startX = 0;
-  track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
-  track.addEventListener('touchend', e => {
-    const diff = e.changedTouches[0].clientX - startX;
-    if(diff > 30) prevBtn.click();
-    if(diff < -30) nextBtn.click();
-  });
 
-  createDots();
-  updateSlider();
-
-  // update slider on resize
-  window.addEventListener('resize', updateSlider);
-});
-</script>
-<script>
 
     const track = document.getElementById("track");
     const cards = Array.from(track.children);
