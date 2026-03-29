@@ -811,10 +811,10 @@ body{
 <div class="section" id="lamaran">
   <h2>Paket Lamaran</h2>
   <div class="carousel">
+   
+    <div class="carousel-track" id="track">
     <button class="carousel-btn prev-btn">&#10094;</button>
     <button class="carousel-btn next-btn">&#10095;</button>
-
-    <div class="carousel-track" id="track">
 
     	<?php $no = 1; foreach ($paketlamaran as $p): ?>
 
@@ -832,7 +832,7 @@ body{
 				          $firstImg = $gambarPaket[0];
 				    ?>
 
-	          <img src="<?= base_url('assets/uploads/pricelist/'.$firstImg->data_pricelist_gambar_nama) ?>" alt="<?= $p->data_pricelist_judul ?>">
+	          <img src="<?= base_url('assets/uploads/pricelist/'.$firstImg->data_pricelist_gambar_nama) ?>">
 		      <?php } else { ?>
 		          <img src="https://via.placeholder.com/400x400?text=No+Image">
 		      <?php } ?>
@@ -862,29 +862,42 @@ body{
       </div>      
 
       <?php endforeach; ?> 
+      <div class="dots"></div>
 
     </div> 
   </div>
-  <!-- DOT -->
-  <div class="dots" id="dots"></div>
 </div>
 
 <!-- GEDUNG -->
 <div class="section" id="gedung">
   <h2>Paket Wedding Gedung</h2>
   <div class="carousel">
-    <button class="carousel-btn prev-btn">&#10094;</button>
-    <button class="carousel-btn next-btn">&#10095;</button>
+ 
 
     <div class="carousel-track" id="track">
 
+	<button class="carousel-btn prev-btn">&#10094;</button>
+    <button class="carousel-btn next-btn">&#10095;</button>
     	<?php $no = 1; foreach ($paketgedung as $p): ?>
 
 
       <!-- CARD -->
       <div class="card">
         <div class="card-img">
-          <img src="https://images.unsplash.com/photo-1519741497674-611481863552">
+           <?php 
+				      // Ambil semua gambar dari tabel data_pricelist_gambar sesuai id session
+				      $gambarPaket = $this->db->get_where('data_pricelist_gambar', [
+				          'data_pricelist_idsession' => $p->data_pricelist_idsession
+				      ])->result();
+				      if(!empty($gambarPaket)){
+				          // tampilkan gambar pertama sebagai thumbnail
+				          $firstImg = $gambarPaket[0];
+				    ?>
+
+	          <img src="<?= base_url('assets/uploads/pricelist/'.$firstImg->data_pricelist_gambar_nama) ?>">
+		      <?php } else { ?>
+		          <img src="https://via.placeholder.com/400x400?text=No+Image">
+		      <?php } ?>
         </div>
         <h3><?= $p->data_pricelist_judul ?></h3>
         <p class="price">
@@ -898,38 +911,54 @@ body{
           data-oldprice="<?= $p->data_pricelist_harga ?>"
           data-desc="<?= $p->data_pricelist_deskripsi ?>"          
           data-images='[
-          "https://images.unsplash.com/photo-1519741497674-611481863552",
-          "https://images.unsplash.com/photo-1522673607200-164d1b6ce486",
-          "https://images.unsplash.com/photo-1507504031003-b417219a0fde"
+          <?php 
+		          $imgUrls = [];
+		          foreach($gambarPaket as $img){
+		              $imgUrls[] = base_url('assets/uploads/pricelist/'.$img->data_pricelist_gambar_nama);
+		          }
+		          echo '"' . implode('","', $imgUrls) . '"';
+		        ?>
           ]'>
           Detail
         </a>
       </div>      
 
       <?php endforeach; ?> 
+      <div class="dots"></div>
 
     </div> 
   </div>
-  <!-- DOT -->
-  <div class="dots" id="dots"></div>
 </div>
 
 <!-- RUMAH -->
 <div class="section" id="rumah">
   <h2>Paket Wedding Rumah</h2>
   <div class="carousel">
-    <button class="carousel-btn prev-btn">&#10094;</button>
-    <button class="carousel-btn next-btn">&#10095;</button>
+ 
 
     <div class="carousel-track" id="track">
-
+	<button class="carousel-btn prev-btn">&#10094;</button>
+    <button class="carousel-btn next-btn">&#10095;</button>
     	<?php $no = 1; foreach ($paketrumah as $p): ?>
 
 
       <!-- CARD -->
       <div class="card">
         <div class="card-img">
-          <img src="https://images.unsplash.com/photo-1519741497674-611481863552">
+           <?php 
+				      // Ambil semua gambar dari tabel data_pricelist_gambar sesuai id session
+				      $gambarPaket = $this->db->get_where('data_pricelist_gambar', [
+				          'data_pricelist_idsession' => $p->data_pricelist_idsession
+				      ])->result();
+				      if(!empty($gambarPaket)){
+				          // tampilkan gambar pertama sebagai thumbnail
+				          $firstImg = $gambarPaket[0];
+				    ?>
+
+	          <img src="<?= base_url('assets/uploads/pricelist/'.$firstImg->data_pricelist_gambar_nama) ?>">
+		      <?php } else { ?>
+		          <img src="https://via.placeholder.com/400x400?text=No+Image">
+		      <?php } ?>
         </div>
         <h3><?= $p->data_pricelist_judul ?></h3>
         <p class="price">
@@ -943,30 +972,35 @@ body{
           data-oldprice="<?= $p->data_pricelist_harga ?>"
           data-desc="<?= $p->data_pricelist_deskripsi ?>"          
           data-images='[
-          "https://images.unsplash.com/photo-1519741497674-611481863552",
-          "https://images.unsplash.com/photo-1522673607200-164d1b6ce486",
-          "https://images.unsplash.com/photo-1507504031003-b417219a0fde"
+          <?php 
+		          $imgUrls = [];
+		          foreach($gambarPaket as $img){
+		              $imgUrls[] = base_url('assets/uploads/pricelist/'.$img->data_pricelist_gambar_nama);
+		          }
+		          echo '"' . implode('","', $imgUrls) . '"';
+		        ?>
           ]'>
           Detail
         </a>
       </div>      
 
       <?php endforeach; ?> 
+      <div class="dots"></div>
 
     </div> 
   </div>
-  <!-- DOT -->
-  <div class="dots" id="dots"></div>
+  
 </div>
 
 <!-- VENDOR -->
 <div class="section" id="vendor">
   <h2>Vendor Pernikahan</h2>
   <div class="carousel">
-    <button class="carousel-btn prev-btn">&#10094;</button>
-    <button class="carousel-btn next-btn">&#10095;</button>
+    
 
     <div class="carousel-track" id="track">
+    	<button class="carousel-btn prev-btn">&#10094;</button>
+    <button class="carousel-btn next-btn">&#10095;</button>
 
     	<?php $no = 1; foreach ($paketvendor as $p): ?>
 
@@ -974,7 +1008,20 @@ body{
       <!-- CARD -->
       <div class="card">
         <div class="card-img">
-          <img src="https://images.unsplash.com/photo-1519741497674-611481863552">
+           <?php 
+				      // Ambil semua gambar dari tabel data_pricelist_gambar sesuai id session
+				      $gambarPaket = $this->db->get_where('data_pricelist_gambar', [
+				          'data_pricelist_idsession' => $p->data_pricelist_idsession
+				      ])->result();
+				      if(!empty($gambarPaket)){
+				          // tampilkan gambar pertama sebagai thumbnail
+				          $firstImg = $gambarPaket[0];
+				    ?>
+
+	          <img src="<?= base_url('assets/uploads/pricelist/'.$firstImg->data_pricelist_gambar_nama) ?>">
+		      <?php } else { ?>
+		          <img src="https://via.placeholder.com/400x400?text=No+Image">
+		      <?php } ?>
         </div>
         <h3><?= $p->data_pricelist_judul ?></h3>
         <p class="price">
@@ -988,20 +1035,22 @@ body{
           data-oldprice="<?= $p->data_pricelist_harga ?>"
           data-desc="<?= $p->data_pricelist_deskripsi ?>"          
           data-images='[
-          "https://images.unsplash.com/photo-1519741497674-611481863552",
-          "https://images.unsplash.com/photo-1522673607200-164d1b6ce486",
-          "https://images.unsplash.com/photo-1507504031003-b417219a0fde"
+          <?php 
+		          $imgUrls = [];
+		          foreach($gambarPaket as $img){
+		              $imgUrls[] = base_url('assets/uploads/pricelist/'.$img->data_pricelist_gambar_nama);
+		          }
+		          echo '"' . implode('","', $imgUrls) . '"';
+		        ?>
           ]'>
           Detail
         </a>
       </div>      
 
       <?php endforeach; ?> 
-
+      <div class="dots"></div>
     </div> 
   </div>
-  <!-- DOT -->
-  <div class="dots" id="dots"></div>
 </div>
 
 <!-- FOOTER -->
