@@ -238,6 +238,9 @@
     function openUploadPopup() {
         uploadPopup.classList.remove('hidden');
         uploadPopup.classList.add('flex');
+
+        // reset input
+        uploadImage.value = "";
     }
 
     function closeUploadPopup() {
@@ -272,29 +275,43 @@
 
     // AJAX upload
     function uploadAJAX() {
-    console.log("UPLOAD DIKLIK"); // 👈 TEST
+    const fileInput = document.getElementById('uploadImage');
+    const file = fileInput.files[0];
 
-    const file = uploadImage.files[0];
+        console.log("FILE:", file); // DEBUG
 
-    let formData = new FormData();
-    formData.append('gambar', uploadImage.files[0]); // ⬅️ pastikan ini
-    formData.append('id', "<?= $pc->data_pricelist_idsession ?>");
+        if (!file) {
+            errorMsg.innerText = "Pilih gambar dulu!";
+            errorMsg.classList.remove('hidden');
+            return;
+        }
 
-    console.log(uploadImage.files);
-    console.log(uploadImage.files[0]);
+        let formData = new FormData();
+        formData.append('gambar', file);
+        formData.append('id', "<?= $pc->data_pricelist_idsession ?>");
 
-    fetch("<?= site_url('potensial-clients-pricelist/upload_gambar') ?>", {
-        method: "POST",
-        body: formData
-    })
-    .then(res => res.text()) // 👈 ubah dulu ke text
-    .then(res => {
-        console.log("RESPONSE:", res); // 👈 LIHAT INI
-    })
-    .catch(err => {
-        console.log("ERROR:", err);
-    });
-}
+        fetch("<?= site_url('potensial-clients-pricelist/upload_gambar') ?>", {
+            method: "POST",
+            body: formData
+        })
+        .then(res => res.json())
+        .then(res => {
+            console.log("RESPONSE:", res);
+
+            if (res.status === 'success') {
+                resultImage.src = res.url + '?t=' + new Date().getTime();
+                closeUploadPopup();
+            } else {
+                errorMsg.innerText = res.message;
+                errorMsg.classList.remove('hidden');
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            errorMsg.innerText = "Upload gagal!";
+            errorMsg.classList.remove('hidden');
+        });
+    }
 
 
   </script>
