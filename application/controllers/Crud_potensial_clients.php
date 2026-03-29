@@ -1328,6 +1328,14 @@ class crud_potensial_clients extends CI_Controller {
         // PATH
         $path = FCPATH . 'assets/frontend/uploads/pricelist/';
 
+        if (!is_dir($path)) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Folder TIDAK ADA: ' . $path
+            ]);
+            return;
+        }
+
         // auto buat folder
         if (!is_dir($path)) {
             mkdir($path, 0777, true);
