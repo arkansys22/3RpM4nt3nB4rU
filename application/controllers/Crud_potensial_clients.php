@@ -1326,7 +1326,7 @@ class crud_potensial_clients extends CI_Controller {
             return;
         }
 
-        $path = FCPATH . 'public_html/assets/uploads/pricelist/';
+        $path = './public_html/assets/uploads/pricelist/';
 
         // ✅ AUTO BUAT FOLDER
         if (!is_dir($path)) {
