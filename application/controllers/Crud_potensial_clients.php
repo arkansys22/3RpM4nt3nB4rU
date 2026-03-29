@@ -1300,6 +1300,10 @@ class crud_potensial_clients extends CI_Controller {
     {
         header('Content-Type: application/json');
 
+         // 👉 TARUH DI SINI (PALING ATAS)
+        echo json_encode($_FILES);
+        die;
+
         $id = $this->input->post('id');
 
         if (empty($id)) {
