@@ -1366,7 +1366,14 @@ class crud_potensial_clients extends CI_Controller {
         $this->load->library('upload', $config);
 
         if (!$this->upload->validate_upload_path()) {
-            $sendJSON(['status' => 'error', 'message' => 'Path upload tidak valid']);
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Path upload tidak valid',
+                'path_config' => $config['upload_path'],
+                'is_dir' => is_dir($config['upload_path']),
+                'writable' => is_writable($config['upload_path'])
+            ]);
+            exit;
         }
 
         if (!$this->upload->do_upload('gambar')) {
