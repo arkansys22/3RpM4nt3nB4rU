@@ -118,8 +118,8 @@
               <!-- PREVIEW HASIL UPLOAD -->
               <div class="mt-4">
                 <img id="resultImage" 
-                     src="<?= base_url('assets/frontend/uploads/pricelist/'.$pc_img->data_pricelist_gambar_nama ?? 'default.png') ?>" 
-                     class="rounded w-60 shadow">
+                 src="<?= base_url('assets/frontend/uploads/pricelist/'.(!empty($pc_img) ? $pc_img->data_pricelist_gambar_nama : 'default.png')) ?>" 
+                 class="rounded w-60 shadow">
               </div>
 
             </div>
