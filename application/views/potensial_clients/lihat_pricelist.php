@@ -123,7 +123,7 @@
                     <?php foreach ($pc_img as $img) : ?>
                         <img 
                             src="<?= base_url('assets/uploads/pricelist/'.$img->data_pricelist_gambar_nama) ?>" 
-                            class="rounded w-60 shadow">
+                            class="rounded w-60 shadow hover:scale-105 transition duration-300">
                     <?php endforeach; ?>
 
                 <?php else : ?>
