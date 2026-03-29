@@ -747,32 +747,50 @@ body{
     	<?php $no = 1; foreach ($paketwo as $p): ?>
 
 
-      <!-- CARD -->
-      <div class="card">
-        <div class="card-img">
-          <img src="https://images.unsplash.com/photo-1519741497674-611481863552">
-        </div>
-        <h3><?= $p->data_pricelist_judul ?></h3>
-        <p class="price">
-          <span class="old-price">Rp <?= number_format($p->data_pricelist_harga, 0, ',', '.')?></span>
-          Rp <?= number_format($p->data_pricelist_hargapromo, 0, ',', '.') ?>
-        </p>
-        <div class="badge auto-discount"></div>
-        <a href="#" class="btn detail-btn"
-          data-title="<?= $p->data_pricelist_judul ?>"
-          data-price="<?= $p->data_pricelist_hargapromo ?>"
-          data-oldprice="<?= $p->data_pricelist_harga ?>"
-          data-desc="<?= $p->data_pricelist_deskripsi ?>"          
-          data-images='[
-          "https://images.unsplash.com/photo-1519741497674-611481863552",
-          "https://images.unsplash.com/photo-1522673607200-164d1b6ce486",
-          "https://images.unsplash.com/photo-1507504031003-b417219a0fde"
-          ]'>
-          Detail
-        </a>
-      </div>      
+	      <!-- CARD -->
+	      <div class="card">
+	        <div class="card-img">
+	        		<?php 
+				      // Ambil semua gambar dari tabel data_pricelist_gambar sesuai id session
+				      $gambarPaket = $this->db->get_where('data_pricelist_gambar', [
+				          'data_pricelist_idsession' => $p->data_pricelist_idsession
+				      ])->result();
+				      if(!empty($gambarPaket)){
+				          // tampilkan gambar pertama sebagai thumbnail
+				          $firstImg = $gambarPaket[0];
+				    ?>
 
-      <?php endforeach; ?> 
+	          <img src="<?= base_url('assets/uploads/pricelist/'.$firstImg->data_pricelist_gambar_nama) ?>" alt="<?= $p->data_pricelist_judul ?>">
+		      <?php } else { ?>
+		          <img src="https://via.placeholder.com/400x400?text=No+Image">
+		      <?php } ?>
+	      
+	        </div>
+	        <h3><?= $p->data_pricelist_judul ?></h3>
+	        <p class="price">
+	          <span class="old-price">Rp <?= number_format($p->data_pricelist_harga, 0, ',', '.')?></span>
+	          Rp <?= number_format($p->data_pricelist_hargapromo, 0, ',', '.') ?>
+	        </p>
+	        <div class="badge auto-discount"></div>
+	        <a href="#" class="btn detail-btn"
+	          data-title="<?= $p->data_pricelist_judul ?>"
+	          data-price="<?= $p->data_pricelist_hargapromo ?>"
+	          data-oldprice="<?= $p->data_pricelist_harga ?>"
+	          data-desc="<?= $p->data_pricelist_deskripsi ?>"          
+	          data-images='[
+	          <?php 
+		          $imgUrls = [];
+		          foreach($gambarPaket as $img){
+		              $imgUrls[] = base_url('assets/uploads/pricelist/'.$img->data_pricelist_gambar_nama);
+		          }
+		          echo '"' . implode('","', $imgUrls) . '"';
+		        ?>
+	          ]'>
+	          Detail
+	        </a>
+	      </div>      
+
+      	<?php endforeach; ?> 
 
     </div>
 
@@ -804,7 +822,20 @@ body{
       <!-- CARD -->
       <div class="card">
         <div class="card-img">
-          <img src="https://images.unsplash.com/photo-1519741497674-611481863552">
+          <?php 
+				      // Ambil semua gambar dari tabel data_pricelist_gambar sesuai id session
+				      $gambarPaket = $this->db->get_where('data_pricelist_gambar', [
+				          'data_pricelist_idsession' => $p->data_pricelist_idsession
+				      ])->result();
+				      if(!empty($gambarPaket)){
+				          // tampilkan gambar pertama sebagai thumbnail
+				          $firstImg = $gambarPaket[0];
+				    ?>
+
+	          <img src="<?= base_url('assets/uploads/pricelist/'.$firstImg->data_pricelist_gambar_nama) ?>" alt="<?= $p->data_pricelist_judul ?>">
+		      <?php } else { ?>
+		          <img src="https://via.placeholder.com/400x400?text=No+Image">
+		      <?php } ?>
         </div>
         <h3><?= $p->data_pricelist_judul ?></h3>
         <p class="price">
@@ -818,9 +849,13 @@ body{
           data-oldprice="<?= $p->data_pricelist_harga ?>"
           data-desc="<?= $p->data_pricelist_deskripsi ?>"          
           data-images='[
-          "https://images.unsplash.com/photo-1519741497674-611481863552",
-          "https://images.unsplash.com/photo-1522673607200-164d1b6ce486",
-          "https://images.unsplash.com/photo-1507504031003-b417219a0fde"
+          <?php 
+		          $imgUrls = [];
+		          foreach($gambarPaket as $img){
+		              $imgUrls[] = base_url('assets/uploads/pricelist/'.$img->data_pricelist_gambar_nama);
+		          }
+		          echo '"' . implode('","', $imgUrls) . '"';
+		        ?>
           ]'>
           Detail
         </a>
