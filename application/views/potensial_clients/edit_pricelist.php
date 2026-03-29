@@ -63,7 +63,14 @@
                     <option value="Makeup & Busana" <?= $pc->data_pricelist_type == 'Makeup & Busana' ? 'selected' : '' ?> >Makeup & Busana</option>
                     <option  value="Venue Pernikahan" <?= $pc->data_pricelist_type == 'Venue Pernikahan' ? 'selected' : '' ?> >Venue Pernikahan</option>
                     <option  value="Paket Pernikahan" <?= $pc->data_pricelist_type == 'Paket Pernikahan' ? 'selected' : '' ?> >Paket Pernikahan</option>
-                </select>      
+                </select>
+
+                <label class="block mb-2">Visibilitas</label>
+                <select name="visibilitas" class="w-full px-4 py-2 border rounded mb-4" required>
+                    <option value="">---</option>
+                    <option value="Public" <?= $pc->data_pricelist_type == 'Public' ? 'selected' : '' ?> >Public</option>
+                    <option value="Private" <?= $pc->data_pricelist_type == 'Private' ? 'selected' : '' ?> >Private</option>
+                </select>        
 
                 
                 <div class="flex flex-col sm:flex-row justify-end">

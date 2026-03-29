@@ -481,6 +481,7 @@ class crud_potensial_clients extends CI_Controller {
             'data_pricelist_diskonmax'      => str_replace('.', '', $this->input->post('diskon')),
             'data_pricelist_deskripsi'      => $this->input->post('deskripsi'),
             'data_pricelist_type'           => $this->input->post('kategori'), 
+            'data_pricelist_visibilitas'    => $this->input->post('visibilitas'), 
             'data_pricelist_status'           => 'Aktif',          
             'data_pricelist_lastupdate'     => $date_create
         );
@@ -784,6 +785,7 @@ class crud_potensial_clients extends CI_Controller {
             'data_pricelist_diskonmax'    => str_replace('.', '', $this->input->post('diskon')),
             'data_pricelist_deskripsi'    => $this->input->post('deskripsi'),
             'data_pricelist_type'      => $this->input->post('kategori'),
+            'data_pricelist_visibilitas'      => $this->input->post('visibilitas'),
             'data_pricelist_lastupdate'      => date('Y-m-d H:i:s'),
         );
     
