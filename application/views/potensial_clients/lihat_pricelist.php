@@ -296,33 +296,38 @@
         reader.readAsDataURL(file);
     });
 
-    // AJAX upload
-    function uploadAJAX() {
-    const fileInput = document.getElementById('uploadImage');
-    const file = fileInput.files[0];
+   function uploadAJAX() {
+      const fileInput = document.getElementById('uploadImage');
+      const file = fileInput.files[0];
 
-        console.log("FILE:", file); // DEBUG
+      console.log("FILE:", file); // DEBUG
 
-        if (!file) {
-            errorMsg.innerText = "Pilih gambar dulu!";
-            errorMsg.classList.remove('hidden');
-            return;
-        }
+      if (!file) {
+          errorMsg.innerText = "Pilih gambar dulu!";
+          errorMsg.classList.remove('hidden');
+          return;
+      }
 
-        let formData = new FormData();
-        formData.append('gambar', file);
-        formData.append('id', "<?= $pc->data_pricelist_idsession ?>");
+      let formData = new FormData();
+      formData.append('gambar', file);
+      formData.append('id', "<?= $pc->data_pricelist_idsession ?>");
 
-        fetch("<?= site_url('potensial-clients-pricelist/upload_gambar') ?>", {
-    method: "POST",
-    body: formData
+      fetch("<?= site_url('potensial-clients-pricelist/upload_gambar') ?>", {
+          method: "POST",
+          body: formData,
+          headers: {
+              // pastikan tidak ada header tambahan yang bikin PHP output berbeda
+          },
       })
       .then(res => res.text())
       .then(res => {
-          console.log("RAW:", res);
+          console.log("RAW RESPONSE:", res); // lihat output mentah
+
+          // Hilangkan spasi/linebreak sebelum/selesai JSON
+          res = res.trim();
 
           try {
-              let json = JSON.parse(res);
+              let json = JSON.parse(res); // parse JSON
 
               if (json.status === 'success') {
                   resultImage.src = json.url + '?t=' + new Date().getTime();
@@ -331,19 +336,18 @@
                   errorMsg.innerText = json.message;
                   errorMsg.classList.remove('hidden');
               }
-
           } catch (e) {
-              console.log("JSON ERROR:", e);
-              errorMsg.innerText = "Response bukan JSON!";
+              console.error("JSON PARSE ERROR:", e);
+              errorMsg.innerText = "Response bukan JSON! Cek console untuk debug.";
               errorMsg.classList.remove('hidden');
           }
       })
       .catch(err => {
-          console.log(err);
+          console.error(err);
           errorMsg.innerText = "Upload gagal!";
           errorMsg.classList.remove('hidden');
       });
-    }
+  }
 
 
   </script>
