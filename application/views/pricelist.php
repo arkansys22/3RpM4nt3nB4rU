@@ -936,12 +936,12 @@ body{
 <div class="section" id="rumah">
   <h2>Paket Wedding Rumah</h2>
   <div class="carousel">
- 
-
-    <div class="carousel-track" id="track">
-	<button class="carousel-btn prev-btn">&#10094;</button>
+ <button class="carousel-btn prev-btn">&#10094;</button>
     <button class="carousel-btn next-btn">&#10095;</button>
-    	<?php $no = 1; foreach ($paketrumah as $p): ?>
+
+
+    <div class="carousel-track">
+	    	<?php $no = 1; foreach ($paketrumah as $p): ?>
 
 
       <!-- CARD -->
@@ -989,9 +989,8 @@ body{
       <?php endforeach; ?> 
 
     </div> 
+    <div class="dots"></div> 
   </div>
-  <!-- DOT -->
-  <div class="dots" id="dots"></div>
 </div>
 
 <!-- VENDOR -->
@@ -1052,9 +1051,8 @@ body{
       <?php endforeach; ?> 
 
     </div> 
+    <div class="dots"></div> 
   </div>
-  <!-- DOT -->
-  <div class="dots" id="dots"></div>
 </div>
 
 <!-- FOOTER -->
