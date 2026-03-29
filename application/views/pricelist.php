@@ -1230,9 +1230,8 @@ body{
     }
   };
   </script>
-  <script>
 
-  	<script>
+<script>
 document.querySelectorAll('.carousel').forEach(carousel => {
   const track = carousel.querySelector('.carousel-track');
   const cards = Array.from(track.children);
@@ -1274,56 +1273,22 @@ document.querySelectorAll('.carousel').forEach(carousel => {
   }
 
   nextBtn.onclick = () => {
-    if(current < cards.length - 1){
-      current++;
-    } else {
-      current = 0; // loop ke awal
-    }
+    current = (current + 1) % cards.length; // loop ke awal
     updateSlider();
   };
 
   prevBtn.onclick = () => {
-    if(current > 0){
-      current--;
-    } else {
-      current = cards.length - 1; // loop ke akhir
-    }
+    current = (current - 1 + cards.length) % cards.length; // loop ke akhir
     updateSlider();
   };
-
-  // drag untuk mobile
-  let startX = 0, isDragging = false, move = 0;
-  track.addEventListener('pointerdown', e => {
-    isDragging = true;
-    startX = e.pageX;
-    track.style.transition = 'none';
-  });
-  track.addEventListener('pointermove', e => {
-    if(!isDragging) return;
-    move = e.pageX - startX;
-    track.style.transform = `translateX(${-current * (cards[0].offsetWidth + 20) + move}px)`;
-  });
-  track.addEventListener('pointerup', e => {
-    isDragging = false;
-    track.style.transition = 'transform 0.4s ease';
-    if(move < -50 && current < cards.length - 1) current++;
-    else if(move > 50 && current > 0) current--;
-    updateSlider();
-    move = 0;
-  });
-  track.addEventListener('pointerleave', e => {
-    if(isDragging) track.dispatchEvent(new Event('pointerup'));
-  });
-
-  // resize handler
-  window.addEventListener('resize', updateSlider);
 
   createDots();
   updateSlider();
 });
 </script>
 
-
+  
+  <script>
 
 
     const track = document.getElementById("track");
