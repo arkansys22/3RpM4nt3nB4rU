@@ -754,8 +754,8 @@ body{
         </div>
         <h3><?= $p->data_pricelist_judul ?></h3>
         <p class="price">
-          <span class="old-price">Rp <?= number_format($p->data_pricelist_harga)?></span>
-          Rp <?= number_format($p->data_pricelist_hargapromo) ?>
+          <span class="old-price">Rp <?= number_format($p->data_pricelist_harga, 0, ',', '.')?></span>
+          Rp <?= number_format($p->data_pricelist_hargapromo, 0, ',', '.') ?>
         </p>
         <div class="badge auto-discount"></div>
         <a href="#" class="btn detail-btn"
