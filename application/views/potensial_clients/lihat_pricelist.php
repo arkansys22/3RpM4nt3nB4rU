@@ -107,6 +107,13 @@
                 <a href="<?= site_url('potensial-clients') ?>" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a> -->
               </form>
 
+              <div class="mt-4">
+                <button onclick="openUploadPopup()" 
+                  class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                  Upload Gambar
+                </button>
+              </div>
+
               <!-- ====== Table Three Start -->
               <div class="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default  dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1" >
                 <div class="max-w-full overflow-x-auto">
@@ -182,6 +189,104 @@
     </div>
     <!-- ===== Content Area End ===== -->
   </div>
+  <!-- POPUP UPLOAD -->
+  <div id="uploadPopup" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white dark:bg-boxdark p-6 rounded shadow-lg w-80">
+      
+      <h2 class="text-lg font-bold mb-4">Upload Gambar</h2>
+
+      <input type="file" id="uploadImage" accept="image/*" class="mb-3 w-full">
+
+      <p class="text-sm text-gray-500 mb-2">Max ukuran: 1MB</p>
+
+      <!-- Preview -->
+      <img id="previewImage" class="hidden mb-3 rounded w-full h-40 object-cover"/>
+
+      <!-- Error -->
+      <p id="errorMsg" class="text-red-500 text-sm mb-2 hidden"></p>
+
+      <div class="flex justify-end">
+        <button onclick="closeUploadPopup()" class="mr-2 bg-gray-400 text-white px-3 py-1 rounded">
+          Batal
+        </button>
+        <button onclick="handleUpload()" class="bg-blue-500 text-white px-3 py-1 rounded">
+          Upload
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function openUploadPopup() {
+        document.getElementById('uploadPopup').classList.remove('hidden');
+        document.getElementById('uploadPopup').classList.add('flex');
+    }
+
+    function closeUploadPopup() {
+        document.getElementById('uploadPopup').classList.add('hidden');
+        document.getElementById('uploadPopup').classList.remove('flex');
+
+        document.getElementById('errorMsg').classList.add('hidden');
+        document.getElementById('previewImage').classList.add('hidden');
+    }
+
+    // Preview + validasi awal
+    document.getElementById('uploadImage').addEventListener('change', function() {
+        const file = this.files[0];
+        const preview = document.getElementById('previewImage');
+        const errorMsg = document.getElementById('errorMsg');
+
+        if (!file) return;
+
+        // Validasi ukuran
+        if (file.size > 1024 * 1024) {
+            errorMsg.innerText = "Ukuran gambar melebihi 1MB!";
+            errorMsg.classList.remove('hidden');
+            preview.classList.add('hidden');
+            this.value = "";
+            return;
+        }
+
+        // Reset error
+        errorMsg.classList.add('hidden');
+
+        // Preview gambar
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.classList.remove('hidden');
+        }
+        reader.readAsDataURL(file);
+    });
+
+    // Handle upload (simulasi / siap ke backend)
+    function handleUpload() {
+        const fileInput = document.getElementById('uploadImage');
+        const file = fileInput.files[0];
+        const errorMsg = document.getElementById('errorMsg');
+
+        if (!file) {
+            errorMsg.innerText = "Silakan pilih gambar!";
+            errorMsg.classList.remove('hidden');
+            return;
+        }
+
+        // Validasi ulang
+        if (file.size > 1024 * 1024) {
+            errorMsg.innerText = "Ukuran gambar melebihi 1MB!";
+            errorMsg.classList.remove('hidden');
+            return;
+        }
+
+        alert("Gambar siap diupload: " + file.name);
+
+        // TODO: kirim ke backend (AJAX / form submit)
+
+        closeUploadPopup();
+    }
+  </script>
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
+
 </body>
 </html>
