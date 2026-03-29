@@ -792,66 +792,181 @@ body{
 <!-- LAMARAN -->
 <div class="section" id="lamaran">
   <h2>Paket Lamaran</h2>
-  <div class="grid">
-    <div class="card">
-      <h3>Basic Lamaran</h3>
-      <p class="price">Rp 5.000.000</p>
-      <p>Dekorasi + dokumentasi</p>
-      <a href="#" class="btn">Detail</a>
-    </div>
+  <div class="carousel">
+    <button class="carousel-btn prev-btn">&#10094;</button>
+    <button class="carousel-btn next-btn">&#10095;</button>
+
+    <div class="carousel-track" id="track">
+
+    	<?php $no = 1; foreach ($paketlamaran as $p): ?>
+
+
+      <!-- CARD -->
+      <div class="card">
+        <div class="card-img">
+          <img src="https://images.unsplash.com/photo-1519741497674-611481863552">
+        </div>
+        <h3><?= $p->data_pricelist_judul ?></h3>
+        <p class="price">
+          <span class="old-price">Rp <?= number_format($p->data_pricelist_harga, 0, ',', '.')?></span>
+          Rp <?= number_format($p->data_pricelist_hargapromo, 0, ',', '.') ?>
+        </p>
+        <div class="badge auto-discount"></div>
+        <a href="#" class="btn detail-btn"
+          data-title="<?= $p->data_pricelist_judul ?>"
+          data-price="<?= $p->data_pricelist_hargapromo ?>"
+          data-oldprice="<?= $p->data_pricelist_harga ?>"
+          data-desc="<?= $p->data_pricelist_deskripsi ?>"          
+          data-images='[
+          "https://images.unsplash.com/photo-1519741497674-611481863552",
+          "https://images.unsplash.com/photo-1522673607200-164d1b6ce486",
+          "https://images.unsplash.com/photo-1507504031003-b417219a0fde"
+          ]'>
+          Detail
+        </a>
+      </div>      
+
+      <?php endforeach; ?> 
+
+    </div> 
   </div>
+  <!-- DOT -->
+  <div class="dots" id="dots"></div>
 </div>
 
 <!-- GEDUNG -->
 <div class="section" id="gedung">
   <h2>Paket Wedding Gedung</h2>
-  <div class="grid">
-    <div class="card">
-      <h3>Gedung Premium</h3>
-      <p class="price">Rp 85.000.000</p>
-      <p>All-in gedung + catering + dekor</p>
-      <a href="#" class="btn">Detail</a>
-    </div>
+  <div class="carousel">
+    <button class="carousel-btn prev-btn">&#10094;</button>
+    <button class="carousel-btn next-btn">&#10095;</button>
+
+    <div class="carousel-track" id="track">
+
+    	<?php $no = 1; foreach ($paketgedung as $p): ?>
+
+
+      <!-- CARD -->
+      <div class="card">
+        <div class="card-img">
+          <img src="https://images.unsplash.com/photo-1519741497674-611481863552">
+        </div>
+        <h3><?= $p->data_pricelist_judul ?></h3>
+        <p class="price">
+          <span class="old-price">Rp <?= number_format($p->data_pricelist_harga, 0, ',', '.')?></span>
+          Rp <?= number_format($p->data_pricelist_hargapromo, 0, ',', '.') ?>
+        </p>
+        <div class="badge auto-discount"></div>
+        <a href="#" class="btn detail-btn"
+          data-title="<?= $p->data_pricelist_judul ?>"
+          data-price="<?= $p->data_pricelist_hargapromo ?>"
+          data-oldprice="<?= $p->data_pricelist_harga ?>"
+          data-desc="<?= $p->data_pricelist_deskripsi ?>"          
+          data-images='[
+          "https://images.unsplash.com/photo-1519741497674-611481863552",
+          "https://images.unsplash.com/photo-1522673607200-164d1b6ce486",
+          "https://images.unsplash.com/photo-1507504031003-b417219a0fde"
+          ]'>
+          Detail
+        </a>
+      </div>      
+
+      <?php endforeach; ?> 
+
+    </div> 
   </div>
+  <!-- DOT -->
+  <div class="dots" id="dots"></div>
 </div>
 
 <!-- RUMAH -->
 <div class="section" id="rumah">
   <h2>Paket Wedding Rumah</h2>
-  <div class="grid">
-    <div class="card">
-      <h3>Rumah Hemat</h3>
-      <p class="price">Rp 35.000.000</p>
-      <p>Tenda + catering + dekor</p>
-      <a href="#" class="btn">Detail</a>
-    </div>
+  <div class="carousel">
+    <button class="carousel-btn prev-btn">&#10094;</button>
+    <button class="carousel-btn next-btn">&#10095;</button>
+
+    <div class="carousel-track" id="track">
+
+    	<?php $no = 1; foreach ($paketrumah as $p): ?>
+
+
+      <!-- CARD -->
+      <div class="card">
+        <div class="card-img">
+          <img src="https://images.unsplash.com/photo-1519741497674-611481863552">
+        </div>
+        <h3><?= $p->data_pricelist_judul ?></h3>
+        <p class="price">
+          <span class="old-price">Rp <?= number_format($p->data_pricelist_harga, 0, ',', '.')?></span>
+          Rp <?= number_format($p->data_pricelist_hargapromo, 0, ',', '.') ?>
+        </p>
+        <div class="badge auto-discount"></div>
+        <a href="#" class="btn detail-btn"
+          data-title="<?= $p->data_pricelist_judul ?>"
+          data-price="<?= $p->data_pricelist_hargapromo ?>"
+          data-oldprice="<?= $p->data_pricelist_harga ?>"
+          data-desc="<?= $p->data_pricelist_deskripsi ?>"          
+          data-images='[
+          "https://images.unsplash.com/photo-1519741497674-611481863552",
+          "https://images.unsplash.com/photo-1522673607200-164d1b6ce486",
+          "https://images.unsplash.com/photo-1507504031003-b417219a0fde"
+          ]'>
+          Detail
+        </a>
+      </div>      
+
+      <?php endforeach; ?> 
+
+    </div> 
   </div>
+  <!-- DOT -->
+  <div class="dots" id="dots"></div>
 </div>
 
 <!-- VENDOR -->
 <div class="section" id="vendor">
   <h2>Vendor Pernikahan</h2>
-  <div class="grid">
+  <div class="carousel">
+    <button class="carousel-btn prev-btn">&#10094;</button>
+    <button class="carousel-btn next-btn">&#10095;</button>
 
-    <div class="card">
-      <h3>MUA Artist</h3>
-      <p class="price">Mulai Rp 3.000.000</p>
-      <p>Makeup pengantin profesional</p>
-    </div>
+    <div class="carousel-track" id="track">
 
-    <div class="card">
-      <h3>Dekorasi</h3>
-      <p class="price">Mulai Rp 10.000.000</p>
-      <p>Dekorasi pelaminan & venue</p>
-    </div>
+    	<?php $no = 1; foreach ($paketvendor as $p): ?>
 
-    <div class="card">
-      <h3>Catering</h3>
-      <p class="price">Mulai Rp 50.000 / pax</p>
-      <p>Paket makanan tamu</p>
-    </div>
 
+      <!-- CARD -->
+      <div class="card">
+        <div class="card-img">
+          <img src="https://images.unsplash.com/photo-1519741497674-611481863552">
+        </div>
+        <h3><?= $p->data_pricelist_judul ?></h3>
+        <p class="price">
+          <span class="old-price">Rp <?= number_format($p->data_pricelist_harga, 0, ',', '.')?></span>
+          Rp <?= number_format($p->data_pricelist_hargapromo, 0, ',', '.') ?>
+        </p>
+        <div class="badge auto-discount"></div>
+        <a href="#" class="btn detail-btn"
+          data-title="<?= $p->data_pricelist_judul ?>"
+          data-price="<?= $p->data_pricelist_hargapromo ?>"
+          data-oldprice="<?= $p->data_pricelist_harga ?>"
+          data-desc="<?= $p->data_pricelist_deskripsi ?>"          
+          data-images='[
+          "https://images.unsplash.com/photo-1519741497674-611481863552",
+          "https://images.unsplash.com/photo-1522673607200-164d1b6ce486",
+          "https://images.unsplash.com/photo-1507504031003-b417219a0fde"
+          ]'>
+          Detail
+        </a>
+      </div>      
+
+      <?php endforeach; ?> 
+
+    </div> 
   </div>
+  <!-- DOT -->
+  <div class="dots" id="dots"></div>
 </div>
 
 <!-- FOOTER -->
