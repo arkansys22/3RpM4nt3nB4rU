@@ -1300,10 +1300,6 @@ class crud_potensial_clients extends CI_Controller {
     {
         header('Content-Type: application/json');
 
-         // 👉 TARUH DI SINI (PALING ATAS)
-        echo json_encode($_FILES);
-        die;
-
         $id = $this->input->post('id');
 
         if (empty($id)) {
@@ -1322,34 +1318,16 @@ class crud_potensial_clients extends CI_Controller {
             return;
         }
 
-        if ($_FILES['gambar']['size'] > 1048576) {
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Ukuran maksimal 1MB'
-            ]);
-            return;
-        }
+        $path = FCPATH . 'assets/uploads/pricelist/';
 
-        $path = './assets/uploads/pricelist/';
-
-        echo "<pre>";
-        echo "FCPATH: ".FCPATH."\n";
-        echo "PATH: ".$path."\n";
-        echo "REALPATH: ".realpath($path)."\n";
-        echo "is_dir: ".(is_dir($path) ? 'YES' : 'NO')."\n";
-        echo "writable: ".(is_writable($path) ? 'YES' : 'NO')."\n";
-        die;
-
-        // ✅ AUTO BUAT FOLDER
         if (!is_dir($path)) {
             mkdir($path, 0777, true);
         }
 
-        // ✅ CEK LAGI
-        if (!is_dir($path) || !is_writable($path)) {
+        if (!is_writable($path)) {
             echo json_encode([
                 'status' => 'error',
-                'message' => 'Folder tidak writable / gagal dibuat'
+                'message' => 'Folder tidak writable'
             ]);
             return;
         }
@@ -1376,7 +1354,7 @@ class crud_potensial_clients extends CI_Controller {
 
             echo json_encode([
                 'status' => 'success',
-                'url' => base_url('assets/uploads/pricelist/' . $file['file_name'])
+                'url' => base_url('assets/uploads/pricelist/'.$file['file_name'])
             ]);
         }
     }

@@ -296,8 +296,6 @@
         })
         .then(res => res.json())
         .then(res => {
-            console.log("RESPONSE:", res);
-
             if (res.status === 'success') {
                 resultImage.src = res.url + '?t=' + new Date().getTime();
                 closeUploadPopup();
