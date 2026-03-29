@@ -48,7 +48,7 @@ class crud_potensial_clients extends CI_Controller {
             $data['aaa'] = '';
             $this->load->view('backend/v_home', $data);
         } else if ($this->session->level == '4') {
-            cek_session_akses_staff_admin('potensial-clients', $th[[]]]is->session->id_session);
+            cek_session_akses_staff_admin('potensial-clients', $this->session->id_session);
             
             // Ambil semua data potensial clients
             $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients();
@@ -1299,7 +1299,7 @@ class crud_potensial_clients extends CI_Controller {
     public function upload_gambar()
     {
         header('Content-Type: application/json');
-        
+
         $id = $this->input->post('id');
 
         if (empty($id)) {
