@@ -986,24 +986,7 @@ body{
     // =========================
     popupDesc.innerHTML = `<p>${desc}</p>`;
 
-    // =========================
-    // BONUS (ARRAY JSON)
-    // =========================
-    const bonusList = document.getElementById("popup-bonus");
-    bonusList.innerHTML = "";
-
-    try{
-      const bonus = JSON.parse(btn.dataset.bonus || "[]");
-
-      bonus.forEach(item=>{
-        const li = document.createElement("li");
-        li.innerText = "✔ " + item;
-        bonusList.appendChild(li);
-      });
-    } catch(err){
-      console.log("bonus error", err);
-    }
-
+    
     // =========================
     // GALLERY
     // =========================
