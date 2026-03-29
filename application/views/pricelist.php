@@ -760,7 +760,7 @@ body{
 				          $firstImg = $gambarPaket[0];
 				    ?>
 
-	          <img src="<?= base_url('assets/uploads/pricelist/'.$firstImg->data_pricelist_gambar_nama) ?>" alt="<?= $p->data_pricelist_judul ?>">
+	          <img src="<?= base_url('assets/uploads/pricelist/'.$firstImg->data_pricelist_gambar_nama) ?>">
 		      <?php } else { ?>
 		          <img src="https://via.placeholder.com/400x400?text=No+Image">
 		      <?php } ?>
