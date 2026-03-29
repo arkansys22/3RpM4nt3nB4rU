@@ -1328,6 +1328,14 @@ class crud_potensial_clients extends CI_Controller {
 
         $path = './public_html/assets/uploads/pricelist/';
 
+        echo "<pre>";
+        echo "FCPATH: ".FCPATH."\n";
+        echo "PATH: ".$path."\n";
+        echo "REALPATH: ".realpath($path)."\n";
+        echo "is_dir: ".(is_dir($path) ? 'YES' : 'NO')."\n";
+        echo "writable: ".(is_writable($path) ? 'YES' : 'NO')."\n";
+        die;
+
         // ✅ AUTO BUAT FOLDER
         if (!is_dir($path)) {
             mkdir($path, 0777, true);
