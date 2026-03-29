@@ -121,16 +121,18 @@
                 <?php if (!empty($pc_img)) : ?>
                     
                     <?php foreach ($pc_img as $img) : ?>
-                        <img 
-                            src="<?= base_url('assets/uploads/pricelist/'.$img->data_pricelist_gambar_nama) ?>" 
-                            class="rounded w-60 shadow hover:scale-105 transition duration-300">
+                      <div class="relative">
+                          <img 
+                              src="<?= base_url('assets/uploads/pricelist/'.$img->data_pricelist_gambar_nama) ?>" 
+                              class="rounded w-60 shadow">
 
-                            <button 
-                                      onclick="hapusGambar('<?= $img->data_pricelist_gambar_nama ?>')"
-                                      class="absolute top-1 right-1 bg-red-500 text-white px-2 rounded">
-                                      X
-                            </button>
-                    <?php endforeach; ?>
+                          <button 
+                              onclick="hapusGambar('<?= $img->data_pricelist_gambar_nama ?>')"
+                              class="absolute top-1 right-1 bg-red-500 text-white px-2 rounded">
+                              X
+                          </button>
+                      </div>
+                  <?php endforeach; ?>
 
                 <?php else : ?>
                     
