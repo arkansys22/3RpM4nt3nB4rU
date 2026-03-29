@@ -1316,12 +1316,12 @@ class crud_potensial_clients extends CI_Controller {
 
     public function upload_gambar()
     {
-        // Bersihkan semua output buffer dan matikan buffering default
-        while (ob_get_level()) {
-            ob_end_clean();
-        }
+        // 🔥 WAJIB: bersihkan semua output sebelumnya
+        ob_clean();
 
-        header('Content-Type: application/json; charset=utf-8');
+        error_reporting(0);
+        ini_set('display_errors', 0);
+        header('Content-Type: application/json');
 
         $id = $this->input->post('id');
 
@@ -1343,11 +1343,13 @@ class crud_potensial_clients extends CI_Controller {
 
         $basePath = FCPATH . 'assets/uploads/pricelist';
 
+        // buat folder kalau belum ada
         if (!is_dir($basePath)) {
             mkdir($basePath, 0777, true);
         }
 
         $path = realpath($basePath);
+
         if ($path === false) {
             echo json_encode([
                 'status' => 'error',
@@ -1363,9 +1365,9 @@ class crud_potensial_clients extends CI_Controller {
         $config['file_name']     = 'pricelist_' . time();
         $config['max_size']      = 1024;
 
-        $this->load->library('upload', $config);
+        $this->load->library('upload');
+        $this->upload->initialize($config);
 
-        // Cek path upload valid
         if (!$this->upload->validate_upload_path()) {
             echo json_encode([
                 'status' => 'error',
@@ -1375,7 +1377,6 @@ class crud_potensial_clients extends CI_Controller {
             exit;
         }
 
-        // Upload file
         if (!$this->upload->do_upload('gambar')) {
             echo json_encode([
                 'status' => 'error',
@@ -1386,13 +1387,11 @@ class crud_potensial_clients extends CI_Controller {
 
         $file = $this->upload->data();
 
-        // Simpan ke database
         $this->db->insert('data_pricelist_gambar', [
             'data_pricelist_idsession' => $id,
             'data_pricelist_gambar_nama' => $file['file_name']
         ]);
 
-        // Kirim response JSON murni
         echo json_encode([
             'status' => 'success',
             'url' => base_url('assets/uploads/pricelist/' . $file['file_name'])
