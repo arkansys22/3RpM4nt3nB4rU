@@ -1341,7 +1341,7 @@ class crud_potensial_clients extends CI_Controller {
             mkdir($path, 0777, true);
         }
 
-        $config['upload_path']   = $path;
+        $config['upload_path'] = '/home/u692958157/domains/maid.mantenbaru.com/public_html/assets/uploads/pricelist/';
         $config['allowed_types'] = 'jpg|jpeg|png|webp';
         $config['file_name']     = 'pricelist_' . time();
         $config['max_size']      = 1024;
