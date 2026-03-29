@@ -108,11 +108,21 @@
               </form>
 
               <div class="mt-4">
-                <button onclick="openUploadPopup()" 
-                  class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
-                  Upload Gambar
-                </button>
+
+              <!-- TOMBOL -->
+              <button onclick="openUploadPopup()" 
+                class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                Upload Gambar
+              </button>
+
+              <!-- PREVIEW HASIL UPLOAD -->
+              <div class="mt-4">
+                <img id="resultImage" 
+                     src="<?= base_url('uploads/pricelist/'.$pc->gambar ?? 'default.png') ?>" 
+                     class="rounded w-60 shadow">
               </div>
+
+            </div>
 
               <!-- ====== Table Three Start -->
               <div class="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default  dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1" >
@@ -219,71 +229,78 @@
 
   <script>
     function openUploadPopup() {
-        document.getElementById('uploadPopup').classList.remove('hidden');
-        document.getElementById('uploadPopup').classList.add('flex');
+        uploadPopup.classList.remove('hidden');
+        uploadPopup.classList.add('flex');
     }
 
     function closeUploadPopup() {
-        document.getElementById('uploadPopup').classList.add('hidden');
-        document.getElementById('uploadPopup').classList.remove('flex');
-
-        document.getElementById('errorMsg').classList.add('hidden');
-        document.getElementById('previewImage').classList.add('hidden');
+        uploadPopup.classList.add('hidden');
+        uploadPopup.classList.remove('flex');
+        errorMsg.classList.add('hidden');
+        previewImage.classList.add('hidden');
     }
 
-    // Preview + validasi awal
-    document.getElementById('uploadImage').addEventListener('change', function() {
+    // preview + validasi
+    uploadImage.addEventListener('change', function() {
         const file = this.files[0];
-        const preview = document.getElementById('previewImage');
-        const errorMsg = document.getElementById('errorMsg');
 
         if (!file) return;
 
-        // Validasi ukuran
         if (file.size > 1024 * 1024) {
-            errorMsg.innerText = "Ukuran gambar melebihi 1MB!";
+            errorMsg.innerText = "Ukuran > 1MB!";
             errorMsg.classList.remove('hidden');
-            preview.classList.add('hidden');
             this.value = "";
             return;
         }
 
-        // Reset error
         errorMsg.classList.add('hidden');
 
-        // Preview gambar
         const reader = new FileReader();
-        reader.onload = function(e) {
-            preview.src = e.target.result;
-            preview.classList.remove('hidden');
+        reader.onload = e => {
+            previewImage.src = e.target.result;
+            previewImage.classList.remove('hidden');
         }
         reader.readAsDataURL(file);
     });
 
-    // Handle upload (simulasi / siap ke backend)
-    function handleUpload() {
-        const fileInput = document.getElementById('uploadImage');
-        const file = fileInput.files[0];
-        const errorMsg = document.getElementById('errorMsg');
+    // AJAX upload
+    function uploadAJAX() {
+        const file = uploadImage.files[0];
 
         if (!file) {
-            errorMsg.innerText = "Silakan pilih gambar!";
+            errorMsg.innerText = "Pilih gambar dulu!";
             errorMsg.classList.remove('hidden');
             return;
         }
 
-        // Validasi ulang
         if (file.size > 1024 * 1024) {
-            errorMsg.innerText = "Ukuran gambar melebihi 1MB!";
+            errorMsg.innerText = "Ukuran > 1MB!";
             errorMsg.classList.remove('hidden');
             return;
         }
 
-        alert("Gambar siap diupload: " + file.name);
+        let formData = new FormData();
+        formData.append('gambar', file);
+        formData.append('id', "<?= $pc->data_pricelist_idsession ?>");
 
-        // TODO: kirim ke backend (AJAX / form submit)
-
-        closeUploadPopup();
+        fetch("<?= site_url('potensial-clients-pricelist/upload_gambar') ?>", {
+            method: "POST",
+            body: formData
+        })
+        .then(res => res.json())
+        .then(res => {
+            if (res.status === 'success') {
+                resultImage.src = res.url + '?t=' + new Date().getTime(); // refresh cache
+                closeUploadPopup();
+            } else {
+                errorMsg.innerText = res.message;
+                errorMsg.classList.remove('hidden');
+            }
+        })
+        .catch(() => {
+            errorMsg.innerText = "Upload gagal!";
+            errorMsg.classList.remove('hidden');
+        });
     }
   </script>
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>

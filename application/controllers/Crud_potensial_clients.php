@@ -1294,6 +1294,51 @@ class crud_potensial_clients extends CI_Controller {
     }
 
 
+    public function upload_gambar()
+    {
+        $id = $this->input->post('id');
+
+        if (!empty($_FILES['gambar']['name'])) {
+
+            // validasi ukuran
+            if ($_FILES['gambar']['size'] > 1048576) {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Ukuran maksimal 1MB'
+                ]);
+                return;
+            }
+
+            $config['upload_path']   = './assets/frontend/uploads/pricelist/';
+            $config['allowed_types'] = 'jpg|jpeg|png|webp';
+            $config['file_name']     = 'pricelist_' . time();
+            $config['max_size']      = 1024; // KB
+
+            $this->load->library('upload', $config);
+
+            if (!$this->upload->do_upload('gambar')) {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => strip_tags($this->upload->display_errors())
+                ]);
+            } else {
+                $file = $this->upload->data();
+
+                // simpan ke database
+                $this->db->where('data_pricelist_idsession', $id);
+                $this->db->update('data_pricelist_gambar', [
+                    'data_pricelist_gambar_nama' => $file['file_name']
+                ]);
+
+                echo json_encode([
+                    'status' => 'success',
+                    'url' => base_url('assets/frontend/uploads/pricelist/'.$file['file_name'])
+                ]);
+            }
+        }
+    }
+
+
 
     
 }
