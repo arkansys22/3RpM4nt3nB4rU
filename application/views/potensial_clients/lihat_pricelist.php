@@ -118,7 +118,7 @@
               <!-- PREVIEW HASIL UPLOAD -->
               <div class="mt-4">
                 <img id="resultImage" 
-                 src="<?= base_url('assets/frontend/uploads/pricelist/'.(!empty($pc_img) ? $pc_img->data_pricelist_gambar_nama : 'default.png')) ?>" 
+                 src="<?= base_url('assets/uploads/pricelist/'.(!empty($pc_img) ? $pc_img->data_pricelist_gambar_nama : 'default.png')) ?>" 
                  class="rounded w-60 shadow">
               </div>
 
@@ -310,7 +310,7 @@
         });
     }
 
-    
+
   </script>
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
 

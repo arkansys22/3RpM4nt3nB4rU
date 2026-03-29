@@ -1326,7 +1326,7 @@ class crud_potensial_clients extends CI_Controller {
         }
 
         // PATH
-        $path = FCPATH . 'assets/frontend/uploads/pricelist/';
+        $path = FCPATH . 'assets/uploads/pricelist/';
 
         if (!is_dir($path)) {
             echo json_encode([
@@ -1364,7 +1364,7 @@ class crud_potensial_clients extends CI_Controller {
 
             echo json_encode([
                 'status' => 'success',
-                'url' => base_url('assets/frontend/uploads/pricelist/'.$file['file_name'])
+                'url' => base_url('assets/uploads/pricelist/'.$file['file_name'])
             ]);
         }
     }
