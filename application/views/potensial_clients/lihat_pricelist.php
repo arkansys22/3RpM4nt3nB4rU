@@ -203,7 +203,7 @@
   <div id="uploadPopup" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
     <div class="bg-white dark:bg-boxdark p-6 rounded shadow-lg w-80">
       
-      <h2 class="text-lg font-bold mb-4">Upload Gambar</h2>
+      <h2 class="text-lg font-bold mb-4">Upload Gambars</h2>
 
       <input type="file" id="uploadImage" accept="image/*" class="mb-3 w-full">
 
