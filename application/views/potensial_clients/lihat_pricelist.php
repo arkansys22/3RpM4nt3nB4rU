@@ -272,43 +272,26 @@
 
     // AJAX upload
     function uploadAJAX() {
-        const file = uploadImage.files[0];
+    console.log("UPLOAD DIKLIK"); // 👈 TEST
 
-        if (!file) {
-            errorMsg.innerText = "Pilih gambar dulu!";
-            errorMsg.classList.remove('hidden');
-            return;
-        }
+    const file = uploadImage.files[0];
 
-        if (file.size > 1024 * 1024) {
-            errorMsg.innerText = "Ukuran > 1MB!";
-            errorMsg.classList.remove('hidden');
-            return;
-        }
+    let formData = new FormData();
+    formData.append('gambar', file);
+    formData.append('id', "<?= $pc->data_pricelist_idsession ?>");
 
-        let formData = new FormData();
-        formData.append('gambar', file);
-        formData.append('id', "<?= $pc->data_pricelist_idsession ?>");
-
-        fetch("<?= site_url('potensial-clients-pricelist/upload_gambar') ?>", {
-            method: "POST",
-            body: formData
-        })
-        .then(res => res.json())
-        .then(res => {
-            if (res.status === 'success') {
-                resultImage.src = res.url + '?t=' + new Date().getTime(); // refresh cache
-                closeUploadPopup();
-            } else {
-                errorMsg.innerText = res.message;
-                errorMsg.classList.remove('hidden');
-            }
-        })
-        .catch(() => {
-            errorMsg.innerText = "Upload gagal!";
-            errorMsg.classList.remove('hidden');
-        });
-    }
+    fetch("<?= site_url('potensial-clients-pricelist/upload_gambar') ?>", {
+        method: "POST",
+        body: formData
+    })
+    .then(res => res.text()) // 👈 ubah dulu ke text
+    .then(res => {
+        console.log("RESPONSE:", res); // 👈 LIHAT INI
+    })
+    .catch(err => {
+        console.log("ERROR:", err);
+    });
+}
 
 
   </script>
