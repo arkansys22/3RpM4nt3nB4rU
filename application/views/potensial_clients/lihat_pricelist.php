@@ -98,7 +98,7 @@
                 <label class="block mb-2"><strong>Harga Asli : </strong>Rp <?= number_format($pc->data_pricelist_harga) ?></label>        
                 <label class="block mb-2"><strong>Harga Promo : </strong>Rp <?= number_format($pc->data_pricelist_hargapromo) ?></label>
                 <label class="block mb-2"><strong>Kategori : </strong><?= $pc->data_pricelist_type ?></label>
-                <label class="block mb-2"><strong>Visibilitas : </strong><?= $pc->data_pricelist_Visibilitas ?></label>
+                <label class="block mb-2"><strong>Visibilitas : </strong><?= $pc->data_pricelist_visibilitas ?></label>
                 <label class="block mb-2"><strong>Terakhir Update : </strong><?= tgl_indo($pc->data_pricelist_lastupdate)?> ( <?= time_ago($pc->data_pricelist_lastupdate)?> )</label>
                 <label class="block mb-2"><strong>Maks. Diskon : </strong>Rp <?= number_format($pc->data_pricelist_diskonmax) ?></label>
                 <label class="block mb-2"><strong>Detail : </strong><?= $pc->data_pricelist_deskripsi ?></label>
