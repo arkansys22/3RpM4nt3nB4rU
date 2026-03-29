@@ -1327,8 +1327,8 @@ class crud_potensial_clients extends CI_Controller {
                 $file = $this->upload->data();
 
                 // simpan ke database
-                $this->db->where('data_pricelist_idsession', $id);
-                $this->db->update('data_pricelist_gambar', [
+                $this->db->insert('data_pricelist_gambar', [
+                    'data_pricelist_idsession' => $id,
                     'data_pricelist_gambar_nama' => $file['file_name']
                 ]);
 

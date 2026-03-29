@@ -309,6 +309,11 @@
             errorMsg.classList.remove('hidden');
         });
     }
+
+    .then(res => res.text())
+    .then(res => {
+        console.log(res);
+    })
   </script>
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
 
