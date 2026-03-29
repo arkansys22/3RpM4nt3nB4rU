@@ -865,10 +865,9 @@ body{
       <?php endforeach; ?> 
 
 
-    </div> 
+    </div>
+    <div class="dots"></div> 
   </div>
-  <!-- DOT -->
-  <div class="dots" id="dots"></div>
 </div>
 
 <!-- GEDUNG -->
