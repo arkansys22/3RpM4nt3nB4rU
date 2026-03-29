@@ -300,8 +300,6 @@
       const fileInput = document.getElementById('uploadImage');
       const file = fileInput.files[0];
 
-      console.log("FILE:", file); // DEBUG
-
       if (!file) {
           errorMsg.innerText = "Pilih gambar dulu!";
           errorMsg.classList.remove('hidden');
@@ -314,37 +312,22 @@
 
       fetch("<?= site_url('potensial-clients-pricelist/upload_gambar') ?>", {
           method: "POST",
-          body: formData,
-          headers: {
-              // pastikan tidak ada header tambahan yang bikin PHP output berbeda
-          },
+          body: formData
       })
-      .then(res => res.text())
-      .then(res => {
-          console.log("RAW RESPONSE:", res); // lihat output mentah
-
-          // Hilangkan spasi/linebreak sebelum/selesai JSON
-          res = res.trim();
-
-          try {
-              let json = JSON.parse(res); // parse JSON
-
-              if (json.status === 'success') {
-                  resultImage.src = json.url + '?t=' + new Date().getTime();
-                  closeUploadPopup();
-              } else {
-                  errorMsg.innerText = json.message;
-                  errorMsg.classList.remove('hidden');
-              }
-          } catch (e) {
-              console.error("JSON PARSE ERROR:", e);
-              errorMsg.innerText = "Response bukan JSON! Cek console untuk debug.";
+      .then(res => res.json()) // langsung parse JSON
+      .then(json => {
+          if (json.status === 'success') {
+              resultImage.src = json.url + '?t=' + new Date().getTime();
+              closeUploadPopup();
+          } else {
+              console.error("UPLOAD ERROR:", json.message);
+              errorMsg.innerText = json.message;
               errorMsg.classList.remove('hidden');
           }
       })
       .catch(err => {
-          console.error(err);
-          errorMsg.innerText = "Upload gagal!";
+          console.error("FETCH ERROR:", err);
+          errorMsg.innerText = "Upload gagal! Cek console.";
           errorMsg.classList.remove('hidden');
       });
   }

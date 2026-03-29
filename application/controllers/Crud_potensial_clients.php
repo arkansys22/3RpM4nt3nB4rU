@@ -1316,73 +1316,61 @@ class crud_potensial_clients extends CI_Controller {
 
     public function upload_gambar()
     {
-        // 🔥 WAJIB: bersihkan semua output sebelumnya
-        ob_clean();
+        // 🔹 Bersihkan semua buffer sebelumnya
+        while (ob_get_level()) ob_end_clean();
+        ob_start();
 
-        error_reporting(0);
-        ini_set('display_errors', 0);
-        header('Content-Type: application/json');
+        // 🔹 Set header JSON
+        header('Content-Type: application/json; charset=utf-8');
+
+        // 🔹 Fungsi bantu kirim JSON dan hentikan eksekusi
+        $sendJSON = function($data) {
+            // hapus output lain sebelum JSON
+            while (ob_get_level()) ob_end_clean();
+            echo json_encode($data);
+            exit;
+        };
+
+        // 🔹 Tangkap semua warning/error dan ubah jadi JSON
+        set_error_handler(function($severity, $message, $file, $line) use ($sendJSON) {
+            $sendJSON([
+                'status' => 'error',
+                'message' => "PHP ERROR: $message in $file:$line"
+            ]);
+        });
 
         $id = $this->input->post('id');
-
         if (empty($id)) {
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'ID tidak ditemukan'
-            ]);
-            exit;
+            $sendJSON(['status' => 'error', 'message' => 'ID tidak ditemukan']);
         }
 
         if (empty($_FILES['gambar']['name'])) {
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'File tidak dipilih'
-            ]);
-            exit;
+            $sendJSON(['status' => 'error', 'message' => 'File tidak dipilih']);
         }
 
         $basePath = FCPATH . 'assets/uploads/pricelist';
-
-        // buat folder kalau belum ada
-        if (!is_dir($basePath)) {
-            mkdir($basePath, 0777, true);
-        }
+        if (!is_dir($basePath)) mkdir($basePath, 0777, true);
 
         $path = realpath($basePath);
-
-        if ($path === false) {
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'realpath gagal'
-            ]);
-            exit;
-        }
+        if ($path === false) $sendJSON(['status' => 'error', 'message' => 'realpath gagal']);
 
         $path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
-        $config['upload_path']   = $path;
-        $config['allowed_types'] = 'jpg|jpeg|png|webp';
-        $config['file_name']     = 'pricelist_' . time();
-        $config['max_size']      = 1024;
+        $config = [
+            'upload_path'   => $path,
+            'allowed_types' => 'jpg|jpeg|png|webp',
+            'file_name'     => 'pricelist_' . time(),
+            'max_size'      => 1024
+        ];
 
-        $this->load->library('upload');
-        $this->upload->initialize($config);
+        $this->load->library('upload', $config);
 
         if (!$this->upload->validate_upload_path()) {
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Path upload tidak valid',
-                'path' => $path
-            ]);
-            exit;
+            $sendJSON(['status' => 'error', 'message' => 'Path upload tidak valid']);
         }
 
         if (!$this->upload->do_upload('gambar')) {
-            echo json_encode([
-                'status' => 'error',
-                'message' => strip_tags($this->upload->display_errors('', ''))
-            ]);
-            exit;
+            $sendJSON(['status' => 'error', 'message' => strip_tags($this->upload->display_errors())]);
         }
 
         $file = $this->upload->data();
@@ -1392,11 +1380,10 @@ class crud_potensial_clients extends CI_Controller {
             'data_pricelist_gambar_nama' => $file['file_name']
         ]);
 
-        echo json_encode([
+        $sendJSON([
             'status' => 'success',
-            'url' => base_url('assets/uploads/pricelist/' . $file['file_name'])
+            'url'    => base_url('assets/uploads/pricelist/' . $file['file_name'])
         ]);
-        exit;
     }
 
 
