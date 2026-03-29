@@ -1298,7 +1298,124 @@ body{
 	  window.addEventListener('resize', updateSlider);
 	});
 	</script>
+<script>
 
+    const track = document.getElementById("track");
+    const cards = Array.from(track.children);
+
+    const nextBtn = document.querySelector(".next-btn");
+    const prevBtn = document.querySelector(".prev-btn");
+    const dotsContainer = document.getElementById("dots");
+
+    let current = 0;
+
+    // 👉 ambil lebar card
+    function getCardWidth(){
+      return cards[0].offsetWidth + 20;
+    }
+
+    // 👉 update slider
+    function updateSlider(){
+      const width = getCardWidth();
+
+      track.style.transition = "transform 0.4s ease";
+      track.style.transform = `translateX(-${current * width}px)`;
+
+      updateActiveCard();
+      updateDots();
+    }
+
+    // 👉 active card
+    function updateActiveCard(){
+      cards.forEach(c => c.classList.remove("active"));
+      cards[current].classList.add("active");
+    }
+
+    // 👉 dots
+    function createDots(){
+      dotsContainer.innerHTML = "";
+
+      cards.forEach((_, i)=>{
+        const dot = document.createElement("span");
+
+        if(i === 0) dot.classList.add("active");
+
+        dot.onclick = ()=>{
+          current = i;
+          updateSlider();
+        };
+
+        dotsContainer.appendChild(dot);
+      });
+    }
+
+    function updateDots(){
+      const dots = dotsContainer.querySelectorAll("span");
+
+      dots.forEach(d => d.classList.remove("active"));
+      dots[current].classList.add("active");
+    }
+
+    // 👉 next prev
+    function nextSlide(){
+      current++;
+      if(current >= cards.length){
+        current = 0; // looping clean
+      }
+      updateSlider();
+    }
+
+    function prevSlide(){
+      current--;
+      if(current < 0){
+        current = cards.length - 1;
+      }
+      updateSlider();
+    }
+
+    // 👉 button
+    nextBtn.onclick = nextSlide;
+    prevBtn.onclick = prevSlide;
+
+    // 👉 swipe (mobile)
+    let startX = 0;
+
+    track.addEventListener("touchstart", e=>{
+      startX = e.touches[0].clientX;
+    });
+
+    track.addEventListener("touchend", e=>{
+      let diff = startX - e.changedTouches[0].clientX;
+
+      if(diff > 50) nextSlide();
+      else if(diff < -50) prevSlide();
+    });
+
+    // 👉 drag (desktop)
+    let isDown = false;
+    let startPos = 0;
+
+    track.addEventListener("mousedown", e=>{
+      isDown = true;
+      startPos = e.pageX;
+    });
+
+    track.addEventListener("mouseup", e=>{
+      if(!isDown) return;
+      isDown = false;
+
+      let diff = startPos - e.pageX;
+
+      if(diff > 50) nextSlide();
+      else if(diff < -50) prevSlide();
+    });
+
+    track.addEventListener("mouseleave", ()=> isDown = false);
+
+    // INIT
+    createDots();
+    updateSlider();
+  </script>
 
   <script>
     const sections = document.querySelectorAll(".section");
