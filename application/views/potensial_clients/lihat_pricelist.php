@@ -277,8 +277,11 @@
     const file = uploadImage.files[0];
 
     let formData = new FormData();
-    formData.append('gambar', file);
+    formData.append('gambar', uploadImage.files[0]); // ⬅️ pastikan ini
     formData.append('id', "<?= $pc->data_pricelist_idsession ?>");
+
+    console.log(uploadImage.files);
+    console.log(uploadImage.files[0]);
 
     fetch("<?= site_url('potensial-clients-pricelist/upload_gambar') ?>", {
         method: "POST",
