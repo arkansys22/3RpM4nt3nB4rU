@@ -1311,7 +1311,7 @@ class crud_potensial_clients extends CI_Controller {
                 return;
             }
 
-            $config['upload_path']   = './assets/frontend/uploads/pricelist/';
+            $config['upload_path']   = FCPATH . 'assets/frontend/uploads/pricelist/';
             $config['allowed_types'] = 'jpg|jpeg|png|webp';
             $config['file_name']     = 'pricelist_' . time();
             $config['max_size']      = 1024; // KB
