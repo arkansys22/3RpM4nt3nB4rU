@@ -577,7 +577,7 @@ body{
 /* CARD */
 .card{
   flex:0 0 80%;
-  opacity:0.5;
+  opacity:0.9;
   transform:scale(0.85);
   transition:all 0.5s ease;
   box-shadow:0 10px 30px rgba(0,0,0,0.1);
@@ -739,10 +739,11 @@ body{
 
   <div class="carousel">
 
+    <div class="carousel-track">
+
     <button class="carousel-btn prev-btn">&#10094;</button>
     <button class="carousel-btn next-btn">&#10095;</button>
 
-    <div class="carousel-track" id="track">
 
     	<?php $no = 1; foreach ($paketwo as $p): ?>
 
@@ -792,14 +793,13 @@ body{
 
       	<?php endforeach; ?> 
 
+      	<div class="dots"></div>
+
     </div>
 
    
 
   </div>
-
-  <!-- DOT -->
-  <div class="dots" id="dots"></div>
 
 </div>
 
@@ -1181,6 +1181,45 @@ body{
   };
   </script>
   <script>
+
+  	document.querySelectorAll('.carousel').forEach(carousel => {
+		  const track = carousel.querySelector('.carousel-track');
+		  const cards = Array.from(track.children);
+		  const nextBtn = carousel.querySelector('.next-btn');
+		  const prevBtn = carousel.querySelector('.prev-btn');
+		  const dotsContainer = carousel.querySelector('.dots');
+		  let current = 0;
+
+		  function updateSlider(){
+		    const width = cards[0].offsetWidth + 20;
+		    track.style.transform = `translateX(-${current * width}px)`;
+		    cards.forEach(c => c.classList.remove('active'));
+		    cards[current].classList.add('active');
+		    const dots = dotsContainer.querySelectorAll('span');
+		    dots.forEach(d => d.classList.remove('active'));
+		    dots[current].classList.add('active');
+		  }
+
+		  function createDots(){
+		    dotsContainer.innerHTML = '';
+		    cards.forEach((_, i) => {
+		      const dot = document.createElement('span');
+		      if(i===0) dot.classList.add('active');
+		      dot.onclick = ()=>{ current = i; updateSlider(); };
+		      dotsContainer.appendChild(dot);
+		    });
+		  }
+
+		  nextBtn.onclick = ()=>{ current = (current+1) % cards.length; updateSlider(); };
+		  prevBtn.onclick = ()=>{ current = (current-1+cards.length) % cards.length; updateSlider(); };
+
+		  createDots();
+		  updateSlider();
+	});
+
+
+
+
     const track = document.getElementById("track");
     const cards = Array.from(track.children);
 
