@@ -999,11 +999,11 @@ body{
 <div class="section" id="vendor">
   <h2>Vendor Pernikahan</h2>
   <div class="carousel">
-    
+    <button class="carousel-btn prev-btn">&#10094;</button>
+    <button class="carousel-btn next-btn">&#10095;</button>
 
     <div class="carousel-track" id="track">
-    	<button class="carousel-btn prev-btn">&#10094;</button>
-    <button class="carousel-btn next-btn">&#10095;</button>
+    	
 
     	<?php $no = 1; foreach ($paketvendor as $p): ?>
 
