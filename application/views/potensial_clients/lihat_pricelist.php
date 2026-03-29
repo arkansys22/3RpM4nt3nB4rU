@@ -219,7 +219,7 @@
         <button onclick="closeUploadPopup()" class="mr-2 bg-gray-400 text-white px-3 py-1 rounded">
           Batal
         </button>
-        <button onclick="handleUpload()" class="bg-blue-500 text-white px-3 py-1 rounded">
+        <button onclick="uploadAJAX()" class="bg-blue-500 text-white px-3 py-1 rounded">
           Upload
         </button>
       </div>
@@ -228,6 +228,13 @@
   </div>
 
   <script>
+
+    const uploadPopup = document.getElementById('uploadPopup');
+    const uploadImage = document.getElementById('uploadImage');
+    const previewImage = document.getElementById('previewImage');
+    const errorMsg = document.getElementById('errorMsg');
+    const resultImage = document.getElementById('resultImage');
+
     function openUploadPopup() {
         uploadPopup.classList.remove('hidden');
         uploadPopup.classList.add('flex');
