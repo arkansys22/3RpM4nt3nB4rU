@@ -1320,19 +1320,15 @@ class crud_potensial_clients extends CI_Controller {
 
         $path = FCPATH . 'assets/uploads/pricelist/';
 
+        // pastikan folder ada
         if (!is_dir($path)) {
             mkdir($path, 0777, true);
         }
 
-        if (!is_writable($path)) {
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Folder tidak writable'
-            ]);
-            return;
-        }
+        // 🔥 INI KUNCI
+        $path = rtrim($path, '/') . '/';
 
-        $config['upload_path']   = $path;
+        $config['upload_path'] = $path;
         $config['allowed_types'] = 'jpg|jpeg|png|webp';
         $config['file_name']     = 'pricelist_' . time();
         $config['max_size']      = 1024;
