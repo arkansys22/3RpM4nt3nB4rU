@@ -738,12 +738,10 @@ body{
   <h2>Paket Wedding Organizer</h2>
 
   <div class="carousel">
-
-    <div class="carousel-track">
-
-    <button class="carousel-btn prev-btn">&#10094;</button>
+  	<button class="carousel-btn prev-btn">&#10094;</button>
     <button class="carousel-btn next-btn">&#10095;</button>
 
+    <div class="carousel-track">
 
     	<?php $no = 1; foreach ($paketwo as $p): ?>
 
@@ -793,11 +791,11 @@ body{
 
       	<?php endforeach; ?> 
 
-      	<div class="dots"></div>
+  
 
     </div>
 
-   
+   <div class="dots"></div>
 
   </div>
 
@@ -874,11 +872,10 @@ body{
   <h2>Paket Wedding Gedung</h2>
   <div class="carousel">
  
-
-    <div class="carousel-track" id="track">
-
 	<button class="carousel-btn prev-btn">&#10094;</button>
     <button class="carousel-btn next-btn">&#10095;</button>
+    <div class="carousel-track" id="track">
+
     	<?php $no = 1; foreach ($paketgedung as $p): ?>
 
 
@@ -925,9 +922,10 @@ body{
       </div>      
 
       <?php endforeach; ?> 
-      <div class="dots"></div>
+     
 
     </div> 
+    <div class="dots"></div>
   </div>
 </div>
 
@@ -935,11 +933,11 @@ body{
 <div class="section" id="rumah">
   <h2>Paket Wedding Rumah</h2>
   <div class="carousel">
- 
+ 	<button class="carousel-btn prev-btn">&#10094;</button>
+    <button class="carousel-btn next-btn">&#10095;</button>
 
     <div class="carousel-track" id="track">
-	<button class="carousel-btn prev-btn">&#10094;</button>
-    <button class="carousel-btn next-btn">&#10095;</button>
+
     	<?php $no = 1; foreach ($paketrumah as $p): ?>
 
 
@@ -986,9 +984,10 @@ body{
       </div>      
 
       <?php endforeach; ?> 
-      <div class="dots"></div>
+      
 
     </div> 
+    <div class="dots"></div>
   </div>
   
 </div>
@@ -998,10 +997,10 @@ body{
   <h2>Vendor Pernikahan</h2>
   <div class="carousel">
     
-
-    <div class="carousel-track" id="track">
-    	<button class="carousel-btn prev-btn">&#10094;</button>
+  	<button class="carousel-btn prev-btn">&#10094;</button>
     <button class="carousel-btn next-btn">&#10095;</button>
+    <div class="carousel-track" id="track">
+  
 
     	<?php $no = 1; foreach ($paketvendor as $p): ?>
 
@@ -1049,8 +1048,9 @@ body{
       </div>      
 
       <?php endforeach; ?> 
-      <div class="dots"></div>
+      
     </div> 
+    <div class="dots"></div>
   </div>
 </div>
 
