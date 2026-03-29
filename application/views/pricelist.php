@@ -712,7 +712,7 @@ body{
 
 <!-- NAVBAR -->
 <div class="navbar">
-  <strong>WeddingKu</strong>
+  <strong>Mantenbaru</strong>
 
   <div class="menu-toggle" id="menu-toggle">&#9776;</div>
 
@@ -1006,7 +1006,7 @@ body{
 
 <!-- FOOTER -->
 <div class="footer">
-  <p>© 2026 WeddingKu - All Rights Reserved</p>
+  <p>© 2026 Mantenbaru - All Rights Reserved</p>
 </div>
 
 <!-- POPUP -->
