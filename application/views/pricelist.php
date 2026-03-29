@@ -444,7 +444,7 @@ body{
   align-items:center;
   justify-content:center;
   text-align:center;
-  background:linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url('http://localhost/pricelist/asset/img/banner.png');
+  background:linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url('https://maid.mantenbaru.com/assets/uploads/pricelist/banner.png');
   background-size:cover;
   color:#fff;
   padding:20px;
