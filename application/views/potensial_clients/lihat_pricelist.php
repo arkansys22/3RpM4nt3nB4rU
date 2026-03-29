@@ -116,12 +116,25 @@
               </button>
 
               <!-- PREVIEW HASIL UPLOAD -->
-              <div class="mt-4">
-                <img id="resultImage" 
-                 src="<?= base_url('assets/uploads/pricelist/'.(!empty($pc_img) ? $pc_img->data_pricelist_gambar_nama : 'default.png')) ?>" 
-                 class="rounded w-60 shadow">
-              </div>
+              <div class="mt-4 flex flex-wrap gap-4">
 
+                  <?php if (!empty($pc_img)) : ?>
+                      
+                      <?php foreach ($pc_img as $img) : ?>
+                          <img 
+                              src="<?= base_url('assets/uploads/pricelist/'.$img->data_pricelist_gambar_nama) ?>" 
+                              class="rounded w-60 shadow">
+                      <?php endforeach; ?>
+
+                  <?php else : ?>
+                      
+                      <img 
+                          src="<?= base_url('assets/uploads/pricelist/default.png') ?>" 
+                          class="rounded w-60 shadow">
+
+                  <?php endif; ?>
+
+            </div>
             </div>
 
               <!-- ====== Table Three Start -->
