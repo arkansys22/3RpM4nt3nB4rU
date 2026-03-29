@@ -70,8 +70,8 @@ class potensial_model extends CI_Model {
     }
 
 
-    public function get_pricelist_by_session($id_session) {
-        return $this->db->get_where('data_pricelist', ['data_pricelist_idsession' => $id_session])->row();
+    public function get_pricelist_img_by_session($id_session) {
+        return $this->db->get_where('data_pricelist_gambar', ['data_pricelist_gambar_idsession' => $id_session])->row();
     }
 
 
