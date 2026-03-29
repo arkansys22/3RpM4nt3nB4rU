@@ -570,6 +570,7 @@ class crud_potensial_clients extends CI_Controller {
             }else if($this->session->level=='2'){
                 cek_session_akses_administrator('potensial-clients-pricelist',$this->session->id_session);
                 $data['pc'] = $this->Potensial_model->get_pricelist_by_session($id_session);
+                $data['pc_img'] = $this->Potensial_model->get_pricelist_img_by_session($id_session);
                 $data['logactivity'] = $this->Potensial_model->get_logactivity_by_session($id_session);
                 $this->load->view('potensial_clients/lihat_pricelist', $data);
 
