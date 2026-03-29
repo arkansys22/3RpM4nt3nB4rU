@@ -762,8 +762,7 @@ body{
           data-title="<?= $p->data_pricelist_judul ?>"
           data-price="<?= $p->data_pricelist_hargapromo ?>"
           data-oldprice="<?= $p->data_pricelist_harga ?>"
-          data-desc="<?= $p->data_pricelist_deskripsi ?>"
-          data-bonus='["Free MC","Free Buku Tamu","Free Dekor"]'
+          data-desc="<?= $p->data_pricelist_deskripsi ?>"          
           data-images='[
           "https://images.unsplash.com/photo-1519741497674-611481863552",
           "https://images.unsplash.com/photo-1522673607200-164d1b6ce486",
@@ -888,14 +887,6 @@ body{
           <div class="acc-header">Deskripsi Paket <span>+</span></div>
           <div class="acc-body">
             <div id="popup-desc"></div>
-          </div>
-        </div>
-
-        <!-- BONUS -->
-        <div class="acc-item">
-          <div class="acc-header">Bonus <span>+</span></div>
-          <div class="acc-body">
-            <ul id="popup-bonus"></ul>
           </div>
         </div>
 
