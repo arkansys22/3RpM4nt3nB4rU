@@ -862,9 +862,10 @@ body{
       </div>      
 
       <?php endforeach; ?> 
-      <div class="dots"></div>
+      
 
     </div> 
+    <div class="dots"></div>
   </div>
 </div>
 
