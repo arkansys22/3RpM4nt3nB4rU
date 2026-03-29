@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+header('Content-Type: application/json');
 require_once APPPATH.'third_party/dompdf/autoload.inc.php';
 require_once APPPATH.'third_party/dompdf/src/Options.php';
 
