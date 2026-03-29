@@ -48,7 +48,7 @@ class crud_potensial_clients extends CI_Controller {
             $data['aaa'] = '';
             $this->load->view('backend/v_home', $data);
         } else if ($this->session->level == '4') {
-            cek_session_akses_staff_admin('potensial-clients', $this->session->id_session);
+            cek_session_akses_staff_admin('potensial-clients', $th[[]]]is->session->id_session);
             
             // Ambil semua data potensial clients
             $data['potensial_clients'] = $this->Potensial_model->get_all_potensial_clients();
@@ -1298,6 +1298,8 @@ class crud_potensial_clients extends CI_Controller {
 
     public function upload_gambar()
     {
+        header('Content-Type: application/json');
+        
         $id = $this->input->post('id');
 
         if (empty($id)) {
@@ -1326,23 +1328,16 @@ class crud_potensial_clients extends CI_Controller {
 
         $path = FCPATH . 'assets/uploads/pricelist/';
 
-        // 👉 TARUH DI SINI
-        echo json_encode([
-            'path' => $path,
-            'is_dir' => is_dir($path),
-            'writable' => is_writable($path)
-        ]);
-        die;
-
-        // auto buat folder
+        // ✅ AUTO BUAT FOLDER
         if (!is_dir($path)) {
             mkdir($path, 0777, true);
         }
 
-        if (!is_dir($path)) {
+        // ✅ CEK LAGI
+        if (!is_dir($path) || !is_writable($path)) {
             echo json_encode([
                 'status' => 'error',
-                'message' => 'Folder gagal dibuat'
+                'message' => 'Folder tidak writable / gagal dibuat'
             ]);
             return;
         }
@@ -1369,7 +1364,7 @@ class crud_potensial_clients extends CI_Controller {
 
             echo json_encode([
                 'status' => 'success',
-                'url' => base_url('assets/uploads/pricelist/'.$file['file_name'])
+                'url' => base_url('assets/uploads/pricelist/' . $file['file_name'])
             ]);
         }
     }
