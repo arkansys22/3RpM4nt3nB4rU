@@ -68,8 +68,8 @@
                 <label class="block mb-2">Visibilitas</label>
                 <select name="visibilitas" class="w-full px-4 py-2 border rounded mb-4" required>
                     <option value="">---</option>
-                    <option value="Public" <?= $pc->data_pricelist_type == 'Public' ? 'selected' : '' ?> >Public</option>
-                    <option value="Private" <?= $pc->data_pricelist_type == 'Private' ? 'selected' : '' ?> >Private</option>
+                    <option value="Public" <?= $pc->data_pricelist_visibilitas == 'Public' ? 'selected' : '' ?> >Public</option>
+                    <option value="Private" <?= $pc->data_pricelist_visibilitas == 'Private' ? 'selected' : '' ?> >Private</option>
                 </select>        
 
                 
