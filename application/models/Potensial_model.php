@@ -22,6 +22,23 @@ class potensial_model extends CI_Model {
         return $this->db->get('data_pricelist')->result();
     }
 
+    public function get_pricelist_types($types)
+    {
+        $this->db->select('*');
+        $this->db->from('data_pricelist');
+
+        if (is_array($types)) {
+            $this->db->where_in('data_pricelist_type', $types); // Bisa banyak pilihan
+        } else {
+            $this->db->where('data_pricelist_type', $types);   // Tetap support single string
+        }
+        $this->db->order_by('data_pricelist_harga', 'RAND');    
+        $this->db->where('data_pricelist_visibilitas', 'Public');
+        $this->db->where('data_pricelist_status', 'Aktif');
+        $query = $this->db->get();
+        return $query->result();
+    }
+
 
 
     public function get_all_potensial_clients_hot() {

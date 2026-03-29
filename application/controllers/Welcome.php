@@ -23,7 +23,7 @@ class Welcome extends CI_Controller {
 		$data['paketlamaran'] = $this->Potensial_model->get_pricelist_type('Paket Lamaran');
 		$data['paketgedung'] = $this->Potensial_model->get_pricelist_type('Paket Wedding Gedung');
 		$data['paketrumah'] = $this->Potensial_model->get_pricelist_type('Paket Wedding Rumah');
-		$data['paketvendor'] = $this->Potensial_model->get_pricelist_type($types);
+		$data['paketvendor'] = $this->Potensial_model->get_pricelist_types($types);
 		$this->load->view('pricelist', $data);
 	}
 
