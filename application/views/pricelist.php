@@ -984,7 +984,8 @@ body{
     // =========================
     // DESKRIPSI
     // =========================
-    popupDesc.innerHTML = `<p>${desc}</p>`;
+    const formattedDesc = desc.split(',').map(item => item.trim()).join('<br>');
+	popupDesc.innerHTML = `<p>${formattedDesc}</p>`;
 
     
     // =========================
