@@ -10,6 +10,20 @@ class potensial_model extends CI_Model {
         return $this->db->get_where('potensial_clients',['status' => 'Tanya-tanya'])->result();
     }
 
+  
+
+
+     public function get_pricelist_type($type)
+    {   
+        $this->db->order_by('chat_date', 'DESC');    
+        $this->db->where('data_pricelist_type', $type);
+        $this->db->where('data_pricelist_visibilitas', 'Public');
+        $this->db->where('data_pricelist_status', 'Aktif');
+        return $this->db->get('data_pricelist')->result();
+    }
+
+
+
     public function get_all_potensial_clients_hot() {
         $this->db->order_by('chat_date', 'DESC');    
         return $this->db->get_where('potensial_clients',['status' => 'Hot'])->result();

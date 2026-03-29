@@ -744,23 +744,25 @@ body{
 
     <div class="carousel-track" id="track">
 
+    	<?php $no = 1; foreach ($paketwo as $p): ?>
+
+
       <!-- CARD -->
       <div class="card">
         <div class="card-img">
           <img src="https://images.unsplash.com/photo-1519741497674-611481863552">
         </div>
-        <h3>Silver Package</h3>
+        <h3><?= $p->data_pricelist_judul ?></h3>
         <p class="price">
-          <span class="old-price">Rp 20.000.000</span>
-          Rp 10.000.000
+          <span class="old-price">Rp <?= $p->data_pricelist_harga ?></span>
+          Rp <?= $p->data_pricelist_hargapromo ?>
         </p>
         <div class="badge auto-discount"></div>
-        <p>Koordinasi hari H + tim WO</p>
         <a href="#" class="btn detail-btn"
-          data-title="Silver Package"
-          data-price="10000000"
-          data-oldprice="20000000"
-          data-desc="Koordinasi hari H + tim WO"
+          data-title="<?= $p->data_pricelist_judul ?>"
+          data-price="<?= $p->data_pricelist_hargapromo ?>"
+          data-oldprice="<?= $p->data_pricelist_harga ?>"
+          data-desc="<?= $p->data_pricelist_deskripsi ?>"
           data-bonus='["Free MC","Free Buku Tamu","Free Dekor"]'
           data-images='[
           "https://images.unsplash.com/photo-1519741497674-611481863552",
@@ -769,25 +771,9 @@ body{
           ]'>
           Detail
         </a>
-      </div>
+      </div>      
 
-      <div class="card">
-        <h3>Gold Package</h3>
-        <p class="price">Rp 25.000.000</p>
-        <p>WO + MC + Rundown lengkap</p>
-      </div>
-
-      <div class="card">
-        <h3>Premium Package</h3>
-        <p class="price">Rp 50.000.000</p>
-        <p>All-in lengkap</p>
-      </div>
-
-      <div class="card">
-        <h3>Luxury Package</h3>
-        <p class="price">Rp 100.000.000</p>
-        <p>Full service wedding</p>
-      </div>
+      <?php endforeach; ?> 
 
     </div>
 
