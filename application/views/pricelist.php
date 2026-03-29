@@ -1239,65 +1239,65 @@ body{
   };
   </script>
   <script>
-	document.querySelectorAll('.carousel').forEach(carousel => {
-	  const track = carousel.querySelector('.carousel-track');
-	  const cards = Array.from(track.children);
-	  const nextBtn = carousel.querySelector('.next-btn');
-	  const prevBtn = carousel.querySelector('.prev-btn');
-	  const dotsContainer = carousel.querySelector('.dots');
-	  let current = 0;
+document.querySelectorAll('.carousel').forEach(carousel => {
+  const track = carousel.querySelector('.carousel-track');
+  const cards = Array.from(track.children);
+  const nextBtn = carousel.querySelector('.next-btn');
+  const prevBtn = carousel.querySelector('.prev-btn');
+  const dotsContainer = carousel.querySelector('.dots');
+  let current = 0;
 
-	  // buat dots
-	  function createDots() {
-	    dotsContainer.innerHTML = '';
-	    cards.forEach((_, i) => {
-	      const dot = document.createElement('span');
-	      dot.onclick = () => { goToSlide(i); };
-	      dotsContainer.appendChild(dot);
-	    });
-	  }
+  // buat dots
+  function createDots() {
+    dotsContainer.innerHTML = '';
+    cards.forEach((_, i) => {
+      const dot = document.createElement('span');
+      dot.onclick = () => { goToSlide(i); };
+      dotsContainer.appendChild(dot);
+    });
+  }
 
-	  function updateSlider() {
-	    const gap = parseInt(getComputedStyle(track).gap) || 20;
-	    const width = cards[0].offsetWidth + gap;
-	    track.style.transform = `translateX(-${current * width}px)`;
+  function updateSlider() {
+    const gap = parseInt(getComputedStyle(track).gap) || 20;
+    const width = cards[0].offsetWidth + gap;
+    track.style.transform = `translateX(-${current * width}px)`;
 
-	    // aktifkan card tengah
-	    cards.forEach(c => c.classList.remove('active'));
-	    if(cards[current]) cards[current].classList.add('active');
+    // aktifkan card tengah
+    cards.forEach(c => c.classList.remove('active'));
+    if(cards[current]) cards[current].classList.add('active');
 
-	    // update dots
-	    const dots = dotsContainer.querySelectorAll('span');
-	    dots.forEach(d => d.classList.remove('active'));
-	    if(dots[current]) dots[current].classList.add('active');
-	  }
+    // update dots
+    const dots = dotsContainer.querySelectorAll('span');
+    dots.forEach(d => d.classList.remove('active'));
+    if(dots[current]) dots[current].classList.add('active');
+  }
 
-	  function goToSlide(index) {
-	    if(index < 0) index = 0;
-	    if(index >= cards.length) index = cards.length -1;
-	    current = index;
-	    updateSlider();
-	  }
+  function goToSlide(index) {
+    if(index < 0) index = 0;
+    if(index >= cards.length) index = cards.length -1;
+    current = index;
+    updateSlider();
+  }
 
-	  nextBtn.onclick = () => { goToSlide(current + 1); };
-	  prevBtn.onclick = () => { goToSlide(current - 1); };
+  nextBtn.onclick = () => { goToSlide(current + 1); };
+  prevBtn.onclick = () => { goToSlide(current - 1); };
 
-	  // swipe support (optional)
-	  let startX = 0;
-	  track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
-	  track.addEventListener('touchend', e => {
-	    const diff = e.changedTouches[0].clientX - startX;
-	    if(diff > 30) prevBtn.click();
-	    if(diff < -30) nextBtn.click();
-	  });
+  // swipe support (optional)
+  let startX = 0;
+  track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
+  track.addEventListener('touchend', e => {
+    const diff = e.changedTouches[0].clientX - startX;
+    if(diff > 30) prevBtn.click();
+    if(diff < -30) nextBtn.click();
+  });
 
-	  createDots();
-	  updateSlider();
+  createDots();
+  updateSlider();
 
-	  // update slider on resize
-	  window.addEventListener('resize', updateSlider);
-	});
-	</script>
+  // update slider on resize
+  window.addEventListener('resize', updateSlider);
+});
+</script>
 <script>
 
     const track = document.getElementById("track");
