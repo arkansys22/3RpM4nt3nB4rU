@@ -317,15 +317,9 @@
             method: "POST",
             body: formData
         })
-        .then(res => res.json())
+       .then(res => res.text())
         .then(res => {
-            if (res.status === 'success') {
-                resultImage.src = res.url + '?t=' + new Date().getTime();
-                closeUploadPopup();
-            } else {
-                errorMsg.innerText = res.message;
-                errorMsg.classList.remove('hidden');
-            }
+            console.log("RESPONSE:", res);
         })
         .catch(err => {
             console.log(err);
