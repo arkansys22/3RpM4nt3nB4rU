@@ -811,10 +811,10 @@ body{
 <div class="section" id="lamaran">
   <h2>Paket Lamaran</h2>
   <div class="carousel">
-   
-    <div class="carousel-track" id="track">
-    <button class="carousel-btn prev-btn">&#10094;</button>
+   <button class="carousel-btn prev-btn">&#10094;</button>
     <button class="carousel-btn next-btn">&#10095;</button>
+    <div class="carousel-track" id="track">
+    
 
     	<?php $no = 1; foreach ($paketlamaran as $p): ?>
 
