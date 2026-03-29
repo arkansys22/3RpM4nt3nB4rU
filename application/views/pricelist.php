@@ -1239,214 +1239,66 @@ body{
   };
   </script>
   <script>
+	document.querySelectorAll('.carousel').forEach(carousel => {
+	  const track = carousel.querySelector('.carousel-track');
+	  const cards = Array.from(track.children);
+	  const nextBtn = carousel.querySelector('.next-btn');
+	  const prevBtn = carousel.querySelector('.prev-btn');
+	  const dotsContainer = carousel.querySelector('.dots');
+	  let current = 0;
 
-document.querySelectorAll('.carousel').forEach(carousel => {
-  const track = carousel.querySelector('.carousel-track');
-  const cards = Array.from(track.children);
-  const nextBtn = carousel.querySelector('.next-btn');
-  const prevBtn = carousel.querySelector('.prev-btn');
-  const dotsContainer = carousel.querySelector('.dots');
-  let current = 0;
+	  // buat dots
+	  function createDots() {
+	    dotsContainer.innerHTML = '';
+	    cards.forEach((_, i) => {
+	      const dot = document.createElement('span');
+	      dot.onclick = () => { goToSlide(i); };
+	      dotsContainer.appendChild(dot);
+	    });
+	  }
 
-  // buat dots
-  function createDots() {
-    dotsContainer.innerHTML = '';
-    cards.forEach((_, i) => {
-      const dot = document.createElement('span');
-      dot.onclick = () => { goToSlide(i); };
-      dotsContainer.appendChild(dot);
-    });
-  }
+	  function updateSlider() {
+	    const gap = parseInt(getComputedStyle(track).gap) || 20;
+	    const width = cards[0].offsetWidth + gap;
+	    track.style.transform = `translateX(-${current * width}px)`;
 
-  // update tampilan slider
-  function updateSlider() {
-    const width = cards[0].offsetWidth + 20; // gap
-    track.style.transform = `translateX(-${current * width}px)`;
+	    // aktifkan card tengah
+	    cards.forEach(c => c.classList.remove('active'));
+	    if(cards[current]) cards[current].classList.add('active');
 
-    // aktifkan card tengah
-    cards.forEach(c => c.classList.remove('active'));
-    if(cards[current]) cards[current].classList.add('active');
+	    // update dots
+	    const dots = dotsContainer.querySelectorAll('span');
+	    dots.forEach(d => d.classList.remove('active'));
+	    if(dots[current]) dots[current].classList.add('active');
+	  }
 
-    // update dots
-    const dots = dotsContainer.querySelectorAll('span');
-    dots.forEach(d => d.classList.remove('active'));
-    if(dots[current]) dots[current].classList.add('active');
-  }
+	  function goToSlide(index) {
+	    if(index < 0) index = 0;
+	    if(index >= cards.length) index = cards.length -1;
+	    current = index;
+	    updateSlider();
+	  }
 
-  function goToSlide(index){
-    if(index < 0) index = 0;
-    if(index >= cards.length) index = cards.length -1;
-    current = index;
-    updateSlider();
-  }
+	  nextBtn.onclick = () => { goToSlide(current + 1); };
+	  prevBtn.onclick = () => { goToSlide(current - 1); };
 
-  nextBtn.onclick = () => {
-    if(current < cards.length - 1){
-      current++;
-    } else {
-      current = 0; // loop ke awal
-    }
-    updateSlider();
-  };
+	  // swipe support (optional)
+	  let startX = 0;
+	  track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
+	  track.addEventListener('touchend', e => {
+	    const diff = e.changedTouches[0].clientX - startX;
+	    if(diff > 30) prevBtn.click();
+	    if(diff < -30) nextBtn.click();
+	  });
 
-  prevBtn.onclick = () => {
-    if(current > 0){
-      current--;
-    } else {
-      current = cards.length - 1; // loop ke akhir
-    }
-    updateSlider();
-  };
+	  createDots();
+	  updateSlider();
 
-  // drag untuk mobile
-  let startX = 0, isDragging = false, move = 0;
-  track.addEventListener('pointerdown', e => {
-    isDragging = true;
-    startX = e.pageX;
-    track.style.transition = 'none';
-  });
-  track.addEventListener('pointermove', e => {
-    if(!isDragging) return;
-    move = e.pageX - startX;
-    track.style.transform = `translateX(${-current * (cards[0].offsetWidth + 20) + move}px)`;
-  });
-  track.addEventListener('pointerup', e => {
-    isDragging = false;
-    track.style.transition = 'transform 0.4s ease';
-    if(move < -50 && current < cards.length - 1) current++;
-    else if(move > 50 && current > 0) current--;
-    updateSlider();
-    move = 0;
-  });
-  track.addEventListener('pointerleave', e => {
-    if(isDragging) track.dispatchEvent(new Event('pointerup'));
-  });
+	  // update slider on resize
+	  window.addEventListener('resize', updateSlider);
+	});
+	</script>
 
-  // resize handler
-  window.addEventListener('resize', updateSlider);
-
-  createDots();
-  updateSlider();
-});
-</script>
-<script>
-
-    const track = document.getElementById("track");
-    const cards = Array.from(track.children);
-
-    const nextBtn = document.querySelector(".next-btn");
-    const prevBtn = document.querySelector(".prev-btn");
-    const dotsContainer = document.getElementById("dots");
-
-    let current = 0;
-
-    // 👉 ambil lebar card
-    function getCardWidth(){
-      return cards[0].offsetWidth + 20;
-    }
-
-    // 👉 update slider
-    function updateSlider(){
-      const width = getCardWidth();
-
-      track.style.transition = "transform 0.4s ease";
-      track.style.transform = `translateX(-${current * width}px)`;
-
-      updateActiveCard();
-      updateDots();
-    }
-
-    // 👉 active card
-    function updateActiveCard(){
-      cards.forEach(c => c.classList.remove("active"));
-      cards[current].classList.add("active");
-    }
-
-    // 👉 dots
-    function createDots(){
-      dotsContainer.innerHTML = "";
-
-      cards.forEach((_, i)=>{
-        const dot = document.createElement("span");
-
-        if(i === 0) dot.classList.add("active");
-
-        dot.onclick = ()=>{
-          current = i;
-          updateSlider();
-        };
-
-        dotsContainer.appendChild(dot);
-      });
-    }
-
-    function updateDots(){
-      const dots = dotsContainer.querySelectorAll("span");
-
-      dots.forEach(d => d.classList.remove("active"));
-      dots[current].classList.add("active");
-    }
-
-    // 👉 next prev
-    function nextSlide(){
-      current++;
-      if(current >= cards.length){
-        current = 0; // looping clean
-      }
-      updateSlider();
-    }
-
-    function prevSlide(){
-      current--;
-      if(current < 0){
-        current = cards.length - 1;
-      }
-      updateSlider();
-    }
-
-    // 👉 button
-    nextBtn.onclick = nextSlide;
-    prevBtn.onclick = prevSlide;
-
-    // 👉 swipe (mobile)
-    let startX = 0;
-
-    track.addEventListener("touchstart", e=>{
-      startX = e.touches[0].clientX;
-    });
-
-    track.addEventListener("touchend", e=>{
-      let diff = startX - e.changedTouches[0].clientX;
-
-      if(diff > 50) nextSlide();
-      else if(diff < -50) prevSlide();
-    });
-
-    // 👉 drag (desktop)
-    let isDown = false;
-    let startPos = 0;
-
-    track.addEventListener("mousedown", e=>{
-      isDown = true;
-      startPos = e.pageX;
-    });
-
-    track.addEventListener("mouseup", e=>{
-      if(!isDown) return;
-      isDown = false;
-
-      let diff = startPos - e.pageX;
-
-      if(diff > 50) nextSlide();
-      else if(diff < -50) prevSlide();
-    });
-
-    track.addEventListener("mouseleave", ()=> isDown = false);
-
-    // INIT
-    createDots();
-    updateSlider();
-  </script>
 
   <script>
     const sections = document.querySelectorAll(".section");
