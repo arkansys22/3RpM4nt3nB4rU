@@ -813,7 +813,7 @@ body{
   <div class="carousel">
    	<button class="carousel-btn prev-btn">&#10094;</button>
     <button class="carousel-btn next-btn">&#10095;</button>
-    <div class="carousel-track" id="track">
+    <div class="carousel-track">
     
 
     	<?php $no = 1; foreach ($paketlamaran as $p): ?>
