@@ -1316,7 +1316,6 @@ class crud_potensial_clients extends CI_Controller {
             return;
         }
 
-        // validasi ukuran
         if ($_FILES['gambar']['size'] > 1048576) {
             echo json_encode([
                 'status' => 'error',
@@ -1325,23 +1324,30 @@ class crud_potensial_clients extends CI_Controller {
             return;
         }
 
-        // PATH
-        $path = FCPATH . 'assets/uploads/pricelist/';
+        $path = FCPATH . 'uploads/pricelist/';
 
-        if (!is_dir($path)) {
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Folder TIDAK ADA: ' . $path
-            ]);
-            return;
-        }
+        // 👉 TARUH DI SINI
+        echo json_encode([
+            'path' => $path,
+            'is_dir' => is_dir($path),
+            'writable' => is_writable($path)
+        ]);
+        die;
 
         // auto buat folder
         if (!is_dir($path)) {
             mkdir($path, 0777, true);
         }
 
-        $config['upload_path'] = '/home/u692958157/domains/maid.mantenbaru.com/public_html/assets/uploads/pricelist/';
+        if (!is_dir($path)) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Folder gagal dibuat'
+            ]);
+            return;
+        }
+
+        $config['upload_path']   = $path;
         $config['allowed_types'] = 'jpg|jpeg|png|webp';
         $config['file_name']     = 'pricelist_' . time();
         $config['max_size']      = 1024;
@@ -1356,7 +1362,6 @@ class crud_potensial_clients extends CI_Controller {
         } else {
             $file = $this->upload->data();
 
-            // simpan ke database
             $this->db->insert('data_pricelist_gambar', [
                 'data_pricelist_idsession' => $id,
                 'data_pricelist_gambar_nama' => $file['file_name']
@@ -1364,7 +1369,7 @@ class crud_potensial_clients extends CI_Controller {
 
             echo json_encode([
                 'status' => 'success',
-                'url' => base_url('assets/uploads/pricelist/'.$file['file_name'])
+                'url' => base_url('uploads/pricelist/'.$file['file_name'])
             ]);
         }
     }
