@@ -1121,6 +1121,14 @@ body{
   const popupDesc = document.getElementById("popup-desc");
   const waBtn = document.getElementById("wa-btn");
 
+  // Tambahkan di sini
+	const popupOldPrice = document.getElementById("popup-old-price");
+	const popupDiscount = document.getElementById("popup-discount");
+
+	function formatRupiah(number){
+	  return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(number);
+	}
+
   // INIT ACCORDION (WAJIB JALAN SEKALI)
   function initAccordion(){
     document.querySelectorAll(".acc-header").forEach(header=>{
