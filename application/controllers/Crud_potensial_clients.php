@@ -1318,23 +1318,46 @@ class crud_potensial_clients extends CI_Controller {
             return;
         }
 
-        $path = FCPATH . 'assets/uploads/pricelist/';
+        $basePath = FCPATH . 'assets/uploads/pricelist';
 
-        // pastikan folder ada
-        if (!is_dir($path)) {
-            mkdir($path, 0777, true);
+        // buat folder kalau belum ada
+        if (!is_dir($basePath)) {
+            mkdir($basePath, 0777, true);
         }
 
-        // 🔥 INI KUNCI
-        $path = rtrim($path, '/') . '/';
+        // 🔥 ambil real absolute path
+        $path = realpath($basePath);
 
-        $config['upload_path'] = $path;
+        // 🔥 VALIDASI FINAL
+        if ($path === false) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'realpath gagal'
+            ]);
+            return;
+        }
+
+        // 🔥 WAJIB trailing slash
+        $path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+
+        $config['upload_path']   = $path;
         $config['allowed_types'] = 'jpg|jpeg|png|webp';
         $config['file_name']     = 'pricelist_' . time();
         $config['max_size']      = 1024;
 
-       
-        $this->load->library('upload', $config);
+        // 🔥 WAJIB initialize ulang
+        $this->load->library('upload');
+        $this->upload->initialize($config);
+
+        // DEBUG FINAL (hapus nanti)
+        if (!$this->upload->validate_upload_path()) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'CI tidak menganggap path valid',
+                'path' => $path
+            ]);
+            return;
+        }
 
         if (!$this->upload->do_upload('gambar')) {
             echo json_encode([
