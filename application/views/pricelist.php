@@ -738,11 +738,12 @@ body{
   <h2>Paket Wedding Organizer</h2>
 
   <div class="carousel">
+  	<button class="carousel-btn prev-btn">&#10094;</button>
+    <button class="carousel-btn next-btn">&#10095;</button>
 
     <div class="carousel-track">
 
-    <button class="carousel-btn prev-btn">&#10094;</button>
-    <button class="carousel-btn next-btn">&#10095;</button>
+    
 
 
     	<?php $no = 1; foreach ($paketwo as $p): ?>
