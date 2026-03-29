@@ -1333,14 +1333,7 @@ class crud_potensial_clients extends CI_Controller {
         $config['file_name']     = 'pricelist_' . time();
         $config['max_size']      = 1024;
 
-        // 👉 TARUH DEBUG DI SINI
-        echo json_encode([
-            'final_path' => $config['upload_path'],
-            'is_dir' => is_dir($config['upload_path']),
-            'writable' => is_writable($config['upload_path'])
-        ]);
-        die;
-
+       
         $this->load->library('upload', $config);
 
         if (!$this->upload->do_upload('gambar')) {
