@@ -1316,6 +1316,11 @@ class crud_potensial_clients extends CI_Controller {
 
     public function upload_gambar()
     {
+        // 🔥 WAJIB: bersihkan semua output sebelumnya
+        ob_clean();
+
+        error_reporting(0);
+        ini_set('display_errors', 0);
         header('Content-Type: application/json');
 
         $id = $this->input->post('id');
@@ -1325,7 +1330,7 @@ class crud_potensial_clients extends CI_Controller {
                 'status' => 'error',
                 'message' => 'ID tidak ditemukan'
             ]);
-            return;
+            exit;
         }
 
         if (empty($_FILES['gambar']['name'])) {
@@ -1333,7 +1338,7 @@ class crud_potensial_clients extends CI_Controller {
                 'status' => 'error',
                 'message' => 'File tidak dipilih'
             ]);
-            return;
+            exit;
         }
 
         $basePath = FCPATH . 'assets/uploads/pricelist';
@@ -1343,19 +1348,16 @@ class crud_potensial_clients extends CI_Controller {
             mkdir($basePath, 0777, true);
         }
 
-        // 🔥 ambil real absolute path
         $path = realpath($basePath);
 
-        // 🔥 VALIDASI FINAL
         if ($path === false) {
             echo json_encode([
                 'status' => 'error',
                 'message' => 'realpath gagal'
             ]);
-            return;
+            exit;
         }
 
-        // 🔥 WAJIB trailing slash
         $path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
         $config['upload_path']   = $path;
@@ -1363,38 +1365,38 @@ class crud_potensial_clients extends CI_Controller {
         $config['file_name']     = 'pricelist_' . time();
         $config['max_size']      = 1024;
 
-        // 🔥 WAJIB initialize ulang
         $this->load->library('upload');
         $this->upload->initialize($config);
 
-        // DEBUG FINAL (hapus nanti)
         if (!$this->upload->validate_upload_path()) {
             echo json_encode([
                 'status' => 'error',
-                'message' => 'CI tidak menganggap path valid',
+                'message' => 'Path upload tidak valid',
                 'path' => $path
             ]);
-            return;
+            exit;
         }
 
         if (!$this->upload->do_upload('gambar')) {
             echo json_encode([
                 'status' => 'error',
-                'message' => strip_tags($this->upload->display_errors())
+                'message' => strip_tags($this->upload->display_errors('', ''))
             ]);
-        } else {
-            $file = $this->upload->data();
-
-            $this->db->insert('data_pricelist_gambar', [
-                'data_pricelist_idsession' => $id,
-                'data_pricelist_gambar_nama' => $file['file_name']
-            ]);
-
-            echo json_encode([
-                'status' => 'success',
-                'url' => base_url('assets/uploads/pricelist/'.$file['file_name'])
-            ]);
+            exit;
         }
+
+        $file = $this->upload->data();
+
+        $this->db->insert('data_pricelist_gambar', [
+            'data_pricelist_idsession' => $id,
+            'data_pricelist_gambar_nama' => $file['file_name']
+        ]);
+
+        echo json_encode([
+            'status' => 'success',
+            'url' => base_url('assets/uploads/pricelist/' . $file['file_name'])
+        ]);
+        exit;
     }
 
 
