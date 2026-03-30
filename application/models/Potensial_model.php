@@ -15,7 +15,7 @@ class potensial_model extends CI_Model {
 
      public function get_pricelist_type($type)
     {   
-        $this->db->order_by('data_pricelist_harga', 'DESC');    
+        $this->db->order_by('data_pricelist_harga', 'ASC');    
         $this->db->where('data_pricelist_type', $type);
         $this->db->where('data_pricelist_visibilitas', 'Public');
         $this->db->where('data_pricelist_status', 'Aktif');
