@@ -32,6 +32,16 @@ class Operational_model extends CI_Model {
 
     }
 
+    public function insert_accounting($data_accounting) {
+        return $this->db->insert('accounting', $data_accounting);
+
+    }
+
+    public function update_accounting($id_session, $data_accounting) {
+        $this->db->where('accounting_id_session', $id_session);
+        return $this->db->update('accounting', $data_accounting);
+    }
+
     var $table = 'operational_acc';
     var $column_order = array(null, 'nama_transaksi','tanggal_transaksi','nominal_transaksi'); // kolom yg bisa diurutkan
     var $column_search = array('nama_transaksi','tanggal_transaksi','kategori');      // kolom yg bisa dicari
