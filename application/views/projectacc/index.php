@@ -288,9 +288,22 @@
 
                     <?php 
                     $data['terbayar_ops'] = $this->finance_project_model->get_finance_dibayarklien($p->id_session);
-                    $data['modal_ops'] = $this->finance_project_model->get_finance_out($p->id_session); ?>
-                    <?php $profit = $data['terbayar_ops']->total_dibayarkan - $data['modal_ops']->total_finance_out?>
-                    <?php $persentase = ($profit / $data['terbayar_ops']->total_dibayarkan) * 100 ?>
+                    $data['modal_ops'] = $this->finance_project_model->get_finance_out($p->id_session); 
+
+                    // amankan nilai (kalau null jadi 0)
+                    $total_dibayar = $data['terbayar_ops']->total_dibayarkan ?? 0;
+                    $total_modal   = $data['modal_ops']->total_finance_out ?? 0;
+
+                    $profit = $total_dibayar - $total_modal;
+
+                    // hindari division by zero
+                    if ($total_dibayar > 0) {
+                        $persentase = ($profit / $total_dibayar) * 100;
+                    } else {
+                        $persentase = 0;
+                    }
+
+                    ?>
 
                     <?php if(!empty($profit)){?>
                     <td><?= "Rp " . number_format($profit, 0, ',', '.'); ?> (<?= round($persentase) ?> %)</td>
