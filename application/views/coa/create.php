@@ -116,6 +116,7 @@
             'Expense': '6000',
             'Other Income': '7100',
             'Other Expense': '7200'
+            'Other Current': '2100'
         };
 
         // saat pilih account type
