@@ -56,6 +56,7 @@
                     <option value="Expense">Expense</option>
                     <option value="Other Expense">Other Expense</option>
                     <option value="Other Income">Other Income</option>
+                    <option value="Other Current">Other Current</option>
                 </select>
 
                 <!-- Checkbox -->

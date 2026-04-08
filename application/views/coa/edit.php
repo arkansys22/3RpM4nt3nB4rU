@@ -55,6 +55,7 @@
                     <option value="Expense" <?= ($coa->detail_kategori == 'Expense') ? 'selected' : '' ?>>Expense</option>
                     <option value="Other Expense" <?= ($coa->detail_kategori == 'Other Expense') ? 'selected' : '' ?>>Other Expense</option>
                     <option value="Other Income" <?= ($coa->detail_kategori == 'Other Income') ? 'selected' : '' ?>>Other Income</option>
+                    <option value="Other Current" <?= ($coa->detail_kategori == 'Other Current') ? 'selected' : '' ?>>Other Current</option>
                 </select>
 
                 <label class="block mb-2">Account No.</label>
