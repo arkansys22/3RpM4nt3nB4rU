@@ -300,8 +300,17 @@
                     <?php $no = 1; foreach ($ops as $p): ?>
                       <tr>
                         <td><?= $p->tanggal_transaksi ?></td>
-                        <?php $kat= $this->Crud_m->view_where('operational_kategori', array('nomer_kategori'=> $p->kategori))->row(); ?>
-                        <td><?= $kat->nama_kategori ?></td>
+                        <?php 
+                        $kat = $this->Crud_m
+                            ->view_where('operational_kategori', array('nomer_kategori' => $p->kategori))
+                            ->row(); 
+                        ?>
+
+                        <td>
+                            <?= !empty($kat) && !empty($kat->nama_kategori) 
+                                ? $kat->nama_kategori 
+                                : 'Belum di input' ?>
+                        </td>
                         
                         <td><?= $p->nama_transaksi ?></td>
                         <td><?= "Rp " . number_format($p->nominal_transaksi, 0, ',', '.'); ?></td>                
