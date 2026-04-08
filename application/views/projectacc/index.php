@@ -305,11 +305,14 @@
 
                     ?>
 
-                    <?php if(!empty($profit)){?>
-                    <td><?= "Rp " . number_format($profit, 0, ',', '.'); ?> (<?= round($persentase) ?> %)</td>
-                    <?php }else{ ?>
+                    <?php if($total_dibayar > 0){ ?>
+                    <td>
+                        <?= "Rp " . number_format($profit, 0, ',', '.'); ?> 
+                        (<?= round($persentase) ?> %)
+                    </td>
+                    <?php } else { ?>
                     <td>Belum Ada</td>
-                    <?php }?>
+                    <?php } ?>
 
                     
                     <td><?= $p->religion ?></td>                    
