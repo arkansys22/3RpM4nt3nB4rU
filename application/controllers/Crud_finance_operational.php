@@ -317,7 +317,7 @@ class crud_finance_operational extends CI_Controller {
 
         $data_accounting = array(
 
-            
+            'accounting_id_session' => $id_session,
             'accounting_nomer_kategori' => $kategori,
             'accounting_nominal' => $nominal,
             'accounting_tanggal' => $tanggal,
@@ -325,7 +325,7 @@ class crud_finance_operational extends CI_Controller {
             
         );
 
-        $this->Operational_model->update_accounting($id_session, $data_accounting);
+        $this->Operational_model->insert_accounting($data_accounting);
     
         $this->session->set_flashdata('Success', 'Operational berhasil diupdate');
         redirect('finance-operational');
