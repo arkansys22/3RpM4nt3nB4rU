@@ -115,7 +115,7 @@
             'Cost Of Goods Sold': '5000',
             'Expense': '6000',
             'Other Income': '7100',
-            'Other Expense': '7200'
+            'Other Expense': '7200',
             'Other Current': '2100'
         };
 
