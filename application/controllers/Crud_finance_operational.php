@@ -113,12 +113,17 @@ class crud_finance_operational extends CI_Controller {
                       $agent = 'Unidentified User Agent';
                 }
 
+        $nominal = str_replace('.', '', $this->input->post('nominal'));
+        $kategori = $this->input->post('kategori');
+        $nama_transaksi =  $this->input->post('nama_transaksi');
+        $tanggal = $this->input->post('tgl_transaksi');
+
         $data = array(
             'id_session'    => $id_session2,
-            'nama_transaksi'  => $this->input->post('nama_transaksi'),
-            'tanggal_transaksi'  => $this->input->post('tgl_transaksi'),
-            'nominal_transaksi'        => str_replace('.', '', $this->input->post('nominal')),
-            'kategori'    => $this->input->post('kategori'),     
+            'nama_transaksi'  => $nama_transaksi,
+            'tanggal_transaksi'  => $tanggal,
+            'nominal_transaksi'        => $nominal,
+            'kategori'    => $kategori,     
             'periode'    => $this->input->post('periode'),         
             'create_by'     => $this->session->id_session,
             'create_date'   => $date_create
@@ -141,6 +146,20 @@ class crud_finance_operational extends CI_Controller {
             'log_activity_ip'=> $ip_with_location            
         );
         $this->Users2_model->insert_log_activity($data_log);   
+
+
+         $data_accounting = array(
+
+            'accounting_id_session' => $id_session2,
+            'accounting_nomer_kategori' => $kategori,
+            'accounting_nominal' => $nominal,
+            'accounting_tanggal' => $tanggal,
+            'accounting_nama_transaksi'=> $nama_transaksi
+            
+        );
+
+        $this->Operational_model->insert_accounting($data_accounting);
+
     
         $this->session->set_flashdata('Success', 'Berhasil dibuat');
         redirect('finance-operational');
