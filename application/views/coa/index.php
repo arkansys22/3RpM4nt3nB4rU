@@ -96,21 +96,29 @@
                   <tbody id="coaTable">
 
                     <?php
-                    function formatAccountNo($no) {
-                        // pecah berdasarkan titik (kalau ada)
-                        $parts = explode('.', $no);
+                      function formatAccountNo($no) {
+                          $parts = explode('.', $no);
 
-                        $formattedParts = array_map(function($part) {
-                            // hanya format kalau angka
-                            if (is_numeric($part)) {
-                                return number_format($part, 0, ',', '.');
-                            }
-                            return $part;
-                        }, $parts);
+                          $formattedParts = array_map(function($part) {
 
-                        return implode('.', $formattedParts);
-                    }
-                    ?>
+                              // jika bukan angka, langsung kembalikan
+                              if (!ctype_digit($part)) {
+                                  return $part;
+                              }
+
+                              // jika ada leading zero (misal 01, 002), jangan diubah
+                              if (strlen($part) > 1 && $part[0] === '0') {
+                                  return $part;
+                              }
+
+                              // format angka biasa
+                              return number_format((int)$part, 0, ',', '.');
+
+                          }, $parts);
+
+                          return implode('.', $formattedParts);
+                      }
+                      ?>
 
                     <?php 
                     // Buat array bantuan untuk cek apakah sebuah ID adalah parent
