@@ -287,32 +287,53 @@
 
 
                     <?php 
-                    $data['terbayar_ops'] = $this->finance_project_model->get_finance_dibayarklien($p->id_session);
-                    $data['modal_ops'] = $this->finance_project_model->get_finance_out($p->id_session); 
+                      $data['terbayar_ops'] = $this->finance_project_model->get_finance_dibayarklien($p->id_session);
+                      $data['modal_ops'] = $this->finance_project_model->get_finance_out($p->id_session);
 
-                    // amankan nilai (kalau null jadi 0)
-                    $total_dibayar = $data['terbayar_ops']->total_dibayarkan ?? 0;
-                    $total_modal   = $data['modal_ops']->total_finance_out ?? 0;
+                      $total_dibayar = $data['terbayar_ops']->total_dibayarkan ?? 0;
+                      $total_modal   = $data['modal_ops']->total_finance_out ?? 0;
 
-                    $profit = $total_dibayar - $total_modal;
+                      $profit = $total_dibayar - $total_modal;
 
-                    // hindari division by zero
-                    if ($total_dibayar > 0) {
-                        $persentase = ($profit / $total_dibayar) * 100;
-                    } else {
-                        $persentase = 0;
-                    }
+                      // hindari division by zero
+                      $persentase = ($total_dibayar > 0) 
+                          ? ($profit / $total_dibayar) * 100 
+                          : 0;
 
+                      // tentukan warna
+                      $color = $profit > 0 ? 'text-green-600' : ($profit < 0 ? 'text-red-600' : 'text-gray-500');
+
+                      // progress bar (max 100%)
+                      $progress = min(abs($persentase), 100);
                     ?>
 
-                    <?php if($total_dibayar > 0){ ?>
                     <td>
-                        <?= "Rp " . number_format($profit, 0, ',', '.'); ?> 
-                        (<?= round($persentase) ?> %)
+                        <?php if($total_dibayar > 0){ ?>
+                            
+                            <div class="flex flex-col gap-1">
+                                <!-- Nominal -->
+                                <span class="font-semibold <?= $color ?>">
+                                    <?= "Rp " . number_format($profit, 0, ',', '.'); ?>
+                                </span>
+
+                                <!-- Persentase -->
+                                <span class="text-xs <?= $color ?>">
+                                    <?= round($persentase) ?> %
+                                </span>
+
+                                <!-- Progress Bar -->
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div 
+                                        class="h-2 rounded-full <?= $profit > 0 ? 'bg-green-500' : ($profit < 0 ? 'bg-red-500' : 'bg-gray-400') ?>"
+                                        style="width: <?= $progress ?>%">
+                                    </div>
+                                </div>
+                            </div>
+
+                        <?php } else { ?>
+                            <span class="text-gray-400 italic">Belum Ada</span>
+                        <?php } ?>
                     </td>
-                    <?php } else { ?>
-                    <td>Belum Ada</td>
-                    <?php } ?>
 
                     
                     <td><?= $p->religion ?></td>                    
