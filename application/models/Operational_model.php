@@ -138,6 +138,11 @@ class Operational_model extends CI_Model {
         return $this->db->delete('operational_acc');
     }
 
+    public function delete_accounting($id_session) {
+        $this->db->where('accounting_id_session ', $id_session);
+        return $this->db->delete('accounting');
+    }
+
 
     public function view_ordering($table,$order,$ordering)
     {

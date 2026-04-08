@@ -492,6 +492,8 @@ class crud_finance_operational extends CI_Controller {
 
             $this->Users2_model->insert_log_activity($data_log);
 
+            $this->Operational_model->delete_accounting($id_session);
+
         
         $this->session->set_flashdata('Success', 'Berhasil dihapus permanen');
         redirect('finance-operational');
