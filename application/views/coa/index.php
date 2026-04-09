@@ -174,7 +174,7 @@
   <script>
 document.addEventListener("DOMContentLoaded", function () {
   initTree();
-  calculateTotals();
+  // calculateTotals();
   applyZebra();
 });
 
