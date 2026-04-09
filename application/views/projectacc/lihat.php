@@ -232,6 +232,9 @@
                           Nama Transaksi
                         </th>
                         <th class="px-4 py-4 font-medium">
+                          Kategori
+                        </th>
+                        <th class="px-4 py-4 font-medium">
                           Nominal
                         </th>
                         <th class="px-4 py-4 font-medium">
@@ -252,6 +255,23 @@
                         </td>
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
                         <p><?= $p->nama_transaksi ?></p>
+                        </td>
+                        <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+                        
+                          <?php 
+                        $kat = $this->Crud_m
+                            ->view_where('operational_kategori', array('nomer_kategori' => $p->kategori))
+                            ->row(); 
+                        ?>
+
+                        <p>
+                            <?= !empty($kat) && !empty($kat->nama_kategori) 
+                                ? $kat->nama_kategori 
+                                : 'Belum di input' ?>
+                        </p>
+
+
+
                         </td>
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
                          <p style="text-align: right;">Rp <?= number_format($p->nominal_transaksi, 0, ',', '.'); ?></p>
