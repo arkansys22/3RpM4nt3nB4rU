@@ -582,9 +582,9 @@ class Crud_finance_project extends CI_Controller {
         }
 
         // Hapus Project Acc
-        if ($this->finance_project_model->delete_permanent($project_id_session,$id_session
-            $this->finance_project_model->delete_accounting($id_session);
-        )) {
+        if ($this->finance_project_model->delete_permanent($project_id_session,$id_session)
+            $this->finance_project_model->delete_accounting($id_session))
+         {
             $this->session->set_flashdata('success', 'Project Finance berhasil dihapus.');
         } else {
             $this->session->set_flashdata('error', 'Gagal menghapus vendor.');
