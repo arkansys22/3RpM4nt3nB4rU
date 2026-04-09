@@ -56,7 +56,10 @@ class Finance_project_model extends CI_Model {
 
 
  
-
+    public function delete_accounting($id_session) {
+        $this->db->where('accounting_id_session ', $id_session);
+        return $this->db->delete('accounting');
+    }
 
 
     public function get_expense_project_bulan_ini()
