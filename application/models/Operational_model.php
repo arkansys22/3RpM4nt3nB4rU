@@ -34,25 +34,27 @@ class Operational_model extends CI_Model {
 
      public function insert_accounting($id_session, $data_accounting) {
 
-        $sql = "
-            INSERT INTO accounting 
-            (accounting_id_session, accounting_nomer_kategori, accounting_nominal, accounting_tanggal, accounting_nama_transaksi)
-            VALUES (?, ?, ?, ?, ?)
-            ON DUPLICATE KEY UPDATE
-                accounting_nomer_kategori = VALUES(accounting_nomer_kategori),
-                accounting_nominal = VALUES(accounting_nominal),
-                accounting_nama_transaksi = VALUES(accounting_nama_transaksi),
-                accounting_tanggal = VALUES(accounting_tanggal)
-        ";
+    // pastikan id_session masuk ke data
+    $data_accounting['accounting_id_session'] = $id_session;
 
-        return $this->db->query($sql, [
-            $id_session, // <-- pakai parameter ini
-            $data_accounting['accounting_nomer_kategori'],
-            $data_accounting['accounting_nominal'],
-            $data_accounting['accounting_tanggal'],
-            $data_accounting['accounting_nama_transaksi']
+    // cek apakah sudah ada
+    $this->db->where('accounting_id_session', $id_session);
+    $cek = $this->db->get('accounting')->row();
+
+    if ($cek) {
+        // UPDATE (termasuk kategori bisa berubah)
+        $this->db->where('accounting_id_session', $id_session);
+        return $this->db->update('accounting', [
+            'accounting_nomer_kategori' => $data_accounting['accounting_nomer_kategori'],
+            'accounting_nominal' => $data_accounting['accounting_nominal'],
+            'accounting_tanggal' => $data_accounting['accounting_tanggal'],
+            'accounting_nama_transaksi' => $data_accounting['accounting_nama_transaksi']
         ]);
+    } else {
+        // INSERT
+        return $this->db->insert('accounting', $data_accounting);
     }
+}
 
     public function update_accounting($id_session, $data_accounting) {
         $this->db->where('accounting_id_session', $id_session);
