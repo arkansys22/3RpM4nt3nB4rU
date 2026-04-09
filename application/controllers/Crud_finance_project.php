@@ -390,7 +390,7 @@ class Crud_finance_project extends CI_Controller {
             
         );
 
-        $this->project_model->insert_accounting($data_accounting);
+        $this->project_model->insert_accounting($id_session, $data_accounting);
 
         $this->session->set_flashdata('Success', 'Finance Project berhasil diupdate');
         redirect('finance-project/lihat/' . $project_id_session);
