@@ -12,7 +12,8 @@ class coa_model extends CI_Model {
                 SELECT SUM(a.accounting_nominal)
                 FROM accounting a
                 WHERE 
-                    TRIM(a.accounting_nomer_kategori) = TRIM(ok.nomer_kategori)
+                    a.accounting_nomer_kategori = ok.nomer_kategori
+                    OR a.accounting_nomer_kategori LIKE CONCAT(ok.nomer_kategori, ".%")
             ),0) as balance');
 
         $this->db->from('operational_kategori ok');
