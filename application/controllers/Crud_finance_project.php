@@ -252,18 +252,21 @@ class Crud_finance_project extends CI_Controller {
         if ($this->session->level=='1'){
             cek_session_akses_developer('finance-project', $this->session->id_session);
             $data['project'] = $this->project_model->get_project_by_session($project_id_session);
+            $data['kategori'] = $this->Crud_m->view_ordering('operational_kategori','nomer_kategori','asc');
             $data['transaction'] = $this->finance_project_model->get_transaction_by_ids($project_id_session, $id_session);
             $this->load->view('projectacc/edit', $data);
 
         }else if($this->session->level=='2'){
             cek_session_akses_administrator('finance-project', $this->session->id_session);
             $data['project'] = $this->project_model->get_project_by_session($project_id_session);
+            $data['kategori'] = $this->Crud_m->view_ordering('operational_kategori','nomer_kategori','asc');
             $data['transaction'] = $this->finance_project_model->get_transaction_by_ids($project_id_session, $id_session);
             $this->load->view('projectacc/edit', $data);
 
         }else if($this->session->level=='3'){
             cek_session_akses_staff_accounting('finance-project', $this->session->id_session);
             $data['project'] = $this->project_model->get_project_by_session($project_id_session);
+            $data['kategori'] = $this->Crud_m->view_ordering('operational_kategori','nomer_kategori','asc');
             $data['transaction'] = $this->finance_project_model->get_transaction_by_ids($project_id_session, $id_session);
             $this->load->view('projectacc/edit', $data);
 
@@ -339,10 +342,16 @@ class Crud_finance_project extends CI_Controller {
             $agent = 'Unidentified User Agent';
         }
 
+        $nominal = str_replace('.', '', $this->input->post('value'));
+        $kategori = $this->input->post('kategori');
+        $nama_transaksi =  $this->input->post('nama_transaksi');
+        $tanggal = $this->input->post('event_date');
+
         $data = [
-            'nama_transaksi' => $this->input->post('nama_transaksi'),
-            'tanggal_transaksi' => $this->input->post('event_date'),
-            'nominal_transaksi' => str_replace('.', '', $this->input->post('value')),
+            'nama_transaksi' => $nama_transaksi,
+            'tanggal_transaksi' => $tanggal,
+            'nominal_transaksi' => $nominal,
+            'kategori' => $kategori,
             'metode_transaksi' => $this->input->post('metode'),
             'detail' => $this->input->post('detail'),
         ];
@@ -369,6 +378,19 @@ class Crud_finance_project extends CI_Controller {
         );
 
         $this->project_model->insert_log_activity($data_log);
+
+
+        $data_accounting = array(
+
+            'accounting_id_session' => $id_session,
+            'accounting_nomer_kategori' => $kategori,
+            'accounting_nominal' => $nominal,
+            'accounting_tanggal' => $tanggal,
+            'accounting_nama_transaksi'=> $nama_transaksi
+            
+        );
+
+        $this->Operational_model->insert_accounting($data_accounting);
 
         $this->session->set_flashdata('Success', 'Finance Project berhasil diupdate');
         redirect('finance-project/lihat/' . $project_id_session);

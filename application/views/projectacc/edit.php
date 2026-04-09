@@ -55,6 +55,17 @@
                   <option value="Cash" <?= $transaction->metode_transaksi == 'Cash' ? 'selected' : '' ?>>Cash</option>
                 </select>
 
+                <label class="block mb-2">Kategori</label>
+                <select name="kategori" class="w-full px-4 py-2 border rounded mb-4" required> 
+                      <?php foreach ($kategori as $p) {
+                            if ($transaction->kategori == $p['nomer_kategori']){
+                              echo"<option selected='selected' value='$p[nomer_kategori]'>$p[nomer_kategori] - $p[nama_kategori]</option> ";
+                            }else{
+                              echo"<option value='$p[nomer_kategori]'>$p[nomer_kategori] - $p[nama_kategori]</option>";
+                         }
+                      } ?>                    
+                </select>
+
                 <label class="block mb-2">Detail</label>
                 <textarea name="detail" class="w-full px-4 py-2 border rounded mb-4" required><?= $transaction->detail ?></textarea>
                 
