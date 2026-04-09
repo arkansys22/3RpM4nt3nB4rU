@@ -6,20 +6,19 @@ class coa_model extends CI_Model {
     }
 
     public function get_all_coa() {
-        $this->db->select('operational_kategori.*, 
-            COALESCE(SUM(accounting.accounting_nominal),0) as balance');
+        $this->db->select('ok.nomer_kategori,
+                           ok.nama_kategori,
+                           ok.detail_kategori,
 
-        $this->db->from('operational_kategori');
+                           COALESCE((
+                               SELECT SUM(a.accounting_nominal)
+                               FROM accounting a
+                               WHERE a.accounting_nomer_kategori 
+                               LIKE CONCAT(ok.nomer_kategori, "%")
+                           ),0) as balance');
 
-        // JOIN ke tabel accounting (sesuai field yang ada)
-        $this->db->join(
-            'accounting', 
-            'accounting.accounting_nomer_kategori LIKE CONCAT(operational_kategori.nomer_kategori, "%")', 
-            'left'
-        );
-
-        $this->db->group_by('operational_kategori.nomer_kategori');
-        $this->db->order_by('operational_kategori.nomer_kategori', 'ASC');
+        $this->db->from('operational_kategori ok');
+        $this->db->order_by('ok.nomer_kategori', 'ASC');
 
         return $this->db->get()->result();
     }
