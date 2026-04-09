@@ -124,25 +124,26 @@ class project_model extends CI_Model {
     }
 
 
-    public function insert_accounting($data_accounting) {
+   public function insert_accounting($id_session, $data_accounting) {
 
-    $sql = "
-        INSERT INTO accounting 
-        (accounting_id_session, accounting_nomer_kategori, accounting_nominal, accounting_tanggal, accounting_nama_transaksi)
-        VALUES (?, ?, ?, ?, ?)
-        ON DUPLICATE KEY UPDATE
-            accounting_nominal = VALUES(accounting_nominal),
-            accounting_nama_transaksi = VALUES(accounting_nama_transaksi)
-    ";
+        $sql = "
+            INSERT INTO accounting 
+            (accounting_id_session, accounting_nomer_kategori, accounting_nominal, accounting_tanggal, accounting_nama_transaksi)
+            VALUES (?, ?, ?, ?, ?)
+            ON DUPLICATE KEY UPDATE
+                accounting_nominal = VALUES(accounting_nominal),
+                accounting_nama_transaksi = VALUES(accounting_nama_transaksi),
+                accounting_tanggal = VALUES(accounting_tanggal)
+        ";
 
-    return $this->db->query($sql, [
-        $data_accounting['accounting_id_session'],
-        $data_accounting['accounting_nomer_kategori'],
-        $data_accounting['accounting_nominal'],
-        $data_accounting['accounting_tanggal'],
-        $data_accounting['accounting_nama_transaksi']
-    ]);
-}
+        return $this->db->query($sql, [
+            $id_session, // <-- pakai parameter ini
+            $data_accounting['accounting_nomer_kategori'],
+            $data_accounting['accounting_nominal'],
+            $data_accounting['accounting_tanggal'],
+            $data_accounting['accounting_nama_transaksi']
+        ]);
+    }
 
 
 }
