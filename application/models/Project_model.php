@@ -131,6 +131,7 @@ class project_model extends CI_Model {
             (accounting_id_session, accounting_nomer_kategori, accounting_nominal, accounting_tanggal, accounting_nama_transaksi)
             VALUES (?, ?, ?, ?, ?)
             ON DUPLICATE KEY UPDATE
+                accounting_nomer_kategori = VALUES(accounting_nomer_kategori),
                 accounting_nominal = VALUES(accounting_nominal),
                 accounting_nama_transaksi = VALUES(accounting_nama_transaksi),
                 accounting_tanggal = VALUES(accounting_tanggal)
