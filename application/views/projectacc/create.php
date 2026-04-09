@@ -55,6 +55,20 @@
                     <option value="Cash">Cash</option>
                 </select>
 
+                <label class="block mb-2">Kategori</label>
+                <select name="kategori" class="w-full px-4 py-2 border rounded mb-4" required> 
+                        <option value="-">-</option>
+                        <?php foreach ($kategori as $p) {
+                              if (empty($kategori)){
+                                echo"
+                                <option value=''>-</option>
+                                <option value='$p[nomer_kategori]'>$p[nomer_kategori] - $p[nama_kategori]</option> ";
+                              }else{
+                                echo"<option value='$p[nomer_kategori]'>$p[nomer_kategori] | $p[nama_kategori]</option>";
+                           }
+                        } ?>
+                </select>
+
                 <label class="block mb-2">Detail</label>
                 <textarea name="detail" class="w-full px-4 py-2 border rounded mb-4" required></textarea>
                 
