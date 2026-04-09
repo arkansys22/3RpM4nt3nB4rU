@@ -573,22 +573,29 @@ class Crud_finance_project extends CI_Controller {
 
 
     public function delete($project_id_session, $id_session) {
-        // Cek apakah vendor dengan id_session dan vendor_id tersebut ada
-        $project_acc = $this->db->get_where('project_acc', ['id_session' => $id_session, 'project_id_session' => $project_id_session])->row();
+
+        // Cek apakah data ada
+        $project_acc = $this->db->get_where('project_acc', [
+            'id_session' => $id_session, 
+            'project_id_session' => $project_id_session
+        ])->row();
 
         if (!$project_acc) {
             $this->session->set_flashdata('error', 'Project ID tidak ditemukan.');
-            redirect($_SERVER['HTTP_REFERER']); // Kembali ke halaman sebelumnya
+            redirect($_SERVER['HTTP_REFERER']);
+            return;
         }
 
-        // Hapus Project Acc
-        if ($this->finance_project_model->delete_permanent($project_id_session,$id_session)
-            $this->finance_project_model->delete_accounting($id_session))
-         {
+        // Jalankan delete
+        $delete_project = $this->finance_project_model->delete_permanent($project_id_session, $id_session);
+        $delete_accounting = $this->finance_project_model->delete_accounting($id_session);
+
+        if ($delete_project && $delete_accounting) {
             $this->session->set_flashdata('success', 'Project Finance berhasil dihapus.');
         } else {
-            $this->session->set_flashdata('error', 'Gagal menghapus vendor.');
+            $this->session->set_flashdata('error', 'Gagal menghapus data.');
         }
+
         redirect('finance-project/lihat/' . $project_id_session);
     }
 
