@@ -344,7 +344,7 @@ class crud_finance_operational extends CI_Controller {
             
         );
 
-        $this->Operational_model->insert_accounting($data_accounting);
+        $this->Operational_model->insert_accounting($id_session, $data_accounting);
     
         $this->session->set_flashdata('Success', 'Operational berhasil diupdate');
         redirect('finance-operational');

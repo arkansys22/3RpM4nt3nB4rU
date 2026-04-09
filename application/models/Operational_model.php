@@ -32,27 +32,26 @@ class Operational_model extends CI_Model {
 
     }
 
-    public function insert_accounting($data_accounting) {
+     public function insert_accounting($id_session, $data_accounting) {
 
-        // cek data yang sama (sesuaikan field uniknya)
-        $this->db->where('accounting_id_session', $data_accounting['accounting_id_session']);
-        $this->db->where('accounting_nomer_kategori', $data_accounting['accounting_nomer_kategori']);
-        $this->db->where('accounting_tanggal', $data_accounting['accounting_tanggal']);
+        $sql = "
+            INSERT INTO accounting 
+            (accounting_id_session, accounting_nomer_kategori, accounting_nominal, accounting_tanggal, accounting_nama_transaksi)
+            VALUES (?, ?, ?, ?, ?)
+            ON DUPLICATE KEY UPDATE
+                accounting_nomer_kategori = VALUES(accounting_nomer_kategori),
+                accounting_nominal = VALUES(accounting_nominal),
+                accounting_nama_transaksi = VALUES(accounting_nama_transaksi),
+                accounting_tanggal = VALUES(accounting_tanggal)
+        ";
 
-        $cek = $this->db->get('accounting');
-
-        if ($cek->num_rows() > 0) {
-            // UPDATE jika sudah ada
-            $this->db->where('accounting_id_session', $data_accounting['accounting_id_session']);
-            $this->db->where('accounting_nomer_kategori', $data_accounting['accounting_nomer_kategori']);
-            $this->db->where('accounting_tanggal', $data_accounting['accounting_tanggal']);
-
-            return $this->db->update('accounting', $data_accounting);
-
-        } else {
-            // INSERT jika belum ada
-            return $this->db->insert('accounting', $data_accounting);
-        }
+        return $this->db->query($sql, [
+            $id_session, // <-- pakai parameter ini
+            $data_accounting['accounting_nomer_kategori'],
+            $data_accounting['accounting_nominal'],
+            $data_accounting['accounting_tanggal'],
+            $data_accounting['accounting_nama_transaksi']
+        ]);
     }
 
     public function update_accounting($id_session, $data_accounting) {
