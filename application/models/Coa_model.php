@@ -12,8 +12,8 @@ class coa_model extends CI_Model {
                 SELECT SUM(a.accounting_nominal)
                 FROM accounting a
                 WHERE 
-                    a.accounting_nomer_kategori = ok.nomer_kategori
-                    OR a.accounting_nomer_kategori LIKE CONCAT(ok.nomer_kategori, ".%")
+                    a.accounting_nomer_kategori COLLATE utf8mb4_general_ci = ok.nomer_kategori COLLATE utf8mb4_general_ci
+                    OR a.accounting_nomer_kategori COLLATE utf8mb4_general_ci LIKE CONCAT(ok.nomer_kategori COLLATE utf8mb4_general_ci, ".%")
             ),0) as balance');
 
         $this->db->from('operational_kategori ok');
