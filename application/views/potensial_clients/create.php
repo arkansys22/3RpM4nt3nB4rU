@@ -40,7 +40,7 @@
                 <input type="text" name="pc_name" class="w-full px-4 py-2 border rounded mb-4" required>
 
                 <label class="block mb-2">Nomer WhatsApp</label>
-                <input type="text" name="pc_nowa" id="nowa" maxlength="15" class="w-full px-4 py-2 border rounded mb-4" oninput="formatWa(this)" required>
+                <input type="text" name="pc_nowa" id="nowa" maxlength="17" class="w-full px-4 py-2 border rounded mb-4" oninput="formatWa(this)" required>
 
                 <label class="block mb-2">Tanggal Pernikahan</label>
                 <input type="date" name="event_date" class="w-full px-4 py-2 border rounded mb-4" required>
