@@ -480,7 +480,7 @@ Ketentuan Pembayaran
 
 <?php }elseif($days_to_event < 60){ ?>
 
-<li>Pembayaran kedua Rp <?= number_format($p2,0,',','.') ?></li>
+<li>Pembayaran kedua <b>kunci tanggal</b> H+14 setelah pembayaran pertama Rp <?= number_format($p2,0,',','.') ?></li>
 
 <li>Pembayaran ketiga <b>H-30 acara (<?= tgl_indo($c->format('Y-m-d')) ?>)</b>
 Rp <?= number_format($p3,0,',','.') ?></li>
