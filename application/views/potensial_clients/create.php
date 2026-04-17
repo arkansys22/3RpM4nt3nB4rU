@@ -94,25 +94,22 @@
   function formatWa(input) {
       let val = input.value;
 
-      // Hapus semua selain angka
+      // simpan cursor (biar gak lompat)
+      let start = input.selectionStart;
+
+      // hapus selain angka
       val = val.replace(/\D/g, '');
 
-      // Jika diawali 0 → ubah ke 62
       if (val.startsWith('0')) {
-          val = '62' + val.substring(1);
-      }
-
-      // Jika diawali 62 → biarkan
-      else if (val.startsWith('62')) {
-          // tidak perlu diubah
-      }
-
-      // Jika diawali selain 0 / 62 → anggap nomor lokal, paksa 62
-      else if (val.length > 0) {
+          val = '62' + val.slice(1);
+      } else if (!val.startsWith('62') && val.length > 0) {
           val = '62' + val;
       }
 
       input.value = val;
+
+      // balikin cursor
+      input.setSelectionRange(start, start);
   }
   </script>
 </body>
