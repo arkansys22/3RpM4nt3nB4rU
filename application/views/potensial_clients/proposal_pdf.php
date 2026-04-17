@@ -326,8 +326,13 @@ $total=$p->penawaran_klien_hargapromo*$p->penawaran_klien_qty;
 <td><?= $namaproduk->data_pricelist_judul ?><br><small><?= $p->penawaran_klien_deskripsi ?></small></td>
 
 <td class="text-right">
-<s>Rp <?= number_format($p->penawaran_klien_harga,0,',','.') ?></s><br>
-Rp <?= number_format($p->penawaran_klien_hargapromo,0,',','.') ?>
+    <?php if ($p->penawaran_klien_harga > 0): ?>
+        <s>Rp <?= number_format($p->penawaran_klien_harga,0,',','.') ?></s><br>
+    <?php endif; ?>
+
+    <?php if ($p->penawaran_klien_hargapromo > 0): ?>
+        Rp <?= number_format($p->penawaran_klien_hargapromo,0,',','.') ?>
+    <?php endif; ?>
 </td>
 
 <td class="text-center">
