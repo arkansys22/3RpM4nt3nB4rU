@@ -40,7 +40,7 @@
                 <input type="text" name="pc_name" class="w-full px-4 py-2 border rounded mb-4" required>
 
                 <label class="block mb-2">Nomer WhatsApp</label>
-                <input type="text" name="pc_nowa" class="w-full px-4 py-2 border rounded mb-4" required>
+                <input type="text" name="pc_nowa" id="nowa" maxlength="15" class="w-full px-4 py-2 border rounded mb-4" oninput="formatWa(this)" required>
 
                 <label class="block mb-2">Tanggal Pernikahan</label>
                 <input type="date" name="event_date" class="w-full px-4 py-2 border rounded mb-4" required>
@@ -90,5 +90,30 @@
     <!-- ===== Content Area End ===== -->
   </div>
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
+  <script>
+  function formatWa(input) {
+      let val = input.value;
+
+      // Hapus semua selain angka
+      val = val.replace(/\D/g, '');
+
+      // Jika diawali 0 → ubah ke 62
+      if (val.startsWith('0')) {
+          val = '62' + val.substring(1);
+      }
+
+      // Jika diawali 62 → biarkan
+      else if (val.startsWith('62')) {
+          // tidak perlu diubah
+      }
+
+      // Jika diawali selain 0 / 62 → anggap nomor lokal, paksa 62
+      else if (val.length > 0) {
+          val = '62' + val;
+      }
+
+      input.value = val;
+  }
+  </script>
 </body>
 </html>

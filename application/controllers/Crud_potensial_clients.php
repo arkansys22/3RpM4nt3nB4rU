@@ -363,6 +363,14 @@ class crud_potensial_clients extends CI_Controller {
         $id_session2 = hash('sha256', bin2hex(random_bytes(16)));
         $date_create = date('Y-m-d H:i:s');  // tanggal dan waktu
         
+        $nowa = preg_replace('/\D/', '', $this->input->post('pc_nowa'));
+
+        if (substr($nowa, 0, 1) == '0') {
+            $nowa = '62' . substr($nowa, 1);
+        } elseif (substr($nowa, 0, 2) != '62') {
+            $nowa = '62' . $nowa;
+        }
+        
         if ($this->agent->is_browser()) // Agent untuk fitur di log activity
                 {
                       $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
@@ -383,7 +391,7 @@ class crud_potensial_clients extends CI_Controller {
         $data = array(
             'id_session'    => $id_session2,
             'pc_name'  => $this->input->post('pc_name'),
-            'pc_nowa'  => $this->input->post('pc_nowa'),
+            'pc_nowa'       => $nowa,
             'status'        => $this->input->post('status'),
             'note'      => $this->input->post('note'),
             'nomeradmin'      => $this->input->post('nomeradmin'),
