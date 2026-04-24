@@ -65,6 +65,27 @@
                     <option value="Cash" <?= $transaction->metode_transaksi == 'Cash' ? 'selected' : '' ?>>Cash</option>
                 </select>
 
+                <label class="block mb-2">Kategori</label>
+                <select name="kategori" class="w-full px-4 py-2 border rounded mb-4" required>
+
+                    <?php if (empty($kategori)) { ?>
+                        <option value="">-- Belum di isi --</option>
+                    <?php } else { ?>
+
+                        <option value="">-- Pilih Kategori --</option>
+
+                        <?php foreach ($kategori as $p) { 
+                            $selected = ($transaction->kategori == $p['nomer_kategori']) ? 'selected' : '';
+                        ?>
+                            <option <?= $selected ?> value="<?= $p['nomer_kategori'] ?>">
+                                <?= $p['nomer_kategori'] ?> - <?= $p['nama_kategori'] ?>
+                            </option>
+                        <?php } ?>
+
+                    <?php } ?>
+
+                </select>
+
                 <div class="flex flex-col sm:flex-row justify-end">
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded w-full hover:bg-blue-600 sm:w-24 mb-2 sm:mb-0 text-center">Update</button>
                 <a href="<?= site_url('finance-project/lihat/'.$project->id_session) ?>" class="sm:ml-2 bg-gray-500 text-white px-4 py-2 rounded w-full hover:bg-gray-600 sm:w-24 text-center">Batal</a>

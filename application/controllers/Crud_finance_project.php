@@ -81,31 +81,31 @@ class Crud_finance_project extends CI_Controller {
         if ($this->session->level == '1') {
             cek_session_akses_developer('project-acc', $this->session->id_session);
             $data['project'] = $this->project_model->get_project_by_session($id_session);
+            $data['kategori'] = $this->project_model->view_ordering('operational_kategori','nomer_kategori','asc');
             $data['crews'] = $this->finance_project_model->view_join_where('crew_projects', $id_session, 'crews', 'crew_id', 'id_session');
             $this->load->view('projectacc/create_crew', $data);
 
         } else if ($this->session->level == '2') {
             cek_session_akses_administrator('project-acc', $this->session->id_session);
             $data['project'] = $this->project_model->get_project_by_session($id_session);
+            $data['kategori'] = $this->project_model->view_ordering('operational_kategori','nomer_kategori','asc');
             $data['crews'] = $this->finance_project_model->view_join_where('crew_projects', $id_session, 'crews', 'crew_id', 'id_session');
             $this->load->view('projectacc/create_crew', $data);
 
         } else if ($this->session->level == '3') {
             cek_session_akses_staff_accounting('project-acc', $this->session->id_session);
             $data['project'] = $this->project_model->get_project_by_session($id_session);
+            $data['kategori'] = $this->project_model->view_ordering('operational_kategori','nomer_kategori','asc');
             $data['crews'] = $this->finance_project_model->view_join_where('crew_projects', $id_session, 'crews', 'crew_id', 'id_session');
             $this->load->view('projectacc/create_crew', $data);
 
         } else if ($this->session->level == '4') {
             cek_session_akses_staff_admin('project-acc', $this->session->id_session);
-            $data['project'] = $this->project_model->get_project_by_session($id_session);
-            $data['crews'] = $this->finance_project_model->view_join_where('crew_projects', $id_session, 'crews', 'crew_id', 'id_session');
-            $this->load->view('projectacc/create_crew', $data);
+            redirect(base_url());
 
         } else if ($this->session->level == '5') {
             cek_session_akses_client('project-acc', $this->session->id_session);
-            $data['aaa'] = '';
-            $this->load->view('backend/v_home', $data);
+            redirect(base_url());
 
         } else {
             redirect(base_url());
@@ -289,6 +289,7 @@ class Crud_finance_project extends CI_Controller {
         if ($this->session->level == '1') {
             cek_session_akses_developer('finance-project', $this->session->id_session);
             $data['project'] = $this->project_model->get_project_by_session($project_id_session);
+            $data['kategori'] = $this->Crud_m->view_ordering('operational_kategori','nomer_kategori','asc');
             $data['transaction'] = $this->finance_project_model->get_transaction_by_ids($project_id_session, $id_session);
             $data['crews'] = $this->finance_project_model->view_join_where('crew_projects', $project_id_session, 'crews', 'crew_id', 'id_session');
             $this->load->view('projectacc/edit_crew', $data);
@@ -296,6 +297,7 @@ class Crud_finance_project extends CI_Controller {
         } else if ($this->session->level == '2') {
             cek_session_akses_administrator('finance-project', $this->session->id_session);
             $data['project'] = $this->project_model->get_project_by_session($project_id_session);
+            $data['kategori'] = $this->Crud_m->view_ordering('operational_kategori','nomer_kategori','asc');
             $data['transaction'] = $this->finance_project_model->get_transaction_by_ids($project_id_session, $id_session);
             $data['crews'] = $this->finance_project_model->view_join_where('crew_projects', $project_id_session, 'crews', 'crew_id', 'id_session');
             $this->load->view('projectacc/edit_crew', $data);
@@ -303,16 +305,14 @@ class Crud_finance_project extends CI_Controller {
         } else if ($this->session->level == '3') {
             cek_session_akses_staff_accounting('finance-project', $this->session->id_session);
             $data['project'] = $this->project_model->get_project_by_session($project_id_session);
+            $data['kategori'] = $this->Crud_m->view_ordering('operational_kategori','nomer_kategori','asc');
             $data['transaction'] = $this->finance_project_model->get_transaction_by_ids($project_id_session, $id_session);
             $data['crews'] = $this->finance_project_model->view_join_where('crew_projects', $project_id_session, 'crews', 'crew_id', 'id_session');
             $this->load->view('projectacc/edit_crew', $data);
 
         } else if ($this->session->level == '4') {
             cek_session_akses_staff_admin('finance-project', $this->session->id_session);
-            $data['project'] = $this->project_model->get_project_by_session($project_id_session);
-            $data['transaction'] = $this->finance_project_model->get_transaction_by_ids($project_id_session, $id_session);
-            $data['crews'] = $this->finance_project_model->view_join_where('crew_projects', $project_id_session, 'crews', 'crew_id', 'id_session');
-            $this->load->view('projectacc/edit_crew', $data);
+            redirect(base_url());
 
         } else if ($this->session->level == '5') {
             cek_session_akses_client('finance-project', $this->session->id_session);
