@@ -68,7 +68,7 @@
                           </td>
                           <td class="px-3 py-2 border">
                               <div class="flex flex-col">
-                                  <span><?= $t->accounting_nama_transaksi ?></span>
+                                  <span><?= $t->accounting_nama_transaksi ?> <?= $t->project_name?></span>
 
                                   <?php if (!empty($t->project_name)) : ?>
                                       <span class="text-xs text-gray-500">
