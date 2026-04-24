@@ -43,38 +43,6 @@
         <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-              <h1 class="text-2xl font-bold mb-4">Daftar Chart Of Account</h1>
-                <div class="flex justify-between mb-4">
-                  <div class="flex space-x-2">
-                    <a href="<?= site_url('coa/create') ?>">
-                      <button class="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m7-7H5"></path>
-                        </svg>
-                      </button>
-                    </a>
-                  </div>
-                </div>
-
-                <div class="flex flex-wrap gap-2 mb-4">
-
-                  <button onclick="expandAll()" 
-                    class="bg-green-500 text-white px-3 py-2 rounded hover:bg-green-600">
-                    Expand All
-                  </button>
-
-                  <button onclick="collapseAll()" 
-                    class="bg-gray-500 text-white px-3 py-2 rounded hover:bg-gray-600">
-                    Collapse All
-                  </button>
-
-                  <button onclick="exportTableToExcel()" 
-                    class="bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-600">
-                    Export Excel
-                  </button>
-
-                </div>  
-
               <h1 class="text-2xl font-bold mb-4">
                   Detail Account: <?= $account->nama_kategori ?>
               </h1>
