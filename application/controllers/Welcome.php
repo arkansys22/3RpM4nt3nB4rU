@@ -7,6 +7,12 @@ class Welcome extends CI_Controller {
         parent::__construct();
         $this->load->model('Potensial_model');
         $this->load->helper('url');
+
+
+        // ✅ CEK SESSION LOGIN
+        if ($this->session->userdata('login') == true) {
+            redirect('panel'); // arahkan ke halaman panel
+        }
     }
 
 
