@@ -345,46 +345,52 @@ class Crud_coa extends CI_Controller {
         redirect('crews/recycle_bin');
     }
 
-    public function delete_permanent($id_session) {
+    public function delete_permanent($id_session)
+    {
+        // 🔴 CEK DULU APAKAH ADA DATA DI ACCOUNTING
+        $total = $this->db
+            ->where('accounting_nomer_kategori', $id_session)
+            ->count_all_results('accounting');
 
-        if ($this->agent->is_browser()) // Agent untuk fitur di log activity
-        {
-              $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
-        }
-        elseif ($this->agent->is_robot())
-        {
-              $agent = $this->agent->robot();
-        }
-        elseif ($this->agent->is_mobile())
-        {
-              $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
-        }
-        else
-        {
-              $agent = 'Unidentified User Agent';
+        if ($total > 0) {
+            // ❌ JANGAN HAPUS
+            $this->session->set_flashdata('error', 'Tidak dapat dihapus karena masih ada total data di accounting!');
+            redirect('coa/edit/'.$id_session);
+            return;
         }
 
+        // ================== AGENT ==================
+        if ($this->agent->is_browser()) {
+            $agent = 'Desktop '.$this->agent->browser().' '.$this->agent->version();
+        } elseif ($this->agent->is_robot()) {
+            $agent = $this->agent->robot();
+        } elseif ($this->agent->is_mobile()) {
+            $agent = 'Mobile '.$this->agent->mobile().' '.$this->agent->version();
+        } else {
+            $agent = 'Unidentified User Agent';
+        }
+
+        // ✅ HAPUS DATA
         $this->coa_model->delete_permanent($id_session);
 
+        // ================== LOG ==================
         $ip = $this->input->ip_address();
         $location = get_location_from_ip($ip);
         $ip_with_location = $ip . "<br>(" . $location . ")";
 
         $data_log = array(
-
-            'log_activity_user_id'=>$this->session->id_session,
-            'log_activity_modul' => 'coa/delete_permanent',
-            'log_activity_document_no' => $id_session,
-            'log_activity_status' => 'Delete Permanent Account',
-            'log_activity_waktu' => date('Y-m-d H:i:s'),
-            'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $ip_with_location
-            
+            'log_activity_user_id'   => $this->session->id_session,
+            'log_activity_modul'     => 'coa/delete_permanent',
+            'log_activity_document_no'=> $id_session,
+            'log_activity_status'    => 'Delete Permanent Account',
+            'log_activity_waktu'     => date('Y-m-d H:i:s'),
+            'log_activity_platform'  => $agent,
+            'log_activity_ip'        => $ip_with_location
         );
 
         $this->coa_model->insert_log_activity($data_log);
 
-        $this->session->set_flashdata('Success', 'Account berhasil dihapus permanen');
+        $this->session->set_flashdata('success', 'Account berhasil dihapus permanen');
         redirect('coa');
     }
 }

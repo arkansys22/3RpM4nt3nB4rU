@@ -69,6 +69,12 @@
                 <a href="<?= site_url('coa') ?>" class="sm:ml-2 bg-gray-500 text-white px-4 py-2 rounded w-full hover:bg-gray-600 sm:w-24 text-center">Batal</a>
                 <a href="<?= site_url('coa/delete_permanent/'.$coa->nomer_kategori) ?>" class="sm:ml-2 bg-gray-500 text-white px-4 py-2 rounded w-full hover:bg-gray-600 sm:w-24 text-center">Hapus</a>
                 </div>
+
+                <?php if ($this->session->flashdata('error')): ?>
+                    <div class="bg-red-500 text-white p-3 rounded mb-4">
+                        <?= $this->session->flashdata('error'); ?>
+                    </div>
+                <?php endif; ?>
               </form>
             </div>
           </div>
