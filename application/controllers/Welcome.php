@@ -14,10 +14,15 @@ class Welcome extends CI_Controller {
 
 	public function index()
 	{
-		if ($this->session->userdata('login') == true) {
-        redirect('panel');
-    }
-		$this->load->view('welcome_message');
+	    echo '<pre>';
+	    print_r($this->session->userdata());
+	    die;
+
+	    if ($this->session->userdata('login') == true) {
+	        redirect('panel');
+	    }
+
+	    $this->load->view('welcome_message');
 	}
 
 
