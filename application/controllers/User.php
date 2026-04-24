@@ -11,71 +11,81 @@ class User extends CI_Controller
     $this->session->sess_destroy();
     redirect(base_url('login'));
   }
-  public function login()	{
-    $data['title'] = 'Sign In';
-    $data['identitas']= $this->Crud_m->get_by_id_identitas($id='1');
-    $this->form_validation->set_rules('username','','trim|required', array('trim' => '', 'required' => '**Fill Your Username '));
-    $this->form_validation->set_rules('password','','trim|required', array('trim' => '', 'required' => '**Fill Your Password'));
-    if($this->form_validation->run() === FALSE){
-        $this->load->view('backend/v_login', $data);
-    } else {
-      if ($this->agent->is_browser())
-          {
-                $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
-          }
-          elseif ($this->agent->is_robot())
-          {
-                $agent = $this->agent->robot();
-          }
-          elseif ($this->agent->is_mobile())
-          {
-                $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
-          }
-          else
-          {
-                $agent = 'Unidentified User Agent';
-          }
+  public function login()
+  {
+      $this->load->library(['form_validation','session','user_agent']);
 
-        $modul = 'Login';
-        $username = $this->input->post('username');
-        $password = sha1($this->input->post('password'));
-        $cek = $this->As_m->cek_login($username,$password,'user');
+      $data['title'] = 'Sign In';
+      $data['identitas'] = $this->Crud_m->get_by_id_identitas(1);
+
+      $this->form_validation->set_rules('username','Username','trim|required', [
+          'required' => '**Fill Your Username'
+      ]);
+      $this->form_validation->set_rules('password','Password','trim|required', [
+          'required' => '**Fill Your Password'
+      ]);
+
+      if ($this->form_validation->run() === FALSE) {
+          $this->load->view('backend/v_login', $data);
+          return;
+      }
+
+      // 🔹 Detect device
+      if ($this->agent->is_browser()) {
+          $agent = 'Desktop '.$this->agent->browser().' '.$this->agent->version();
+      } elseif ($this->agent->is_robot()) {
+          $agent = $this->agent->robot();
+      } elseif ($this->agent->is_mobile()) {
+          $agent = 'Mobile '.$this->agent->mobile().' '.$this->agent->version();
+      } else {
+          $agent = 'Unidentified User Agent';
+      }
+
+      $username = $this->input->post('username', true);
+      $password = sha1($this->input->post('password', true));
+
+      $cek = $this->As_m->cek_login($username, $password, 'user');
+
+      if ($cek->num_rows() > 0) {
+
           $row = $cek->row_array();
-          $total = $cek->num_rows();
-          if ($total > 0){
-            $this->session->set_userdata(
-              array(
-                'username'=>$row['username'],
-                'level'=>$row['level'],
-                'id_user'=>$row['id_user'],
-                'id_session'=>$row['id_session']));
 
-            $this->session->set_flashdata('user_loggedin','Selamat Anda Berhasil Login');
-            $id = array('id_session' => $this->session->id_session);
-            $data = array('user_login_status'=>'online');
-            $this->db->update('user', $data, $id);
+          // ✅ FIX PALING PENTING → TAMBAH 'login'
+          $this->session->set_userdata([
+              'login'      => true, // ← INI YANG KAMU BUTUHKAN
+              'username'   => $row['username'],
+              'level'      => $row['level'],
+              'id_user'    => $row['id_user'],
+              'id_session' => $row['id_session']
+          ]);
 
-            $ip = $this->input->ip_address();
-            $location = get_location_from_ip($ip);
-            $ip_with_location = $ip . "<br>(" . $location . ")";
-    
-            $data2 = array (
-              'log_activity_user_id'=>$row['id_session'],
-              'log_activity_modul' => 'Login',
-              'log_activity_status' => 'Login',
+          $this->session->set_flashdata('user_loggedin', 'Selamat Anda Berhasil Login');
+
+          // 🔹 Update status user
+          $this->db->where('id_session', $row['id_session']);
+          $this->db->update('user', ['user_login_status' => 'online']);
+
+          // 🔹 Log activity
+          $ip = $this->input->ip_address();
+          $location = function_exists('get_location_from_ip') ? get_location_from_ip($ip) : 'Unknown';
+          $ip_with_location = $ip . " (" . $location . ")";
+
+          $this->db->insert('log_activity', [
+              'log_activity_user_id' => $row['id_session'],
+              'log_activity_modul'   => 'Login',
+              'log_activity_status'  => 'Login',
               'log_activity_platform'=> $agent,
-              'log_activity_ip'=> $ip_with_location
-            );
-            $this->db->insert('log_activity', $data2);
-            redirect('panel');
-          }else {
-            // Set message
-            $this->session->set_flashdata('login_failed', 'username and password you entered is unregisted');
+              'log_activity_ip'      => $ip_with_location
+          ]);
 
-            redirect(base_url('login'));
-        }
-    }
-		}
+          redirect('panel');
+
+      } else {
+
+          $this->session->set_flashdata('login_failed', 'Username dan password salah');
+          redirect('login');
+      }
+  }
   public function datapengantinmoeslem(){
         $this->form_validation->set_rules('cpp_namaleng','','trim|required', array('trim' => '', 'required' => 'nama lengkap pengantin pria belum diisi'));
 
