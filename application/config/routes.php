@@ -141,6 +141,7 @@ $route['coa/soft_delete/(:any)'] = 'Crud_coa/soft_delete/$1'; // Menghapus data 
 $route['coa/restore/(:any)'] = 'Crud_coa/restore/$1'; // Mengembalikan data crews dari Recycle Bin ke daftar aktif
 $route['coa/delete_permanent/(:any)'] = 'Crud_coa/delete_permanent/$1'; // Menghapus permanen data crews dari Recycle Bin
 $route['coa/lihat/(:any)'] = 'Crud_coa/lihat/$1'; // Menampilkan lihat Crew
+$route['coa/detail/(:any)'] = 'Crud_coa/detail/$1'; // Menampilkan halaman edit crews berdasarkan id_session
 
 
 

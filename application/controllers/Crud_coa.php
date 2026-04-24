@@ -157,6 +157,36 @@ class Crud_coa extends CI_Controller {
             'data' => $data
         ]);
     }
+    public function detail($id)
+    {
+        // 🔹 ambil data akun (coa)
+        $data['account'] = $this->db
+            ->where('nomer_kategori', $id)
+            ->get('operational_kategori')
+            ->row();
+
+        // 🔹 ambil transaksi accounting
+        $data['transaksi'] = $this->db
+            ->where('accounting_nomer_kategori', $id)
+            ->order_by('accounting_tanggal', 'DESC')
+            ->get('accounting')
+            ->result();
+
+        // 🔹 total saldo
+        $data['total'] = $this->db
+            ->select_sum('accounting_nominal')
+            ->where('accounting_nomer_kategori', $id)
+            ->get('accounting')
+            ->row()
+            ->accounting_nominal;
+
+        // 🔥 HANDLE kalau data kosong
+        if (!$data['account']) {
+            show_404();
+        }
+
+        $this->load->view('coa/accounting_detail', $data);
+    }
 
     public function lihat($id_session) {
 
