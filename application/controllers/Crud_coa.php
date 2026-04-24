@@ -169,17 +169,15 @@ class Crud_coa extends CI_Controller {
         ->select('a.*, p.project_name')
         ->from('accounting a')
 
-        // 🔹 join accounting → project_acc
         ->join(
             'project_acc pa',
-            'pa.id_session COLLATE utf8mb4_unicode_ci = a.accounting_id_session COLLATE utf8mb4_unicode_ci',
+            'pa.id_session = a.accounting_id_session',
             'left'
         )
 
-        // 🔹 join project_acc → project
         ->join(
             'project p',
-            'p.id_session COLLATE utf8mb4_unicode_ci = pa.project_id_session COLLATE utf8mb4_unicode_ci',
+            'p.id_session = pa.project_id_session',
             'left'
         )
 
