@@ -34,7 +34,13 @@
         <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-              <h2 class="text-2xl font-bold mb-4">Edit Account <?= $coa->nomer_kategori ?></h2>
+              <h2 class="text-2xl font-bold mb-4">Edit Account <?= $coa->nomer_kategori ?></h2>          
+
+                <?php if ($this->session->flashdata('error')): ?>
+                    <div class="bg-red-500 text-white p-3 rounded mb-4">
+                        <?= $this->session->flashdata('error'); ?>
+                    </div>
+                <?php endif; ?>
               <form action="<?= site_url('coa/update/'.$coa->nomer_kategori) ?>" method="post" class="bg-white p-6 shadow-md rounded">             
 
                 <label class="block mb-2">Account Type</label>
@@ -69,12 +75,6 @@
                 <a href="<?= site_url('coa') ?>" class="sm:ml-2 bg-gray-500 text-white px-4 py-2 rounded w-full hover:bg-gray-600 sm:w-24 text-center">Batal</a>
                 <a href="<?= site_url('coa/delete_permanent/'.$coa->nomer_kategori) ?>" class="sm:ml-2 bg-gray-500 text-white px-4 py-2 rounded w-full hover:bg-gray-600 sm:w-24 text-center">Hapus</a>
                 </div>
-
-                <?php if ($this->session->flashdata('error')): ?>
-                    <div class="bg-red-500 text-white p-3 rounded mb-4">
-                        <?= $this->session->flashdata('error'); ?>
-                    </div>
-                <?php endif; ?>
               </form>
             </div>
           </div>
