@@ -363,7 +363,7 @@ function exportTableToExcel() {
       console.log("Klik balance:", id);
 
       // 🔥 OPTION 1: redirect ke halaman detail
-      window.location.href = "<?= site_url('accounting/detail/') ?>" + id;
+      window.location.href = "<?= site_url('coa/detail/') ?>" + id;
 
       // =============================
       // 🔥 OPTION 2 (AJAX - tanpa reload)
