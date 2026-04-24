@@ -67,7 +67,15 @@
                               <?= date('d-m-Y', strtotime($t->accounting_tanggal)) ?>
                           </td>
                           <td class="px-3 py-2 border">
-                              <?= $t->accounting_nama_transaksi ?>
+                              <div class="flex flex-col">
+                                  <span><?= $t->accounting_nama_transaksi ?></span>
+
+                                  <?php if (!empty($t->project_name)) : ?>
+                                      <span class="text-xs text-gray-500">
+                                          <?= $t->project_name?>
+                                      </span>
+                                  <?php endif; ?>
+                              </div>
                           </td>
                           <td class="px-3 py-2 border text-right">
                               Rp <?= number_format($t->accounting_nominal,0,',','.') ?>
