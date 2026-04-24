@@ -166,10 +166,16 @@ class Crud_coa extends CI_Controller {
             ->row();
 
         // 🔹 ambil transaksi accounting
-        $data['transaksi'] = $this->db
-        ->select('accounting.*, project.project_name') // ambil nama project
+       $data['transaksi'] = $this->db
+        ->select('accounting.*, project.project_name')
         ->from('accounting')
-        ->join('project', 'project.id_session = accounting.accounting_id_session', 'left')
+
+        // 🔹 join ke project_acc
+        ->join('project_acc', 'project_acc.id_session = accounting.accounting_id_session', 'left')
+
+        // 🔹 join ke project
+        ->join('project', 'project.id_session = project_acc.project_id_session', 'left')
+
         ->where('accounting.accounting_nomer_kategori', $id)
         ->order_by('accounting.accounting_tanggal', 'DESC')
         ->get()

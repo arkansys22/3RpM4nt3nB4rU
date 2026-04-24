@@ -70,9 +70,9 @@
                               <div class="flex flex-col">
                                   <span><?= $t->accounting_nama_transaksi ?> <?= $t->project_name?></span>
 
-                                  <?php if (!empty($t->project_nama)) : ?>
-                                      <span class="text-xs text-gray-500">
-                                          <?= $t->project_nama?>
+                                  <?php if (!empty($t->project_name)) : ?>
+                                      <span class="text-xs text-blue-600">
+                                          <?= $t->project_name ?>
                                       </span>
                                   <?php endif; ?>
                               </div>
