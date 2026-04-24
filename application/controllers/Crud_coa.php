@@ -171,14 +171,16 @@ class Crud_coa extends CI_Controller {
 
         ->join(
             'project_acc pa',
-            'pa.id_session = a.accounting_id_session',
-            'left'
+            'pa.id_session COLLATE utf8mb4_unicode_ci = a.accounting_id_session COLLATE utf8mb4_unicode_ci',
+            'left',
+            false
         )
 
         ->join(
             'project p',
-            'p.id_session = pa.project_id_session',
-            'left'
+            'p.id_session COLLATE utf8mb4_unicode_ci = pa.project_id_session COLLATE utf8mb4_unicode_ci',
+            'left',
+            false
         )
 
         ->where('a.accounting_nomer_kategori', $id)
