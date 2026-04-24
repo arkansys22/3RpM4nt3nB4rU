@@ -354,7 +354,7 @@ class Crud_coa extends CI_Controller {
 
         if ($total > 0) {
             // ❌ JANGAN HAPUS
-            $this->session->set_flashdata('error', 'Tidak dapat dihapus karena masih ada total data di accounting!');
+            $this->session->set_flashdata('error', 'Tidak dapat dihapus karena masih digunakan oleh '.$total.' transaksi accounting.');
             redirect('coa/edit/'.$id_session);
             return;
         }
