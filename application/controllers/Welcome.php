@@ -8,16 +8,14 @@ class Welcome extends CI_Controller {
         $this->load->model('Potensial_model');
         $this->load->helper('url');
 
-
-        // ✅ CEK SESSION LOGIN
-        if ($this->session->userdata('login') == true) {
-            redirect('panel'); // arahkan ke halaman panel
-        }
     }
 
 
 	public function index()
 	{
+		if ($this->session->userdata('login') == true) {
+        redirect('panel');
+    }
 		$this->load->view('welcome_message');
 	}
 
