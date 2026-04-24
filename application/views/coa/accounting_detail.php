@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sDetail Accounting</title>
+    <title>Detail Accounting</title>
     <link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
     <link href="<?php echo base_url()?>assets/backend/style.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -70,9 +70,9 @@
                               <div class="flex flex-col">
                                   <span><?= $t->accounting_nama_transaksi ?> <?= $t->project_name?></span>
 
-                                  <?php if (!empty($t->project_name)) : ?>
+                                  <?php if (!empty($t->project_nama)) : ?>
                                       <span class="text-xs text-gray-500">
-                                          <?= $t->project_name?>
+                                          <?= $t->project_nama?>
                                       </span>
                                   <?php endif; ?>
                               </div>
