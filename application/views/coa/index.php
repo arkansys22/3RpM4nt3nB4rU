@@ -153,8 +153,14 @@
                             <a href="<?= site_url('coa/edit/'.$c->nomer_kategori) ?>" class="hover:underline text-blue-700"><?= $c->nama_kategori ?></a>
                         </td>
                         <td class="px-3 py-2 border"><?= $c->detail_kategori ?></td>
-                        <td class="px-3 py-2 border text-right font-semibold balance-cell" data-value="<?= $c->balance ?? 0 ?>">
-                            <?= number_format($c->balance ?? 0, 0, ',', '.') ?>
+                        <td class="px-3 py-2 border text-right font-semibold">
+                            <span 
+                                class="balance-cell text-blue-600 cursor-pointer hover:underline"
+                                data-id="<?= $c->nomer_kategori ?>"
+                                data-value="<?= $c->balance ?? 0 ?>"
+                                onclick="showDetail(this)">
+                                <?= number_format($c->balance ?? 0, 0, ',', '.') ?>
+                            </span>
                         </td>
                     </tr>
                     <?php endforeach; ?>
@@ -347,6 +353,36 @@ function exportTableToExcel() {
   link.download = "chart_of_account.xls";
   link.click();
 }
+</script>
+
+<script>
+  function showDetail(el) {
+      const id = el.dataset.id;
+      const value = el.dataset.value;
+
+      console.log("Klik balance:", id);
+
+      // 🔥 OPTION 1: redirect ke halaman detail
+      window.location.href = "<?= site_url('accounting/detail/') ?>" + id;
+
+      // =============================
+      // 🔥 OPTION 2 (AJAX - tanpa reload)
+      // =============================
+      /*
+      fetch("<?= site_url('accounting/get_detail/') ?>" + id)
+          .then(res => res.json())
+          .then(res => {
+              console.log(res);
+
+              alert("Total data: " + res.total);
+              // nanti bisa tampilkan ke modal popup
+          })
+          .catch(err => {
+              console.log(err);
+              alert("Gagal ambil data");
+          });
+      */
+  }
 </script>
 <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
 </body>

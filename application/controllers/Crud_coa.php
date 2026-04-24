@@ -145,6 +145,19 @@ class Crud_coa extends CI_Controller {
         redirect('coa');
     }
 
+    public function get_detail($id)
+    {
+        $data = $this->db
+            ->where('accounting_nomer_kategori', $id)
+            ->get('accounting')
+            ->result();
+
+        echo json_encode([
+            'total' => count($data),
+            'data' => $data
+        ]);
+    }
+
     public function lihat($id_session) {
 
         if ($this->session->level=='1'){
