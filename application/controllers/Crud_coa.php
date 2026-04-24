@@ -165,19 +165,26 @@ class Crud_coa extends CI_Controller {
             ->get('operational_kategori')
             ->row();
 
-        // 🔹 ambil transaksi accounting
-       $data['transaksi'] = $this->db
-        ->select('accounting.*, project.project_name')
-        ->from('accounting')
+        $data['transaksi'] = $this->db
+        ->select('a.*, p.project_name')
+        ->from('accounting a')
 
-        // 🔹 join ke project_acc
-        ->join('project_acc', 'project_acc.id_session = accounting.accounting_id_session', 'left')
+        // 🔹 join accounting → project_acc
+        ->join(
+            'project_acc pa',
+            'pa.id_session COLLATE utf8mb4_unicode_ci = a.accounting_id_session COLLATE utf8mb4_unicode_ci',
+            'left'
+        )
 
-        // 🔹 join ke project
-        ->join('project', 'project.id_session = project_acc.project_id_session', 'left')
+        // 🔹 join project_acc → project
+        ->join(
+            'project p',
+            'p.id_session COLLATE utf8mb4_unicode_ci = pa.project_id_session COLLATE utf8mb4_unicode_ci',
+            'left'
+        )
 
-        ->where('accounting.accounting_nomer_kategori', $id)
-        ->order_by('accounting.accounting_tanggal', 'DESC')
+        ->where('a.accounting_nomer_kategori', $id)
+        ->order_by('a.accounting_tanggal', 'DESC')
         ->get()
         ->result();
 
