@@ -319,9 +319,26 @@
                           <td class="px-4 py-5"><?= tgl_indo($p->tanggal_transaksi) ?></td>
 
                           <?php if (stripos($p->nama_transaksi, 'crew') !== false): ?>
-                          <td class="px-4 py-5"><a href="<?= site_url('finance-project/edit2/' . $p->project_id_session . '/' . $p->id_session) ?>"><?= $p->nama_transaksi ?></a></td>
+                          <td class="px-4 py-5">
+                            <a href="<?= site_url('finance-project/edit2/' . $p->project_id_session . '/' . $p->id_session) ?>" 
+                               class="inline-flex items-center gap-1 bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200"
+                               title="Klik untuk edit">
+                               
+                               <i class="fa fa-pen text-sm"></i>
+                               <?= $p->nama_transaksi ?>
+                            </a>
+                          </td>
+
                           <?php else: ?>
-                          <td class="px-4 py-5"><a href="<?= site_url('finance-project/edit/' . $p->project_id_session . '/' . $p->id_session) ?>"><?= $p->nama_transaksi ?></a></td>  
+                          <td class="px-4 py-5">
+                            <a href="<?= site_url('finance-project/edit/' . $p->project_id_session . '/' . $p->id_session) ?>" 
+                               class="inline-flex items-center gap-1 bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200"
+                               title="Klik untuk edit">
+                               
+                               <i class="fa fa-pen text-sm"></i>
+                               <?= $p->nama_transaksi ?>
+                            </a>
+                          </td>
                           <?php endif; ?>
 
                           <td class="px-4 py-5">
