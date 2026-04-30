@@ -307,7 +307,7 @@
                       </thead>
                       <tbody>
                         <?php $no = 1; foreach ($financeacc as $p): ?>
-                        <tr>
+                        <tr class="hover:bg-gray-100 hover:border-l-4 hover:border-blue-500 transition duration-150">
                           <td class="px-4 py-5 flex items-center gap-2">  
                             <a href="<?= site_url('crud_finance_project/delete/' . $p->project_id_session . '/' . $p->id_session) ?>"
                                onclick="return confirm('Yakin ingin menghapus transaksi <?= $p->nama_transaksi ?> ?')"
