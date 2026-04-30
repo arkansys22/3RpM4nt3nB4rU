@@ -512,9 +512,7 @@ class Crud_finance_project extends CI_Controller {
 
         }else if($this->session->level=='4'){
             cek_session_akses_staff_admin('project',$this->session->id_session);
-            $data['project'] = $this->project_model->get_project_by_session($id_session);
-            $data['logactivity'] = $this->project_model->get_logactivity_by_session($id_session);
-            $this->load->view('projectacc/lihat', $data);
+            redirect(base_url());
 
         }else if($this->session->level=='5'){
             cek_session_akses_client('project',$this->session->id_session);
