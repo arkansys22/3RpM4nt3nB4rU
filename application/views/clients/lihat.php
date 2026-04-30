@@ -107,7 +107,14 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                         <a href="https://wa.me/?text=<?= $project->project_name ?>%0A<?= hari($clients->wedding_date) ?>,%20<?= tgl_indo($clients->wedding_date) ?>%0A<?php if (!empty($clients->stand_by) && $clients->stand_by !== '00:00:00'): ?>%0AStandby%20di%20lokasi%20jam%20<?= date('H:i', strtotime($clients->stand_by)) ?>%0A<?php endif; ?><?php if (!empty($clients->uniform)): ?>Dresscode%20<?= $clients->uniform ?>%0A<?php endif; ?><?php if (!empty($clients->location)): ?>%0A<?= $clients->location ?><?php endif; ?><?php if (!empty($clients->maps)): ?>%0A<?= $clients->maps ?><?php endif; ?><?php if ($islam): ?><?php if (!empty($clients->wedding_ceremony)): ?>%0A%0ASusunan%20Acara%20Akad%0A<?= $clients->wedding_ceremony ?><?php endif; ?><?php else: ?><?php if (!empty($clients->wedding_ceremony)): ?>Susunan%20Acara%20Pemberkatan%0A<?= $clients->wedding_ceremony ?><?php endif; ?><?php endif; ?><?php if (!empty($clients->reception_afterward)): ?>%0A%0ASusunan%20Acara%20Resepsi%0A<?= $clients->reception_afterward ?><?php endif; ?>%0A%0A*Notes :%0A- Konten tiap event 2 buah%0A%20%20%20%20%201 konten polos, 1 konten dengan nama-nama vendor%0A- Kalau tidak dari template capcut%0A- Export Resolusi min 1080p, Frame rate 60, Code rate High" 
                       target="_blank" 
                       class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">
-                        Share to Group
+                        Share to Group WO
+                      </a>
+                    </li>
+                    <li>
+                        <a href="https://wa.me/?text=<?= $project->project_name ?>%0A<?= hari($clients->wedding_date) ?>,%20<?= tgl_indo($clients->wedding_date) ?>%0A<?php if (!empty($clients->stand_by) && $clients->stand_by !== '00:00:00'): ?>%0AStandby%20di%20lokasi%20jam%20<?= date('H:i', strtotime($clients->stand_by)) ?>%0A<?php endif; ?><?php if (!empty($clients->uniform)): ?>Dresscode%20<?= $clients->uniform ?>%0A<?php endif; ?><?php if (!empty($clients->location)): ?>%0A<?= $clients->location ?><?php endif; ?><?php if (!empty($clients->maps)): ?>%0A<?= $clients->maps ?><?php endif; ?><?php if ($islam): ?><?php if (!empty($clients->wedding_ceremony)): ?>%0A%0ASusunan%20Acara%20Akad%0A<?= $clients->wedding_ceremony ?><?php endif; ?><?php else: ?><?php if (!empty($clients->wedding_ceremony)): ?>Susunan%20Acara%20Pemberkatan%0A<?= $clients->wedding_ceremony ?><?php endif; ?><?php endif; ?><?php if (!empty($clients->reception_afterward)): ?>%0A%0ASusunan%20Acara%20Resepsi%0A<?= $clients->reception_afterward ?><?php endif; ?>Data%20Pengantin%0A<?= site_url('naskah/data_pengantin/'. $clients->id_session) ?>" 
+                      target="_blank" 
+                      class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">
+                        Share to Group Vendor
                       </a>
                     </li>
                   </ul>
