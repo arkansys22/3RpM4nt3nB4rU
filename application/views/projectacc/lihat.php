@@ -261,6 +261,26 @@
                           <td class="px-4 py-5 text-right">
                             Rp <?= number_format($p->nominal_transaksi, 0, ',', '.') ?>
                           </td>
+                          <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+                            <div class="flex flex-col gap-2">
+                            <?php if (stripos($p->nama_transaksi, 'crew') !== false): ?>
+                              <a href="<?= site_url('finance-project/edit2/' . $p->project_id_session . '/' . $p->id_session) ?>" 
+                               class="inline-flex justify-center bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 text-center">
+                              Edit Crew
+                              </a>
+                            <?php else: ?>
+                              <a href="<?= site_url('finance-project/edit/' . $p->project_id_session . '/' . $p->id_session) ?>" 
+                               class="inline-flex justify-center bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 text-center">
+                              Edit
+                              </a>
+                            <?php endif; ?>
+                            <a href="<?= site_url('crud_finance_project/delete/' . $p->project_id_session . '/' . $p->id_session) ?>" 
+                               class="inline-flex justify-center bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 text-center" 
+                               onclick="return confirm('Yakin ingin menghapus transaksi <?= $p->nama_transaksi ?> ?')">
+                              Hapus
+                            </a>
+                            </div>
+                          </td>
                         </tr>
                         <?php endforeach; ?>
                       </tbody>
