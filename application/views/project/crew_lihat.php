@@ -85,6 +85,9 @@
                       <?php if (!empty($clients->list_photo)) : ?>
                         <a href="<?= $clients->list_photo ?>" target="_blank" class="w-full sm:w-auto block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 text-center">List Foto</a>
                       <?php endif; ?>
+                      
+                        <a href=<?= site_url('naskah/data_pengantin/'.$project->id_session) ?>" target="_blank" class="w-full sm:w-auto block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 text-center">List Data Pengantin</a>
+                     
                     </div>
 
                 <?php
