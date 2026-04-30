@@ -7,6 +7,7 @@
     <link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
     <link href="<?php echo base_url()?>assets/backend/style.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body
     x-data="{ page: 'project', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
@@ -310,7 +311,7 @@
                           <td class="px-4 py-5 flex items-center gap-2">  
                             <a href="<?= site_url('crud_finance_project/delete/' . $p->project_id_session . '/' . $p->id_session) ?>"
                                onclick="return confirm('Yakin ingin menghapus transaksi <?= $p->nama_transaksi ?> ?')"
-                               class="text-red-500 hover:text-red-700 text-lg">                               
+                               class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">                               
                                <i class="fa fa-trash"></i>
                             </a>
                             <?= $no++ ?>
