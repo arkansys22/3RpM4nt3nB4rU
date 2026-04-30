@@ -123,11 +123,11 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
         <th colspan="2" style="text-align: center;">Data Calon Pengantin Pria</th>
         </tr>
     <tr>
-                <td>CPW (Anak ke <?= $client->m_bride_nchild; ?> dari <?= $client->m_bride_hsibling; ?> bersaudara)</td>
+                <td>CPP (Anak ke <?= $client->m_bride_nchild; ?> dari <?= $client->m_bride_hsibling; ?> bersaudara)</td>
                 <td><?= $client->m_bride_fname; ?> (<?= $client->m_bride_cname; ?>)</td>
             </tr>
             <tr>
-                <td>Bapak CPW (<?= $client->m_bride_fathercname; ?>)</td>
+                <td>Bapak CPP (<?= $client->m_bride_fathercname; ?>)</td>
                 <td><?= $client->m_bride_fathername; ?>
                 <?php if (!empty($client->m_bride_freplacementname)): ?>
                 <br>Pengganti: <?= $client->m_bride_freplacementname; ?> (<?= $client->m_bride_freplacementcname; ?>)
@@ -135,7 +135,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
             </td>
             </tr>
             <tr>
-                <td>Ibu CPW (<?= $client->m_bride_mothercname; ?>)</td>
+                <td>Ibu CPP (<?= $client->m_bride_mothercname; ?>)</td>
                 <td><?= $client->m_bride_mothername; ?>
                 <?php if (!empty($client->m_bride_mreplacementname)): ?>
                 <br>Pengganti: <?= $client->m_bride_mreplacementname; ?> (<?= $client->m_bride_mreplacementcname; ?>)
@@ -148,6 +148,8 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                 <?= nl2br($client->m_bride_sibling); ?>
                 </td>
             </tr>
+
+             <?php if ($islam): ?>
             <tr>
                 <td>Mahar</td>
                 <td><?= $client->mahr; ?></td>
@@ -156,6 +158,11 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                 <td>Simbolis</td>
                 <td><?= $client->handover; ?></td>
             </tr>
+             <?php else: ?>
+
+            <?php endif; ?>
+
+
     </table><br>
 
     <?php if ($islam): ?>
