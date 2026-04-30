@@ -215,7 +215,7 @@
                   <a href="javascript:history.back()" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 text-center">Kembali</a>
                 </div> -->
               </form>
-
+              <br><br>
               <!-- TAB BUTTON -->
               <div class="mb-4 flex gap-2">
                 <button onclick="showTab('hutang')" id="tab-hutang"
@@ -307,9 +307,15 @@
                       <tbody>
                         <?php $no = 1; foreach ($financeacc as $p): ?>
                         <tr>
-                          <td class="px-4 py-5"><?= $no++ ?></td>
+                          <td class="px-4 py-5"><a href="<?= site_url('crud_finance_project/delete/' . $p->project_id_session . '/' . $p->id_session) ?>" onclick="return confirm('Yakin ingin menghapus transaksi <?= $p->nama_transaksi ?> ?')">X</a><?= $no++ ?></td>
                           <td class="px-4 py-5"><?= tgl_indo($p->tanggal_transaksi) ?></td>
-                          <td class="px-4 py-5"><?= $p->nama_transaksi ?></td>
+
+                          <?php if (stripos($p->nama_transaksi, 'crew') !== false): ?>
+                          <td class="px-4 py-5"><a href="<?= site_url('finance-project/edit2/' . $p->project_id_session . '/' . $p->id_session) ?>"><?= $p->nama_transaksi ?></a></td>
+                          <?php else: ?>
+                          <td class="px-4 py-5"><a href="<?= site_url('finance-project/edit/' . $p->project_id_session . '/' . $p->id_session) ?>"><?= $p->nama_transaksi ?></a></td>  
+                          <?php endif; ?>
+
                           <td class="px-4 py-5">
                             <?php 
                               $kat = $this->Crud_m
