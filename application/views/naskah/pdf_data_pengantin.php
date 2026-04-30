@@ -236,7 +236,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                 <?= $client->female_coor; ?>(CPW)</td>
             </tr>
             <tr>
-                <td>Pendeta (<?= $client->church ?>)</td>
+                <td>Pendeta / Romo(<?= $client->church ?>)</td>
                 <td><?= $client->pastor; ?></td>
             </tr>
             <tr>
