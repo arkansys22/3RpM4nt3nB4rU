@@ -307,7 +307,14 @@
                       <tbody>
                         <?php $no = 1; foreach ($financeacc as $p): ?>
                         <tr>
-                          <td class="px-4 py-5"><a href="<?= site_url('crud_finance_project/delete/' . $p->project_id_session . '/' . $p->id_session) ?>" onclick="return confirm('Yakin ingin menghapus transaksi <?= $p->nama_transaksi ?> ?')">X</a><?= $no++ ?></td>
+                          <td class="px-4 py-5 flex items-center gap-2">  
+                            <a href="<?= site_url('crud_finance_project/delete/' . $p->project_id_session . '/' . $p->id_session) ?>"
+                               onclick="return confirm('Yakin ingin menghapus transaksi <?= $p->nama_transaksi ?> ?')"
+                               class="text-red-500 hover:text-red-700 text-lg">                               
+                               <i class="fa fa-trash"></i>
+                            </a>
+                            <?= $no++ ?>
+                          </td>                          
                           <td class="px-4 py-5"><?= tgl_indo($p->tanggal_transaksi) ?></td>
 
                           <?php if (stripos($p->nama_transaksi, 'crew') !== false): ?>
@@ -337,116 +344,22 @@
 
               <!-- JS TAB -->
               <script>
-              function showTab(tab) {
-                document.getElementById('content-hutang').classList.add('hidden');
-                document.getElementById('content-aktual').classList.add('hidden');
+                function showTab(tab) {
+                  document.getElementById('content-hutang').classList.add('hidden');
+                  document.getElementById('content-aktual').classList.add('hidden');
 
-                document.getElementById('tab-hutang').classList.remove('bg-blue-500','text-white');
-                document.getElementById('tab-aktual').classList.remove('bg-blue-500','text-white');
+                  document.getElementById('tab-hutang').classList.remove('bg-blue-500','text-white');
+                  document.getElementById('tab-aktual').classList.remove('bg-blue-500','text-white');
 
-                if(tab === 'hutang'){
-                  document.getElementById('content-hutang').classList.remove('hidden');
-                  document.getElementById('tab-hutang').classList.add('bg-blue-500','text-white');
-                } else {
-                  document.getElementById('content-aktual').classList.remove('hidden');
-                  document.getElementById('tab-aktual').classList.add('bg-blue-500','text-white');
+                  if(tab === 'hutang'){
+                    document.getElementById('content-hutang').classList.remove('hidden');
+                    document.getElementById('tab-hutang').classList.add('bg-blue-500','text-white');
+                  } else {
+                    document.getElementById('content-aktual').classList.remove('hidden');
+                    document.getElementById('tab-aktual').classList.add('bg-blue-500','text-white');
+                  }
                 }
-              }
               </script>
-
-              <!-- ====== Table Three Start -->
-              <div class="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default  dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1" >
-                <div class="max-w-full overflow-x-auto">
-                  <table class="w-full table-auto">
-                    <thead>
-                      <tr class="bg-gray-2 text-left dark:bg-meta-4">
-                        <th class="px-4 py-4 font-medium">
-                          No
-                        </th>
-                        <th class="px-4 py-4 font-medium">
-                          Date
-                        </th>
-                        <th class="px-4 py-4 font-medium">
-                          Nama Transaksi
-                        </th>
-                        <th class="px-4 py-4 font-medium">
-                          Kategori
-                        </th>
-                        <th class="px-4 py-4 font-medium">
-                          Nominal
-                        </th>
-                        <th class="px-4 py-4 font-medium">
-                           
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <?php $no = 1; foreach ($financeacc as $p): ?>
-                      <tr>                        
-                        <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                          <p><?=$no++?></p>
-                        </td>                        
-                        <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                          <p class="inline-flex rounded-full bg-success bg-opacity-10 px-3 py-1 text-sm font-medium text-success">
-                            <?= tgl_indo($p->tanggal_transaksi) ?>
-                          </p>
-                        </td>
-                        <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                        <p><?= $p->nama_transaksi ?></p>
-                        </td>
-                        <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                        
-                          <?php 
-                        $kat = $this->Crud_m
-                            ->view_where('operational_kategori', array('nomer_kategori' => $p->kategori))
-                            ->row(); 
-                        ?>
-
-                        <p>
-                            <?= !empty($kat) && !empty($kat->nama_kategori) 
-                                ? $kat->nama_kategori 
-                                : 'Belum di input' ?>
-                        </p>
-
-
-
-                        </td>
-                        <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                         <p style="text-align: right;">Rp <?= number_format($p->nominal_transaksi, 0, ',', '.'); ?></p>
-                        </td>
-
-                        <?php 
-                          $nilai1 = $p->nominal_transaksi;
-                          $nilai2 = $p->nominal_transaksi;
-                          $total = $nilai1++; 
-                          ?>
-                        <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                          <div class="flex flex-col gap-2">
-                          <?php if (stripos($p->nama_transaksi, 'crew') !== false): ?>
-                            <a href="<?= site_url('finance-project/edit2/' . $p->project_id_session . '/' . $p->id_session) ?>" 
-                             class="inline-flex justify-center bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 text-center">
-                            Edit Crew
-                            </a>
-                          <?php else: ?>
-                            <a href="<?= site_url('finance-project/edit/' . $p->project_id_session . '/' . $p->id_session) ?>" 
-                             class="inline-flex justify-center bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 text-center">
-                            Edit
-                            </a>
-                          <?php endif; ?>
-                          <a href="<?= site_url('crud_finance_project/delete/' . $p->project_id_session . '/' . $p->id_session) ?>" 
-                             class="inline-flex justify-center bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 text-center" 
-                             onclick="return confirm('Yakin ingin menghapus transaksi <?= $p->nama_transaksi ?> ?')">
-                            Hapus
-                          </a>
-                          </div>
-                        </td>
-                      </tr>
-                      <?php endforeach; ?>                            
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <!-- ====== Table Three End -->
             </div>
           </div>
         </div>
