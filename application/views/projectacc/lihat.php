@@ -151,23 +151,30 @@
 
                   <div>
                     <label class="block mb-2">
-                      Biaya Operasional
-                      <p><h1 class="text-lg font-bold"><?= "Rp " . number_format($modal_ops->total_finance_out, 0, ',', '.'); ?></h1></p>
-                    </label>
-                  </div>
-
-                  <div>
-                    <label class="block mb-2">
-                      Sudah Dibayar
+                      Sudah Dibayar Klien
                       <p><h1 class="text-lg font-bold"><?= "Rp " . number_format($terbayar_ops->total_dibayarkan, 0, ',', '.'); ?></h1></p>
                     </label>
                   </div>
 
                   <div>
                     <label class="block mb-2">
-                      Belum Dibayar
+                      Belum Dibayar Klien
                       <?php $kurang = $project->value - $terbayar_ops->total_dibayarkan ?>
                       <p><h1 class="text-lg font-bold"><?= "Rp " . number_format($kurang, 0, ',', '.'); ?></h1></p>
+                    </label>
+                  </div>
+
+                  <div>
+                    <label class="block mb-2">
+                      Utang Ke Vendor
+                      <p><h1 class="text-lg font-bold"><?= "Rp " . number_format($bayar_vendor->total_hutang_vendor, 0, ',', '.'); ?></h1></p>
+                    </label>
+                  </div>
+
+                  <div>
+                    <label class="block mb-2">
+                      Biaya Operasional (Aktual)
+                      <p><h1 class="text-lg font-bold"><?= "Rp " . number_format($modal_ops->total_finance_out, 0, ',', '.'); ?></h1></p>
                     </label>
                   </div>
 

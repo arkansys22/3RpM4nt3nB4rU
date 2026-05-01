@@ -715,6 +715,7 @@ class Crud_finance_project extends CI_Controller {
             $data['financeacc'] = $this->finance_project_model->get_all_projectacc($id_session);
             $data['financeaccutang'] = $this->finance_project_model->get_all_projectacc_utang($id_session);
             $data['modal_ops'] = $this->finance_project_model->get_finance_out($id_session);
+            $data['bayar_vendor'] = $this->finance_project_model->get_finance_utang($id_session);
             $data['terbayar_ops'] = $this->finance_project_model->get_finance_dibayarklien($id_session);
             $this->load->view('projectacc/lihat', $data);
 
@@ -724,6 +725,8 @@ class Crud_finance_project extends CI_Controller {
             $data['financeacc'] = $this->finance_project_model->get_all_projectacc($id_session);
             $data['financeaccutang'] = $this->finance_project_model->get_all_projectacc_utang($id_session);
             $data['modal_ops'] = $this->finance_project_model->get_finance_out($id_session);
+            $data['bayar_vendor'] = $this->finance_project_model->get_finance_utang($id_session);
+            $data['terbayar_ops'] = $this->finance_project_model->get_finance_dibayarklien($id_session);
             $this->load->view('projectacc/lihat', $data);
 
         }else if($this->session->level=='3'){
@@ -732,6 +735,8 @@ class Crud_finance_project extends CI_Controller {
             $data['financeacc'] = $this->finance_project_model->get_all_projectacc($id_session);
             $data['financeaccutang'] = $this->finance_project_model->get_all_projectacc_utang($id_session);
             $data['modal_ops'] = $this->finance_project_model->get_finance_out($id_session);
+            $data['bayar_vendor'] = $this->finance_project_model->get_finance_utang($id_session);
+            $data['terbayar_ops'] = $this->finance_project_model->get_finance_dibayarklien($id_session);
             $this->load->view('projectacc/lihat', $data);
 
         }else if($this->session->level=='4'){

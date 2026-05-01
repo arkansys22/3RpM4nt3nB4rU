@@ -55,6 +55,16 @@ class Finance_project_model extends CI_Model {
         return $query->row();
     }
 
+
+    public function get_finance_utang($project_id_session)
+    {
+        $this->db->select('SUM(nominal_transaksi) as total_hutang_vendor');
+        $this->db->from('project_acc_utang');
+        $this->db->where('project_id_session', $project_id_session);  // Tahun
+        $query = $this->db->get();
+        return $query->row();
+    }
+
     public function get_finance_dibayarklien($project_id_session)
     {
         $this->db->select('SUM(total_paid) as total_dibayarkan');
