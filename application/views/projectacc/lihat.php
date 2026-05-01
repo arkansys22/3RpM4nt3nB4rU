@@ -238,7 +238,7 @@
                       <thead>
                         <tr class="bg-gray-2 text-left">
                           <th class="px-4 py-4">No</th>
-                          <th class="px-4 py-4">Date</th>
+                          <th class="px-4 py-4">Jatuh Tempo</th>
                           <th class="px-4 py-4">Nama Transaksi</th>
                           <th class="px-4 py-4">Kategori</th>
                           <th class="px-4 py-4">Nominal</th>
@@ -246,10 +246,10 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <?php $no = 1; foreach ($financeacc as $p): ?>
+                        <?php $no = 1; foreach ($financeaccutang as $p): ?>
                         <tr>
                           <td class="px-4 py-5"><?= $no++ ?></td>
-                          <td class="px-4 py-5"><?= tgl_indo($p->tanggal_transaksi) ?></td>
+                          <td class="px-4 py-5"><?= tgl_indo($p->tanggal_jatuh_tempo) ?></td>
                           <td class="px-4 py-5"><?= $p->nama_transaksi ?></td>
                           <td class="px-4 py-5">
                             <?php 
@@ -263,19 +263,12 @@
                             Rp <?= number_format($p->nominal_transaksi, 0, ',', '.') ?>
                           </td>
                           <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                            <div class="flex flex-col gap-2">
-                            <?php if (stripos($p->nama_transaksi, 'crew') !== false): ?>
-                              <a href="<?= site_url('finance-project/edit2/' . $p->project_id_session . '/' . $p->id_session) ?>" 
+                            <div class="flex flex-col gap-2">                          
+                              <a href="<?= site_url('finance-project/edit3/' . $p->project_id_session . '/' . $p->id_session) ?>" 
                                class="inline-flex justify-center bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 text-center">
-                              Edit Crew
-                              </a>
-                            <?php else: ?>
-                              <a href="<?= site_url('finance-project/edit/' . $p->project_id_session . '/' . $p->id_session) ?>" 
-                               class="inline-flex justify-center bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 text-center">
                               Edit
                               </a>
-                            <?php endif; ?>
-                            <a href="<?= site_url('crud_finance_project/delete/' . $p->project_id_session . '/' . $p->id_session) ?>" 
+                            <a href="<?= site_url('crud_finance_project/delete_utang/' . $p->project_id_session . '/' . $p->id_session) ?>" 
                                class="inline-flex justify-center bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 text-center" 
                                onclick="return confirm('Yakin ingin menghapus transaksi <?= $p->nama_transaksi ?> ?')">
                               Hapus

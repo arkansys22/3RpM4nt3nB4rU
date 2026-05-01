@@ -10,6 +10,11 @@ class Finance_project_model extends CI_Model {
         return $this->db->get_where('project_acc',['project_id_session' => $id_session])->result();
     }
 
+    public function get_all_projectacc_utang($id_session) {
+        $this->db->order_by('tanggal_jatuh_tempo', 'ASC');
+        return $this->db->get_where('project_acc_utang',['project_id_session' => $id_session])->result();
+    }
+
 
     public function view_join_where($table,$id_session,$table2,$field1,$field2)
   {
@@ -32,6 +37,12 @@ class Finance_project_model extends CI_Model {
         $this->db->where('id_session', $id_session);
         $this->db->where('project_id_session', $project_id_session);
         return $this->db->delete('project_acc');
+    }
+
+    public function delete_permanent_utang($project_id_session,$id_session) {
+        $this->db->where('id_session', $id_session);
+        $this->db->where('project_id_session', $project_id_session);
+        return $this->db->delete('project_acc_utang');
     }
 
 

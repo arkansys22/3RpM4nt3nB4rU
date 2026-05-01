@@ -604,6 +604,7 @@ class Crud_finance_project extends CI_Controller {
             cek_session_akses_developer('project',$this->session->id_session);
             $data['project'] = $this->project_model->get_project_by_session($id_session);         
             $data['financeacc'] = $this->finance_project_model->get_all_projectacc($id_session);
+            $data['financeaccutang'] = $this->finance_project_model->get_all_projectacc_utang($id_session);
             $data['modal_ops'] = $this->finance_project_model->get_finance_out($id_session);
             $data['terbayar_ops'] = $this->finance_project_model->get_finance_dibayarklien($id_session);
             $this->load->view('projectacc/lihat', $data);
@@ -612,6 +613,7 @@ class Crud_finance_project extends CI_Controller {
             cek_session_akses_administrator('project',$this->session->id_session);
             $data['project'] = $this->project_model->get_project_by_session($id_session);
             $data['financeacc'] = $this->finance_project_model->get_all_projectacc($id_session);
+            $data['financeaccutang'] = $this->finance_project_model->get_all_projectacc_utang($id_session);
             $data['modal_ops'] = $this->finance_project_model->get_finance_out($id_session);
             $this->load->view('projectacc/lihat', $data);
 
@@ -619,6 +621,7 @@ class Crud_finance_project extends CI_Controller {
             cek_session_akses_staff_accounting('project',$this->session->id_session);
             $data['project'] = $this->project_model->get_project_by_session($id_session);         
             $data['financeacc'] = $this->finance_project_model->get_all_projectacc($id_session);
+            $data['financeaccutang'] = $this->finance_project_model->get_all_projectacc_utang($id_session);
             $data['modal_ops'] = $this->finance_project_model->get_finance_out($id_session);
             $this->load->view('projectacc/lihat', $data);
 
@@ -738,6 +741,34 @@ class Crud_finance_project extends CI_Controller {
 
         if ($delete_project && $delete_accounting) {
             $this->session->set_flashdata('success', 'Project Finance berhasil dihapus.');
+        } else {
+            $this->session->set_flashdata('error', 'Gagal menghapus data.');
+        }
+
+        redirect('finance-project/lihat/' . $project_id_session);
+    }
+
+
+    public function delete_utang($project_id_session, $id_session) {
+
+        // Cek apakah data ada
+        $project_acc_utang = $this->db->get_where('project_acc_utang', [
+            'id_session' => $id_session, 
+            'project_id_session' => $project_id_session
+        ])->row();
+
+        if (!$project_acc_utang) {
+            $this->session->set_flashdata('error', 'Project Utang ID tidak ditemukan.');
+            redirect($_SERVER['HTTP_REFERER']);
+            return;
+        }
+
+        // Jalankan delete
+        $delete_project_utang = $this->finance_project_model->delete_permanent_utang($project_id_session, $id_session);
+        $delete_accounting = $this->finance_project_model->delete_accounting($id_session);
+
+        if ($delete_project_utang && $delete_accounting) {
+            $this->session->set_flashdata('success', 'Project Utang berhasil dihapus.');
         } else {
             $this->session->set_flashdata('error', 'Gagal menghapus data.');
         }
