@@ -173,8 +173,16 @@
 
                   <div>
                     <label class="block mb-2">
-                      Biaya Operasional (Aktual)
+                      Biaya Operasional (Faktual)
                       <p><h1 class="text-lg font-bold"><?= "Rp " . number_format($modal_ops->total_finance_out, 0, ',', '.'); ?></h1></p>
+                    </label>
+                  </div>
+
+                  <?php $sisa = $bayar_vendor->total_hutang_vendor - $modal_ops->total_finance_out?>
+                  <div>
+                    <label class="block mb-2">
+                      Sisa Utang Ke Vendor
+                      <p><h1 class="text-lg font-bold"><?= "Rp " . number_format($sisa, 0, ',', '.'); ?></h1></p>
                     </label>
                   </div>
 
