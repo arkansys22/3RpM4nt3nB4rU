@@ -69,6 +69,7 @@ $route['project/partner_lihat/(:any)'] = 'crud_project/partner_lihat/$1'; // Men
 
 $route['finance-project'] = 'crud_finance_project/index'; // Menampilkan daftar project
 $route['finance-project/delete/(:any)'] = 'crud_finance_project/delete/$1'; // Menghapus project
+$route['finance-project/delete_utang/(:any)'] = 'crud_finance_project/delete_utang/$1'; // Menghapus project
 $route['finance-project/recycle_bin'] = 'crud_finance_project/recycle_bin'; // Halaman recycle bin
 $route['finance-project/restore/(:any)'] = 'crud_finance_project/restore/$1'; // Restore project
 $route['finance-project/permanent_delete/(:any)'] = 'crud_finance_project/permanent_delete/$1'; // Hapus permanen project
