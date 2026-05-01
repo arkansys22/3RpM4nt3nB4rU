@@ -166,21 +166,34 @@ class Crud_coa extends CI_Controller {
             ->row();
 
         $data['transaksi'] = $this->db
-        ->select('a.*, p.project_name')
+        ->select('
+            a.*, 
+            COALESCE(p.project_name, pu_proj.project_name) as project_name
+        ')
         ->from('accounting a')
 
+        // 🔹 RELASI KE PROJECT NORMAL
         ->join(
             'project_acc pa',
-            'pa.id_session COLLATE utf8mb4_unicode_ci = a.accounting_id_session COLLATE utf8mb4_unicode_ci',
-            'left',
-            false
+            'pa.accounting_id_session = a.accounting_id_session',
+            'left'
         )
-
         ->join(
             'project p',
-            'p.id_session COLLATE utf8mb4_unicode_ci = pa.project_id_session COLLATE utf8mb4_unicode_ci',
-            'left',
-            false
+            'p.id_session = pa.project_id_session',
+            'left'
+        )
+
+        // 🔹 RELASI KE PROJECT UTANG
+        ->join(
+            'project_acc_utang pu',
+            'pu.accounting_id_session = a.accounting_id_session',
+            'left'
+        )
+        ->join(
+            'project pu_proj',
+            'pu_proj.id_session = pu.project_id_session',
+            'left'
         )
 
         ->like('a.accounting_nomer_kategori', $id, 'after')
