@@ -175,7 +175,7 @@ class Crud_coa extends CI_Controller {
         // 🔹 RELASI KE PROJECT NORMAL
         ->join(
             'project_acc pa',
-            'pa.accounting_id_session = a.accounting_id_session',
+            'pa.id_session = a.accounting_id_session',
             'left'
         )
         ->join(
@@ -187,7 +187,7 @@ class Crud_coa extends CI_Controller {
         // 🔹 RELASI KE PROJECT UTANG
         ->join(
             'project_acc_utang pu',
-            'pu.accounting_id_session = a.accounting_id_session',
+            'pu.id_session = a.accounting_id_session',
             'left'
         )
         ->join(
