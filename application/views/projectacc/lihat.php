@@ -140,33 +140,38 @@
                 <div class="mb-4.5 flex flex-col md:flex-row">
                   <h1 class="text-xl font-bold">Valuasi Project</h1>
                 </div>
-                <div class="mb-4.5 flex flex-col md:flex-row">
-                  <div class="w-full md:w-1/2">
-                  <label class="block mb-2">
-                  Nilai Project <p><h1 class="text-lg font-bold"><?= "Rp " . number_format($project->value, 0, ',', '.'); ?></h1></p>
-                  </label>
-                  </div>
-                  <div class="w-full md:w-1/2">
-                  <label class="block mb-2">
-                  Biaya Operasional
-                  <p><h1 class="text-lg font-bold"><?= "Rp " . number_format($modal_ops->total_finance_out, 0, ',', '.'); ?></h1></p>
-                  </label> </div>
+                <div class="mb-4.5 grid grid-cols-1 md:grid-cols-3 gap-4">
 
-                </div>
-                <div class="mb-4.5 flex flex-col md:flex-row">
-                  <div class="w-full md:w-1/2">
-                    <label class="block mb-2 ">Sudah Dibayar 
-                    <p><h1 class="text-lg font-bold"><?= "Rp " . number_format($terbayar_ops->total_dibayarkan, 0, ',', '.'); ?></h1></p>
-                    </label>  
-                  </div>
-                  <div class="w-full md:w-1/2">
+                  <div>
                     <label class="block mb-2">
-                    Belum Dibayar 
-                    <?php $kurang = $project->value - $terbayar_ops->total_dibayarkan  ?>
-                    <p><h1 class="text-lg font-bold"><?= "Rp " . number_format($kurang, 0, ',', '.'); ?></h1></p>
+                      Nilai Project
+                      <p><h1 class="text-lg font-bold"><?= "Rp " . number_format($project->value, 0, ',', '.'); ?></h1></p>
                     </label>
                   </div>
-                </div>                
+
+                  <div>
+                    <label class="block mb-2">
+                      Biaya Operasional
+                      <p><h1 class="text-lg font-bold"><?= "Rp " . number_format($modal_ops->total_finance_out, 0, ',', '.'); ?></h1></p>
+                    </label>
+                  </div>
+
+                  <div>
+                    <label class="block mb-2">
+                      Sudah Dibayar
+                      <p><h1 class="text-lg font-bold"><?= "Rp " . number_format($terbayar_ops->total_dibayarkan, 0, ',', '.'); ?></h1></p>
+                    </label>
+                  </div>
+
+                  <div>
+                    <label class="block mb-2">
+                      Belum Dibayar
+                      <?php $kurang = $project->value - $terbayar_ops->total_dibayarkan ?>
+                      <p><h1 class="text-lg font-bold"><?= "Rp " . number_format($kurang, 0, ',', '.'); ?></h1></p>
+                    </label>
+                  </div>
+
+                </div>               
                 
                 <hr>
                 <br>
