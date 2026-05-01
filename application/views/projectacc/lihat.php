@@ -263,7 +263,7 @@
                                <i class="fa fa-trash"></i>
                             </a>                            
                           </td>
-                          <td class="px-4 py-5 flex items-center gap-2">  
+                          <td class="px-4 py-5 items-center">  
                             <?= $no++ ?>
                           </td>                          
                           <td class="px-4 py-5"><?= tgl_indo($p->tanggal_jatuh_tempo) ?></td>
@@ -284,22 +284,6 @@
                                 ->row(); 
                             ?>
                             <?= !empty($kat->nama_kategori) ? $kat->nama_kategori : 'Belum di input' ?>
-                          </td>
-                          <td class="px-4 py-5 text-right">
-                            Rp <?= number_format($p->nominal_transaksi, 0, ',', '.') ?>
-                          </td>
-                          <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                            <div class="flex flex-col gap-2">                          
-                              <a href="<?= site_url('finance-project/edit3/' . $p->project_id_session . '/' . $p->id_session) ?>" 
-                               class="inline-flex justify-center bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 text-center">
-                              Edit
-                              </a>
-                            <a href="<?= site_url('crud_finance_project/delete_utang/' . $p->project_id_session . '/' . $p->id_session) ?>" 
-                               class="inline-flex justify-center bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 text-center" 
-                               onclick="return confirm('Yakin ingin menghapus transaksi <?= $p->nama_transaksi ?> ?')">
-                              Hapus
-                            </a>
-                            </div>
                           </td>
                         </tr>
                         <?php endforeach; ?>
