@@ -193,8 +193,15 @@
                 <div class="mb-4.5 flex flex-col md:flex-row">
                   <h1 class="text-xl font-bold">Profit / Loss</h1>
                 </div>
-                <div class="mb-4.5 flex flex-col md:flex-row">
-                  <label class="block mb-2">Nominal
+                <div class="mb-4.5 grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <label class="block mb-2">Estimasi (Nilai Project - Utang ke Vendor)
+                  <?php $estimasi = $project->value - $bayar_vendor->total_hutang_vendor ?>
+                  <p><h1 class="text-lg font-bold"><?= "Rp " . number_format($estimasi, 0, ',', '.'); ?> 
+                  <?php $presentase2 = ($estimasi / $project->value) * '100' ?>                
+                  (<?= round($presentase2) ?> %)</h1></p>
+                  </label>
+
+                  <label class="block mb-2">Faktual (Nilai Project - Biaya Operasional)
                   <?php $profit = $project->value - $modal_ops->total_finance_out ?>
                   <p><h1 class="text-lg font-bold"><?= "Rp " . number_format($profit, 0, ',', '.'); ?> 
                   <?php $presentase = ($profit / $project->value) * '100' ?>                
