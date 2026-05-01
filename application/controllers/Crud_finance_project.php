@@ -112,6 +112,39 @@ class Crud_finance_project extends CI_Controller {
         }
     }
 
+    public function create3($id_session) {
+        if ($this->session->level == '1') {
+            cek_session_akses_developer('project-acc', $this->session->id_session);
+            $data['project'] = $this->project_model->get_project_by_session($id_session);
+            $data['kategori'] = $this->project_model->view_ordering('operational_kategori','nomer_kategori','asc');
+            $this->load->view('projectacc/create_utang', $data);
+
+        } else if ($this->session->level == '2') {
+            cek_session_akses_administrator('project-acc', $this->session->id_session);
+            $data['project'] = $this->project_model->get_project_by_session($id_session);
+            $data['kategori'] = $this->project_model->view_ordering('operational_kategori','nomer_kategori','asc');
+            $this->load->view('projectacc/create_utang', $data);
+
+        } else if ($this->session->level == '3') {
+            cek_session_akses_staff_accounting('project-acc', $this->session->id_session);
+            $data['project'] = $this->project_model->get_project_by_session($id_session);
+            $data['kategori'] = $this->project_model->view_ordering('operational_kategori','nomer_kategori','asc');
+            $this->load->view('projectacc/create_utang', $data);
+
+        } else if ($this->session->level == '4') {
+            cek_session_akses_staff_admin('project-acc', $this->session->id_session);
+            $data['aaa'] = '';
+            $this->load->view('backend/v_home', $data);
+        } else if ($this->session->level == '5') {
+            cek_session_akses_client('project-acc', $this->session->id_session);
+            $data['aaa'] = '';
+            $this->load->view('backend/v_home', $data);
+
+        } else {
+            redirect(base_url());
+        }
+    }
+
     public function store($id_session) {
 
         $id_session = hash('sha256', bin2hex(random_bytes(16)));
@@ -187,6 +220,84 @@ class Crud_finance_project extends CI_Controller {
         $this->project_model->insert_accounting($id_session,$data_accounting);
 
         $this->session->set_flashdata('Success', 'Finance Project berhasil diupdate');
+        redirect('finance-project/lihat/' . $project_id_session);
+    }
+
+    public function store3($id_session) {
+
+        $id_session = hash('sha256', bin2hex(random_bytes(16)));
+
+        if ($this->agent->is_browser()) // Agent untuk fitur di log activity
+        {
+            $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
+        }
+        elseif ($this->agent->is_robot())
+        {
+            $agent = $this->agent->robot();
+        }
+        elseif ($this->agent->is_mobile())
+        {
+            $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
+        }
+        else
+        {
+            $agent = 'Unidentified User Agent';
+        }
+
+        $nominal = str_replace('.', '', $this->input->post('value'));
+        $kategori = $this->input->post('kategori');
+        $nama_transaksi =  $this->input->post('nama_transaksi');
+        $tanggal = $this->input->post('event_date');
+
+        $data = [
+            'id_session'  => $id_session,
+            'project_id_session'  => $this->input->post('project_id_session'),
+            'nama_transaksi' => $nama_transaksi,
+            'tanggal_jatuh_tempo' => $tanggal,
+            'nominal_transaksi' => $nominal,
+            'metode_transaksi' => $this->input->post('metode'),
+            'kategori'    => $kategori,    
+            'detail' => $this->input->post('detail'),
+            'create_by' => $this->session->id_session,
+        ];
+        $this->db->insert('project_acc_utang', $data);
+
+        $project_id_session = $this->input->post('project_id_session');
+
+        $status = 'Tambah Transaksi Utang Project' ;
+        $ip = $this->input->ip_address();
+        $location = get_location_from_ip($ip);
+        $ip_with_location = $ip . "<br>(" . $location . ")";
+
+        $data_log = array(
+
+            'log_activity_user_id'=>$this->session->id_session,
+            'log_activity_modul' => 'finance-project/create3/'.$project_id_session,
+            'log_activity_document_no' => $id_session,
+            'log_activity_status' => $status,
+            'log_activity_platform'=> $agent,
+            'log_activity_waktu' => date('Y-m-d H:i:s'),
+            'log_activity_ip'=> $ip_with_location
+            
+        );
+
+        $this->project_model->insert_log_activity($data_log);
+
+
+
+         $data_accounting = array(
+
+            'accounting_id_session' => $id_session,
+            'accounting_nomer_kategori' => $kategori,
+            'accounting_nominal' => $nominal,
+            'accounting_tanggal' => $tanggal,
+            'accounting_nama_transaksi'=> $nama_transaksi
+            
+        );
+
+        $this->project_model->insert_accounting($id_session,$data_accounting);
+
+        $this->session->set_flashdata('Success', 'Finance Project Utang berhasil diupdate');
         redirect('finance-project/lihat/' . $project_id_session);
     }
 
@@ -500,7 +611,8 @@ class Crud_finance_project extends CI_Controller {
         }else if($this->session->level=='2'){
             cek_session_akses_administrator('project',$this->session->id_session);
             $data['project'] = $this->project_model->get_project_by_session($id_session);
-            $data['logactivity'] = $this->project_model->get_logactivity_by_session($id_session);
+            $data['financeacc'] = $this->finance_project_model->get_all_projectacc($id_session);
+            $data['modal_ops'] = $this->finance_project_model->get_finance_out($id_session);
             $this->load->view('projectacc/lihat', $data);
 
         }else if($this->session->level=='3'){
