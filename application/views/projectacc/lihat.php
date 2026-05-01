@@ -303,23 +303,26 @@
                     <table class="w-full table-auto">
                       <thead>
                         <tr class="bg-gray-2 text-left">
+                          <th class="px-4 py-4"></th>
                           <th class="px-4 py-4">No</th>
                           <th class="px-4 py-4">Date</th>
                           <th class="px-4 py-4">Nama Transaksi</th>
                           <th class="px-4 py-4">Kategori</th>
                           <th class="px-4 py-4">Nominal</th>
-                          <th class="px-4 py-4"></th>
+                          
                         </tr>
                       </thead>
                       <tbody>
                         <?php $no = 1; foreach ($financeacc as $p): ?>
                         <tr class="hover:bg-gray-100 hover:border-l-4 hover:border-blue-500 transition duration-150">
-                          <td class="px-4 py-5 flex items-center gap-2">  
+                          <td class="px-4 py-5 items-center">  
                             <a href="<?= site_url('crud_finance_project/delete/' . $p->project_id_session . '/' . $p->id_session) ?>"
                                onclick="return confirm('Yakin ingin menghapus transaksi <?= $p->nama_transaksi ?> ?')"
                                class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">                               
                                <i class="fa fa-trash"></i>
                             </a>
+                          </td>  
+                          <td class="px-4 py-5 items-center">                            
                             <?= $no++ ?>
                           </td>                          
                           <td class="px-4 py-5"><?= tgl_indo($p->tanggal_transaksi) ?></td>
