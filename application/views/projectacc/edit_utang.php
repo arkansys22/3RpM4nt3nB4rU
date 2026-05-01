@@ -42,8 +42,8 @@
                 <label class="block mb-2">Nama Transaksi</label>
                 <input type="text" name="nama_transaksi" class="w-full px-4 py-2 border rounded mb-4" value="<?= $transaction->nama_transaksi ?>" required>
 
-                <label class="block mb-2">Tanggal Transaksi</label>
-                <input type="date" name="event_date" class="w-full px-4 py-2 border rounded mb-4" value="<?= $transaction->tanggal_transaksi ?>" required>
+                <label class="block mb-2">Jatuh Tempo</label>
+                <input type="date" name="event_date" class="w-full px-4 py-2 border rounded mb-4" value="<?= $transaction->tanggal_jatuh_tempo ?>" required>
 
                 <label class="block mb-2">Nominal</label>
                 <input type="text" id="formattedNumber" value="<?= number_format($transaction->nominal_transaksi ?? 0, 0, ',', '.') ?>" class="w-full px-4 py-2 border rounded mb-4" oninput="formatNumber(this)" name="value" required>
