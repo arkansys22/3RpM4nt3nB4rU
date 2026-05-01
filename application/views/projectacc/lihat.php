@@ -285,6 +285,9 @@
                             ?>
                             <?= !empty($kat->nama_kategori) ? $kat->nama_kategori : 'Belum di input' ?>
                           </td>
+                          <td class="px-4 py-5 text-right">
+                            Rp <?= number_format($p->nominal_transaksi, 0, ',', '.') ?>
+                          </td>
                         </tr>
                         <?php endforeach; ?>
                       </tbody>
