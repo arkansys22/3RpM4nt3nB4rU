@@ -257,7 +257,7 @@
                         <?php $no = 1; foreach ($financeaccutang as $p): ?>
                         <tr class="hover:bg-gray-100 hover:border-l-4 hover:border-blue-500 transition duration-150">
                           <td class="px-4 py-5 flex items-center gap-2">  
-                            <a href="<?= site_url('finance-project//delete_utang/' . $p->project_id_session . '/' . $p->id_session) ?>"
+                            <a href="<?= site_url('finance-project/delete_utang/' . $p->project_id_session . '/' . $p->id_session) ?>"
                                onclick="return confirm('Yakin ingin menghapus transaksi <?= $p->nama_transaksi ?> ?')"
                                class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">                               
                                <i class="fa fa-trash"></i>
