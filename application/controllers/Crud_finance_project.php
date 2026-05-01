@@ -420,21 +420,21 @@ class Crud_finance_project extends CI_Controller {
             cek_session_akses_developer('finance-project', $this->session->id_session);
             $data['project'] = $this->project_model->get_project_by_session($project_id_session);
             $data['kategori'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','210102');
-            $data['transaction'] = $this->finance_project_model->get_transaction_by_ids($project_id_session, $id_session);
+            $data['transaction'] = $this->finance_project_model->get_transaction_by_ids_utang($project_id_session, $id_session);
             $this->load->view('projectacc/edit_utang', $data);
 
         }else if($this->session->level=='2'){
             cek_session_akses_administrator('finance-project', $this->session->id_session);
             $data['project'] = $this->project_model->get_project_by_session($project_id_session);
             $data['kategori'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','210102');
-            $data['transaction'] = $this->finance_project_model->get_transaction_by_ids($project_id_session, $id_session);
+            $data['transaction'] = $this->finance_project_model->get_transaction_by_ids_utang($project_id_session, $id_session);
             $this->load->view('projectacc/edit_utang', $data);
 
         }else if($this->session->level=='3'){
             cek_session_akses_staff_accounting('finance-project', $this->session->id_session);
             $data['project'] = $this->project_model->get_project_by_session($project_id_session);
             $data['kategori'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','210102');
-            $data['transaction'] = $this->finance_project_model->get_transaction_by_ids($project_id_session, $id_session);
+            $data['transaction'] = $this->finance_project_model->get_transaction_by_ids_utang($project_id_session, $id_session);
             $this->load->view('projectacc/edit_utang', $data);
 
         }else if($this->session->level=='4'){

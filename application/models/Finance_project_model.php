@@ -151,4 +151,12 @@ class Finance_project_model extends CI_Model {
         ])->row();
     }
 
+     public function get_transaction_by_ids_utang($project_id_session, $id_session) {
+        return $this->db->get_where('project_acc_utang', [
+            'project_id_session' => $project_id_session,
+            'id_session' => $id_session
+        ])->row();
+    }
+
+
 }
