@@ -183,7 +183,7 @@ class Crud_coa extends CI_Controller {
             false
         )
 
-        ->where('a.accounting_nomer_kategori', $id)
+        ->like('a.accounting_nomer_kategori', $id, 'after')
         ->order_by('a.accounting_tanggal', 'DESC')
         ->get()
         ->result();
@@ -191,7 +191,7 @@ class Crud_coa extends CI_Controller {
         // 🔹 total saldo
         $data['total'] = $this->db
             ->select_sum('accounting_nominal')
-            ->where('accounting_nomer_kategori', $id)
+            ->like('accounting_nomer_kategori', $id, 'after')
             ->get('accounting')
             ->row()
             ->accounting_nominal;
