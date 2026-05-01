@@ -116,19 +116,19 @@ class Crud_finance_project extends CI_Controller {
         if ($this->session->level == '1') {
             cek_session_akses_developer('project-acc', $this->session->id_session);
             $data['project'] = $this->project_model->get_project_by_session($id_session);
-            $data['kategori'] = $this->project_model->view_ordering('operational_kategori','nomer_kategori','asc');
+            $data['kategori'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','210102');
             $this->load->view('projectacc/create_utang', $data);
 
         } else if ($this->session->level == '2') {
             cek_session_akses_administrator('project-acc', $this->session->id_session);
             $data['project'] = $this->project_model->get_project_by_session($id_session);
-            $data['kategori'] = $this->project_model->view_ordering('operational_kategori','nomer_kategori','asc');
+            $data['kategori'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','210102');
             $this->load->view('projectacc/create_utang', $data);
 
         } else if ($this->session->level == '3') {
             cek_session_akses_staff_accounting('project-acc', $this->session->id_session);
             $data['project'] = $this->project_model->get_project_by_session($id_session);
-            $data['kategori'] = $this->project_model->view_ordering('operational_kategori','nomer_kategori','asc');
+            $data['kategori'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','210102');
             $this->load->view('projectacc/create_utang', $data);
 
         } else if ($this->session->level == '4') {

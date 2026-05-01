@@ -124,6 +124,21 @@ class project_model extends CI_Model {
     }
 
 
+    public function view_ordering_payable($table, $order, $ordering, $kategori)
+    {
+        $this->db->select('*');
+        $this->db->from($table);
+
+        $this->db->group_start();
+        $this->db->where('nomer_kategori', $kategori);
+        $this->db->or_like('nomer_kategori', $kategori . '.', 'after');
+        $this->db->group_end();
+
+        $this->db->order_by($order,$ordering);
+        return $this->db->get()->result_array();
+    }
+
+
    public function insert_accounting($id_session, $data_accounting) {
 
         $sql = "
