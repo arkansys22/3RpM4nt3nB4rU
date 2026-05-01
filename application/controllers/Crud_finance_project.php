@@ -413,6 +413,42 @@ class Crud_finance_project extends CI_Controller {
             redirect(base_url());
         }
     }
+
+
+    public function edit3($project_id_session, $id_session) {
+        if ($this->session->level=='1'){
+            cek_session_akses_developer('finance-project', $this->session->id_session);
+            $data['project'] = $this->project_model->get_project_by_session($project_id_session);
+            $data['kategori'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','210102');
+            $data['transaction'] = $this->finance_project_model->get_transaction_by_ids($project_id_session, $id_session);
+            $this->load->view('projectacc/edit', $data);
+
+        }else if($this->session->level=='2'){
+            cek_session_akses_administrator('finance-project', $this->session->id_session);
+            $data['project'] = $this->project_model->get_project_by_session($project_id_session);
+            $data['kategori'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','210102');
+            $data['transaction'] = $this->finance_project_model->get_transaction_by_ids($project_id_session, $id_session);
+            $this->load->view('projectacc/edit', $data);
+
+        }else if($this->session->level=='3'){
+            cek_session_akses_staff_accounting('finance-project', $this->session->id_session);
+            $data['project'] = $this->project_model->get_project_by_session($project_id_session);
+            $data['kategori'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','210102');
+            $data['transaction'] = $this->finance_project_model->get_transaction_by_ids($project_id_session, $id_session);
+            $this->load->view('projectacc/edit', $data);
+
+        }else if($this->session->level=='4'){
+            cek_session_akses_staff_admin('finance-project', $this->session->id_session);
+            redirect(base_url());
+
+        }else if($this->session->level=='5'){
+            cek_session_akses_client('finance-project', $this->session->id_session);
+            redirect(base_url());
+
+        }else{
+            redirect(base_url());
+        }
+    }
     
     public function edit2($project_id_session, $id_session) {
         if ($this->session->level == '1') {

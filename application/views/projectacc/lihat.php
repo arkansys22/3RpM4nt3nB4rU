@@ -245,20 +245,38 @@
                     <table class="w-full table-auto">
                       <thead>
                         <tr class="bg-gray-2 text-left">
+                          <th class="px-4 py-4"></th>
                           <th class="px-4 py-4">No</th>
                           <th class="px-4 py-4">Jatuh Tempo</th>
                           <th class="px-4 py-4">Nama Transaksi</th>
                           <th class="px-4 py-4">Kategori</th>
-                          <th class="px-4 py-4">Nominal</th>
-                          <th class="px-4 py-4"></th>
+                          <th class="px-4 py-4">Nominal</th>                          
                         </tr>
                       </thead>
                       <tbody>
                         <?php $no = 1; foreach ($financeaccutang as $p): ?>
-                        <tr>
-                          <td class="px-4 py-5"><?= $no++ ?></td>
+                        <tr class="hover:bg-gray-100 hover:border-l-4 hover:border-blue-500 transition duration-150">
+                          <td class="px-4 py-5 flex items-center gap-2">  
+                            <a href="<?= site_url('crud_finance_project/delete/' . $p->project_id_session . '/' . $p->id_session) ?>"
+                               onclick="return confirm('Yakin ingin menghapus transaksi <?= $p->nama_transaksi ?> ?')"
+                               class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600">                               
+                               <i class="fa fa-trash"></i>
+                            </a>                            
+                          </td>
+                          <td class="px-4 py-5 flex items-center gap-2">  
+                            <?= $no++ ?>
+                          </td>                          
                           <td class="px-4 py-5"><?= tgl_indo($p->tanggal_jatuh_tempo) ?></td>
-                          <td class="px-4 py-5"><?= $p->nama_transaksi ?></td>
+
+                          <td class="px-4 py-5">
+                            <a href="<?= site_url('finance-project/edit3/' . $p->project_id_session . '/' . $p->id_session) ?>" 
+                               class="inline-flex items-center gap-1 bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200"
+                               title="Klik untuk edit">
+                               
+                               <i class="fa fa-pen text-sm"></i>
+                               <?= $p->nama_transaksi ?>
+                            </a>
+                          </td>
                           <td class="px-4 py-5">
                             <?php 
                               $kat = $this->Crud_m

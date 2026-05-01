@@ -81,9 +81,10 @@ $route['finance-project/store2/(:any)'] = 'crud_finance_project/store2/$1'; // S
 $route['finance-project/store3/(:any)'] = 'crud_finance_project/store3/$1'; // Store data from create_crew.php
 $route['finance-project/edit/(:any)/(:any)'] = 'crud_finance_project/edit/$1/$2'; // Edit data from create.php
 $route['finance-project/edit2/(:any)/(:any)'] = 'crud_finance_project/edit2/$1/$2'; // Edit data from create_crew.php
+$route['finance-project/edit3/(:any)/(:any)'] = 'crud_finance_project/edit3/$1/$2'; // Edit data from create_crew.php
 $route['finance-project/update/(:any)/(:any)'] = 'crud_finance_project/update/$1/$2'; // Update data from create.php
 $route['finance-project/update2/(:any)/(:any)'] = 'crud_finance_project/update2/$1/$2'; // Update data from create_crew.php
-
+$route['finance-project/update3/(:any)/(:any)'] = 'crud_finance_project/update3/$1/$2'; // Update data from create_crew.php
 $route['payment/create/(:num)/(:num)'] = 'Crud_payment/create/$1/$2';  // Routing untuk menambah pembayaran (Add Payment)
 $route['payment/store/(:num)/(:num)'] = 'Crud_payment/store/$1/$2';  // Routing untuk menambah pembayaran (Add Payment)
 $route['payment/edit/(:num)/(:num)'] = 'Crud_payment/edit/$1/$2';      // Routing untuk mengedit pembayaran (Edit Payment)
