@@ -65,7 +65,7 @@
                           <tr>
                             <td><?= $expense->nama_transaksi ?></td>
                             <?php $kat= $this->Crud_m->view_where('operational_kategori', array('nomer_kategori'=> $expense->kategori))->row(); ?>
-                            <td><?= $kat->nama_kategori ?></td>
+                            <td><?= !empty($kat) ? $kat->nama_kategori : 'Kategori belum di isi'; ?></td>
                             <td>Rp <?= number_format($expense->nominal_transaksi, 0, ',', '.') ?></td>
                             <td><?= tgl_indo($expense->transaction_date) ?></td>
                             <td>
