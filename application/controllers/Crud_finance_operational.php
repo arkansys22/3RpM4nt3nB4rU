@@ -245,18 +245,23 @@ class crud_finance_operational extends CI_Controller {
                 {
                       $agent = 'Unidentified User Agent';
                 }
+
+        $nominal = str_replace('.', '', $this->input->post('nominal_transaksi'));
+        $kategori = $this->input->post('kategori');
+        $nama_transaksi =  $this->input->post('nama_transaksi');
+        $tanggal = $this->input->post('tanggal_transaksi');
         
         $data = array(
-            'nama_transaksi'  => $this->input->post('nama_transaksi'),
-            'tanggal_transaksi'  => $this->input->post('tanggal_transaksi'),
-            'nominal_transaksi'        => str_replace('.', '', $this->input->post('nominal_transaksi')), 
-            'kategori'    => $this->input->post('kategori'), 
+            'nama_transaksi'  => $nama_transaksi,
+            'tanggal_transaksi'  => $tanggal,
+            'nominal_transaksi'        =>  $nominal, 
+            'kategori'    => $kategori, 
             'periode'    => $this->input->post('periode')                        
             );
          
         $this->Operational_model->update_operational($id_session, $data);
 
-        $status = 'Edit Operational';
+        $status = 'Edit Finance Operational';
         $ip = $this->input->ip_address();
         $location = get_location_from_ip($ip);
         $ip_with_location = $ip . "<br>(" . $location . ")";
@@ -264,7 +269,7 @@ class crud_finance_operational extends CI_Controller {
         $data_log = array(
 
             'log_activity_user_id'=>$this->session->id_session,
-            'log_activity_modul' => 'Operational/edit',
+            'log_activity_modul' => 'finance-operational/edit2/'.$id_session,
             'log_activity_document_no' => $id_session,
             'log_activity_status' => $status,
             'log_activity_waktu' => date('Y-m-d H:i:s'),
@@ -274,6 +279,19 @@ class crud_finance_operational extends CI_Controller {
         );
 
         $this->Operational_model->insert_log_activity($data_log);
+
+        $data_accounting = array(
+
+            'accounting_id_session' => $id_session,
+            'accounting_nomer_kategori' => $kategori,
+            'accounting_nominal' => $nominal,
+            'accounting_tanggal' => $tanggal,
+            'accounting_nama_transaksi'=> $nama_transaksi
+            
+        );
+
+        $this->Operational_model->insert_accounting($id_session, $data_accounting);
+
         $url_back = $this->input->post('url_back');
         $this->session->set_flashdata('Success', 'Operational berhasil diupdate');
         redirect($url_back);
