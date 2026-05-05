@@ -581,5 +581,22 @@ class Crud_project extends CI_Controller {
 
         $this->load->view('projects/detail', $data);
     }
+
+
+    public function get_total_penawaran(){
+        $id_session = $this->input->post('id_session');
+
+        $this->db->select('
+            SUM(penawaran_klien_harga_promo - COALESCE(penawaran_klien_diskon,0)) AS total
+        ');
+        $this->db->from('penawaran_klien');
+        $this->db->where('project_id_session', $id_session);
+
+        $result = $this->db->get()->row();
+
+        echo json_encode([
+            'total' => $result && $result->total ? $result->total : 0
+        ]);
+    }
     
 }

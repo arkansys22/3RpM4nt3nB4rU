@@ -80,7 +80,7 @@
                 <input type="text" id="event_date" name="event_date" class="w-full px-4 py-2 border rounded mb-4" required>
 
                 <label class="block mb-2">Value</label>
-                <input type="text" id="formattedNumber" class="w-full px-4 py-2 border rounded mb-4" oninput="formatNumber(this)" name="value" required>
+                <input type="text" id="value_project" class="w-full px-4 py-2 border rounded mb-4" name="value" required>
 
 
                 <label class="block mb-2">Detail</label>
@@ -124,6 +124,31 @@
 
   <script>
     document.getElementById('potensialSelect').addEventListener('change', function() {
+
+        let selected = this.value;
+
+        if (!selected) {
+            document.getElementById('value_project').value = '';
+            return;
+        }
+
+        fetch("<?= site_url('Crud_project/get_total_penawaran') ?>", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: "id_session=" + selected
+        })
+        .then(response => response.json())
+        .then(data => {
+            let total = data.total ? data.total : 0;
+
+            // format ke rupiah (pakai titik)
+            total = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+            document.getElementById('value_project').value = total;
+        });
+
         let selected = this.options[this.selectedIndex];
 
         let name = selected.getAttribute('data-name');
