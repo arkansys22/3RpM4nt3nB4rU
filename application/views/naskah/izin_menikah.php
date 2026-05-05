@@ -72,7 +72,7 @@
         <p class="text-lg leading-relaxed text-justify">Seorang laki-laki bernama <?= $client->m_bride_fname; ?>, yang Insha’Allah
         bisa menjadi imam yang bijak dan penuh kasih sayang.</p></br>
 
-        <h1 class="text-xl font-bold text-center mb-4">Permohonan Izin Menikah (<?php if (!empty($client->f_bride_freplacementcname)) {echo $client->f_bride_freplacementcname;} else {echo $client->f_bride_fathercname;}?>)</h1>
+        <h1 class="text-xl font-bold text-center mb-4">Permohonan Izin Menikah (<?php if (!empty($client->f_bride_mreplacementcname)) {echo $client->f_bride_mreplacementcname;} else {echo $client->f_bride_mothercname;}?>)</h1>
         </br>
         <p class="text-lg leading-relaxed text-justify">Putriku <?= $client->f_bride_cname; ?>, penyampaian izin pernikahanmu dan permohonan restumu
         sudah <?php if (!empty($client->f_bride_mreplacementcname)) {echo $client->f_bride_mreplacementcname;} else {echo $client->f_bride_mothercname;}?> restui dan <?php if (!empty($client->f_bride_mreplacementcname)) {echo $client->f_bride_mreplacementcname;} else {echo $client->f_bride_mothercname;}?> dengar dengan seksama.</p>
