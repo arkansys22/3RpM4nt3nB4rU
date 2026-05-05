@@ -250,7 +250,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                     <option value="Bapak" <?= $clients->pmizin == 'Bapak' ? 'selected' : '' ?>>Bapak</option>
                     <option value="Ibu" <?= $clients->pmizin == 'Ibu' ? 'selected' : '' ?>>Ibu</option>
                     <option value="Kakak" <?= $clients->pmizin == 'Kakak' ? 'selected' : '' ?>>Kakak</option>
-                    <option value="Tidak Ada" <?= $clients->pmizin == 'Tidak Ada"' ? 'selected' : '' ?>>Tidak Ada"</option>               
+                    <option value="Tidak Ada" <?= $clients->pmizin == 'Tidak Ada"' ? 'selected' : '' ?>>Tidak Ada</option>               
               </select>
 
               <label class="block mb-2">Mahar</label>
