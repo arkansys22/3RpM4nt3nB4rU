@@ -113,6 +113,7 @@ class Crud_project extends CI_Controller {
         // Data project
         $data = array(
             'id_session'    => $id_session,
+            'closing_user_idsession' => $this->input->post('closing_user_idsession'),
             'project_name'  => $this->input->post('project_name'),
             'status'        => 'create',
             'create_by'     => $this->session->id_session,
