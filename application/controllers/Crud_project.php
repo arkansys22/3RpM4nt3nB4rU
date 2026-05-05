@@ -136,20 +136,7 @@ class Crud_project extends CI_Controller {
         $project_id = $this->db->insert_id();
         $create_day = date('l', strtotime($date_create));
 
-        // Data clients
-        $client_data = array(
-            'id'           => $project_id,
-            'id_session'   => $id_session,
-            'client_name'  => $this->input->post('client_name'),
-            'wedding_date' => $event_date,
-            'created_at'   => $date_create,
-            'create_day'   => $create_day,
-            'location'     => $this->input->post('location'),
-            'create_by'    => $this->session->id_session,
-            'status'       => 'create'
-        );
-
-        $this->db->insert('clients', $client_data);
+    
 
         // Log activity
         $ip = $this->input->ip_address();
