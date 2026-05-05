@@ -155,6 +155,12 @@
         let date = selectedOption.getAttribute('data-date');
         let location = selectedOption.getAttribute('data-lokasi');
 
+        if (date) {
+            let parts = date.split('-'); // Y-m-d
+            date = parts[2] + '/' + parts[1] + '/' + parts[0];
+        }
+
+
         document.getElementById('client_name').value = name || '';
         document.getElementById('event_date').value = date || '';
         document.getElementById('lokasi').value = location || '';
