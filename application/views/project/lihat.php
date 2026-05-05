@@ -123,7 +123,7 @@
           <label class="block mb-2"><strong>Tanggal Pernikahan : </strong><?= hari($project->event_date) ?>, <?= tgl_indo($project->event_date) ?></label>
           <label class="block mb-2"><strong>Lokasi : </strong><?= $project->location ?></label>
           <label class="block mb-2"><strong>Detail : </strong><?= $project->detail ?></label>
-          <label class="block mb-2"><strong>Dari Data Potensial Klien : </strong><a href="<?= site_url('potensial-clients/lihat/'.$project->potensial_clients_id_session) ?>">Lihat Selengkapnya</a></label>
+          <label class="block mb-2"><strong>Dari Data Potensial Klien : </strong><a href="<?= site_url('potensial-clients/lihat/'.$project->potensial_clients_id_session) ?>" target="_blank">Lihat Selengkapnya</a></label>
 
           <?php  if($this->session->level=='1' OR $this->session->level=='2'){ ?>
           <label class="block mb-2"><strong>Detail Biaya : </strong><?= $project->detail_biaya ?></label>
