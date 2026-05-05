@@ -120,6 +120,7 @@ class Crud_project extends CI_Controller {
             'value'         => str_replace('.', '', $this->input->post('value')),
             'detail'        => $this->input->post('detail'),
             'religion'      => $this->input->post('religion'),
+            'potensial_clients_id_session'      => $this->input->post('potensial_clients'),
             'create_date'   => $date_create
         );
 
