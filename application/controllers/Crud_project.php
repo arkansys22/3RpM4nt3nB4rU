@@ -104,7 +104,15 @@ class Crud_project extends CI_Controller {
 
         // Convert tanggal
         $input_date = $this->input->post('event_date');
-        $date = DateTime::createFromFormat('d/m/Y', $input_date);
+
+        if (strpos($input_date, '/') !== false) {
+            // format d/m/Y
+            $date = DateTime::createFromFormat('d/m/Y', $input_date);
+        } else {
+            // format Y-m-d
+            $date = DateTime::createFromFormat('Y-m-d', $input_date);
+        }
+
         $event_date = $date ? $date->format('Y-m-d') : null;
 
         // Data project
