@@ -47,6 +47,7 @@
                               value="<?= isset($p['id_session']) ? $p['id_session'] : ''; ?>"
                               data-name="<?= isset($p['pc_name']) ? $p['pc_name'] : ''; ?>"
                               data-date="<?= isset($p['event_date']) ? $p['event_date'] : ''; ?>"
+                              data-lokasi="<?= isset($p['location']) ? $p['location'] : ''; ?>"
                               <?= (isset($project) && isset($project->potensial_clients_id_session) && $project->potensial_clients_id_session == $p['id_session']) ? 'selected' : ''; ?> >
                               
                               <?= isset($p['pc_name']) ? $p['pc_name'] : 'Tanpa Nama'; ?>
@@ -97,7 +98,7 @@
                   </select>
                 
                 <label class="block mb-2">Lokasi</label>
-                <input type="text" name="location" class="w-full px-4 py-2 border rounded mb-4" required>
+                <input type="text" id="lokasi" name="location" class="w-full px-4 py-2 border rounded mb-4" required>
 
                 <div class="flex flex-col sm:flex-row justify-end">
                 <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded w-full hover:bg-green-600 sm:w-24 mb-2 sm:mb-0 text-center">Simpan</button>
@@ -127,9 +128,11 @@
 
         let name = selected.getAttribute('data-name');
         let date = selected.getAttribute('data-date');
+        let location = selected.getAttribute('data-lokasi');
 
         document.getElementById('client_name').value = name ? name : '';
         document.getElementById('event_date').value = date ? date : '';
+        document.getElementById('lokasi').value = location ? location : '';
     });
   </script>
   <script>
