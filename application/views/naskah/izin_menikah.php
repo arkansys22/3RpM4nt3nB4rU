@@ -58,8 +58,7 @@
         <p class="text-lg leading-relaxed">Bismillahirrohmanirrohim,</p>
         <p class="text-lg leading-relaxed">Astagfirullahal’adzim 3x</p>
         <p class="text-lg leading-relaxed">Asyhadualla illa ha illalah, wa asyhadu anna muhammadarrosulullah.</p>
-        <p class="text-lg leading-relaxed"><?php if (!empty($client->f_bride_freplacementcname)) {echo $client->f_bride_freplacementcname;} else {echo $client->f_bride_fathercname;}?>
-        dan <?php if (!empty($client->f_bride_mreplacementcname)) {echo $client->f_bride_mreplacementcname;} else {echo $client->f_bride_mothercname;}?> yang <?= $client->f_bride_cname; ?> cintai dan hormati, <?= $client->f_bride_cname; ?> bersyukur dan berterima
+        <p class="text-lg leading-relaxed"> <?php if (!empty($client->f_bride_mreplacementcname)) {echo $client->f_bride_mreplacementcname;} else {echo $client->f_bride_mothercname;}?> yang <?= $client->f_bride_cname; ?> cintai dan hormati, <?= $client->f_bride_cname; ?> bersyukur dan berterima
         kasih kepada Allah SWT karena telah diberikan limpahan perhatian, kasih
         sayang dan cinta kasih pada <?= $client->f_bride_cname; ?> tiada henti.</p>
         <p class="text-lg leading-relaxed text-justify"><?= $client->f_bride_cname; ?> menghaturkan permohonan maaf yang sedalam-dalamnya atas
