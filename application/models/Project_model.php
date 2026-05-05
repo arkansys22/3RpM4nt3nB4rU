@@ -17,31 +17,29 @@ class project_model extends CI_Model {
     }
 
     public function insert_project($data) {
-        return $this->db->insert('project', $data);
+
+        $insert = $this->db->insert('project', $data);
 
         if ($insert) {
 
-            // Ambil id yang baru disimpan di tabel project
-            $project_id = $this->db->insert_id();  // Mendapatkan id auto-increment dari project
+            $project_id = $this->db->insert_id();
 
-            // Ambil hari dari create_at (format: Senin, Selasa, dst.)
-            $create_day = date('l', strtotime($data['date_create'])); 
-    
-            // Data untuk tabel clients
+            // pakai create_date yang benar
+            $create_day = date('l', strtotime($data['create_date'])); 
+
             $client_data = [
-                'id_session'         => $data['id_session'],
-                'client_name'        => $data['project_name'],  // project_name → client_name
-                'wedding_date'       => $data['event_date'],   // event_date → wedding_date
-                'created_at'         => $data['create_date'],  // create_date → create_at
-                'create_day'         => $create_day,           // Otomatis ambil hari dari create_at
-                'location'           => $data['location'],     // Sama dengan project
-                'status'             => 'create'
+                'id_session'   => $data['id_session'],
+                'client_name'  => $data['project_name'],
+                'wedding_date' => $data['event_date'], // pastikan tidak null
+                'created_at'   => $data['create_date'],
+                'create_day'   => $create_day,
+                'location'     => $data['location'],
+                'status'       => 'create'
             ];
-            
-            // Insert ke tabel clients
+
             $this->db->insert('clients', $client_data);
         }
-    
+
         return $insert;
     }
 
