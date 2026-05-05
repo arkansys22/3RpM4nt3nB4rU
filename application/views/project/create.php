@@ -125,39 +125,39 @@
   <script>
     document.getElementById('potensialSelect').addEventListener('change', function() {
 
-        let selected = this.value;
+        let selectedValue = this.value;
 
-        if (!selected) {
+        if (!selectedValue) {
             document.getElementById('value_project').value = '';
             return;
         }
 
+        // AJAX ambil total
         fetch("<?= site_url('Crud_project/get_total_penawaran') ?>", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
-            body: "id_session=" + selected
+            body: "id_session=" + selectedValue
         })
         .then(response => response.json())
         .then(data => {
             let total = data.total ? data.total : 0;
-
-            // format ke rupiah (pakai titik)
             total = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-
             document.getElementById('value_project').value = total;
-        });
+        })
+        .catch(err => console.log('ERROR AJAX:', err));
 
-        let selected = this.options[this.selectedIndex];
+        // ambil data dari option
+        let selectedOption = this.options[this.selectedIndex];
 
-        let name = selected.getAttribute('data-name');
-        let date = selected.getAttribute('data-date');
-        let location = selected.getAttribute('data-lokasi');
+        let name = selectedOption.getAttribute('data-name');
+        let date = selectedOption.getAttribute('data-date');
+        let location = selectedOption.getAttribute('data-lokasi');
 
-        document.getElementById('client_name').value = name ? name : '';
-        document.getElementById('event_date').value = date ? date : '';
-        document.getElementById('lokasi').value = location ? location : '';
+        document.getElementById('client_name').value = name || '';
+        document.getElementById('event_date').value = date || '';
+        document.getElementById('lokasi').value = location || '';
     });
   </script>
   <script>
