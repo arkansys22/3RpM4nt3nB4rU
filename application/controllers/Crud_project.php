@@ -57,11 +57,15 @@ class Crud_project extends CI_Controller {
 
         if ($this->session->level=='1'){
             cek_session_akses_developer('project',$this->session->id_session);
-            $this->load->view('project/create');
+            $data['user'] = $this->Crud_m->view_where_user_orderingss('user','id_user', 'asc');
+            $data['potensial_clients'] = $this->Crud_m->view_where_potensial_clients_deal('potensial_clients','event_date', 'asc');
+            $this->load->view('project/create',$data);
 
         }else if($this->session->level=='2'){
             cek_session_akses_administrator('project',$this->session->id_session);
-            $this->load->view('project/create');
+            $data['user'] = $this->Crud_m->view_where_user_orderingss('user','id_user', 'asc');
+            $data['potensial_clients'] = $this->Crud_m->view_where_potensial_clients_deal('potensial_clients','event_date', 'asc');
+            $this->load->view('project/create',$data);
 
         }else if($this->session->level=='3'){
             cek_session_akses_staff_accounting('project',$this->session->id_session);
@@ -69,7 +73,9 @@ class Crud_project extends CI_Controller {
 
         }else if($this->session->level=='4'){
             cek_session_akses_staff_admin('project',$this->session->id_session);
-            $this->load->view('project/create');
+            $data['user'] = $this->Crud_m->view_where_user_orderingss('user','id_user', 'asc');
+            $data['potensial_clients'] = $this->Crud_m->view_where_potensial_clients_deal('potensial_clients','event_date', 'asc');
+            $this->load->view('project/create',$data);
 
         }else if($this->session->level=='5'){
             cek_session_akses_client('project',$this->session->id_session);
