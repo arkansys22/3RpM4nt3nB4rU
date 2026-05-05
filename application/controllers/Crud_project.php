@@ -331,8 +331,16 @@ class Crud_project extends CI_Controller {
             return;
         }
 
-        // Ambil tanggal (versi yang sudah kita sederhanakan)    
-        $event_date = $this->input->post('event_date');
+         // Ambil tanggal (versi yang sudah kita sederhanakan)    
+        $input_date = $this->input->post('event_date');
+
+        if (strpos($input_date, '/') !== false) {
+            $date = DateTime::createFromFormat('d/m/Y', $input_date);
+        } else {
+            $date = DateTime::createFromFormat('Y-m-d', $input_date);
+        }
+
+        $event_date = $date ? $date->format('Y-m-d') : null;
         
         $data = array(
             'project_name'  => $this->input->post('project_name'),

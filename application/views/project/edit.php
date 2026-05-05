@@ -87,13 +87,13 @@
                 </select>
 
                 <label class="block mb-2">Nama Client</label>
-                <input type="text" id="client_name" name="client_name" value="<?= $project->client_name ?>" class="w-full px-4 py-2 border rounded mb-4" disabled>
+                <input type="text" id="client_name" name="client_name" value="<?= $project->client_name ?>" class="w-full px-4 py-2 border rounded mb-4" readonly>
 
                 <label class="block mb-2">Tanggal Pernikahan</label>
-                <input type="date" id="event_date" name="event_date" value="<?= $project->event_date ?>" class="w-full px-4 py-2 border rounded mb-4" disabled>
+                <input type="date" id="event_date" name="event_date" value="<?= $project->event_date ?>" class="w-full px-4 py-2 border rounded mb-4" readonly>
 
                 <label class="block mb-2">Value</label>
-                <input type="text" id="value_project" value="<?= number_format($project->value ?? 0, 0, ',', '.') ?>" class="w-full px-4 py-2 border rounded mb-4" oninput="formatNumber(this)" name="value" disabled>
+                <input type="text" id="value_project" value="<?= number_format($project->value ?? 0, 0, ',', '.') ?>" class="w-full px-4 py-2 border rounded mb-4" oninput="formatNumber(this)" name="value" readonly>
 
                 <label class="block mb-2">Detail</label>
                 <textarea name="detail" rows="20" cols="100%" class="w-full px-4 py-2 border rounded mb-4" required><?= $project->detail ?></textarea>
@@ -117,7 +117,7 @@
                 </select>
 
                 <label class="block mb-2">Lokasi</label>
-                <input type="text" id="lokasi" name="location" value="<?= $project->location ?>" class="w-full px-4 py-2 border rounded mb-4" disabled>
+                <input type="text" id="lokasi" name="location" value="<?= $project->location ?>" class="w-full px-4 py-2 border rounded mb-4" readonly>
 
                 <div class="flex flex-col sm:flex-row justify-end">
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded w-full hover:bg-blue-600 sm:w-24 mb-2 sm:mb-0 text-center">Update</button>
