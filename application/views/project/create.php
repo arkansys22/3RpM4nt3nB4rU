@@ -42,6 +42,7 @@
 
                 <label class="block mb-2">Closingan</label>
                 <select name="closing_user_idsession" class="w-full px-4 py-2 border rounded mb-4" required> 
+                  <option value="">-- Pilih Closingan --</option>
                       <?php foreach ($user as $p) {
                             if ($project->closing_user_idsession == $p['id_session']){
                               echo"<option selected='selected' value='$p[id_session]'>$p[nama]</option> ";
@@ -53,6 +54,7 @@
 
                 <label class="block mb-2">Pilih Dari Klien Potensial</label>
                 <select name="potensial_clients" class="w-full px-4 py-2 border rounded mb-4" required> 
+                  <option value="">-- Pilih Klien Potensial --</option>
                       <?php foreach ($potensial_clients as $p) {
                             if ($project->potensial_clients_id_session == $p['id_session']){
                               echo"<option selected='selected' value='$p[id_session]'>$p[pc_name]</option> ";
