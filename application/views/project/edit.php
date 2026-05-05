@@ -87,13 +87,13 @@
                 </select>
 
                 <label class="block mb-2">Nama Client</label>
-                <input type="text" name="client_name" value="<?= $project->client_name ?>" class="w-full px-4 py-2 border rounded mb-4" required>
+                <input type="text" id="client_name" name="client_name" value="<?= $project->client_name ?>" class="w-full px-4 py-2 border rounded mb-4" disabled>
 
                 <label class="block mb-2">Tanggal Pernikahan</label>
-                <input type="date" name="event_date" value="<?= $project->event_date ?>" class="w-full px-4 py-2 border rounded mb-4" required>
+                <input type="date" id="event_date" name="event_date" value="<?= $project->event_date ?>" class="w-full px-4 py-2 border rounded mb-4" disabled>
 
                 <label class="block mb-2">Value</label>
-                <input type="text" id="value" value="<?= number_format($project->value ?? 0, 0, ',', '.') ?>" class="w-full px-4 py-2 border rounded mb-4" oninput="formatNumber(this)" name="value" required>
+                <input type="text" id="value_project" value="<?= number_format($project->value ?? 0, 0, ',', '.') ?>" class="w-full px-4 py-2 border rounded mb-4" oninput="formatNumber(this)" name="value" disabled>
 
                 <label class="block mb-2">Detail</label>
                 <textarea name="detail" rows="20" cols="100%" class="w-full px-4 py-2 border rounded mb-4" required><?= $project->detail ?></textarea>
@@ -117,7 +117,7 @@
                 </select>
 
                 <label class="block mb-2">Lokasi</label>
-                <input type="text" name="location" value="<?= $project->location ?>" class="w-full px-4 py-2 border rounded mb-4" required>
+                <input type="text" id="lokasi" name="location" value="<?= $project->location ?>" class="w-full px-4 py-2 border rounded mb-4" disabled>
 
                 <div class="flex flex-col sm:flex-row justify-end">
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded w-full hover:bg-blue-600 sm:w-24 mb-2 sm:mb-0 text-center">Update</button>
@@ -140,6 +140,56 @@
         value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Tambah titik setiap 3 digit
         input.value = value;
     }
+  </script>
+  <script>
+    document.getElementById('potensialSelect').addEventListener('change', function() {
+
+        let selectedValue = this.value;
+
+        if (!selectedValue) {
+            document.getElementById('value_project').value = '';
+            return;
+        }
+
+        // AJAX ambil total
+        fetch("<?= site_url('Crud_project/get_total_penawaran') ?>", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: "id_session=" + selectedValue
+        })
+        .then(response => response.json())
+        .then(data => {
+            let total = data.total ? data.total : 0;
+            total = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            document.getElementById('value_project').value = total;
+        })
+        .catch(err => console.log('ERROR AJAX:', err));
+
+        // ambil data dari option
+        let selectedOption = this.options[this.selectedIndex];
+
+        let name = selectedOption.getAttribute('data-name');
+        let date = selectedOption.getAttribute('data-date');
+        let location = selectedOption.getAttribute('data-lokasi');
+
+    
+        document.getElementById('client_name').value = name || '';
+        document.getElementById('event_date').value = date || '';
+        document.getElementById('lokasi').value = location || '';
+    });
+  </script>
+  <script>
+    window.addEventListener('load', function() {
+        document.getElementById('potensialSelect').dispatchEvent(new Event('change'));
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script>
+    flatpickr("#event_date", {
+        dateFormat: "Y-m-d"
+    });
   </script>
 
 </body>
