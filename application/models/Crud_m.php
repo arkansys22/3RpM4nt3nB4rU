@@ -288,7 +288,9 @@ class Crud_m extends CI_model{
 
   public function view_where_potensial_clients_deal($table,$order,$ordering)
   {   
+      $today = date('Y-m-d');
       $this->db->where_in('status','Deal');
+       $this->db->where('event_date >=', $today);
       $this->db->order_by($order,$ordering);
       $query = $this->db->get($table);
       return $query->result_array();
