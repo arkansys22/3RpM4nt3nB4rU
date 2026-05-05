@@ -45,7 +45,7 @@
                         <option 
                             value="<?= $p['id_session']; ?>"
                             data-name="<?= $p['pc_name']; ?>"
-                            data-date="<?= $p['pc_event_date']; ?>"
+                            data-date="<?= $p['event_date']; ?>"
                             <?= ($project->potensial_clients_id_session == $p['id_session']) ? 'selected' : ''; ?>>
                             <?= $p['pc_name']; ?>
                         </option>
