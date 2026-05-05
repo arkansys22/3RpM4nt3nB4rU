@@ -37,6 +37,21 @@
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
               <h1 class="text-2xl font-bold mb-4">Tambah Project</h1>
               <form action="<?= site_url('project/store') ?>" method="post" class="bg-white p-6 shadow-md rounded">
+
+                <label class="block mb-2">Pilih Dari Klien Potensial</label>
+                <select id="potensialSelect" name="potensial_clients" class="w-full px-4 py-2 border rounded mb-4" required> 
+                    <option value="">-- Pilih Klien Potensial --</option>
+                    <?php foreach ($potensial_clients as $p): ?>
+                        <option 
+                            value="<?= $p['id_session']; ?>"
+                            data-name="<?= $p['pc_name']; ?>"
+                            data-date="<?= $p['pc_event_date']; ?>"
+                            <?= ($project->potensial_clients_id_session == $p['id_session']) ? 'selected' : ''; ?>>
+                            <?= $p['pc_name']; ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+
                 <label class="block mb-2">Nama Project</label>
                 <input type="text" name="project_name" class="w-full px-4 py-2 border rounded mb-4" required>
 
@@ -52,23 +67,13 @@
                       } ?>                    
                 </select>
 
-                <label class="block mb-2">Pilih Dari Klien Potensial</label>
-                <select name="potensial_clients" class="w-full px-4 py-2 border rounded mb-4" required> 
-                  <option value="">-- Pilih Klien Potensial --</option>
-                      <?php foreach ($potensial_clients as $p) {
-                            if ($project->potensial_clients_id_session == $p['id_session']){
-                              echo"<option selected='selected' value='$p[id_session]'>$p[pc_name]</option> ";
-                            }else{
-                              echo"<option value='$p[id_session]'>$p[pc_name]</option>";
-                        }
-                      } ?>                    
-                </select>
+
 
                 <label class="block mb-2">Nama Client</label>
-                <input type="text" name="client_name" class="w-full px-4 py-2 border rounded mb-4" required>
+                <input type="text" id="client_name" name="client_name" class="w-full px-4 py-2 border rounded mb-4" required>
 
                 <label class="block mb-2">Tanggal Pernikahan</label>
-                <input type="date" name="event_date" class="w-full px-4 py-2 border rounded mb-4" required>
+                <input type="date" id="event_date" name="event_date" class="w-full px-4 py-2 border rounded mb-4" required>
 
                 <label class="block mb-2">Value</label>
                 <input type="text" id="formattedNumber" class="w-full px-4 py-2 border rounded mb-4" oninput="formatNumber(this)" name="value" required>
@@ -111,6 +116,23 @@
       value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Tambah titik setiap 3 digit
       input.value = value;
   }
+  </script>
+
+  <script>
+    document.getElementById('potensialSelect').addEventListener('change', function() {
+        let selected = this.options[this.selectedIndex];
+
+        let name = selected.getAttribute('data-name');
+        let date = selected.getAttribute('data-date');
+
+        document.getElementById('client_name').value = name ? name : '';
+        document.getElementById('event_date').value = date ? date : '';
+    });
+  </script>
+  <script>
+    window.addEventListener('load', function() {
+        document.getElementById('potensialSelect').dispatchEvent(new Event('change'));
+    });
   </script>
 </body>
 </html>
