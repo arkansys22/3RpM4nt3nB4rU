@@ -153,6 +153,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
               <label class="block mb-2">Nama Saudara Kandung</label>
               <textarea name="f_bride_sibling" placeholder="1. Contoh A&#10;2. Contoh B&#10;3. ..." class="w-full px-4 py-2 border rounded mb-4"><?= $clients->f_bride_sibling ?></textarea>
 
+
               <!-- Data Mempelai Pria -->
               <h3 class="text-lg font-bold mt-6 mb-2">Data Mempelai Pria</h3>
               <label class="block mb-2">Nama Lengkap</label>
@@ -243,6 +244,15 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
               <input type="text" name="maps" value="<?= $clients->maps ?>" placeholder="Maps" class="w-full px-4 py-2 border rounded mb-4">
 
               <?php if ($islam) : ?>
+              <label class="block mb-2">Permohonan Izin Dilakukan ke</label>
+              <select name="pmizin" class="w-full px-4 py-2 border rounded mb-4" required>
+                    <option value="">Pilih</option>
+                    <option value="Bapak" <?= set_select('pmizin', 'Bapak') ?>>Bapak</option>
+                    <option value="Ibu" <?= set_select('pmizin', 'Ibu') ?>>Ibu</option>
+                    <option value="Kakak" <?= set_select('pmizin', 'Kakak') ?>>Kakak</option>
+                    <option value="Tidak Ada" <?= set_select('pmizin', 'Tidak Ada') ?>>Tidak Ada</option>
+              </select>
+
               <label class="block mb-2">Mahar</label>
               <input type="text" name="mahr" value="<?= $clients->mahr ?>" placeholder="Mahar" class="w-full px-4 py-2 border rounded mb-4">
 

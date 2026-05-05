@@ -355,6 +355,7 @@ class Crud_clients extends CI_Controller {
             'm_witness'             => $this->input->post('m_witness'),
             'qori'                  => $this->input->post('qori'),
             'advice_doa'            => $this->input->post('advice_doa'),
+            'pmizin'                => $this->input->post('pmizin'),
             'clamp'                 => $this->input->post('clamp'),
             'jasmine_carrier'       => $this->input->post('jasmine_carrier'),
             'mahr_carrier'          => $this->input->post('mahr_carrier'),
