@@ -331,15 +331,24 @@ class Crud_project extends CI_Controller {
             return;
         }
 
+        // Ambil tanggal (versi yang sudah kita sederhanakan)    
+        $event_date = $this->input->post('event_date');
+         if (empty($event_date)) {
+            $this->session->set_flashdata('error', 'Tanggal pernikahan wajib diisi!');
+            redirect('project/create');
+            return;
+        }
+
         $data = array(
             'project_name'  => $this->input->post('project_name'),
             'closing_user_idsession'  => $this->input->post('closing_user_idsession'),
             'client_name'   => $this->input->post('client_name'),
-            'event_date'    => $this->input->post('event_date'),
+            'event_date'    => $event_date,
             'value'         => str_replace('.', '', $this->input->post('value')),
             'detail'        => $this->input->post('detail'),
             'detail_biaya'  => $this->input->post('detail_biaya'),
             'religion'      => $this->input->post('religion'),
+            'potensial_clients_id_session' => $this->input->post('potensial_clients'),
             'location'      => $this->input->post('location'),
         );
 
@@ -348,7 +357,7 @@ class Crud_project extends CI_Controller {
         // Update juga di tabel clients
         $client_data = array(
             'client_name' => $this->input->post('client_name'),
-            'wedding_date' => $this->input->post('event_date'),
+            'wedding_date' => $event_date,
             'location' => $this->input->post('location'),
         );
 
