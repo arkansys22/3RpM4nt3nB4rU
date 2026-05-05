@@ -36,6 +36,42 @@
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
               <h1 class="text-2xl font-bold mb-4">Edit Project <?= $project->project_name ?></h1>
               <form action="<?= site_url('project/update/'.$project->id_session) ?>" method="post" class="bg-white p-6 shadow-md rounded">
+                <label class="block mb-2">Pilih Dari Klien Potensial</label>
+                <select id="potensialSelect" name="potensial_clients" class="w-full px-4 py-2 border rounded mb-4" required> 
+                    <option value="">-- Pilih Klien Potensial --</option>
+
+                    <?php if (!empty($potensial_clients)): ?>
+                        <?php 
+                        // ambil nilai lama (prioritas: POST → project → kosong)
+                        $selected_value = set_value('potensial_clients');
+                        if (empty($selected_value) && isset($project->potensial_clients_id_session)) {
+                            $selected_value = $project->potensial_clients_id_session;
+                        }
+                        ?>
+
+                        <?php foreach ($potensial_clients as $p): ?>
+                            <?php 
+                                $id = isset($p['id_session']) ? $p['id_session'] : '';
+                                $name = isset($p['pc_name']) ? $p['pc_name'] : 'Tanpa Nama';
+                                $date = isset($p['event_date']) ? $p['event_date'] : '';
+                                $lokasi = isset($p['location']) ? $p['location'] : '';
+                            ?>
+
+                            <option 
+                                value="<?= $id; ?>"
+                                data-name="<?= $name; ?>"
+                                data-date="<?= $date; ?>"
+                                data-lokasi="<?= $lokasi; ?>"
+                                <?= ($selected_value == $id) ? 'selected' : ''; ?>
+                            >
+                                <?= $name; ?>
+                            </option>
+
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </select>
+
+
                 <label class="block mb-2">Nama Project</label>
                 <input type="text" name="project_name" value="<?= $project->project_name ?>" class="w-full px-4 py-2 border rounded mb-4" required>
 

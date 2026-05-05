@@ -261,6 +261,7 @@ class Crud_project extends CI_Controller {
             $data['user'] = $this->Crud_m->view_where_user_orderingss('user','id_user', 'asc');
             $data['crews_list'] = $this->Crews_model->get_all_crews();
             $data['selected_crews'] = $this->CrewProjects_model->get_crew_by_project($id_session);
+            $data['potensial_clients'] = $this->Crud_m->view_where_potensial_clients_deal('potensial_clients','event_date', 'asc');
             $this->load->view('project/edit', $data);
 
         }else if($this->session->level=='2'){
@@ -269,6 +270,7 @@ class Crud_project extends CI_Controller {
             $data['user'] = $this->Crud_m->view_where_user_orderingss('user','id_user', 'asc');
             $data['crews_list'] = $this->Crews_model->get_all_crews();
             $data['selected_crews'] = $this->CrewProjects_model->get_crew_by_project($id_session);
+            $data['potensial_clients'] = $this->Crud_m->view_where_potensial_clients_deal('potensial_clients','event_date', 'asc');
             $this->load->view('project/edit', $data);
 
         }else if($this->session->level=='3'){
@@ -281,6 +283,7 @@ class Crud_project extends CI_Controller {
             $data['user'] = $this->Crud_m->view_where_user_orderingss('user','id_user', 'asc');
             $data['crews_list'] = $this->Crews_model->get_all_crews();
             $data['selected_crews'] = $this->CrewProjects_model->get_crew_by_project($id_session);
+            $data['potensial_clients'] = $this->Crud_m->view_where_potensial_clients_deal('potensial_clients','event_date', 'asc');
             $this->load->view('project/edit', $data);
 
         }else if($this->session->level=='9'){
@@ -289,6 +292,7 @@ class Crud_project extends CI_Controller {
             $data['user'] = $this->Crud_m->view_where_user_orderingss('user','id_user', 'asc');
             $data['crews_list'] = $this->Crews_model->get_all_crews();
             $data['selected_crews'] = $this->CrewProjects_model->get_crew_by_project($id_session);
+            $data['potensial_clients'] = $this->Crud_m->view_where_potensial_clients_deal('potensial_clients','event_date', 'asc');
             $this->load->view('project/edit', $data);
 
         }else if($this->session->level=='5'){
