@@ -89,56 +89,51 @@ class Crud_project extends CI_Controller {
     public function store() {
 
         $id_session = hash('sha256', bin2hex(random_bytes(16)));
+        $date_create = date('Y-m-d H:i:s');
 
-        $date_create = date('Y-m-d H:i:s');  // tanggal dan waktu
-    
-        if ($this->agent->is_browser()) // Agent untuk fitur di log activity
-                {
-                    $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
-                }
-                elseif ($this->agent->is_robot())
-                {
-                    $agent = $this->agent->robot();
-                }
-                elseif ($this->agent->is_mobile())
-                {
-                    $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
-                }
-                else
-                {
-                    $agent = 'Unidentified User Agent';
-                }
+        // Deteksi device
+        if ($this->agent->is_browser()) {
+            $agent = 'Desktop ' . $this->agent->browser() . ' ' . $this->agent->version();
+        } elseif ($this->agent->is_robot()) {
+            $agent = $this->agent->robot();
+        } elseif ($this->agent->is_mobile()) {
+            $agent = 'Mobile ' . $this->agent->mobile() . ' ' . $this->agent->version();
+        } else {
+            $agent = 'Unidentified User Agent';
+        }
 
+        // Convert tanggal
+        $input_date = $this->input->post('event_date');
+        $date = DateTime::createFromFormat('d/m/Y', $input_date);
+        $event_date = $date ? $date->format('Y-m-d') : null;
+
+        // Data project
         $data = array(
             'id_session'    => $id_session,
             'project_name'  => $this->input->post('project_name'),
             'status'        => 'create',
             'create_by'     => $this->session->id_session,
-            'event_date'    => $this->input->post('event_date'),
+            'event_date'    => $event_date,
             'location'      => $this->input->post('location'),
             'client_name'   => $this->input->post('client_name'),
             'value'         => str_replace('.', '', $this->input->post('value')),
             'detail'        => $this->input->post('detail'),
             'religion'      => $this->input->post('religion'),
-            'potensial_clients_id_session'      => $this->input->post('potensial_clients'),
+            'potensial_clients_id_session' => $this->input->post('potensial_clients'),
             'create_date'   => $date_create
         );
 
-        // Insert ke tabel project
         $this->project_model->insert_project($data);
 
-         // Ambil id yang baru disimpan di tabel project
-        $project_id = $this->db->insert_id();  // Mendapatkan id auto-increment
-
-        // Ambil nama hari dari create_date
+        $project_id = $this->db->insert_id();
         $create_day = date('l', strtotime($date_create));
 
-        // Data untuk tabel clients
+        // Data clients
         $client_data = array(
-            'id'           => $project_id,  // Gunakan id yang sama di clients
+            'id'           => $project_id,
             'id_session'   => $id_session,
             'client_name'  => $this->input->post('client_name'),
-            'wedding_date' => $this->input->post('event_date'),
+            'wedding_date' => $event_date,
             'created_at'   => $date_create,
             'create_day'   => $create_day,
             'location'     => $this->input->post('location'),
@@ -146,23 +141,21 @@ class Crud_project extends CI_Controller {
             'status'       => 'create'
         );
 
-        // Insert ke tabel clients
         $this->db->insert('clients', $client_data);
 
+        // Log activity
         $ip = $this->input->ip_address();
         $location = get_location_from_ip($ip);
         $ip_with_location = $ip . "<br>(" . $location . ")";
 
         $data_log = array(
-
-            'log_activity_user_id'=>$this->session->id_session,
-            'log_activity_modul' => 'project/create',
+            'log_activity_user_id'   => $this->session->id_session,
+            'log_activity_modul'     => 'project/create',
             'log_activity_document_no' => $id_session,
-            'log_activity_status' => 'Tambah Project',
-            'log_activity_waktu' => date('Y-m-d H:i:s'),
-            'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $ip_with_location
-            
+            'log_activity_status'    => 'Tambah Project',
+            'log_activity_waktu'     => date('Y-m-d H:i:s'),
+            'log_activity_platform'  => $agent,
+            'log_activity_ip'        => $ip_with_location
         );
 
         $this->project_model->insert_log_activity($data_log);

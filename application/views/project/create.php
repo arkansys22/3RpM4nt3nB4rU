@@ -76,7 +76,7 @@
                 <input type="text" id="client_name" name="client_name" class="w-full px-4 py-2 border rounded mb-4" required>
 
                 <label class="block mb-2">Tanggal Pernikahan</label>
-                <input type="date" id="event_date" name="event_date" class="w-full px-4 py-2 border rounded mb-4" required>
+                <input type="text" id="event_date" name="event_date" placeholder="DD/MM/YYYY" class="w-full px-4 py-2 border rounded mb-4" required>
 
                 <label class="block mb-2">Value</label>
                 <input type="text" id="formattedNumber" class="w-full px-4 py-2 border rounded mb-4" oninput="formatNumber(this)" name="value" required>
@@ -135,6 +135,20 @@
   <script>
     window.addEventListener('load', function() {
         document.getElementById('potensialSelect').dispatchEvent(new Event('change'));
+    });
+  </script>
+
+  <script>
+    document.getElementById('event_date').addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '').substring(0,8);
+        
+        if (value.length >= 5) {
+            value = value.replace(/(\d{2})(\d{2})(\d{1,4})/, '$1/$2/$3');
+        } else if (value.length >= 3) {
+            value = value.replace(/(\d{2})(\d{1,2})/, '$1/$2');
+        }
+
+        e.target.value = value;
     });
   </script>
 </body>
