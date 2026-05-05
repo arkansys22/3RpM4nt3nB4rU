@@ -137,20 +137,6 @@
         document.getElementById('potensialSelect').dispatchEvent(new Event('change'));
     });
   </script>
-
-  <script>
-    document.getElementById('event_date').addEventListener('input', function(e) {
-        let value = e.target.value.replace(/\D/g, '').substring(0,8);
-        
-        if (value.length >= 5) {
-            value = value.replace(/(\d{2})(\d{2})(\d{1,4})/, '$1/$2/$3');
-        } else if (value.length >= 3) {
-            value = value.replace(/(\d{2})(\d{1,2})/, '$1/$2');
-        }
-
-        e.target.value = value;
-    });
-  </script>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script>
     flatpickr("#event_date", {
