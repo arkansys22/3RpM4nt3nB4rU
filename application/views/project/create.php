@@ -41,15 +41,18 @@
                 <label class="block mb-2">Pilih Dari Klien Potensial</label>
                 <select id="potensialSelect" name="potensial_clients" class="w-full px-4 py-2 border rounded mb-4" required> 
                     <option value="">-- Pilih Klien Potensial --</option>
-                    <?php foreach ($potensial_clients as $p): ?>
-                        <option 
-                            value="<?= $p['id_session']; ?>"
-                            data-name="<?= $p['pc_name']; ?>"
-                            data-date="<?= $p['event_date']; ?>"
-                            <?= ($project->potensial_clients_id_session == $p['id_session']) ? 'selected' : ''; ?>>
-                            <?= $p['pc_name']; ?>
-                        </option>
-                    <?php endforeach; ?>
+                  <?php if (!empty($potensial_clients)): ?>
+                      <?php foreach ($potensial_clients as $p): ?>
+                          <option 
+                              value="<?= isset($p['id_session']) ? $p['id_session'] : ''; ?>"
+                              data-name="<?= isset($p['pc_name']) ? $p['pc_name'] : ''; ?>"
+                              data-date="<?= isset($p['event_date']) ? $p['event_date'] : ''; ?>"
+                              <?= (isset($project) && isset($project->potensial_clients_id_session) && $project->potensial_clients_id_session == $p['id_session']) ? 'selected' : ''; ?> >
+                              
+                              <?= isset($p['pc_name']) ? $p['pc_name'] : 'Tanpa Nama'; ?>
+                          </option>
+                      <?php endforeach; ?>
+                  <?php endif; ?>
                 </select>
 
                 <label class="block mb-2">Nama Project</label>
