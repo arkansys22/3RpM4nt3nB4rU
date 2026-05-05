@@ -28,12 +28,14 @@ class project_model extends CI_Model {
             $create_day = date('l', strtotime($data['create_date'])); 
 
             $client_data = [
+                'id'           => $project_id,
                 'id_session'   => $data['id_session'],
-                'client_name'  => $data['project_name'],
+                'client_name'  => $data['client_name'],
                 'wedding_date' => $data['event_date'], // pastikan tidak null
                 'created_at'   => $data['create_date'],
                 'create_day'   => $create_day,
                 'location'     => $data['location'],
+                'create_by'    => $this->session->id_session,
                 'status'       => 'create'
             ];
 

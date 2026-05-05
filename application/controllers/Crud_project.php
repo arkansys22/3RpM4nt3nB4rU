@@ -102,18 +102,13 @@ class Crud_project extends CI_Controller {
             $agent = 'Unidentified User Agent';
         }
 
-        // Convert tanggal
-        $input_date = $this->input->post('event_date');
-
-        if (strpos($input_date, '/') !== false) {
-            // format d/m/Y
-            $date = DateTime::createFromFormat('d/m/Y', $input_date);
-        } else {
-            // format Y-m-d
-            $date = DateTime::createFromFormat('Y-m-d', $input_date);
+        // Ambil tanggal (versi yang sudah kita sederhanakan)    
+        $event_date = $this->input->post('event_date');
+         if (empty($event_date)) {
+            $this->session->set_flashdata('error', 'Tanggal pernikahan wajib diisi!');
+            redirect('project/create');
+            return;
         }
-
-        $event_date = $date ? $date->format('Y-m-d') : null;
 
         // Data project
         $data = array(
@@ -132,11 +127,6 @@ class Crud_project extends CI_Controller {
         );
 
         $this->project_model->insert_project($data);
-
-        $project_id = $this->db->insert_id();
-        $create_day = date('l', strtotime($date_create));
-
-    
 
         // Log activity
         $ip = $this->input->ip_address();
