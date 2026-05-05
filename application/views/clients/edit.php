@@ -247,10 +247,10 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
               <label class="block mb-2">Permohonan Izin Dilakukan ke</label>
               <select name="pmizin" class="w-full px-4 py-2 border rounded mb-4" required>
                     <option value="">Pilih</option>
-                    <option value="Bapak" <?= set_select('pmizin', 'Bapak') ?>>Bapak</option>
-                    <option value="Ibu" <?= set_select('pmizin', 'Ibu') ?>>Ibu</option>
-                    <option value="Kakak" <?= set_select('pmizin', 'Kakak') ?>>Kakak</option>
-                    <option value="Tidak Ada" <?= set_select('pmizin', 'Tidak Ada') ?>>Tidak Ada</option>
+                    <option value="Bapak" <?= $clients->pmizin == 'Bapak' ? 'selected' : '' ?>>Bapak</option>
+                    <option value="Ibu" <?= $clients->pmizin == 'Ibu' ? 'selected' : '' ?>>Ibu</option>
+                    <option value="Kakak" <?= $clients->pmizin == 'Kakak' ? 'selected' : '' ?>>Kakak</option>
+                    <option value="Tidak Ada" <?= $clients->pmizin == 'Tidak Ada"' ? 'selected' : '' ?>>Tidak Ada"</option>               
               </select>
 
               <label class="block mb-2">Mahar</label>
