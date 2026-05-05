@@ -75,10 +75,10 @@
         <h1 class="text-xl font-bold text-center mb-4">Permohonan Izin Menikah (<?php if (!empty($client->f_bride_freplacementcname)) {echo $client->f_bride_freplacementcname;} else {echo $client->f_bride_fathercname;}?>)</h1>
         </br>
         <p class="text-lg leading-relaxed text-justify">Putriku <?= $client->f_bride_cname; ?>, penyampaian izin pernikahanmu dan permohonan restumu
-        sudah <?php if (!empty($client->f_bride_freplacementcname)) {echo $client->f_bride_freplacementcname;} else {echo $client->f_bride_fathercname;}?> restui dan <?php if (!empty($client->f_bride_freplacementcname)) {echo $client->f_bride_freplacementcname;} else {echo $client->f_bride_fathercname;}?> dengar dengan seksama.</p>
-        <p class="text-lg leading-relaxed text-justify">Karena Insya Allah sebentar lagi <?php if (!empty($client->f_bride_freplacementcname)) {echo $client->f_bride_freplacementcname;} else {echo $client->f_bride_fathercname;}?> akan segera menikahkanmu
+        sudah <?php if (!empty($client->f_bride_mreplacementcname)) {echo $client->f_bride_mreplacementcname;} else {echo $client->f_bride_mothercname;}?> restui dan <?php if (!empty($client->f_bride_mreplacementcname)) {echo $client->f_bride_mreplacementcname;} else {echo $client->f_bride_mothercname;}?> dengar dengan seksama.</p>
+        <p class="text-lg leading-relaxed text-justify">Karena Insya Allah sebentar lagi <?php if (!empty($client->f_bride_mreplacementcname)) {echo $client->f_bride_mreplacementcname;} else {echo $client->f_bride_mothercname;}?> akan segera menikahkanmu
         dengan calon suamimu yang bernama <?= $client->m_bride_fname; ?>.</p>
-        <p class="text-lg leading-relaxed text-justify">Teriring doa, semoga Allah meridhoi hajat pernikahan yang akan <?php if (!empty($client->f_bride_freplacementcname)) {echo $client->f_bride_freplacementcname;} else {echo $client->f_bride_fathercname;}?>
+        <p class="text-lg leading-relaxed text-justify">Teriring doa, semoga Allah meridhoi hajat pernikahan yang akan <?php if (!empty($client->f_bride_mreplacementcname)) {echo $client->f_bride_mreplacementcname;} else {echo $client->f_bride_mothercname;}?>
         langsungkan sebentar lagi. Hingga rumah tanggamu nanti senantiasa
         rukun, damai dan bahagia penuh rahmat dan keberkahan dari Allah SWT.</p>
         <p class="text-lg leading-relaxed">Aamiin aamiin Allahumma aamiin..</p>
