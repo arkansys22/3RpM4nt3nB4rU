@@ -333,12 +333,7 @@ class Crud_project extends CI_Controller {
 
         // Ambil tanggal (versi yang sudah kita sederhanakan)    
         $event_date = $this->input->post('event_date');
-         if (empty($event_date)) {
-            $this->session->set_flashdata('error', 'Tanggal pernikahan wajib diisi!');
-            redirect('project/create');
-            return;
-        }
-
+        
         $data = array(
             'project_name'  => $this->input->post('project_name'),
             'closing_user_idsession'  => $this->input->post('closing_user_idsession'),
