@@ -76,7 +76,7 @@
                 <input type="text" id="client_name" name="client_name" class="w-full px-4 py-2 border rounded mb-4" required>
 
                 <label class="block mb-2">Tanggal Pernikahan</label>
-                <input type="text" id="event_date" name="event_date" placeholder="DD/MM/YYYY" class="w-full px-4 py-2 border rounded mb-4" required>
+                <input type="date" id="event_date" name="event_date" placeholder="DD/MM/YYYY" class="w-full px-4 py-2 border rounded mb-4" required>
 
                 <label class="block mb-2">Value</label>
                 <input type="text" id="formattedNumber" class="w-full px-4 py-2 border rounded mb-4" oninput="formatNumber(this)" name="value" required>
