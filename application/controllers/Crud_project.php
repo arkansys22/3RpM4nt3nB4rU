@@ -588,37 +588,52 @@ class Crud_project extends CI_Controller {
     public function get_total_penawaran(){
         $id_session = $this->input->post('id_session');
 
-        // 1. Ambil promo global
-        $this->db->select('promo_value');
+        // 1. Ambil data promo
+        $this->db->select('promo, promo_value');
         $this->db->from('potensial_clients');
         $this->db->where('id_session', $id_session);
-        $promo = $this->db->get()->row()->promo_value ?? 0;
+        $pc = $this->db->get()->row();
 
-        // 2. Tentukan perhitungan subtotal
-        if ($promo > 0) {
-            // ✅ Pakai harga full (tanpa diskon item)
+        $promo_type  = $pc->promo ?? 'tidak';
+        $promo_value = $pc->promo_value ?? 0;
+
+        // 2. Hitung berdasarkan tipe promo
+        if ($promo_type == 'tidak') {
+
+            // ❗ Tanpa diskon
             $this->db->select('
-                SUM(penawaran_klien_hargapromo * penawaran_klien_qty) AS subtotal
+                SUM(penawaran_klien_hargapromo * penawaran_klien_qty) AS total
             ');
-        } else {
-            // ✅ Cek apakah ada diskon item
+
+        } elseif ($promo_type == 'default') {
+
+            // ❗ Pakai diskon per item
             $this->db->select('
                 SUM(
                     (penawaran_klien_hargapromo * penawaran_klien_qty)
                     - COALESCE(penawaran_klien_diskon, 0)
-                ) AS subtotal
+                ) AS total
             ');
+
+        } elseif ($promo_type == 'custom') {
+
+            // ❗ Pakai promo global
+            $this->db->select('
+                SUM(penawaran_klien_hargapromo * penawaran_klien_qty) AS subtotal
+            ');
+
         }
 
         $this->db->from('penawaran_klien');
         $this->db->where('penawaran_klien_potensial_idsession', $id_session);
-        $subtotal = $this->db->get()->row()->subtotal ?? 0;
+        $result = $this->db->get()->row();
 
-        // 3. Hitung total akhir
-        if ($promo > 0) {
-            $total = $subtotal - $promo;
+        // 3. Final total
+        if ($promo_type == 'custom') {
+            $subtotal = $result->subtotal ?? 0;
+            $total = $subtotal - $promo_value;
         } else {
-            $total = $subtotal; // sudah include diskon item / atau tanpa diskon
+            $total = $result->total ?? 0;
         }
 
         // 4. Hindari minus
