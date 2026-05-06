@@ -589,7 +589,7 @@ class Crud_project extends CI_Controller {
         $id_session = $this->input->post('id_session');
 
         $this->db->select('
-            SUM(penawaran_klien_hargapromo - COALESCE(penawaran_klien_diskon,0)) AS total
+            SUM((penawaran_klien_hargapromo * penawaran_klien_qty) - COALESCE(penawaran_klien_diskon,0)) AS total
         ');
         $this->db->from('penawaran_klien');
         $this->db->where('penawaran_klien_potensial_idsession', $id_session);
