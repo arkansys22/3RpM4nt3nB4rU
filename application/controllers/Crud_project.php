@@ -588,20 +588,20 @@ class Crud_project extends CI_Controller {
     public function get_total_penawaran(){
         $id_session = $this->input->post('id_session');
 
-        // 1. Ambil promo global dulu
+        // 1. Ambil promo global
         $this->db->select('promo_value');
         $this->db->from('potensial_clients');
         $this->db->where('id_session', $id_session);
         $promo = $this->db->get()->row()->promo_value ?? 0;
 
-        // 2. Hitung subtotal berdasarkan kondisi promo
+        // 2. Tentukan perhitungan subtotal
         if ($promo > 0) {
-            // ❗ Promo global aktif → abaikan diskon per item
+            // ✅ Pakai harga full (tanpa diskon item)
             $this->db->select('
                 SUM(penawaran_klien_hargapromo * penawaran_klien_qty) AS subtotal
             ');
         } else {
-            // ❗ Tidak ada promo → pakai diskon per item
+            // ✅ Cek apakah ada diskon item
             $this->db->select('
                 SUM(
                     (penawaran_klien_hargapromo * penawaran_klien_qty)
@@ -615,9 +615,11 @@ class Crud_project extends CI_Controller {
         $subtotal = $this->db->get()->row()->subtotal ?? 0;
 
         // 3. Hitung total akhir
-        $total = ($promo > 0)
-            ? $subtotal - $promo   // pakai promo global
-            : $subtotal;           // sudah termasuk diskon item
+        if ($promo > 0) {
+            $total = $subtotal - $promo;
+        } else {
+            $total = $subtotal; // sudah include diskon item / atau tanpa diskon
+        }
 
         // 4. Hindari minus
         if ($total < 0) {
