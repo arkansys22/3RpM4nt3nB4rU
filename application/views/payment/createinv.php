@@ -44,7 +44,7 @@
     
                     <option value="">-Pilih Asal Invoice-</option>
 
-                    <option value="<?= $project->potensial_client_id_session ?>"
+                    <option value="<?= $project->potensial_clients_id_session ?>"
                         <?= set_select('typeinvoice', $project->potensial_clients_id_session) ?>>
                         Dari Proposal
                     </option>
