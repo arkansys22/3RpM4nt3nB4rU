@@ -41,17 +41,19 @@
 
                 <label class="block mb-2">Jenis Invoice</label>
                 <select id="typeinvoice" name="typeinvoice" class="w-full px-4 py-2 border rounded mb-4" required>
+    
                     <option value="">-Pilih Asal Invoice-</option>
 
-                    <option value="Dari Prpoposal"
-                        <?= set_select('typeinvoice', 'Dari Prpoposal', !empty($project->potensial_client_id_session)) ?>>
-                        Dari Prpoposal
+                    <option value="<?= $project->potensial_client_id_session ?>"
+                        <?= set_select('typeinvoice', $project->potensial_client_id_session) ?>>
+                        Dari Proposal
                     </option>
 
                     <option value="Penambahan"
-                        <?= set_select('typeinvoice', 'Penambahan', empty($project->potensial_client_id_session)) ?>>
+                        <?= set_select('typeinvoice', 'Penambahan') ?>>
                         Penambahan
                     </option>
+
                 </select>
 
                 <label class="block mb-2">Tanggal Pembuatan</label>
