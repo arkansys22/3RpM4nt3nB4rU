@@ -143,7 +143,7 @@ document.getElementById('typeinvoice').addEventListener('change', function () {
     // Jika pilih Dari Proposal
     if (typeinvoice === 'Dari Prpoposal') {
 
-        fetch("<?= base_url('payment/get_total_penawaran') ?>", {
+        fetch("<?= base_url('Crud_project/get_total_penawaran') ?>", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
