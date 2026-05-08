@@ -47,12 +47,14 @@ class Crud_payment extends CI_Controller {
             cek_session_akses_developer('payment',$this->session->id_session);
             $data['payment'] = $this->Payment_model->get_payment_by_session($id_session);
             $data['project'] = $this->project_model->get_project_by_session($id_session);
+            $data['kategori'] = $this->project_model->view_ordering('operational_kategori','nomer_kategori','asc');
             $this->load->view('payment/createinv', $data);
 
         }else if($this->session->level=='2'){
             cek_session_akses_administrator('payment',$this->session->id_session);
             $data['payment'] = $this->Payment_model->get_payment_by_session($id_session);
             $data['project'] = $this->project_model->get_project_by_session($id_session);
+            $data['kategori'] = $this->project_model->view_ordering('operational_kategori','nomer_kategori','asc');
             $this->load->view('payment/createinv', $data);
 
         }else if($this->session->level=='3'){
@@ -63,6 +65,7 @@ class Crud_payment extends CI_Controller {
             cek_session_akses_staff_admin('payment',$this->session->id_session);
             $data['payment'] = $this->Payment_model->get_payment_by_session($id_session);
             $data['project'] = $this->project_model->get_project_by_session($id_session);
+            $data['kategori'] = $this->project_model->view_ordering('operational_kategori','nomer_kategori','asc');
             $this->load->view('payment/createinv', $data);
 
         }else if($this->session->level=='5'){
@@ -134,6 +137,7 @@ class Crud_payment extends CI_Controller {
             'id_session'      => $id_session,
             'transactions_id' => 'IMB' . date('ymd', strtotime($this->input->post('date'))) . $this->input->post('number'),
             'total_bill'      => $this->input->post('total_bill'),
+            'potensial_clients_id_session'      => $this->input->post('typeinvoice'),
             'total_paid'      => 0, // Set total_paid to 0
             'detail'          => json_encode($this->input->post('detail')),
             'date'            => $this->input->post('date'),
