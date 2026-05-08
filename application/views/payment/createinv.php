@@ -40,8 +40,8 @@
               <input type="hidden" name="total_paid" value="0"> <!-- Ensure total_paid is always 0 -->
 
                 <label class="block mb-2">Jenis Invoice</label>
-                <select name="typeinvoice" class="w-full px-4 py-2 border rounded mb-4" required>
-                    <option value="">Pilih Asal Invoice</option>
+                <select id="typeinvoice" name="typeinvoice" class="w-full px-4 py-2 border rounded mb-4" required>
+                    <option value="">-Pilih Asal Invoice-</option>
                     <option value="Dari Prpoposal" <?= set_select('typeinvoice', 'Dari Prpoposal') ?>>Dari Prpoposal</option>
                     <option value="Penambahan" <?= set_select('typeinvoice', 'Penambahan') ?>>Penambahan</option>
                   </select>
@@ -54,9 +54,9 @@
 
                 <label class="block mb-2">Kode Unik</label>
                 <input type="number" name="number" class="w-full px-4 py-2 border rounded mb-4">
-              
+
                 <label class="block mb-2">Total</label>
-                <input type="text" id="formattedNumber" oninput="formatNumber(this)" name="total_bill" step="0.01" class="w-full px-4 py-2 border rounded mb-4" required>
+                <input type="text" id="total_bill" oninput="formatNumber(this)" name="total_bill" step="0.01" class="w-full px-4 py-2 border rounded mb-4" required>
 
                 <label class="block mb-2">Metode Pembayaran</label>
                 <select name="metodep" class="w-full px-4 py-2 border rounded mb-4" required>
@@ -66,7 +66,7 @@
                   </select>
 
                 <label class="block mb-2">Pembayaran Pertama</label>
-                <input type="text" id="formattedNumber" oninput="formatNumber(this)" name="DP" step="0.01" class="w-full px-4 py-2 border rounded mb-4" required>
+                <input type="text" id="dp_bill" oninput="formatNumber(this)" name="DP" step="0.01" class="w-full px-4 py-2 border rounded mb-4" required>
 
                 <!-- Section for detail -->
                 <div id="detail-section">
@@ -129,6 +129,47 @@
             detailSection.appendChild(newDetailWrapper);
         }
     });
+</script>
+
+<script>
+document.getElementById('typeinvoice').addEventListener('change', function () {
+
+    const typeinvoice = this.value;
+    const totalBillInput = document.getElementById('total_bill');
+
+    // id session project
+    const id_session = '<?= $project->id_session ?>';
+
+    // Jika pilih Dari Proposal
+    if (typeinvoice === 'Dari Prpoposal') {
+
+        fetch("<?= base_url('payment/get_total_penawaran') ?>", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: "id_session=" + encodeURIComponent(id_session)
+        })
+        .then(response => response.json())
+        .then(data => {
+
+            let total = parseInt(data.total) || 0;
+
+            // format ribuan
+            totalBillInput.value = total.toLocaleString('id-ID');
+
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+    } else {
+
+        // kosongkan jika bukan dari proposal
+        totalBillInput.value = '';
+
+    }
+});
 </script>
 </body>
 </html>
