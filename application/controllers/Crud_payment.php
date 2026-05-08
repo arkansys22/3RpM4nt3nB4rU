@@ -505,4 +505,66 @@ class Crud_payment extends CI_Controller {
         $this->load->view('payment/view_kwitansi', $data);
     }
 
+
+     public function get_total_penawaran(){
+        $id_session = $this->input->post('id_session');
+
+        // 1. Ambil data promo
+        $this->db->select('promo, promo_value');
+        $this->db->from('potensial_clients');
+        $this->db->where('id_session', $id_session);
+        $pc = $this->db->get()->row();
+
+        $promo_type  = $pc->promo ?? 'tidak';
+        $promo_value = $pc->promo_value ?? 0;
+
+        // 2. Hitung berdasarkan tipe promo
+        if ($promo_type == 'tidak') {
+
+            // ❗ Tanpa diskon
+            $this->db->select('
+                SUM(penawaran_klien_hargapromo * penawaran_klien_qty) AS total
+            ');
+
+        } elseif ($promo_type == 'default') {
+
+            // ❗ Pakai diskon per item
+            $this->db->select('
+                SUM(
+                    (penawaran_klien_hargapromo * penawaran_klien_qty)
+                    - COALESCE(penawaran_klien_diskon, 0)
+                ) AS total
+            ');
+
+        } elseif ($promo_type == 'custom') {
+
+            // ❗ Pakai promo global
+            $this->db->select('
+                SUM(penawaran_klien_hargapromo * penawaran_klien_qty) AS subtotal
+            ');
+
+        }
+
+        $this->db->from('penawaran_klien');
+        $this->db->where('penawaran_klien_potensial_idsession', $id_session);
+        $result = $this->db->get()->row();
+
+        // 3. Final total
+        if ($promo_type == 'custom') {
+            $subtotal = $result->subtotal ?? 0;
+            $total = $subtotal - $promo_value;
+        } else {
+            $total = $result->total ?? 0;
+        }
+
+        // 4. Hindari minus
+        if ($total < 0) {
+            $total = 0;
+        }
+
+        echo json_encode([
+            'total' => $total
+        ]);
+    }
+
 }

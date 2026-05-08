@@ -42,9 +42,17 @@
                 <label class="block mb-2">Jenis Invoice</label>
                 <select id="typeinvoice" name="typeinvoice" class="w-full px-4 py-2 border rounded mb-4" required>
                     <option value="">-Pilih Asal Invoice-</option>
-                    <option value="Dari Prpoposal" <?= set_select('typeinvoice', 'Dari Prpoposal') ?>>Dari Prpoposal</option>
-                    <option value="Penambahan" <?= set_select('typeinvoice', 'Penambahan') ?>>Penambahan</option>
-                  </select>
+
+                    <option value="Dari Prpoposal"
+                        <?= set_select('typeinvoice', 'Dari Prpoposal', !empty($project->potensial_client_id_session)) ?>>
+                        Dari Prpoposal
+                    </option>
+
+                    <option value="Penambahan"
+                        <?= set_select('typeinvoice', 'Penambahan', empty($project->potensial_client_id_session)) ?>>
+                        Penambahan
+                    </option>
+                </select>
 
                 <label class="block mb-2">Tanggal Pembuatan</label>
                 <input type="date" name="date" class="w-full px-4 py-2 border rounded mb-4">
@@ -143,7 +151,7 @@ document.getElementById('typeinvoice').addEventListener('change', function () {
     // Jika pilih Dari Proposal
     if (typeinvoice === 'Dari Prpoposal') {
 
-        fetch("<?= base_url('Crud_project/get_total_penawaran') ?>", {
+        fetch("<?= base_url('Crud_payment/get_total_penawaran') ?>", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
