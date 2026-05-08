@@ -147,25 +147,27 @@ document.getElementById('typeinvoice').addEventListener('change', function () {
     const typeinvoice = this.value;
     const totalBillInput = document.getElementById('total_bill');
 
-    // id session project
-    const id_session = '<?= $project->id_session ?>';
+    // value proposal
+    const proposalValue = '<?= $project->potensial_clients_id_session ?>';
 
     // Jika pilih Dari Proposal
-    if (typeinvoice === 'Dari Prpoposal') {
+    if (typeinvoice === proposalValue) {
 
         fetch("<?= base_url('Crud_payment/get_total_penawaran') ?>", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
-            body: "id_session=" + encodeURIComponent(id_session)
+            body: "id_session=" + encodeURIComponent(typeinvoice)
         })
         .then(response => response.json())
         .then(data => {
 
+            console.log(data);
+
             let total = parseInt(data.total) || 0;
 
-            // format ribuan
+            // format ribuan Indonesia
             totalBillInput.value = total.toLocaleString('id-ID');
 
         })
@@ -175,7 +177,7 @@ document.getElementById('typeinvoice').addEventListener('change', function () {
 
     } else {
 
-        // kosongkan jika bukan dari proposal
+        // kosongkan jika penambahan
         totalBillInput.value = '';
 
     }
