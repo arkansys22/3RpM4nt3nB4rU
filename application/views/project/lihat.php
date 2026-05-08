@@ -285,77 +285,93 @@
     </a>
   </div>
 
-<h2 class="text-lg font-bold mb-2">Daftar Pembayaran</h2>
+  <h2 class="text-lg font-bold mb-2">Daftar Pembayaran</h2>
 
-<div class="border p-4 mb-4">
-  <?php if (empty($payment)): ?>
-    <p class="text-red-500 font-semibold">Belum ada transaksi.</p>
-    <a href="<?= site_url('payment/createinv/' . $project->id_session) ?>" 
-       class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
-       Tambah Invoice
-    </a>
-  <?php else: ?>
-    <?php foreach ($payment as $index => $trans): ?>
-      <div class="mb-4 <?= $index === count($payment) - 1 ? '' : 'border-b pb-2' ?>">
-        <h3 class="text-md font-semibold">
-          Transaksi <?= $project->client_name ?> 
-          <span style="color: <?= $trans->status === 'Pending' ? 'red' : ($trans->status === 'Paid' ? 'green' : 'black') ?>;">
-          <?= $trans->status ?>
-          </span>
-        </h3>
-        <div class="flex items-center justify-between">
-          <div>
-            <p class="font-medium">
-              <strong>Transaksi ID:</strong> <?= htmlspecialchars($trans->transactions_id) ?><br>
-              <strong>Total Tagihan:</strong> 
-              <?php if (strpos($trans->transactions_id, 'IMB') === 0): ?>
-                Rp <?= number_format($trans->total_bill, 0, ',', '.') ?><br>
-              <?php elseif (strpos($trans->transactions_id, 'MBP') === 0 || strpos($trans->transactions_id, 'MBP1') === 0): ?>
-                Rp <?= number_format($trans->total_paid, 0, ',', '.') ?><br>
-              <?php endif; ?>
-              <?php if (strpos($trans->transactions_id, 'IMB') === 0): ?>
-                <strong>DP:</strong> Rp <?= number_format($trans->DP, 0, ',', '.') ?><br>
-              <?php endif; ?>
-              <strong>Tanggal:</strong> <?= tgl_indo($trans->date) ?><br>
-              <?php if (!empty($trans->due_date)): ?>
-                <strong>Jatuh Tempo:</strong> <?= tgl_indo($trans->due_date) ?><br>
-              <?php endif; ?>
-            </p>
-            <div class="flex gap-2 mt-2">
-              <?php if (strpos($trans->transactions_id, 'IMB') === 0): ?>
-                <a href="<?= site_url('payment/view_invoice/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
-                   class="bg-blue-500 text-white text-sm px-2 py-1 rounded-md hover:bg-blue-600">
-                   Lihat Invoice
+  <div class="border p-4 mb-4">
+
+    <?php if (empty($payment)): ?>
+      <p class="text-red-500 font-semibold">Belum ada transaksi.</p>
+    <?php else: ?>
+      <?php foreach ($payment as $index => $trans): ?>
+        <div class="mb-4 <?= $index === count($payment) - 1 ? '' : 'border-b pb-2' ?>">
+          <h3 class="text-md font-semibold">
+            Transaksi <?= $project->client_name ?> 
+            <span style="color: <?= $trans->status === 'Pending' ? 'red' : ($trans->status === 'Paid' ? 'green' : 'black') ?>;">
+            <?= $trans->status ?>
+            </span>
+          </h3>
+
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="font-medium">
+                <strong>Transaksi ID:</strong> <?= htmlspecialchars($trans->transactions_id) ?><br>
+
+                <strong>Total Tagihan:</strong>
+                <?php if (strpos($trans->transactions_id, 'IMB') === 0): ?>
+                  Rp <?= number_format($trans->total_bill, 0, ',', '.') ?><br>
+                <?php elseif (strpos($trans->transactions_id, 'MBP') === 0 || strpos($trans->transactions_id, 'MBP1') === 0): ?>
+                  Rp <?= number_format($trans->total_paid, 0, ',', '.') ?><br>
+                <?php endif; ?>
+
+                <?php if (strpos($trans->transactions_id, 'IMB') === 0): ?>
+                  <strong>DP:</strong> Rp <?= number_format($trans->DP, 0, ',', '.') ?><br>
+                <?php endif; ?>
+
+                <strong>Tanggal:</strong> <?= tgl_indo($trans->date) ?><br>
+
+                <?php if (!empty($trans->due_date)): ?>
+                  <strong>Jatuh Tempo:</strong> <?= tgl_indo($trans->due_date) ?><br>
+                <?php endif; ?>
+              </p>
+
+              <div class="flex gap-2 mt-2">
+                <?php if (strpos($trans->transactions_id, 'IMB') === 0): ?>
+                  <a href="<?= site_url('payment/view_invoice/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
+                     class="bg-blue-500 text-white text-sm px-2 py-1 rounded-md hover:bg-blue-600">
+                     Lihat Invoice
+                  </a>
+                <?php elseif (strpos($trans->transactions_id, 'MBP') === 0 || strpos($trans->transactions_id, 'MBP1') === 0): ?>
+                  <a href="<?= site_url('payment/view_kwitansi/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
+                     class="bg-blue-500 text-white text-sm px-2 py-1 rounded-md hover:bg-blue-600">
+                     Lihat Kwitansi
+                  </a>
+                <?php endif; ?>
+
+                <a href="<?= site_url('payment/' . (strpos($trans->transactions_id, 'IMB') === 0 ? 'edit' : 'edit2') . '/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
+                   class="bg-green-500 text-white text-sm px-2 py-1 rounded-md hover:bg-green-600">
+                   Edit
                 </a>
-              <?php elseif (strpos($trans->transactions_id, 'MBP') === 0 || strpos($trans->transactions_id, 'MBP1') === 0): ?>
-                <a href="<?= site_url('payment/view_kwitansi/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
-                   class="bg-blue-500 text-white text-sm px-2 py-1 rounded-md hover:bg-blue-600">
-                   Lihat Kwitansi
+
+                <a href="<?= site_url('payment/delete/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
+                   onclick="return confirm('Apakah Anda yakin ingin menghapus transaksi ini?')"
+                   class="bg-red-500 text-white text-sm px-2 py-1 rounded-md hover:bg-red-600">
+                   Hapus
                 </a>
-              <?php endif; ?>
-              <a href="<?= site_url('payment/' . (strpos($trans->transactions_id, 'IMB') === 0 ? 'edit' : 'edit2') . '/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
-                 class="bg-green-500 text-white text-sm px-2 py-1 rounded-md hover:bg-green-600">
-                 Edit
-              </a>
-              <a href="<?= site_url('payment/delete/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
-                 onclick="return confirm('Apakah Anda yakin ingin menghapus transaksi ini?')"
-                 class="bg-red-500 text-white text-sm px-2 py-1 rounded-md hover:bg-red-600">
-                 Hapus
-              </a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    <?php endforeach; ?>
-  <?php endif; ?>
+      <?php endforeach; ?>
+    <?php endif; ?>
 
-  <?php if (!empty($has_invoice)): ?>
-    <a href="<?= site_url('payment/createkwt/' . $project->id_session . '/' . $has_invoice->transactions_id) ?>" 
-       class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
-       Tambah Kwitansi
-    </a>
-  <?php endif; ?>
-</div>
+    <!-- Tombol selalu tampil -->
+    <div class="flex gap-2 mt-4 flex-wrap">
+
+      <a href="<?= site_url('payment/createinv/' . $project->id_session) ?>" 
+         class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center">
+         Tambah Invoice
+      </a>
+
+      <?php if (!empty($has_invoice)): ?>
+        <a href="<?= site_url('payment/createkwt/' . $project->id_session . '/' . $has_invoice->transactions_id) ?>" 
+           class="bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-700 inline-block text-center">
+           Tambah Kwitansi
+        </a>
+      <?php endif; ?>
+
+    </div>
+
+  </div>
 
                 <!-- <a href="<?= site_url('project/edit/'. $project->id_session) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Edit Project</a>
                 <a href="javascript:history.back()" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a> -->
