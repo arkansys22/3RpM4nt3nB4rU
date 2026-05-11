@@ -160,17 +160,6 @@
                 </div>
             </div>
 
-            <div class="flex justify-end">
-                <div class="bg-emerald-50 border border-emerald-100 rounded-xl px-6 py-5 text-right">
-                    <p class="text-sm text-slate-500 mb-2">
-                        Total Tagihan
-                    </p>
-
-                    <h2 class="text-3xl font-bold text-emerald-600">
-                        Rp <?= number_format($payment->total_bill, 0, ',', '.') ?>
-                    </h2>
-                </div>
-            </div>
 
         </div>
 
