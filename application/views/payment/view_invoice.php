@@ -107,7 +107,7 @@
             <div class="text-right">
 
                 <h1 class="text-4xl font-bold text-slate-800 tracking-wide">
-                    INVOICE
+                    INVOICE 
                 </h1>
 
                 <div class="mt-6 bg-slate-50 rounded-xl p-5 min-w-[260px] border border-slate-200">
@@ -174,54 +174,62 @@
                             Rincian
                         </th>
 
+                        <th class="text-right px-6 py-4 text-sm font-medium w-52">
+                            Harga
+                        </th>
+
                         <th class="text-center px-6 py-4 text-sm font-medium w-28">
                             Qty
                         </th>
 
                         <th class="text-right px-6 py-4 text-sm font-medium w-52">
-                            Harga
-                        </th>
-
-                        <th class="text-right px-6 py-4 text-sm font-medium w-52">
-                            Jumlah
+                            Total
                         </th>
                     </tr>
                 </thead>
 
                 <tbody class="bg-white">
+                    <?php $subTotal=0; $diskonTotal = 0; ?>
+                            <?php 
+                              $penawaran = $this->db->get_where('penawaran_klien',['penawaran_klien_potensial_idsession'=>$payment->potensial_clients_id_session])->result(); ?>
+
+                            <?php foreach ($penawaran as $p): ?>
 
                     <tr class="border-b border-slate-200 align-top">
 
+                         
+                        <?php $namaproduk = $this->Crud_m->view_where('data_pricelist', array('data_pricelist_idsession'=> $p->penawaran_klien_idpricelist))->row(); ?>
+
                         <td class="px-6 py-5 text-sm text-slate-700 leading-7">
 
-                            <?php
-                            $details = str_replace(['[', ']', '"'], '', $payment->detail);
-                            $detailsArray = explode(',', $details);
+                            <?= $namaproduk->data_pricelist_judul ?><br><small><?= $p->penawaran_klien_deskripsi ?></small>                     
 
-                            foreach ($detailsArray as $item):
-                            ?>
+                        </td>
 
-                            <div class="mb-2 flex items-start">
-                                <span class="mr-2 text-emerald-600">•</span>
-                                <span><?= trim($item); ?></span>
-                            </div>
 
-                            <?php endforeach; ?>
+                        <td class="text-right px-6 py-5 text-sm text-slate-700">
+                            <?php if ($p->penawaran_klien_harga > 0): ?>
+                                <s>Rp <?= number_format($p->penawaran_klien_harga,0,',','.') ?></s><br>
+                            <?php endif; ?>
 
+                            <?php if ($p->penawaran_klien_hargapromo > 0): ?>
+                                Rp <?= number_format($p->penawaran_klien_hargapromo,0,',','.') ?>
+                            <?php endif; ?>                         
                         </td>
 
                         <td class="text-center px-6 py-5 text-sm text-slate-700">
-                            1 Sesi
-                        </td>
-
-                        <td class="text-right px-6 py-5 text-sm text-slate-700">
-                            Rp <?= number_format($payment->total_bill, 0, ',', '.') ?>
+                           <?= $p->penawaran_klien_qty ?>
                         </td>
 
                         <td class="text-right px-6 py-5 font-semibold text-slate-800">
-                            Rp <?= number_format($payment->total_bill, 0, ',', '.') ?>
+                            Rp <?= number_format($total,0,',','.') ?>
                         </td>
+
+                      
                     </tr>
+                        <?php $diskonTotal+=$p->penawaran_klien_diskon ?>
+                        <?php $subTotal+=$total ?>
+                      <?php endforeach; ?>
 
                 </tbody>
             </table>
@@ -254,6 +262,8 @@
                 <h4 class="font-semibold text-slate-800 mb-3">
                     Ketentuan Pembayaran
                 </h4>
+
+                <?= $payment->detail ?>
 
                 <div class="text-sm text-slate-500 leading-7">
                     <p>
