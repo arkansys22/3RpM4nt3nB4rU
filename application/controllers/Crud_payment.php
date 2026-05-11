@@ -137,12 +137,12 @@ class Crud_payment extends CI_Controller {
             'id_session'      => $id_session,
             'transactions_id' => 'IMB' . date('ymd', strtotime($this->input->post('date'))) . $this->input->post('number'),
             'total_bill'      => $this->input->post('total_bill'),
+            'kategori'      => $this->input->post('kategori'),
             'potensial_clients_id_session'      => $this->input->post('typeinvoice'),
             'total_paid'      => 0, // Set total_paid to 0
             'detail'          => json_encode($this->input->post('detail')),
             'date'            => $this->input->post('date'),
             'due_date'        => $this->input->post('due_date'),
-            'DP'              => $this->input->post('DP'),
             'created_by'      => $this->session->id_session,
         ];
         

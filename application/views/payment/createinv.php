@@ -67,14 +67,6 @@
 
                 <label class="block mb-2">Total</label>
                 <input type="text" id="total_bill" oninput="formatNumber(this)" name="total_bill" step="0.01" class="w-full px-4 py-2 border rounded mb-4" required>
-
-                <label class="block mb-2">Metode Pembayaran</label>
-                <select name="metodep" class="w-full px-4 py-2 border rounded mb-4" required>
-                    <option value="">Pilih</option>
-                    <option value="Default" <?= set_select('metodep', 'Default') ?>>Default</option>
-                    <option value="Custom" <?= set_select('metodep', 'Custom') ?>>Custom</option>
-                  </select>
-
                 <label class="block mb-2">Kategori</label>
                 <select name="kategori" class="w-full px-4 py-2 border rounded mb-4" required> 
                         <option value="-">-</option>
@@ -89,10 +81,17 @@
                         } ?>
                 </select>
 
+                <label class="block mb-2">Metode Pembayaran</label>
+                <select name="metodep" class="w-full px-4 py-2 border rounded mb-4" required>
+                    <option value="">Pilih</option>
+                    <option value="Default" <?= set_select('metodep', 'Default') ?>>Default</option>
+                    <option value="Custom" <?= set_select('metodep', 'Custom') ?>>Custom</option>
+                  </select>                
+
                 <!-- Section for detail -->
                 <div id="detail-section">
                     <div class="mb-2">
-                        <label class="block mb-2" for="detail">Detail</label>
+                        <label class="block mb-2" for="detail">Detail Pembayaran</label>
                         <textarea name="detail[]" class="w-full px-4 py-2 border rounded mb-4" required></textarea>
                     </div>
                 </div>
