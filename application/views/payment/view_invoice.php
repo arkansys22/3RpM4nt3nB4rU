@@ -136,7 +136,7 @@
         </div>
 
         <!-- Client Info -->
-        <div class="grid grid-cols-2 gap-8 mt-8 relative z-10">
+        <div class="grid md:grid-cols-2 grid-cols-1 gap-8 mt-8 relative z-10">
 
             <div>
                 <p class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">
@@ -187,67 +187,128 @@
                         </th>
                     </tr>
                 </thead>
-
-                <tbody class="bg-white">
-                    <?php $subTotal=0; $diskonTotal = 0; ?>
+                    <tbody class="bg-white">
                             <?php 
-                              $penawaran = $this->db->get_where('penawaran_klien',['penawaran_klien_potensial_idsession'=>$payment->potensial_clients_id_session])->result(); ?>
+                            $subTotal = 0;
+                            $diskonTotal = 0;
+
+                            $penawaran = $this->db
+                                ->get_where(
+                                    'penawaran_klien',
+                                    ['penawaran_klien_potensial_idsession' => $payment->potensial_clients_id_session]
+                                )
+                                ->result();
+                            ?>
 
                             <?php foreach ($penawaran as $p): ?>
 
-                    <tr class="border-b border-slate-200 align-top">
+                            <?php
 
-                         
-                        <?php $namaproduk = $this->Crud_m->view_where('data_pricelist', array('data_pricelist_idsession'=> $p->penawaran_klien_idpricelist))->row(); ?>
+                            $namaproduk = $this->Crud_m
+                                ->view_where(
+                                    'data_pricelist',
+                                    [
+                                        'data_pricelist_idsession' => $p->penawaran_klien_idpricelist
+                                    ]
+                                )
+                                ->row();
 
-                        <td class="px-6 py-5 text-sm text-slate-700 leading-7">
+                            $harga = (float)$p->penawaran_klien_harga;
+                            $hargaPromo = (float)$p->penawaran_klien_hargapromo;
+                            $qty = (float)$p->penawaran_klien_qty;
+                            $diskon = (float)$p->penawaran_klien_diskon;
 
-                            <?= $namaproduk->data_pricelist_judul ?><br><small><?= $p->penawaran_klien_deskripsi ?></small>                     
+                            // gunakan harga promo jika ada
+                            $hargaFinal = $hargaPromo > 0 ? $hargaPromo : $harga;
 
-                        </td>
+                            // hitung total
+                            $total = ($hargaFinal * $qty) - $diskon;
 
+                            // subtotal
+                            $subTotal += $total;
+                            $diskonTotal += $diskon;
+                            ?>
 
-                        <td class="text-right px-6 py-5 text-sm text-slate-700">
-                            <?php if ($p->penawaran_klien_harga > 0): ?>
-                                <s>Rp <?= number_format($p->penawaran_klien_harga,0,',','.') ?></s><br>
-                            <?php endif; ?>
+                            <tr class="border-b border-slate-200 align-top hover:bg-slate-50">
 
-                            <?php if ($p->penawaran_klien_hargapromo > 0): ?>
-                                Rp <?= number_format($p->penawaran_klien_hargapromo,0,',','.') ?>
-                            <?php endif; ?>                         
-                        </td>
+                                <td class="px-6 py-5 text-sm text-slate-700 leading-7">
 
-                        <td class="text-center px-6 py-5 text-sm text-slate-700">
-                           <?= $p->penawaran_klien_qty ?>
-                        </td>
+                                    <div class="font-medium text-slate-800">
+                                        <?= $namaproduk->data_pricelist_judul ?? 'Produk Tidak Ditemukan' ?>
+                                    </div>
 
-                        <td class="text-right px-6 py-5 font-semibold text-slate-800">
-                            Rp <?= number_format($total,0,',','.') ?>
-                        </td>
+                                    <?php if (!empty($p->penawaran_klien_deskripsi)): ?>
+                                        <small class="text-slate-500">
+                                            <?= $p->penawaran_klien_deskripsi ?>
+                                        </small>
+                                    <?php endif; ?>
 
-                      
-                    </tr>
-                        <?php $diskonTotal+=$p->penawaran_klien_diskon ?>
-                        <?php $subTotal+=$total ?>
-                      <?php endforeach; ?>
+                                </td>
 
-                </tbody>
+                                <td class="text-right px-6 py-5 text-sm text-slate-700">
+
+                                    <?php if ($harga > 0 && $hargaPromo > 0): ?>
+                                        <div class="text-slate-400 text-xs">
+                                            <s>Rp <?= number_format($harga,0,',','.') ?></s>
+                                        </div>
+                                    <?php endif; ?>
+
+                                    <div class="font-medium">
+                                        Rp <?= number_format($hargaFinal,0,',','.') ?>
+                                    </div>
+
+                                </td>
+
+                                <td class="text-center px-6 py-5 text-sm text-slate-700">
+                                    <?= $qty ?>
+                                </td>
+
+                                <td class="text-right px-6 py-5 font-semibold text-slate-800">
+                                    Rp <?= number_format($total,0,',','.') ?>
+                                </td>
+
+                            </tr>
+
+                            <?php endforeach; ?>
+                    </tbody>
             </table>
 
         </div>
 
         <!-- Total -->
-        <div class="flex justify-end mt-8 relative z-10">
+        <div class="w-full max-w-md bg-slate-50 rounded-2xl border border-slate-200 p-6">
 
-            <div class="w-full max-w-md bg-slate-50 rounded-2xl border border-slate-200 p-6">
+            <div class="space-y-3">
 
-                <div class="flex justify-between items-center text-lg">
-                    <span class="font-medium text-slate-600">
+                <div class="flex justify-between text-sm">
+                    <span class="text-slate-500">
+                        Sub Total
+                    </span>
+
+                    <span class="font-medium">
+                        Rp <?= number_format($subTotal,0,',','.') ?>
+                    </span>
+                </div>
+
+                <?php if ($diskonTotal > 0): ?>
+                <div class="flex justify-between text-sm">
+                    <span class="text-slate-500">
+                        Total Diskon
+                    </span>
+
+                    <span class="text-red-500 font-medium">
+                        - Rp <?= number_format($diskonTotal,0,',','.') ?>
+                    </span>
+                </div>
+                <?php endif; ?>
+
+                <div class="border-t pt-4 flex justify-between items-center">
+                    <span class="font-semibold text-slate-700">
                         Grand Total
                     </span>
 
                     <span class="font-bold text-2xl text-slate-800">
-                        Rp <?= number_format($payment->total_bill, 0, ',', '.') ?>
+                        Rp <?= number_format($payment->total_bill,0,',','.') ?>
                     </span>
                 </div>
 
@@ -256,14 +317,24 @@
         </div>
 
         <!-- Terms & Payment -->
-        <div class="grid grid-cols-2 gap-8 mt-10 relative z-10">
+        <div class="grid md:grid-cols-2 grid-cols-1 gap-8 mt-10 relative z-10">
 
             <div>
                 <h4 class="font-semibold text-slate-800 mb-3">
                     Ketentuan Pembayaran
                 </h4>
 
-                <?= $payment->detail ?>
+                <?php
+                $details = json_decode($payment->detail, true);
+                ?>
+
+                <?php if (!empty($details)): ?>
+                    <ul class="list-disc ml-5 text-sm text-slate-500 leading-7 mb-4">
+                        <?php foreach ($details as $item): ?>
+                            <li><?= $item ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
 
                 <div class="text-sm text-slate-500 leading-7">
                     <p>
@@ -275,7 +346,7 @@
                     </p>
 
                     <p>
-                        Pelunasan dilakukan maksimal
+                        Pelunasan maksimal
                         <strong>H-7</strong>
                         sebelum acara berlangsung.
                     </p>
