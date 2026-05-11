@@ -82,22 +82,38 @@
                 </select>
 
                 <label class="block mb-2">Metode Pembayaran</label>
-                <select name="metodep" class="w-full px-4 py-2 border rounded mb-4" required>
+                <select id= "metodep" name="metodep" class="w-full px-4 py-2 border rounded mb-4" required>
                     <option value="">Pilih</option>
                     <option value="Default" <?= set_select('metodep', 'Default') ?>>Default</option>
                     <option value="Custom" <?= set_select('metodep', 'Custom') ?>>Custom</option>
                   </select>                
 
-                <!-- Section for detail -->
-                <div id="detail-section">
-                    <div class="mb-2">
-                        <label class="block mb-2" for="detail">Detail Pembayaran</label>
-                        <textarea name="detail[]" class="w-full px-4 py-2 border rounded mb-4" required></textarea>
+               <!-- Section for detail -->
+                <div id="detail-wrapper" style="display: none;">
+                    
+                    <div id="detail-section">
+                        <div class="mb-2">
+                            <label class="block mb-2" for="detail">
+                                Detail Pembayaran
+                            </label>
+
+                            <textarea 
+                                name="detail[]" 
+                                class="detail-input w-full px-4 py-2 border rounded mb-4">
+                            </textarea>
+                        </div>
                     </div>
+
+                    <!-- Button to add more detail -->
+                    <button 
+                        type="button" 
+                        id="add-detail-btn" 
+                        class="bg-blue-500 text-white px-4 py-2 rounded mb-4">
+                        Tambah Detail
+                    </button>
+
                 </div>
 
-                <!-- Button to add more detail -->
-                <button type="button" id="add-detail-btn" class="bg-blue-500 text-white px-4 py-2 rounded mb-4">Tambah Detail</button>
 
                 <div class="flex flex-col sm:flex-row justify-end">
                   <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded w-full hover:bg-green-600 sm:w-24 mb-2 sm:mb-0 text-center">Simpan</button>
@@ -191,6 +207,52 @@ document.getElementById('typeinvoice').addEventListener('change', function () {
         totalBillInput.value = '';
 
     }
+});
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const metodeSelect = document.getElementById('metodep');
+    const detailWrapper = document.getElementById('detail-wrapper');
+    const detailInputs = document.querySelectorAll('.detail-input');
+
+    function toggleDetailSection() {
+
+        const metode = metodeSelect.value;
+
+        // Jika Custom → tampil
+        if (metode === 'Custom') {
+
+            detailWrapper.style.display = 'block';
+
+            document
+                .querySelectorAll('.detail-input')
+                .forEach(input => {
+                    input.required = true;
+                });
+
+        } 
+        // Jika Default → sembunyikan
+        else {
+
+            detailWrapper.style.display = 'none';
+
+            document
+                .querySelectorAll('.detail-input')
+                .forEach(input => {
+                    input.required = false;
+                    input.value = '';
+                });
+        }
+    }
+
+    // jalankan saat select berubah
+    metodeSelect.addEventListener('change', toggleDetailSection);
+
+    // jalankan saat page pertama load
+    toggleDetailSection();
 });
 </script>
 </body>
