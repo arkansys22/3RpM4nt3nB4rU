@@ -115,6 +115,11 @@ class Crud_payment extends CI_Controller {
 
     public function store() {
         $id_session = $this->input->post('id_session');
+        $total_bill = str_replace('.', '', $this->input->post('total_bill'));
+        $kategori = $this->input->post('kategori');
+        $transaction_id =  'IMB' . date('ymd', strtotime($this->input->post('date'))) . $this->input->post('number');
+        $tanggal = $this->input->post('date');
+
 
         if ($this->agent->is_browser()) // Agent untuk fitur di log activity
         {
@@ -135,13 +140,13 @@ class Crud_payment extends CI_Controller {
 
         $data = [
             'id_session'      => $id_session,
-            'transactions_id' => 'IMB' . date('ymd', strtotime($this->input->post('date'))) . $this->input->post('number'),
-            'total_bill'      => $this->input->post('total_bill'),
-            'kategori'      => $this->input->post('kategori'),
+            'transactions_id' => $transaction_id,
+            'total_bill'      => $total_bill,
+            'kategori'      => $kategori,
             'potensial_clients_id_session'      => $this->input->post('typeinvoice'),
             'total_paid'      => 0, // Set total_paid to 0
             'detail'          => json_encode($this->input->post('detail')),
-            'date'            => $this->input->post('date'),
+            'date'            => $tanggal,
             'due_date'        => $this->input->post('due_date'),
             'created_by'      => $this->session->id_session,
         ];
@@ -166,6 +171,22 @@ class Crud_payment extends CI_Controller {
         );
 
         $this->Payment_model->insert_log_activity($data_log);
+
+
+
+
+         $data_accounting = array(
+
+            'accounting_id_session' => $id_session,
+            'accounting_nomer_kategori' => $kategori,
+            'accounting_nominal' => $nominal,
+            'accounting_tanggal' => $tanggal,
+            'accounting_nama_transaksi'=> $transaction_id
+            
+        );
+
+        $this->project_model->insert_accounting($id_session,$data_accounting);
+
 
         $this->session->set_flashdata('Success', 'Invoice berhasil dibuat');
 
