@@ -1,3 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice</title>
+    <link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .background-image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            opacity: 0.1;
+        }
+        @media print {
+        .no-print {
+            display: none !important; /* Menyembunyikan elemen dengan class 'no-print' */
+        }
+        @page {
+            margin: 0; /* Menghapus margin default browser */
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .print-wrapper {
+            width: 80%;
+            margin: auto;
+        }
+        }
+    </style>
+</head>
 <body class="bg-slate-100 print:bg-white">
 
 <style>
@@ -267,3 +305,4 @@
 </div>
 
 </body>
+</html>
