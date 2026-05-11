@@ -42,7 +42,7 @@
                 <label class="block mb-2">Jenis Invoice</label>
                 <select id="typeinvoice" name="typeinvoice" class="w-full px-4 py-2 border rounded mb-4" required>
     
-                    <option value="">-Pilih Asal Invoice-</option>
+                    <option value="">- Pilih Asal Invoice -</option>
 
                     <option value="<?= $project->potensial_clients_id_session ?>"
                         <?= set_select('typeinvoice', $project->potensial_clients_id_session) ?>>
@@ -69,7 +69,7 @@
                 <input type="text" id="total_bill" oninput="formatNumber(this)" name="total_bill" step="0.01" class="w-full px-4 py-2 border rounded mb-4" required>
                 <label class="block mb-2">Kategori</label>
                 <select name="kategori" class="w-full px-4 py-2 border rounded mb-4" required> 
-                        <option value="-">-</option>
+                        <option value="-">- Pilih Kategori -</option>
                         <?php foreach ($kategori as $p) {
                               if (empty($kategori)){
                                 echo"
@@ -83,7 +83,7 @@
 
                 <label class="block mb-2">Metode Pembayaran</label>
                 <select id= "metodep" name="metodep" class="w-full px-4 py-2 border rounded mb-4" required>
-                    <option value="">Pilih</option>
+                    <option value="">- Pilih -</option>
                     <option value="Default" <?= set_select('metodep', 'Default') ?>>Default</option>
                     <option value="Custom" <?= set_select('metodep', 'Custom') ?>>Custom</option>
                   </select>                
