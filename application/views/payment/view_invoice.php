@@ -1,168 +1,269 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice</title>
-    <link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .background-image {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: -1;
-            opacity: 0.1;
-        }
-        @media print {
+<body class="bg-slate-100 print:bg-white">
+
+<style>
+    @media print {
         .no-print {
-            display: none !important; /* Menyembunyikan elemen dengan class 'no-print' */
+            display: none !important;
         }
-        @page {
-            margin: 0; /* Menghapus margin default browser */
-        }
+
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            background: white !important;
         }
-        .print-wrapper {
-            width: 80%;
-            margin: auto;
-        }
-        }
-    </style>
-</head>
-<body class="bg-gray-100">
 
-<div class="print-wrapper">
-    <div class="max-w-100% mx-auto p-8 relative"> <!-- Added relative positioning here -->
-        <div class="flex justify-between mb-8">
-            <!-- Company Information -->
-            <div class="w-1/2">
-                <img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-02.png') ?>" alt="Logo" style="width: 220px; margin-left: -12px;"> <!-- Adjust the width to match the text -->
-                <p class="text-sm"><strong>MANTENBARU ORGANIZER</strong></p>
-                <p class="text-xs">Teras Country Blok H No 38, Tonjong,</p>
-                <p class="text-xs">Tajurhalang, Kab. Bogor</p>
-                <p class="text-xs">Telp / WA : 0812-9292-9396</p>
-                <p class="text-xs">Web : www.mantenbaru.com</p>
+        .invoice-container {
+            box-shadow: none !important;
+            margin: 0 !important;
+            border-radius: 0 !important;
+        }
+
+        @page {
+            size: A4;
+            margin: 12mm;
+        }
+    }
+</style>
+
+<div class="max-w-5xl mx-auto py-8 px-4">
+
+    <!-- Action Button -->
+    <div class="flex justify-end gap-3 mb-5 no-print">
+        <button onclick="window.print()"
+            class="bg-slate-800 hover:bg-black text-white px-5 py-2 rounded-lg transition">
+            Print Invoice
+        </button>
+
+        <a href="<?= base_url('project/lihat/' . $project->id_session) ?>"
+            class="bg-slate-500 hover:bg-slate-600 text-white px-5 py-2 rounded-lg transition">
+            Kembali
+        </a>
+    </div>
+
+    <!-- Invoice -->
+    <div class="invoice-container bg-white rounded-2xl shadow-xl p-10 relative overflow-hidden">
+
+        <!-- Watermark -->
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03]">
+            <img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-03.png') ?>"
+                class="w-[420px]">
+        </div>
+
+        <!-- Header -->
+        <div class="flex justify-between items-start border-b border-slate-200 pb-8 relative z-10">
+
+            <div>
+                <img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-02.png') ?>"
+                    class="w-56 mb-3">
+
+                <h2 class="font-semibold text-slate-800 text-sm tracking-wide">
+                    MANTENBARU ORGANIZER
+                </h2>
+
+                <div class="text-sm text-slate-500 leading-6 mt-2">
+                    <p>Teras Country Blok H No 38, Tonjong</p>
+                    <p>Tajurhalang, Kabupaten Bogor</p>
+                    <p>0812-9292-9396</p>
+                    <p>www.mantenbaru.com</p>
+                </div>
             </div>
 
-            <!-- Invoice Info -->
-            <div class="w-60 text-center"><br>
-                <p class="text-sm mb-10"><strong>TAGIHAN</strong></p>
-                <table class="table-auto w-full border border-black mx-auto">
-                    <tr>
-                        <td class="border border-black text-xs text-center"><strong>TAGIHAN</strong></td>
-                        <td class="border border-black text-xs text-center"><strong>TANGGAL</strong></td>
-                        <td class="border border-black text-xs text-center"><strong>JATUH TEMPO</strong></td>
-                    </tr>
-                    <tr>
-                        <td class="border border-black text-xs text-center"><?= $payment->transactions_id; ?></td>
-                        <td class="border border-black text-xs text-center"><?= date('d-M-y', strtotime($payment->date)); ?></td>
-                        <td class="border border-black text-xs text-center whitespace-nowrap"><?= date('d-M-y', strtotime($payment->due_date)); ?></td>
-                    </tr>
-                </table>
+            <div class="text-right">
+
+                <h1 class="text-4xl font-bold text-slate-800 tracking-wide">
+                    INVOICE
+                </h1>
+
+                <div class="mt-6 bg-slate-50 rounded-xl p-5 min-w-[260px] border border-slate-200">
+                    <div class="flex justify-between text-sm py-1">
+                        <span class="text-slate-500">Invoice No</span>
+                        <span class="font-semibold">
+                            <?= $payment->transactions_id; ?>
+                        </span>
+                    </div>
+
+                    <div class="flex justify-between text-sm py-1">
+                        <span class="text-slate-500">Tanggal</span>
+                        <span>
+                            <?= date('d M Y', strtotime($payment->date)); ?>
+                        </span>
+                    </div>
+
+                    <div class="flex justify-between text-sm py-1">
+                        <span class="text-slate-500">Jatuh Tempo</span>
+                        <span>
+                            <?= date('d M Y', strtotime($payment->due_date)); ?>
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Customer Information -->
-        <div class="mb-6">
-            <p class="text-sm"><strong>PEMBAYARAN KEPADA</strong></p>
-            <p class="text-xs"><?= $project->client_name; ?></p> <!-- Menampilkan nama_client -->
-            <p class="text-xs">Untuk acara yang rencana berlokasi di</p>
-            <p class="text-xs"><?= $project->location; ?></p>
-            <p class="text-xs">Waktu acara :</p>
-            <p class="text-xs"><?= date('d/m/Y', strtotime($project->event_date)) ?></p>
+        <!-- Client Info -->
+        <div class="grid grid-cols-2 gap-8 mt-8 relative z-10">
+
+            <div>
+                <p class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-3">
+                    Ditagihkan Kepada
+                </p>
+
+                <h3 class="text-xl font-semibold text-slate-800">
+                    <?= $project->client_name; ?>
+                </h3>
+
+                <div class="text-sm text-slate-500 mt-2 leading-7">
+                    <p>Lokasi Acara:</p>
+                    <p class="text-slate-700 font-medium">
+                        <?= $project->location; ?>
+                    </p>
+
+                    <p class="mt-2">Tanggal Acara:</p>
+                    <p class="text-slate-700 font-medium">
+                        <?= date('d F Y', strtotime($project->event_date)) ?>
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex justify-end">
+                <div class="bg-emerald-50 border border-emerald-100 rounded-xl px-6 py-5 text-right">
+                    <p class="text-sm text-slate-500 mb-2">
+                        Total Tagihan
+                    </p>
+
+                    <h2 class="text-3xl font-bold text-emerald-600">
+                        Rp <?= number_format($payment->total_bill, 0, ',', '.') ?>
+                    </h2>
+                </div>
+            </div>
+
         </div>
 
-        <!-- Payment Details -->
-        <div class="mb-6">
-            <table class="table-auto w-full border border-black">
-                <thead>
+        <!-- Table -->
+        <div class="mt-10 relative z-10 overflow-hidden rounded-xl border border-slate-200">
+
+            <table class="w-full">
+
+                <thead class="bg-slate-800 text-white">
                     <tr>
-                        <th class="border border-black p-2 w-3/5 text-sm">RINCIAN</th>
-                        <th class="border border-black p-2 w-1/5 text-sm">QTY</th>
-                        <th class="border border-black p-2 text-sm" style="width: auto;">HARGA SATUAN</th>
-                        <th class="border border-black p-2 text-sm" style="width: auto;">JUMLAH</th>
+                        <th class="text-left px-6 py-4 text-sm font-medium">
+                            Rincian
+                        </th>
+
+                        <th class="text-center px-6 py-4 text-sm font-medium w-28">
+                            Qty
+                        </th>
+
+                        <th class="text-right px-6 py-4 text-sm font-medium w-52">
+                            Harga
+                        </th>
+
+                        <th class="text-right px-6 py-4 text-sm font-medium w-52">
+                            Jumlah
+                        </th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td class="border border-black p-2 text-justify text-xs">
-                            <?php 
-                            $details = str_replace(['[', ']', '"'], '', $payment->detail); // Remove brackets and quotes
-                            $detailsArray = explode(',', $details); // Split the cleaned details by comma
-                            foreach ($detailsArray as $item): ?>
-                                <div><?= trim($item); ?></div> <!-- Display each item directly in a new line -->
+
+                <tbody class="bg-white">
+
+                    <tr class="border-b border-slate-200 align-top">
+
+                        <td class="px-6 py-5 text-sm text-slate-700 leading-7">
+
+                            <?php
+                            $details = str_replace(['[', ']', '"'], '', $payment->detail);
+                            $detailsArray = explode(',', $details);
+
+                            foreach ($detailsArray as $item):
+                            ?>
+
+                            <div class="mb-2 flex items-start">
+                                <span class="mr-2 text-emerald-600">•</span>
+                                <span><?= trim($item); ?></span>
+                            </div>
+
                             <?php endforeach; ?>
+
                         </td>
-                        <td class="border border-black p-2 text-center text-xs">1 Sesi</td>
-                        <td class="border border-black p-2 text-center text-xs">
-                            <div class="flex justify-center items-center h-full">
-                                <span class="mr-1">Rp</span>
-                                <span><?= number_format($payment->total_bill, 0, ',', '.') ?></span>
-                            </div>
+
+                        <td class="text-center px-6 py-5 text-sm text-slate-700">
+                            1 Sesi
                         </td>
-                        <td class="border border-black p-2 text-center text-xs">
-                            <div class="flex justify-center items-center h-full">
-                                <span class="mr-1">Rp</span>
-                                <span><?= number_format($payment->total_bill, 0, ',', '.') ?></span>
-                            </div>
+
+                        <td class="text-right px-6 py-5 text-sm text-slate-700">
+                            Rp <?= number_format($payment->total_bill, 0, ',', '.') ?>
                         </td>
-                    </tr>
-                    <tr>
-                        <th colspan="3" class="border border-black text-right text-sm p-1">
-                            <strong>GRAND TOTAL</strong>
-                        </th>
-                        <td class="border border-black p-2 text-center text-sm">
-                            <div class="flex justify-center items-center h-full">
-                                <span class="mr-1"><strong>Rp</strong></span>
-                                <strong>
-                                    <?php 
-                                    $grandTotal = 0;
-                                    $grandTotal += $payment->total_bill; // Add total_bill to grand total
-                                    echo number_format($grandTotal, 0, ',', '.'); 
-                                    ?>
-                                </strong></strong>
-                            </div>
+
+                        <td class="text-right px-6 py-5 font-semibold text-slate-800">
+                            Rp <?= number_format($payment->total_bill, 0, ',', '.') ?>
                         </td>
                     </tr>
+
                 </tbody>
             </table>
+
         </div>
 
-        <!-- Payment Terms -->
-        <div class="mb-6">
-            <p class="text-xs">Ketentuan Pembayaran :</p>
-            <p class="text-xs">Syarat Pembayaran adalah DP sebesar Rp <?= number_format($payment->DP, 0, ',', '.') ?></p>
-            <p class="text-xs">sebagai booking tanggal dan pelunasan H-7</p>
-            <p class="text-xs">sebelum acara.</p>
-        </div>
+        <!-- Total -->
+        <div class="flex justify-end mt-8 relative z-10">
 
-        <!-- Grand Total -->
-        <div class="mb-6">
-            <p class="text-xs">Pembayaran :</p>
-            <p class="text-xs">No.rek 167-2468421</p>
-            <p class="text-xs">Bank Central Asia</p>
-            <p class="text-xs">a/n Nadi Sukses Berkarya PT</p>
-        </div>
+            <div class="w-full max-w-md bg-slate-50 rounded-2xl border border-slate-200 p-6">
 
-        <img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-03.png') ?>" alt="Background" class="background-image"> <!-- Add background image -->
-        <div class="mt-6 flex justify-between no-print">
-        <div class="flex">
-            <button onclick="window.print()" 
-                    class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-2">
-                Print
-            </button>
-        </div>
-        <a href="<?= base_url('project/lihat/' . $project->id_session) ?>" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a>
+                <div class="flex justify-between items-center text-lg">
+                    <span class="font-medium text-slate-600">
+                        Grand Total
+                    </span>
+
+                    <span class="font-bold text-2xl text-slate-800">
+                        Rp <?= number_format($payment->total_bill, 0, ',', '.') ?>
+                    </span>
+                </div>
+
             </div>
+
+        </div>
+
+        <!-- Terms & Payment -->
+        <div class="grid grid-cols-2 gap-8 mt-10 relative z-10">
+
+            <div>
+                <h4 class="font-semibold text-slate-800 mb-3">
+                    Ketentuan Pembayaran
+                </h4>
+
+                <div class="text-sm text-slate-500 leading-7">
+                    <p>
+                        Pembayaran DP sebesar
+                        <strong>
+                            Rp <?= number_format($payment->DP, 0, ',', '.') ?>
+                        </strong>
+                        diperlukan untuk booking tanggal acara.
+                    </p>
+
+                    <p>
+                        Pelunasan dilakukan maksimal
+                        <strong>H-7</strong>
+                        sebelum acara berlangsung.
+                    </p>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="font-semibold text-slate-800 mb-3">
+                    Informasi Pembayaran
+                </h4>
+
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 text-sm leading-7">
+                    <p class="font-semibold text-slate-700">
+                        PT Nadi Sukses Berkarya
+                    </p>
+
+                    <p>Bank Central Asia (BCA)</p>
+                    <p>No. Rek: <strong>167-2468421</strong></p>
+                </div>
+            </div>
+
+        </div>
+
     </div>
+
 </div>
 
 </body>
-</html>
