@@ -45,11 +45,71 @@
             <label for="detail" class="block mb-2 font-medium">Detail:</label>
             <textarea name="detail" class="w-full px-4 py-2 border rounded mb-4"><?= htmlspecialchars(json_decode($payment->detail)) ?></textarea>
 
+
+            <label class="block mb-2">Pembayaran ke</label>
+                <select id="metodep" name="metodep" class="w-full px-4 py-2 border rounded mb-4" required>
+                    <option value="">- Pilih -</option>
+
+                    <option value="Pembayaran Kesatu"
+                        <?= ($payment->metodep == 'Pembayaran Kesatu') ? 'selected' : '' ?>>
+                        Pembayaran Kesatu
+                    </option>
+                    <option value="Pembayaran Kedua"
+                        <?= ($payment->metodep == 'Pembayaran Kedua') ? 'selected' : '' ?>>
+                        Pembayaran Kedua
+                    </option>
+                    <option value="Pembayaran Ketiga"
+                        <?= ($payment->metodep == 'Pembayaran Ketiga') ? 'selected' : '' ?>>
+                        Pembayaran Ketiga
+                    </option>
+                    <option value="Pembayaran Keempat"
+                        <?= ($payment->metodep == 'Pembayaran Keempat') ? 'selected' : '' ?>>
+                        Pembayaran Keempat
+                    </option>
+                    <option value="Pembayaran Kelima"
+                        <?= ($payment->metodep == 'Pembayaran Kelima') ? 'selected' : '' ?>>
+                        Pembayaran Kelima
+                    </option>
+                    <option value="Pembayaran Keenam"
+                        <?= ($payment->metodep == 'Pembayaran Keenam') ? 'selected' : '' ?>>
+                        Pembayaran Keenam
+                    </option>
+                    <option value="Pembayaran Ketujuh"
+                        <?= ($payment->metodep == 'Pembayaran Ketujuh') ? 'selected' : '' ?>>
+                        Pembayaran Ketujuh
+                    </option>
+                    <option value="Pembayaran Kedelapan"
+                        <?= ($payment->metodep == 'Pembayaran Kedelapan') ? 'selected' : '' ?>>
+                        Pembayaran Kedelapan
+                    </option>
+                </select>
             <label for="status" class="block mb-2 font-medium">Status:</label>
             <select name="status" id="status" class="w-full px-4 py-2 border rounded mb-4" required>
                 <option value="Pending" <?= $payment->status === 'Pending' ? 'selected' : '' ?>>Pending</option>
                 <option value="Paid" <?= $payment->status === 'Paid' ? 'selected' : '' ?>>Paid</option>
             </select>
+
+            <label class="block mb-2">Kategori</label>
+
+                <select 
+                    name="kategori" 
+                    class="w-full px-4 py-2 border rounded mb-4" 
+                    required
+                >
+                    <option value="">- Pilih Kategori -</option>
+
+                    <?php foreach ($kategori as $p): ?>
+
+                        <option 
+                            value="<?= $p['nomer_kategori'] ?>"
+                            <?= ($payment->kategori == $p['nomer_kategori']) ? 'selected' : '' ?>
+                        >
+                            <?= $p['nomer_kategori'] ?> | <?= $p['nama_kategori'] ?>
+                        </option>
+
+                    <?php endforeach; ?>
+
+                </select>
 
             <div class="flex flex-col sm:flex-row justify-end">
               <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded w-full hover:bg-blue-600 sm:w-24 mb-2 sm:mb-0 text-center">Update</button>
