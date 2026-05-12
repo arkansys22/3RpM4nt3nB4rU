@@ -36,37 +36,82 @@
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
               <h1 class="text-2xl font-bold mb-4">Edit Invoice <?= $payment->transactions_id ?></h1>
               <form action="<?= site_url('payment/update/' . $payment->id_session . '/' . ($payment->transactions_id ?? '')) ?>" method="post" class="bg-white p-6 shadow-md rounded">
-                <label for="total_bill" class="block mb-2 font-medium">Total Tagihan:</label>
-                <input type="text" id="total_bill" name="total_bill" value="<?= number_format($payment->total_bill, 0, ',', '.') ?>" class="w-full px-4 py-2 border rounded mb-4" required>
 
-                <label for="date" class="block mb-2 font-medium">Tanggal:</label>
+                <label class="block mb-2">Jenis Invoice</label>
+                <select id="typeinvoice" name="typeinvoice" class="w-full px-4 py-2 border rounded mb-4" required>
+    
+                    <option value="">- Pilih Asal Invoice -</option>
+
+                    <option value="<?= $project->potensial_clients_id_session ?>"
+                        <?= set_select('typeinvoice', $project->potensial_clients_id_session) ?>>
+                        Dari Proposal
+                    </option>
+
+                    <option value="Penambahan"
+                        <?= set_select('typeinvoice', 'Penambahan') ?>>
+                        Penambahan
+                    </option>
+
+                </select>
+
+                <label for="date" class="block mb-2 font-medium">Tanggal Pembuatan</label>
                 <input type="date" name="date" value="<?= $payment->date ?>" class="w-full px-4 py-2 border rounded mb-4" required>
 
-                <label for="due_date" class="block mb-2 font-medium">Jatuh Tempo:</label>
+                <label for="due_date" class="block mb-2 font-medium">Jatuh Tempo</label>
                 <input type="date" name="due_date" value="<?= $payment->due_date ?>" class="w-full px-4 py-2 border rounded mb-4" required>
 
-                <label for="DP" class="block mb-2 font-medium">DP:</label>
-                <input type="text" id="DP" name="DP" value="<?= number_format($payment->DP ?? 0, 0, ',', '.') ?>" class="w-full px-4 py-2 border rounded mb-4" required oninput="formatNumber(this)">
+                <label for="total_bill" class="block mb-2 font-medium">Total Tagihan:</label>
+                <input type="text" id="total_bill" name="total_bill" oninput="formatNumber(this)" value="<?= number_format($payment->total_bill, 0, ',', '.') ?>" class="w-full px-4 py-2 border rounded mb-4" required>
 
-                <label for="detail" class="block mb-2 font-medium">Detail:</label>
-                <div id="detail-section">
-                    <?php 
-                    $details = json_decode($payment->detail, true); 
-                    if (!empty($details)):
-                        foreach ($details as $detail): ?>
-                            <div class="mb-2">
-                                <textarea name="detail[]" class="w-full px-4 py-2 border rounded mb-4" required><?= htmlspecialchars($detail) ?></textarea>
-                            </div>
-                        <?php endforeach; 
-                    else: ?>
+                <label class="block mb-2">Kategori</label>
+                <select name="kategori" class="w-full px-4 py-2 border rounded mb-4" required> 
+                        <option value="-">- Pilih Kategori -</option>
+                        <?php foreach ($kategori as $p) {
+                              if (empty($kategori)){
+                                echo"
+                                <option value=''>-</option>
+                                <option value='$p[nomer_kategori]'>$p[nomer_kategori] - $p[nama_kategori]</option> ";
+                              }else{
+                                echo"<option value='$p[nomer_kategori]'>$p[nomer_kategori] | $p[nama_kategori]</option>";
+                           }
+                        } ?>
+                </select>
+
+
+
+                <label class="block mb-2">Metode Pembayaran</label>
+                <select id= "metodep" name="metodep" class="w-full px-4 py-2 border rounded mb-4" required>
+                    <option value="">- Pilih -</option>
+                    <option value="Default" <?= set_select('metodep', 'Default') ?>>Default</option>
+                    <option value="Custom" <?= set_select('metodep', 'Custom') ?>>Custom</option>
+                  </select>  
+
+
+                <!-- Section for detail -->
+                <div id="detail-wrapper" style="display: none;">
+                    
+                    <div id="detail-section">
                         <div class="mb-2">
-                            <textarea name="detail[]" class="w-full px-4 py-2 border rounded mb-4" required></textarea>
-                        </div>
-                    <?php endif; ?>
-                </div>
+                            <label class="block mb-2" for="detail">
+                                Detail Pembayaran
+                            </label>
 
-                <!-- Tombol untuk menambah detail -->
-                <button type="button" id="add-detail-btn" class="bg-gray-500 text-white px-4 py-2 rounded mb-4">Tambah Detail</button>
+                            <textarea 
+                                name="detail[]" 
+                                class="detail-input w-full px-4 py-2 border rounded mb-4">
+                            </textarea>
+                        </div>
+                    </div>
+
+                    <!-- Button to add more detail -->
+                    <button 
+                        type="button" 
+                        id="add-detail-btn" 
+                        class="bg-blue-500 text-white px-4 py-2 rounded mb-4">
+                        Tambah Detail
+                    </button>
+
+                </div>
 
                 <div class="flex flex-col sm:flex-row justify-end">
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded w-full hover:bg-blue-600 sm:w-24 mb-2 sm:mb-0 text-center">Update</button>

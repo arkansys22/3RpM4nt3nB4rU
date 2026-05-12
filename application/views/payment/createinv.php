@@ -67,6 +67,7 @@
 
                 <label class="block mb-2">Total</label>
                 <input type="text" id="total_bill" oninput="formatNumber(this)" name="total_bill" step="0.01" class="w-full px-4 py-2 border rounded mb-4" required>
+                
                 <label class="block mb-2">Kategori</label>
                 <select name="kategori" class="w-full px-4 py-2 border rounded mb-4" required> 
                         <option value="-">- Pilih Kategori -</option>
@@ -89,27 +90,40 @@
                   </select>                
 
                <!-- Section for detail -->
-                <div id="detail-wrapper" style="display: none;">
-                    
-                    <div id="detail-section">
-                        <div class="mb-2">
-                            <label class="block mb-2" for="detail">
-                                Detail Pembayaran
-                            </label>
+                <!-- Detail Pembayaran -->
+                <div id="detail-wrapper" class="hidden">
 
-                            <textarea 
-                                name="detail[]" 
-                                class="detail-input w-full px-4 py-2 border rounded mb-4">
-                            </textarea>
+                    <label class="block mb-2 font-medium">
+                        Detail Pembayaran
+                    </label>
+
+                    <div id="detail-section" class="space-y-3">
+
+                        <!-- Default item -->
+                        <div class="detail-item flex gap-2 items-start">
+
+                            <input
+                                type="text"
+                                name="detail[]"
+                                class="detail-input flex-1 px-4 py-2 border rounded-lg"
+                                placeholder="Contoh: Pembayaran pertama DP 20% maksimal H+7"
+                            >
+
+                            <button
+                                type="button"
+                                class="remove-detail bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg hidden">
+                                Hapus
+                            </button>
+
                         </div>
+
                     </div>
 
-                    <!-- Button to add more detail -->
-                    <button 
-                        type="button" 
-                        id="add-detail-btn" 
-                        class="bg-blue-500 text-white px-4 py-2 rounded mb-4">
-                        Tambah Detail
+                    <button
+                        type="button"
+                        id="add-detail-btn"
+                        class="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">
+                        + Tambah Detail
                     </button>
 
                 </div>
@@ -145,27 +159,47 @@
     });
   </script>
   <script>
-    document.getElementById('add-detail-btn').addEventListener('click', function() {
+    document.addEventListener('DOMContentLoaded', function () {
+
         const detailSection = document.getElementById('detail-section');
-        const existingDetail = detailSection.querySelector('textarea');
-        
-        if (existingDetail) {
-            const newDetailWrapper = document.createElement('div');
-            newDetailWrapper.classList.add('mb-2');
+        const addButton = document.getElementById('add-detail-btn');
 
-            const newDetailLabel = document.createElement('label');
-            newDetailLabel.classList.add('block', 'mb-2');
-            newDetailLabel.textContent = 'Detail';
+        // tambah detail
+        addButton.addEventListener('click', function () {
 
-            const newDetailInput = existingDetail.cloneNode(true);
-            newDetailInput.value = '';
+            const wrapper = document.createElement('div');
+            wrapper.className = 'detail-item flex gap-2 items-start';
 
-            newDetailWrapper.appendChild(newDetailLabel);
-            newDetailWrapper.appendChild(newDetailInput);
-            detailSection.appendChild(newDetailWrapper);
-        }
+            wrapper.innerHTML = `
+                <input
+                    type="text"
+                    name="detail[]"
+                    class="detail-input flex-1 px-4 py-2 border rounded-lg"
+                    placeholder="Masukkan detail pembayaran"
+                    required
+                >
+
+                <button
+                    type="button"
+                    class="remove-detail bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg">
+                    Hapus
+                </button>
+            `;
+
+            detailSection.appendChild(wrapper);
+        });
+
+        // hapus detail
+        document.addEventListener('click', function (e) {
+
+            if (e.target.classList.contains('remove-detail')) {
+                e.target.closest('.detail-item').remove();
+            }
+
+        });
+
     });
-</script>
+    </script>
 
 <script>
 document.getElementById('typeinvoice').addEventListener('change', function () {
@@ -216,42 +250,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const metodeSelect = document.getElementById('metodep');
     const detailWrapper = document.getElementById('detail-wrapper');
-    const detailInputs = document.querySelectorAll('.detail-input');
 
     function toggleDetailSection() {
 
-        const metode = metodeSelect.value;
+        const isCustom = metodeSelect.value === 'Custom';
 
-        // Jika Custom → tampil
-        if (metode === 'Custom') {
+        detailWrapper.classList.toggle('hidden', !isCustom);
 
-            detailWrapper.style.display = 'block';
+        document.querySelectorAll('.detail-input')
+            .forEach(input => {
+                input.required = isCustom;
 
-            document
-                .querySelectorAll('.detail-input')
-                .forEach(input => {
-                    input.required = true;
-                });
-
-        } 
-        // Jika Default → sembunyikan
-        else {
-
-            detailWrapper.style.display = 'none';
-
-            document
-                .querySelectorAll('.detail-input')
-                .forEach(input => {
-                    input.required = false;
+                if (!isCustom) {
                     input.value = '';
-                });
-        }
+                }
+            });
     }
 
-    // jalankan saat select berubah
     metodeSelect.addEventListener('change', toggleDetailSection);
 
-    // jalankan saat page pertama load
     toggleDetailSection();
 });
 </script>
