@@ -157,7 +157,7 @@ class Crud_coa extends CI_Controller {
             'data' => $data
         ]);
     }
-    public function detail($id)
+   public function detail($id)
 {
     // akun coa
     $data['account'] = $this->db
@@ -166,60 +166,81 @@ class Crud_coa extends CI_Controller {
         ->row();
 
     $data['transaksi'] = $this->db
-    ->select('
-        a.*,
-        pay.total_paid,
-        pay.transactions_id,
-        pay.kategori as payment_kategori,
+        ->select('
+            a.*,
+            pay.total_paid,
+            pay.transactions_id,
+            pay.kategori as payment_kategori,
 
-        MAX(
-            COALESCE(
-                p.project_name,
-                pu_proj.project_name
-            )
-        ) as project_name
-    ')
-    ->from('accounting a')
+            MAX(
+                COALESCE(
+                    p.project_name,
+                    pu_proj.project_name,
+                    pay_proj.project_name
+                )
+            ) as project_name
+        ')
+        ->from('accounting a')
 
-    // PROJECT NORMAL
-    ->join(
-        'project_acc pa',
-        'pa.id_session = a.accounting_id_session',
-        'left'
-    )
-    ->join(
-        'project p',
-        'p.id_session = pa.project_id_session',
-        'left'
-    )
+        // ==========================
+        // PROJECT NORMAL
+        // ==========================
+        ->join(
+            'project_acc pa',
+            'pa.id_session = a.accounting_id_session',
+            'left'
+        )
+        ->join(
+            'project p',
+            'p.id_session = pa.project_id_session',
+            'left'
+        )
 
-    // PROJECT UTANG
-    ->join(
-        'project_acc_utang pu',
-        'pu.id_session = a.accounting_id_session',
-        'left'
-    )
-    ->join(
-        'project pu_proj',
-        'pu_proj.id_session = pu.project_id_session',
-        'left'
-    )
+        // ==========================
+        // PROJECT UTANG
+        // ==========================
+        ->join(
+            'project_acc_utang pu',
+            'pu.id_session = a.accounting_id_session',
+            'left'
+        )
+        ->join(
+            'project pu_proj',
+            'pu_proj.id_session = pu.project_id_session',
+            'left'
+        )
 
-    // PAYMENT
-    ->join(
-        'payment pay',
-        'pay.id_session = a.accounting_id_session',
-        'left'
-    )
+        // ==========================
+        // PAYMENT
+        // ==========================
+        ->join(
+            'payment pay',
+            'pay.id_session = a.accounting_id_session',
+            'left'
+        )
 
-    ->like('a.accounting_nomer_kategori', $id, 'after')
+        // PAYMENT -> POTENSIAL CLIENT
+        ->join(
+            'potensial_clients pc',
+            'pc.id_session = pay.potensial_clients_id_session',
+            'left'
+        )
 
-    // supaya tidak duplicate
-    ->group_by('a.accounting_id_session')
+        // POTENSIAL -> PROJECT
+        ->join(
+            'project pay_proj',
+            'pay_proj.id_session = pc.project_id_session',
+            'left'
+        )
 
-    ->order_by('a.accounting_tanggal', 'DESC')
-    ->get()
-    ->result();
+        ->like('a.accounting_nomer_kategori', $id, 'after')
+
+        // hindari duplicate
+        ->group_by('a.accounting_id_session')
+
+        ->order_by('a.accounting_tanggal', 'DESC')
+        ->get()
+        ->result();
 
     // total saldo
     $data['total'] = $this->db
@@ -229,7 +250,6 @@ class Crud_coa extends CI_Controller {
         ->row()
         ->accounting_nominal ?? 0;
 
-    // kalau account tidak ada
     if (!$data['account']) {
         show_404();
     }
