@@ -159,12 +159,13 @@ class Crud_coa extends CI_Controller {
     }
     public function detail($id)
     {
-        // 🔹 ambil data akun (coa)
+        // ambil data akun (COA)
         $data['account'] = $this->db
             ->where('nomer_kategori', $id)
             ->get('operational_kategori')
             ->row();
 
+        // transaksi accounting
         $data['transaksi'] = $this->db
             ->select('
                 a.*,
@@ -179,10 +180,10 @@ class Crud_coa extends CI_Controller {
             ')
             ->from('accounting a')
 
-            // 🔹 RELASI KE PROJECT NORMAL
+            // PROJECT NORMAL
             ->join(
                 'project_acc pa',
-                'pa.id_session = a.accounting_id_session',
+                'pa.accounting_id_session = a.accounting_id_session',
                 'left'
             )
             ->join(
@@ -191,10 +192,10 @@ class Crud_coa extends CI_Controller {
                 'left'
             )
 
-            // 🔹 RELASI KE PROJECT UTANG
+            // PROJECT UTANG
             ->join(
                 'project_acc_utang pu',
-                'pu.id_session = a.accounting_id_session',
+                'pu.accounting_id_session = a.accounting_id_session',
                 'left'
             )
             ->join(
@@ -203,34 +204,38 @@ class Crud_coa extends CI_Controller {
                 'left'
             )
 
-            // 🔹 JOIN PAYMENT
+            // PAYMENT
             ->join(
                 'payment pay',
                 'pay.id_session = a.accounting_id_session',
                 'left'
             )
 
-            // 🔹 PROJECT DARI PAYMENT
+            // PROJECT DARI PAYMENT
             ->join(
                 'project pay_proj',
-                'pay_proj.id_session = pay.id_session',
+                'pay_proj.id_session = pay.project_id_session',
                 'left'
             )
 
             ->like('a.accounting_nomer_kategori', $id, 'after')
+
+            // PENTING: hindari duplicate row
+            ->group_by('a.accounting_id_session')
+
             ->order_by('a.accounting_tanggal', 'DESC')
             ->get()
             ->result();
 
-        // 🔹 total saldo
+        // total saldo tetap dari tabel accounting asli
         $data['total'] = $this->db
             ->select_sum('accounting_nominal')
             ->like('accounting_nomer_kategori', $id, 'after')
             ->get('accounting')
             ->row()
-            ->accounting_nominal;
+            ->accounting_nominal ?? 0;
 
-        // 🔥 HANDLE kalau data kosong
+        // handle kalau account tidak ada
         if (!$data['account']) {
             show_404();
         }
