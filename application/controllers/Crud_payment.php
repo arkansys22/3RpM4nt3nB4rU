@@ -302,52 +302,58 @@ class Crud_payment extends CI_Controller {
         }
     }
 
-    public function edit2($id_session, $payment_id_session) {
+    public function edit2($id_session, $payment_id_session)
+    {
         if (empty($id_session) || empty($payment_id_session)) {
-            show_404(); // Tampilkan 404 jika parameter tidak valid
+            show_404();
         }
 
+        // Cek hak akses
         if ($this->session->level == '1') {
             cek_session_akses_developer('payment', $this->session->id_session);
-            $data['payment'] = $this->Payment_model->get_payment_by_transaction_id($id_session, $payment_id_session);
-            $data['project'] = $this->project_model->get_project_by_session($id_session);
-            $data['kategori'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','1000');
-            if (!$data['payment'] || (strpos($data['payment']->transactions_id, 'MBP') !== 0 && strpos($data['payment']->transactions_id, 'MBP1') !== 0)) {
-                show_404(); // Pastikan hanya kwitansi yang dapat diedit
-            }
-            $this->load->view('payment/editkwt', $data);
-
-        } else if ($this->session->level == '2') {
+        } elseif ($this->session->level == '2') {
             cek_session_akses_administrator('payment', $this->session->id_session);
-            $data['payment'] = $this->Payment_model->get_payment_by_transaction_id($id_session, $transaction_id);
-            $data['project'] = $this->project_model->get_project_by_session($id_session);
-            $data['kategori'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','1000');
-            if (!$data['payment'] || (strpos($data['payment']->transactions_id, 'MBP') !== 0 && strpos($data['payment']->transactions_id, 'MBP1') !== 0)) {
-                show_404(); // Pastikan hanya kwitansi yang dapat diedit
-            }
-            $this->load->view('payment/editkwt', $data);
-
-        } else if ($this->session->level == '3') {
+        } elseif ($this->session->level == '3') {
             cek_session_akses_staff_accounting('payment', $this->session->id_session);
             redirect(base_url());
-
-        } else if ($this->session->level == '4') {
+        } elseif ($this->session->level == '4') {
             cek_session_akses_staff_admin('payment', $this->session->id_session);
-            $data['payment'] = $this->Payment_model->get_payment_by_transaction_id($id_session, $transaction_id);
-            $data['project'] = $this->project_model->get_project_by_session($id_session);
-            $data['kategori'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','1000');
-            if (!$data['payment'] || (strpos($data['payment']->transactions_id, 'MBP') !== 0 && strpos($data['payment']->transactions_id, 'MBP1') !== 0)) {
-                show_404(); // Pastikan hanya kwitansi yang dapat diedit
-            }
-            $this->load->view('payment/editkwt', $data);
-
-        } else if ($this->session->level == '5') {
+        } elseif ($this->session->level == '5') {
             cek_session_akses_client('payment', $this->session->id_session);
             redirect(base_url());
-
         } else {
             redirect(base_url());
         }
+
+        // Ambil data payment
+        $data['payment'] = $this->Payment_model
+            ->get_payment_by_transaction_id($id_session, $payment_id_session);
+
+        // Jika payment tidak ditemukan
+        if (!$data['payment']) {
+            show_404();
+        }
+
+        // Pastikan hanya kwitansi (MBP / MBP1)
+        if (
+            strpos($data['payment']->transactions_id, 'MBP') !== 0 &&
+            strpos($data['payment']->transactions_id, 'MBP1') !== 0
+        ) {
+            show_404();
+        }
+
+        $data['project'] = $this->project_model
+            ->get_project_by_session($id_session);
+
+        $data['kategori'] = $this->project_model
+            ->view_ordering_payable(
+                'operational_kategori',
+                'nomer_kategori',
+                'asc',
+                '1000'
+            );
+
+        $this->load->view('payment/editkwt', $data);
     }
 
     public function update($id_session, $payment_id_session) {
