@@ -388,12 +388,20 @@
                     )
                     ->row();
 
+                // fallback jika data tidak ditemukan
+                if (!$potensial) {
+                    $potensial = (object)[
+                        'promo' => 'tidak',
+                        'promo_value' => 0
+                    ];
+                }
+
                 // default
                 $promoDiskon = 0;
                 $labelPromo = '';
 
                 // kondisi promo
-                if ($potensial->promo == 'custom') {
+                if (($potensial->promo ?? 'tidak') == 'custom') {
 
                     // ambil promo custom
                     $promoDiskon = (float) str_replace('.', '', $potensial->promo_value ?? 0);
@@ -564,7 +572,7 @@
                 
                     
                     <p>
-                        <?php if($potensial->promo === 'tidak' ){ ?>
+                        <?php if(($potensial->promo ?? 'tidak') === 'tidak'){ ?>
                             <div><i>Harga dapat berubah sewaktu-waktu jika belum melakukan pembayaran pertama untuk kunci harga.</i>
                             </div><br>                                
                         <?php }else{ ?>     
