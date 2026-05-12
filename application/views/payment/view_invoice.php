@@ -348,7 +348,7 @@
                 <?php if ($promoDiskon > 0): ?>
                 <div class="flex justify-between text-sm">
                     <span class="text-slate-500">
-                        Promo Diskon <?= $labelPromo ?>
+                        Promo Diskon
                     </span>
 
                     <span class="text-red-500 font-medium">
