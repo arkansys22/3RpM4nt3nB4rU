@@ -158,90 +158,88 @@ class Crud_coa extends CI_Controller {
         ]);
     }
     public function detail($id)
-    {
-        // ambil data akun (COA)
-        $data['account'] = $this->db
-            ->where('nomer_kategori', $id)
-            ->get('operational_kategori')
-            ->row();
+{
+    // ambil data akun (coa)
+    $data['account'] = $this->db
+        ->where('nomer_kategori', $id)
+        ->get('operational_kategori')
+        ->row();
 
-        // transaksi accounting
-        $data['transaksi'] = $this->db
-            ->select('
-                a.*,
-                pay.total_paid,
-                pay.transactions_id,
-                pay.kategori as payment_kategori,
-                COALESCE(
-                    p.project_name,
-                    pu_proj.project_name,
-                    pay_proj.project_name
-                ) as project_name
-            ')
-            ->from('accounting a')
+    $data['transaksi'] = $this->db
+        ->select('
+            a.*,
+            pay.total_paid,
+            pay.transactions_id,
+            pay.kategori as payment_kategori,
+            COALESCE(
+                p.project_name,
+                pu_proj.project_name,
+                pay_proj.project_name
+            ) as project_name
+        ')
+        ->from('accounting a')
 
-            // PROJECT NORMAL
-            ->join(
-                'project_acc pa',
-                'pa.accounting_id_session = a.accounting_id_session',
-                'left'
-            )
-            ->join(
-                'project p',
-                'p.id_session = pa.project_id_session',
-                'left'
-            )
+        // RELASI PROJECT NORMAL
+        ->join(
+            'project_acc pa',
+            'pa.id_session = a.accounting_id_session',
+            'left'
+        )
+        ->join(
+            'project p',
+            'p.id_session = pa.project_id_session',
+            'left'
+        )
 
-            // PROJECT UTANG
-            ->join(
-                'project_acc_utang pu',
-                'pu.accounting_id_session = a.accounting_id_session',
-                'left'
-            )
-            ->join(
-                'project pu_proj',
-                'pu_proj.id_session = pu.project_id_session',
-                'left'
-            )
+        // RELASI PROJECT UTANG
+        ->join(
+            'project_acc_utang pu',
+            'pu.id_session = a.accounting_id_session',
+            'left'
+        )
+        ->join(
+            'project pu_proj',
+            'pu_proj.id_session = pu.project_id_session',
+            'left'
+        )
 
-            // PAYMENT
-            ->join(
-                'payment pay',
-                'pay.id_session = a.accounting_id_session',
-                'left'
-            )
+        // PAYMENT
+        ->join(
+            'payment pay',
+            'pay.id_session = a.accounting_id_session',
+            'left'
+        )
 
-            // PROJECT DARI PAYMENT
-            ->join(
-                'project pay_proj',
-                'pay_proj.id_session = pay.project_id_session',
-                'left'
-            )
+        // PROJECT DARI PAYMENT
+        ->join(
+            'project pay_proj',
+            'pay_proj.id_session = pay.project_id_session',
+            'left'
+        )
 
-            ->like('a.accounting_nomer_kategori', $id, 'after')
+        ->like('a.accounting_nomer_kategori', $id, 'after')
 
-            // PENTING: hindari duplicate row
-            ->group_by('a.accounting_id_session')
+        // INI YANG MENCEGAH DUPLICATE
+        ->group_by('a.id')
 
-            ->order_by('a.accounting_tanggal', 'DESC')
-            ->get()
-            ->result();
+        ->order_by('a.accounting_tanggal', 'DESC')
+        ->get()
+        ->result();
 
-        // total saldo tetap dari tabel accounting asli
-        $data['total'] = $this->db
-            ->select_sum('accounting_nominal')
-            ->like('accounting_nomer_kategori', $id, 'after')
-            ->get('accounting')
-            ->row()
-            ->accounting_nominal ?? 0;
+    // total saldo
+    $data['total'] = $this->db
+        ->select_sum('accounting_nominal')
+        ->like('accounting_nomer_kategori', $id, 'after')
+        ->get('accounting')
+        ->row()
+        ->accounting_nominal ?? 0;
 
-        // handle kalau account tidak ada
-        if (!$data['account']) {
-            show_404();
-        }
-
-        $this->load->view('coa/accounting_detail', $data);
+    if (!$data['account']) {
+        show_404();
     }
+
+    $this->load->view('coa/accounting_detail', $data);
+}
 
     public function lihat($id_session) {
 
