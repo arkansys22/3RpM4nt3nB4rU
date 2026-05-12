@@ -228,10 +228,10 @@ class Crud_coa extends CI_Controller {
 
         // POTENSIAL -> PROJECT
         ->join(
-            'project pay_proj',
-            'pay_proj.id_session = pc.project_id_session',
-            'left'
-        )
+                'project pay_proj',
+                'pay_proj.id_session = pc.id_session',
+                'left'
+            )
 
         ->like('a.accounting_nomer_kategori', $id, 'after')
 
