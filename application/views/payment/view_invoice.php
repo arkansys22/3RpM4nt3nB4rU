@@ -214,7 +214,7 @@
 
                     <p class="mt-2">Tanggal Acara:</p>
                     <p class="text-slate-700 font-medium">
-                        <?= date('d F Y', strtotime($project->event_date)) ?>
+                        <?= hari($project->event_date) ?>, <?= date('d F Y', strtotime($project->event_date)) ?>
                     </p>
                 </div>
             </div>
