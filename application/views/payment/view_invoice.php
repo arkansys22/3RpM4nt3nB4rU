@@ -237,7 +237,7 @@
                             // simpan total diskon
                             $diskonTotal += $diskon;
 
-                            $grandTotal = $subTotal - $diskonTotal
+                            $grandTotal = $subTotal - $diskonTotal;
 
                             ?>
 
@@ -294,16 +294,42 @@
         <!-- Total -->
         <div class="w-full max-w-md bg-slate-50 rounded-2xl border border-slate-200 p-6">
 
-            <?php 
-            $potensial = $this->Crud_m
-                                ->view_where(
-                                    'potensial_clients',
-                                    [
-                                        'id_session' =>  $payment->potensial_clients_id_session
-                                    ]
-                                )
-                                ->row();
+            <?php
 
+                $potensial = $this->Crud_m
+                    ->view_where(
+                        'potensial_clients',
+                        [
+                            'id_session' => $payment->potensial_clients_id_session
+                        ]
+                    )
+                    ->row();
+
+                // default
+                $promoDiskon = 0;
+                $labelPromo = '';
+
+                // kondisi promo
+                if ($potensial->promo == 'custom') {
+
+                    // ambil promo custom
+                    $promoDiskon = (float) str_replace('.', '', $potensial->promo_value);
+                    $labelPromo = 'Custom';
+
+                } elseif ($potensial->promo == 'default') {
+
+                    // ambil total diskon item
+                    $promoDiskon = $diskonTotal;
+                    $labelPromo = 'Default';
+
+                } elseif ($potensial->promo == 'tidak') {
+
+                    // tidak ada promo
+                    $promoDiskon = 0;
+                }
+
+                // hitung grand total
+                $grandTotal = $subTotal - $promoDiskon;
 
             ?>
 
@@ -311,7 +337,7 @@
 
                 <div class="flex justify-between text-sm">
                     <span class="text-slate-500">
-                        Sub Total <?= $potensial->promo ?>
+                        Sub Total 
                     </span>
 
                     <span class="font-medium">
@@ -319,14 +345,14 @@
                     </span>
                 </div>
 
-                <?php if ($diskonTotal > 0): ?>
+                <?php if ($promoDiskon > 0): ?>
                 <div class="flex justify-between text-sm">
                     <span class="text-slate-500">
-                        Promo Diskon
+                        Promo Diskon <?= $labelPromo ?>
                     </span>
 
                     <span class="text-red-500 font-medium">
-                        - Rp <?= number_format($diskonTotal,0,',','.') ?>
+                        - Rp <?= number_format($promoDiskon,0,',','.') ?>
                     </span>
                 </div>
                 <?php endif; ?>
