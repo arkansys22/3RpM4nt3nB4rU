@@ -270,7 +270,21 @@
                                 </td>
 
                                 <td class="text-right px-6 py-5 font-semibold text-slate-800">
-                                    Rp <?= number_format($total,0,',','.') ?>
+
+                                    <div>
+                                        Rp <?= number_format($totalHarga,0,',','.') ?>
+                                    </div>
+
+                                    <?php if($diskon > 0): ?>
+                                        <small class="text-red-500">
+                                            Diskon - Rp <?= number_format($diskon,0,',','.') ?>
+                                        </small>
+
+                                        <div class="text-green-600 text-xs font-medium mt-1">
+                                            Final: Rp <?= number_format($totalAkhir,0,',','.') ?>
+                                        </div>
+                                    <?php endif; ?>
+
                                 </td>
 
                             </tr>
@@ -314,7 +328,7 @@
                     </span>
 
                     <span class="font-bold text-2xl text-slate-800">
-                        Rp <?= number_format($payment->total_bill,0,',','.') ?>
+                        Rp <?= number_format($subTotal,0,',','.') ?>
                     </span>
                 </div>
 
