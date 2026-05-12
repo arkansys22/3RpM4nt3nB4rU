@@ -563,10 +563,32 @@
 
                             <?php } ?>
                     </ul>
-                <?php }else if ($payment->metodep == 'Custom') { ?>
-                     <?= $payment->detail ?>
+                <?php } else if ($payment->metodep == 'Custom') { ?>
 
-                 <?php }else{ ?>    
+                    <div class="bg-slate-50 border border-slate-200 rounded-2xl p-5 shadow-sm">
+                        
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="w-10 h-10 rounded-full bg-slate-800 text-white flex items-center justify-center">
+                                💳
+                            </div>
+
+                            <div>
+                                <h5 class="font-semibold text-slate-800">
+                                    Skema Pembayaran Custom
+                                </h5>
+                                <p class="text-xs text-slate-500">
+                                    Ketentuan pembayaran disesuaikan dengan kesepakatan klien
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="text-sm text-slate-600 leading-7 prose max-w-none">
+                            <?= nl2br($payment->detail) ?>
+                        </div>
+
+                    </div>
+
+                <?php } else { ?> 
                 <?php } ?>
 
                 
