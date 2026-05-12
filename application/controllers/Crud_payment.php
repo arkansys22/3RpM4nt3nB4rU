@@ -346,6 +346,14 @@ class Crud_payment extends CI_Controller {
     }
 
     public function update($id_session, $transaction_id) {
+
+
+      
+        $total_bill = str_replace('.', '', $this->input->post('total_bill'));
+        $kategori = $this->input->post('kategori');
+        $tanggal = $this->input->post('date');
+
+
         if ($this->agent->is_browser()) // Agent untuk fitur di log activity
         {
             $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
@@ -364,11 +372,13 @@ class Crud_payment extends CI_Controller {
         }
 
         $data = [
-            'total_bill'    => $this->input->post('total_bill'),
+            'potensial_clients_id_session'      => $this->input->post('typeinvoice'),
+            'total_bill'    => $total_bill,
             'detail'        => json_encode($this->input->post('detail')),
-            'date'          => $this->input->post('date'),
+            'date'          => $tanggal,
+            'kategori'      => $kategori,
+            'metodep'        => $this->input->post('metodep'),
             'due_date'      => $this->input->post('due_date'),
-            'DP'            => $this->input->post('DP'),
         ];
 
         $this->Payment_model->update_payment($id_session, $transaction_id, $data);
@@ -389,8 +399,20 @@ class Crud_payment extends CI_Controller {
             'log_activity_ip'=> $ip_with_location
             
         );
-
         $this->Payment_model->insert_log_activity($data_log);
+
+         $data_accounting = array(
+
+            'accounting_id_session' => $id_session,
+            'accounting_nomer_kategori' => $kategori,
+            'accounting_nominal' => $total_bill,
+            'accounting_tanggal' => $tanggal,
+            'accounting_nama_transaksi'=> $transaction_id
+            
+        );
+
+        $this->project_model->insert_accounting($id_session,$data_accounting);
+        
 
         $this->session->set_flashdata('Success', 'Invoice berhasil diupdate');
 
