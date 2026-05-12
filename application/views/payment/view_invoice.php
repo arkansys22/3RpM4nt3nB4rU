@@ -292,7 +292,8 @@
         </div>
 
         <!-- Total -->
-        <div class="w-full max-w-md bg-slate-50 rounded-2xl border border-slate-200 p-6">
+        <div class="mt-6 flex justify-end relative z-10">
+            <div class="w-full md:w-[360px] ml-auto bg-slate-50 rounded-2xl border border-slate-200 p-6">
 
             <?php
 
@@ -369,6 +370,7 @@
 
             </div>
 
+            </div>
         </div>
 
         <!-- Terms & Payment -->
