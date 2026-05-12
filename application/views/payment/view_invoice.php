@@ -213,6 +213,9 @@
                                 )
                                 ->row();
 
+
+
+
                            // bersihkan format angka
                             $harga = (float) str_replace('.', '', $p->penawaran_klien_harga);
                             $hargaPromo = (float) str_replace('.', '', $p->penawaran_klien_hargapromo);
@@ -295,7 +298,7 @@
 
                 <div class="flex justify-between text-sm">
                     <span class="text-slate-500">
-                        Sub Total
+                        Sub Total <?= $payment->potensial_clients_id_session ?>
                     </span>
 
                     <span class="font-medium">
