@@ -327,7 +327,7 @@ class Crud_payment extends CI_Controller {
 
         // Ambil data payment
         $data['payment'] = $this->Payment_model
-            ->get_payment_by_transaction_id($id_session, $payment_id_session);
+            ->get_payment_by_payment_id_session($id_session, $payment_id_session);
 
         // Jika payment tidak ditemukan
         if (!$data['payment']) {
