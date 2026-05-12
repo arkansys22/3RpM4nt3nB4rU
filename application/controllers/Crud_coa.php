@@ -159,7 +159,7 @@ class Crud_coa extends CI_Controller {
     }
     public function detail($id)
 {
-    // ambil data akun (coa)
+    // akun coa
     $data['account'] = $this->db
         ->where('nomer_kategori', $id)
         ->get('operational_kategori')
@@ -173,13 +173,12 @@ class Crud_coa extends CI_Controller {
             pay.kategori as payment_kategori,
             COALESCE(
                 p.project_name,
-                pu_proj.project_name,
-                pay_proj.project_name
+                pu_proj.project_name
             ) as project_name
         ')
         ->from('accounting a')
 
-        // RELASI PROJECT NORMAL
+        // PROJECT NORMAL
         ->join(
             'project_acc pa',
             'pa.id_session = a.accounting_id_session',
@@ -191,7 +190,7 @@ class Crud_coa extends CI_Controller {
             'left'
         )
 
-        // RELASI PROJECT UTANG
+        // PROJECT UTANG
         ->join(
             'project_acc_utang pu',
             'pu.id_session = a.accounting_id_session',
@@ -210,16 +209,9 @@ class Crud_coa extends CI_Controller {
             'left'
         )
 
-        // PROJECT DARI PAYMENT
-        ->join(
-            'project pay_proj',
-            'pay_proj.id_session = pay.project_id_session',
-            'left'
-        )
-
         ->like('a.accounting_nomer_kategori', $id, 'after')
 
-        // INI YANG MENCEGAH DUPLICATE
+        // anti duplicate
         ->group_by('a.id')
 
         ->order_by('a.accounting_tanggal', 'DESC')
@@ -234,6 +226,7 @@ class Crud_coa extends CI_Controller {
         ->row()
         ->accounting_nominal ?? 0;
 
+    // kalau account tidak ada
     if (!$data['account']) {
         show_404();
     }
