@@ -321,7 +321,7 @@
               </p>
 
               <div class="flex gap-2 mt-2">
-                <?php if (strpos($trans->payment_id_session, 'IMB') === 0): ?>
+                <?php if (strpos($trans->transactions_id, 'IMB') === 0): ?>
                   <a href="<?= site_url('payment/view_invoice/' . $project->id_session . '/' . $trans->payment_id_session) ?>" 
                      class="bg-blue-500 text-white text-sm px-2 py-1 rounded-md hover:bg-blue-600">
                      Lihat Invoice
