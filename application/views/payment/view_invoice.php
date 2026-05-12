@@ -379,34 +379,21 @@
             <div>
                 <h4 class="font-semibold text-slate-800 mb-3">
                     Ketentuan Pembayaran
-                </h4>
-
-                <?php
-                $details = json_decode($payment->detail, true);
-                ?>
-
-                <?php if (!empty($details)): ?>
-                    <ul class="list-disc ml-5 text-sm text-slate-500 leading-7 mb-4">
-                        <?php foreach ($details as $item): ?>
-                            <li><?= $item ?></li>
-                        <?php endforeach; ?>
-                    </ul>
-                <?php endif; ?>
+                </h4>      
 
                 <div class="text-sm text-slate-500 leading-7">
                     <p>
-                        Pembayaran DP sebesar
-                        <strong>
-                            Rp <?= number_format($payment->DP, 0, ',', '.') ?>
-                        </strong>
-                        diperlukan untuk booking tanggal acara.
+                        <?= $payment->detail ?>
+                    </p>
+                    <p>
+                        <?php if($potensial->promo === 'tidak' ){ ?>
+                            <div><i>Harga dapat berubah sewaktu-waktu jika belum melakukan pembayaran pertama untuk kunci harga.</i>
+                            </div><br>                                
+                        <?php }else{ ?>     
+                            <div><i>Harga dapat berubah sewaktu-waktu jika belum melakukan pembayaran pertama untuk kunci harga. Bonus dan Cashback berlaku hanya sampai H+5 setelah penawaran ini diberikan. Dan besaran bonus dan cashback setiap harinya berkurang Rp 200.000. Jadi segera lakukan pembayaran pertama dan amankan bonus dan cashbacknya.</i></div><br>
+                        <?php }?>
                     </p>
 
-                    <p>
-                        Pelunasan maksimal
-                        <strong>H-7</strong>
-                        sebelum acara berlangsung.
-                    </p>
                 </div>
             </div>
 
