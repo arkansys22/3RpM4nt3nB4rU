@@ -213,19 +213,25 @@
                                 )
                                 ->row();
 
-                            $harga = (float)$p->penawaran_klien_harga;
-                            $hargaPromo = (float)$p->penawaran_klien_hargapromo;
-                            $qty = (float)$p->penawaran_klien_qty;
-                            $diskon = (float)$p->penawaran_klien_diskon;
+                           // bersihkan format angka
+                            $harga = (float) str_replace('.', '', $p->penawaran_klien_harga);
+                            $hargaPromo = (float) str_replace('.', '', $p->penawaran_klien_hargapromo);
+                            $qty = (float) $p->penawaran_klien_qty;
+                            $diskon = (float) str_replace('.', '', $p->penawaran_klien_diskon);
 
                             // gunakan harga promo jika ada
-                            $hargaFinal = $hargaPromo > 0 ? $hargaPromo : $harga;
+                            $hargaFinal = ($hargaPromo > 0) ? $hargaPromo : $harga;
 
-                            // hitung total
-                            $total = ($hargaFinal * $qty) - $diskon;
+                            // total sebelum diskon
+                            $totalHarga = $hargaFinal * $qty;
 
-                            // subtotal
-                            $subTotal += $total;
+                            // total setelah diskon
+                            $totalAkhir = $totalHarga - $diskon;
+
+                            // hitung subtotal
+                            $subTotal += $totalAkhir;
+
+                            // simpan total diskon
                             $diskonTotal += $diskon;
                             ?>
 
