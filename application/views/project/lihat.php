@@ -313,10 +313,6 @@
                   Rp <?= number_format($trans->total_paid, 0, ',', '.') ?><br>
                 <?php endif; ?>
 
-                <?php if (strpos($trans->transactions_id, 'IMB') === 0): ?>
-                  <strong>DP:</strong> Rp <?= number_format($trans->DP, 0, ',', '.') ?><br>
-                <?php endif; ?>
-
                 <strong>Tanggal:</strong> <?= tgl_indo($trans->date) ?><br>
 
                 <?php if (!empty($trans->due_date)): ?>
