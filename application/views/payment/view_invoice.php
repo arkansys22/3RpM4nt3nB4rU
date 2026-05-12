@@ -563,32 +563,44 @@
 
                             <?php } ?>
                     </ul>
-                <?php } else if ($payment->metodep == 'Custom') { ?>
+                <?php }else if ($payment->metodep == 'Custom') { ?>
+                    <?php
+                        $paymentDetails = json_decode($payment->detail, true);
+                    ?>
 
-                    <div class="bg-slate-50 border border-slate-200 rounded-2xl p-5 shadow-sm">
-                        
-                        <div class="flex items-center gap-2 mb-4">
-                            <div class="w-10 h-10 rounded-full bg-slate-800 text-white flex items-center justify-center">
-                                💳
+                     <?php if (!empty($paymentDetails) && is_array($paymentDetails)): ?>
+
+                            <ul class="space-y-3">
+
+                                <?php foreach ($paymentDetails as $index => $item): ?>
+
+                                    <li class="flex items-start gap-3 bg-white border border-slate-200 rounded-xl p-4">
+
+                                        <div class="w-8 h-8 rounded-full bg-slate-800 text-white text-sm flex items-center justify-center shrink-0">
+                                            <?= $index + 1 ?>
+                                        </div>
+
+                                        <div class="text-sm text-slate-700 leading-6">
+                                            <?= htmlspecialchars($item) ?>
+                                        </div>
+
+                                    </li>
+
+                                <?php endforeach; ?>
+
+                            </ul>
+
+                        <?php else: ?>
+
+                            <div class="text-sm text-slate-500 italic">
+                                Detail pembayaran belum tersedia.
                             </div>
 
-                            <div>
-                                <h5 class="font-semibold text-slate-800">
-                                    Skema Pembayaran Custom
-                                </h5>
-                                <p class="text-xs text-slate-500">
-                                    Ketentuan pembayaran disesuaikan dengan kesepakatan klien
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="text-sm text-slate-600 leading-7 prose max-w-none">
-                            <?= nl2br($payment->detail) ?>
-                        </div>
+                        <?php endif; ?>
 
                     </div>
 
-                <?php } else { ?> 
+                 <?php }else{ ?>    
                 <?php } ?>
 
                 
