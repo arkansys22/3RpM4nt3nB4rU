@@ -465,7 +465,7 @@
                         </ul>
                        
                     </p>
-                <?php else { ?>
+                <?php }else { ?>
                      <?= $payment->detail ?>
                 <?php } ?>
 
