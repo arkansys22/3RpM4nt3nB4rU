@@ -87,35 +87,75 @@
 
 
                 <label class="block mb-2">Metode Pembayaran</label>
-                <select id= "metodep" name="metodep" class="w-full px-4 py-2 border rounded mb-4" required>
+                <select id="metodep" name="metodep" class="w-full px-4 py-2 border rounded mb-4" required>
                     <option value="">- Pilih -</option>
-                    <option value="Default" <?= set_select('metodep', 'Default') ?>>Default</option>
-                    <option value="Custom" <?= set_select('metodep', 'Custom') ?>>Custom</option>
-                  </select>  
+
+                    <option value="Default"
+                        <?= ($payment->metodep == 'Default') ? 'selected' : '' ?>>
+                        Default
+                    </option>
+
+                    <option value="Custom"
+                        <?= ($payment->metodep == 'Custom') ? 'selected' : '' ?>>
+                        Custom
+                    </option>
+                </select>
 
 
-                <!-- Section for detail -->
-                <div id="detail-wrapper" style="display: none;">
-                    
-                    <div id="detail-section">
-                        <div class="mb-2">
-                            <label class="block mb-2" for="detail">
-                                Detail Pembayaran
-                            </label>
+                <!-- Detail Pembayaran -->
+                <div id="detail-wrapper" class="hidden">
 
-                            <textarea 
-                                name="detail[]" 
-                                class="detail-input w-full px-4 py-2 border rounded mb-4">
-                            </textarea>
+                    <label class="block mb-2 font-medium">
+                        Detail Pembayaran
+                    </label>
+
+                    <div id="detail-section" class="space-y-3">
+
+                        <?php
+                        $details = [];
+
+                        if (!empty($payment->detail)) {
+                            $decoded = json_decode($payment->detail, true);
+
+                            if (is_array($decoded)) {
+                                $details = $decoded;
+                            } else {
+                                $details = [$payment->detail];
+                            }
+                        }
+
+                        if (empty($details)) {
+                            $details[] = '';
+                        }
+                        ?>
+
+                        <?php foreach ($details as $index => $detail): ?>
+                        <div class="detail-item flex gap-2 items-start">
+
+                            <input
+                                type="text"
+                                name="detail[]"
+                                value="<?= htmlspecialchars($detail) ?>"
+                                class="detail-input flex-1 px-4 py-2 border rounded-lg"
+                                placeholder="Contoh: Pembayaran pertama DP 20% maksimal H+7"
+                            >
+
+                            <button
+                                type="button"
+                                class="remove-detail bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg <?= $index == 0 ? 'hidden' : '' ?>">
+                                Hapus
+                            </button>
+
                         </div>
+                        <?php endforeach; ?>
+
                     </div>
 
-                    <!-- Button to add more detail -->
-                    <button 
-                        type="button" 
-                        id="add-detail-btn" 
-                        class="bg-blue-500 text-white px-4 py-2 rounded mb-4">
-                        Tambah Detail
+                    <button
+                        type="button"
+                        id="add-detail-btn"
+                        class="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">
+                        + Tambah Detail
                     </button>
 
                 </div>
@@ -135,88 +175,144 @@
   </div>
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
   <script>
-    function formatNumber(input) {
-        let value = input.value.replace(/\D/g, ''); // Remove non-numeric characters
-        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Add dots for formatting
-        input.value = value;
-    }
+    document.addEventListener('DOMContentLoaded', function () {
 
-    document.querySelector('form').addEventListener('submit', function (e) {
-        const totalBillInput = document.querySelector('input[name="total_bill"]');
-        totalBillInput.value = totalBillInput.value.replace(/\./g, ''); // Remove dots before submitting
-    });
-  </script>
-  <script>
-    // JavaScript to handle adding new detail fields dynamically
-    document.getElementById('add-detail-btn').addEventListener('click', function() {
+        const form = document.querySelector('form');
+        const totalBillInput = document.getElementById('total_bill');
+        const typeinvoice = document.getElementById('typeinvoice');
+        const metodeSelect = document.getElementById('metodep');
+        const detailWrapper = document.getElementById('detail-wrapper');
         const detailSection = document.getElementById('detail-section');
-        const newDetailWrapper = document.createElement('div');
-        newDetailWrapper.classList.add('mb-2');
+        const addButton = document.getElementById('add-detail-btn');
 
-        const newDetailInput = document.createElement('textarea');
-        newDetailInput.name = 'detail[]';
-        newDetailInput.classList.add('w-full', 'px-4', 'py-2', 'border', 'rounded', 'mb-4');
-        newDetailInput.required = true;
-
-        newDetailWrapper.appendChild(newDetailInput);
-        detailSection.appendChild(newDetailWrapper);
-    });
-
-    // Format angka dengan titik saat pengguna mengetik
-    document.getElementById('total_bill').addEventListener('input', function (e) {
-        let value = e.target.value.replace(/\D/g, ''); // Hapus karakter non-angka
-        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Tambahkan titik setiap 3 angka
-        e.target.value = value;
-    });
-
-    // Hapus titik sebelum formulir dikirim
-    document.querySelector('form').addEventListener('submit', function (e) {
-        const totalBillInput = document.getElementById('total_bill');
-        totalBillInput.value = totalBillInput.value.replace(/\./g, ''); // Hapus semua titik
-    });
-    
-  </script>
-
-
-<script>
-    document.getElementById('typeinvoice').addEventListener('change', function () {
-
-        const typeinvoice = this.value;
-        const totalBillInput = document.getElementById('total_bill');
-
-        // value proposal
-        const proposalValue = '<?= $project->potensial_clients_id_session ?>';
-
-        // Jika pilih Dari Proposal
-        if (typeinvoice === proposalValue) {
-
-            fetch("<?= base_url('Crud_payment/get_total_penawaran') ?>", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                },
-                body: "id_session=" + encodeURIComponent(typeinvoice)
-            })
-            .then(response => response.json())
-            .then(data => {
-
-                let total = parseInt(data.total) || 0;
-
-                // format ribuan Indonesia
-                totalBillInput.value = total.toLocaleString('id-ID');
-
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-
-        } else {
-
-            // kosongkan jika penambahan
-            totalBillInput.value = '';
-
+        // format angka
+        function formatNumber(input) {
+            let value = input.value.replace(/\D/g, '');
+            value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            input.value = value;
         }
+
+        window.formatNumber = formatNumber;
+
+        // submit form
+        form.addEventListener('submit', function () {
+            totalBillInput.value =
+                totalBillInput.value.replace(/\./g, '');
+        });
+
+        // jenis invoice
+        typeinvoice.addEventListener('change', function () {
+
+            const proposalValue =
+                '<?= $project->potensial_clients_id_session ?>';
+
+            if (this.value === proposalValue) {
+
+                fetch("<?= base_url('Crud_payment/get_total_penawaran') ?>", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type":
+                            "application/x-www-form-urlencoded"
+                    },
+                    body:
+                        "id_session=" +
+                        encodeURIComponent(this.value)
+                })
+                .then(response => response.json())
+                .then(data => {
+
+                    let total =
+                        parseInt(data.total) || 0;
+
+                    totalBillInput.value =
+                        total.toLocaleString('id-ID');
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+
+            }
+        });
+
+        // tampil hide detail custom
+        function toggleDetailSection() {
+
+            const isCustom =
+                metodeSelect.value === 'Custom';
+
+            detailWrapper.classList.toggle(
+                'hidden',
+                !isCustom
+            );
+
+            document
+                .querySelectorAll('.detail-input')
+                .forEach(input => {
+
+                    input.required = isCustom;
+
+                    if (!isCustom) {
+                        input.value = '';
+                    }
+                });
+        }
+
+        metodeSelect.addEventListener(
+            'change',
+            toggleDetailSection
+        );
+
+        // tambah detail
+        addButton.addEventListener(
+            'click',
+            function () {
+
+                const wrapper =
+                    document.createElement('div');
+
+                wrapper.className =
+                    'detail-item flex gap-2 items-start';
+
+                wrapper.innerHTML = `
+                    <input
+                        type="text"
+                        name="detail[]"
+                        class="detail-input flex-1 px-4 py-2 border rounded-lg"
+                        placeholder="Masukkan detail pembayaran"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="remove-detail bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg">
+                        Hapus
+                    </button>
+                `;
+
+                detailSection.appendChild(wrapper);
+            }
+        );
+
+        // hapus detail
+        document.addEventListener(
+            'click',
+            function (e) {
+
+                if (
+                    e.target.classList.contains(
+                        'remove-detail'
+                    )
+                ) {
+                    e.target
+                        .closest('.detail-item')
+                        .remove();
+                }
+            }
+        );
+
+        // init
+        toggleDetailSection();
     });
-   </script>
+    </script>
 </body>
 </html>
