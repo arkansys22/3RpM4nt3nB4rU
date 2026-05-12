@@ -427,6 +427,7 @@ class Crud_payment extends CI_Controller {
         $total_paid = str_replace('.', '', $this->input->post('total_paid'));
         $kategori = $this->input->post('kategori');
         $tanggal = $this->input->post('date');
+        $detail = json_encode($this->input->post('detail'));
 
 
         if ($this->agent->is_browser()) // Agent untuk fitur di log activity
@@ -448,7 +449,7 @@ class Crud_payment extends CI_Controller {
 
         $data = [
             'total_paid'    => $total_paid,
-            'detail'        => json_encode($this->input->post('detail')),
+            'detail'        => $detail,
             'date'          => $tanggal,
             'kategori'      => $kategori,
             'metodep'        => $this->input->post('metodep'),
@@ -480,15 +481,15 @@ class Crud_payment extends CI_Controller {
 
             'accounting_id_session' => $id_session,
             'accounting_nomer_kategori' => $kategori,
-            'accounting_nominal' => $total_bill,
+            'accounting_nominal' => $total_paid,
             'accounting_tanggal' => $tanggal,
-            'accounting_nama_transaksi'=> $transaction_id
+            'accounting_nama_transaksi'=> $detail
             
         );
 
         $this->project_model->insert_accounting($id_session,$data_accounting);
 
-        
+
 
         $this->session->set_flashdata('Success', 'Kwitansi berhasil diupdate');
 
