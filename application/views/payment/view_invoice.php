@@ -438,7 +438,7 @@
                     }
                 ?>
 
-                <?php if ($payment->metodep == 'default') { ?>
+                <?php if ($payment->metodep == 'Default') { ?>
 
                     <ul class="list-disc pl-5">
                             <li>Pembayaran pertama <b>kunci harga</b> Rp <?= number_format($p1,0,',','.') ?></li>
