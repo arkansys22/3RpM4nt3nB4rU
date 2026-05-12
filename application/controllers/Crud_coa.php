@@ -171,9 +171,12 @@ class Crud_coa extends CI_Controller {
         pay.total_paid,
         pay.transactions_id,
         pay.kategori as payment_kategori,
-        COALESCE(
-            p.project_name,
-            pu_proj.project_name
+
+        MAX(
+            COALESCE(
+                p.project_name,
+                pu_proj.project_name
+            )
         ) as project_name
     ')
     ->from('accounting a')
@@ -211,7 +214,7 @@ class Crud_coa extends CI_Controller {
 
     ->like('a.accounting_nomer_kategori', $id, 'after')
 
-    // FIX DUPLICATE
+    // supaya tidak duplicate
     ->group_by('a.accounting_id_session')
 
     ->order_by('a.accounting_tanggal', 'DESC')
