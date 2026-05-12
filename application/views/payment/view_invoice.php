@@ -233,6 +233,9 @@
 
                             // simpan total diskon
                             $diskonTotal += $diskon;
+
+                            $grandTotal = $subTotal - $diskonTotal
+
                             ?>
 
                             <tr class="border-b border-slate-200 align-top hover:bg-slate-50">
@@ -303,7 +306,7 @@
                 <?php if ($diskonTotal > 0): ?>
                 <div class="flex justify-between text-sm">
                     <span class="text-slate-500">
-                        Total Diskon
+                        Promo Diskon
                     </span>
 
                     <span class="text-red-500 font-medium">
@@ -318,7 +321,7 @@
                     </span>
 
                     <span class="font-bold text-2xl text-slate-800">
-                        Rp <?= number_format($subTotal,0,',','.') ?>
+                        Rp <?= number_format($grandTotal,0,',','.') ?>
                     </span>
                 </div>
 
