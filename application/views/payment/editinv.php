@@ -201,11 +201,13 @@
         });
 
         // jenis invoice
+       // jenis invoice
         typeinvoice.addEventListener('change', function () {
 
             const proposalValue =
                 '<?= $project->potensial_clients_id_session ?>';
 
+            // Jika pilih Dari Proposal
             if (this.value === proposalValue) {
 
                 fetch("<?= base_url('Crud_payment/get_total_penawaran') ?>", {
@@ -231,8 +233,29 @@
                     console.error(error);
                 });
 
+            } 
+            // Jika pilih Penambahan
+            else if (this.value === 'Penambahan') {
+
+                // kosongkan total bill
+                totalBillInput.value = '';
+
+            } 
+            // Jika kembali ke pilih asal invoice
+            else {
+
+                totalBillInput.value = '';
             }
         });
+
+        // simpan nilai awal saat page load
+        const initialInvoiceType = typeinvoice.value;
+
+        // saat pertama load jangan kosongkan,
+        // hanya trigger logic sesuai pilihan
+        if (initialInvoiceType === '<?= $project->potensial_clients_id_session ?>') {
+            typeinvoice.dispatchEvent(new Event('change'));
+        }
 
         // tampil hide detail custom
         function toggleDetailSection() {
