@@ -49,13 +49,13 @@
 
                     <option 
                         value="<?= $project->potensial_clients_id_session ?>"
-                        <?= ($payment->typeinvoice == $project->potensial_clients_id_session) ? 'selected' : '' ?>>
+                        <?= ($payment->potensial_clients_id_session == $project->potensial_clients_id_session) ? 'selected' : '' ?>>
                         Dari Proposal
                     </option>
 
                     <option 
                         value="Penambahan"
-                        <?= ($payment->typeinvoice == 'Penambahan') ? 'selected' : '' ?>>
+                        <?= ($payment->potensial_clients_id_session == 'Penambahan') ? 'selected' : '' ?>>
                         Penambahan
                     </option>
 
