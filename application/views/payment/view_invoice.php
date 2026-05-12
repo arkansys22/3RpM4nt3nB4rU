@@ -254,59 +254,106 @@
                         </th>
                     </tr>
                 </thead>
+                    <tbody class="bg-white">
+                            <?php 
+                            $subTotal = 0;
+                            $diskonTotal = 0;
 
-                <tbody class="bg-white">
+                            $penawaran = $this->db
+                                ->get_where(
+                                    'penawaran_klien',
+                                    ['penawaran_klien_potensial_idsession' => $payment->potensial_clients_id_session]
+                                )
+                                ->result();
+                            ?>
 
-                    <?php foreach ($penawaran as $p): ?>
+                            <?php foreach ($penawaran as $p): ?>
 
-                    <tr class="border-b border-slate-200 align-top hover:bg-slate-50">
+                            <?php
 
-                        <!-- Rincian -->
-                        <td class="px-5 py-4 text-sm text-slate-700 break-words">
+                            $namaproduk = $this->Crud_m
+                                ->view_where(
+                                    'data_pricelist',
+                                    [
+                                        'data_pricelist_idsession' => $p->penawaran_klien_idpricelist
+                                    ]
+                                )
+                                ->row();
 
-                            <div class="font-medium text-slate-800 leading-6">
-                                <?= $namaproduk->data_pricelist_judul ?? 'Produk Tidak Ditemukan' ?>
-                            </div>
 
-                            <?php if (!empty($p->penawaran_klien_deskripsi)): ?>
-                                <div class="text-slate-500 text-xs leading-5 mt-1">
-                                    <?= $p->penawaran_klien_deskripsi ?>
-                                </div>
-                            <?php endif; ?>
 
-                        </td>
 
-                        <!-- Harga -->
-                        <td class="text-right px-4 py-4 text-sm text-slate-700 whitespace-nowrap">
+                           // bersihkan format angka
+                            $harga = (float) str_replace('.', '', $p->penawaran_klien_harga);
+                            $hargaPromo = (float) str_replace('.', '', $p->penawaran_klien_hargapromo);
+                            $qty = (float) $p->penawaran_klien_qty;
+                            $diskon = (float) str_replace('.', '', $p->penawaran_klien_diskon);
 
-                            <?php if ($harga > 0 && $hargaPromo > 0): ?>
-                                <div class="text-slate-400 text-xs">
-                                    <s>Rp <?= number_format($harga,0,',','.') ?></s>
-                                </div>
-                            <?php endif; ?>
+                            // gunakan harga promo jika ada
+                            $hargaFinal = ($hargaPromo > 0) ? $hargaPromo : $harga;
 
-                            <div class="font-medium">
-                                Rp <?= number_format($hargaFinal,0,',','.') ?>
-                            </div>
+                            // total sebelum diskon
+                            $totalHarga = $hargaFinal * $qty;
 
-                        </td>
+                            // total setelah diskon
+                            $totalAkhir = $totalHarga - $diskon;
 
-                        <!-- Qty -->
-                        <td class="text-center px-3 py-4 text-sm text-slate-700 whitespace-nowrap">
-                            <?= $qty ?>
-                        </td>
+                            // hitung subtotal
+                            $subTotal += $totalHarga;
 
-                        <!-- Total -->
-                        <td class="text-right px-5 py-4 text-sm font-semibold text-slate-800 whitespace-nowrap">
-                            Rp <?= number_format($totalHarga,0,',','.') ?>
-                        </td>
+                            // simpan total diskon
+                            $diskonTotal += $diskon;
 
-                    </tr>
+                            $grandTotal = $subTotal - $diskonTotal;
 
-                    <?php endforeach; ?>
+                            ?>
 
-                </tbody>
+                            <tr class="border-b border-slate-200 align-top hover:bg-slate-50">
 
+                                <td class="px-5 py-4 text-sm text-slate-700 break-words">
+
+                                    <div class="font-medium text-slate-800 leading-6">
+                                        <?= $namaproduk->data_pricelist_judul ?? 'Produk Tidak Ditemukan' ?>
+                                    </div>
+
+                                    <?php if (!empty($p->penawaran_klien_deskripsi)): ?>
+                                        <div class="text-slate-500 text-xs leading-5 mt-1">
+                                            <?= $p->penawaran_klien_deskripsi ?>
+                                        </div>
+                                    <?php endif; ?>
+
+                                </td>
+
+                                <td class="text-right px-4 py-4 text-sm text-slate-700 whitespace-nowrap">
+
+                                    <?php if ($harga > 0 && $hargaPromo > 0): ?>
+                                        <div class="text-slate-400 text-xs">
+                                            <s>Rp <?= number_format($harga,0,',','.') ?></s>
+                                        </div>
+                                    <?php endif; ?>
+
+                                    <div class="font-medium">
+                                        Rp <?= number_format($hargaFinal,0,',','.') ?>
+                                    </div>
+
+                                </td>
+
+                                <td class="text-center px-3 py-4 text-sm text-slate-700 whitespace-nowrap">
+                                    <?= $qty ?>
+                                </td>
+
+                                <td class="text-right px-5 py-4 text-sm font-semibold text-slate-800 whitespace-nowrap">
+
+                                    <div>
+                                        Rp <?= number_format($totalHarga,0,',','.') ?>
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                            <?php endforeach; ?>
+                    </tbody>
             </table>
 
         </div>
