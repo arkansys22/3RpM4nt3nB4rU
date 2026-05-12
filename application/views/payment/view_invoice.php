@@ -566,39 +566,19 @@
                 <?php }else if ($payment->metodep == 'Custom') { ?>
                     <?php
                         $paymentDetails = json_decode($payment->detail, true);
+
+                        if (is_array($paymentDetails)) {
+                            echo '<ul class="list-disc pl-5">';
+
+                            foreach ($paymentDetails as $item) {
+                                echo '<li>' . htmlspecialchars($item) . '</li>';
+                            }
+
+                            echo '</ul>';
+                        } else {
+                            echo nl2br($payment->detail);
+                        }
                     ?>
-
-                     <?php if (!empty($paymentDetails) && is_array($paymentDetails)): ?>
-
-                            <ul class="space-y-3">
-
-                                <?php foreach ($paymentDetails as $index => $item): ?>
-
-                                    <li class="flex items-start gap-3 bg-white border border-slate-200 rounded-xl p-4">
-
-                                        <div class="w-8 h-8 rounded-full bg-slate-800 text-white text-sm flex items-center justify-center shrink-0">
-                                            <?= $index + 1 ?>
-                                        </div>
-
-                                        <div class="text-sm text-slate-700 leading-6">
-                                            <?= htmlspecialchars($item) ?>
-                                        </div>
-
-                                    </li>
-
-                                <?php endforeach; ?>
-
-                            </ul>
-
-                        <?php else: ?>
-
-                            <div class="text-sm text-slate-500 italic">
-                                Detail pembayaran belum tersedia.
-                            </div>
-
-                        <?php endif; ?>
-
-                    </div>
 
                  <?php }else{ ?>    
                 <?php } ?>
