@@ -254,14 +254,14 @@ class Crud_payment extends CI_Controller {
         redirect('project/lihat/' . $id_session);
     }
 
-    public function edit($id_session, $transaction_id) {
-        if (empty($id_session) || empty($transaction_id)) {
+    public function edit($id_session, $payment_id_session) {
+        if (empty($id_session) || empty($payment_id_session)) {
             show_404(); // Tampilkan 404 jika parameter tidak valid
         }
 
         if ($this->session->level == '1') {
             cek_session_akses_developer('payment', $this->session->id_session);
-            $data['payment'] = $this->Payment_model->get_payment_by_transaction_id($id_session, $transaction_id);
+            $data['payment'] = $this->Payment_model->get_payment_by_payment_id_session($id_session, $payment_id_session);
             $data['project'] = $this->project_model->get_project_by_session($id_session);
             $data['kategori'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','110302');
             if (!$data['payment'] || strpos($data['payment']->transactions_id, 'IMB') !== 0) {
@@ -271,7 +271,7 @@ class Crud_payment extends CI_Controller {
 
         } else if ($this->session->level == '2') {
             cek_session_akses_administrator('payment', $this->session->id_session);
-            $data['payment'] = $this->Payment_model->get_payment_by_transaction_id($id_session, $transaction_id);
+            $data['payment'] = $this->Payment_model->get_payment_by_payment_id_session($id_session, $payment_id_session);
             $data['project'] = $this->project_model->get_project_by_session($id_session);
             $data['kategori'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','110302');
             if (!$data['payment'] || strpos($data['payment']->transactions_id, 'IMB') !== 0) {
@@ -285,7 +285,7 @@ class Crud_payment extends CI_Controller {
 
         } else if ($this->session->level == '4') {
             cek_session_akses_staff_admin('payment', $this->session->id_session);
-            $data['payment'] = $this->Payment_model->get_payment_by_transaction_id($id_session, $transaction_id);
+            $data['payment'] = $this->Payment_model->get_payment_by_payment_id_session($id_session, $payment_id_session);
             $data['project'] = $this->project_model->get_project_by_session($id_session);
             $data['kategori'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','110302');
             if (!$data['payment'] || strpos($data['payment']->transactions_id, 'IMB') !== 0) {
