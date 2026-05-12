@@ -349,7 +349,7 @@
                 <?php if ($promoDiskon > 0): ?>
                 <div class="flex justify-between text-sm">
                     <span class="text-slate-500">
-                        Promo Diskon
+                        Bonus & Cashback
                     </span>
 
                     <span class="text-red-500 font-medium">
@@ -379,18 +379,104 @@
             <div>
                 <h4 class="font-semibold text-slate-800 mb-3">
                     Ketentuan Pembayaran
-                </h4>      
+                </h4>    
 
-                <div class="text-sm text-slate-500 leading-7">
+                <div class="text-sm text-slate-500 leading-7">  
+
+            <?php
+                $today = new DateTime();
+                $event = new DateTime($project->event_date);
+                $diff  = $today->diff($event);
+                $days_to_event = $diff->days;
+            ?>
+
+            <?php
+                $aa = new DateTime($project->event_date);
+                $b  = clone $aa;
+                $b->modify('-60 days');
+                $c  = clone $aa;
+                $c->modify('-30 days');
+                $d  = clone $aa;
+                $d->modify('-14 days');
+            ?>
+
+
+            <?php
+
+                $grandTotal = ($potensial->promo === 'tidak') ? $subTotal : $total;
+
+                $p1 = 1000000;
+
+                if($days_to_event < 30){
+
+                    $p2 = $grandTotal - $p1;
+
+                }elseif($days_to_event < 60){
+
+                    $p2 = ($grandTotal - $p1) * 15/100;
+                    $p3 = ($grandTotal - $p1) * 45/100;
+                    $p4 = ($grandTotal - $p1) * 40/100;
+
+                }else{
+
+                    $p2 = ($grandTotal - $p1) * 15/100;
+                    $p3 = ($grandTotal - $p1) * 35/100;
+                    $p4 = ($grandTotal - $p1) * 35/100;
+                    $p5 = ($grandTotal - $p1) * 15/100;
+
+                }
+            ?>
+
+                <?php if ($payment->metodep == 'default') { ?>
+
                     <p>
-                        <?= $payment->detail ?>
+                        <ul>
+                            <li>Pembayaran pertama <b>kunci harga</b> Rp <?= number_format($p1,0,',','.') ?></li>
+
+                            <?php if($days_to_event < 30){ ?>
+
+                            <li>Pembayaran kedua <b>pelunasan</b> Rp <?= number_format($p2,0,',','.') ?></li>
+
+                            <?php }elseif($days_to_event < 60){ ?>
+
+                            <li>Pembayaran kedua <b>kunci tanggal</b> sebesar 15% dari total biaya pada H+14 setelah pembayaran pertama Rp <?= number_format($p2,0,',','.') ?></li>
+
+                            <li>Pembayaran ketiga sebesar 45% dari total biaya pada <b>H-30 acara (<?= tgl_indo($c->format('Y-m-d')) ?>)</b>
+                            Rp <?= number_format($p3,0,',','.') ?></li>
+
+                            <li>Pembayaran keempat sebesar 40% dari total biaya pada <b>H-14 acara (<?= tgl_indo($d->format('Y-m-d')) ?>)</b>
+                            Rp <?= number_format($p4,0,',','.') ?></li>
+
+                            <?php }else{ ?>
+
+                            <li>Pembayaran kedua <b>kunci tanggal</b> sebesar 15% dari total biaya pada H+14 setelah pembayaran pertama
+                            Rp <?= number_format($p2,0,',','.') ?></li>
+
+                            <li>Pembayaran ketiga sebesar 35% dari total biaya pada <b>H-60 acara (<?= tgl_indo($b->format('Y-m-d')) ?>)</b>
+                            Rp <?= number_format($p3,0,',','.') ?></li>
+
+                            <li>Pembayaran keempat sebesar 35% dari total biaya pada <b>H-30 acara (<?= tgl_indo($c->format('Y-m-d')) ?>)</b>
+                            Rp <?= number_format($p4,0,',','.') ?></li>
+
+                            <li>Pembayaran kelima sebesar 15% dari total biaya pada <b>H-14 acara (<?= tgl_indo($d->format('Y-m-d')) ?>)</b>
+                            Rp <?= number_format($p5,0,',','.') ?></li>
+
+                            <?php } ?>
+                        </ul>
+                       
                     </p>
+                <?php else { ?>
+                     <?= $payment->detail ?>
+                <?php } ?>
+
+                
+                    
                     <p>
                         <?php if($potensial->promo === 'tidak' ){ ?>
                             <div><i>Harga dapat berubah sewaktu-waktu jika belum melakukan pembayaran pertama untuk kunci harga.</i>
                             </div><br>                                
                         <?php }else{ ?>     
-                            <div><i>Harga dapat berubah sewaktu-waktu jika belum melakukan pembayaran pertama untuk kunci harga. Bonus dan Cashback berlaku hanya sampai H+5 setelah penawaran ini diberikan. Dan besaran bonus dan cashback setiap harinya berkurang Rp 200.000. Jadi segera lakukan pembayaran pertama dan amankan bonus dan cashbacknya.</i></div><br>
+                            <div><i>Harga dapat berubah sewaktu-waktu jika belum melakukan pembayaran pertama untuk kunci harga. Bonus dan Cashback berlaku hanya sampai H+5 setelah invoice ini diberikan. Dan besaran bonus dan cashback setiap harinya berkurang Rp 200.000. Jadi segera lakukan pembayaran pertama dan amankan bonus dan cashbacknya.</i></div><br>
                         <?php }?>
                     </p>
 
