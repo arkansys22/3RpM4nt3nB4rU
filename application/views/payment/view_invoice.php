@@ -555,8 +555,10 @@
 
                             <?php } ?>
                     </ul>
-                <?php }else { ?>
+                <?php }else if ($payment->metodep == 'Custom') { ?>
                      <?= $payment->detail ?>
+
+                 <?php }else{ ?>    
                 <?php } ?>
 
                 
