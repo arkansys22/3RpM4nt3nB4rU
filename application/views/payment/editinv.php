@@ -38,17 +38,24 @@
               <form action="<?= site_url('payment/update/' . $payment->id_session . '/' . ($payment->transactions_id ?? '')) ?>" method="post" class="bg-white p-6 shadow-md rounded">
 
                 <label class="block mb-2">Jenis Invoice</label>
-                <select id="typeinvoice" name="typeinvoice" class="w-full px-4 py-2 border rounded mb-4" required>
-    
+                <select 
+                    id="typeinvoice" 
+                    name="typeinvoice" 
+                    class="w-full px-4 py-2 border rounded mb-4" 
+                    required
+                >
+
                     <option value="">- Pilih Asal Invoice -</option>
 
-                    <option value="<?= $project->potensial_clients_id_session ?>"
-                        <?= set_select('typeinvoice', $project->potensial_clients_id_session) ?>>
+                    <option 
+                        value="<?= $project->potensial_clients_id_session ?>"
+                        <?= ($payment->typeinvoice == $project->potensial_clients_id_session) ? 'selected' : '' ?>>
                         Dari Proposal
                     </option>
 
-                    <option value="Penambahan"
-                        <?= set_select('typeinvoice', 'Penambahan') ?>>
+                    <option 
+                        value="Penambahan"
+                        <?= ($payment->typeinvoice == 'Penambahan') ? 'selected' : '' ?>>
                         Penambahan
                     </option>
 
@@ -167,19 +174,49 @@
         const totalBillInput = document.getElementById('total_bill');
         totalBillInput.value = totalBillInput.value.replace(/\./g, ''); // Hapus semua titik
     });
-
-    // Format angka dengan titik saat pengguna mengetik untuk DP
-    document.getElementById('DP').addEventListener('input', function (e) {
-        let value = e.target.value.replace(/\D/g, ''); // Hapus karakter non-angka
-        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Tambahkan titik setiap 3 angka
-        e.target.value = value;
-    });
-
-    // Hapus titik sebelum formulir dikirim untuk DP
-    document.querySelector('form').addEventListener('submit', function (e) {
-        const DPInput = document.getElementById('DP');
-        DPInput.value = DPInput.value.replace(/\./g, ''); // Hapus semua titik
-    });
+    
   </script>
+
+
+<script>
+    document.getElementById('typeinvoice').addEventListener('change', function () {
+
+        const typeinvoice = this.value;
+        const totalBillInput = document.getElementById('total_bill');
+
+        // value proposal
+        const proposalValue = '<?= $project->potensial_clients_id_session ?>';
+
+        // Jika pilih Dari Proposal
+        if (typeinvoice === proposalValue) {
+
+            fetch("<?= base_url('Crud_payment/get_total_penawaran') ?>", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: "id_session=" + encodeURIComponent(typeinvoice)
+            })
+            .then(response => response.json())
+            .then(data => {
+
+                let total = parseInt(data.total) || 0;
+
+                // format ribuan Indonesia
+                totalBillInput.value = total.toLocaleString('id-ID');
+
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+        } else {
+
+            // kosongkan jika penambahan
+            totalBillInput.value = '';
+
+        }
+    });
+   </script>
 </body>
 </html>
