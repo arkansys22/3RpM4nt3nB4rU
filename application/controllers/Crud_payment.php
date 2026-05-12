@@ -302,14 +302,14 @@ class Crud_payment extends CI_Controller {
         }
     }
 
-    public function edit2($id_session, $transaction_id) {
-        if (empty($id_session) || empty($transaction_id)) {
+    public function edit2($id_session, $payment_id_session) {
+        if (empty($id_session) || empty($payment_id_session)) {
             show_404(); // Tampilkan 404 jika parameter tidak valid
         }
 
         if ($this->session->level == '1') {
             cek_session_akses_developer('payment', $this->session->id_session);
-            $data['payment'] = $this->Payment_model->get_payment_by_transaction_id($id_session, $transaction_id);
+            $data['payment'] = $this->Payment_model->get_payment_by_transaction_id($id_session, $payment_id_session);
             $data['project'] = $this->project_model->get_project_by_session($id_session);
             $data['kategori'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','1000');
             if (!$data['payment'] || (strpos($data['payment']->transactions_id, 'MBP') !== 0 && strpos($data['payment']->transactions_id, 'MBP1') !== 0)) {
