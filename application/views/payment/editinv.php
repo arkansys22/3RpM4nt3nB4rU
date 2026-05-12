@@ -71,17 +71,25 @@
                 <input type="text" id="total_bill" name="total_bill" oninput="formatNumber(this)" value="<?= number_format($payment->total_bill, 0, ',', '.') ?>" class="w-full px-4 py-2 border rounded mb-4" required>
 
                 <label class="block mb-2">Kategori</label>
-                <select name="kategori" class="w-full px-4 py-2 border rounded mb-4" required> 
-                        <option value="-">- Pilih Kategori -</option>
-                        <?php foreach ($kategori as $p) {
-                              if (empty($kategori)){
-                                echo"
-                                <option value=''>-</option>
-                                <option value='$p[nomer_kategori]'>$p[nomer_kategori] - $p[nama_kategori]</option> ";
-                              }else{
-                                echo"<option value='$p[nomer_kategori]'>$p[nomer_kategori] | $p[nama_kategori]</option>";
-                           }
-                        } ?>
+
+                <select 
+                    name="kategori" 
+                    class="w-full px-4 py-2 border rounded mb-4" 
+                    required
+                >
+                    <option value="">- Pilih Kategori -</option>
+
+                    <?php foreach ($kategori as $p): ?>
+
+                        <option 
+                            value="<?= $p['nomer_kategori'] ?>"
+                            <?= ($payment->kategori == $p['nomer_kategori']) ? 'selected' : '' ?>
+                        >
+                            <?= $p['nomer_kategori'] ?> | <?= $p['nama_kategori'] ?>
+                        </option>
+
+                    <?php endforeach; ?>
+
                 </select>
 
 
