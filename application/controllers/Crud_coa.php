@@ -166,57 +166,57 @@ class Crud_coa extends CI_Controller {
         ->row();
 
     $data['transaksi'] = $this->db
-        ->select('
-            a.*,
-            pay.total_paid,
-            pay.transactions_id,
-            pay.kategori as payment_kategori,
-            COALESCE(
-                p.project_name,
-                pu_proj.project_name
-            ) as project_name
-        ')
-        ->from('accounting a')
+    ->select('
+        a.*,
+        pay.total_paid,
+        pay.transactions_id,
+        pay.kategori as payment_kategori,
+        COALESCE(
+            p.project_name,
+            pu_proj.project_name
+        ) as project_name
+    ')
+    ->from('accounting a')
 
-        // PROJECT NORMAL
-        ->join(
-            'project_acc pa',
-            'pa.id_session = a.accounting_id_session',
-            'left'
-        )
-        ->join(
-            'project p',
-            'p.id_session = pa.project_id_session',
-            'left'
-        )
+    // PROJECT NORMAL
+    ->join(
+        'project_acc pa',
+        'pa.id_session = a.accounting_id_session',
+        'left'
+    )
+    ->join(
+        'project p',
+        'p.id_session = pa.project_id_session',
+        'left'
+    )
 
-        // PROJECT UTANG
-        ->join(
-            'project_acc_utang pu',
-            'pu.id_session = a.accounting_id_session',
-            'left'
-        )
-        ->join(
-            'project pu_proj',
-            'pu_proj.id_session = pu.project_id_session',
-            'left'
-        )
+    // PROJECT UTANG
+    ->join(
+        'project_acc_utang pu',
+        'pu.id_session = a.accounting_id_session',
+        'left'
+    )
+    ->join(
+        'project pu_proj',
+        'pu_proj.id_session = pu.project_id_session',
+        'left'
+    )
 
-        // PAYMENT
-        ->join(
-            'payment pay',
-            'pay.id_session = a.accounting_id_session',
-            'left'
-        )
+    // PAYMENT
+    ->join(
+        'payment pay',
+        'pay.id_session = a.accounting_id_session',
+        'left'
+    )
 
-        ->like('a.accounting_nomer_kategori', $id, 'after')
+    ->like('a.accounting_nomer_kategori', $id, 'after')
 
-        // anti duplicate
-        ->group_by('a.id')
+    // FIX DUPLICATE
+    ->group_by('a.accounting_id_session')
 
-        ->order_by('a.accounting_tanggal', 'DESC')
-        ->get()
-        ->result();
+    ->order_by('a.accounting_tanggal', 'DESC')
+    ->get()
+    ->result();
 
     // total saldo
     $data['total'] = $this->db
