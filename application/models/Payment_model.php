@@ -22,6 +22,9 @@ class Payment_model extends CI_Model {
     }
 
 
+  
+
+
     public function get_payment_by_payment_id_session($id_session, $payment_id_session) {
         $this->db->where('id_session', $id_session);
         $this->db->where('payment_id_session', $payment_id_session);
@@ -29,19 +32,6 @@ class Payment_model extends CI_Model {
 
         if (!$result) {
             log_message('error', "Payment not found for id_session: $id_session and payment_id_session: $payment_id_session");
-        }
-
-        return $result;
-    }
-
-
-    public function get_payment_by_payment_id_session($id_session, $payment_id_session) {
-        $this->db->where('id_session', $id_session);
-        $this->db->where('payment_id_session', $payment_id_session);
-        $result = $this->db->get('payment')->row();
-
-        if (!$result) {
-            log_message('error', "Payment not found for id_session: $id_session and transactions_id: $transactions_id");
         }
 
         return $result;
