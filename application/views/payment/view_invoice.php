@@ -229,7 +229,7 @@
                             $totalAkhir = $totalHarga - $diskon;
 
                             // hitung subtotal
-                            $subTotal += $totalAkhir;
+                            $subTotal += $totalHarga;
 
                             // simpan total diskon
                             $diskonTotal += $diskon;
@@ -274,16 +274,6 @@
                                     <div>
                                         Rp <?= number_format($totalHarga,0,',','.') ?>
                                     </div>
-
-                                    <?php if($diskon > 0): ?>
-                                        <small class="text-red-500">
-                                            Diskon - Rp <?= number_format($diskon,0,',','.') ?>
-                                        </small>
-
-                                        <div class="text-green-600 text-xs font-medium mt-1">
-                                            Final: Rp <?= number_format($totalAkhir,0,',','.') ?>
-                                        </div>
-                                    <?php endif; ?>
 
                                 </td>
 
