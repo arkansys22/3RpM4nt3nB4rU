@@ -403,7 +403,7 @@
 
             <?php
 
-                $grandTotal = ($potensial->promo === 'tidak') ? $subTotal : $total;
+                $grandTotal = ($potensial->promo === 'tidak') ? $subTotal : $totalHarga;
 
                 $p1 = 1000000;
 
