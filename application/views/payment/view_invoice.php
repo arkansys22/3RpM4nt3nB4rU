@@ -10,29 +10,88 @@
     <style>
         .background-image {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: -1;
-            opacity: 0.1;
-        }
-        @media print {
-        .no-print {
-            display: none !important; /* Menyembunyikan elemen dengan class 'no-print' */
-        }
-        @page {
-            margin: 0; /* Menghapus margin default browser */
-        }
-        body {
+            inset: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 0;
         }
-        .print-wrapper {
-            width: 80%;
-            margin: auto;
+
+        @page {
+            size: A4;
+            margin: 12mm;
         }
+
+        @media print {
+
+            /* sembunyikan tombol */
+            .no-print {
+                display: none !important;
+            }
+
+            html,
+            body {
+                width: 100%;
+                height: auto !important;
+                background: #fff !important;
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                display: block !important;
+            }
+
+            /* container invoice */
+            .invoice-container {
+                width: 100% !important;
+                max-width: 100% !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                overflow: visible !important;
+                page-break-inside: auto;
+            }
+
+            /* wrapper full lebar */
+            .max-w-5xl {
+                max-width: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            /* table tidak kepotong */
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            thead {
+                display: table-header-group;
+            }
+
+            tfoot {
+                display: table-footer-group;
+            }
+
+            tr,
+            td,
+            th {
+                page-break-inside: avoid;
+            }
+
+            /* section jangan terpotong aneh */
+            .avoid-break {
+                page-break-inside: avoid;
+            }
+
+            /* paksa pindah halaman jika perlu */
+            .page-break {
+                page-break-before: always;
+            }
         }
     </style>
 </head>
@@ -77,7 +136,7 @@
     </div>
 
     <!-- Invoice -->
-    <div class="invoice-container bg-white rounded-2xl shadow-xl p-10 relative overflow-hidden">
+    <div class="invoice-container bg-white rounded-2xl shadow-xl p-10 relative">
 
         <!-- Watermark -->
         <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03]">
@@ -292,7 +351,7 @@
         </div>
 
         <!-- Total -->
-        <div class="mt-6 flex justify-end relative z-10">
+        <div class="mt-6 flex justify-end relative z-10 avoid-break">
             <div class="w-full md:w-[360px] ml-auto bg-slate-50 rounded-2xl border border-slate-200 p-6">
 
             <?php
@@ -374,7 +433,7 @@
         </div>
 
         <!-- Terms & Payment -->
-        <div class="grid md:grid-cols-2 grid-cols-1 gap-8 mt-10 relative z-10">
+        <div class="grid md:grid-cols-2 grid-cols-1 gap-8 mt-10 relative z-10 avoid-break">
 
             <div>
                 <h4 class="font-semibold text-slate-800 mb-3">
