@@ -314,7 +314,7 @@
                 if ($potensial->promo == 'custom') {
 
                     // ambil promo custom
-                    $promoDiskon = (float) str_replace('.', '', $potensial->promo_value);
+                    $promoDiskon = (float) str_replace('.', '', $potensial->promo_value ?? 0);
                     $labelPromo = 'Custom';
 
                 } elseif ($potensial->promo == 'default') {
@@ -401,36 +401,46 @@
             ?>
 
 
-            <?php
 
-                $grandTotal = ($potensial->promo === 'tidak') ? $subTotal : $totalHarga;
+                <?php
 
-                $p1 = 1000000;
+                    // gunakan grand total yang sudah dihitung sebelumnya
+                    $totalPembayaran = $grandTotal;
 
-                if($days_to_event < 30){
+                    // pembayaran pertama
+                    $p1 = 1000000;
 
-                    $p2 = $grandTotal - $p1;
+                    // sisa pembayaran
+                    $sisa = max(0, $totalPembayaran - $p1);
 
-                }elseif($days_to_event < 60){
+                    // reset variable
+                    $p2 = 0;
+                    $p3 = 0;
+                    $p4 = 0;
+                    $p5 = 0;
 
-                    $p2 = ($grandTotal - $p1) * 15/100;
-                    $p3 = ($grandTotal - $p1) * 45/100;
-                    $p4 = ($grandTotal - $p1) * 40/100;
+                    if ($days_to_event < 30) {
 
-                }else{
+                        $p2 = $sisa;
 
-                    $p2 = ($grandTotal - $p1) * 15/100;
-                    $p3 = ($grandTotal - $p1) * 35/100;
-                    $p4 = ($grandTotal - $p1) * 35/100;
-                    $p5 = ($grandTotal - $p1) * 15/100;
+                    } elseif ($days_to_event < 60) {
 
-                }
-            ?>
+                        $p2 = $sisa * 0.15;
+                        $p3 = $sisa * 0.45;
+                        $p4 = $sisa * 0.40;
+
+                    } else {
+
+                        $p2 = $sisa * 0.15;
+                        $p3 = $sisa * 0.35;
+                        $p4 = $sisa * 0.35;
+                        $p5 = $sisa * 0.15;
+                    }
+                ?>
 
                 <?php if ($payment->metodep == 'default') { ?>
 
-                    <p>
-                        <ul>
+                    <ul class="list-disc pl-5">
                             <li>Pembayaran pertama <b>kunci harga</b> Rp <?= number_format($p1,0,',','.') ?></li>
 
                             <?php if($days_to_event < 30){ ?>
@@ -462,9 +472,7 @@
                             Rp <?= number_format($p5,0,',','.') ?></li>
 
                             <?php } ?>
-                        </ul>
-                       
-                    </p>
+                    </ul>
                 <?php }else { ?>
                      <?= $payment->detail ?>
                 <?php } ?>
