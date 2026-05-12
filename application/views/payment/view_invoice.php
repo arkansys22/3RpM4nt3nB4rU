@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice</title>
+    <title><?= $fileName ?></title>
     <link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -94,6 +94,21 @@
             }
         }
     </style>
+    <?php
+        $clientName = preg_replace(
+            '/[^A-Za-z0-9\-]/',
+            '_',
+            $project->client_name
+        );
+
+        $invoiceNo = preg_replace(
+            '/[^A-Za-z0-9\-]/',
+            '_',
+            $payment->transactions_id
+        );
+
+        $fileName = 'Invoice_' . $clientName . '_' . $invoiceNo;
+        ?>
 </head>
 <body class="bg-slate-100 print:bg-white">
 
@@ -124,7 +139,7 @@
 
     <!-- Action Button -->
     <div class="flex justify-end gap-3 mb-5 no-print">
-        <button onclick="window.print()"
+        <button onclick="printInvoice()"
             class="bg-slate-800 hover:bg-black text-white px-5 py-2 rounded-lg transition">
             Print Invoice
         </button>
@@ -578,6 +593,31 @@
     </div>
 
 </div>
+
+<script>
+function printInvoice() {
+
+    // nama file dari PHP
+    const fileName =
+        "<?= $fileName ?>";
+
+    // ubah title halaman
+    const oldTitle =
+        document.title;
+
+    document.title =
+        fileName;
+
+    // print
+    window.print();
+
+    // balikan title setelah print
+    setTimeout(() => {
+        document.title =
+            oldTitle;
+    }, 1000);
+}
+</script>
 
 </body>
 </html>
