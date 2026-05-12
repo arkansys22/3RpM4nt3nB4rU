@@ -294,11 +294,24 @@
         <!-- Total -->
         <div class="w-full max-w-md bg-slate-50 rounded-2xl border border-slate-200 p-6">
 
+            <?php 
+            $potensial = $this->Crud_m
+                                ->view_where(
+                                    'potensial_clients',
+                                    [
+                                        'id_session' =>  $payment->potensial_clients_id_session
+                                    ]
+                                )
+                                ->row();
+
+
+            ?>
+
             <div class="space-y-3">
 
                 <div class="flex justify-between text-sm">
                     <span class="text-slate-500">
-                        Sub Total <?= $payment->potensial_clients_id_session ?>
+                        Sub Total <?= $potensial->promo ?>
                     </span>
 
                     <span class="font-medium">
