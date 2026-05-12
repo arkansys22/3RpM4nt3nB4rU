@@ -31,6 +31,12 @@ class Payment_model extends CI_Model {
         return $this->db->update('payment', $data);
     }
 
+    public function update_payment2($id_session, $payment_id_session, $data) {
+        $this->db->where('id_session', $id_session);
+        $this->db->where('payment_id_session', $payment_id_session);
+        return $this->db->update('payment', $data);
+    }
+
     public function delete_payment($id_session, $transactions_id) {
         $this->db->where('id_session', $id_session);
         $this->db->where('transactions_id', $transactions_id);

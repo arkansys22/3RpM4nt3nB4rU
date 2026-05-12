@@ -321,24 +321,24 @@
               </p>
 
               <div class="flex gap-2 mt-2">
-                <?php if (strpos($trans->transactions_id, 'IMB') === 0): ?>
-                  <a href="<?= site_url('payment/view_invoice/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
+                <?php if (strpos($trans->payment_id_session, 'IMB') === 0): ?>
+                  <a href="<?= site_url('payment/view_invoice/' . $project->id_session . '/' . $trans->payment_id_session) ?>" 
                      class="bg-blue-500 text-white text-sm px-2 py-1 rounded-md hover:bg-blue-600">
                      Lihat Invoice
                   </a>
-                <?php elseif (strpos($trans->transactions_id, 'MBP') === 0 || strpos($trans->transactions_id, 'MBP1') === 0): ?>
-                  <a href="<?= site_url('payment/view_kwitansi/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
+                <?php elseif (strpos($trans->payment_id_session, 'MBP') === 0 || strpos($trans->payment_id_session, 'MBP1') === 0): ?>
+                  <a href="<?= site_url('payment/view_kwitansi/' . $project->id_session . '/' . $trans->payment_id_session) ?>" 
                      class="bg-blue-500 text-white text-sm px-2 py-1 rounded-md hover:bg-blue-600">
                      Lihat Kwitansi
                   </a>
                 <?php endif; ?>
 
-                <a href="<?= site_url('payment/' . (strpos($trans->transactions_id, 'IMB') === 0 ? 'edit' : 'edit2') . '/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
+                <a href="<?= site_url('payment/' . (strpos($trans->payment_id_session, 'IMB') === 0 ? 'edit' : 'edit2') . '/' . $project->id_session . '/' . $trans->payment_id_session) ?>" 
                    class="bg-green-500 text-white text-sm px-2 py-1 rounded-md hover:bg-green-600">
                    Edit
                 </a>
 
-                <a href="<?= site_url('payment/delete/' . $project->id_session . '/' . $trans->transactions_id) ?>" 
+                <a href="<?= site_url('payment/delete/' . $project->id_session . '/' . $trans->payment_id_session) ?>" 
                    onclick="return confirm('Apakah Anda yakin ingin menghapus transaksi ini?')"
                    class="bg-red-500 text-white text-sm px-2 py-1 rounded-md hover:bg-red-600">
                    Hapus

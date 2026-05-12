@@ -119,6 +119,7 @@ class Crud_payment extends CI_Controller {
         $kategori = $this->input->post('kategori');
         $transaction_id =  'IMB' . date('ymd', strtotime($this->input->post('date'))) . $this->input->post('number');
         $tanggal = $this->input->post('date');
+        $payment_id_session = $id_session .$transaction_id;
 
 
         if ($this->agent->is_browser()) // Agent untuk fitur di log activity
@@ -140,6 +141,7 @@ class Crud_payment extends CI_Controller {
 
         $data = [
             'id_session'      => $id_session,
+            'payment_id_session'      => $payment_id_session,
             'transactions_id' => $transaction_id,
             'total_bill'      => $total_bill,
             'kategori'      => $kategori,
@@ -182,7 +184,7 @@ class Crud_payment extends CI_Controller {
             'accounting_nomer_kategori' => $kategori,
             'accounting_nominal' => $total_bill,
             'accounting_tanggal' => $tanggal,
-            'accounting_nama_transaksi'=> $transaction_id
+            'accounting_nama_transaksi'=> $payment_id_session
             
         );
 
@@ -348,7 +350,7 @@ class Crud_payment extends CI_Controller {
         }
     }
 
-    public function update($id_session, $transaction_id) {
+    public function update($id_session, $payment_id_session) {
 
 
       
@@ -384,7 +386,7 @@ class Crud_payment extends CI_Controller {
             'due_date'      => $this->input->post('due_date'),
         ];
 
-        $this->Payment_model->update_payment($id_session, $transaction_id, $data);
+        $this->Payment_model->update_payment2($id_session, $payment_id_session, $data);
 
         $status = 'Update Invoice ' . $transaction_id; // Include transactions_id in log status
         $ip = $this->input->ip_address();
