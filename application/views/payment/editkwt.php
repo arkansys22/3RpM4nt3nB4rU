@@ -89,27 +89,35 @@
                 <option value="Paid" <?= $payment->status === 'Paid' ? 'selected' : '' ?>>Paid</option>
             </select>
 
-            <label class="block mb-2">Kategori</label>
+            <div  id="kategori-wrapper" class="<?= ($payment->status === 'Paid') ? '' : 'hidden' ?>"  >
+
+                <label class="block mb-2 font-medium">
+                    Kategori
+                </label>
 
                 <select 
-                    name="kategori" 
-                    class="w-full px-4 py-2 border rounded mb-4" 
-                    required
+                    name="kategori"
+                    id="kategori"
+                    class="w-full px-4 py-2 border rounded mb-4"
+                    <?= ($payment->status === 'Paid') ? 'required' : '' ?>
                 >
                     <option value="">- Pilih Kategori -</option>
 
                     <?php foreach ($kategori as $p): ?>
 
-                        <option 
+                        <option
                             value="<?= $p['nomer_kategori'] ?>"
                             <?= ($payment->kategori == $p['nomer_kategori']) ? 'selected' : '' ?>
                         >
-                            <?= $p['nomer_kategori'] ?> | <?= $p['nama_kategori'] ?>
+                            <?= $p['nomer_kategori'] ?> |
+                            <?= $p['nama_kategori'] ?>
                         </option>
 
                     <?php endforeach; ?>
 
                 </select>
+
+            </div>
 
             <div class="flex flex-col sm:flex-row justify-end">
               <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded w-full hover:bg-blue-600 sm:w-24 mb-2 sm:mb-0 text-center">Update</button>
@@ -138,6 +146,33 @@
         const totalPaidInput = document.getElementById('total_paid');
         totalPaidInput.value = totalPaidInput.value.replace(/\./g, ''); // Hapus semua titik
     });
+  </script>
+
+  <script>
+      const statusSelect = document.getElementById('status');
+      const kategoriWrapper = document.getElementById('kategori-wrapper');
+      const kategoriSelect = document.getElementById('kategori');
+
+      function toggleKategori() {
+
+          if (statusSelect.value === 'Paid') {
+
+              kategoriWrapper.classList.remove('hidden');
+              kategoriSelect.setAttribute('required', 'required');
+
+          } else {
+
+              kategoriWrapper.classList.add('hidden');
+              kategoriSelect.removeAttribute('required');
+              kategoriSelect.value = '';
+          }
+      }
+
+      // saat halaman load
+      toggleKategori();
+
+      // saat status berubah
+      statusSelect.addEventListener('change', toggleKategori);
   </script>
 </body>
 </html>
