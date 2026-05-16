@@ -368,7 +368,7 @@
       </a>
 
       <?php if (!empty($has_invoice)): ?>
-        <a href="<?= site_url('payment/createkwt/' . $project->id_session . '/' . $has_invoice->transactions_id) ?>" 
+        <a href="<?= site_url('payment/createkwt/' . $project->id_session) ?>" 
            class="bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-700 inline-block text-center">
            Tambah Kwitansi
         </a>

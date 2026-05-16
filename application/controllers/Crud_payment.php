@@ -77,8 +77,8 @@ class Crud_payment extends CI_Controller {
             }
     }
 
-    public function create2($id_session, $transaction_id) {
-        if (empty($id_session) || empty($transaction_id)) {
+    public function create2($id_session) {
+        if (empty($id_session)) {
             show_404(); // Tampilkan 404 jika parameter tidak valid
         }
 

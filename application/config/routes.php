@@ -95,7 +95,7 @@ $route['payment/view_invoice/(:any)/(:num)'] = 'Crud_payment/view_invoice/$1/$2'
 $route['payment/view_kwitansi/(:any)/(:num)'] = 'Crud_payment/view_kwitansi/$1/$2';
 
 $route['payment/createinv/(:any)'] = 'crud_payment/create/$1'; // Route for creating an invoice
-$route['payment/createkwt/(:any)/(:any)'] = 'crud_payment/create2/$1/$2'; // Route for creating a kwitansi
+$route['payment/createkwt/(:any)'] = 'crud_payment/create2/$1'; // Route for creating a kwitansi
 $route['payment/edit/(:any)/(:any)'] = 'crud_payment/edit/$1/$2';
 $route['payment/edit2/(:any)/(:any)'] = 'crud_payment/edit2/$1/$2';
 $route['payment/delete/(:any)/(:any)'] = 'crud_payment/delete/$1/$2';
