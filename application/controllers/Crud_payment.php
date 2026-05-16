@@ -216,9 +216,12 @@ class Crud_payment extends CI_Controller {
             $agent = 'Unidentified User Agent';
         }
 
+        $transactions_id => 'MBP' . date('ymd', strtotime($this->input->post('date'))) . $this->input->post('number');
         $data = [
+
+            'payment_id_session' => $id_session.''.$transactions_id,
             'id_session' => $id_session,
-            'transactions_id' => 'MBP' . date('ymd', strtotime($this->input->post('date'))) . $this->input->post('number'),
+            'transactions_id' => $transactions_id,
             'total_paid' => $this->input->post('total_paid'),
             'total_bill' => 0, // Set total_bill to 0
             'detail' => json_encode($this->input->post('detail')),
