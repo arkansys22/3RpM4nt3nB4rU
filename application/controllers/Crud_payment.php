@@ -504,7 +504,7 @@ class Crud_payment extends CI_Controller {
         redirect('project/lihat/' . $id_session);
     }
 
-    public function delete($id_session, $transaction_id) {
+    public function delete($id_session, $payment_id_session) {
         if ($this->agent->is_browser()) // Agent untuk fitur di log activity
         {
             $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
@@ -522,7 +522,7 @@ class Crud_payment extends CI_Controller {
             $agent = 'Unidentified User Agent';
         }
 
-        $payment = $this->Payment_model->get_payment_by_transaction_id($id_session, $transaction_id);
+        $payment = $this->Payment_model->get_payment_by_payment_id_session($id_session, $payment_id_session);
 
         if (!$payment) {
             $this->session->set_flashdata('error', 'Transaksi tidak ditemukan.');
