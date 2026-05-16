@@ -182,7 +182,7 @@ class Crud_payment extends CI_Controller {
 
          $data_accounting = array(
 
-            'accounting_id_session' => $transaction_id,
+          
             'accounting_nomer_kategori' => $kategori,
             'accounting_nominal' => $total_bill,
             'accounting_tanggal' => $tanggal,
@@ -190,7 +190,7 @@ class Crud_payment extends CI_Controller {
             
         );
 
-        $this->project_model->insert_accounting($id_session,$data_accounting);
+        $this->project_model->insert_accounting($payment_id_session,$data_accounting);
 
 
         $this->session->set_flashdata('Success', 'Invoice berhasil dibuat');

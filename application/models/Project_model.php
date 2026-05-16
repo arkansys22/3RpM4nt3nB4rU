@@ -139,7 +139,7 @@ class project_model extends CI_Model {
     }
 
 
-   public function insert_accounting($id_session, $data_accounting) {
+   public function insert_accounting($payment_id_session, $data_accounting) {
 
         $sql = "
             INSERT INTO accounting 
@@ -153,7 +153,7 @@ class project_model extends CI_Model {
         ";
 
         return $this->db->query($sql, [
-            $id_session, // <-- pakai parameter ini
+            $payment_id_session, // <-- pakai parameter ini
             $data_accounting['accounting_nomer_kategori'],
             $data_accounting['accounting_nominal'],
             $data_accounting['accounting_tanggal'],
