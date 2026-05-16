@@ -182,7 +182,7 @@ class Crud_payment extends CI_Controller {
 
          $data_accounting = array(
 
-            'accounting_id_session' => $id_session .$transaction_id,
+            'accounting_id_session' => $transaction_id,
             'accounting_nomer_kategori' => $kategori,
             'accounting_nominal' => $total_bill,
             'accounting_tanggal' => $tanggal,
