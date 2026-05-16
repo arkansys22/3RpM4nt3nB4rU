@@ -529,7 +529,11 @@ class Crud_payment extends CI_Controller {
             redirect($_SERVER['HTTP_REFERER']); // Kembali ke halaman sebelumnya
         }
 
-        if ($this->Payment_model->delete_payment($id_session, $transaction_id)) {
+        $delete_payment =  $this->Payment_model->delete_payment($id_session, $payment_id_session);
+        $delete_accounting = $this->Payment_model->delete_accounting($payment_id_session);
+
+
+        if ($delete_payment && $delete_accounting) {
             $this->session->set_flashdata('success', 'Transaksi berhasil dihapus.');
         } else {
             $this->session->set_flashdata('error', 'Gagal menghapus transaksi.');

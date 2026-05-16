@@ -53,9 +53,9 @@ class Payment_model extends CI_Model {
         return $this->db->update('payment', $data);
     }
 
-    public function delete_payment($id_session, $transactions_id) {
+    public function delete_payment($id_session, $payment_id_session) {
         $this->db->where('id_session', $id_session);
-        $this->db->where('transactions_id', $transactions_id);
+        $this->db->where('payment_id_session', $payment_id_session);
         return $this->db->delete('payment');
     }
 
@@ -133,6 +133,12 @@ class Payment_model extends CI_Model {
             ];
         }
         return $espense_per_year;
+    }
+
+
+    public function delete_accounting($payment_id_session) {
+        $this->db->where('accounting_id_session ', $payment_id_session);
+        return $this->db->delete('accounting');
     }
 
 
