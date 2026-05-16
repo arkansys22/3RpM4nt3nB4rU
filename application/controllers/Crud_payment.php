@@ -216,7 +216,7 @@ class Crud_payment extends CI_Controller {
             $agent = 'Unidentified User Agent';
         }
 
-        $transactions_id => 'MBP' . date('ymd', strtotime($this->input->post('date'))) . $this->input->post('number');
+        $transactions_id = 'MBP' . date('ymd', strtotime($this->input->post('date'))) . $this->input->post('number');
         $data = [
 
             'payment_id_session' => $id_session.''.$transactions_id,
