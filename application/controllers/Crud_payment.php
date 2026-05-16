@@ -190,7 +190,7 @@ class Crud_payment extends CI_Controller {
             
         );
 
-        $this->project_model->insert_accounting($payment_id_session,$data_accounting);
+        $this->Payment_model->insert_accounting($payment_id_session,$data_accounting);
 
 
         $this->session->set_flashdata('Success', 'Invoice berhasil dibuat');
