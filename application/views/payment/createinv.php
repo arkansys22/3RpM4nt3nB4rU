@@ -56,6 +56,9 @@
 
                 </select>
 
+                <label class="block mb-2">Nama Invoice</label>
+                <input type="text" name="nama_transaksi" class="w-full px-4 py-2 border rounded mb-4">
+
                 <label class="block mb-2">Tanggal Pembuatan</label>
                 <input type="date" name="date" class="w-full px-4 py-2 border rounded mb-4">
 

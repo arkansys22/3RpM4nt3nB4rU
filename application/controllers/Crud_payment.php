@@ -114,6 +114,7 @@ class Crud_payment extends CI_Controller {
     }
 
     public function store() {
+        $nama_transaksi = $this->input->post('nama_transaksi');
         $id_session = $this->input->post('id_session');
         $total_bill = str_replace('.', '', $this->input->post('total_bill'));
         $kategori = $this->input->post('kategori');
@@ -141,6 +142,7 @@ class Crud_payment extends CI_Controller {
 
         $data = [
             'id_session'      => $id_session,
+            'nama_transaksi'      => $nama_transaksi,
             'payment_id_session'      => $payment_id_session,
             'transactions_id' => $transaction_id,
             'total_bill'      => $total_bill,
@@ -180,11 +182,11 @@ class Crud_payment extends CI_Controller {
 
          $data_accounting = array(
 
-            'accounting_id_session' => $id_session,
+            'accounting_id_session' => $payment_id_session,
             'accounting_nomer_kategori' => $kategori,
             'accounting_nominal' => $total_bill,
             'accounting_tanggal' => $tanggal,
-            'accounting_nama_transaksi'=> $payment_id_session
+            'accounting_nama_transaksi'=> $nama_transaksi
             
         );
 
