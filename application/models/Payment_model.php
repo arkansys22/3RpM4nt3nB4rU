@@ -166,14 +166,25 @@ class Payment_model extends CI_Model {
 
     public function update_accounting($payment_id_session, $data_accounting)
     {
+        // Hapus accounting lama berdasarkan payment session
         $this->db->where('accounting_id_session', $payment_id_session);
+        $this->db->delete('accounting');
 
-        return $this->db->update('accounting', [
-            'accounting_nomer_kategori' => $data_accounting['accounting_nomer_kategori'],
-            'accounting_nominal'        => $data_accounting['accounting_nominal'],
-            'accounting_tanggal'        => $data_accounting['accounting_tanggal'],
-            'accounting_nama_transaksi' => $data_accounting['accounting_nama_transaksi']
-        ]);
+        // Insert ulang accounting baru
+        foreach ($data_accounting as $row) {
+
+            $insertData = [
+                'accounting_id_session'      => $payment_id_session,
+                'accounting_nomer_kategori'  => $row['accounting_nomer_kategori'],
+                'accounting_nominal'         => $row['accounting_nominal'],
+                'accounting_tanggal'         => $row['accounting_tanggal'],
+                'accounting_nama_transaksi'  => $row['accounting_nama_transaksi']
+            ];
+
+            $this->db->insert('accounting', $insertData);
+        }
+
+        return true;
     }
 
 }
