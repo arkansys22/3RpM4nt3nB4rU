@@ -63,7 +63,7 @@
                     ];
 
                     foreach ($pembayaranList as $item):
-                        $value = "Pembayaran {$item} {$payment->client_name}";
+                        $value = "Pembayaran {$item} {$project->client_name}";
                     ?>
                         <option value="<?= $value ?>" <?= ($payment->metodep == $value) ? 'selected' : '' ?>>
                             <?= $value ?>
