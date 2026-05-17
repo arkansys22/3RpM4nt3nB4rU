@@ -140,21 +140,22 @@ class Payment_model extends CI_Model {
     }
 
 
-    public function insert_accounting($payment_id_session, $data_accounting) {
-
+    public function insert_accounting($payment_id_session, $data_accounting)
+    {
         $sql = "
-            INSERT INTO accounting 
-            (accounting_id_session, accounting_nomer_kategori, accounting_nominal, accounting_tanggal, accounting_nama_transaksi)
+            INSERT INTO accounting
+            (
+                accounting_id_session,
+                accounting_nomer_kategori,
+                accounting_nominal,
+                accounting_tanggal,
+                accounting_nama_transaksi
+            )
             VALUES (?, ?, ?, ?, ?)
-            ON DUPLICATE KEY UPDATE
-                accounting_nomer_kategori = VALUES(accounting_nomer_kategori),
-                accounting_nominal = VALUES(accounting_nominal),
-                accounting_nama_transaksi = VALUES(accounting_nama_transaksi),
-                accounting_tanggal = VALUES(accounting_tanggal)
         ";
 
         return $this->db->query($sql, [
-            $payment_id_session, // <-- pakai parameter ini
+            $payment_id_session,
             $data_accounting['accounting_nomer_kategori'],
             $data_accounting['accounting_nominal'],
             $data_accounting['accounting_tanggal'],

@@ -124,6 +124,7 @@ class Crud_payment extends CI_Controller {
         $id_session = $this->input->post('id_session');
         $total_bill = str_replace('.', '', $this->input->post('total_bill'));
         $kategori = $this->input->post('kategori');
+        $kategori2 = $this->input->post('kategori2');
         $transaction_id =  'IMB' . date('ymd', strtotime($this->input->post('date'))) . $this->input->post('number');
         $tanggal = $this->input->post('date');
         $payment_id_session = $id_session .$transaction_id;
@@ -153,6 +154,7 @@ class Crud_payment extends CI_Controller {
             'transactions_id' => $transaction_id,
             'total_bill'      => $total_bill,
             'kategori'      => $kategori,
+            'kategori2'      => $kategori2,
             'potensial_clients_id_session'      => $this->input->post('typeinvoice'),
             'total_paid'      => 0, // Set total_paid to 0
             'detail'          => json_encode($this->input->post('detail')),
@@ -186,17 +188,33 @@ class Crud_payment extends CI_Controller {
 
 
 
-         $data_accounting = array(
-
-          
-            'accounting_nomer_kategori' => $kategori,
+         $data_accounting_1 = array(
+            'accounting_nomer_kategori' => $kategori, // kategori pertama
             'accounting_nominal' => $total_bill,
             'accounting_tanggal' => $tanggal,
-            'accounting_nama_transaksi'=> $nama_transaksi
-            
+            'accounting_nama_transaksi' => $nama_transaksi
         );
 
-        $this->Payment_model->insert_accounting($payment_id_session,$data_accounting);
+        $data_accounting_2 = array(
+            'accounting_nomer_kategori' => $kategori2, // kategori kedua
+            'accounting_nominal' => $total_bill,
+            'accounting_tanggal' => $tanggal,
+            'accounting_nama_transaksi' => $nama_transaksi
+        );
+
+        // Insert accounting pertama
+        $this->Payment_model->insert_accounting(
+            $payment_id_session,
+            $data_accounting_1
+        );
+
+        // Insert accounting kedua
+        $this->Payment_model->insert_accounting(
+            $payment_id_session,
+            $data_accounting_2
+        );
+
+    
 
 
         $this->session->set_flashdata('Success', 'Invoice berhasil dibuat');

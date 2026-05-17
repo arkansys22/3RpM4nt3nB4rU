@@ -90,7 +90,7 @@
                 </select>
 
                 <label class="block mb-2">Kategori Sales</label>
-                <select name="kategori" class="w-full px-4 py-2 border rounded mb-4" required> 
+                <select name="kategori2" class="w-full px-4 py-2 border rounded mb-4" required> 
                         <option value="-">- Pilih Kategori -</option>
                         <?php foreach ($kategori2 as $p) {
                               if (empty($kategori2)){
