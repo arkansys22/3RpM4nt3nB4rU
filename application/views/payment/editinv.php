@@ -107,7 +107,7 @@
 
                         <option 
                             value="<?= $p['nomer_kategori'] ?>"
-                            <?= ($payment->kategori == $p['nomer_kategori']) ? 'selected' : '' ?>
+                            <?= ($payment->kategori2 == $p['nomer_kategori']) ? 'selected' : '' ?>
                         >
                             <?= $p['nomer_kategori'] ?> | <?= $p['nama_kategori'] ?>
                         </option>
