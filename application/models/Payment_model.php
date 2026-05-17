@@ -164,4 +164,16 @@ class Payment_model extends CI_Model {
     }
 
 
+    public function update_accounting($payment_id_session, $data_accounting)
+    {
+        $this->db->where('accounting_id_session', $payment_id_session);
+
+        return $this->db->update('accounting', [
+            'accounting_nomer_kategori' => $data_accounting['accounting_nomer_kategori'],
+            'accounting_nominal'        => $data_accounting['accounting_nominal'],
+            'accounting_tanggal'        => $data_accounting['accounting_tanggal'],
+            'accounting_nama_transaksi' => $data_accounting['accounting_nama_transaksi']
+        ]);
+    }
+
 }

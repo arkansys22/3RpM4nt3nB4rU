@@ -313,7 +313,7 @@ class Crud_payment extends CI_Controller {
             $data['project'] = $this->project_model->get_project_by_session($id_session);
             $data['kategori'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','110302');
             $data['kategori2'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','4000');
-            
+
             if (!$data['payment'] || strpos($data['payment']->transactions_id, 'IMB') !== 0) {
                 show_404(); // Pastikan hanya invoice yang dapat diedit
             }
@@ -414,6 +414,7 @@ class Crud_payment extends CI_Controller {
         $nama_transaksi = $this->input->post('nama_transaksi');
         $total_bill = str_replace('.', '', $this->input->post('total_bill'));
         $kategori = $this->input->post('kategori');
+        $kategori2 = $this->input->post('kategori2');
         $tanggal = $this->input->post('date');
 
 
@@ -441,6 +442,7 @@ class Crud_payment extends CI_Controller {
             'date'          => $tanggal,
             'nama_transaksi'          => $nama_transaksi,
             'kategori'      => $kategori,
+            'kategori2'      => $kategori2,
             'metodep'        => $this->input->post('metodep'),
             'due_date'      => $this->input->post('due_date'),
         ];
@@ -465,17 +467,31 @@ class Crud_payment extends CI_Controller {
         );
         $this->Payment_model->insert_log_activity($data_log);
 
-         $data_accounting = array(
-
-            'accounting_id_session' => $payment_id_session,
-            'accounting_nomer_kategori' => $kategori,
+         $data_accounting_1 = array(
+            'accounting_nomer_kategori' => $kategori, // kategori pertama
             'accounting_nominal' => $total_bill,
             'accounting_tanggal' => $tanggal,
-            'accounting_nama_transaksi'=> $nama_transaksi
-            
+            'accounting_nama_transaksi' => $nama_transaksi
         );
 
-        $this->project_model->insert_accounting($payment_id_session,$data_accounting);
+        $data_accounting_2 = array(
+            'accounting_nomer_kategori' => $kategori2, // kategori kedua
+            'accounting_nominal' => $total_bill,
+            'accounting_tanggal' => $tanggal,
+            'accounting_nama_transaksi' => $nama_transaksi
+        );
+
+        // Insert accounting pertama
+        $this->Payment_model->update_accounting(
+            $payment_id_session,
+            $data_accounting_1
+        );
+
+        // Insert accounting kedua
+        $this->Payment_model->update_accounting(
+            $payment_id_session,
+            $data_accounting_2
+        );
 
 
         $this->session->set_flashdata('Success', 'Invoice berhasil diupdate');
