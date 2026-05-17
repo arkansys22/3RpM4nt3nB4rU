@@ -1,3 +1,4 @@
+
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -186,5 +187,41 @@ class Payment_model extends CI_Model {
 
         return true;
     }
+
+    public function update_accounting_kwitansi($payment_id_session, $data_accounting)
+{
+    // Cek apakah accounting_id_session sudah ada
+    $cek = $this->db
+        ->where('accounting_id_session', $payment_id_session)
+        ->get('accounting')
+        ->row();
+
+    $insertData = [
+        'accounting_id_session'      => $payment_id_session,
+        'accounting_nomer_kategori'  => $data_accounting['accounting_nomer_kategori'],
+        'accounting_nominal'         => $data_accounting['accounting_nominal'],
+        'accounting_tanggal'         => $data_accounting['accounting_tanggal'],
+        'accounting_nama_transaksi'  => $data_accounting['accounting_nama_transaksi']
+    ];
+
+    // Jika belum ada → insert
+    if (!$cek) {
+
+        return $this->db->insert('accounting', $insertData);
+
+    } else {
+
+        // Jika sudah ada → update
+        $this->db->where(
+            'accounting_id_session',
+            $payment_id_session
+        );
+
+        return $this->db->update(
+            'accounting',
+            $insertData
+        );
+    }
+}
 
 }

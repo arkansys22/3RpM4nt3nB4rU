@@ -550,16 +550,19 @@ class Crud_payment extends CI_Controller {
 
         $this->Payment_model->insert_log_activity($data_log);
 
-         $data_accounting = array(
 
+        $data_accounting = [
             'accounting_nomer_kategori' => $kategori,
-            'accounting_nominal' => $total_paid,
-            'accounting_tanggal' => $tanggal,
-            'accounting_nama_transaksi'=> $metodep
-            
+            'accounting_nominal'        => $total_paid,
+            'accounting_tanggal'        => $tanggal,
+            'accounting_nama_transaksi' => $metodep
+        ];
+
+        $this->Payment_model->update_accounting_kwitansi(
+            $payment_id_session,
+            $data_accounting
         );
 
-        $this->Payment_model->update_accounting($payment_id_session,$data_accounting);
 
 
 
