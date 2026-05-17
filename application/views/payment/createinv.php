@@ -65,8 +65,12 @@
                 <label class="block mb-2">Jatuh Tempo</label>
                 <input type="date" name="due_date" class="w-full px-4 py-2 border rounded mb-4"> <!-- Include due_date -->
 
-                <label class="block mb-2">Kode Unik</label>
-                <input type="number" name="number" class="w-full px-4 py-2 border rounded mb-4">
+                <?php
+                // Generate angka random 3 digit (100 - 999)
+                $kode_unik = rand(100, 999);
+                ?>
+
+                <input type="hidden" name="number" value="<?= $kode_unik ?>">
 
                 <label class="block mb-2">Total</label>
                 <input type="text" id="total_bill" oninput="formatNumber(this)" name="total_bill" step="0.01" class="w-full px-4 py-2 border rounded mb-4" required>
