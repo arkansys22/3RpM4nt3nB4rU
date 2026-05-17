@@ -73,8 +73,7 @@
                     foreach ($pembayaranList as $item):
                         $value = "Pembayaran {$item} {$project->client_name}";
                     ?>
-                        <option value="<?= $value ?>"
-                            <?= (isset($payment) && $payment->metodep == $value) ? 'selected' : '' ?>>
+                        <option value="<?= $value ?>">
                             <?= $value ?>
                         </option>
                     <?php endforeach; ?>
@@ -126,37 +125,56 @@
   </div>
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
   <script>
-      function formatNumber(input) {
-          let value = input.value.replace(/\D/g, '');
-          value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-          input.value = value;
-      }
+    document.addEventListener('DOMContentLoaded', function () {
 
-      document.querySelector('form').addEventListener('submit', function () {
-          const totalPaidInput = document.querySelector('input[name="total_paid"]');
-          totalPaidInput.value = totalPaidInput.value.replace(/\./g, '');
-      });
+        // Format angka ribuan
+        window.formatNumber = function(input) {
+            let value = input.value.replace(/\D/g, '');
+            value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            input.value = value;
+        };
 
-      // Show / Hide kategori berdasarkan status
-      const statusSelect = document.getElementById('status');
-      const kategoriWrapper = document.getElementById('kategori-wrapper');
-      const kategoriSelect = document.getElementById('kategori');
+        // Hapus titik sebelum submit
+        const form = document.querySelector('form');
 
-      function toggleKategori() {
-          if (statusSelect.value === 'Paid') {
-              kategoriWrapper.classList.remove('hidden');
-              kategoriSelect.setAttribute('required', 'required');
-          } else {
-              kategoriWrapper.classList.add('hidden');
-              kategoriSelect.removeAttribute('required');
-              kategoriSelect.value = '';
-          }
-      }
+        if (form) {
+            form.addEventListener('submit', function () {
+                const totalPaidInput = document.querySelector('input[name="total_paid"]');
 
-      statusSelect.addEventListener('change', toggleKategori);
+                if (totalPaidInput) {
+                    totalPaidInput.value = totalPaidInput.value.replace(/\./g, '');
+                }
+            });
+        }
 
-      // Jalankan saat halaman pertama kali load
-      toggleKategori();
+        // Show / Hide kategori berdasarkan status
+        const statusSelect = document.getElementById('status');
+        const kategoriWrapper = document.getElementById('kategori-wrapper');
+        const kategoriSelect = document.getElementById('kategori');
+
+        function toggleKategori() {
+
+            // Cegah error jika element tidak ditemukan
+            if (!statusSelect || !kategoriWrapper || !kategoriSelect) return;
+
+            if (statusSelect.value === 'Paid') {
+                kategoriWrapper.classList.remove('hidden');
+                kategoriSelect.setAttribute('required', 'required');
+            } else {
+                kategoriWrapper.classList.add('hidden');
+                kategoriSelect.removeAttribute('required');
+                kategoriSelect.value = '';
+            }
+        }
+
+        // Event change status
+        if (statusSelect) {
+            statusSelect.addEventListener('change', toggleKategori);
+        }
+
+        // Jalankan saat halaman load
+        toggleKategori();
+    });
   </script>
 </body>
 </html>
