@@ -529,7 +529,7 @@ class Crud_payment extends CI_Controller {
             'status'        => $this->input->post('status'),
         ];
 
-        $this->Payment_model->update_payment2($id_session, $payment_id_session, $data);
+        $this->Payment_model->update_payment2($id_session, $metodep, $data);
 
         $status = 'Update Kwitansi ' . $payment_id_session; // Include transactions_id in log status
         $ip = $this->input->ip_address();
