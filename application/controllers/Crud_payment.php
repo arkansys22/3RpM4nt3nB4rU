@@ -203,6 +203,12 @@ class Crud_payment extends CI_Controller {
 
     public function store2() {
         $id_session = $this->input->post('id_session');
+        $total_paid = str_replace('.', '', $this->input->post('total_paid'));
+        $kategori = $this->input->post('kategori');        
+        $transactions_id = 'MBP' . date('ymd', strtotime($this->input->post('date'))) . $this->input->post('number');
+        $tanggal = $this->input->post('date');
+        $payment_id_session = $id_session .$transaction_id;
+        $metodep        = $this->input->post('metodep');
 
         if ($this->agent->is_browser()) // Agent untuk fitur di log activity
         {
@@ -221,24 +227,25 @@ class Crud_payment extends CI_Controller {
             $agent = 'Unidentified User Agent';
         }
 
-        $transactions_id = 'MBP' . date('ymd', strtotime($this->input->post('date'))) . $this->input->post('number');
         $data = [
 
-            'payment_id_session' => $id_session.''.$transactions_id,
+            'payment_id_session' => $payment_id_session,
             'id_session' => $id_session,
             'transactions_id' => $transactions_id,
-            'total_paid' => $this->input->post('total_paid'),
+            'total_paid' => $total_paid,
+            'kategori' => $kategori,
             'total_bill' => 0, // Set total_bill to 0
             'detail' => json_encode($this->input->post('detail')),
-            'date' => $this->input->post('date'),
+            'date' => $tanggal,
+            'metodep'        => $metodep,
             'due_date' => null, // Set due_date to null
-            'status' => 'Pending',
+            'status' => $this->input->post('status'),
             'created_by'    => $this->session->id_session,
         ];
         
         $this->Payment_model->insert_payment($data);
 
-        $status = 'Tambah Kwitansi ' . $data['transactions_id']; // Log status
+        $status = 'Tambah Kwitansi ' . $metodep; // Log status
         $ip = $this->input->ip_address();
         $location = get_location_from_ip($ip);
         $ip_with_location = $ip . "<br>(" . $location . ")";
@@ -256,6 +263,18 @@ class Crud_payment extends CI_Controller {
         );
 
         $this->Payment_model->insert_log_activity($data_log);
+
+        $data_accounting = array(
+
+          
+            'accounting_nomer_kategori' => $kategori,
+            'accounting_nominal' => $total_paid,
+            'accounting_tanggal' => $tanggal,
+            'accounting_nama_transaksi'=> $metodep
+            
+        );
+
+        $this->Payment_model->insert_accounting($payment_id_session,$data_accounting);
 
         $this->session->set_flashdata('Success', 'Kwitansi berhasil dibuat');
 
