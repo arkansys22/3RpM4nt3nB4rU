@@ -558,7 +558,7 @@ class Crud_payment extends CI_Controller {
             
         );
 
-        $this->Payment_model->insert_accounting($payment_id_session,$data_accounting);
+        $this->Payment_model->update_accounting($payment_id_session,$data_accounting);
 
 
 
