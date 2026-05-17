@@ -61,6 +61,9 @@
 
                 </select>
 
+                <label class="block mb-2">Nama Invoice</label>
+                <input type="text" name="nama_transaksi" value="<?= $payment->nama_transaksi ?>" class="w-full px-4 py-2 border rounded mb-4">
+
                 <label for="date" class="block mb-2 font-medium">Tanggal Pembuatan</label>
                 <input type="date" name="date" value="<?= $payment->date ?>" class="w-full px-4 py-2 border rounded mb-4" required>
 

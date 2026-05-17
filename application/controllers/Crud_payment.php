@@ -364,7 +364,7 @@ class Crud_payment extends CI_Controller {
     public function update($id_session, $payment_id_session) {
 
 
-      
+        $nama_transaksi = $this->input->post('nama_transaksi');
         $total_bill = str_replace('.', '', $this->input->post('total_bill'));
         $kategori = $this->input->post('kategori');
         $tanggal = $this->input->post('date');
@@ -392,6 +392,7 @@ class Crud_payment extends CI_Controller {
             'total_bill'    => $total_bill,
             'detail'        => json_encode($this->input->post('detail')),
             'date'          => $tanggal,
+            'nama_transaksi'          => $nama_transaksi,
             'kategori'      => $kategori,
             'metodep'        => $this->input->post('metodep'),
             'due_date'      => $this->input->post('due_date'),
@@ -399,14 +400,14 @@ class Crud_payment extends CI_Controller {
 
         $this->Payment_model->update_payment2($id_session, $payment_id_session, $data);
 
-        $status = 'Update Invoice ' . $transaction_id; // Include transactions_id in log status
+        $status = 'Update Invoice ' . $nama_transaksi; // Include transactions_id in log status
         $ip = $this->input->ip_address();
         $location = get_location_from_ip($ip);
         $ip_with_location = $ip . "<br>(" . $location . ")";
 
         $data_log = array(
 
-            'log_activity_user_id'=>$this->session->id_session,
+            'log_activity_user_id'=>$payment_id_session,
             'log_activity_modul' => 'payment/update',
             'log_activity_document_no' => $id_session,
             'log_activity_status' => $status, // Update log status
@@ -419,15 +420,15 @@ class Crud_payment extends CI_Controller {
 
          $data_accounting = array(
 
-            'accounting_id_session' => $id_session,
+            'accounting_id_session' => $payment_id_session,
             'accounting_nomer_kategori' => $kategori,
             'accounting_nominal' => $total_bill,
             'accounting_tanggal' => $tanggal,
-            'accounting_nama_transaksi'=> $transaction_id
+            'accounting_nama_transaksi'=> $nama_transaksi
             
         );
 
-        $this->project_model->insert_accounting($id_session,$data_accounting);
+        $this->project_model->insert_accounting($payment_id_session,$data_accounting);
 
 
         $this->session->set_flashdata('Success', 'Invoice berhasil diupdate');
