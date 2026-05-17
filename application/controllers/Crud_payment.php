@@ -467,31 +467,26 @@ class Crud_payment extends CI_Controller {
         );
         $this->Payment_model->insert_log_activity($data_log);
 
-         $data_accounting_1 = array(
-            'accounting_nomer_kategori' => $kategori, // kategori pertama
-            'accounting_nominal' => $total_bill,
-            'accounting_tanggal' => $tanggal,
-            'accounting_nama_transaksi' => $nama_transaksi
-        );
+         $data_accounting = [
+            [
+                'accounting_nomer_kategori' => $kategori_1,
+                'accounting_nominal'        => $total_bill,
+                'accounting_tanggal'        => $tanggal,
+                'accounting_nama_transaksi' => $nama_transaksi
+            ],
+            [
+                'accounting_nomer_kategori' => $kategori_2,
+                'accounting_nominal'        => $total_bill,
+                'accounting_tanggal'        => $tanggal,
+                'accounting_nama_transaksi' => $nama_transaksi
+            ]
+        ];
 
-        $data_accounting_2 = array(
-            'accounting_nomer_kategori' => $kategori2, // kategori kedua
-            'accounting_nominal' => $total_bill,
-            'accounting_tanggal' => $tanggal,
-            'accounting_nama_transaksi' => $nama_transaksi
-        );
-
-        // Insert accounting pertama
         $this->Payment_model->update_accounting(
             $payment_id_session,
-            $data_accounting_1
+            $data_accounting
         );
 
-        // Insert accounting kedua
-        $this->Payment_model->update_accounting(
-            $payment_id_session,
-            $data_accounting_2
-        );
 
 
         $this->session->set_flashdata('Success', 'Invoice berhasil diupdate');
