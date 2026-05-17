@@ -83,20 +83,12 @@
                 <!-- Status -->
                 <label for="status" class="block mb-2 font-medium">Status:</label>
                 <select name="status" id="status" class="w-full px-4 py-2 border rounded mb-4" required>
-                    <option value="Pending"
-                        <?= (isset($payment) && $payment->status == 'Pending') ? 'selected' : '' ?>>
-                        Pending
-                    </option>
-
-                    <option value="Paid"
-                        <?= (isset($payment) && $payment->status == 'Paid') ? 'selected' : '' ?>>
-                        Paid
-                    </option>
+                    <option value="Pending" selected>Pending</option>
+                    <option value="Paid">Paid</option>
                 </select>
 
                 <!-- Kategori -->
-                <div id="kategori-wrapper"
-                    class="<?= (isset($payment) && $payment->status === 'Paid') ? '' : 'hidden' ?>">
+                <div id="kategori-wrapper" class="hidden">
 
                     <label class="block mb-2 font-medium">
                         Kategori
@@ -106,15 +98,11 @@
                         name="kategori"
                         id="kategori"
                         class="w-full px-4 py-2 border rounded mb-4"
-                        <?= (isset($payment) && $payment->status === 'Paid') ? 'required' : '' ?>
                     >
                         <option value="">- Pilih Kategori -</option>
 
                         <?php foreach ($kategori as $p): ?>
-                            <option
-                                value="<?= $p['nomer_kategori'] ?>"
-                                <?= (isset($payment) && $payment->kategori == $p['nomer_kategori']) ? 'selected' : '' ?>
-                            >
+                            <option value="<?= $p['nomer_kategori'] ?>">
                                 <?= $p['nomer_kategori'] ?> |
                                 <?= $p['nama_kategori'] ?>
                             </option>
