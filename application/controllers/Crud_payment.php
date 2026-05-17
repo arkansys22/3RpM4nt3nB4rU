@@ -86,12 +86,14 @@ class Crud_payment extends CI_Controller {
             cek_session_akses_developer('project', $this->session->id_session);
             $data['payment'] = $this->Payment_model->get_payment_by_session($id_session);
             $data['project'] = $this->project_model->get_project_by_session($id_session);
+            $data['kategori'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','110302');
         $this->load->view('payment/createkwt', $data);
 
         } else if ($this->session->level == '2') {
             cek_session_akses_administrator('project', $this->session->id_session);
             $data['payment'] = $this->Payment_model->get_payment_by_session($id_session);
             $data['project'] = $this->project_model->get_project_by_session($id_session);
+            $data['kategori'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','110302');
         $this->load->view('payment/createkwt', $data);
 
         } else if ($this->session->level == '3') {
@@ -102,6 +104,7 @@ class Crud_payment extends CI_Controller {
             cek_session_akses_staff_admin('project', $this->session->id_session);
             $data['payment'] = $this->Payment_model->get_payment_by_session($id_session);
             $data['project'] = $this->project_model->get_project_by_session($id_session);
+            $data['kategori'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','110302');
         $this->load->view('payment/createkwt', $data);
 
         } else if ($this->session->level == '5') {
