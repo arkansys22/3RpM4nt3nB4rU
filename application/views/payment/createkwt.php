@@ -39,10 +39,10 @@
               <input type="hidden" name="id_session" value="<?= $project->id_session ?>">
               <input type="hidden" name="total_bill" value="0"> <!-- Ensure total_bill is always 0 -->
 
-                <label class="block mb-2">Total</label>
+                <label class="block mb-2">Total Dibayar</label>
                 <input type="text" id="formattedNumber" oninput="formatNumber(this)" name="total_paid" step="0.01" class="w-full px-4 py-2 border rounded mb-4" required>
 
-                <label class="block mb-2">Tanggal Pembuatan</label>
+                <label class="block mb-2">Tanggal</label>
                 <input type="date" name="date" class="w-full px-4 py-2 border rounded mb-4">
                 <!-- Exclude due_date -->
 
@@ -50,8 +50,78 @@
                 <input type="number" name="number" class="w-full px-4 py-2 border rounded mb-4">
 
                 <!-- Section for detail -->
-                        <label class="block mb-2">Detail</label>
-                        <textarea name="detail" class="w-full px-4 py-2 border rounded mb-4" required></textarea>
+                <label class="block mb-2">Detail</label>
+                <textarea name="detail" class="w-full px-4 py-2 border rounded mb-4" required></textarea>
+
+                <!-- Pembayaran ke -->
+                <label class="block mb-2">Pembayaran ke</label>
+                <select id="metodep" name="metodep" class="w-full px-4 py-2 border rounded mb-4" required>
+                    <option value="">- Pilih -</option>
+
+                    <?php
+                    $pembayaranList = [
+                        'Kesatu',
+                        'Kedua',
+                        'Ketiga',
+                        'Keempat',
+                        'Kelima',
+                        'Keenam',
+                        'Ketujuh',
+                        'Kedelapan'
+                    ];
+
+                    foreach ($pembayaranList as $item):
+                        $value = "Pembayaran {$item} {$project->client_name}";
+                    ?>
+                        <option value="<?= $value ?>"
+                            <?= (isset($payment) && $payment->metodep == $value) ? 'selected' : '' ?>>
+                            <?= $value ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+
+                <!-- Status -->
+                <label for="status" class="block mb-2 font-medium">Status:</label>
+                <select name="status" id="status" class="w-full px-4 py-2 border rounded mb-4" required>
+                    <option value="Pending"
+                        <?= (isset($payment) && $payment->status == 'Pending') ? 'selected' : '' ?>>
+                        Pending
+                    </option>
+
+                    <option value="Paid"
+                        <?= (isset($payment) && $payment->status == 'Paid') ? 'selected' : '' ?>>
+                        Paid
+                    </option>
+                </select>
+
+                <!-- Kategori -->
+                <div id="kategori-wrapper"
+                    class="<?= (isset($payment) && $payment->status === 'Paid') ? '' : 'hidden' ?>">
+
+                    <label class="block mb-2 font-medium">
+                        Kategori
+                    </label>
+
+                    <select
+                        name="kategori"
+                        id="kategori"
+                        class="w-full px-4 py-2 border rounded mb-4"
+                        <?= (isset($payment) && $payment->status === 'Paid') ? 'required' : '' ?>
+                    >
+                        <option value="">- Pilih Kategori -</option>
+
+                        <?php foreach ($kategori as $p): ?>
+                            <option
+                                value="<?= $p['nomer_kategori'] ?>"
+                                <?= (isset($payment) && $payment->kategori == $p['nomer_kategori']) ? 'selected' : '' ?>
+                            >
+                                <?= $p['nomer_kategori'] ?> |
+                                <?= $p['nama_kategori'] ?>
+                            </option>
+                        <?php endforeach; ?>
+
+                    </select>
+                </div>
 
                 <div class="flex flex-col sm:flex-row justify-end">
                   <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded w-full hover:bg-green-600 sm:w-24 mb-2 sm:mb-0 text-center">Simpan</button>
@@ -68,38 +138,37 @@
   </div>
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
   <script>
-    function formatNumber(input) {
-        let value = input.value.replace(/\D/g, ''); // Remove non-numeric characters
-        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Add dots for formatting
-        input.value = value;
-    }
+      function formatNumber(input) {
+          let value = input.value.replace(/\D/g, '');
+          value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+          input.value = value;
+      }
 
-    document.querySelector('form').addEventListener('submit', function (e) {
-        const totalPaidInput = document.querySelector('input[name="total_paid"]');
-        totalPaidInput.value = totalPaidInput.value.replace(/\./g, ''); // Remove dots before submitting
-    });
+      document.querySelector('form').addEventListener('submit', function () {
+          const totalPaidInput = document.querySelector('input[name="total_paid"]');
+          totalPaidInput.value = totalPaidInput.value.replace(/\./g, '');
+      });
+
+      // Show / Hide kategori berdasarkan status
+      const statusSelect = document.getElementById('status');
+      const kategoriWrapper = document.getElementById('kategori-wrapper');
+      const kategoriSelect = document.getElementById('kategori');
+
+      function toggleKategori() {
+          if (statusSelect.value === 'Paid') {
+              kategoriWrapper.classList.remove('hidden');
+              kategoriSelect.setAttribute('required', 'required');
+          } else {
+              kategoriWrapper.classList.add('hidden');
+              kategoriSelect.removeAttribute('required');
+              kategoriSelect.value = '';
+          }
+      }
+
+      statusSelect.addEventListener('change', toggleKategori);
+
+      // Jalankan saat halaman pertama kali load
+      toggleKategori();
   </script>
-  <script>
-    document.getElementById('add-detail-btn').addEventListener('click', function() {
-        const detailSection = document.getElementById('detail-section');
-        const existingDetail = detailSection.querySelector('textarea');
-        
-        if (existingDetail) {
-            const newDetailWrapper = document.createElement('div');
-            newDetailWrapper.classList.add('mb-2');
-
-            const newDetailLabel = document.createElement('label');
-            newDetailLabel.classList.add('block', 'mb-2');
-            newDetailLabel.textContent = 'Detail';
-
-            const newDetailInput = existingDetail.cloneNode(true);
-            newDetailInput.value = '';
-
-            newDetailWrapper.appendChild(newDetailLabel);
-            newDetailWrapper.appendChild(newDetailInput);
-            detailSection.appendChild(newDetailWrapper);
-        }
-    });
-</script>
 </body>
 </html>
