@@ -407,7 +407,7 @@ class Crud_payment extends CI_Controller {
 
         $data_log = array(
 
-            'log_activity_user_id'=>$payment_id_session,
+            'log_activity_user_id'=>$this->session->id_session,
             'log_activity_modul' => 'payment/update',
             'log_activity_document_no' => $id_session,
             'log_activity_status' => $status, // Update log status
