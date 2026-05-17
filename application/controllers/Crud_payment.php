@@ -469,7 +469,7 @@ class Crud_payment extends CI_Controller {
 
          $data_accounting = [
             [
-                'accounting_nomer_kategori' => $kategori1,
+                'accounting_nomer_kategori' => $kategori,
                 'accounting_nominal'        => $total_bill,
                 'accounting_tanggal'        => $tanggal,
                 'accounting_nama_transaksi' => $nama_transaksi
