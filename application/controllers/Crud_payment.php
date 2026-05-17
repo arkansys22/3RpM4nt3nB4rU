@@ -494,7 +494,7 @@ class Crud_payment extends CI_Controller {
         redirect('project/lihat/' . $id_session);
     }
 
-    public function update2($id_session, $transaction_id) {
+    public function update2($id_session, $payment_id_session) {
 
         $total_paid = str_replace('.', '', $this->input->post('total_paid'));
         $kategori = $this->input->post('kategori');
@@ -528,9 +528,9 @@ class Crud_payment extends CI_Controller {
             'status'        => $this->input->post('status'),
         ];
 
-        $this->Payment_model->update_payment($id_session, $transaction_id, $data);
+        $this->Payment_model->update_payment2($id_session, $payment_id_session, $data);
 
-        $status = 'Update Kwitansi ' . $transaction_id; // Include transactions_id in log status
+        $status = 'Update Kwitansi ' . $payment_id_session; // Include transactions_id in log status
         $ip = $this->input->ip_address();
         $location = get_location_from_ip($ip);
         $ip_with_location = $ip . "<br>(" . $location . ")";
@@ -551,7 +551,6 @@ class Crud_payment extends CI_Controller {
 
          $data_accounting = array(
 
-            'accounting_id_session' => $id_session,
             'accounting_nomer_kategori' => $kategori,
             'accounting_nominal' => $total_paid,
             'accounting_tanggal' => $tanggal,
@@ -559,7 +558,7 @@ class Crud_payment extends CI_Controller {
             
         );
 
-        $this->project_model->insert_accounting($id_session,$data_accounting);
+        $this->Payment_model->insert_accounting($payment_id_session,$data_accounting);
 
 
 
