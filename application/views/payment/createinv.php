@@ -75,11 +75,25 @@
                 <label class="block mb-2">Total</label>
                 <input type="text" id="total_bill" oninput="formatNumber(this)" name="total_bill" step="0.01" class="w-full px-4 py-2 border rounded mb-4" required>
                 
-                <label class="block mb-2">Kategori</label>
+                <label class="block mb-2">Kategori Account Receivable</label>
                 <select name="kategori" class="w-full px-4 py-2 border rounded mb-4" required> 
                         <option value="-">- Pilih Kategori -</option>
                         <?php foreach ($kategori as $p) {
                               if (empty($kategori)){
+                                echo"
+                                <option value=''>-</option>
+                                <option value='$p[nomer_kategori]'>$p[nomer_kategori] - $p[nama_kategori]</option> ";
+                              }else{
+                                echo"<option value='$p[nomer_kategori]'>$p[nomer_kategori] | $p[nama_kategori]</option>";
+                           }
+                        } ?>
+                </select>
+
+                <label class="block mb-2">Kategori Sales</label>
+                <select name="kategori" class="w-full px-4 py-2 border rounded mb-4" required> 
+                        <option value="-">- Pilih Kategori -</option>
+                        <?php foreach ($kategori2 as $p) {
+                              if (empty($kategori2)){
                                 echo"
                                 <option value=''>-</option>
                                 <option value='$p[nomer_kategori]'>$p[nomer_kategori] - $p[nama_kategori]</option> ";

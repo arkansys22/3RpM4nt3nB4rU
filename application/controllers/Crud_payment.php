@@ -48,6 +48,7 @@ class Crud_payment extends CI_Controller {
             $data['payment'] = $this->Payment_model->get_payment_by_session($id_session);
             $data['project'] = $this->project_model->get_project_by_session($id_session);
             $data['kategori'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','110302');
+            $data['kategori2'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','4000');
             $this->load->view('payment/createinv', $data);
 
         }else if($this->session->level=='2'){
@@ -55,6 +56,7 @@ class Crud_payment extends CI_Controller {
             $data['payment'] = $this->Payment_model->get_payment_by_session($id_session);
             $data['project'] = $this->project_model->get_project_by_session($id_session);
             $data['kategori'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','110302');
+            $data['kategori2'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','4000');
             $this->load->view('payment/createinv', $data);
 
         }else if($this->session->level=='3'){
@@ -66,6 +68,7 @@ class Crud_payment extends CI_Controller {
             $data['payment'] = $this->Payment_model->get_payment_by_session($id_session);
             $data['project'] = $this->project_model->get_project_by_session($id_session);
             $data['kategori'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','110302');
+            $data['kategori2'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','4000');
             $this->load->view('payment/createinv', $data);
 
         }else if($this->session->level=='5'){
