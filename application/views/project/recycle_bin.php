@@ -35,6 +35,19 @@
                     <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
                         <div class="flex items-center justify-between mb-4">
                           <h1 class="text-2xl font-bold">Recycle Bin Project</h1>
+                          <?php if($this->session->flashdata('Success')): ?>
+                              <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+                                  <?= $this->session->flashdata('Success'); ?>
+                              </div>
+                          <?php endif; ?>
+
+                          <?php if($this->session->flashdata('Error')): ?>
+                              <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                                  <?= $this->session->flashdata('Error'); ?>
+                              </div>
+                          <?php endif; ?>
+
+
                           <a href="<?= site_url('project') ?>" class="flex items-center gap-2 bg-blue-500 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                               <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
@@ -301,7 +314,7 @@
                                     <td>
                                     <div class="flex flex-col items-start gap-2 w-max">
                                         <a href="<?= site_url('project/restore/'.$p->id_session) ?>" class="bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 text-center w-full">Restore</a>
-                                        <a href="<?= site_url('project/permanent_delete/'.$p->id_session) ?>" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 text-center w-full whitespace-nowrap overflow-hidden text-ellipsis" onclick="return confirm('Hapus secara permanen?')">Delete Permanent</a>
+                                        <a href="<?= site_url('project/permanent_delete/'.$p->id_session) ?>" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 text-center w-full whitespace-nowrap overflow-hidden text-ellipsis" onclick="return confirm('Yakin ingin menghapus <?= $p->project_name ?> secara permanen?')">Delete Permanent</a>
                                     </div>
                                     </td>
                                 </tr>
