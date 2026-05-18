@@ -644,9 +644,9 @@ class Crud_payment extends CI_Controller {
         $this->load->view('payment/view_invoice', $data);
     }
     
-    public function view_kwitansi($id_session, $transactions_id) {
+    public function view_kwitansi($id_session, $payment_id_session) {
         // Ambil data pembayaran berdasarkan id_session dan transactions_id
-        $data['payment'] = $this->Payment_model->get_payment_by_transaction_id($id_session, $transactions_id);
+        $data['payment'] = $this->Payment_model->get_payment_by_payment_id_session($id_session, $payment_id_session);
     
         // Ambil data project berdasarkan id_session
         $data['project'] = $this->project_model->get_project_by_session($id_session);
