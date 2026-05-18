@@ -35,6 +35,19 @@
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
               <h1 class="text-2xl font-bold mb-4">Daftar Project</h1>
+
+              <?php if($this->session->flashdata('Success')): ?>
+                  <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+                      <?= $this->session->flashdata('Success'); ?>
+                  </div>
+              <?php endif; ?>
+
+              <?php if($this->session->flashdata('Error')): ?>
+                  <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                      <?= $this->session->flashdata('Error'); ?>
+                  </div>
+              <?php endif; ?>
+
               <div class="flex justify-between mb-4">
               <a href="<?= site_url('project/create') ?>">
                 <button class="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none">
