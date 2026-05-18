@@ -392,56 +392,71 @@ class Crud_project extends CI_Controller {
 
     public function delete($id_session) {
 
-        if ($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3' OR $this->session->level=='4' OR $this->session->level=='5'){
-        
+        if (
+            $this->session->level == '1' OR
+            $this->session->level == '2' OR
+            $this->session->level == '3' OR
+            $this->session->level == '4' OR
+            $this->session->level == '5'
+        ) {
 
-        if ($this->agent->is_browser()) // Agent untuk fitur di log activity
-                {
-                    $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
-                }
-                elseif ($this->agent->is_robot())
-                {
-                    $agent = $this->agent->robot();
-                }
-                elseif ($this->agent->is_mobile())
-                {
-                    $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
-                }
-                else
-                {
-                    $agent = 'Unidentified User Agent';
-                }
+            // Cek apakah id_session project ada di tabel payment
+            $cek_payment = $this->db
+                ->where('payment_id_session', $id_session)
+                ->get('payment')
+                ->num_rows();
 
-        $data = ['status' => 'delete'];
-        $this->project_model->update_project($id_session, $data);
-
-        // Update juga di tabel clients
-        $this->db->where('id_session', $id_session);
-        $this->db->update('clients', $data);
-
-        $ip = $this->input->ip_address();
-        $location = get_location_from_ip($ip);
-        $ip_with_location = $ip . "<br>(" . $location . ")";
-
-        $data_log = array(
-
-            'log_activity_user_id'=>$this->session->id_session,
-            'log_activity_modul' => 'project/delete',
-            'log_activity_document_no' => $id_session,
-            'log_activity_status' => 'Delete Project',
-            'log_activity_waktu' => date('Y-m-d H:i:s'),
-            'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $ip_with_location
-            
-        );
-
-        $this->project_model->insert_log_activity($data_log);
-
-        $this->session->set_flashdata('Success', 'Project berhasil dihapus');
-        redirect('project');
-            }else{
-                redirect(base_url());
+            // Jika ada payment, project tidak boleh dihapus
+            if ($cek_payment > 0) {
+                $this->session->set_flashdata(
+                    'Error',
+                    'Project tidak dapat dihapus karena sudah memiliki data pembayaran.'
+                );
+                redirect('project');
+                return;
             }
+
+            // Agent untuk fitur log activity
+            if ($this->agent->is_browser()) {
+                $agent = 'Desktop ' . $this->agent->browser() . ' ' . $this->agent->version();
+            } elseif ($this->agent->is_robot()) {
+                $agent = $this->agent->robot();
+            } elseif ($this->agent->is_mobile()) {
+                $agent = 'Mobile ' . $this->agent->mobile() . ' ' . $this->agent->version();
+            } else {
+                $agent = 'Unidentified User Agent';
+            }
+
+            // Soft delete project
+            $data = ['status' => 'delete'];
+            $this->project_model->update_project($id_session, $data);
+
+            // Update juga di tabel clients
+            $this->db->where('id_session', $id_session);
+            $this->db->update('clients', $data);
+
+            $ip = $this->input->ip_address();
+            $location = get_location_from_ip($ip);
+            $ip_with_location = $ip . "<br>(" . $location . ")";
+
+            $data_log = array(
+                'log_activity_user_id'      => $this->session->id_session,
+                'log_activity_modul'        => 'project/delete',
+                'log_activity_document_no'  => $id_session,
+                'log_activity_status'       => 'Delete Project',
+                'log_activity_waktu'        => date('Y-m-d H:i:s'),
+                'log_activity_platform'     => $agent,
+                'log_activity_ip'           => $ip_with_location
+            );
+
+            $this->project_model->insert_log_activity($data_log);
+
+            $this->session->set_flashdata('Success', 'Project berhasil dihapus');
+            redirect('project');
+
+        } else {
+            redirect(base_url());
+        }
     }
 
     public function recycle_bin() {
