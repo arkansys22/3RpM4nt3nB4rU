@@ -451,7 +451,7 @@ class Crud_project extends CI_Controller {
 
             $this->project_model->insert_log_activity($data_log);
 
-            $this->session->set_flashdata('Success', 'Project berhasil dihapus');
+            $this->session->set_flashdata('Success', 'Project berhasil dihapus dan dipindahkan ke Recycle Bin');
             redirect('project');
 
         } else {
