@@ -402,7 +402,7 @@ class Crud_project extends CI_Controller {
 
             // Cek apakah id_session project ada di tabel payment
             $cek_payment = $this->db
-                ->where('payment_id_session', $id_session)
+                ->where('id_session', $id_session)
                 ->get('payment')
                 ->num_rows();
 
