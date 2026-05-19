@@ -48,7 +48,7 @@
 
                 <?php foreach ($invoice as $p): ?>
 
-                    <?php $invoice_no = $p['payment_id_session'] . 'IMB'; ?>
+                    <?php $invoice_no = $p['payment_id_session']; ?>
 
                     <option
                         value="<?= $invoice_no ?>"
