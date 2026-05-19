@@ -104,7 +104,7 @@ class Crud_agenda extends CI_Controller {
     $this->Agenda_model->insert_log_activity($data_log);
     $this->session->set_flashdata('Success', 'Agenda berhasil dibuat');
 
-    redirect('project');
+    redirect('project/lihat/'.$id_session);
 }
 
 public function edit($id_session) {
