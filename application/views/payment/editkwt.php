@@ -39,7 +39,7 @@
 
             <label class="block mb-2 font-medium">Dari Invoice</label>
 
-            <select 
+           <select 
                 name="dariinvoice"
                 id="dariinvoice"
                 class="w-full px-4 py-2 border rounded mb-4"
@@ -48,15 +48,11 @@
 
                 <?php foreach ($invoice as $p): ?>
 
-                    <?php $invoice_no = $p['payment_id_session']; 
-                            $nama_transaksi = $p['nama_transaksi'];
-                    ?>
-
                     <option
-                        value="<?= $invoice_no ?>"
-                        <?= ($payment->kategori == $invoice_no) ? 'selected' : '' ?>
+                        value="<?= $p['payment_id_session'] ?>"
+                        <?= ($payment->dariinvoice == $p['payment_id_session']) ? 'selected' : '' ?>
                     >
-                        <?= $nama_transaksi ?>
+                        <?= $p['nama_transaksi'] ?>
                     </option>
 
                 <?php endforeach; ?>
