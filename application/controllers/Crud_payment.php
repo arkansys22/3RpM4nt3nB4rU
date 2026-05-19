@@ -236,6 +236,7 @@ class Crud_payment extends CI_Controller {
         $tanggal = $this->input->post('date');
         $payment_id_session = $id_session .$transaction_id;
         $metodep        = $this->input->post('metodep');
+        $dariinvoice        = $this->input->post('dariinvoice');
 
         if ($this->agent->is_browser()) // Agent untuk fitur di log activity
         {
@@ -258,6 +259,7 @@ class Crud_payment extends CI_Controller {
 
             'payment_id_session' => $payment_id_session,
             'id_session' => $id_session,
+            'dariinvoice' => $dariinvoice,
             'transactions_id' => $transactions_id,
             'total_paid' => $total_paid,
             'kategori' => $kategori,
