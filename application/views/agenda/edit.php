@@ -41,6 +41,15 @@
                 <label class="block mb-2">Brainstorming</label>
                 <input type="date" id="brainstorming" name="brainstorming" value="<?= $agenda->brainstorming ?>" class="w-full px-4 py-2 border rounded mb-4">
 
+                <label class="block mb-2">Fiting</label>
+                <input type="date" id="fiting" name="fiting" value="<?= $agenda->fiting ?>" class="w-full px-4 py-2 border rounded mb-4">
+
+                <label class="block mb-2">Test Food</label>
+                <input type="date" id="testfood" name="testfood" value="<?= $agenda->testfood ?>" class="w-full px-4 py-2 border rounded mb-4">
+
+                <label class="block mb-2">Final Fiting</label>
+                <input type="date" id="final_fiting" name="final_fiting" value="<?= $agenda->final_fiting ?>" class="w-full px-4 py-2 border rounded mb-4">
+
                 <label class="block mb-2">Technical Meeting</label>
                 <input type="date" id="technical_meeting" name="technical_meeting" value="<?= $agenda->technical_meeting ?>" class="w-full px-4 py-2 border rounded mb-4">
 
