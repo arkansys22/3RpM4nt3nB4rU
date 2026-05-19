@@ -256,12 +256,12 @@ public function update_sisa_invoice($id_session)
         return false;
     }
 
-    // Ambil total invoice asli dari payment
+    // Ambil total invoice asli
     $payment_invoice = $this->db
-        ->select('accounting_nominal')
-        ->from('accounting')
+        ->select('total_bill')
+        ->from('payment')
         ->like(
-            'accounting_id_session',
+            'payment_id_session',
             $id_session . 'IMB',
             'after'
         )
@@ -272,17 +272,23 @@ public function update_sisa_invoice($id_session)
         return false;
     }
 
-    $total_invoice = (float)$payment_invoice->accounting_nominal;
+    $total_invoice = (float)$payment_invoice->total_bill;
 
-    // Total semua pembayaran MBP
+    // TOTAL MBP STATUS PAID SAJA
     $mbp = $this->db
-        ->select_sum('accounting_nominal')
-        ->from('accounting')
+        ->select_sum('a.accounting_nominal')
+        ->from('accounting a')
+        ->join(
+            'payment p',
+            'p.payment_id_session = a.accounting_id_session',
+            'left'
+        )
         ->like(
-            'accounting_id_session',
+            'a.accounting_id_session',
             $id_session . 'MBP',
             'after'
         )
+        ->where('p.status', 'Paid')
         ->get()
         ->row();
 
@@ -293,10 +299,10 @@ public function update_sisa_invoice($id_session)
     // Hitung sisa invoice
     $sisa_invoice = $total_invoice - $total_mbp;
 
-    // Jangan minus
+    // Hindari minus
     $sisa_invoice = max(0, $sisa_invoice);
 
-    // UPDATE HANYA KATEGORI 110302
+    // Update hanya kategori 110302
     $this->db->like(
         'accounting_id_session',
         $id_session . 'IMB',
