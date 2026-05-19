@@ -235,7 +235,7 @@ class Payment_model extends CI_Model {
 
 public function update_sisa_invoice($id_session)
 {
-    // Ambil invoice accounting kategori 110302
+    // Cari invoice kategori 110302
     $invoice = $this->db
         ->select('accounting_id_session')
         ->from('accounting')
@@ -244,7 +244,10 @@ public function update_sisa_invoice($id_session)
             $id_session . 'IMB',
             'after'
         )
-        ->where('accounting_nomer_kategori', '110302')
+        ->where(
+            'accounting_nomer_kategori',
+            '110302'
+        )
         ->get()
         ->row();
 
@@ -252,7 +255,7 @@ public function update_sisa_invoice($id_session)
         return false;
     }
 
-    // Ambil total invoice asli dari payment IMB
+    // Ambil total invoice asli
     $payment_invoice = $this->db
         ->select('total_bill')
         ->from('payment')
@@ -269,47 +272,52 @@ public function update_sisa_invoice($id_session)
         return false;
     }
 
-    $total_invoice = (float)$payment_invoice->total_bill;
+    $total_invoice = (float)
+        $payment_invoice->total_bill;
 
     /*
     |--------------------------------------------------------------------------
-    | Total pembayaran MBP HANYA STATUS PAID
+    | Total MBP STATUS PAID
     |--------------------------------------------------------------------------
     */
-    $mbp = $this->db
-        ->select_sum('a.accounting_nominal')
-        ->from('accounting a')
-        ->join(
-            'payment p',
-            'p.payment_id_session = a.accounting_id_session',
-            'inner'
-        )
+    $mbp_paid = $this->db
+        ->select('payment_id_session')
+        ->from('payment')
         ->like(
-            'a.accounting_id_session',
+            'payment_id_session',
             $id_session . 'MBP',
             'after'
         )
-        ->where('p.status', 'Paid')
+        ->where('status', 'Paid')
         ->get()
-        ->row();
+        ->result();
 
-    $total_mbp = !empty($mbp->accounting_nominal)
-        ? (float)$mbp->accounting_nominal
-        : 0;
+    $total_mbp = 0;
 
-    // Hitung sisa invoice
-    $sisa_invoice = $total_invoice - $total_mbp;
+    foreach ($mbp_paid as $row) {
 
-    // Jangan minus
-    if ($sisa_invoice < 0) {
-        $sisa_invoice = 0;
+        $acc = $this->db
+            ->select_sum('accounting_nominal')
+            ->from('accounting')
+            ->where(
+                'accounting_id_session',
+                $row->payment_id_session
+            )
+            ->get()
+            ->row();
+
+        $total_mbp += (float)(
+            $acc->accounting_nominal ?? 0
+        );
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | Update HANYA kategori 110302
-    |--------------------------------------------------------------------------
-    */
+    // Hitung sisa invoice
+    $sisa_invoice = max(
+        0,
+        $total_invoice - $total_mbp
+    );
+
+    // Update accounting invoice 110302 saja
     $this->db
         ->like(
             'accounting_id_session',
