@@ -53,7 +53,6 @@
 
                         <option
                             value="<?= $p['payment_id_session'] ?>"
-                            <?= ($payment->dariinvoice == $p['payment_id_session']) ? 'selected' : '' ?>
                         >
                             <?= $p['nama_transaksi'] ?>
                         </option>
