@@ -36,6 +36,30 @@
         <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
           <h1 class="text-2xl font-bold mb-4">Edit Kwitansi <?= $payment->transactions_id ?></h1>
           <form id="edit-kwitansi-form" action="<?= site_url('payment/update2/' . $payment->id_session . '/' . ($payment->payment_id_session ?? '')) ?>" method="post" class="bg-white p-6 shadow-md rounded">
+
+            <label class="block mb-2 font-medium">Dari Invoice</label>
+                <select 
+                    name="kategori"
+                    id="kategori"
+                    class="w-full px-4 py-2 border rounded mb-4"
+                    <?= ($payment->status === 'Paid') ? 'required' : '' ?>
+                >
+                    <option value="">- Pilih Invoice -</option>
+
+                    <?php foreach ($invoice as $p): ?>
+
+                        <option
+                            value="<?= $p['nomer_kategori'] ?>"
+                            <?= ($payment->kategori == $p['nomer_kategori']) ? 'selected' : '' ?>
+                        >
+                            <?= $p['nomer_kategori'] ?> |
+                            <?= $p['nama_kategori'] ?>
+                        </option>
+
+                    <?php endforeach; ?>
+
+                </select>
+
             <label for="total_paid" class="block mb-2 font-medium">Total Dibayar:</label>
             <input type="text" id="total_paid" name="total_paid" value="<?= number_format($payment->total_paid, 0, ',', '.') ?>" class="w-full px-4 py-2 border rounded mb-4" required>
 

@@ -405,6 +405,15 @@ class Crud_payment extends CI_Controller {
                 '1000'
             );
 
+        // Ambil invoice berdasarkan payment_id_session
+        $invoice = $this->Payment_model
+            ->get_by_payment_id_session($id_session);
+
+        // Tambahkan prefix IMB
+        $data['invoice'] = $invoice
+            ? $invoice->payment_id_session . 'IMB'
+            : '';
+
         $this->load->view('payment/editkwt', $data);
     }
 

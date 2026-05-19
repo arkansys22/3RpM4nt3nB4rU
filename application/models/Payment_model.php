@@ -36,6 +36,13 @@ class Payment_model extends CI_Model {
         return $result;
     }
 
+    public function get_by_payment_id_session($id_session)
+    {
+        return $this->db
+            ->get_where('payment', ['payment_id_session' => $id_session])
+            ->result_array();
+    }
+
     public function insert_payment($data) {
         return $this->db->insert('payment', $data);
     }
