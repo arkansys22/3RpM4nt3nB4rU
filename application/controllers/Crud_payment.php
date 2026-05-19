@@ -257,7 +257,7 @@ class Crud_payment extends CI_Controller {
 
         $data = [
 
-            'payment_id_session' => $payment_id_session,
+            'payment_id_session' => $payment_id_session.$transactions_id,
             'id_session' => $id_session,
             'dariinvoice' => $dariinvoice,
             'transactions_id' => $transactions_id,
