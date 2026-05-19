@@ -235,27 +235,40 @@ class Payment_model extends CI_Model {
 
 public function update_sisa_invoice($id_session)
 {
-    // Cari invoice kategori 110302
+    /*
+    |--------------------------------------------------------------------------
+    | Cari invoice IMB kategori 110302
+    |--------------------------------------------------------------------------
+    */
     $invoice = $this->db
-        ->select('accounting_id_session')
+        ->select('*')
         ->from('accounting')
         ->like(
             'accounting_id_session',
             $id_session . 'IMB',
             'after'
         )
-        ->where(
+        ->like(
             'accounting_nomer_kategori',
-            '110302'
+            '110302',
+            'after'
         )
         ->get()
         ->row();
 
     if (!$invoice) {
+        log_message(
+            'error',
+            'Invoice accounting tidak ditemukan: ' . $id_session
+        );
         return false;
     }
 
-    // Ambil total invoice asli
+    /*
+    |--------------------------------------------------------------------------
+    | Ambil nilai invoice asli dari payment IMB
+    |--------------------------------------------------------------------------
+    */
     $payment_invoice = $this->db
         ->select('total_bill')
         ->from('payment')
@@ -269,6 +282,10 @@ public function update_sisa_invoice($id_session)
         ->row();
 
     if (!$payment_invoice) {
+        log_message(
+            'error',
+            'Payment invoice tidak ditemukan: ' . $id_session
+        );
         return false;
     }
 
@@ -277,11 +294,11 @@ public function update_sisa_invoice($id_session)
 
     /*
     |--------------------------------------------------------------------------
-    | Total MBP STATUS PAID
+    | Jumlah semua pembayaran MBP status Paid
     |--------------------------------------------------------------------------
     */
-    $mbp_paid = $this->db
-        ->select('payment_id_session')
+    $total_mbp = $this->db
+        ->select_sum('total_paid')
         ->from('payment')
         ->like(
             'payment_id_session',
@@ -290,48 +307,59 @@ public function update_sisa_invoice($id_session)
         )
         ->where('status', 'Paid')
         ->get()
-        ->result();
+        ->row();
 
-    $total_mbp = 0;
+    $total_paid = !empty(
+        $total_mbp->total_paid
+    )
+        ? (float)$total_mbp->total_paid
+        : 0;
 
-    foreach ($mbp_paid as $row) {
+    /*
+    |--------------------------------------------------------------------------
+    | Hitung sisa invoice
+    |--------------------------------------------------------------------------
+    */
+    $sisa_invoice = $total_invoice - $total_paid;
 
-        $acc = $this->db
-            ->select_sum('accounting_nominal')
-            ->from('accounting')
-            ->where(
-                'accounting_id_session',
-                $row->payment_id_session
-            )
-            ->get()
-            ->row();
-
-        $total_mbp += (float)(
-            $acc->accounting_nominal ?? 0
-        );
+    if ($sisa_invoice < 0) {
+        $sisa_invoice = 0;
     }
 
-    // Hitung sisa invoice
-    $sisa_invoice = max(
-        0,
-        $total_invoice - $total_mbp
-    );
-
-    // Update accounting invoice 110302 saja
+    /*
+    |--------------------------------------------------------------------------
+    | Update accounting invoice
+    |--------------------------------------------------------------------------
+    */
     $this->db
         ->like(
             'accounting_id_session',
             $id_session . 'IMB',
             'after'
         )
-        ->where(
+        ->like(
             'accounting_nomer_kategori',
-            '110302'
+            '110302',
+            'after'
         );
 
-    return $this->db->update('accounting', [
+    $update = $this->db->update('accounting', [
         'accounting_nominal' => $sisa_invoice
     ]);
+
+    log_message(
+        'error',
+        'Update invoice: ' .
+        $id_session .
+        ' | total_invoice=' .
+        $total_invoice .
+        ' | paid=' .
+        $total_paid .
+        ' | sisa=' .
+        $sisa_invoice
+    );
+
+    return $update;
 }
 
 }
