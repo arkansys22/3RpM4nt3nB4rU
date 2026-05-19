@@ -161,7 +161,8 @@ public function update($id_session){
     );
 
     $this->Agenda_model->insert_log_activity($data_log);
-        redirect('agenda');
+            redirect('project/lihat/'.$id_session);
+
     }
 
     public function delete_permanent($id_session) {
