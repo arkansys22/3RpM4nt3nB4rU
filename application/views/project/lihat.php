@@ -289,80 +289,60 @@
 
     <div class="border p-4 mb-4">
 
-    <?php
-    $agenda_order = [
-        'Brainstroming',
-        'Fiting',
-        'Test Food',
-        'Final Fiting',
-        'Technical Meeting',
-        'Final Revision',
-        'Loading',
-        'Wedding Day',
-        'Honeymoon'
-    ];
-
-    // Urutkan agenda
-    if (!empty($agenda)) {
-        usort($agenda, function ($a, $b) use ($agenda_order) {
-            $posA = array_search($a->agenda, $agenda_order);
-            $posB = array_search($b->agenda, $agenda_order);
-
-            $posA = ($posA === false) ? 999 : $posA;
-            $posB = ($posB === false) ? 999 : $posB;
-
-            return $posA - $posB;
-        });
-    }
-    ?>
-
     <?php if (!empty($agenda)): ?>
-        
-        <?php foreach ($agenda as $index => $item): ?>
-        <div class="mb-2 flex items-center justify-between <?= $index === count($agenda) - 1 ? '' : 'border-b pb-2' ?>">
-            
+
+        <?php
+        $agendaList = [
+            'Brainstroming'      => $agenda->brainstroming ?? null,
+            'Fiting'             => $agenda->fiting ?? null,
+            'Test Food'          => $agenda->test_food ?? null,
+            'Final Fiting'       => $agenda->final_fiting ?? null,
+            'Technical Meeting'  => $agenda->technical_meeting ?? null,
+            'Final Revision'     => $agenda->final_revision ?? null,
+            'Loading'            => $agenda->loading ?? null,
+            'Wedding Day'        => $agenda->wedding_day ?? null,
+            'Honeymoon'          => $agenda->honeymoon ?? null,
+        ];
+        ?>
+
+        <?php foreach ($agendaList as $namaAgenda => $tanggal): ?>
+        <div class="mb-2 flex items-center justify-between border-b pb-2">
+
             <div>
                 <p class="font-medium">
-                    <strong><?= htmlspecialchars($item->agenda) ?>:</strong><br>
+                    <strong><?= $namaAgenda ?> :</strong><br>
 
-                    <?php if (!empty($item->tanggal)): ?>
-                        <?= hari($item->tanggal) ?>,
-                        <?= tgl_indo($item->tanggal) ?>
+                    <?php if (!empty($tanggal)): ?>
+                        <?= hari($tanggal) ?>,
+                        <?= tgl_indo($tanggal) ?>
                     <?php else: ?>
                         <span class="text-red-500">
-                            Tanggal belum diisi
+                            Belum dijadwalkan
                         </span>
                     <?php endif; ?>
                 </p>
             </div>
 
-            <div class="flex gap-2">
-                <!-- Tombol Edit -->
-                <a href="<?= site_url('agenda/edit/' . $item->id) ?>"
-                   class="bg-green-500 text-white text-sm px-2 py-1 rounded-md hover:bg-green-600">
-                   Edit
-                </a>
-
-                <!-- Tombol Hapus -->
-                <a href="<?= site_url('agenda/delete/' . $item->id) ?>"
-                   onclick="return confirm('Apakah Anda yakin ingin menghapus agenda ini?')"
-                   class="bg-red-500 text-white text-sm px-2 py-1 rounded-md hover:bg-red-600">
-                   Hapus
-                </a>
-            </div>
-
         </div>
         <?php endforeach; ?>
 
+        <div class="mt-4 flex gap-2">
+            <a href="<?= site_url('agenda/edit/' . $project->id_session) ?>"
+               class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-700">
+               Edit Agenda
+            </a>
+        </div>
+
     <?php else: ?>
+
         <p class="text-red-500 font-semibold">
             Belum ada Agenda.
         </p>
+
     <?php endif; ?>
 
-    <!-- Tombol Tambah Agenda -->
     <a href="<?= site_url('agenda/create/' . $project->id_session) ?>" 
-       class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
+       class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center">
        Tambah Agenda
     </a>
 
