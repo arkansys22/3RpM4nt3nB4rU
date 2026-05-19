@@ -39,7 +39,7 @@
 
             <label class="block mb-2 font-medium">Dari Invoice</label>
 
-           <select 
+            <select 
                 name="dariinvoice"
                 id="dariinvoice"
                 class="w-full px-4 py-2 border rounded mb-4"
@@ -59,8 +59,18 @@
 
             </select>
 
-            <label for="total_paid" class="block mb-2 font-medium">Total Dibayar:</label>
-            <input type="text" id="total_paid" name="total_paid" value="<?= number_format($payment->total_paid, 0, ',', '.') ?>" class="w-full px-4 py-2 border rounded mb-4" required>
+           <label for="total_paid" class="block mb-2 font-medium">
+                Total Dibayar
+            </label>
+
+            <input 
+                type="text" 
+                id="total_paid" 
+                name="total_paid" 
+                value="<?= number_format($payment->total_paid, 0, ',', '.') ?>" 
+                class="w-full px-4 py-2 border rounded mb-4 bg-gray-100 cursor-not-allowed" 
+                readonly
+            >
 
             <label for="date" class="block mb-2 font-medium">Tanggal:</label>
             <input type="date" name="date" value="<?= $payment->date ?>" class="w-full px-4 py-2 border rounded mb-4" required>
