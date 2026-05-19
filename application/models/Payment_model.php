@@ -235,25 +235,59 @@ class Payment_model extends CI_Model {
 
 public function update_sisa_invoice($id_session)
 {
-    // Ambil total invoice IMB kategori 4000
+    // Cari invoice IMB kategori 4000
     $invoice = $this->db
-        ->select('accounting_nominal')
-        ->like('accounting_id_session', $id_session . 'IMB', 'after')
-        ->like('accounting_nomer_kategori', '4000', 'after')
-        ->get('accounting')
+        ->select('accounting_id_session, accounting_nominal')
+        ->from('accounting')
+        ->like(
+            'accounting_id_session',
+            $id_session . 'IMB',
+            'after'
+        )
+        ->like(
+            'accounting_nomer_kategori',
+            '4000',
+            'after'
+        )
+        ->get()
         ->row();
 
+    // Jika invoice tidak ditemukan
     if (!$invoice) {
         return false;
     }
 
-    $total_invoice = (float)$invoice->accounting_nominal;
+    /*
+    Simpan nominal awal invoice.
+    Jangan ambil dari accounting_nominal sekarang
+    karena sudah pernah diupdate sebelumnya.
+    */
+    $payment_invoice = $this->db
+        ->select('total_bill')
+        ->like(
+            'payment_id_session',
+            $id_session . 'IMB',
+            'after'
+        )
+        ->get('payment')
+        ->row();
 
-    // Total pembayaran MBP
+    if (!$payment_invoice) {
+        return false;
+    }
+
+    $total_invoice = (float)$payment_invoice->total_bill;
+
+    // Jumlah seluruh pembayaran MBP
     $mbp = $this->db
         ->select_sum('accounting_nominal')
-        ->like('accounting_id_session', $id_session . 'MBP', 'after')
-        ->get('accounting')
+        ->from('accounting')
+        ->like(
+            'accounting_id_session',
+            $id_session . 'MBP',
+            'after'
+        )
+        ->get()
         ->row();
 
     $total_mbp = !empty($mbp->accounting_nominal)
@@ -266,8 +300,11 @@ public function update_sisa_invoice($id_session)
     // Hindari minus
     $sisa_invoice = max(0, $sisa_invoice);
 
-    // Update nominal IMB
-    $this->db->where('accounting_id_session', $invoice->accounting_id_session);
+    // Update accounting IMB
+    $this->db->where(
+        'accounting_id_session',
+        $invoice->accounting_id_session
+    );
 
     return $this->db->update('accounting', [
         'accounting_nominal' => $sisa_invoice
