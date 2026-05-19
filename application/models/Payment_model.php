@@ -39,9 +39,9 @@ class Payment_model extends CI_Model {
     public function get_by_payment_id_session($id_session)
     {
 
-         $id_session = str_replace('IMB', '', $id_session);
+
         return $this->db
-            ->like('payment_id_session', $id_session, 'both')
+            ->like('payment_id_session', $id_session)
             ->get('payment')
             ->result_array();
     }
