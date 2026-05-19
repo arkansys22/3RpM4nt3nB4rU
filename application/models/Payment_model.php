@@ -244,11 +244,7 @@ public function update_sisa_invoice($id_session)
             $id_session . 'IMB',
             'after'
         )
-        ->like(
-            'accounting_nomer_kategori',
-            '110302',
-            'after'
-        )
+        ->where('accounting_nomer_kategori', '110302')
         ->get()
         ->row();
 
@@ -256,7 +252,7 @@ public function update_sisa_invoice($id_session)
         return false;
     }
 
-    // Ambil total invoice asli
+    // Ambil total invoice asli dari payment IMB
     $payment_invoice = $this->db
         ->select('total_bill')
         ->from('payment')
@@ -265,6 +261,7 @@ public function update_sisa_invoice($id_session)
             $id_session . 'IMB',
             'after'
         )
+        ->limit(1)
         ->get()
         ->row();
 
@@ -274,14 +271,18 @@ public function update_sisa_invoice($id_session)
 
     $total_invoice = (float)$payment_invoice->total_bill;
 
-    // TOTAL MBP STATUS PAID SAJA
+    /*
+    |--------------------------------------------------------------------------
+    | Total pembayaran MBP HANYA STATUS PAID
+    |--------------------------------------------------------------------------
+    */
     $mbp = $this->db
         ->select_sum('a.accounting_nominal')
         ->from('accounting a')
         ->join(
             'payment p',
             'p.payment_id_session = a.accounting_id_session',
-            'left'
+            'inner'
         )
         ->like(
             'a.accounting_id_session',
@@ -299,21 +300,26 @@ public function update_sisa_invoice($id_session)
     // Hitung sisa invoice
     $sisa_invoice = $total_invoice - $total_mbp;
 
-    // Hindari minus
-    $sisa_invoice = max(0, $sisa_invoice);
+    // Jangan minus
+    if ($sisa_invoice < 0) {
+        $sisa_invoice = 0;
+    }
 
-    // Update hanya kategori 110302
-    $this->db->like(
-        'accounting_id_session',
-        $id_session . 'IMB',
-        'after'
-    );
-
-    $this->db->like(
-        'accounting_nomer_kategori',
-        '110302',
-        'after'
-    );
+    /*
+    |--------------------------------------------------------------------------
+    | Update HANYA kategori 110302
+    |--------------------------------------------------------------------------
+    */
+    $this->db
+        ->like(
+            'accounting_id_session',
+            $id_session . 'IMB',
+            'after'
+        )
+        ->where(
+            'accounting_nomer_kategori',
+            '110302'
+        );
 
     return $this->db->update('accounting', [
         'accounting_nominal' => $sisa_invoice
