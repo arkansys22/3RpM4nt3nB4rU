@@ -293,9 +293,9 @@
 
         <?php
         $agendaList = [
-            'Brainstroming'      => $agenda->brainstroming ?? null,
+            'Brainstroming'      => $agenda->brainstorming ?? null,
             'Fiting'             => $agenda->fiting ?? null,
-            'Test Food'          => $agenda->test_food ?? null,
+            'Test Food'          => $agenda->testfood ?? null,
             'Final Fiting'       => $agenda->final_fiting ?? null,
             'Technical Meeting'  => $agenda->technical_meeting ?? null,
             'Final Revision'     => $agenda->final_revision ?? null,
