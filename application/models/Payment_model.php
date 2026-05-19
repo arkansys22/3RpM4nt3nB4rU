@@ -232,4 +232,46 @@ class Payment_model extends CI_Model {
     }
 }
 
+
+public function update_sisa_invoice($id_session)
+{
+    // Ambil total invoice IMB kategori 4000
+    $invoice = $this->db
+        ->select('id, accounting_nominal')
+        ->like('accounting_id_session', $id_session . 'IMB', 'after')
+        ->like('accounting_nomer_kategori', '4000', 'after')
+        ->get('accounting')
+        ->row();
+
+    if (!$invoice) {
+        return false;
+    }
+
+    $total_invoice = (float)$invoice->accounting_nominal;
+
+    // Total pembayaran MBP
+    $mbp = $this->db
+        ->select_sum('accounting_nominal')
+        ->like('accounting_id_session', $id_session . 'MBP', 'after')
+        ->get('accounting')
+        ->row();
+
+    $total_mbp = !empty($mbp->accounting_nominal)
+        ? (float)$mbp->accounting_nominal
+        : 0;
+
+    // Hitung sisa invoice
+    $sisa_invoice = $total_invoice - $total_mbp;
+
+    // Hindari minus
+    $sisa_invoice = max(0, $sisa_invoice);
+
+    // Update nominal IMB
+    $this->db->where('id', $invoice->id);
+
+    return $this->db->update('accounting', [
+        'accounting_nominal' => $sisa_invoice
+    ]);
+}
+
 }

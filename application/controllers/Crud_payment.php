@@ -305,6 +305,11 @@ class Crud_payment extends CI_Controller {
 
         $this->Payment_model->insert_accounting($payment_id_session,$data_accounting);
 
+        // Update sisa invoice IMB
+        $this->Payment_model->update_sisa_invoice(
+            $id_session
+        );
+
         $this->session->set_flashdata('Success', 'Kwitansi berhasil dibuat');
 
         redirect('project/lihat/' . $id_session);
