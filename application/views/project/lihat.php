@@ -306,6 +306,13 @@
               <p class="font-medium">
                 <strong>Transaksi ID:</strong> <?= htmlspecialchars($trans->transactions_id) ?><br>
 
+               
+                <?php if (strpos($trans->transactions_id, 'IMB') === 0): ?>
+             
+                <?php elseif (strpos($trans->transactions_id, 'MBP') === 0 || strpos($trans->transactions_id, 'MBP1') === 0): ?>
+                  Kwitansi <?=$trans->metodep ?><br>
+                <?php endif; ?>
+
                 <strong>Total Tagihan:</strong>
                 <?php if (strpos($trans->transactions_id, 'IMB') === 0): ?>
                   Rp <?= number_format($trans->total_bill, 0, ',', '.') ?><br>
@@ -344,7 +351,7 @@
                     '/' . $trans->payment_id_session
                 ) ?>"
                 class="bg-green-500 text-white text-sm px-2 py-1 rounded-md hover:bg-green-600">
-                    Edit
+                    Update
                 </a>
 
                 <a href="<?= site_url('payment/delete/' . $project->id_session . '/' . $trans->payment_id_session) ?>" 
