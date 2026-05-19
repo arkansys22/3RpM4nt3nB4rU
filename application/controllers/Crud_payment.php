@@ -552,6 +552,15 @@ class Crud_payment extends CI_Controller {
 
         $this->Payment_model->update_payment2($id_session, $payment_id_session, $data);
 
+        // Jika status berubah ke Paid
+        if ($this->input->post('status') == 'Paid') {
+
+            $this->Payment_model
+                ->update_sisa_invoice(
+                    $id_session
+                );
+        }
+
         $status = 'Update Kwitansi ' . $metodep; // Include transactions_id in log status
         $ip = $this->input->ip_address();
         $location = get_location_from_ip($ip);
