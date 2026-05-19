@@ -505,6 +505,7 @@ class Crud_payment extends CI_Controller {
         $tanggal = $this->input->post('date');
         $detail = json_encode($this->input->post('detail'));
         $metodep = $this->input->post('metodep');
+        $dariinvoice = $this->input->post('dariinvoice');
 
 
         if ($this->agent->is_browser()) // Agent untuk fitur di log activity
@@ -527,6 +528,7 @@ class Crud_payment extends CI_Controller {
         $data = [
             'total_paid'    => $total_paid,
             'detail'        => $detail,
+            'dariinvoice'        => $dariinvoice,
             'date'          => $tanggal,
             'kategori'      => $kategori,
             'metodep'        => $metodep,

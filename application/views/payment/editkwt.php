@@ -40,8 +40,8 @@
             <label class="block mb-2 font-medium">Dari Invoice</label>
 
             <select 
-                name="kategori"
-                id="kategori"
+                name="dariinvoice"
+                id="dariinvoice"
                 class="w-full px-4 py-2 border rounded mb-4"
             >
                 <option value="">- Pilih Invoice -</option>
