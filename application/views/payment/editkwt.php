@@ -48,7 +48,9 @@
 
                 <?php foreach ($invoice as $p): ?>
 
-                    <?php $invoice_no = $p['payment_id_session']; ?>
+                    <?php $invoice_no = $p['payment_id_session']; 
+                            $nama_transaksi = $p['nama_transaksi'];
+                    ?>
 
                     <option
                         value="<?= $invoice_no ?>"
