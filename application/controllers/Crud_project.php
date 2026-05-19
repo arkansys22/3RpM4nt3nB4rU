@@ -181,7 +181,6 @@ class Crud_project extends CI_Controller {
         // TAMBAHAN AGENDA
         $data['agenda'] = $this->db
             ->where('id_session', $id_session)
-            ->order_by('tanggal', 'ASC')
             ->get('agenda')
             ->result();
 
