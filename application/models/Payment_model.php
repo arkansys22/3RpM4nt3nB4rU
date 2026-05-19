@@ -237,7 +237,7 @@ public function update_sisa_invoice($id_session)
 {
     // Ambil total invoice IMB kategori 4000
     $invoice = $this->db
-        ->select('id, accounting_nominal')
+        ->select('accounting_nominal')
         ->like('accounting_id_session', $id_session . 'IMB', 'after')
         ->like('accounting_nomer_kategori', '4000', 'after')
         ->get('accounting')
