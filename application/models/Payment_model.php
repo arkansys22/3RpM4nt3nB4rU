@@ -235,9 +235,9 @@ class Payment_model extends CI_Model {
 
 public function update_sisa_invoice($id_session)
 {
-    // Cari invoice IMB kategori 4000
+    // Ambil invoice accounting kategori 110302
     $invoice = $this->db
-        ->select('accounting_id_session, accounting_nominal')
+        ->select('accounting_id_session')
         ->from('accounting')
         ->like(
             'accounting_id_session',
@@ -246,30 +246,26 @@ public function update_sisa_invoice($id_session)
         )
         ->like(
             'accounting_nomer_kategori',
-            '4000',
+            '110302',
             'after'
         )
         ->get()
         ->row();
 
-    // Jika invoice tidak ditemukan
     if (!$invoice) {
         return false;
     }
 
-    /*
-    Simpan nominal awal invoice.
-    Jangan ambil dari accounting_nominal sekarang
-    karena sudah pernah diupdate sebelumnya.
-    */
+    // Ambil total invoice asli dari payment
     $payment_invoice = $this->db
         ->select('total_bill')
+        ->from('payment')
         ->like(
             'payment_id_session',
             $id_session . 'IMB',
             'after'
         )
-        ->get('payment')
+        ->get()
         ->row();
 
     if (!$payment_invoice) {
@@ -278,7 +274,7 @@ public function update_sisa_invoice($id_session)
 
     $total_invoice = (float)$payment_invoice->total_bill;
 
-    // Jumlah seluruh pembayaran MBP
+    // Total semua pembayaran MBP
     $mbp = $this->db
         ->select_sum('accounting_nominal')
         ->from('accounting')
@@ -297,13 +293,20 @@ public function update_sisa_invoice($id_session)
     // Hitung sisa invoice
     $sisa_invoice = $total_invoice - $total_mbp;
 
-    // Hindari minus
+    // Jangan minus
     $sisa_invoice = max(0, $sisa_invoice);
 
-    // Update accounting IMB
-    $this->db->where(
+    // UPDATE HANYA KATEGORI 110302
+    $this->db->like(
         'accounting_id_session',
-        $invoice->accounting_id_session
+        $id_session . 'IMB',
+        'after'
+    );
+
+    $this->db->like(
+        'accounting_nomer_kategori',
+        '110302',
+        'after'
     );
 
     return $this->db->update('accounting', [
