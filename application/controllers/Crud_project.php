@@ -163,20 +163,28 @@ class Crud_project extends CI_Controller {
             return;
         }
 
-        $data['paid'] = $this->db->select_sum('total_paid')
-                    ->where('id_session', $id_session)
-                    ->where('status', 'Paid')
-                    ->get('payment')
-                    ->row();
+        $data['paid'] = $this->db
+            ->select_sum('total_paid')
+            ->where('id_session', $id_session)
+            ->where('status', 'Paid')
+            ->get('payment')
+            ->row();
 
         $data['project'] = $this->project_model->get_project_by_session($id_session);
-        $data['crew_list'] = $this->CrewProjects_model->get_crew_by_project($id_session); // Fetch the crew list
-        $data['payment'] = $this->Payment_model->get_payment_by_session($id_session); // All transactions
-        $data['has_invoice'] = $this->Payment_model->has_invoice($id_session); // Check if there is an invoice
+        $data['crew_list'] = $this->CrewProjects_model->get_crew_by_project($id_session);
+        $data['payment'] = $this->Payment_model->get_payment_by_session($id_session);
+        $data['has_invoice'] = $this->Payment_model->has_invoice($id_session);
         $data['vendors'] = $this->Vendor_model->get_vendor_by_id($id_session);
         $data['clients'] = $this->Clients_model->get_client_by_session($id_session);
         $data['logactivity'] = $this->project_model->get_logactivity_by_session($id_session);
-    
+
+        // TAMBAHAN AGENDA
+        $data['agenda'] = $this->db
+            ->where('id_session', $id_session)
+            ->order_by('tanggal', 'ASC')
+            ->get('agenda')
+            ->result();
+
         $this->load->view('project/lihat', $data);
     }
 

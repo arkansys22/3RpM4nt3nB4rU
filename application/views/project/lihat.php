@@ -289,19 +289,84 @@
 
     <div class="border p-4 mb-4">
 
+    <?php
+    $agenda_order = [
+        'Brainstroming',
+        'Fiting',
+        'Test Food',
+        'Final Fiting',
+        'Technical Meeting',
+        'Final Revision',
+        'Loading',
+        'Wedding Day',
+        'Honeymoon'
+    ];
 
-    <?php if (!empty($vendors)): ?>
-      Tampilin  List Agenda 
+    // Urutkan agenda
+    if (!empty($agenda)) {
+        usort($agenda, function ($a, $b) use ($agenda_order) {
+            $posA = array_search($a->agenda, $agenda_order);
+            $posB = array_search($b->agenda, $agenda_order);
+
+            $posA = ($posA === false) ? 999 : $posA;
+            $posB = ($posB === false) ? 999 : $posB;
+
+            return $posA - $posB;
+        });
+    }
+    ?>
+
+    <?php if (!empty($agenda)): ?>
+        
+        <?php foreach ($agenda as $index => $item): ?>
+        <div class="mb-2 flex items-center justify-between <?= $index === count($agenda) - 1 ? '' : 'border-b pb-2' ?>">
+            
+            <div>
+                <p class="font-medium">
+                    <strong><?= htmlspecialchars($item->agenda) ?>:</strong><br>
+
+                    <?php if (!empty($item->tanggal)): ?>
+                        <?= hari($item->tanggal) ?>,
+                        <?= tgl_indo($item->tanggal) ?>
+                    <?php else: ?>
+                        <span class="text-red-500">
+                            Tanggal belum diisi
+                        </span>
+                    <?php endif; ?>
+                </p>
+            </div>
+
+            <div class="flex gap-2">
+                <!-- Tombol Edit -->
+                <a href="<?= site_url('agenda/edit/' . $item->id) ?>"
+                   class="bg-green-500 text-white text-sm px-2 py-1 rounded-md hover:bg-green-600">
+                   Edit
+                </a>
+
+                <!-- Tombol Hapus -->
+                <a href="<?= site_url('agenda/delete/' . $item->id) ?>"
+                   onclick="return confirm('Apakah Anda yakin ingin menghapus agenda ini?')"
+                   class="bg-red-500 text-white text-sm px-2 py-1 rounded-md hover:bg-red-600">
+                   Hapus
+                </a>
+            </div>
+
+        </div>
+        <?php endforeach; ?>
+
     <?php else: ?>
-      <p class='text-red-500 font-semibold'>Belum ada Agenda.</p>
+        <p class="text-red-500 font-semibold">
+            Belum ada Agenda.
+        </p>
     <?php endif; ?>
 
-    <!-- Tombol Tambah Vendor -->
+    <!-- Tombol Tambah Agenda -->
     <a href="<?= site_url('agenda/create/' . $project->id_session) ?>" 
        class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
        Tambah Agenda
     </a>
-  </div>
+
+    </div>
 
   <h2 class="text-lg font-bold mb-2">Daftar Pembayaran</h2>
 
