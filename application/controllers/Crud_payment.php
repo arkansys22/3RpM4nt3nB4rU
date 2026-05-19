@@ -232,7 +232,7 @@ class Crud_payment extends CI_Controller {
         $id_session = $this->input->post('id_session');
         $total_paid = str_replace('.', '', $this->input->post('total_paid'));
         $kategori = $this->input->post('kategori');        
-        $transactions_id = 'MBP' . date('ymd', strtotime($this->input->post('date'))) . $this->input->post('number');
+        $transaction_id = 'MBP' . date('ymd', strtotime($this->input->post('date'))) . $this->input->post('number');
         $tanggal = $this->input->post('date');
         $payment_id_session = $id_session .$transaction_id;
         $metodep        = $this->input->post('metodep');
