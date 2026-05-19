@@ -299,7 +299,7 @@
             'Final Fiting'       => $agenda->final_fiting ?? null,
             'Technical Meeting'  => $agenda->technical_meeting ?? null,
             'Final Revision'     => $agenda->final_revision ?? null,
-            'Loading'            => $agenda->loading ?? null,
+            'Loading'            => $agenda->loading_decoration ?? null,
             'Wedding Day'        => $agenda->wedding_day ?? null,
             'Honeymoon'          => $agenda->honeymoon ?? null,
         ];
