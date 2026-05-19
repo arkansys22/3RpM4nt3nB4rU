@@ -38,27 +38,28 @@
           <form id="edit-kwitansi-form" action="<?= site_url('payment/update2/' . $payment->id_session . '/' . ($payment->payment_id_session ?? '')) ?>" method="post" class="bg-white p-6 shadow-md rounded">
 
             <label class="block mb-2 font-medium">Dari Invoice</label>
-                <select 
-                    name="kategori"
-                    id="kategori"
-                    class="w-full px-4 py-2 border rounded mb-4"
-                    <?= ($payment->status === 'Paid') ? 'required' : '' ?>
-                >
-                    <option value="">- Pilih Invoice -</option>
 
-                    <?php foreach ($invoice as $p): ?>
+            <select 
+                name="kategori"
+                id="kategori"
+                class="w-full px-4 py-2 border rounded mb-4"
+            >
+                <option value="">- Pilih Invoice -</option>
 
-                        <option
-                            value="<?= $p['nomer_kategori'] ?>"
-                            <?= ($payment->kategori == $p['nomer_kategori']) ? 'selected' : '' ?>
-                        >
-                            <?= $p['nomer_kategori'] ?> |
-                            <?= $p['nama_kategori'] ?>
-                        </option>
+                <?php foreach ($invoice as $p): ?>
 
-                    <?php endforeach; ?>
+                    <?php $invoice_no = $p['payment_id_session'] . 'IMB'; ?>
 
-                </select>
+                    <option
+                        value="<?= $invoice_no ?>"
+                        <?= ($payment->kategori == $invoice_no) ? 'selected' : '' ?>
+                    >
+                        <?= $invoice_no ?>
+                    </option>
+
+                <?php endforeach; ?>
+
+            </select>
 
             <label for="total_paid" class="block mb-2 font-medium">Total Dibayar:</label>
             <input type="text" id="total_paid" name="total_paid" value="<?= number_format($payment->total_paid, 0, ',', '.') ?>" class="w-full px-4 py-2 border rounded mb-4" required>
