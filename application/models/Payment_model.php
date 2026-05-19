@@ -267,7 +267,7 @@ public function update_sisa_invoice($id_session)
     $sisa_invoice = max(0, $sisa_invoice);
 
     // Update nominal IMB
-    $this->db->where('id', $invoice->id);
+    $this->db->where('accounting_id_session', $invoice->accounting_id_session);
 
     return $this->db->update('accounting', [
         'accounting_nominal' => $sisa_invoice
