@@ -54,7 +54,7 @@
                         value="<?= $invoice_no ?>"
                         <?= ($payment->kategori == $invoice_no) ? 'selected' : '' ?>
                     >
-                        <?= $invoice_no ?>
+                        <?= $nama_transaksi ?>
                     </option>
 
                 <?php endforeach; ?>
