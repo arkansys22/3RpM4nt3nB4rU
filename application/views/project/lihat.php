@@ -355,7 +355,9 @@
                 </a>
 
                 <a href="<?= site_url('payment/delete/' . $project->id_session . '/' . $trans->payment_id_session) ?>" 
-                   onclick="return confirm('Apakah Anda yakin ingin menghapus transaksi ini?')"
+                   onclick="return confirm(
+                   'Apakah Anda yakin ingin menghapus transaksi ini?\n\nJika transaksi ini adalah pembayaran PAID, maka sisa invoice akan otomatis diperbarui.'
+                   )"
                    class="bg-red-500 text-white text-sm px-2 py-1 rounded-md hover:bg-red-600">
                    Hapus
                 </a>

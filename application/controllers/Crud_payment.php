@@ -601,39 +601,93 @@ class Crud_payment extends CI_Controller {
         redirect('project/lihat/' . $id_session);
     }
 
-    public function delete($id_session, $payment_id_session) {
-        if ($this->agent->is_browser()) // Agent untuk fitur di log activity
-        {
-            $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
-        }
-        elseif ($this->agent->is_robot())
-        {
+    public function delete($id_session, $payment_id_session)
+    {
+        if ($this->agent->is_browser()) {
+            $agent = 'Desktop ' . $this->agent->browser() . ' ' . $this->agent->version();
+        } elseif ($this->agent->is_robot()) {
             $agent = $this->agent->robot();
-        }
-        elseif ($this->agent->is_mobile())
-        {
-            $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
-        }
-        else
-        {
+        } elseif ($this->agent->is_mobile()) {
+            $agent = 'Mobile ' . $this->agent->mobile() . ' ' . $this->agent->version();
+        } else {
             $agent = 'Unidentified User Agent';
         }
 
-        $payment = $this->Payment_model->get_payment_by_payment_id_session($id_session, $payment_id_session);
+        $payment = $this->Payment_model
+            ->get_payment_by_payment_id_session(
+                $id_session,
+                $payment_id_session
+            );
 
         if (!$payment) {
-            $this->session->set_flashdata('error', 'Transaksi tidak ditemukan.');
-            redirect($_SERVER['HTTP_REFERER']); // Kembali ke halaman sebelumnya
+            $this->session->set_flashdata(
+                'error',
+                'Transaksi tidak ditemukan.'
+            );
+
+            redirect($_SERVER['HTTP_REFERER']);
         }
 
-        $delete_payment =  $this->Payment_model->delete_payment($id_session, $payment_id_session);
-        $delete_accounting = $this->Payment_model->delete_accounting($payment_id_session);
+        /*
+        |--------------------------------------------------------------------------
+        | Simpan status sebelum dihapus
+        |--------------------------------------------------------------------------
+        */
+        $status_payment = $payment->status;
 
+        // Delete payment
+        $delete_payment = $this->Payment_model
+            ->delete_payment(
+                $id_session,
+                $payment_id_session
+            );
+
+        // Delete accounting
+        $delete_accounting = $this->Payment_model
+            ->delete_accounting(
+                $payment_id_session
+            );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Jika transaksi PAID → update sisa invoice
+        |--------------------------------------------------------------------------
+        */
+        if (
+            $delete_payment &&
+            $delete_accounting &&
+            $status_payment == 'Paid'
+        ) {
+
+            $this->Payment_model
+                ->update_sisa_invoice(
+                    $id_session
+                );
+        }
 
         if ($delete_payment && $delete_accounting) {
-            $this->session->set_flashdata('success', 'Transaksi berhasil dihapus.');
+
+            if ($status_payment == 'Paid') {
+
+                $this->session->set_flashdata(
+                    'success',
+                    'Transaksi berhasil dihapus dan sisa invoice berhasil diperbarui.'
+                );
+
+            } else {
+
+                $this->session->set_flashdata(
+                    'success',
+                    'Transaksi berhasil dihapus.'
+                );
+            }
+
         } else {
-            $this->session->set_flashdata('error', 'Gagal menghapus transaksi.');
+
+            $this->session->set_flashdata(
+                'error',
+                'Gagal menghapus transaksi.'
+            );
         }
 
         $ip = $this->input->ip_address();
@@ -641,15 +695,13 @@ class Crud_payment extends CI_Controller {
         $ip_with_location = $ip . "<br>(" . $location . ")";
 
         $data_log = array(
-
-            'log_activity_user_id'=>$this->session->id_session,
+            'log_activity_user_id' => $this->session->id_session,
             'log_activity_modul' => 'payment/delete',
             'log_activity_document_no' => $id_session,
             'log_activity_status' => 'Hapus Transaksi',
             'log_activity_waktu' => date('Y-m-d H:i:s'),
-            'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $ip_with_location
-            
+            'log_activity_platform' => $agent,
+            'log_activity_ip' => $ip_with_location
         );
 
         $this->Payment_model->insert_log_activity($data_log);
