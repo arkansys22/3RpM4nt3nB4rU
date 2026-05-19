@@ -260,7 +260,7 @@ class Crud_payment extends CI_Controller {
             'payment_id_session' => $payment_id_session,
             'id_session' => $id_session,
             'dariinvoice' => $dariinvoice,
-            'transactions_id' => $transactions_id,
+            'transactions_id' => $transaction_id,
             'total_paid' => $total_paid,
             'kategori' => $kategori,
             'total_bill' => 0, // Set total_bill to 0
