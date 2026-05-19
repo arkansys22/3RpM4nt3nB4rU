@@ -73,6 +73,9 @@ class Crud_agenda extends CI_Controller {
     $data = array(
         'id_session' => $id_session,
         'brainstorming' => $this->input->post('brainstorming'),
+        'fiting' => $this->input->post('fiting'),
+        'testfood' => $this->input->post('testfood'),
+        'final_fiting' => $this->input->post('final_fiting'),
         'technical_meeting' => $this->input->post('technical_meeting'),
         'final_revision' => $this->input->post('final_revision'),
         'loading_decoration' => $this->input->post('loading_decoration'),
@@ -99,7 +102,9 @@ class Crud_agenda extends CI_Controller {
         
     );
     $this->Agenda_model->insert_log_activity($data_log);
-    redirect('agenda');
+    $this->session->set_flashdata('Success', 'Agenda berhasil dibuat');
+
+    redirect('project');
 }
 
 public function edit($id_session) {

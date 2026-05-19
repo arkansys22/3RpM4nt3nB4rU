@@ -285,6 +285,24 @@
     </a>
   </div>
 
+  <h2 class="text-lg font-bold mb-2">Agenda</h2>
+
+    <div class="border p-4 mb-4">
+
+
+    <?php if (!empty($vendors)): ?>
+      Tampilin  List Agenda 
+    <?php else: ?>
+      <p class='text-red-500 font-semibold'>Belum ada Agenda.</p>
+    <?php endif; ?>
+
+    <!-- Tombol Tambah Vendor -->
+    <a href="<?= site_url('agenda/create/' . $project->id_session) ?>" 
+       class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
+       Tambah Agenda
+    </a>
+  </div>
+
   <h2 class="text-lg font-bold mb-2">Daftar Pembayaran</h2>
 
   <div class="border p-4 mb-4">

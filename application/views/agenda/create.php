@@ -41,6 +41,15 @@
                 <label class="block mb-2" for="brainstorming">Brainstorming</label>
                 <input type="date" id="brainstorming" name="brainstorming" class="w-full px-4 py-2 border rounded mb-4">
 
+                <label class="block mb-2" for="brainstorming">Fiting</label>
+                <input type="date" id="fiting" name="fiting" class="w-full px-4 py-2 border rounded mb-4">
+
+                <label class="block mb-2" for="brainstorming">Test Food</label>
+                <input type="date" id="testfood" name="testfood" class="w-full px-4 py-2 border rounded mb-4">
+
+                <label class="block mb-2" for="brainstorming">Final Fiting</label>
+                <input type="date" id="final_fiting" name="final_fiting" class="w-full px-4 py-2 border rounded mb-4">
+
                 <label class="block mb-2" for="technical_meeting">Technical Meeting</label>
                 <input type="date" id="technical_meeting" name="technical_meeting" class="w-full px-4 py-2 border rounded mb-4">
 
