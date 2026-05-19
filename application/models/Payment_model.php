@@ -258,10 +258,10 @@ public function update_sisa_invoice($id_session)
 
     // Ambil total invoice asli dari payment
     $payment_invoice = $this->db
-        ->select('total_bill')
-        ->from('payment')
+        ->select('accounting_nominal')
+        ->from('accounting')
         ->like(
-            'payment_id_session',
+            'accounting_id_session',
             $id_session . 'IMB',
             'after'
         )
@@ -272,7 +272,7 @@ public function update_sisa_invoice($id_session)
         return false;
     }
 
-    $total_invoice = (float)$payment_invoice->total_bill;
+    $total_invoice = (float)$payment_invoice->accounting_nominal;
 
     // Total semua pembayaran MBP
     $mbp = $this->db
