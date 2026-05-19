@@ -39,6 +39,29 @@
               <input type="hidden" name="id_session" value="<?= $project->id_session ?>">
               <input type="hidden" name="total_bill" value="0"> <!-- Ensure total_bill is always 0 -->
 
+
+                <label class="block mb-2 font-medium">Dari Invoice</label>
+
+                <select 
+                    name="dariinvoice"
+                    id="dariinvoice"
+                    class="w-full px-4 py-2 border rounded mb-4"
+                >
+                    <option value="">- Pilih Invoice -</option>
+
+                    <?php foreach ($invoice as $p): ?>
+
+                        <option
+                            value="<?= $p['payment_id_session'] ?>"
+                            <?= ($payment->dariinvoice == $p['payment_id_session']) ? 'selected' : '' ?>
+                        >
+                            <?= $p['nama_transaksi'] ?>
+                        </option>
+
+                    <?php endforeach; ?>
+
+                </select>
+
                 <label class="block mb-2">Total Dibayar</label>
                 <input type="text" id="formattedNumber" oninput="formatNumber(this)" name="total_paid" step="0.01" class="w-full px-4 py-2 border rounded mb-4" required>
 

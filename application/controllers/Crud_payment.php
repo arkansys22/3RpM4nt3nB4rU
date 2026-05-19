@@ -89,6 +89,8 @@ class Crud_payment extends CI_Controller {
             cek_session_akses_developer('project', $this->session->id_session);
             $data['payment'] = $this->Payment_model->get_payment_by_session($id_session);
             $data['project'] = $this->project_model->get_project_by_session($id_session);
+            // Ambil invoice berdasarkan payment_id_session
+            $data['invoice'] = $this->Payment_model->get_by_payment_id_session($id_session);
             $data['kategori'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','1000');
         $this->load->view('payment/createkwt', $data);
 
@@ -96,6 +98,8 @@ class Crud_payment extends CI_Controller {
             cek_session_akses_administrator('project', $this->session->id_session);
             $data['payment'] = $this->Payment_model->get_payment_by_session($id_session);
             $data['project'] = $this->project_model->get_project_by_session($id_session);
+            // Ambil invoice berdasarkan payment_id_session
+            $data['invoice'] = $this->Payment_model->get_by_payment_id_session($id_session);
             $data['kategori'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','1000');
         $this->load->view('payment/createkwt', $data);
 
@@ -107,6 +111,8 @@ class Crud_payment extends CI_Controller {
             cek_session_akses_staff_admin('project', $this->session->id_session);
             $data['payment'] = $this->Payment_model->get_payment_by_session($id_session);
             $data['project'] = $this->project_model->get_project_by_session($id_session);
+            // Ambil invoice berdasarkan payment_id_session
+            $data['invoice'] = $this->Payment_model->get_by_payment_id_session($id_session);
             $data['kategori'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','1000');
         $this->load->view('payment/createkwt', $data);
 
