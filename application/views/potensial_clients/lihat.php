@@ -445,14 +445,15 @@
                         class="w-full rounded border px-3 py-2">                        
                     </div>       
                     <div class="flex justify-end gap-2">
-                      <button type="button" onclick="closeModals()"
-                        class="px-4 py-2 border rounded-md">
-                        Batal
-                      </button>
                       <button type="submit"
                         class="px-4 py-2 bg-primary text-white rounded-md">
                         Simpan
                       </button>
+                      <button type="button" onclick="closeModals()"
+                        class="px-4 py-2 border rounded-md">
+                        Batal
+                      </button>
+                      
                     </div>
                   </form>
 
