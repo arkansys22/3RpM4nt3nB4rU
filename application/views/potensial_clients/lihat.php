@@ -341,12 +341,14 @@
 
                       <?php } ?>
 
-                      <button
-                        onclick="window.location.href='<?= base_url('potensial-clients/download_proposal/'.$pc->id_session) ?>'"
-                        class="float-right mt-8 inline-flex items-center gap-2.5 rounded bg-primary px-7.5 py-2.5 font-medium text-white hover:bg-opacity-90"
-                      >
-                        Cetak Penawaran
-                      </button>
+                      <div class="mt-6 flex justify-end">
+                        <button
+                          onclick="window.location.href='<?= base_url('potensial-clients/download_proposal/'.$pc->id_session) ?>'"
+                          class="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 font-medium text-white hover:bg-opacity-90 transition"
+                        >
+                          Cetak Penawaran
+                        </button>
+                      </div>
 
                     </div>
                   </div>
