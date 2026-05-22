@@ -1279,7 +1279,7 @@ class crud_potensial_clients extends CI_Controller {
         $data = [
            
             'promo'      => $this->input->post('promo'),
-            'promo_value'     => $this->input->post('nilai_promo')
+            'promo_value'     => str_replace('.', '', $this->input->post('nilai_promo'))
         ];
 
         $this->Potensial_model->update_potensial_clients($id_session, $data);

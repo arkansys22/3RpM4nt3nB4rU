@@ -441,7 +441,7 @@
                     </div>
                     <div class="mb-4 hidden" id="promoCustom">
                       <label class="block text-sm font-medium mb-1">Masukan Nilai Promo</label>
-                      <input type="number" name="nilai_promo"
+                      <input type="text" id="formattedNumber" name="nilai_promo" oninput="formatNumber(this)"
                         class="w-full rounded border px-3 py-2">                        
                     </div>       
                     <div class="flex justify-end gap-2">
@@ -679,6 +679,14 @@
         });
     });
   });
+  </script>
+
+  <script>
+    function formatNumber(input) {
+        let value = input.value.replace(/\D/g, ''); // Hanya angka
+        value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Tambah titik setiap 3 digit
+        input.value = value;
+    }
   </script>
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
 </body>
