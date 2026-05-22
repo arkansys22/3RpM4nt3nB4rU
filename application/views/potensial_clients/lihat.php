@@ -253,26 +253,26 @@
 
                   <!-- total price start -->
                   <div class="w-full border-t border-stroke dark:border-strokedark p-4 md:p-6">
-                    <div class="w-full md:max-w-md ml-auto bg-white dark:bg-boxdark rounded-lg p-4 border border-stroke dark:border-strokedark">
+                    <div class="w-full md:max-w-md ml-auto rounded-lg p-4 border border-stroke dark:border-strokedark bg-white dark:bg-boxdark-2 text-black dark:text-white">
 
                       <?php if ($pc->promo === 'default'){ ?>
 
                         <div class="flex flex-col gap-4">
 
                           <div class="flex justify-between items-center text-sm md:text-base">
-                            <span class="font-medium text-black dark:text-white">
+                            <span class="font-medium !text-black dark:!text-white">
                               Sub Total
                             </span>
-                            <span class="font-semibold text-black dark:text-white text-right">
+                            <span class="font-semibold !text-black dark:!text-white text-right">
                               Rp <?= number_format($subTotal, 0, ',', '.') ?>
                             </span>
                           </div>
 
                           <div class="flex justify-between items-center text-sm md:text-base">
-                            <span class="font-medium text-black dark:text-white">
+                            <span class="font-medium !text-black dark:!text-white">
                               Promo Diskon (-)
                             </span>
-                            <span class="font-semibold text-black dark:text-white text-right">
+                            <span class="font-semibold !text-black dark:!text-white text-right">
                               Rp <?= number_format($diskonTotal, 0, ',', '.') ?>
                             </span>
                           </div>
@@ -280,7 +280,7 @@
                           <div class="border-t border-stroke dark:border-strokedark pt-4 flex justify-between items-center">
                             <?php $total = $subTotal - $diskonTotal; ?>
 
-                            <span class="font-bold text-black dark:text-white text-base md:text-lg">
+                            <span class="font-bold !text-black dark:!text-white text-base md:text-lg">
                               Total
                             </span>
 
@@ -308,27 +308,27 @@
                         <div class="flex flex-col gap-4">
 
                           <div class="flex justify-between items-center text-sm md:text-base">
-                            <span class="font-medium text-black dark:text-white">
+                            <span class="font-medium !text-black dark:!text-white">
                               Sub Total
                             </span>
-                            <span class="font-semibold text-black dark:text-white text-right">
+                            <span class="font-semibold !text-black dark:!text-white text-right">
                               Rp <?= number_format($subTotal, 0, ',', '.') ?>
                             </span>
                           </div>
 
                           <div class="flex justify-between items-center text-sm md:text-base">
-                            <span class="font-medium text-black dark:text-white">
+                            <span class="font-medium !text-black dark:!text-white">
                               Promo Diskon (-)
                             </span>
-                            <span class="font-semibold text-black dark:text-white text-right">
-                              Rp <?= number_format($pc->promo_value, 0, ',', '.') ?>
+                            <span class="font-semibold !text-black dark:!text-white text-right">
+                              Rp <?= number_format($diskonTotal, 0, ',', '.') ?>
                             </span>
                           </div>
 
                           <div class="border-t border-stroke dark:border-strokedark pt-4 flex justify-between items-center">
                             <?php $total = $subTotal - $pc->promo_value; ?>
 
-                            <span class="font-bold text-black dark:text-white text-base md:text-lg">
+                            <span class="font-bold !text-black dark:!text-white text-base md:text-lg">
                               Total
                             </span>
 
