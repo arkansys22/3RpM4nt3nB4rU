@@ -252,110 +252,102 @@
                   </div>
 
                   <!-- total price start -->
-                  <!-- total price start -->
                   <div class="w-full border-t border-stroke dark:border-strokedark p-4 md:p-6">
                     <div class="w-full md:max-w-md ml-auto bg-white dark:bg-boxdark rounded-lg p-4 border border-stroke dark:border-strokedark">
-                      <?php if ($pc->promo === 'default'){?>
-                        <div>
-                          <div class="flex flex-col gap-4">
-                            <p class="flex justify-between items-center gap-2 text-sm md:text-base font-medium text-slate-900 dark:text-white">
-                              <span class="!text-black dark:!text-white">
-                                Sub Total
-                              </span>
-                              <span class="!text-black dark:!text-white">
-                                Rp <?= number_format($subTotal, 0, ',', '.') ?>
-                              </span>
-                            </p>
 
-                            <p class="flex justify-between items-center gap-2 text-sm md:text-base font-medium text-slate-900 dark:text-white">
-                              <span> Promo Diskon (-) </span>
-                              <span class="!text-black dark:!text-white">Rp <?= number_format($diskonTotal, 0, ',', '.') ?> </span>
-                            </p>
+                      <?php if ($pc->promo === 'default'){ ?>
+
+                        <div class="flex flex-col gap-4">
+
+                          <div class="flex justify-between items-center text-sm md:text-base">
+                            <span class="font-medium text-black dark:text-white">
+                              Sub Total
+                            </span>
+                            <span class="font-semibold text-black dark:text-white text-right">
+                              Rp <?= number_format($subTotal, 0, ',', '.') ?>
+                            </span>
                           </div>
 
-                          <p
-                            class="mt-4 flex justify-between border-t border-stroke pt-5 dark:border-strokedark"
-                          >
-                            <span class="font-medium text-slate-900 dark:text-white">
-                            <?php $total = $subTotal - $diskonTotal?>
+                          <div class="flex justify-between items-center text-sm md:text-base">
+                            <span class="font-medium text-black dark:text-white">
+                              Promo Diskon (-)
+                            </span>
+                            <span class="font-semibold text-black dark:text-white text-right">
+                              Rp <?= number_format($diskonTotal, 0, ',', '.') ?>
+                            </span>
+                          </div>
+
+                          <div class="border-t border-stroke dark:border-strokedark pt-4 flex justify-between items-center">
+                            <?php $total = $subTotal - $diskonTotal; ?>
+
+                            <span class="font-bold text-black dark:text-white text-base md:text-lg">
                               Total
                             </span>
-                            <span class="font-bold text-meta-3"> Rp <?= number_format($total, 0, ',', '.') ?> </span>
-                          </p>
-                        </div>
-                      <?php }else if($pc->promo === 'tidak'){?>
-                        <div>
-                          <div class="flex flex-col gap-4">
-                            <p class="flex justify-between items-center gap-2 text-sm md:text-base font-medium text-slate-900 dark:text-white">
-                              <span> Total </span>
-                              <span class="text-right break-words">
-                                Rp <?= number_format($subTotal, 0, ',', '.') ?>
-                              </span>
-                            </p>
-                          </div>
-                        </div>
-                      <?php }else if($pc->promo === 'custom' ){ ?>
 
-                        <div>
-                          <div class="flex flex-col gap-4">
-                            <p class="flex justify-between items-center gap-2 text-sm md:text-base font-medium text-slate-900 dark:text-white">
-                              <span class="!text-black dark:!text-white">
-                                Sub Total
-                              </span>
-                              <span class="!text-black dark:!text-white">
-                                Rp <?= number_format($subTotal, 0, ',', '.') ?>
-                              </span>
-                            </p>
-
-                            <p class="flex justify-between items-center gap-2 text-sm md:text-base font-medium text-slate-900 dark:text-white">
-                              <span class="!text-black dark:!text-white"> Promo Diskon (-) </span>
-                             <span class="!text-black dark:!text-white"> Rp <?= number_format($pc->promo_value, 0, ',', '.') ?> </span>
-                            </p>
+                            <span class="font-bold text-meta-3 text-base md:text-lg text-right">
+                              Rp <?= number_format($total, 0, ',', '.') ?>
+                            </span>
                           </div>
 
-                          <p
-                            class="mt-4 flex justify-between border-t border-stroke pt-5 dark:border-strokedark"
-                          >
-                            <span class="font-medium text-slate-900 dark:text-white">
-                            <?php $total = $subTotal - $pc->promo_value?>
+                        </div>
+
+                      <?php } else if($pc->promo === 'tidak'){ ?>
+
+                        <div class="flex justify-between items-center text-sm md:text-base">
+                          <span class="font-bold text-black dark:text-white">
+                            Total
+                          </span>
+
+                          <span class="font-bold text-meta-3 text-right">
+                            Rp <?= number_format($subTotal, 0, ',', '.') ?>
+                          </span>
+                        </div>
+
+                      <?php } else if($pc->promo === 'custom'){ ?>
+
+                        <div class="flex flex-col gap-4">
+
+                          <div class="flex justify-between items-center text-sm md:text-base">
+                            <span class="font-medium text-black dark:text-white">
+                              Sub Total
+                            </span>
+                            <span class="font-semibold text-black dark:text-white text-right">
+                              Rp <?= number_format($subTotal, 0, ',', '.') ?>
+                            </span>
+                          </div>
+
+                          <div class="flex justify-between items-center text-sm md:text-base">
+                            <span class="font-medium text-black dark:text-white">
+                              Promo Diskon (-)
+                            </span>
+                            <span class="font-semibold text-black dark:text-white text-right">
+                              Rp <?= number_format($pc->promo_value, 0, ',', '.') ?>
+                            </span>
+                          </div>
+
+                          <div class="border-t border-stroke dark:border-strokedark pt-4 flex justify-between items-center">
+                            <?php $total = $subTotal - $pc->promo_value; ?>
+
+                            <span class="font-bold text-black dark:text-white text-base md:text-lg">
                               Total
                             </span>
-                            <span class="font-bold text-meta-3"> Rp <?= number_format($total, 0, ',', '.') ?> </span>
-                          </p>
+
+                            <span class="font-bold text-meta-3 text-base md:text-lg text-right">
+                              Rp <?= number_format($total, 0, ',', '.') ?>
+                            </span>
+                          </div>
+
                         </div>
-                      <?php }?>
 
-                      
+                      <?php } ?>
 
-                      <button onclick="window.location.href='<?= base_url('potensial-clients/download_proposal/'.$pc->id_session) ?>'"
-                        class="float-right mt-10 inline-flex items-center gap-2.5 rounded bg-primary px-7.5 py-2.5 font-medium text-white hover:bg-opacity-90"
+                      <button
+                        onclick="window.location.href='<?= base_url('potensial-clients/download_proposal/'.$pc->id_session) ?>'"
+                        class="float-right mt-8 inline-flex items-center gap-2.5 rounded bg-primary px-7.5 py-2.5 font-medium text-white hover:bg-opacity-90"
                       >
                         Cetak Penawaran
-                        <svg
-                          class="fill-current"
-                          width="18"
-                          height="18"
-                          viewBox="0 0 18 18"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <g clip-path="url(#clip0_1878_13706)">
-                            <path
-                              d="M16.8754 12.375C16.5379 12.375 16.2285 12.6562 16.2285 13.0219V15.525C16.2285 15.7781 16.0316 15.975 15.7785 15.975H2.22227C1.96914 15.975 1.77227 15.7781 1.77227 15.525V13.0219C1.77227 12.6562 1.46289 12.375 1.12539 12.375C0.787891 12.375 0.478516 12.6562 0.478516 13.0219V15.525C0.478516 16.4812 1.23789 17.2406 2.19414 17.2406H15.7785C16.7348 17.2406 17.4941 16.4812 17.4941 15.525V13.0219C17.5223 12.6562 17.2129 12.375 16.8754 12.375Z"
-                              fill=""
-                            />
-                            <path
-                              d="M8.55055 13.078C8.66305 13.1905 8.8318 13.2468 9.00055 13.2468C9.1693 13.2468 9.30992 13.1905 9.45054 13.078L13.5287 9.1124C13.7818 8.85928 13.7818 8.46553 13.5287 8.2124C13.2755 7.95928 12.8818 7.95928 12.6287 8.2124L9.64742 11.1374V1.40615C9.64742 1.06865 9.36617 0.759277 9.00055 0.759277C8.66305 0.759277 8.35367 1.04053 8.35367 1.40615V11.1374L5.37242 8.2124C5.1193 7.95928 4.72555 7.9874 4.47242 8.2124C4.2193 8.46553 4.24742 8.85928 4.47242 9.1124L8.55055 13.078Z"
-                              fill=""
-                            />
-                          </g>
-                          <defs>
-                            <clipPath id="clip0_1878_13706">
-                              <rect width="18" height="18" fill="white" />
-                            </clipPath>
-                          </defs>
-                        </svg>
                       </button>
+
                     </div>
                   </div>
                   <!-- total price end -->
