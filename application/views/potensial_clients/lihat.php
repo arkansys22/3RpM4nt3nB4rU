@@ -352,6 +352,7 @@
                   </div>
                   <!-- total price end -->
                 </div>
+                <br>
 
 
               <div class="mb-4 flex items-center justify-between">
