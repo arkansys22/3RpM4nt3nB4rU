@@ -252,21 +252,20 @@
                   </div>
 
                   <!-- total price start -->
-                  <div class="flex justify-end p-6">
-                    <div class="w-full max-w-65">
+                  <!-- total price start -->
+                  <div class="w-full border-t border-stroke dark:border-strokedark p-4 md:p-6">
+                    <div class="w-full md:max-w-md ml-auto bg-gray-50 dark:bg-boxdark-2 rounded-lg p-4">
                       <?php if ($pc->promo === 'default'){?>
                         <div>
                           <div class="flex flex-col gap-4">
-                            <p
-                              class="flex justify-between font-medium text-black dark:text-white"
-                            >
+                            <p class="flex justify-between items-center gap-2 text-sm md:text-base font-medium text-black dark:text-white">
                               <span> Sub Total </span>
-                              <span> Rp <?= number_format($subTotal, 0, ',', '.') ?></span>
+                              <span class="text-right break-words">
+                                Rp <?= number_format($subTotal, 0, ',', '.') ?>
+                              </span>
                             </p>
 
-                            <p
-                              class="flex justify-between font-medium text-black dark:text-white"
-                            >
+                            <p class="flex justify-between items-center gap-2 text-sm md:text-base font-medium text-black dark:text-white">
                               <span> Promo Diskon (-) </span>
                               <span> Rp <?= number_format($diskonTotal, 0, ',', '.') ?> </span>
                             </p>
@@ -285,11 +284,11 @@
                       <?php }else if($pc->promo === 'tidak'){?>
                         <div>
                           <div class="flex flex-col gap-4">
-                            <p
-                              class="flex justify-between font-medium text-black dark:text-white"
-                            >
+                            <p class="flex justify-between items-center gap-2 text-sm md:text-base font-medium text-black dark:text-white">
                               <span> Total </span>
-                              <span> Rp <?= number_format($subTotal, 0, ',', '.') ?></span>
+                              <span class="text-right break-words">
+                                Rp <?= number_format($subTotal, 0, ',', '.') ?>
+                              </span>
                             </p>
                           </div>
                         </div>
@@ -297,16 +296,14 @@
 
                         <div>
                           <div class="flex flex-col gap-4">
-                            <p
-                              class="flex justify-between font-medium text-black dark:text-white"
-                            >
+                            <p class="flex justify-between items-center gap-2 text-sm md:text-base font-medium text-black dark:text-white">
                               <span> Sub Total </span>
-                              <span> Rp <?= number_format($subTotal, 0, ',', '.') ?></span>
+                              <span class="text-right break-words">
+                                Rp <?= number_format($subTotal, 0, ',', '.') ?>
+                              </span>
                             </p>
 
-                            <p
-                              class="flex justify-between font-medium text-black dark:text-white"
-                            >
+                            <p class="flex justify-between items-center gap-2 text-sm md:text-base font-medium text-black dark:text-white">
                               <span> Promo Diskon (-) </span>
                               <span> Rp <?= number_format($pc->promo_value, 0, ',', '.') ?> </span>
                             </p>
