@@ -259,15 +259,17 @@
                         <div>
                           <div class="flex flex-col gap-4">
                             <p class="flex justify-between items-center gap-2 text-sm md:text-base font-medium text-slate-900 dark:text-white">
-                              <span> Sub Total </span>
-                              <span class="text-right break-words">
+                              <span class="!text-black dark:!text-white">
+                                Sub Total
+                              </span>
+                              <span class="!text-black dark:!text-white">
                                 Rp <?= number_format($subTotal, 0, ',', '.') ?>
                               </span>
                             </p>
 
                             <p class="flex justify-between items-center gap-2 text-sm md:text-base font-medium text-slate-900 dark:text-white">
                               <span> Promo Diskon (-) </span>
-                              <span> Rp <?= number_format($diskonTotal, 0, ',', '.') ?> </span>
+                              <span class="!text-black dark:!text-white">Rp <?= number_format($diskonTotal, 0, ',', '.') ?> </span>
                             </p>
                           </div>
 
@@ -297,15 +299,17 @@
                         <div>
                           <div class="flex flex-col gap-4">
                             <p class="flex justify-between items-center gap-2 text-sm md:text-base font-medium text-slate-900 dark:text-white">
-                              <span> Sub Total </span>
-                              <span class="text-right break-words">
+                              <span class="!text-black dark:!text-white">
+                                Sub Total
+                              </span>
+                              <span class="!text-black dark:!text-white">
                                 Rp <?= number_format($subTotal, 0, ',', '.') ?>
                               </span>
                             </p>
 
                             <p class="flex justify-between items-center gap-2 text-sm md:text-base font-medium text-slate-900 dark:text-white">
                               <span> Promo Diskon (-) </span>
-                              <span> Rp <?= number_format($pc->promo_value, 0, ',', '.') ?> </span>
+                             <span class="!text-black dark:!text-white"> Rp <?= number_format($pc->promo_value, 0, ',', '.') ?> </span>
                             </p>
                           </div>
 
