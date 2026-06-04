@@ -217,40 +217,40 @@
     let table;
     let activeKategori = 'semua';
 
+    // ✅ Daftarkan custom filter SEBELUM DataTable diinisialisasi
+    $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+      if (settings.nTable.id !== 'dataTableTwo') return true;
+      if (activeKategori === 'semua') return true;
+
+      const row         = table.row(dataIndex).node();
+      const rowKategori = row ? row.getAttribute('data-kategori').trim() : '';
+
+      return rowKategori === activeKategori;
+    });
+
     $(document).ready(function () {
 
-      // Cek apakah tabel sudah diinisialisasi oleh bundle.js, jika ya destroy dulu
+      // Destroy jika sudah diinisialisasi oleh bundle.js
       if ($.fn.DataTable.isDataTable('#dataTableTwo')) {
         $('#dataTableTwo').DataTable().destroy();
       }
 
-      // Inisialisasi ulang DataTables secara manual
+      // Inisialisasi DataTable
       table = $('#dataTableTwo').DataTable({
         pageLength: 10,
         language: {
-          search:      "Cari:",
-          lengthMenu:  "Tampilkan _MENU_ data",
-          info:        "Menampilkan _START_ - _END_ dari _TOTAL_ data",
+          search:       "Cari:",
+          lengthMenu:   "Tampilkan _MENU_ data",
+          info:         "Menampilkan _START_ - _END_ dari _TOTAL_ data",
           paginate: {
-            previous: "Sebelumnya",
-            next:     "Selanjutnya"
+            previous:   "Sebelumnya",
+            next:       "Selanjutnya"
           },
-          zeroRecords:    "Data tidak ditemukan",
-          emptyTable:     "Tidak ada data tersedia",
-          infoEmpty:      "Menampilkan 0 - 0 dari 0 data",
-          infoFiltered:   "(difilter dari _MAX_ total data)"
+          zeroRecords:  "Data tidak ditemukan",
+          emptyTable:   "Tidak ada data tersedia",
+          infoEmpty:    "Menampilkan 0 - 0 dari 0 data",
+          infoFiltered: "(difilter dari _MAX_ total data)"
         }
-      });
-
-      // Custom search filter berdasarkan data-kategori di <tr>
-      $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
-        if (settings.nTable.id !== 'dataTableTwo') return true; // hanya berlaku untuk tabel ini
-        if (activeKategori === 'semua') return true;
-
-        const row        = table.row(dataIndex).node();
-        const rowKategori = $(row).attr('data-kategori') ? $(row).attr('data-kategori').trim() : '';
-
-        return rowKategori === activeKategori;
       });
 
       updateTotal();
@@ -282,7 +282,7 @@
       button.classList.remove('bg-white', 'text-gray-700', 'border-gray-300');
       button.classList.add('bg-blue-500', 'text-white', 'border-blue-500');
 
-      // Redraw tabel dengan filter baru
+      // Redraw tabel — custom filter akan terpanggil otomatis
       table.draw();
     }
   </script>
