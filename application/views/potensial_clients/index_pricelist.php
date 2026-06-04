@@ -210,67 +210,126 @@
       </main>
     </div>
   </div>
-<!-- bundle.js TANPA defer agar jQuery tersedia sebelum script kita -->
   <script src="<?php echo base_url()?>assets/backend/bundle.js"></script>
 
   <script>
-    let table;
     let activeKategori = 'semua';
+    let currentPage    = 1;
+    const perPage      = 10;
 
-    // ✅ Daftarkan custom filter SEBELUM DataTable diinisialisasi
-    $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
-      if (settings.nTable.id !== 'dataTableTwo') return true;
-      if (activeKategori === 'semua') return true;
+    // Ambil semua baris dari tbody asli (sebelum DataTables menyentuhnya)
+    // Simpan semua baris sebagai array
+    let allRows = [];
 
-      const row         = table.row(dataIndex).node();
-      const rowKategori = row ? row.getAttribute('data-kategori').trim() : '';
+    window.addEventListener('DOMContentLoaded', function () {
 
-      return rowKategori === activeKategori;
-    });
-
-    $(document).ready(function () {
-
-      // Destroy jika sudah diinisialisasi oleh bundle.js
-      if ($.fn.DataTable.isDataTable('#dataTableTwo')) {
+      // Destroy DataTables jika bundle.js sudah menginisialisasinya
+      if (typeof $ !== 'undefined' && $.fn.DataTable && $.fn.DataTable.isDataTable('#dataTableTwo')) {
         $('#dataTableTwo').DataTable().destroy();
+        // Kembalikan tabel ke kondisi semula
+        $('#dataTableTwo').removeClass('dataTable');
       }
 
-      // Inisialisasi DataTable
-      table = $('#dataTableTwo').DataTable({
-        pageLength: 10,
-        language: {
-          search:       "Cari:",
-          lengthMenu:   "Tampilkan _MENU_ data",
-          info:         "Menampilkan _START_ - _END_ dari _TOTAL_ data",
-          paginate: {
-            previous:   "Sebelumnya",
-            next:       "Selanjutnya"
-          },
-          zeroRecords:  "Data tidak ditemukan",
-          emptyTable:   "Tidak ada data tersedia",
-          infoEmpty:    "Menampilkan 0 - 0 dari 0 data",
-          infoFiltered: "(difilter dari _MAX_ total data)"
-        }
-      });
+      // Simpan semua <tr> dari tbody
+      const tbody = document.getElementById('tableBody');
+      allRows = Array.from(tbody.querySelectorAll('tr'));
 
-      updateTotal();
-
-      table.on('draw', function () {
-        updateTotal();
-      });
-
+      renderTable();
     });
 
-    function updateTotal() {
-      const count        = table ? table.rows({ search: 'applied' }).count() : 0;
+    function getFilteredRows() {
+      if (activeKategori === 'semua') return allRows;
+      return allRows.filter(row => row.getAttribute('data-kategori').trim() === activeKategori);
+    }
+
+    function renderTable() {
+      const filtered  = getFilteredRows();
+      const totalData = filtered.length;
+      const start     = (currentPage - 1) * perPage;
+      const end       = start + perPage;
+      const pageRows  = filtered.slice(start, end);
+
+      const tbody = document.getElementById('tableBody');
+
+      // Sembunyikan semua baris dulu
+      allRows.forEach(row => row.style.display = 'none');
+
+      // Tampilkan hanya baris halaman aktif
+      pageRows.forEach((row, i) => {
+        row.style.display = '';
+        // Update nomor urut
+        row.querySelector('td:first-child').textContent = start + i + 1;
+      });
+
+      // Update total
       const totalMobile  = document.getElementById('totalCount');
       const totalDesktop = document.getElementById('totalCountDesktop');
-      if (totalMobile)  totalMobile.textContent  = count;
-      if (totalDesktop) totalDesktop.textContent = count;
+      if (totalMobile)  totalMobile.textContent  = totalData;
+      if (totalDesktop) totalDesktop.textContent = totalData;
+
+      // Render pagination
+      renderPagination(totalData);
+    }
+
+    function renderPagination(totalData) {
+      const totalPages = Math.ceil(totalData / perPage);
+
+      let paginationEl = document.getElementById('customPagination');
+      if (!paginationEl) {
+        paginationEl = document.createElement('div');
+        paginationEl.id = 'customPagination';
+        document.getElementById('tableBody').closest('table').after(paginationEl);
+      }
+
+      paginationEl.className = 'flex flex-wrap items-center justify-between gap-2 mt-4 px-2';
+
+      // Info
+      const filtered = getFilteredRows();
+      const start    = Math.min((currentPage - 1) * perPage + 1, filtered.length);
+      const end      = Math.min(currentPage * perPage, filtered.length);
+
+      let html = `<span class="text-sm text-gray-600 dark:text-gray-300">
+                    Menampilkan ${filtered.length > 0 ? start : 0} - ${end} dari ${filtered.length} data
+                  </span>`;
+
+      html += `<div class="flex flex-wrap gap-1">`;
+
+      // Tombol Sebelumnya
+      html += `<button onclick="goToPage(${currentPage - 1})"
+                       class="px-3 py-1 rounded border text-sm ${currentPage === 1 ? 'opacity-40 cursor-not-allowed' : 'hover:bg-blue-500 hover:text-white'}"
+                       ${currentPage === 1 ? 'disabled' : ''}>
+                  Sebelumnya
+               </button>`;
+
+      // Tombol nomor halaman
+      for (let i = 1; i <= totalPages; i++) {
+        html += `<button onclick="goToPage(${i})"
+                         class="px-3 py-1 rounded border text-sm ${i === currentPage ? 'bg-blue-500 text-white border-blue-500' : 'hover:bg-blue-500 hover:text-white'}">
+                    ${i}
+                 </button>`;
+      }
+
+      // Tombol Selanjutnya
+      html += `<button onclick="goToPage(${currentPage + 1})"
+                       class="px-3 py-1 rounded border text-sm ${currentPage === totalPages || totalPages === 0 ? 'opacity-40 cursor-not-allowed' : 'hover:bg-blue-500 hover:text-white'}"
+                       ${currentPage === totalPages || totalPages === 0 ? 'disabled' : ''}>
+                  Selanjutnya
+               </button>`;
+
+      html += `</div>`;
+      paginationEl.innerHTML = html;
+    }
+
+    function goToPage(page) {
+      const totalPages = Math.ceil(getFilteredRows().length / perPage);
+      if (page < 1 || page > totalPages) return;
+      currentPage = page;
+      renderTable();
     }
 
     function filterKategori(button) {
       activeKategori = button.dataset.kategori;
+      currentPage    = 1; // Reset ke halaman pertama saat filter berubah
 
       // Reset semua tombol
       document.querySelectorAll('.btn-filter').forEach(btn => {
@@ -282,8 +341,7 @@
       button.classList.remove('bg-white', 'text-gray-700', 'border-gray-300');
       button.classList.add('bg-blue-500', 'text-white', 'border-blue-500');
 
-      // Redraw tabel — custom filter akan terpanggil otomatis
-      table.draw();
+      renderTable();
     }
   </script>
 </body>
