@@ -230,5 +230,43 @@
       document.getElementById('totalCountDesktop').textContent = visibleCount;
     }
   </script>
+
+  <script>
+  let table;
+
+  document.addEventListener('DOMContentLoaded', function () {
+    // Inisialisasi DataTable dan simpan ke variabel
+    table = $('#dataTableTwo').DataTable();
+  });
+
+  function filterKategori(kategori) {
+    const allBtns = document.querySelectorAll('.btn-filter');
+
+    // Reset semua tombol
+    allBtns.forEach(btn => {
+      btn.classList.remove('bg-blue-500', 'text-white', 'border-blue-500');
+      btn.classList.add('bg-white', 'text-gray-700', 'border-gray-300');
+    });
+
+    // Aktifkan tombol yang dipilih
+    const activeBtn = document.getElementById('btn-' + kategori);
+    if (activeBtn) {
+      activeBtn.classList.remove('bg-white', 'text-gray-700', 'border-gray-300');
+      activeBtn.classList.add('bg-blue-500', 'text-white', 'border-blue-500');
+    }
+
+    // Filter tabel menggunakan DataTables API
+    if (kategori === 'semua') {
+      table.column(4).search('').draw(); // kolom ke-4 = Kategori (index mulai 0)
+    } else {
+      table.column(4).search('^' + kategori + '$', true, false).draw(); // exact match
+    }
+
+    // Update total sesuai jumlah baris yang tampil
+    const visibleCount = table.rows({ search: 'applied' }).count();
+    document.getElementById('totalCount').textContent       = visibleCount;
+    document.getElementById('totalCountDesktop').textContent = visibleCount;
+  }
+</script>
 </body>
 </html>
