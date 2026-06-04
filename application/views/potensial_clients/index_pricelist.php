@@ -135,8 +135,7 @@
                       <tr class="bg-gray-50 dark:bg-meta-4 text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wider">
                         <th class="px-4 py-3 text-left font-semibold w-10">No</th>
                         <th class="px-4 py-3 text-left font-semibold">Judul</th>
-                        <th class="px-4 py-3 text-left font-semibold">Harga Asli</th>
-                        <th class="px-4 py-3 text-left font-semibold">Harga Promo</th>
+                        <th class="px-4 py-3 text-left font-semibold">Harga</th>
                         <th class="px-4 py-3 text-left font-semibold">Kategori</th>
                         <th class="px-4 py-3 text-left font-semibold">Diupdate</th>
                         <th class="px-4 py-3 text-center font-semibold">Aksi</th>
@@ -152,9 +151,7 @@
                             <span class="font-medium text-gray-800 dark:text-white"><?= $p->data_pricelist_judul ?></span>
                           </td>
                           <td class="px-4 py-3">
-                            <span class="text-gray-400 line-through text-xs"><?= "Rp " . number_format($p->data_pricelist_harga, 0, ',', '.') ?></span>
-                          </td>
-                          <td class="px-4 py-3">
+                            <small><span class="text-gray-400 line-through text-xs"><?= "Rp " . number_format($p->data_pricelist_harga, 0, ',', '.') ?></span></small>
                             <span class="font-semibold text-green-600 dark:text-green-400"><?= "Rp " . number_format($p->data_pricelist_hargapromo, 0, ',', '.') ?></span>
                           </td>
                           <td class="px-4 py-3">
