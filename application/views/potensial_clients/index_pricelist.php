@@ -66,57 +66,72 @@
               <div class="mt-6 px-6">
                 <p class="text-sm font-semibold mb-3 text-center text-gray-600 dark:text-gray-300">Filter Kategori</p>
                 <div class="flex flex-wrap justify-center gap-2">
-                  <button onclick="filterKategori('semua')" id="btn-semua"
-                    class="btn-filter active-filter px-3 py-1.5 rounded-full text-sm font-medium border transition-all bg-blue-500 text-white border-blue-500">
-                    Semua
+                  <button onclick="filterKategori(this)"
+                          data-kategori="semua"
+                          class="btn-filter bg-blue-500 text-white border-blue-500 px-3 py-1.5 rounded-full text-sm font-medium border">
+                      Semua
                   </button>
-                  <button onclick="filterKategori('MC')" id="btn-MC"
-                    class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border transition-all bg-white text-gray-700 border-gray-300 hover:bg-blue-500 hover:text-white hover:border-blue-500 dark:bg-boxdark dark:text-white dark:border-strokedark">
-                    MC
+                  <button onclick="filterKategori(this)"
+                          data-kategori="MC"
+                          class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border">
+                      MC
                   </button>
-                  <button onclick="filterKategori('WP dan WO')" id="btn-WP dan WO"
-                    class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border transition-all bg-white text-gray-700 border-gray-300 hover:bg-blue-500 hover:text-white hover:border-blue-500 dark:bg-boxdark dark:text-white dark:border-strokedark">
-                    WP dan WO
+
+                  <button onclick="filterKategori(this)"
+                          data-kategori="WP dan WO"
+                          class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border">
+                      WP dan WO
                   </button>
-                  <button onclick="filterKategori('Dokumentasi')" id="btn-Dokumentasi"
-                    class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border transition-all bg-white text-gray-700 border-gray-300 hover:bg-blue-500 hover:text-white hover:border-blue-500 dark:bg-boxdark dark:text-white dark:border-strokedark">
-                    Dokumentasi
+
+                  <button onclick="filterKategori(this)"
+                          data-kategori="Dokumentasi"
+                          class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border">
+                      Dokumentasi
                   </button>
-                  <button onclick="filterKategori('Dekorasi')" id="btn-Dekorasi"
-                    class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border transition-all bg-white text-gray-700 border-gray-300 hover:bg-blue-500 hover:text-white hover:border-blue-500 dark:bg-boxdark dark:text-white dark:border-strokedark">
-                    Dekorasi
+                  <button onclick="filterKategori(this)"
+                          data-kategori="Dekorasi"
+                          class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border">
+                      Dekorasi
                   </button>
-                  <button onclick="filterKategori('Catering')" id="btn-Catering"
-                    class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border transition-all bg-white text-gray-700 border-gray-300 hover:bg-blue-500 hover:text-white hover:border-blue-500 dark:bg-boxdark dark:text-white dark:border-strokedark">
-                    Catering
+                  <button onclick="filterKategori(this)"
+                          data-kategori="Catering"
+                          class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border">
+                      Catering
                   </button>
-                  <button onclick="filterKategori('Entertainment')" id="btn-Entertainment"
-                    class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border transition-all bg-white text-gray-700 border-gray-300 hover:bg-blue-500 hover:text-white hover:border-blue-500 dark:bg-boxdark dark:text-white dark:border-strokedark">
-                    Entertainment
+                  <button onclick="filterKategori(this)"
+                          data-kategori="Entertainment"
+                          class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border">
+                      Entertainment
                   </button>
-                  <button onclick="filterKategori('Makeup & Busana')" id="btn-Makeup & Busana"
-                    class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border transition-all bg-white text-gray-700 border-gray-300 hover:bg-blue-500 hover:text-white hover:border-blue-500 dark:bg-boxdark dark:text-white dark:border-strokedark">
-                    Makeup & Busana
+                  <button onclick="filterKategori(this)"
+                          data-kategori="Makeup & Busana"
+                          class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border">
+                      Makeup & Busana
                   </button>
-                  <button onclick="filterKategori('Venue Pernikahan')" id="btn-Venue Pernikahan"
-                    class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border transition-all bg-white text-gray-700 border-gray-300 hover:bg-blue-500 hover:text-white hover:border-blue-500 dark:bg-boxdark dark:text-white dark:border-strokedark">
-                    Venue Pernikahan
+                  <button onclick="filterKategori(this)"
+                          data-kategori="Makeup & Busana"
+                          class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border">
+                      Venue Pernikahan
                   </button>
-                  <button onclick="filterKategori('Paket Pernikahan')" id="btn-Paket Pernikahan"
-                    class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border transition-all bg-white text-gray-700 border-gray-300 hover:bg-blue-500 hover:text-white hover:border-blue-500 dark:bg-boxdark dark:text-white dark:border-strokedark">
-                    Paket Pernikahan
+                  <button onclick="filterKategori(this)"
+                          data-kategori="Makeup & Busana"
+                          class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border">
+                      Paket Pernikahan
                   </button>
-                  <button onclick="filterKategori('Paket Wedding Organizer')" id="btn-Paket Wedding Organizer"
-                    class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border transition-all bg-white text-gray-700 border-gray-300 hover:bg-blue-500 hover:text-white hover:border-blue-500 dark:bg-boxdark dark:text-white dark:border-strokedark">
-                    Paket Wedding Organizer
+                  <button onclick="filterKategori(this)"
+                          data-kategori="Paket Wedding Organizer"
+                          class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border">
+                       Paket Wedding Organizer
                   </button>
-                  <button onclick="filterKategori('Paket Wedding Gedung')" id="btn-Paket Wedding Gedung"
-                    class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border transition-all bg-white text-gray-700 border-gray-300 hover:bg-blue-500 hover:text-white hover:border-blue-500 dark:bg-boxdark dark:text-white dark:border-strokedark">
-                    Paket Wedding Gedung
+                  <button onclick="filterKategori(this)"
+                          data-kategori="Paket Wedding Gedung"
+                          class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border">
+                       Paket Wedding Gedung
                   </button>
-                  <button onclick="filterKategori('Paket Wedding Rumah')" id="btn-Paket Wedding Rumah"
-                    class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border transition-all bg-white text-gray-700 border-gray-300 hover:bg-blue-500 hover:text-white hover:border-blue-500 dark:bg-boxdark dark:text-white dark:border-strokedark">
-                    Paket Wedding Rumah
+                  <button onclick="filterKategori(this)"
+                          data-kategori="Paket Wedding Rumah"
+                          class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border">
+                       Paket Wedding Rumah
                   </button>
                 </div>
               </div>
@@ -194,115 +209,82 @@
   </div>
 
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
+  
   <script>
-    function filterKategori(kategori) {
-      const rows       = document.querySelectorAll('#tableBody tr');
-      const btnSemua   = document.getElementById('btn-semua');
-      const allBtns    = document.querySelectorAll('.btn-filter');
+    let table;
 
-      // Reset semua tombol
-      allBtns.forEach(btn => {
-        btn.classList.remove('bg-blue-500', 'text-white', 'border-blue-500');
-        btn.classList.add('bg-white', 'text-gray-700', 'border-gray-300');
-      });
+    $(document).ready(function () {
 
-      // Aktifkan tombol yang dipilih
-      const activeBtn = document.getElementById('btn-' + kategori);
-      if (activeBtn) {
-        activeBtn.classList.remove('bg-white', 'text-gray-700', 'border-gray-300');
-        activeBtn.classList.add('bg-blue-500', 'text-white', 'border-blue-500');
-      }
+        table = $('#dataTableTwo').DataTable({
+            pageLength: 10
+        });
 
-      let visibleCount = 0;
+        updateTotal();
 
-      rows.forEach(row => {
-        const rowKategori = row.getAttribute('data-kategori');
-        if (kategori === 'semua' || rowKategori === kategori) {
-          row.style.display = '';
-          visibleCount++;
-        } else {
-          row.style.display = 'none';
+        table.on('draw', function () {
+            updateTotal();
+        });
+
+    });
+
+    function updateTotal() {
+        const total = table.rows({ search: 'applied' }).count();
+
+        if ($('#totalCount').length) {
+            $('#totalCount').text(total);
         }
-      });
 
-      // Update total
-      document.getElementById('totalCount').textContent      = visibleCount;
-      document.getElementById('totalCountDesktop').textContent = visibleCount;
+        if ($('#totalCountDesktop').length) {
+            $('#totalCountDesktop').text(total);
+        }
+    }
+
+    function filterKategori(button) {
+
+        const kategori = button.dataset.kategori;
+
+        // reset tombol
+        document.querySelectorAll('.btn-filter').forEach(btn => {
+
+            btn.classList.remove(
+                'bg-blue-500',
+                'text-white',
+                'border-blue-500'
+            );
+
+            btn.classList.add(
+                'bg-white',
+                'text-gray-700',
+                'border-gray-300'
+            );
+        });
+
+        // aktifkan tombol terpilih
+        button.classList.remove(
+            'bg-white',
+            'text-gray-700',
+            'border-gray-300'
+        );
+
+        button.classList.add(
+            'bg-blue-500',
+            'text-white',
+            'border-blue-500'
+        );
+
+        // filter kategori
+        if (kategori === 'semua') {
+
+            table.column(4).search('').draw();
+
+        } else {
+
+            table.column(4).search(kategori, false, false).draw();
+
+        }
+
+        updateTotal();
     }
   </script>
-
-  <script>
-let table;
-
-document.addEventListener('DOMContentLoaded', function () {
-
-    table = $('#dataTableTwo').DataTable();
-
-    // tampilkan jumlah awal
-    updateTotal();
-
-    // update total saat pencarian/filter berubah
-    table.on('draw', function () {
-        updateTotal();
-    });
-
-});
-
-function updateTotal() {
-    const visibleCount = table.rows({ search: 'applied' }).count();
-
-    const mobileTotal = document.getElementById('totalCount');
-    const desktopTotal = document.getElementById('totalCountDesktop');
-
-    if (mobileTotal) mobileTotal.textContent = visibleCount;
-    if (desktopTotal) desktopTotal.textContent = visibleCount;
-}
-
-function filterKategori(kategori) {
-
-    // reset tombol
-    document.querySelectorAll('.btn-filter').forEach(btn => {
-        btn.classList.remove(
-            'bg-blue-500',
-            'text-white',
-            'border-blue-500'
-        );
-
-        btn.classList.add(
-            'bg-white',
-            'text-gray-700',
-            'border-gray-300'
-        );
-    });
-
-    // aktifkan tombol terpilih
-    const activeBtn = document.getElementById('btn-' + kategori);
-
-    if (activeBtn) {
-        activeBtn.classList.remove(
-            'bg-white',
-            'text-gray-700',
-            'border-gray-300'
-        );
-
-        activeBtn.classList.add(
-            'bg-blue-500',
-            'text-white',
-            'border-blue-500'
-        );
-    }
-
-    // kolom kategori = kolom ke-5 (index 4)
-    if (kategori === 'semua') {
-        table.column(4).search('').draw();
-    } else {
-        table.column(4).search(
-            '^' + $.fn.dataTable.util.escapeRegex(kategori) + '$',
-            true,
-            false
-        ).draw();
-    }
-}
-</script>
 </body>
 </html>
