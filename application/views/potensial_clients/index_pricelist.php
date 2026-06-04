@@ -232,41 +232,77 @@
   </script>
 
   <script>
-  let table;
+let table;
 
-  document.addEventListener('DOMContentLoaded', function () {
-    // Inisialisasi DataTable dan simpan ke variabel
+document.addEventListener('DOMContentLoaded', function () {
+
     table = $('#dataTableTwo').DataTable();
-  });
 
-  function filterKategori(kategori) {
-    const allBtns = document.querySelectorAll('.btn-filter');
+    // tampilkan jumlah awal
+    updateTotal();
 
-    // Reset semua tombol
-    allBtns.forEach(btn => {
-      btn.classList.remove('bg-blue-500', 'text-white', 'border-blue-500');
-      btn.classList.add('bg-white', 'text-gray-700', 'border-gray-300');
+    // update total saat pencarian/filter berubah
+    table.on('draw', function () {
+        updateTotal();
     });
 
-    // Aktifkan tombol yang dipilih
-    const activeBtn = document.getElementById('btn-' + kategori);
-    if (activeBtn) {
-      activeBtn.classList.remove('bg-white', 'text-gray-700', 'border-gray-300');
-      activeBtn.classList.add('bg-blue-500', 'text-white', 'border-blue-500');
-    }
+});
 
-    // Filter tabel menggunakan DataTables API
-    if (kategori === 'semua') {
-      table.column(4).search('').draw(); // kolom ke-4 = Kategori (index mulai 0)
-    } else {
-      table.column(4).search('^' + kategori + '$', true, false).draw(); // exact match
-    }
-
-    // Update total sesuai jumlah baris yang tampil
+function updateTotal() {
     const visibleCount = table.rows({ search: 'applied' }).count();
-    document.getElementById('totalCount').textContent       = visibleCount;
-    document.getElementById('totalCountDesktop').textContent = visibleCount;
-  }
+
+    const mobileTotal = document.getElementById('totalCount');
+    const desktopTotal = document.getElementById('totalCountDesktop');
+
+    if (mobileTotal) mobileTotal.textContent = visibleCount;
+    if (desktopTotal) desktopTotal.textContent = visibleCount;
+}
+
+function filterKategori(kategori) {
+
+    // reset tombol
+    document.querySelectorAll('.btn-filter').forEach(btn => {
+        btn.classList.remove(
+            'bg-blue-500',
+            'text-white',
+            'border-blue-500'
+        );
+
+        btn.classList.add(
+            'bg-white',
+            'text-gray-700',
+            'border-gray-300'
+        );
+    });
+
+    // aktifkan tombol terpilih
+    const activeBtn = document.getElementById('btn-' + kategori);
+
+    if (activeBtn) {
+        activeBtn.classList.remove(
+            'bg-white',
+            'text-gray-700',
+            'border-gray-300'
+        );
+
+        activeBtn.classList.add(
+            'bg-blue-500',
+            'text-white',
+            'border-blue-500'
+        );
+    }
+
+    // kolom kategori = kolom ke-5 (index 4)
+    if (kategori === 'semua') {
+        table.column(4).search('').draw();
+    } else {
+        table.column(4).search(
+            '^' + $.fn.dataTable.util.escapeRegex(kategori) + '$',
+            true,
+            false
+        ).draw();
+    }
+}
 </script>
 </body>
 </html>
