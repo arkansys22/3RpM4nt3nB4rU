@@ -208,113 +208,113 @@
     </div>
   </div>
   <script src="<?php echo base_url()?>assets/backend/bundle.js"></script>
-
   <script>
     let activeKategori = 'semua';
+    let searchQuery    = '';
     let currentPage    = 1;
     const perPage      = 10;
-
-    // Ambil semua baris dari tbody asli (sebelum DataTables menyentuhnya)
-    // Simpan semua baris sebagai array
-    let allRows = [];
+    let allRows        = [];
 
     window.addEventListener('DOMContentLoaded', function () {
-
-      // Destroy DataTables jika bundle.js sudah menginisialisasinya
-      if (typeof $ !== 'undefined' && $.fn.DataTable && $.fn.DataTable.isDataTable('#dataTableTwo')) {
-        $('#dataTableTwo').DataTable().destroy();
-        // Kembalikan tabel ke kondisi semula
-        $('#dataTableTwo').removeClass('dataTable');
+      if (typeof $ !== 'undefined' && $.fn.DataTable && $.fn.DataTable.isDataTable('#mainTable')) {
+        $('#mainTable').DataTable().destroy();
       }
-
-      // Simpan semua <tr> dari tbody
-      const tbody = document.getElementById('tableBody');
-      allRows = Array.from(tbody.querySelectorAll('tr'));
-
+      allRows = Array.from(document.querySelectorAll('#tableBody tr'));
       renderTable();
     });
 
     function getFilteredRows() {
-      if (activeKategori === 'semua') return allRows;
-      return allRows.filter(row => row.getAttribute('data-kategori').trim() === activeKategori);
+      return allRows.filter(row => {
+        const kat   = row.getAttribute('data-kategori') || '';
+        const judul = row.getAttribute('data-judul') || '';
+        const matchKat    = activeKategori === 'semua' || kat.trim() === activeKategori;
+        const matchSearch = judul.includes(searchQuery.toLowerCase()) || kat.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchKat && matchSearch;
+      });
     }
 
     function renderTable() {
-      const filtered  = getFilteredRows();
-      const totalData = filtered.length;
-      const start     = (currentPage - 1) * perPage;
-      const end       = start + perPage;
-      const pageRows  = filtered.slice(start, end);
-
-      const tbody = document.getElementById('tableBody');
-
-      // Sembunyikan semua baris dulu
-      allRows.forEach(row => row.style.display = 'none');
-
-      // Tampilkan hanya baris halaman aktif
-      pageRows.forEach((row, i) => {
-        row.style.display = '';
-        // Update nomor urut
-        row.querySelector('td:first-child').textContent = start + i + 1;
-      });
-
-      // Update total
-      const totalMobile  = document.getElementById('totalCount');
-      const totalDesktop = document.getElementById('totalCountDesktop');
-      if (totalMobile)  totalMobile.textContent  = totalData;
-      if (totalDesktop) totalDesktop.textContent = totalData;
-
-      // Render pagination
-      renderPagination(totalData);
-    }
-
-    function renderPagination(totalData) {
+      const filtered   = getFilteredRows();
+      const totalData  = filtered.length;
       const totalPages = Math.ceil(totalData / perPage);
 
-      let paginationEl = document.getElementById('customPagination');
-      if (!paginationEl) {
-        paginationEl = document.createElement('div');
-        paginationEl.id = 'customPagination';
-        document.getElementById('tableBody').closest('table').after(paginationEl);
+      if (currentPage > totalPages) currentPage = 1;
+
+      const start    = (currentPage - 1) * perPage;
+      const end      = start + perPage;
+      const pageRows = filtered.slice(start, end);
+
+      // Sembunyikan semua
+      allRows.forEach(row => row.style.display = 'none');
+
+      // Tampilkan halaman aktif
+      pageRows.forEach((row, i) => {
+        row.style.display = '';
+        row.querySelector('.row-no').textContent = start + i + 1;
+      });
+
+      // Empty state
+      const emptyState = document.getElementById('emptyState');
+      emptyState.classList.toggle('hidden', totalData > 0);
+
+      // Update total
+      ['totalCount','totalCountDesktop'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = totalData;
+      });
+
+      // Info text
+      const s = totalData > 0 ? start + 1 : 0;
+      const e = Math.min(end, totalData);
+      const infoEl = document.getElementById('infoText');
+      if (infoEl) infoEl.textContent = `Menampilkan ${s}–${e} dari ${totalData} data`;
+
+      renderPagination(totalData, totalPages);
+    }
+
+    function renderPagination(totalData, totalPages) {
+      const el = document.getElementById('customPagination');
+      if (!el) return;
+
+      if (totalPages <= 1) { el.innerHTML = ''; return; }
+
+      // Tombol halaman dengan ellipsis
+      let pages = [];
+      for (let i = 1; i <= totalPages; i++) {
+        if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+          pages.push(i);
+        } else if (pages[pages.length - 1] !== '...') {
+          pages.push('...');
+        }
       }
 
-      paginationEl.className = 'flex flex-wrap items-center justify-between gap-2 mt-4 px-2';
+      const btnBase = 'px-3 py-1.5 rounded-lg border text-xs font-semibold transition-all duration-150';
+      const btnActive = 'bg-blue-500 text-white border-blue-500 shadow-sm';
+      const btnInactive = 'bg-white dark:bg-boxdark text-gray-600 dark:text-gray-300 border-gray-200 dark:border-strokedark hover:bg-blue-50 hover:border-blue-300';
+      const btnDisabled = 'opacity-40 cursor-not-allowed bg-white dark:bg-boxdark text-gray-400 border-gray-200 dark:border-strokedark';
 
-      // Info
-      const filtered = getFilteredRows();
-      const start    = Math.min((currentPage - 1) * perPage + 1, filtered.length);
-      const end      = Math.min(currentPage * perPage, filtered.length);
+      let html = `<div class="flex flex-wrap gap-1.5 items-center">`;
 
-      let html = `<span class="text-sm text-gray-600 dark:text-gray-300">
-                    Menampilkan ${filtered.length > 0 ? start : 0} - ${end} dari ${filtered.length} data
-                  </span>`;
-
-      html += `<div class="flex flex-wrap gap-1">`;
-
-      // Tombol Sebelumnya
-      html += `<button onclick="goToPage(${currentPage - 1})"
-                       class="px-3 py-1 rounded border text-sm ${currentPage === 1 ? 'opacity-40 cursor-not-allowed' : 'hover:bg-blue-500 hover:text-white'}"
-                       ${currentPage === 1 ? 'disabled' : ''}>
-                  Sebelumnya
+      html += `<button onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}
+                class="${btnBase} ${currentPage === 1 ? btnDisabled : btnInactive}">
+                ← Prev
                </button>`;
 
-      // Tombol nomor halaman
-      for (let i = 1; i <= totalPages; i++) {
-        html += `<button onclick="goToPage(${i})"
-                         class="px-3 py-1 rounded border text-sm ${i === currentPage ? 'bg-blue-500 text-white border-blue-500' : 'hover:bg-blue-500 hover:text-white'}">
-                    ${i}
-                 </button>`;
-      }
+      pages.forEach(p => {
+        if (p === '...') {
+          html += `<span class="px-2 text-gray-400 text-xs">…</span>`;
+        } else {
+          html += `<button onclick="goToPage(${p})" class="${btnBase} ${p === currentPage ? btnActive : btnInactive}">${p}</button>`;
+        }
+      });
 
-      // Tombol Selanjutnya
-      html += `<button onclick="goToPage(${currentPage + 1})"
-                       class="px-3 py-1 rounded border text-sm ${currentPage === totalPages || totalPages === 0 ? 'opacity-40 cursor-not-allowed' : 'hover:bg-blue-500 hover:text-white'}"
-                       ${currentPage === totalPages || totalPages === 0 ? 'disabled' : ''}>
-                  Selanjutnya
+      html += `<button onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}
+                class="${btnBase} ${currentPage === totalPages ? btnDisabled : btnInactive}">
+                Next →
                </button>`;
 
       html += `</div>`;
-      paginationEl.innerHTML = html;
+      el.innerHTML = html;
     }
 
     function goToPage(page) {
@@ -324,19 +324,23 @@
       renderTable();
     }
 
+    function handleSearch(value) {
+      searchQuery = value.trim();
+      currentPage = 1;
+      renderTable();
+    }
+
     function filterKategori(button) {
       activeKategori = button.dataset.kategori;
-      currentPage    = 1; // Reset ke halaman pertama saat filter berubah
+      currentPage    = 1;
 
-      // Reset semua tombol
       document.querySelectorAll('.btn-filter').forEach(btn => {
-        btn.classList.remove('bg-blue-500', 'text-white', 'border-blue-500');
-        btn.classList.add('bg-white', 'text-gray-700', 'border-gray-300');
+        btn.classList.remove('bg-blue-500', 'text-white', 'border-blue-500', 'shadow-sm');
+        btn.classList.add('bg-white', 'dark:bg-boxdark', 'text-gray-600', 'dark:text-gray-300', 'border-gray-200', 'dark:border-strokedark');
       });
 
-      // Aktifkan tombol yang dipilih
-      button.classList.remove('bg-white', 'text-gray-700', 'border-gray-300');
-      button.classList.add('bg-blue-500', 'text-white', 'border-blue-500');
+      button.classList.remove('bg-white', 'dark:bg-boxdark', 'text-gray-600', 'dark:text-gray-300', 'border-gray-200', 'dark:border-strokedark');
+      button.classList.add('bg-blue-500', 'text-white', 'border-blue-500', 'shadow-sm');
 
       renderTable();
     }
