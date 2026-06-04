@@ -93,108 +93,92 @@
 
 
               <!-- ===== Tombol Filter Kategori ===== -->
-              <div class="mt-6 px-6">
-                <p class="text-sm font-semibold mb-3 text-center text-gray-600 dark:text-gray-300">Filter Kategori</p>
+              <div class="mt-6 px-2">
+                <p class="text-xs font-semibold mb-3 uppercase tracking-widest text-center text-gray-400 dark:text-gray-500">Filter Kategori</p>
                 <div class="flex flex-wrap justify-center gap-2">
-                  <button onclick="filterKategori(this)"
-                          data-kategori="semua"
-                          class="btn-filter bg-blue-500 text-white border-blue-500 px-3 py-1.5 rounded-full text-sm font-medium border">
-                      Semua
+                  <button onclick="filterKategori(this)" data-kategori="semua"
+                    class="btn-filter active-filter px-3 py-1.5 rounded-full text-xs font-semibold border transition-all duration-200 bg-blue-500 text-white border-blue-500 shadow-sm">
+                    Semua
                   </button>
-                  <button onclick="filterKategori(this)"
-                          data-kategori="MC"
-                          class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border">
-                      MC
+                  <?php
+                  $kategoris = ['MC','WP dan WO','Dokumentasi','Dekorasi','Catering','Entertainment','Makeup & Busana','Venue Pernikahan','Paket Pernikahan','Paket Wedding Organizer','Paket Wedding Gedung','Paket Wedding Rumah'];
+                  foreach ($kategoris as $k): ?>
+                  <button onclick="filterKategori(this)" data-kategori="<?= $k ?>"
+                    class="btn-filter px-3 py-1.5 rounded-full text-xs font-semibold border transition-all duration-200 bg-white dark:bg-boxdark text-gray-600 dark:text-gray-300 border-gray-200 dark:border-strokedark hover:bg-blue-500 hover:text-white hover:border-blue-500">
+                    <?= $k ?>
                   </button>
-
-                  <button onclick="filterKategori(this)"
-                          data-kategori="WP dan WO"
-                          class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border">
-                      WP dan WO
-                  </button>
-
-                  <button onclick="filterKategori(this)"
-                          data-kategori="Dokumentasi"
-                          class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border">
-                      Dokumentasi
-                  </button>
-                  <button onclick="filterKategori(this)"
-                          data-kategori="Dekorasi"
-                          class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border">
-                      Dekorasi
-                  </button>
-                  <button onclick="filterKategori(this)"
-                          data-kategori="Catering"
-                          class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border">
-                      Catering
-                  </button>
-                  <button onclick="filterKategori(this)"
-                          data-kategori="Entertainment"
-                          class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border">
-                      Entertainment
-                  </button>
-                  <button onclick="filterKategori(this)"
-                          data-kategori="Makeup & Busana"
-                          class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border">
-                      Makeup & Busana
-                  </button>
-                  <button onclick="filterKategori(this)"
-                          data-kategori="Venue Pernikahan"
-                          class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border">
-                      Venue Pernikahan
-                  </button>
-                  <button onclick="filterKategori(this)"
-                          data-kategori="Paket Pernikahan"
-                          class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border">
-                      Paket Pernikahan
-                  </button>
-                  <button onclick="filterKategori(this)"
-                          data-kategori="Paket Wedding Organizer"
-                          class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border">
-                       Paket Wedding Organizer
-                  </button>
-                  <button onclick="filterKategori(this)"
-                          data-kategori="Paket Wedding Gedung"
-                          class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border">
-                       Paket Wedding Gedung
-                  </button>
-                  <button onclick="filterKategori(this)"
-                          data-kategori="Paket Wedding Rumah"
-                          class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border">
-                       Paket Wedding Rumah
-                  </button>
+                  <?php endforeach; ?>
                 </div>
               </div>
               <!-- ===== End Tombol Filter Kategori ===== -->
 
-              <br><br>
-              <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                <div class="max-w-full overflow-x-auto">
-                  <table class="table w-full table-auto" id="">
+              <br>
+
+              <!-- Search & Info Bar -->
+              <div class="flex flex-col sm:flex-row items-center justify-between gap-3 mt-2 mb-3 px-1">
+                <div class="relative w-full sm:w-64">
+                  <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
+                  </svg>
+                  <input type="text" id="searchInput" placeholder="Cari judul atau kategori..."
+                    oninput="handleSearch(this.value)"
+                    class="w-full pl-9 pr-4 py-2 text-sm border border-gray-200 dark:border-strokedark rounded-lg bg-white dark:bg-boxdark text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"/>
+                </div>
+                <p id="infoText" class="text-xs text-gray-400 whitespace-nowrap"></p>
+              </div>
+
+              <!-- Tabel -->
+              <div class="rounded-xl border border-gray-100 dark:border-strokedark overflow-hidden shadow-sm">
+                <div class="overflow-x-auto">
+                  <table class="w-full text-sm" id="mainTable">
                     <thead>
-                      <tr>
-                        <th><div class="flex items-center justify-between gap-1.5"><p>No</p></div></th>
-                        <th><div class="flex items-center justify-between gap-1.5"><p>Judul</p></div></th>
-                        <th><div class="flex items-center justify-between gap-1.5"><p>Harga Asli</p></div></th>
-                        <th><div class="flex items-center justify-between gap-1.5"><p>Harga Promo</p></div></th>
-                        <th><div class="flex items-center justify-between gap-1.5"><p>Kategori</p></div></th>
-                        <th><div class="flex items-center justify-between gap-1.5"><p>Terakhir Diupdate</p></div></th>
-                        <th><div class="flex items-center justify-between gap-1.5"><p>Aksi</p></div></th>
+                      <tr class="bg-gray-50 dark:bg-meta-4 text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wider">
+                        <th class="px-4 py-3 text-left font-semibold w-10">No</th>
+                        <th class="px-4 py-3 text-left font-semibold">Judul</th>
+                        <th class="px-4 py-3 text-left font-semibold">Harga Asli</th>
+                        <th class="px-4 py-3 text-left font-semibold">Harga Promo</th>
+                        <th class="px-4 py-3 text-left font-semibold">Kategori</th>
+                        <th class="px-4 py-3 text-left font-semibold">Diupdate</th>
+                        <th class="px-4 py-3 text-center font-semibold">Aksi</th>
                       </tr>
                     </thead>
-                    <tbody id="tableBody">
+                    <tbody id="tableBody" class="divide-y divide-gray-100 dark:divide-strokedark">
                       <?php $no = 1; foreach ($potensial_clients_pl as $p): ?>
-                        <tr data-kategori="<?= trim($p->data_pricelist_type) ?>">
-                          <td><?= $no++ ?></td>
-                          <td><?= $p->data_pricelist_judul ?></td>
-                          <td><s><?= "Rp " . number_format($p->data_pricelist_harga, 0, ',', '.'); ?></s></td>
-                          <td><?= "Rp " . number_format($p->data_pricelist_hargapromo, 0, ',', '.'); ?></td>
-                          <td><?= trim($p->data_pricelist_type) ?></td>
-                          <td><?= tgl_indo($p->data_pricelist_lastupdate) ?> <p><small><?= time_ago($p->data_pricelist_lastupdate) ?></small></p></td>
-                          <td>
-                            <div class="flex flex-col items-start gap-2 w-max">
-                              <a href="<?= site_url('potensial-clients-pricelist/lihat/'. $p->data_pricelist_idsession) ?>" class="inline-flex justify-center bg-yellow-500 text-white px-2 py-1 rounded-md hover:bg-yellow-600 text-center w-full">Lihat</a>
-                              <a href="<?= site_url('potensial-clients-pricelist/delete/'.$p->data_pricelist_idsession) ?>" class="inline-flex justify-center bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 min-w-full text-center" onclick="return confirm('Yakin ingin menghapus potensial clients <?= $p->data_pricelist_judul ?>?')">Hapus</a>
+                        <tr data-kategori="<?= htmlspecialchars(trim($p->data_pricelist_type)) ?>"
+                            data-judul="<?= htmlspecialchars(strtolower($p->data_pricelist_judul)) ?>"
+                            class="hover:bg-blue-50 dark:hover:bg-meta-4 transition-colors duration-150 group">
+                          <td class="px-4 py-3 text-gray-400 text-xs font-mono row-no"><?= $no++ ?></td>
+                          <td class="px-4 py-3">
+                            <span class="font-medium text-gray-800 dark:text-white"><?= $p->data_pricelist_judul ?></span>
+                          </td>
+                          <td class="px-4 py-3">
+                            <span class="text-gray-400 line-through text-xs"><?= "Rp " . number_format($p->data_pricelist_harga, 0, ',', '.') ?></span>
+                          </td>
+                          <td class="px-4 py-3">
+                            <span class="font-semibold text-green-600 dark:text-green-400"><?= "Rp " . number_format($p->data_pricelist_hargapromo, 0, ',', '.') ?></span>
+                          </td>
+                          <td class="px-4 py-3">
+                            <span class="inline-block px-2 py-0.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300">
+                              <?= htmlspecialchars(trim($p->data_pricelist_type)) ?>
+                            </span>
+                          </td>
+                          <td class="px-4 py-3 text-gray-500 dark:text-gray-400 text-xs">
+                            <?= tgl_indo($p->data_pricelist_lastupdate) ?>
+                            <br><span class="text-gray-400"><?= time_ago($p->data_pricelist_lastupdate) ?></span>
+                          </td>
+                          <td class="px-4 py-3">
+                            <div class="flex items-center justify-center gap-1.5">
+                              <a href="<?= site_url('potensial-clients-pricelist/lihat/'. $p->data_pricelist_idsession) ?>"
+                                class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-amber-400 hover:bg-amber-500 text-white text-xs font-semibold transition-all shadow-sm">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                Lihat
+                              </a>
+                              <a href="<?= site_url('potensial-clients-pricelist/delete/'.$p->data_pricelist_idsession) ?>"
+                                onclick="return confirm('Yakin ingin menghapus <?= htmlspecialchars($p->data_pricelist_judul) ?>?')"
+                                class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-red-500 hover:bg-red-600 text-white text-xs font-semibold transition-all shadow-sm">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                Hapus
+                              </a>
                             </div>
                           </td>
                         </tr>
@@ -203,6 +187,19 @@
                   </table>
                 </div>
               </div>
+
+              <!-- Empty State -->
+              <div id="emptyState" class="hidden text-center py-16">
+                <svg class="w-12 h-12 mx-auto text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <p class="text-gray-400 font-medium">Tidak ada data untuk kategori ini</p>
+              </div>
+
+              <!-- Pagination -->
+              <div id="customPagination" class="flex flex-col sm:flex-row items-center justify-between gap-3 mt-4 px-1"></div>
+
+
             </div>
 
           </div>
