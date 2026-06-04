@@ -139,12 +139,12 @@
                       Makeup & Busana
                   </button>
                   <button onclick="filterKategori(this)"
-                          data-kategori="Makeup & Busana"
+                          data-kategori="Venue Pernikahan"
                           class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border">
                       Venue Pernikahan
                   </button>
                   <button onclick="filterKategori(this)"
-                          data-kategori="Makeup & Busana"
+                          data-kategori="Paket Pernikahan"
                           class="btn-filter px-3 py-1.5 rounded-full text-sm font-medium border">
                       Paket Pernikahan
                   </button>
@@ -184,12 +184,12 @@
                     </thead>
                     <tbody id="tableBody">
                       <?php $no = 1; foreach ($potensial_clients_pl as $p): ?>
-                        <tr data-kategori="<?= htmlspecialchars(trim($p->data_pricelist_type)) ?>">
+                        <tr data-kategori="<?= trim($p->data_pricelist_type) ?>">
                           <td><?= $no++ ?></td>
                           <td><?= $p->data_pricelist_judul ?></td>
                           <td><s><?= "Rp " . number_format($p->data_pricelist_harga, 0, ',', '.'); ?></s></td>
                           <td><?= "Rp " . number_format($p->data_pricelist_hargapromo, 0, ',', '.'); ?></td>
-                          <td><?= $p->data_pricelist_type ?></td>
+                          <td><?= trim($p->data_pricelist_type) ?></td>
                           <td><?= tgl_indo($p->data_pricelist_lastupdate) ?> <p><small><?= time_ago($p->data_pricelist_lastupdate) ?></small></p></td>
                           <td>
                             <div class="flex flex-col items-start gap-2 w-max">
