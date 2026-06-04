@@ -62,6 +62,36 @@
                 </div>
               </div>
 
+              
+
+            </div>
+
+            <!-- ===== Tabel ===== -->
+            <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
+              <h1 class="text-2xl font-bold mb-4">Daftar Harga</h1>
+
+              <div class="col-span-12 flex flex-wrap items-center justify-center gap-3 md:justify-between">
+                <div class="relative">
+                  <a href="<?= site_url('potensial-clients-pricelist/create') ?>">
+                    <button class="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m7-7H5"></path>
+                      </svg>
+                    </button>
+                  </a>
+                </div>
+                <div class="relative z-20">
+                  <a href="<?= site_url('potensial-clients-pricelist/recycle_bin') ?>">
+                    <button class="bg-red-500 text-white p-3 rounded-md hover:bg-red-700 focus:outline-none">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-2 14H7L5 7M12 4v-2m4 2h-8m5 2l1-1m3 1l-1-1m0 0h6l-1 2m-7-5h2m6 5H5"></path>
+                      </svg>
+                    </button>
+                  </a>
+                </div>
+              </div>
+
+
               <!-- ===== Tombol Filter Kategori ===== -->
               <div class="mt-6 px-6">
                 <p class="text-sm font-semibold mb-3 text-center text-gray-600 dark:text-gray-300">Filter Kategori</p>
@@ -136,33 +166,6 @@
                 </div>
               </div>
               <!-- ===== End Tombol Filter Kategori ===== -->
-
-            </div>
-
-            <!-- ===== Tabel ===== -->
-            <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-              <h1 class="text-2xl font-bold mb-4">Daftar Harga</h1>
-
-              <div class="col-span-12 flex flex-wrap items-center justify-center gap-3 md:justify-between">
-                <div class="relative">
-                  <a href="<?= site_url('potensial-clients-pricelist/create') ?>">
-                    <button class="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m7-7H5"></path>
-                      </svg>
-                    </button>
-                  </a>
-                </div>
-                <div class="relative z-20">
-                  <a href="<?= site_url('potensial-clients-pricelist/recycle_bin') ?>">
-                    <button class="bg-red-500 text-white p-3 rounded-md hover:bg-red-700 focus:outline-none">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-2 14H7L5 7M12 4v-2m4 2h-8m5 2l1-1m3 1l-1-1m0 0h6l-1 2m-7-5h2m6 5H5"></path>
-                      </svg>
-                    </button>
-                  </a>
-                </div>
-              </div>
 
               <br><br>
               <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
