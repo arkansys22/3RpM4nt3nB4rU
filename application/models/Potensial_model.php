@@ -162,7 +162,8 @@ class potensial_model extends CI_Model {
 
 
      public function get_all_pricelist() {
-        $this->db->order_by('data_pricelist_type', 'DESC');    
+        $this->db->order_by('data_pricelist_type', 'DESC'); 
+        $this->db->order_by('data_pricelist_judul', 'ASC');   
         return $this->db->get_where('data_pricelist',['data_pricelist_status' => 'aktif'])->result();
     }
 
