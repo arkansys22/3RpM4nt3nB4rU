@@ -94,8 +94,8 @@
                 </div>
                 </div>
               <form action="" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
-                <label class="block mb-2"><strong>Judul : </strong><a href="<?= $pc->data_pricelist_judul ?>" target=_blank ><?= $pc->data_pricelist_judul ?></a></label>
-                <label class="block mb-2"><strong>Link Di Web Mantenbaru : </strong><?= $pc->data_pricelist_url ?></label>         
+                <label class="block mb-2"><strong>Judul : </strong><?= $pc->data_pricelist_judul ?></label>
+                <label class="block mb-2"><strong>Link Di Web Mantenbaru : </strong><a href="<?= $pc->data_pricelist_url ?>" target="_blank"><?= $pc->data_pricelist_url ?></a></label>         
                 <label class="block mb-2"><strong>Harga Asli : </strong>Rp <?= number_format($pc->data_pricelist_harga) ?></label>        
                 <label class="block mb-2"><strong>Harga Promo : </strong>Rp <?= number_format($pc->data_pricelist_hargapromo) ?></label>
                 <label class="block mb-2"><strong>Kategori : </strong><?= $pc->data_pricelist_type ?></label>
