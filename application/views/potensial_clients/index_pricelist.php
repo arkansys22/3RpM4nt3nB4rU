@@ -170,7 +170,7 @@
               <br><br>
               <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                 <div class="max-w-full overflow-x-auto">
-                  <table class="table w-full table-auto" id="dataTableTwo">
+                  <table class="table w-full table-auto" id="">
                     <thead>
                       <tr>
                         <th><div class="flex items-center justify-between gap-1.5"><p>No</p></div></th>
