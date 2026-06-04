@@ -211,97 +211,60 @@
     </div>
   </div>
 
-  <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
-  
-  <script>
-    let table;
+  <s<script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
 
-    $(document).ready(function () {
+<script>
+  let table;
+  let activeKategori = 'semua';
 
-        table = $('#dataTableTwo').DataTable({
-            pageLength: 10
-        });
+  $(document).ready(function () {
 
-
-            // CEK ISI KOLOM KATEGORI
-        table.rows().every(function () {
-            console.log(this.data()[4]);
-        });
-
-        updateTotal();
-
-        table.on('draw', function () {
-            updateTotal();
-        });
-
+    table = $('#dataTableTwo').DataTable({
+      pageLength: 10
     });
 
-    function updateTotal() {
-        const visibleRows = document.querySelectorAll(
-            '#tableBody tr:not([style*="display: none"])'
-        ).length;
+    // Custom search filter berdasarkan data-kategori di <tr>
+    $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+      if (activeKategori === 'semua') return true;
 
-        const totalMobile = document.getElementById('totalCount');
-        const totalDesktop = document.getElementById('totalCountDesktop');
+      const row = table.row(dataIndex).node();
+      const rowKategori = $(row).attr('data-kategori') ? $(row).attr('data-kategori').trim() : '';
 
-        if (totalMobile) totalMobile.textContent = visibleRows;
-        if (totalDesktop) totalDesktop.textContent = visibleRows;
-    }
-
-    function filterKategori(button) {
-
-        const kategori = button.dataset.kategori;
-
-        // Reset tombol
-        document.querySelectorAll('.btn-filter').forEach(btn => {
-            btn.classList.remove(
-                'bg-blue-500',
-                'text-white',
-                'border-blue-500'
-            );
-
-            btn.classList.add(
-                'bg-white',
-                'text-gray-700',
-                'border-gray-300'
-            );
-        });
-
-        // Aktifkan tombol yang dipilih
-        button.classList.remove(
-            'bg-white',
-            'text-gray-700',
-            'border-gray-300'
-        );
-
-        button.classList.add(
-            'bg-blue-500',
-            'text-white',
-            'border-blue-500'
-        );
-
-        // Filter tabel
-        document.querySelectorAll('#tableBody tr').forEach(row => {
-
-            const rowKategori = row.dataset.kategori.trim();
-
-            if (
-                kategori === 'semua' ||
-                rowKategori === kategori
-            ) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
-
-        });
-
-        updateTotal();
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-        updateTotal();
+      return rowKategori === activeKategori;
     });
-  </script>
+
+    updateTotal();
+
+    table.on('draw', function () {
+      updateTotal();
+    });
+
+  });
+
+  function updateTotal() {
+    const count = table ? table.rows({ search: 'applied' }).count() : 0;
+    const totalMobile  = document.getElementById('totalCount');
+    const totalDesktop = document.getElementById('totalCountDesktop');
+    if (totalMobile)  totalMobile.textContent  = count;
+    if (totalDesktop) totalDesktop.textContent = count;
+  }
+
+  function filterKategori(button) {
+    activeKategori = button.dataset.kategori;
+
+    // Reset semua tombol
+    document.querySelectorAll('.btn-filter').forEach(btn => {
+      btn.classList.remove('bg-blue-500', 'text-white', 'border-blue-500');
+      btn.classList.add('bg-white', 'text-gray-700', 'border-gray-300');
+    });
+
+    // Aktifkan tombol yang dipilih
+    button.classList.remove('bg-white', 'text-gray-700', 'border-gray-300');
+    button.classList.add('bg-blue-500', 'text-white', 'border-blue-500');
+
+    // Redraw tabel dengan filter baru
+    table.draw();
+  }
+</script>
 </body>
 </html>
