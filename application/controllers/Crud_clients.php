@@ -260,139 +260,150 @@ class Crud_clients extends CI_Controller {
     }
 
     public function edit($id_session) {
+        // Cek session login terlebih dahulu
+        if (!$this->session->userdata('id_session') || !$this->session->userdata('level')) {
+            $this->session->set_flashdata('error', 'Session habis, silakan login kembali.');
+            redirect('auth/login');
+            return;
+        }
 
-        if ($this->session->level=='1'){
-            cek_session_akses_developer('clients',$this->session->id_session);
-            $data['clients'] = $this->Clients_model->get_client_by_session($id_session);
-            $this->load->view('clients/edit', $data);
+        $level = $this->session->level;
 
-        }else if($this->session->level=='2'){
-            cek_session_akses_administrator('clients',$this->session->id_session);
-            $data['clients'] = $this->Clients_model->get_client_by_session($id_session);
-            $this->load->view('clients/edit', $data);
-
-        }else if($this->session->level=='3'){
-            cek_session_akses_staff_accounting('clients',$this->session->id_session);
+        // Level yang tidak diizinkan akses edit
+        if (in_array($level, ['3', '5'])) {
             redirect(base_url());
+            return;
+        }
 
-        }else if($this->session->level=='4'){
-            cek_session_akses_staff_admin('clients',$this->session->id_session);
-            $data['clients'] = $this->Clients_model->get_client_by_session($id_session);
-            $this->load->view('clients/edit', $data);
+        // Level yang diizinkan
+        if (!in_array($level, ['1', '2', '4'])) {
+            redirect(base_url());
+            return;
+        }
 
-        }else if($this->session->level=='5'){
-            cek_session_akses_client('clients',$this->session->id_session);
-            redirect(base_url());
-            
-        }else{
-            redirect(base_url());
-            }
+        // Cek akses berdasarkan level
+        switch ($level) {
+            case '1': cek_session_akses_developer('clients', $this->session->id_session); break;
+            case '2': cek_session_akses_administrator('clients', $this->session->id_session); break;
+            case '4': cek_session_akses_staff_admin('clients', $this->session->id_session); break;
+        }
+
+        $data['clients'] = $this->Clients_model->get_client_by_session($id_session);
+        $this->load->view('clients/edit', $data);
     }
 
-    public function update($id_session){
 
-        if ($this->agent->is_browser()) // Agent untuk fitur di log activity
-        {
-            $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
+    public function update($id_session) {
+        // Cek session login terlebih dahulu
+        if (!$this->session->userdata('id_session') || !$this->session->userdata('level')) {
+            $this->session->set_flashdata('error', 'Session habis, silakan login kembali.');
+            redirect('auth/login');
+            return;
         }
-        elseif ($this->agent->is_robot())
-        {
+
+        // Cek level yang diizinkan melakukan update
+        $level = $this->session->level;
+        if (!in_array($level, ['1', '2', '4'])) {
+            $this->session->set_flashdata('error', 'Anda tidak memiliki akses untuk melakukan update.');
+            redirect(base_url());
+            return;
+        }
+
+        if ($this->agent->is_browser()) {
+            $agent = 'Desktop ' . $this->agent->browser() . ' ' . $this->agent->version();
+        } elseif ($this->agent->is_robot()) {
             $agent = $this->agent->robot();
-        }
-        elseif ($this->agent->is_mobile())
-        {
-            $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
-        }
-        else
-        {
+        } elseif ($this->agent->is_mobile()) {
+            $agent = 'Mobile' . $this->agent->mobile() . '' . $this->agent->version();
+        } else {
             $agent = 'Unidentified User Agent';
         }
 
         $data = array(
-            'client_name'           => $this->input->post('client_name'),
-            'email'                 => $this->input->post('email'),
-            'phone'                 => $this->input->post('phone'),
-            'wedding_ceremony'      => $this->input->post('wedding_ceremony'),
-            'reception_afterward'   => $this->input->post('reception_afterward'),
-            'list_photo'            => $this->input->post('list_photo'),
-            'stand_by'              => $this->input->post('stand_by'),
-            'uniform'               => $this->input->post('uniform'),
-            'f_bride_fname'         => $this->input->post('f_bride_fname'),
-            'f_bride_cname'         => $this->input->post('f_bride_cname'),
-            'f_bride_nchild'        => $this->input->post('f_bride_nchild'),
-            'f_bride_hsibling'      => $this->input->post('f_bride_hsibling'),
-            'f_bride_fathername'    => $this->input->post('f_bride_fathername'),
-            'f_bride_fathercname'   => $this->input->post('f_bride_fathercname'),
-            'f_bride_freplacementname' => $this->input->post('f_bride_freplacementname'),
-            'f_bride_freplacementcname' => $this->input->post('f_bride_freplacementcname'),
-            'f_bride_mothername'    => $this->input->post('f_bride_mothername'),
-            'f_bride_mothercname'   => $this->input->post('f_bride_mothercname'),
-            'f_bride_mreplacementname' => $this->input->post('f_bride_mreplacementname'),
-            'f_bride_mreplacementcname' => $this->input->post('f_bride_mreplacementcname'),
-            'f_bride_sibling'       => $this->input->post('f_bride_sibling'),
-            'm_bride_fname'         => $this->input->post('m_bride_fname'),
-            'm_bride_cname'         => $this->input->post('m_bride_cname'),
-            'm_bride_nchild'        => $this->input->post('m_bride_nchild'),
-            'm_bride_hsibling'      => $this->input->post('m_bride_hsibling'),
-            'm_bride_fathername'    => $this->input->post('m_bride_fathername'),
-            'm_bride_fathercname'   => $this->input->post('m_bride_fathercname'),
-            'm_bride_freplacementname' => $this->input->post('m_bride_freplacementname'),
-            'm_bride_freplacementcname' => $this->input->post('m_bride_freplacementcname'),
-            'm_bride_mothername'    => $this->input->post('m_bride_mothername'),
-            'm_bride_mothercname'   => $this->input->post('m_bride_mothercname'),
-            'm_bride_mreplacementname' => $this->input->post('m_bride_mreplacementname'),
-            'm_bride_mreplacementcname' => $this->input->post('m_bride_mreplacementcname'),
-            'm_bride_sibling'       => $this->input->post('m_bride_sibling'),
-            'mahr'                  => $this->input->post('mahr'),
-            'handover'              => $this->input->post('handover'),
-            'female_coor'           => $this->input->post('female_coor'),
-            'male_coor'             => $this->input->post('male_coor'),
-            'f_spokesman'           => $this->input->post('f_spokesman'),
-            'm_spokesman'           => $this->input->post('m_spokesman'),
-            'wedding_officiant'     => $this->input->post('wedding_officiant'),
-            'guardian'              => $this->input->post('guardian'),
-            'f_witness'             => $this->input->post('f_witness'),
-            'm_witness'             => $this->input->post('m_witness'),
-            'qori'                  => $this->input->post('qori'),
-            'advice_doa'            => $this->input->post('advice_doa'),
-            'pmizin'                => $this->input->post('pmizin'),
-            'clamp'                 => $this->input->post('clamp'),
-            'jasmine_carrier'       => $this->input->post('jasmine_carrier'),
-            'mahr_carrier'          => $this->input->post('mahr_carrier'),
-            'ring_carrier'          => $this->input->post('ring_carrier'),
-            'pastor'                => $this->input->post('pastor'),
-            'church'                => $this->input->post('church'),
-            'prayer'                => $this->input->post('prayer'),
-            'wedding_speech'        => $this->input->post('wedding_speech'),
-            'wedding_date'          => $this->input->post('wedding_date'),
-            'location'              => $this->input->post('location'),
-            'maps'                  => $this->input->post('maps'),
+            'client_name'                   => $this->input->post('client_name'),
+            'email'                         => $this->input->post('email'),
+            'phone'                         => $this->input->post('phone'),
+            'wedding_ceremony'              => $this->input->post('wedding_ceremony'),
+            'reception_afterward'           => $this->input->post('reception_afterward'),
+            'list_photo'                    => $this->input->post('list_photo'),
+            'stand_by'                      => $this->input->post('stand_by'),
+            'uniform'                       => $this->input->post('uniform'),
+            'f_bride_fname'                 => $this->input->post('f_bride_fname'),
+            'f_bride_cname'                 => $this->input->post('f_bride_cname'),
+            'f_bride_nchild'                => $this->input->post('f_bride_nchild'),
+            'f_bride_hsibling'              => $this->input->post('f_bride_hsibling'),
+            'f_bride_fathername'            => $this->input->post('f_bride_fathername'),
+            'f_bride_fathercname'           => $this->input->post('f_bride_fathercname'),
+            'f_bride_freplacementname'      => $this->input->post('f_bride_freplacementname'),
+            'f_bride_freplacementcname'     => $this->input->post('f_bride_freplacementcname'),
+            'f_bride_mothername'            => $this->input->post('f_bride_mothername'),
+            'f_bride_mothercname'           => $this->input->post('f_bride_mothercname'),
+            'f_bride_mreplacementname'      => $this->input->post('f_bride_mreplacementname'),
+            'f_bride_mreplacementcname'     => $this->input->post('f_bride_mreplacementcname'),
+            'f_bride_sibling'               => $this->input->post('f_bride_sibling'),
+            'm_bride_fname'                 => $this->input->post('m_bride_fname'),
+            'm_bride_cname'                 => $this->input->post('m_bride_cname'),
+            'm_bride_nchild'                => $this->input->post('m_bride_nchild'),
+            'm_bride_hsibling'              => $this->input->post('m_bride_hsibling'),
+            'm_bride_fathername'            => $this->input->post('m_bride_fathername'),
+            'm_bride_fathercname'           => $this->input->post('m_bride_fathercname'),
+            'm_bride_freplacementname'      => $this->input->post('m_bride_freplacementname'),
+            'm_bride_freplacementcname'     => $this->input->post('m_bride_freplacementcname'),
+            'm_bride_mothername'            => $this->input->post('m_bride_mothername'),
+            'm_bride_mothercname'           => $this->input->post('m_bride_mothercname'),
+            'm_bride_mreplacementname'      => $this->input->post('m_bride_mreplacementname'),
+            'm_bride_mreplacementcname'     => $this->input->post('m_bride_mreplacementcname'),
+            'm_bride_sibling'               => $this->input->post('m_bride_sibling'),
+            'mahr'                          => $this->input->post('mahr'),
+            'handover'                      => $this->input->post('handover'),
+            'female_coor'                   => $this->input->post('female_coor'),
+            'male_coor'                     => $this->input->post('male_coor'),
+            'f_spokesman'                   => $this->input->post('f_spokesman'),
+            'm_spokesman'                   => $this->input->post('m_spokesman'),
+            'wedding_officiant'             => $this->input->post('wedding_officiant'),
+            'guardian'                      => $this->input->post('guardian'),
+            'f_witness'                     => $this->input->post('f_witness'),
+            'm_witness'                     => $this->input->post('m_witness'),
+            'qori'                          => $this->input->post('qori'),
+            'advice_doa'                    => $this->input->post('advice_doa'),
+            'pmizin'                        => $this->input->post('pmizin'),
+            'clamp'                         => $this->input->post('clamp'),
+            'jasmine_carrier'               => $this->input->post('jasmine_carrier'),
+            'mahr_carrier'                  => $this->input->post('mahr_carrier'),
+            'ring_carrier'                  => $this->input->post('ring_carrier'),
+            'pastor'                        => $this->input->post('pastor'),
+            'church'                        => $this->input->post('church'),
+            'prayer'                        => $this->input->post('prayer'),
+            'wedding_speech'                => $this->input->post('wedding_speech'),
+            'wedding_date'                  => $this->input->post('wedding_date'),
+            'location'                      => $this->input->post('location'),
+            'maps'                          => $this->input->post('maps'),
         );
 
         // Clear unused fields based on radio button selection
         if ($this->input->post('fayah_status') === 'Masih Ada') {
-            $data['f_bride_freplacementname'] = null;
+            $data['f_bride_freplacementname']  = null;
             $data['f_bride_freplacementcname'] = null;
         } else {
             $data['f_bride_fathercname'] = null;
         }
 
         if ($this->input->post('fibu_status') === 'Masih Ada') {
-            $data['f_bride_mreplacementname'] = null;
+            $data['f_bride_mreplacementname']  = null;
             $data['f_bride_mreplacementcname'] = null;
         } else {
             $data['f_bride_mothercname'] = null;
         }
 
         if ($this->input->post('mayah_status') === 'Masih Ada') {
-            $data['m_bride_freplacementname'] = null;
+            $data['m_bride_freplacementname']  = null;
             $data['m_bride_freplacementcname'] = null;
         } else {
             $data['m_bride_fathercname'] = null;
         }
 
         if ($this->input->post('mibu_status') === 'Masih Ada') {
-            $data['m_bride_mreplacementname'] = null;
+            $data['m_bride_mreplacementname']  = null;
             $data['m_bride_mreplacementcname'] = null;
         } else {
             $data['m_bride_mothercname'] = null;
@@ -403,34 +414,31 @@ class Crud_clients extends CI_Controller {
         // Update juga di tabel project
         $project_data = array(
             'client_name' => $this->input->post('client_name'),
-            'event_date' => $this->input->post('wedding_date'),
-            'location' => $this->input->post('location'),
+            'event_date'  => $this->input->post('wedding_date'),
+            'location'    => $this->input->post('location'),
         );
+        $this->db->where('id_session', $id_session);
+        $this->db->update('project', $project_data);
 
-            $this->db->where('id_session', $id_session);
-            $this->db->update('project', $project_data);
-
-        $status = 'Update Data Client' ;
+        $status = 'Update Data Client';
         $ip = $this->input->ip_address();
         $location = get_location_from_ip($ip);
         $ip_with_location = $ip . "<br>(" . $location . ")";
 
         $data_log = array(
-
-            'log_activity_user_id'=>$this->session->id_session,
-            'log_activity_modul' => 'clients/edit',
-            'log_activity_document_no' => $id_session,
-            'log_activity_status' => $status,
-            'log_activity_waktu' => date('Y-m-d H:i:s'),
-            'log_activity_platform'=> $agent,
-             'log_activity_ip'=> $ip_with_location
-            
+            'log_activity_user_id'      => $this->session->id_session,
+            'log_activity_modul'        => 'clients/edit',
+            'log_activity_document_no'  => $id_session,
+            'log_activity_status'       => $status,
+            'log_activity_waktu'        => date('Y-m-d H:i:s'),
+            'log_activity_platform'     => $agent,
+            'log_activity_ip'           => $ip_with_location,
         );
 
         $this->Clients_model->insert_log_activity($data_log);
 
         $this->session->set_flashdata('Success', 'Client berhasil diupdate');
-        redirect('clients/lihat/'.$id_session);
+        redirect('clients/lihat/' . $id_session);
     }
 
     public function delete($id_session) {
