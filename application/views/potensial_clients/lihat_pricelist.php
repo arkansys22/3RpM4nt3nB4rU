@@ -98,7 +98,7 @@
                 <label class="block mb-2">
                     <strong>Link Di Web Mantenbaru : </strong>
                     <?php if (!empty($pc->data_pricelist_url)): ?>
-                        <a href="<?= $pc->data_pricelist_url ?>" target="_blank">Preview di Web</a>
+                        <a href="<?= $pc->data_pricelist_url ?>" target="_blank">Preview di Mantenbaru.com</a>
                     <?php else: ?>
                         <span class="text-gray-400">Belum Tersedia</span>
                     <?php endif; ?>
