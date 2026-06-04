@@ -184,7 +184,7 @@
                     </thead>
                     <tbody id="tableBody">
                       <?php $no = 1; foreach ($potensial_clients_pl as $p): ?>
-                        <tr data-kategori="<?= htmlspecialchars($p->data_pricelist_type) ?>">
+                        <tr data-kategori="<?= htmlspecialchars(trim($p->data_pricelist_type)) ?>">
                           <td><?= $no++ ?></td>
                           <td><?= $p->data_pricelist_judul ?></td>
                           <td><s><?= "Rp " . number_format($p->data_pricelist_harga, 0, ',', '.'); ?></s></td>
@@ -220,6 +220,12 @@
 
         table = $('#dataTableTwo').DataTable({
             pageLength: 10
+        });
+
+
+            // CEK ISI KOLOM KATEGORI
+        table.rows().every(function () {
+            console.log(this.data()[4]);
         });
 
         updateTotal();
