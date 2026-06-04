@@ -237,24 +237,23 @@
     });
 
     function updateTotal() {
-        const total = table.rows({ search: 'applied' }).count();
+        const visibleRows = document.querySelectorAll(
+            '#tableBody tr:not([style*="display: none"])'
+        ).length;
 
-        if ($('#totalCount').length) {
-            $('#totalCount').text(total);
-        }
+        const totalMobile = document.getElementById('totalCount');
+        const totalDesktop = document.getElementById('totalCountDesktop');
 
-        if ($('#totalCountDesktop').length) {
-            $('#totalCountDesktop').text(total);
-        }
+        if (totalMobile) totalMobile.textContent = visibleRows;
+        if (totalDesktop) totalDesktop.textContent = visibleRows;
     }
 
     function filterKategori(button) {
 
         const kategori = button.dataset.kategori;
 
-        // reset tombol
+        // Reset tombol
         document.querySelectorAll('.btn-filter').forEach(btn => {
-
             btn.classList.remove(
                 'bg-blue-500',
                 'text-white',
@@ -268,7 +267,7 @@
             );
         });
 
-        // aktifkan tombol terpilih
+        // Aktifkan tombol yang dipilih
         button.classList.remove(
             'bg-white',
             'text-gray-700',
@@ -281,19 +280,28 @@
             'border-blue-500'
         );
 
-        // filter kategori
-        if (kategori === 'semua') {
+        // Filter tabel
+        document.querySelectorAll('#tableBody tr').forEach(row => {
 
-            table.column(4).search('').draw();
+            const rowKategori = row.dataset.kategori.trim();
 
-        } else {
+            if (
+                kategori === 'semua' ||
+                rowKategori === kategori
+            ) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
 
-            table.column(4).search(kategori, false, false).draw();
-
-        }
+        });
 
         updateTotal();
     }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        updateTotal();
+    });
   </script>
 </body>
 </html>
