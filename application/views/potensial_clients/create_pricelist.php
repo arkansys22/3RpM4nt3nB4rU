@@ -69,7 +69,8 @@
                     <option value="Paket Wedding Rumah">Paket Wedding Rumah</option>
                     
                 </select>
-
+                <label class="block mb-2">Link di Web Mantenbaru</label>
+                <input type="text" name="urlweb" class="w-full px-4 py-2 border rounded mb-4">
 
                 <label class="block mb-2">Visibilitas</label>
                 <select name="visibilitas" class="w-full px-4 py-2 border rounded mb-4" required>

@@ -484,6 +484,7 @@ class crud_potensial_clients extends CI_Controller {
         $data = array(
             'data_pricelist_idsession'      => $id_session2,
             'data_pricelist_judul'          => $this->input->post('judul'),
+            'data_pricelist_url'          => $this->input->post('urlweb'),
             'data_pricelist_harga'          => str_replace('.', '', $this->input->post('harga')),
             'data_pricelist_hargapromo'     => str_replace('.', '', $this->input->post('promo')), 
             'data_pricelist_diskonmax'      => str_replace('.', '', $this->input->post('diskon')),
@@ -776,34 +777,35 @@ class crud_potensial_clients extends CI_Controller {
 
 
     public function update_pricelist($id_session) {
+        // Cek session login terlebih dahulu
+        if (!$this->session->userdata('id_session') || !$this->session->userdata('level')) {
+            $this->session->set_flashdata('error', 'Session habis, silakan login kembali.');
+            redirect('auth/login');
+            return;
+        }
 
-        if ($this->agent->is_browser()) // Agent untuk fitur di log activity
-                {
-                      $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
-                }
-                elseif ($this->agent->is_robot())
-                {
-                      $agent = $this->agent->robot();
-                }
-                elseif ($this->agent->is_mobile())
-                {
-                      $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
-                }
-                else
-                {
-                      $agent = 'Unidentified User Agent';
-                }
+        if ($this->agent->is_browser()) {
+            $agent = 'Desktop ' . $this->agent->browser() . ' ' . $this->agent->version();
+        } elseif ($this->agent->is_robot()) {
+            $agent = $this->agent->robot();
+        } elseif ($this->agent->is_mobile()) {
+            $agent = 'Mobile' . $this->agent->mobile() . '' . $this->agent->version();
+        } else {
+            $agent = 'Unidentified User Agent';
+        }
+
         $data = array(
-            'data_pricelist_judul'  => $this->input->post('judul'),
-            'data_pricelist_harga'  => str_replace('.', '', $this->input->post('harga')),
-            'data_pricelist_hargapromo'    => str_replace('.', '', $this->input->post('promo')),
-            'data_pricelist_diskonmax'    => str_replace('.', '', $this->input->post('diskon')),
-            'data_pricelist_deskripsi'    => $this->input->post('deskripsi'),
-            'data_pricelist_type'      => $this->input->post('kategori'),
-            'data_pricelist_visibilitas'      => $this->input->post('visibilitas'),
-            'data_pricelist_lastupdate'      => date('Y-m-d H:i:s'),
+            'data_pricelist_judul'       => $this->input->post('judul'),
+            'data_pricelist_url'         => $this->input->post('urlweb'),
+            'data_pricelist_harga'       => str_replace('.', '', $this->input->post('harga')),
+            'data_pricelist_hargapromo'  => str_replace('.', '', $this->input->post('promo')),
+            'data_pricelist_diskonmax'   => str_replace('.', '', $this->input->post('diskon')),
+            'data_pricelist_deskripsi'   => $this->input->post('deskripsi'),
+            'data_pricelist_type'        => $this->input->post('kategori'),
+            'data_pricelist_visibilitas' => $this->input->post('visibilitas'),
+            'data_pricelist_lastupdate'  => date('Y-m-d H:i:s'),
         );
-    
+
         $this->Potensial_model->update_pricelist($id_session, $data);
 
         $status = 'Update Pricelist';
@@ -812,21 +814,19 @@ class crud_potensial_clients extends CI_Controller {
         $ip_with_location = $ip . "<br>(" . $location . ")";
 
         $data_log = array(
-
-            'log_activity_user_id'=>$this->session->id_session,
-            'log_activity_modul' => 'potensial-clients-pricelist/edit',
+            'log_activity_user_id'     => $this->session->id_session,
+            'log_activity_modul'       => 'potensial-clients-pricelist/edit',
             'log_activity_document_no' => $id_session,
-            'log_activity_status' => $status,
-            'log_activity_waktu' => date('Y-m-d H:i:s'),
-            'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $ip_with_location
-            
+            'log_activity_status'      => $status,
+            'log_activity_waktu'       => date('Y-m-d H:i:s'),
+            'log_activity_platform'    => $agent,
+            'log_activity_ip'          => $ip_with_location,
         );
 
         $this->Potensial_model->insert_log_activity($data_log);
-    
+
         $this->session->set_flashdata('Success', 'Pricelist berhasil diupdate');
-        redirect('potensial-clients-pricelist/lihat/' .$id_session);
+        redirect('potensial-clients-pricelist/lihat/' . $id_session);
     }
 
 

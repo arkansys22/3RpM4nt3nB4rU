@@ -69,6 +69,9 @@
                     <option  value="Paket Wedding Rumah" <?= $pc->data_pricelist_type == 'Paket Wedding Rumah' ? 'selected' : '' ?> >Paket Wedding Rumah</option>
                 </select>
 
+                <label class="block mb-2">Link di Web Mantenbaru</label>
+                <input type="text" name="urlweb" value="<?= $pc->data_pricelist_judul ?>" class="w-full px-4 py-2 border rounded mb-4" required>
+
                 <label class="block mb-2">Visibilitas</label>
                 <select name="visibilitas" class="w-full px-4 py-2 border rounded mb-4" required>
                     <option value="">---</option>
