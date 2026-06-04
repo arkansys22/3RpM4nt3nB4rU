@@ -169,7 +169,7 @@
 
               <br><br>
               <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                <div class="data-table-common data-table-two max-w-full overflow-x-auto">
+                <div class="max-w-full overflow-x-auto">
                   <table class="table w-full table-auto" id="dataTableTwo">
                     <thead>
                       <tr>
@@ -210,61 +210,81 @@
       </main>
     </div>
   </div>
+<!-- bundle.js TANPA defer agar jQuery tersedia sebelum script kita -->
+  <script src="<?php echo base_url()?>assets/backend/bundle.js"></script>
 
-  <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
+  <script>
+    let table;
+    let activeKategori = 'semua';
 
-<script>
-  let table;
-  let activeKategori = 'semua';
+    $(document).ready(function () {
 
-  $(document).ready(function () {
+      // Cek apakah tabel sudah diinisialisasi oleh bundle.js, jika ya destroy dulu
+      if ($.fn.DataTable.isDataTable('#dataTableTwo')) {
+        $('#dataTableTwo').DataTable().destroy();
+      }
 
-    table = $('#dataTableTwo').DataTable({
-      pageLength: 10
-    });
+      // Inisialisasi ulang DataTables secara manual
+      table = $('#dataTableTwo').DataTable({
+        pageLength: 10,
+        language: {
+          search:      "Cari:",
+          lengthMenu:  "Tampilkan _MENU_ data",
+          info:        "Menampilkan _START_ - _END_ dari _TOTAL_ data",
+          paginate: {
+            previous: "Sebelumnya",
+            next:     "Selanjutnya"
+          },
+          zeroRecords:    "Data tidak ditemukan",
+          emptyTable:     "Tidak ada data tersedia",
+          infoEmpty:      "Menampilkan 0 - 0 dari 0 data",
+          infoFiltered:   "(difilter dari _MAX_ total data)"
+        }
+      });
 
-    // Custom search filter berdasarkan data-kategori di <tr>
-    $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
-      if (activeKategori === 'semua') return true;
+      // Custom search filter berdasarkan data-kategori di <tr>
+      $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+        if (settings.nTable.id !== 'dataTableTwo') return true; // hanya berlaku untuk tabel ini
+        if (activeKategori === 'semua') return true;
 
-      const row = table.row(dataIndex).node();
-      const rowKategori = $(row).attr('data-kategori') ? $(row).attr('data-kategori').trim() : '';
+        const row        = table.row(dataIndex).node();
+        const rowKategori = $(row).attr('data-kategori') ? $(row).attr('data-kategori').trim() : '';
 
-      return rowKategori === activeKategori;
-    });
+        return rowKategori === activeKategori;
+      });
 
-    updateTotal();
-
-    table.on('draw', function () {
       updateTotal();
+
+      table.on('draw', function () {
+        updateTotal();
+      });
+
     });
 
-  });
+    function updateTotal() {
+      const count        = table ? table.rows({ search: 'applied' }).count() : 0;
+      const totalMobile  = document.getElementById('totalCount');
+      const totalDesktop = document.getElementById('totalCountDesktop');
+      if (totalMobile)  totalMobile.textContent  = count;
+      if (totalDesktop) totalDesktop.textContent = count;
+    }
 
-  function updateTotal() {
-    const count = table ? table.rows({ search: 'applied' }).count() : 0;
-    const totalMobile  = document.getElementById('totalCount');
-    const totalDesktop = document.getElementById('totalCountDesktop');
-    if (totalMobile)  totalMobile.textContent  = count;
-    if (totalDesktop) totalDesktop.textContent = count;
-  }
+    function filterKategori(button) {
+      activeKategori = button.dataset.kategori;
 
-  function filterKategori(button) {
-    activeKategori = button.dataset.kategori;
+      // Reset semua tombol
+      document.querySelectorAll('.btn-filter').forEach(btn => {
+        btn.classList.remove('bg-blue-500', 'text-white', 'border-blue-500');
+        btn.classList.add('bg-white', 'text-gray-700', 'border-gray-300');
+      });
 
-    // Reset semua tombol
-    document.querySelectorAll('.btn-filter').forEach(btn => {
-      btn.classList.remove('bg-blue-500', 'text-white', 'border-blue-500');
-      btn.classList.add('bg-white', 'text-gray-700', 'border-gray-300');
-    });
+      // Aktifkan tombol yang dipilih
+      button.classList.remove('bg-white', 'text-gray-700', 'border-gray-300');
+      button.classList.add('bg-blue-500', 'text-white', 'border-blue-500');
 
-    // Aktifkan tombol yang dipilih
-    button.classList.remove('bg-white', 'text-gray-700', 'border-gray-300');
-    button.classList.add('bg-blue-500', 'text-white', 'border-blue-500');
-
-    // Redraw tabel dengan filter baru
-    table.draw();
-  }
-</script>
+      // Redraw tabel dengan filter baru
+      table.draw();
+    }
+  </script>
 </body>
 </html>
