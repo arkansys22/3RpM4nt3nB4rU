@@ -151,8 +151,8 @@
                             <span class="font-medium text-gray-800 dark:text-white"><?= $p->data_pricelist_judul ?></span>
                           </td>
                           <td class="px-4 py-3">
-                            <small><span class="text-gray-400 line-through text-xs"><?= "Rp " . number_format($p->data_pricelist_harga, 0, ',', '.') ?></span></small>
-                            <span class="font-semibold text-green-600 dark:text-green-400"><?= "Rp " . number_format($p->data_pricelist_hargapromo, 0, ',', '.') ?></span>
+                            <small><span class="text-gray-400 line-through text-xs"><?= "Rp " . number_format($p->data_pricelist_harga, 0, ',', '.') ?></span></small><p>
+                            <span class="font-semibold text-green-600 dark:text-green-400"><?= "Rp " . number_format($p->data_pricelist_hargapromo, 0, ',', '.') ?></span></p>
                           </td>
                           <td class="px-4 py-3">
                             <span class="inline-block px-2 py-0.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300">
