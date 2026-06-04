@@ -261,139 +261,124 @@ class Crud_project extends CI_Controller {
     }
 
     public function edit($id_session) {
-        if ($this->session->level=='1'){
-            cek_session_akses_developer('project',$this->session->id_session);
-            $data['project'] = $this->project_model->get_project_by_session($id_session);
-            $data['user'] = $this->Crud_m->view_where_user_orderingss('user','id_user', 'asc');
-            $data['crews_list'] = $this->Crews_model->get_all_crews();
-            $data['selected_crews'] = $this->CrewProjects_model->get_crew_by_project($id_session);
-            $data['potensial_clients'] = $this->Crud_m->view_where_potensial_clients_deal('potensial_clients','event_date', 'asc');
-            $this->load->view('project/edit', $data);
-
-        }else if($this->session->level=='2'){
-            cek_session_akses_administrator('project',$this->session->id_session);
-            $data['project'] = $this->project_model->get_project_by_session($id_session);
-            $data['user'] = $this->Crud_m->view_where_user_orderingss('user','id_user', 'asc');
-            $data['crews_list'] = $this->Crews_model->get_all_crews();
-            $data['selected_crews'] = $this->CrewProjects_model->get_crew_by_project($id_session);
-            $data['potensial_clients'] = $this->Crud_m->view_where_potensial_clients_deal('potensial_clients','event_date', 'asc');
-            $this->load->view('project/edit', $data);
-
-        }else if($this->session->level=='3'){
-            cek_session_akses_staff_accounting('project',$this->session->id_session);
-            redirect(base_url());
-
-        }else if($this->session->level=='4'){
-            cek_session_akses_staff_admin('project',$this->session->id_session);
-            $data['project'] = $this->project_model->get_project_by_session($id_session);
-            $data['user'] = $this->Crud_m->view_where_user_orderingss('user','id_user', 'asc');
-            $data['crews_list'] = $this->Crews_model->get_all_crews();
-            $data['selected_crews'] = $this->CrewProjects_model->get_crew_by_project($id_session);
-            $data['potensial_clients'] = $this->Crud_m->view_where_potensial_clients_deal('potensial_clients','event_date', 'asc');
-            $this->load->view('project/edit', $data);
-
-        }else if($this->session->level=='9'){
-            cek_session_akses_staff_sales('project',$this->session->id_session);
-            $data['project'] = $this->project_model->get_project_by_session($id_session);
-            $data['user'] = $this->Crud_m->view_where_user_orderingss('user','id_user', 'asc');
-            $data['crews_list'] = $this->Crews_model->get_all_crews();
-            $data['selected_crews'] = $this->CrewProjects_model->get_crew_by_project($id_session);
-            $data['potensial_clients'] = $this->Crud_m->view_where_potensial_clients_deal('potensial_clients','event_date', 'asc');
-            $this->load->view('project/edit', $data);
-
-        }else if($this->session->level=='5'){
-            cek_session_akses_client('project',$this->session->id_session);
-            redirect(base_url());
-            
-        }else{
-            redirect(base_url());
-            }
-    }
-
-    public function update($id_session) {
-
-        if ($this->agent->is_browser()) // Agent untuk fitur di log activity
-                {
-                    $agent = 'Desktop ' .$this->agent->browser().' '.$this->agent->version();
-                }
-                elseif ($this->agent->is_robot())
-                {
-                    $agent = $this->agent->robot();
-                }
-                elseif ($this->agent->is_mobile())
-                {
-                    $agent = 'Mobile' .$this->agent->mobile().''.$this->agent->version();
-                }
-                else
-                {
-                    $agent = 'Unidentified User Agent';
-                }
-
-        $project = $this->project_model->get_project_by_session($id_session);
-
-        if (!$project) {
-            $this->session->set_flashdata('error', 'Project tidak ditemukan!');
-            redirect('project/lihat/'.$id_session);
+        // Cek session login terlebih dahulu
+        if (!$this->session->userdata('id_session') || !$this->session->userdata('level')) {
+            $this->session->set_flashdata('error', 'Session habis, silakan login kembali.');
+            redirect('auth/login');
             return;
         }
 
-         // Ambil tanggal (versi yang sudah kita sederhanakan)    
-        $input_date = $this->input->post('event_date');
+        $level = $this->session->level;
 
+        if ($level == '3' || $level == '5') {
+            redirect(base_url());
+            return;
+        }
+
+        if (!in_array($level, ['1', '2', '4', '9'])) {
+            redirect(base_url());
+            return;
+        }
+
+        // Cek akses berdasarkan level
+        switch ($level) {
+            case '1': cek_session_akses_developer('project', $this->session->id_session); break;
+            case '2': cek_session_akses_administrator('project', $this->session->id_session); break;
+            case '4': cek_session_akses_staff_admin('project', $this->session->id_session); break;
+            case '9': cek_session_akses_staff_sales('project', $this->session->id_session); break;
+        }
+
+        $data['project']          = $this->project_model->get_project_by_session($id_session);
+        $data['user']             = $this->Crud_m->view_where_user_orderingss('user', 'id_user', 'asc');
+        $data['crews_list']       = $this->Crews_model->get_all_crews();
+        $data['selected_crews']   = $this->CrewProjects_model->get_crew_by_project($id_session);
+        $data['potensial_clients'] = $this->Crud_m->view_where_potensial_clients_deal('potensial_clients', 'event_date', 'asc');
+
+        $this->load->view('project/edit', $data);
+    }
+
+    public function update($id_session) {
+        // Cek session login terlebih dahulu
+        if (!$this->session->userdata('id_session') || !$this->session->userdata('level')) {
+            $this->session->set_flashdata('error', 'Session habis, silakan login kembali.');
+            redirect('auth/login');
+            return;
+        }
+
+        // Cek level yang tidak diizinkan update
+        $level = $this->session->level;
+        if (!in_array($level, ['1', '2', '4', '9'])) {
+            $this->session->set_flashdata('error', 'Anda tidak memiliki akses untuk melakukan update.');
+            redirect(base_url());
+            return;
+        }
+
+        if ($this->agent->is_browser()) {
+            $agent = 'Desktop ' . $this->agent->browser() . ' ' . $this->agent->version();
+        } elseif ($this->agent->is_robot()) {
+            $agent = $this->agent->robot();
+        } elseif ($this->agent->is_mobile()) {
+            $agent = 'Mobile' . $this->agent->mobile() . '' . $this->agent->version();
+        } else {
+            $agent = 'Unidentified User Agent';
+        }
+
+        $project = $this->project_model->get_project_by_session($id_session);
+        if (!$project) {
+            $this->session->set_flashdata('error', 'Project tidak ditemukan!');
+            redirect('project/lihat/' . $id_session);
+            return;
+        }
+
+        $input_date = $this->input->post('event_date');
         if (strpos($input_date, '/') !== false) {
             $date = DateTime::createFromFormat('d/m/Y', $input_date);
         } else {
             $date = DateTime::createFromFormat('Y-m-d', $input_date);
         }
-
         $event_date = $date ? $date->format('Y-m-d') : null;
-        
+
         $data = array(
-            'project_name'  => $this->input->post('project_name'),
-            'closing_user_idsession'  => $this->input->post('closing_user_idsession'),
-            'client_name'   => $this->input->post('client_name'),
-            'event_date'    => $event_date,
-            'value'         => str_replace('.', '', $this->input->post('value')),
-            'detail'        => $this->input->post('detail'),
-            'detail_biaya'  => $this->input->post('detail_biaya'),
-            'religion'      => $this->input->post('religion'),
-            'potensial_clients_id_session' => $this->input->post('potensial_clients'),
-            'location'      => $this->input->post('location'),
+            'project_name'                  => $this->input->post('project_name'),
+            'closing_user_idsession'        => $this->input->post('closing_user_idsession'),
+            'client_name'                   => $this->input->post('client_name'),
+            'event_date'                    => $event_date,
+            'value'                         => str_replace('.', '', $this->input->post('value')),
+            'detail'                        => $this->input->post('detail'),
+            'detail_biaya'                  => $this->input->post('detail_biaya'),
+            'religion'                      => $this->input->post('religion'),
+            'potensial_clients_id_session'  => $this->input->post('potensial_clients'),
+            'location'                      => $this->input->post('location'),
         );
 
         $this->project_model->update_project($id_session, $data);
-    
-        // Update juga di tabel clients
-        $client_data = array(
-            'client_name' => $this->input->post('client_name'),
-            'wedding_date' => $event_date,
-            'location' => $this->input->post('location'),
-        );
 
+        $client_data = array(
+            'client_name'  => $this->input->post('client_name'),
+            'wedding_date' => $event_date,
+            'location'     => $this->input->post('location'),
+        );
         $this->db->where('id_session', $id_session);
         $this->db->update('clients', $client_data);
-    
-        $status = 'Update Project' ;
+
+        $status = 'Update Project';
         $ip = $this->input->ip_address();
         $location = get_location_from_ip($ip);
         $ip_with_location = $ip . "<br>(" . $location . ")";
 
         $data_log = array(
-
-            'log_activity_user_id'=>$this->session->id_session,
-            'log_activity_modul' => 'project/edit',
-            'log_activity_document_no' => $id_session,
-            'log_activity_status' => $status,
-            'log_activity_waktu' => date('Y-m-d H:i:s'),
-            'log_activity_platform'=> $agent,
-            'log_activity_ip'=> $ip_with_location
-            
+            'log_activity_user_id'      => $this->session->id_session,
+            'log_activity_modul'        => 'project/edit',
+            'log_activity_document_no'  => $id_session,
+            'log_activity_status'       => $status,
+            'log_activity_waktu'        => date('Y-m-d H:i:s'),
+            'log_activity_platform'     => $agent,
+            'log_activity_ip'           => $ip_with_location,
         );
 
         $this->project_model->insert_log_activity($data_log);
-
         $this->session->set_flashdata('Success', 'Project berhasil diupdate');
-        redirect('project/lihat/'.$id_session);
+        redirect('project/lihat/' . $id_session);
     }
 
     public function delete($id_session) {
