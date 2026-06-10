@@ -1302,7 +1302,8 @@ class crud_potensial_clients extends CI_Controller {
 
         $produk = $this->db
             ->where('data_pricelist_type', $kategori_id)
-            ->where('data_pricelist_status', 'Aktif')
+            ->where('data_pricelist_status', 'Aktif')   
+            ->order_by('data_pricelist_judul', 'DESC')           
             ->get('data_pricelist')
             ->result_array();
 
