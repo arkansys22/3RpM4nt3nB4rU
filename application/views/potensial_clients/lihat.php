@@ -7,6 +7,26 @@
     <link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
     <link href="<?php echo base_url()?>assets/backend/style.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <style>
+      .select2-container .select2-selection--single {
+          height: 42px !important;
+          border: 1px solid #d1d5db !important;
+          border-radius: 0.375rem !important;
+          display: flex !important;
+          align-items: center !important;
+      }
+
+      .select2-container--default .select2-selection--single .select2-selection__rendered {
+          line-height: 40px !important;
+      }
+
+      .select2-container {
+          width: 100% !important;
+      }
+    </style>
 </head>
 <body
     x-data="{ page: 'projects', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
@@ -635,7 +655,14 @@
               </option>`;
             });
 
-            produk.innerHTML = html; // ✅ FIX
+            produk.innerHTML = html;
+
+            $('#produk').select2('destroy').select2({
+                placeholder: 'Cari produk...',
+                allowClear: true,
+                width: '100%',
+                dropdownParent: $('#modal')
+            });
           })
           .catch(err => {
             console.error(err);
@@ -688,6 +715,17 @@
         value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Tambah titik setiap 3 digit
         input.value = value;
     }
+  </script>
+
+  <script>
+    $(document).ready(function() {
+        $('#produk').select2({
+            placeholder: 'Cari produk...',
+            allowClear: true,
+            width: '100%',
+            dropdownParent: $('#modal')
+        });
+    });
   </script>
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
 </body>
