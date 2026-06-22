@@ -655,9 +655,13 @@
               </option>`;
             });
 
-            produk.innerHTML = html;
+           produk.innerHTML = html;
 
-            $('#produk').select2('destroy').select2({
+            if ($('#produk').hasClass("select2-hidden-accessible")) {
+                $('#produk').select2('destroy');
+            }
+
+            $('#produk').select2({
                 placeholder: 'Cari produk...',
                 allowClear: true,
                 width: '100%',
@@ -672,41 +676,43 @@
     });
   </script>
   <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const produk = document.getElementById('produk');
-    const hargaAsli = document.getElementById('harga_asli');
-    const hargaPromo = document.getElementById('harga_promo');
-    const maksDiskon = document.getElementById('maks_diskon');
-    const detail = document.getElementById('detail');
+    $(document).on('change', '#produk', function () {
 
-    produk.addEventListener('change', function () {
-      const produkId = this.value;
+        const produkId = $(this).val();
 
-      if (!produkId) {
-        hargaAsli.value = '';
-        hargaPromo.value = '';
-        maksDiskon.value = '';
-        detail.value = '';
-        return;
-      }
+        if (!produkId) {
+            $('#harga_asli').val('');
+            $('#harga_promo').val('');
+            $('#maks_diskon').val('');
+            $('#detail').val('');
+            return;
+        }
 
-      fetch(`<?= site_url('crud_potensial_clients/get_pricelist_detail') ?>?produk_id=${produkId}`)
-        .then(res => res.json())
-        .then(data => {
-          console.log('DETAIL:', data); // 🔥 WAJIB ADA DI CONSOLE
+        $.ajax({
+            url: "<?= site_url('crud_potensial_clients/get_pricelist_detail') ?>",
+            type: "GET",
+            data: {
+                produk_id: produkId
+            },
+            dataType: "json",
+            success: function(data) {
 
-          if (!data) return;
+                console.log('DETAIL:', data);
 
-          hargaAsli.value  = data.harga_asli ?? '';
-          hargaPromo.value = data.harga_promo ?? '';
-          maksDiskon.value = data.maks_diskon ?? '';
-          detail.value     = data.deskripsi ?? '';
-        })
-        .catch(err => {
-          console.error('ERROR:', err);
+                if (!data) return;
+
+                $('#harga_asli').val(data.harga_asli || '');
+                $('#harga_promo').val(data.harga_promo || '');
+                $('#maks_diskon').val(data.maks_diskon || '');
+                $('#detail').val(data.deskripsi || '');
+
+            },
+            error: function(xhr) {
+                console.log(xhr.responseText);
+            }
         });
+
     });
-  });
   </script>
 
   <script>
