@@ -143,31 +143,46 @@ class Crud_vendor extends CI_Controller {
 
         $data = [];
 
-        $partner_match = $this->db->get_where('partner', ['id_session' => $vendor_id])->row();
+        $partner_id = $this->input->post('partner_id');
+
+        if (!empty($partner_id)) {
+            $partner_match = $this->db
+                ->where('id_session', $partner_id)
+                ->get('partner')
+                ->row();
+        } else {
+            $partner_match = null;
+        }
+
         if ($partner_match) {
-            // Data dari partner
-            $data['vendor_id'] = $partner_match->id_session;
-            $data['vendor'] = $partner_match->partner_name;
-            $data['type'] = $partner_match->type;
-            $data['social_media'] = $partner_match->social_media;
-            $data['contact_name'] = $partner_match->contact_name;
-            $data['phone'] = $partner_match->phone;
-            $data['photo1'] = $partner_match->logo ?: $existing_vendor->photo1;
-        
-            // Editable fields dari form
+
+            $data['vendor_id']     = $partner_match->id_session;
+            $data['vendor']        = $partner_match->partner_name;
+            $data['type']          = $partner_match->type;
+            $data['social_media']  = $partner_match->social_media;
+            $data['contact_name']  = $partner_match->contact_name;
+            $data['phone']         = $partner_match->phone;
+            $data['photo1']        = !empty($partner_match->logo)
+                                        ? $partner_match->logo
+                                        : $existing_vendor->photo1;
+
             $data['detail'] = $this->input->post('partner_detail') ?: $existing_vendor->detail;
+
             $data['photo2'] = $this->upload_photo('partner_photo2') ?: $existing_vendor->photo2;
             $data['photo3'] = $this->upload_photo('partner_photo3') ?: $existing_vendor->photo3;
             $data['photo4'] = $this->upload_photo('partner_photo4') ?: $existing_vendor->photo4;
             $data['photo5'] = $this->upload_photo('partner_photo5') ?: $existing_vendor->photo5;
+
         } else {
-            // Non-partner logic tetap sama
-            $data['vendor'] = $this->input->post('vendor');
-            $data['type'] = $this->input->post('type');
-            $data['social_media'] = $this->input->post('social_media');
-            $data['contact_name'] = $this->input->post('contact_name');
-            $data['phone'] = $this->input->post('phone');
-            $data['detail'] = $this->input->post('detail') ?: $existing_vendor->detail;
+
+            // vendor biasa
+            $data['vendor']        = $this->input->post('vendor');
+            $data['type']          = $this->input->post('type');
+            $data['social_media']  = $this->input->post('social_media');
+            $data['contact_name']  = $this->input->post('contact_name');
+            $data['phone']         = $this->input->post('phone');
+            $data['detail']        = $this->input->post('detail') ?: $existing_vendor->detail;
+
             $data['photo1'] = $this->upload_photo('photo1') ?: $existing_vendor->photo1;
             $data['photo2'] = $this->upload_photo('photo2') ?: $existing_vendor->photo2;
             $data['photo3'] = $this->upload_photo('photo3') ?: $existing_vendor->photo3;

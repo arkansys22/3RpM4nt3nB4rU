@@ -53,7 +53,7 @@
                     <select name="partner_id" id="partner_id" class="w-full px-4 py-2 border rounded mb-4" onchange="fetchPartnerData()">
                         <option value="">Pilih Partner</option>
                         <?php foreach ($partners as $partner): ?>
-                            <option value="<?= $partner->id ?>" <?= $vendors->vendor_id == $partner->id_session ? 'selected' : '' ?>><?= $partner->partner_name ?> - <?= $partner->type ?></option>
+                            <option value="<?= $partner->id_session ?>" <?= $vendors->vendor_id == $partner->id_session ? 'selected' : '' ?>><?= $partner->partner_name ?> - <?= $partner->type ?></option>
                         <?php endforeach; ?>
                     </select>
 
@@ -157,17 +157,15 @@
   <script>
     function fetchPartnerData() {
         const partnerId = document.getElementById('partner_id').value;
-        if (partnerId) {
-            fetch(`<?= base_url('vendor/get_partner_data/') ?>${partnerId}`) // Use partner ID
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('vendor').value = data.partner_name;
-                    document.getElementById('type').value = data.type;
-                    document.getElementById('social_media').value = data.social_media;
-                    document.getElementById('contact_name').value = data.contact_name;
-                    document.getElementById('phone').value = data.phone;
-                });
-        }
+
+        if (!partnerId) return;
+
+        fetch(`<?= base_url('vendor/get_partner_data/') ?>${partnerId}`)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                // jika ingin update preview/logo bisa dilakukan di sini
+            });
     }
   </script>
 </body>
