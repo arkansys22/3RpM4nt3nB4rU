@@ -53,47 +53,47 @@
 	                  <div class="swiper-wrapper">
 
 					  <div class="swiper-slide border-r border-stroke px-10 last:border-r-0 dark:border-strokedark">
-							<div class="flex items-center justify-between">
-								<div class="flex items-center gap-2.5">
-									<h4 class="text-xl font-bold">
-										Clients
-									</h4>
-								</div>
+						<div class="flex items-center justify-between">
+							<div class="flex items-center gap-2.5">
+								<h4 class="text-xl font-bold">
+									Clients
+								</h4>
+							</div>
+						</div>
+
+						<div class="mt-5.5 flex flex-col gap-1.5">
+							<!-- Client Bulan Ini -->
+							<div class="flex items-center justify-between gap-1">
+								<p class="text-sm font-medium">Client Tahun Ini</p>
+									<p id="client_tahun_ini" class="text-sm font-medium"><?= count($client_tahun_ini); ?></p>
 							</div>
 
-							<div class="mt-5.5 flex flex-col gap-1.5">
-								<!-- Client Bulan Ini -->
-								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium">Client Tahun Ini</p>
-										<p id="client_tahun_ini" class="text-sm font-medium"><?= count($client_tahun_ini); ?></p>
-								</div>
-
-								<!-- Client Bulan Lalu -->
-								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium">Client Tahun Lalu</p>
-										<p id="client_tahun_lalu" class="text-sm font-medium"><?= count($client_tahun_lalu); ?></p>
-								</div>
-
-								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium">Client Tahun Depan</p>
-										<p id="client_tahun_depan" class="text-sm font-medium"><?= count($client_tahun_depan); ?></p>
-								</div>
-
-								<!-- Total Client -->
-								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium">Total Semua Client</p>
-										<p id="total_client" class="text-sm font-medium"><?= $total_client; ?></p>
-								</div>
-								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium">
-										<a href="<?= base_url('client/lebih_lengkap') ?>">
-					                        <span class="text-sm font-medium text-primary">
-					                          Lebih Lengkap >>
-					                        </span>
-					                    </a>				                      
-									</p>
-								</div>				
+							<!-- Client Bulan Lalu -->
+							<div class="flex items-center justify-between gap-1">
+								<p class="text-sm font-medium">Client Tahun Lalu</p>
+									<p id="client_tahun_lalu" class="text-sm font-medium"><?= count($client_tahun_lalu); ?></p>
 							</div>
+
+							<div class="flex items-center justify-between gap-1">
+								<p class="text-sm font-medium">Client Tahun Depan</p>
+									<p id="client_tahun_depan" class="text-sm font-medium"><?= count($client_tahun_depan); ?></p>
+							</div>
+
+							<!-- Total Client -->
+							<div class="flex items-center justify-between gap-1">
+								<p class="text-sm font-medium">Total Semua Client</p>
+									<p id="total_client" class="text-sm font-medium"><?= $total_client; ?></p>
+							</div>
+							<div class="flex items-center justify-between gap-1">
+								<p class="text-sm font-medium">
+									<a href="<?= base_url('client/lebih_lengkap') ?>">
+				                        <span class="text-sm font-medium text-primary">
+				                          Lebih Lengkap >>
+				                        </span>
+				                    </a>				                      
+								</p>
+							</div>				
+						</div>
 	                    </div>
 
 	                    <div class="swiper-slide border-r border-stroke px-10 last:border-r-0 dark:border-strokedark">
@@ -180,120 +180,7 @@
 
 
 	                    </div>
-
-	                    <div class="swiper-slide border-r border-stroke px-10 last:border-r-0 dark:border-strokedark">
-							<div class="flex items-center justify-between">
-								<div class="flex items-center gap-2.5">
-									<h4 class="text-xl font-bold">
-										Gross & Net Revenue
-									</h4>
-								</div>
-							</div>
-
-							<div class="mt-5.5 flex flex-col gap-1.5">
-								<!-- Total Revenue Bulan Ini -->
-								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium">Bulan Ini</p>
-										<p id="revenue_bulan_ini" class="text-sm font-medium">Rp 0</p>
-								</div>
-
-								<!-- Pemasukan Bulan Lalu -->
-								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium">Bulan Lalu</p>
-										<p id="revenue_bulan_lalu" class="text-sm font-medium">Rp 0</p>
-								</div>
-								<!-- Total Revenue Semua -->
-								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium">Total Gross</p>
-										<p id="total_revenue_all" class="text-sm font-medium">Rp 0</p>
-								</div>
-								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium">Total Net</p>
-										<p id="total_net_revenue" class="text-sm font-medium">Rp 0</p>
-								</div>
-								<div class="flex items-center justify-between gap-1">
-								    <p class="text-sm font-medium">
-								        <a href="<?= base_url('revenue/lebih_lengkap') ?>">
-								            <span class="text-sm font-medium text-primary">
-								                Lebih Lengkap >>
-								            </span>
-								        </a>
-								    </p>
-								</div>
-							</div>
-						</div>
-	                   	<div class="swiper-slide border-r border-stroke px-10 last:border-r-0 dark:border-strokedark">
-	                      	<div class="flex items-center justify-between">
-		                        <div class="flex items-center gap-2.5">
-		                          <h4
-		                            class="text-xl font-bold"
-		                          >
-		                            Expenses 
-		                          </h4>
-		                        </div>		                        
-	                      	</div>
-	                      	<div class="mt-5.5 flex flex-col gap-1.5">
-								<!-- Total Revenue Bulan Ini -->
-								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium">Bulan Ini</p>
-										<p id="expense_bulan_ini" class="text-sm font-medium">
-
-										</p>
-								</div>
-
-								<!-- Pemasukan Bulan Lalu -->
-								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium">Bulan Lalu</p>
-										<p id="expense_bulan_lalu" class="text-sm font-medium">
-
-										</p>
-								</div>
-								<!-- Total Revenue Semua -->
-								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium">Total Expenses</p>
-										<p id="total_expense_all" class="text-sm font-medium">Rp 0</p>
-								</div>
-								<!-- asdasdsadas -->
-								<?php  if($this->session->level=='1' OR $this->session->level=='2'){ ?>
-								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium">
-										<a href="<?= base_url('expense/lebih_lengkap') ?>">
-				                        <span class="text-sm font-medium text-primary">
-				                          Lebih Lengkap >>
-				                        </span>
-				                    </a>				                      
-									</p>
-								</div>
-								<?php }else{ ?>
-								<?php }?>
-
-							</div>
-
-
-	                    </div>
-
-	                    <div class="swiper-slide border-r border-stroke px-10 last:border-r-0 dark:border-strokedark">
-	                      	<div class="flex items-center justify-between">
-		                        <div class="flex items-center gap-2.5">
-		                          <h4 class="text-xl font-bold">
-		                            Profit
-		                          </h4>
-		                        </div>		                        
-	                      	</div>
-			                <div class="mt-5.5 flex flex-col gap-1.5">
-									<!-- Total Revenue Bulan Ini -->
-									<div class="flex items-center justify-between gap-1">
-										<p class="text-sm font-medium">Gross Profit</p>
-											<p id="total_gross_profit" class="text-sm font-medium">Rp 0</p>
-									</div>
-
-									<!-- Pemasukan Bulan Lalu -->
-									<div class="flex items-center justify-between gap-1">
-										<p class="text-sm font-medium">Net Profit</p>
-											<p id="total_net_profit" class="text-sm font-medium">Rp 0</p>
-									</div>
-							</div>
-	                    </div>                  
+	                                      
 	                  </div>
 	                </div>
 
@@ -389,7 +276,17 @@
         fetch('<?= base_url('Aspanel/get_revenue_data') ?>')
             .then(response => response.json())
             .then(data => {
-                document.querySelector('#revenue_bulan_ini').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.revenue_bulan_ini)}`;
+               	document.querySelector('#target_nominal').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.target_nominal)}`;
+                document.querySelector('#estimasi_revenue_bulan_ini').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.estimasi_revenue_bulan_ini)}`;
+                document.querySelector('#hasil_target').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.hasil_target)}`;
+                document.querySelector('#estimasi_komisi_bulan_ini').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.estimasi_komisi_bulan_ini)}`;
+
+                document.querySelector('#estimasi_revenue_tahun_ini').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.estimasi_revenue_tahun_ini)}`;
+                document.querySelector('#estimasi_revenue_tahun_lalu').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.estimasi_revenue_tahun_lalu)}`;
+                document.querySelector('#estimasi_revenue_all_time').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.estimasi_revenue_all_time)}`;
+                document.querySelector('#estimasi_komisi_total').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.estimasi_komisi_total)}`;
+
+                 document.querySelector('#revenue_bulan_ini').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.revenue_bulan_ini)}`;
                 document.querySelector('#revenue_bulan_lalu').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.revenue_bulan_lalu)}`;
                 document.querySelector('#total_revenue_all').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.total_revenue_all)}`;
                 document.querySelector('#total_net_revenue').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.total_net_revenue)}`;

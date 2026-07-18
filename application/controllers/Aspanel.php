@@ -180,10 +180,15 @@ class Aspanel extends CI_Controller {
 				$data['total_client'] = $this->Clients_model->get_total_clients(); // Total client
 				
 				
-				// Revenue bulan ini
-				$data['revenue_bulan_ini'] = $this->db->select_sum('total_paid')
+				// Estimasi Revenue bulan ini
+				$data['estimasi_revenue_bulan_ini'] = $this->db
+					->select_sum('project.value')
+					->from('payment')
+					->join('project', 'project.id_session = payment.id_session', 'inner')
+					->join('user', 'user.id_session = project.closing_user_idsession', 'inner')
 					->where('DATE_FORMAT(date, "%Y-%m") =', $month_now)
-					->get('payment')
+					->where('user.id_session', $this->session->id_session)				
+					->get()
 					->row();
 
 				// Revenue bulan lalu
@@ -197,11 +202,7 @@ class Aspanel extends CI_Controller {
 					->get('payment')
 					->row();
 
-				// Hitung persentase perubahan revenue
-				$data['percent_change'] = null;
-				if ($data['revenue_bulan_ini'] && $data['revenue_bulan_lalu'] && $data['revenue_bulan_lalu']->total_paid != 0) {
-					$data['percent_change'] = (($data['revenue_bulan_ini']->total_paid - $data['revenue_bulan_lalu']->total_paid) / $data['revenue_bulan_lalu']->total_paid) * 100;
-				}
+
 				if ($view === 'staff') {
 					$this->db->select('project.event_date, project.location, project.client_name, crew_projects.role, crew_projects.project_id');
 					$this->db->from('user');
@@ -212,7 +213,7 @@ class Aspanel extends CI_Controller {
 					$data['events'] = $this->db->get()->result_array();
 					$this->load->view('backend/v_home_staff', $data);
 				} else {
-					$this->load->view('backend/v_home', $data);
+					$this->load->view('backend/v_home_admin', $data);
 				}
 		
 			}else if ($this->session->level == '9') {
