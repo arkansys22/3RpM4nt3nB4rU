@@ -16,8 +16,8 @@ class Aspanel extends CI_Controller {
 		{
 		redirect(base_url('login'));
 		}
-		public function home($view = null)
-		{
+	public function home($view = null)
+	{
 			if (!$this->session->userdata('crews_idsession')) {
 				$user = $this->db->get_where('user', ['id_session' => $this->session->userdata('id_session')])->row();
 				if ($user && isset($user->crews_idsession)) {
@@ -326,7 +326,7 @@ class Aspanel extends CI_Controller {
 			} else {
 				redirect(base_url());
 			}
-		}
+	}
 
 	public function logout()
 		{
