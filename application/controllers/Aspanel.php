@@ -64,23 +64,7 @@ class Aspanel extends CI_Controller {
 
 
 				// Estimasi Revenue bulan ini
-				$data['estimasi_revenue_bulan_ini'] = $this->db
-			    ->select('COALESCE(SUM(project.value),0) AS total')
-			    ->from('project')
-			    ->join('user', 'user.id_session = project.closing_user_idsession')
-			    ->where('user.id_session', $this->session->id_session)
-			    ->where('DATE_FORMAT(project.event_date,"%Y-%m") =', $month_now)
-			    ->where("
-			        EXISTS (
-			            SELECT 1
-			            FROM payment
-			            WHERE payment.id_session = project.id_session
-			            AND payment.metodep = 'Pembayaran Kedua'
-			            AND payment.status = 'Paid'
-			        )
-			    ", null, false)
-			    ->get()
-			    ->row();
+				$data['estimasi_revenue_bulan_ini'] = $this->getEstimasiRevenue();
 
 				// Revenue bulan lalu
 				$data['revenue_bulan_lalu'] = $this->db->select_sum('total_paid')
@@ -214,15 +198,7 @@ class Aspanel extends CI_Controller {
 				
 				
 				// Estimasi Revenue bulan ini
-				$data['estimasi_revenue_bulan_ini'] = $this->db
-					->select_sum('project.value')
-					->from('payment')
-					->join('project', 'project.id_session = payment.id_session', 'inner')
-					->join('user', 'user.id_session = project.closing_user_idsession', 'inner')
-					->where('DATE_FORMAT(date, "%Y-%m") =', $month_now)
-					->where('user.id_session', $this->session->id_session)				
-					->get()
-					->row();
+				$data['estimasi_revenue_bulan_ini'] = $this->getEstimasiRevenue($this->session->id_session);
 
 				// Revenue bulan lalu
 				$data['revenue_bulan_lalu'] = $this->db->select_sum('total_paid')
@@ -260,15 +236,7 @@ class Aspanel extends CI_Controller {
 				
 				
 				// Estimasi Revenue bulan ini
-				$data['estimasi_revenue_bulan_ini'] = $this->db
-					->select_sum('project.value')
-					->from('payment')
-					->join('project', 'project.id_session = payment.id_session', 'inner')
-					->join('user', 'user.id_session = project.closing_user_idsession', 'inner')
-					->where('DATE_FORMAT(date, "%Y-%m") =', $month_now)
-					->where('user.id_session', $this->session->id_session)				
-					->get()
-					->row();
+				$data['estimasi_revenue_bulan_ini'] = $this->getEstimasiRevenue($this->session->id_session);
 
 				// Revenue bulan lalu
 				$data['revenue_bulan_lalu'] = $this->db->select_sum('total_paid')
@@ -334,6 +302,48 @@ class Aspanel extends CI_Controller {
 			} else {
 				redirect(base_url());
 			}
+	}
+
+
+	private function getEstimasiRevenue($user_id = null, $periode = null)
+	{
+	    if ($periode == null) {
+	        $periode = date('Y-m');
+	    }
+
+	    $this->db->select('COALESCE(SUM(project.value),0) AS total');
+	    $this->db->from('project');
+
+	    if ($user_id != null) {
+	        $this->db->where('project.closing_user_idsession', $user_id);
+	    }
+
+	    // Event bulan yang sedang dipilih
+	    $this->db->where('DATE_FORMAT(project.event_date,"%Y-%m")', $periode);
+
+	    // Harus sudah bayar DP
+	    $this->db->where("
+	        EXISTS(
+	            SELECT 1
+	            FROM payment p1
+	            WHERE p1.id_session = project.id_session
+	            AND p1.metodep = 'Pembayaran Pertama'
+	            AND p1.status = 'Paid'
+	        )
+	    ", NULL, FALSE);
+
+	    // Harus sudah bayar pembayaran kedua
+	    $this->db->where("
+	        EXISTS(
+	            SELECT 1
+	            FROM payment p2
+	            WHERE p2.id_session = project.id_session
+	            AND p2.metodep = 'Pembayaran Kedua'
+	            AND p2.status = 'Paid'
+	        )
+	    ", NULL, FALSE);
+
+	    return $this->db->get()->row();
 	}
 
 	public function logout()
@@ -799,20 +809,13 @@ class Aspanel extends CI_Controller {
     	$target_nominal = (int) ($target->targetsales_nominal ?? 0);
 
 	    // Revenue bulan ini  
-	    $estimasi_revenue_bulan_ini = $this->db
-	    	->select_sum('project.value')	    	
-			->join('project', 'project.id_session = payment.id_session')
-			->join('user', 'user.id_session = project.closing_user_idsession')
-	        ->where('DATE(date) >=', $date_start_of_month)
-	        ->where('DATE(date) <=', $date_now)
-	        ->where('user.id_session', $this->session->id_session)
-	        ->where('payment.status', 'Paid')
-	        ->get('payment')
-	        ->row();
+	   	$estimasi_revenue_bulan_ini = $this->getEstimasiRevenue($this->session->id_session);
 
-	    $estimasi_komisi_bulan_ini = $estimasi_revenue_bulan_ini->value * 2.5 / 100;
+	    $estimasi = $estimasi_revenue_bulan_ini->total ?? 0;
 
-	    $hasil_target = $estimasi_revenue_bulan_ini->value - $target_nominal ;
+			$estimasi_komisi_bulan_ini = $estimasi * 2.5 / 100;
+
+			$hasil_target = $estimasi - $target_nominal;
 
 	    $revenue_bulan_ini = $this->db->select_sum('total_paid')
 	        ->where('DATE(date) >=', $date_start_of_month)
@@ -918,7 +921,7 @@ class Aspanel extends CI_Controller {
 	    }
 
 	    echo json_encode([
-	    	'estimasi_revenue_bulan_ini' => $estimasi_revenue_bulan_ini->value ?? 0,
+	    	'estimasi_revenue_bulan_ini' => $estimasi,
 	    	'target_nominal' => $target_nominal,
 	        'hasil_target' => $hasil_target,
 	        'estimasi_komisi_bulan_ini' => $estimasi_komisi_bulan_ini,
