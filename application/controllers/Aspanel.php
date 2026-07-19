@@ -794,36 +794,38 @@ class Aspanel extends CI_Controller {
 	    $date_start_of_month = date('Y-m-01'); // Start of the current month
 	    $date_start_of_last_month = date('Y-m-01', strtotime('first day of last month')); // Start of last month
 	    $date_end_of_last_month = date('Y-m-t', strtotime('last month')); // End of last month
-
-
-	     // ====== TARGET BULAN INI (VARCHAR YYYY-MM) ======
-    
+	 
+	    // ====== TENTUKAN APAKAH DATA DIFILTER PER-USER ATAU GLOBAL ======
+	    // Level 4 (Staff Admin) & 9 (Sales Marketing) => lihat data milik sendiri
+	    // Level 1 (Developer), 2 (Admin), 3 (Accounting) => lihat data GLOBAL/keseluruhan
+	    $level = $this->session->level;
+	    $filter_by_user = in_array($level, ['4', '9']);
+	    $user_id = $filter_by_user ? $this->session->id_session : null;
+	 
+	    // ====== TARGET BULAN INI (VARCHAR YYYY-MM) ======
 	    $bulan_ini = date('Y-m');
-    	$target = $this->db
-        ->select_sum('targetsales_nominal')
-        ->where('targetsales_periode', $bulan_ini)
-        ->where('user_id_session', $this->session->id_session)
-        ->get('targetsales')
-        ->row();
-
-    	$target_nominal = (int) ($target->targetsales_nominal ?? 0);
-
-	    // Revenue bulan ini  
-	   	$estimasi_revenue_bulan_ini = $this->getEstimasiRevenue($this->session->id_session);
-
+	    $this->db->select_sum('targetsales_nominal')
+	        ->where('targetsales_periode', $bulan_ini);
+	    if ($user_id != null) {
+	        $this->db->where('user_id_session', $user_id);
+	    }
+	    $target = $this->db->get('targetsales')->row();
+	    $target_nominal = (int) ($target->targetsales_nominal ?? 0);
+	 
+	    // Revenue bulan ini
+	    $estimasi_revenue_bulan_ini = $this->getEstimasiRevenue($user_id);
 	    $estimasi = $estimasi_revenue_bulan_ini->total ?? 0;
-
-			$estimasi_komisi_bulan_ini = $estimasi * 2.5 / 100;
-
-			$hasil_target = $estimasi - $target_nominal;
-
+	 
+	    $estimasi_komisi_bulan_ini = $estimasi * 2.5 / 100;
+	    $hasil_target = $estimasi - $target_nominal;
+	 
 	    $revenue_bulan_ini = $this->db->select_sum('total_paid')
 	        ->where('DATE(date) >=', $date_start_of_month)
 	        ->where('DATE(date) <=', $date_now)
 	        ->where('status', 'Paid')
 	        ->get('payment')
 	        ->row();
-
+	 
 	    // Revenue bulan lalu
 	    $revenue_bulan_lalu = $this->db->select_sum('total_paid')
 	        ->where('DATE(date) >=', $date_start_of_last_month)
@@ -831,98 +833,93 @@ class Aspanel extends CI_Controller {
 	        ->where('status', 'Paid')
 	        ->get('payment')
 	        ->row();
-
+	 
 	    // Total revenue all
 	    $total_revenue_all = $this->db->select_sum('total_paid')
-	    	->where('status', 'Paid')
+	        ->where('status', 'Paid')
 	        ->get('payment')
 	        ->row();
-
+	 
 	    $total_pending_revenue = $this->db->select_sum('total_paid')
-	    	->where('status', 'Pending')
+	        ->where('status', 'Pending')
 	        ->get('payment')
 	        ->row();
-
+	 
 	    $total_project_acc = $this->db->select_sum('nominal_transaksi')
 	        ->get('project_acc')
 	        ->row();
-
+	 
 	    $total_net_revenue = $total_revenue_all->total_paid - $total_project_acc->nominal_transaksi;
-
-
-
-
+	 
+	    // ====== ESTIMASI REVENUE TAHUN INI ======
 	    $tahun_ini = date('Y');
-
-		$estimasi_revenue_tahun_ini = $this->db
-		    ->select_sum('project.value', 'value')
-		    ->join('project', 'project.id_session = payment.id_session')
-		    ->join('user', 'user.id_session = project.closing_user_idsession')
-		    ->where('YEAR(payment.date)', $tahun_ini)
-		    ->where('user.id_session', $this->session->id_session)
-		    ->where('payment.status', 'Paid')
-		    ->get('payment')
-		    ->row();
-
-
-		$tahun_lalu = date('Y') - 1;
-
-		$estimasi_revenue_tahun_lalu = $this->db
-		    ->select_sum('project.value', 'value')
-		    ->join('project', 'project.id_session = payment.id_session')
-		    ->join('user', 'user.id_session = project.closing_user_idsession')
-		    ->where('YEAR(payment.date)', $tahun_lalu)
-		    ->where('user.id_session', $this->session->id_session)
-		    ->where('payment.status', 'Paid')
-		    ->get('payment')
-		    ->row();
-
-
-
-		$estimasi_revenue_all_time = $this->db
-		    ->select_sum('project.value', 'value')
-		    ->join('project', 'project.id_session = payment.id_session')
-		    ->join('user', 'user.id_session = project.closing_user_idsession')
-		    ->where('user.id_session', $this->session->id_session)
-		    ->where('payment.status', 'Paid')
-		    ->get('payment')
-		    ->row();
-
-		$estimasi_komisi_total = $estimasi_revenue_all_time->value * 2.5 / 100;
-
+	    $this->db->select_sum('project.value', 'value')
+	        ->join('project', 'project.id_session = payment.id_session')
+	        ->where('YEAR(payment.date)', $tahun_ini)
+	        ->where('payment.status', 'Paid');
+	    if ($user_id != null) {
+	        $this->db->join('user', 'user.id_session = project.closing_user_idsession')
+	            ->where('user.id_session', $user_id);
+	    }
+	    $estimasi_revenue_tahun_ini = $this->db->get('payment')->row();
+	 
+	    // ====== ESTIMASI REVENUE TAHUN LALU ======
+	    $tahun_lalu = date('Y') - 1;
+	    $this->db->select_sum('project.value', 'value')
+	        ->join('project', 'project.id_session = payment.id_session')
+	        ->where('YEAR(payment.date)', $tahun_lalu)
+	        ->where('payment.status', 'Paid');
+	    if ($user_id != null) {
+	        $this->db->join('user', 'user.id_session = project.closing_user_idsession')
+	            ->where('user.id_session', $user_id);
+	    }
+	    $estimasi_revenue_tahun_lalu = $this->db->get('payment')->row();
+	 
+	    // ====== ESTIMASI REVENUE ALL TIME ======
+	    $this->db->select_sum('project.value', 'value')
+	        ->join('project', 'project.id_session = payment.id_session')
+	        ->where('payment.status', 'Paid');
+	    if ($user_id != null) {
+	        $this->db->join('user', 'user.id_session = project.closing_user_idsession')
+	            ->where('user.id_session', $user_id);
+	    }
+	    $estimasi_revenue_all_time = $this->db->get('payment')->row();
+	 
+	    $estimasi_komisi_total = ($estimasi_revenue_all_time->value ?? 0) * 2.5 / 100;
+	 
 	    $expense_bulan_ini = $this->db->select_sum('nominal_transaksi')
-	    	->where('DATE(tanggal_transaksi) >=', $date_start_of_month)
+	        ->where('DATE(tanggal_transaksi) >=', $date_start_of_month)
 	        ->where('DATE(tanggal_transaksi) <=', $date_now)
 	        ->get('operational_acc')
 	        ->row();
-
+	 
 	    $expense_bulan_lalu = $this->db->select_sum('nominal_transaksi')
-	    	->where('DATE(tanggal_transaksi) >=', $date_start_of_last_month)
+	        ->where('DATE(tanggal_transaksi) >=', $date_start_of_last_month)
 	        ->where('DATE(tanggal_transaksi) <=', $date_end_of_last_month)
 	        ->get('operational_acc')
 	        ->row();
-
+	 
 	    $total_expense_all = $this->db->select_sum('nominal_transaksi')
 	        ->get('operational_acc')
 	        ->row();
-
+	 
 	    $total_other = $this->db->select_sum('nominal_transaksi')
 	        ->get('other_acc')
 	        ->row();
-
+	 
 	    $total_gross_profit = ($total_revenue_all->total_paid - $total_project_acc->nominal_transaksi) - $total_expense_all->nominal_transaksi;
-
-	    $total_net_profit = $total_revenue_all->total_paid - $total_project_acc->nominal_transaksi - $total_expense_all->nominal_transaksi - $total_other->nominal_transaksi ;
-
+	 
+	    $total_net_profit = $total_revenue_all->total_paid - $total_project_acc->nominal_transaksi - $total_expense_all->nominal_transaksi - $total_other->nominal_transaksi;
+	 
 	    // Hitung persentase perubahan revenue
 	    $percent_change = null;
 	    if ($revenue_bulan_ini && $revenue_bulan_lalu && $revenue_bulan_lalu->total_paid != 0) {
 	        $percent_change = (($revenue_bulan_ini->total_paid - $revenue_bulan_lalu->total_paid) / $revenue_bulan_lalu->total_paid) * 100;
 	    }
-
+	 
 	    echo json_encode([
-	    	'estimasi_revenue_bulan_ini' => $estimasi,
-	    	'target_nominal' => $target_nominal,
+	        'estimasi_revenue_bulan_ini' => $estimasi,
+	        'target_nominal' => $target_nominal,
 	        'hasil_target' => $hasil_target,
 	        'estimasi_komisi_bulan_ini' => $estimasi_komisi_bulan_ini,
 	        'estimasi_komisi_total' => $estimasi_komisi_total,

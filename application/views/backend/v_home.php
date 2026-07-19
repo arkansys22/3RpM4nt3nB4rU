@@ -399,6 +399,13 @@
                 document.querySelector('#revenue_bulan_lalu').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.revenue_bulan_lalu)}`;
                 document.querySelector('#total_revenue_all').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.total_revenue_all)}`;
                 document.querySelector('#total_net_revenue').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.total_net_revenue)}`;
+
+                document.querySelector('#estimasi_revenue_tahun_ini').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.estimasi_revenue_tahun_ini)}`;
+                document.querySelector('#estimasi_revenue_tahun_lalu').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.estimasi_revenue_tahun_lalu)}`;
+                document.querySelector('#estimasi_revenue_all_time').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.estimasi_revenue_all_time)}`;
+                document.querySelector('#estimasi_komisi_total').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.estimasi_komisi_total)}`;
+
+
                 document.querySelector('#expense_bulan_ini').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.expense_bulan_ini)}`;
                 document.querySelector('#expense_bulan_lalu').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.expense_bulan_lalu)}`;
                 document.querySelector('#total_expense_all').textContent = `Rp ${new Intl.NumberFormat('id-ID').format(data.total_expense_all)}`;
