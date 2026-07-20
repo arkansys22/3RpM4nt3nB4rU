@@ -152,6 +152,7 @@
               </div>
               <div class="block md:hidden">
               <form action="" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
+              <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>">
                 <label class="block mb-2">Nama Klien : <strong><?= $pc->pc_name ?></strong></label>        
                 <label class="block mb-2">Nomer WhatsApp : <strong><a href="https://wa.me/<?= $pc->pc_nowa ?>"><?= $pc->pc_nowa ?></a></strong></label>        
                 <label class="block mb-2">Tanggal Pernikahan : <strong><?= hari($pc->event_date) ?>, <?= tgl_indo($pc->event_date) ?></strong></label>
@@ -449,6 +450,7 @@
 
                   <!-- Form -->
                   <form action="<?= site_url('potensial-clients/update_promo/'.$pc->id_session) ?>" method="post">
+                  <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>">
 
                     <div class="mb-4">
                       <label class="block text-sm font-medium mb-1">Pilihan Promo</label>
@@ -498,6 +500,7 @@
 
                   <!-- Form -->
                   <form action="<?= site_url('potensial-clients/update_penawaran/'.$pc->id_session) ?>" method="post">
+                  <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>">
 
                     <div class="mb-4">
                     <label class="block text-sm font-medium mb-1">Pilih Kategori</label>

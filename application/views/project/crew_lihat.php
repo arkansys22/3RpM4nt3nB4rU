@@ -43,6 +43,7 @@
                 </a>
             </div>
               <form action="<?= site_url('project/update/'.$project->id_session) ?>" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
+              <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>">
                 <label class="block mb-2"><strong>Nama Project : </strong><?= $project->project_name ?></label>        
                 <label class="block mb-2"><strong>Agama : </strong><?= $project->religion ?></label>        
                 <label class="block mb-2"><strong>Tanggal Pernikahan : </strong><?= hari($project->event_date) ?>, <?= tgl_indo($project->event_date) ?></label>

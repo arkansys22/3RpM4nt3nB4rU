@@ -36,6 +36,7 @@
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
               <h1 class="text-2xl font-bold mb-4">Tambah Kwitansi <?= $project->client_name ?></h1>
               <form action="<?= base_url('payment/store2') ?>" method="post" class="bg-white p-6 shadow-md rounded">
+              <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>">
               <input type="hidden" name="id_session" value="<?= $project->id_session ?>">
               <input type="hidden" name="total_bill" value="0"> <!-- Ensure total_bill is always 0 -->
 

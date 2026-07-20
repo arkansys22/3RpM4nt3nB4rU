@@ -94,6 +94,7 @@
                 </div>
                 </div>
               <form action="" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
+              <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>">
                 <label class="block mb-2"><strong>Judul : </strong><?= $pc->data_pricelist_judul ?></label>
                 <label class="block mb-2">
                     <strong>Link Di Web Mantenbaru : </strong>
@@ -320,6 +321,7 @@
       let formData = new FormData();
       formData.append('gambar', file);
       formData.append('id', "<?= $pc->data_pricelist_idsession ?>");
+      formData.append('<?= $this->security->get_csrf_token_name() ?>', '<?= $this->security->get_csrf_hash() ?>');
 
       fetch("<?= site_url('potensial-clients-pricelist/upload_gambar') ?>", {
           method: "POST",

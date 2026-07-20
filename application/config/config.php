@@ -468,11 +468,15 @@ $config['global_xss_filtering'] = FALSE;
 | 'csrf_regenerate' = Regenerate token on every submission
 | 'csrf_exclude_uris' = Array of URIs which ignore CSRF checks
 */
-$config['csrf_protection'] = FALSE;
+$config['csrf_protection'] = TRUE;
 $config['csrf_token_name'] = 'csrf_test_name';
 $config['csrf_cookie_name'] = 'csrf_cookie_name';
 $config['csrf_expire'] = 7200;
-$config['csrf_regenerate'] = TRUE;
+// FALSE: several pages render more than one form / fire more than one AJAX
+// POST from a single page load, all embedding the same token. Regenerating
+// on every submit would invalidate the token still sitting in the other
+// forms/AJAX calls on that page, breaking them with a 403 on the 2nd submit.
+$config['csrf_regenerate'] = FALSE;
 $config['csrf_exclude_uris'] = array();
 
 /*

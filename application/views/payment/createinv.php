@@ -36,6 +36,7 @@
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
               <h1 class="text-2xl font-bold mb-4">Tambah Invoice <?= $project->client_name ?></h1>
               <form action="<?= base_url('payment/store') ?>" method="post" class="bg-white p-6 shadow-md rounded">
+              <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>">
               <input type="hidden" name="id_session" value="<?= $project->id_session ?>">
               <input type="hidden" name="total_paid" value="0"> <!-- Ensure total_paid is always 0 -->
 
@@ -239,7 +240,7 @@ document.getElementById('typeinvoice').addEventListener('change', function () {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
-            body: "id_session=" + encodeURIComponent(typeinvoice)
+            body: "id_session=" + encodeURIComponent(typeinvoice) + "&<?= $this->security->get_csrf_token_name() ?>=<?= $this->security->get_csrf_hash() ?>"
         })
         .then(response => response.json())
         .then(data => {

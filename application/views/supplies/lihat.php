@@ -103,6 +103,7 @@
                     </div>
                 </div>
               <form method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
+              <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>">
                 <label class="block mb-2"><strong>Nama Produk : </strong><?= $supplies->product_name ?></label>        
                 <label class="block mb-2"><strong>Jenis : </strong><?= $supplies->type ?></label>        
                 <label class="block mb-2"><strong>Stock Tersedia : </strong><?= $supplies->amount; ?></label>

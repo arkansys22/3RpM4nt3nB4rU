@@ -111,6 +111,7 @@
                   </div>
                 </div>
               <form action="<?= site_url('project/update/'.$project->id_session) ?>" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
+              <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>">
                 <br>
                 <div class="mb-4.5 flex flex-col md:flex-row">
                   <h1 class="text-xl font-bold">Informasi Project</h1>

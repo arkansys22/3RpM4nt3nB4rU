@@ -45,6 +45,7 @@
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
               <h1 class="text-2xl font-bold mb-4">Edit Vendor <?= $project->client_name ?></h1>
               <form action="<?= base_url('vendor/update/' . $vendors->id_session . '/' . $vendors->vendor_id) ?>" method="post" enctype="multipart/form-data" class="bg-white p-6 shadow-md rounded">
+              <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>">
                 <input type="hidden" name="id_session" value="<?= $vendors->id_session ?>">
 
                 <!-- Partner Section -->

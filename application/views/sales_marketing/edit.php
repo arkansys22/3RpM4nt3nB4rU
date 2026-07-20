@@ -36,6 +36,7 @@
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
               <h1 class="text-2xl font-bold mb-4">Edit Setting Target</h1>
               <form action="<?= site_url('sales-setting-target/update/'.$pc->targetsales_idsession) ?>" method="post" class="bg-white p-6 shadow-md rounded">
+              <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>">
                 
                 <label class="block mb-2">Nama Sales</label>
                 <select name="nama" class="w-full px-4 py-2 border rounded mb-4" required> 

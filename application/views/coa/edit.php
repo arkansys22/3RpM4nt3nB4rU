@@ -42,6 +42,7 @@
                     </div>
                 <?php endif; ?>
               <form action="<?= site_url('coa/update/'.$coa->nomer_kategori) ?>" method="post" class="bg-white p-6 shadow-md rounded">             
+              <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>">
 
                 <label class="block mb-2">Account Type</label>
                 <select name="account_type" id="account_type" class="w-full px-4 py-2 border rounded mb-4">

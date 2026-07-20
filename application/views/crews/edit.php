@@ -36,6 +36,7 @@
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
               <h2 class="text-2xl font-bold mb-4">Edit Crew <?= $crews->crew_name ?></h2>
               <form action="<?= site_url('crews/update/'.$crews->id_session) ?>" method="post" class="bg-white p-6 shadow-md rounded">
+              <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>">
                 <label class="block mb-2">Nama</label>
                 <input type="text" name="crew_name" value="<?= $crews->crew_name ?>" class="w-full px-4 py-2 border rounded mb-4" required>
 

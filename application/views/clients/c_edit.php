@@ -41,6 +41,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                 </h2>
             </div>
             <form action="<?= site_url('clients/c_update/' . $clients->id_session) ?>" method="post" class="bg-white p-6 shadow-md rounded" style="font-family: 'Josefin Sans', serif; color: #000;">
+            <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>">
 
               <!-- Data Mempelai Wanita -->
               <h3 class="text-xl font-bold mt-6 mb-2">DATA PENGANTIN WANITA</h3>

@@ -40,6 +40,7 @@
                 </div>
                 <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
                   <form action="<?= base_url('client/login') ?>" method="post">
+                  <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>">
                     <?php echo $this->session->flashdata('login_failed'); ?>
                     <?php echo $this->session->flashdata('msg'); ?>
                     <?php

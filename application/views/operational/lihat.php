@@ -96,6 +96,7 @@
               
               <!-- User Details Form -->
               <form action="<?= site_url('potensial-clients/update/'.$pc->id_session) ?>" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
+              <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>">
                 <label class="block mb-2 text-black dark:text-white"><strong>Username : </strong><?= $pc->username ?></label>        
                 <label class="block mb-2 text-black dark:text-white"><strong>Nama : </strong><?= $pc->nama ?></label>
                 <label class="block mb-2 text-black dark:text-white"><strong>Email : </strong><?= $pc->email ?></label>
