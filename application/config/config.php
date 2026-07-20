@@ -25,9 +25,14 @@ date_default_timezone_set("Asia/Jakarta");
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = (isset($_SERVER['HTTPS']) ? "https://" : "http://").$_SERVER['HTTP_HOST'].
-						str_replace(basename($_SERVER['SCRIPT_NAME']),"",
-						$_SERVER['SCRIPT_NAME']);
+// Prefer an explicit, env-provided base URL (avoids Host header injection).
+// Falls back to the previous HTTP_HOST auto-detection when unset, so local
+// and staging environments keep working without extra configuration.
+$config['base_url'] = getenv('APP_BASE_URL') ?: (
+	(isset($_SERVER['HTTPS']) ? "https://" : "http://").$_SERVER['HTTP_HOST'].
+	str_replace(basename($_SERVER['SCRIPT_NAME']),"",
+	$_SERVER['SCRIPT_NAME'])
+);
 
 
 /*
@@ -230,7 +235,7 @@ $config['allow_get_array'] = TRUE;
 | your log files will fill up very fast.
 |
 */
-$config['log_threshold'] = 0;
+$config['log_threshold'] = 1;
 
 /*
 |--------------------------------------------------------------------------
@@ -331,7 +336,7 @@ $config['cache_query_string'] = FALSE;
 | https://codeigniter.com/userguide3/libraries/encryption.html
 |
 */
-$config['encryption_key'] = '';
+$config['encryption_key'] = getenv('ENCRYPTION_KEY') ?: '';
 
 /*
 |--------------------------------------------------------------------------
@@ -416,8 +421,11 @@ $config['sess_regenerate_destroy'] = FALSE;
 $config['cookie_prefix']	= '';
 $config['cookie_domain']	= '';
 $config['cookie_path']		= '/';
+// cookie_secure left FALSE pending confirmation that the production server
+// serves HTTPS — enabling it on plain HTTP would silently break login
+// (browsers refuse to set/send Secure cookies without TLS). See SEC-07.
 $config['cookie_secure']	= FALSE;
-$config['cookie_httponly'] 	= FALSE;
+$config['cookie_httponly'] 	= TRUE;
 $config['cookie_samesite'] 	= 'Lax';
 
 /*

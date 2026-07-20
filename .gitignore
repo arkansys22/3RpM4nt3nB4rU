@@ -25,6 +25,16 @@ application/logs/*
 
 ### CodeIgniter Patch ###
 
+# Environment variables (real secrets live here, never commit this file)
+.env
+.env.*
+!.env.example
+
+# db/ is denied via db/.htaccess, but don't let git ignore that file too
+!db/.htaccess
+# Prevent new SQL dumps from being committed (existing ones are legacy history)
+db/*.sql
+
 ### SublimeText ###
 # Cache files for Sublime Text
 *.tmlanguage.cache

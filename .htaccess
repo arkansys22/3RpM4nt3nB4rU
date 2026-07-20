@@ -1,4 +1,9 @@
 RewriteEngine On
+
+# Block direct access to the .git directory (source + history must never be
+# servable — this repo's .git folder sits inside the deployed webroot).
+RewriteRule ^\.git(/|$) - [F,L]
+
 RewriteCond %{REQUEST_FILENAME} -s [OR]
 RewriteCond %{REQUEST_FILENAME} -l [OR]
 RewriteCond %{REQUEST_FILENAME} -d

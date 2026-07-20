@@ -1,7 +1,7 @@
 <?php
 function cek_session_akses_developer($id){
   $ci = & get_instance();
-  $session = $ci->db->query("SELECT * FROM user WHERE user.id_session='$id'")->num_rows();
+  $session = $ci->db->query("SELECT 1 FROM user WHERE id_session = ?", array($id))->num_rows();
   if ($session == '0' AND $ci->session->userdata('level') != '1'){
     redirect(base_url().'panel');
   }
@@ -9,7 +9,7 @@ function cek_session_akses_developer($id){
 
 function cek_session_akses_administrator($id){
   $ci = & get_instance();
-  $session = $ci->db->query("SELECT * FROM user WHERE user.id_session='$id'")->num_rows();
+  $session = $ci->db->query("SELECT 1 FROM user WHERE id_session = ?", array($id))->num_rows();
   if ($session == '0' AND $ci->session->userdata('level') != '2'){
     redirect(base_url().'panel');
   }
@@ -17,7 +17,7 @@ function cek_session_akses_administrator($id){
 
 function cek_session_akses_staff_accounting($id){
   $ci = & get_instance();
-  $session = $ci->db->query("SELECT * FROM user WHERE user.id_session='$id'")->num_rows();
+  $session = $ci->db->query("SELECT 1 FROM user WHERE id_session = ?", array($id))->num_rows();
   if ($session == '0' AND $ci->session->userdata('level') != '3'){
     redirect(base_url().'panel');
   }
@@ -25,7 +25,7 @@ function cek_session_akses_staff_accounting($id){
 
 function cek_session_akses_staff_admin($id){
   $ci = & get_instance();
-  $session = $ci->db->query("SELECT * FROM user WHERE user.id_session='$id'")->num_rows();
+  $session = $ci->db->query("SELECT 1 FROM user WHERE id_session = ?", array($id))->num_rows();
   if ($session == '0' AND $ci->session->userdata('level') != '4'){
     redirect(base_url().'panel');
   }
@@ -33,7 +33,7 @@ function cek_session_akses_staff_admin($id){
 
 function cek_session_akses_staff_sales($id){
   $ci = & get_instance();
-  $session = $ci->db->query("SELECT * FROM user WHERE user.id_session='$id'")->num_rows();
+  $session = $ci->db->query("SELECT 1 FROM user WHERE id_session = ?", array($id))->num_rows();
   if ($session == '0' AND $ci->session->userdata('level') != '9'){
     redirect(base_url().'panel');
   }
@@ -41,7 +41,7 @@ function cek_session_akses_staff_sales($id){
 
 function cek_session_akses_affiliate_super($id){
   $ci = & get_instance();
-  $session = $ci->db->query("SELECT * FROM user WHERE user.id_session='$id'")->num_rows();
+  $session = $ci->db->query("SELECT 1 FROM user WHERE id_session = ?", array($id))->num_rows();
   if ($session == '0' AND $ci->session->userdata('level') != '10'){
     redirect(base_url().'panel');
   }
@@ -49,7 +49,7 @@ function cek_session_akses_affiliate_super($id){
 
 function cek_session_akses_affiliate_promax($id){
   $ci = & get_instance();
-  $session = $ci->db->query("SELECT * FROM user WHERE user.id_session='$id'")->num_rows();
+  $session = $ci->db->query("SELECT 1 FROM user WHERE id_session = ?", array($id))->num_rows();
   if ($session == '0' AND $ci->session->userdata('level') != '11'){
     redirect(base_url().'panel');
   }
@@ -57,7 +57,7 @@ function cek_session_akses_affiliate_promax($id){
 
 function cek_session_akses_affiliate_vip($id){
   $ci = & get_instance();
-  $session = $ci->db->query("SELECT * FROM user WHERE user.id_session='$id'")->num_rows();
+  $session = $ci->db->query("SELECT 1 FROM user WHERE id_session = ?", array($id))->num_rows();
   if ($session == '0' AND $ci->session->userdata('level') != '12'){
     redirect(base_url().'panel');
   }
@@ -65,7 +65,7 @@ function cek_session_akses_affiliate_vip($id){
 
 function cek_session_akses_client($id){
   $ci = & get_instance();
-  $session = $ci->db->query("SELECT * FROM user WHERE user.id_session='$id'")->num_rows();
+  $session = $ci->db->query("SELECT 1 FROM user WHERE id_session = ?", array($id))->num_rows();
   if ($session == '0' AND $ci->session->userdata('level') != '5'){
     redirect(base_url().'panel');
   }
@@ -73,7 +73,7 @@ function cek_session_akses_client($id){
 
 function cek_session_akses_guest($id){
   $ci = & get_instance();
-  $session = $ci->db->query("SELECT * FROM user WHERE user.id_session='$id'")->num_rows();
+  $session = $ci->db->query("SELECT 1 FROM user WHERE id_session = ?", array($id))->num_rows();
   if ($session == '0' AND $ci->session->userdata('level') != '6'){
     redirect(base_url().'panel');
   }
@@ -81,7 +81,7 @@ function cek_session_akses_guest($id){
 
 function cek_session_akses_staff($id){
   $ci = & get_instance();
-  $session = $ci->db->query("SELECT * FROM user WHERE user.id_session='$id'")->num_rows();
+  $session = $ci->db->query("SELECT 1 FROM user WHERE id_session = ?", array($id))->num_rows();
   if ($session == '0' AND $ci->session->userdata('level') != '7'){
     redirect(base_url().'panel');
   }
@@ -89,7 +89,7 @@ function cek_session_akses_staff($id){
 
 function cek_session_akses_partner($id){
   $ci = & get_instance();
-  $session = $ci->db->query("SELECT * FROM user WHERE user.id_session='$id'")->num_rows();
+  $session = $ci->db->query("SELECT 1 FROM user WHERE id_session = ?", array($id))->num_rows();
   if ($session == '0' AND $ci->session->userdata('level') != '8'){
     redirect(base_url().'panel');
   }
@@ -114,7 +114,7 @@ function hari($date){
      'Saturday' => 'Sabtu'
     );
     $namahari = $daftar_hari[date('l', strtotime($date))];
-    
+
     return $namahari;
 }
 
@@ -245,10 +245,10 @@ if (!function_exists('terbilang')) {
           "https://ipwhois.app/json/{$ip}",
           "http://ipinfo.io/{$ip}/json"
       ];
-  
+
       $mh = curl_multi_init();
       $curl_handles = [];
-  
+
       foreach ($urls as $url) {
           $ch = curl_init();
           curl_setopt($ch, CURLOPT_URL, $url);
@@ -257,24 +257,24 @@ if (!function_exists('terbilang')) {
           $curl_handles[] = $ch;
           curl_multi_add_handle($mh, $ch);
       }
-  
+
       $running = null;
       do {
           curl_multi_exec($mh, $running);
           usleep(100);
       } while ($running > 0);
-  
+
       $results = [];
       foreach ($curl_handles as $ch) {
           $results[] = json_decode(curl_multi_getcontent($ch), true);
           curl_multi_remove_handle($mh, $ch);
       }
-  
+
       curl_multi_close($mh);
-  
+
       $city = '';
       $country = '';
-  
+
       foreach ($results as $response) {
           if (!empty($response['city']) && !empty($response['country'])) {
               $city = $response['city'];
@@ -282,8 +282,8 @@ if (!function_exists('terbilang')) {
               break;
           }
       }
-  
+
       return trim("{$city}, {$country}", ', ');
   }
-  
+
 }
