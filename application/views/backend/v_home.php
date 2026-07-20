@@ -385,6 +385,25 @@
     </div>
     <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
 	<script>
+
+		// ============================================================
+		// TAMBAHKAN kode ini di dalam fetchRevenueData(), setelah baris:
+		// document.querySelector('#hasil_target').textContent = ...
+		// ============================================================
+
+		const pencapaianEl = document.querySelector('#estimasi_revenue_bulan_ini');
+		const hasilTargetEl = document.querySelector('#hasil_target');
+
+		if (data.estimasi_revenue_bulan_ini >= data.target_nominal) {
+		    // Target sudah tercapai / terlampaui -> hijau
+		    pencapaianEl.style.color = 'green';
+		    hasilTargetEl.style.color = 'green';
+		} else {
+		    // Target belum tercapai -> merah
+		    pencapaianEl.style.color = 'red';
+		    hasilTargetEl.style.color = 'red';
+		}
+		
     function fetchRevenueData() {
         fetch('<?= base_url('Aspanel/get_revenue_data') ?>')
             .then(response => response.json())

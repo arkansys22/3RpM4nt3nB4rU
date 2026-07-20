@@ -311,6 +311,9 @@ class Aspanel extends CI_Controller {
 	        $periode = date('Y-m');
 	    }
 
+	    // escape supaya aman dari SQL injection karena di-inject manual ke raw query
+	    $periode_escaped = $this->db->escape($periode);
+
 	    $this->db->select('COALESCE(SUM(project.value),0) AS total');
 	    $this->db->from('project');
 
@@ -318,10 +321,7 @@ class Aspanel extends CI_Controller {
 	        $this->db->where('project.closing_user_idsession', $user_id);
 	    }
 
-	    // Event bulan yang sedang dipilih
-	    $this->db->where('DATE_FORMAT(project.event_date,"%Y-%m")', $periode);
-
-	    // Harus sudah bayar DP
+	    // Pembayaran Pertama harus LUNAS dan dibayar di bulan yang sedang berjalan
 	    $this->db->where("
 	        EXISTS(
 	            SELECT 1
@@ -329,10 +329,11 @@ class Aspanel extends CI_Controller {
 	            WHERE p1.id_session = project.id_session
 	            AND p1.metodep = 'Pembayaran Pertama'
 	            AND p1.status = 'Paid'
+	            AND DATE_FORMAT(p1.date, '%Y-%m') = $periode_escaped
 	        )
 	    ", NULL, FALSE);
 
-	    // Harus sudah bayar pembayaran kedua
+	    // Pembayaran Kedua harus LUNAS dan dibayar di bulan yang sedang berjalan
 	    $this->db->where("
 	        EXISTS(
 	            SELECT 1
@@ -340,6 +341,7 @@ class Aspanel extends CI_Controller {
 	            WHERE p2.id_session = project.id_session
 	            AND p2.metodep = 'Pembayaran Kedua'
 	            AND p2.status = 'Paid'
+	            AND DATE_FORMAT(p2.date, '%Y-%m') = $periode_escaped
 	        )
 	    ", NULL, FALSE);
 
