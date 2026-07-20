@@ -421,10 +421,8 @@ $config['sess_regenerate_destroy'] = FALSE;
 $config['cookie_prefix']	= '';
 $config['cookie_domain']	= '';
 $config['cookie_path']		= '/';
-// cookie_secure left FALSE pending confirmation that the production server
-// serves HTTPS — enabling it on plain HTTP would silently break login
-// (browsers refuse to set/send Secure cookies without TLS). See SEC-07.
-$config['cookie_secure']	= FALSE;
+// Production confirmed HTTPS (2026-07-20) — safe to require Secure cookies.
+$config['cookie_secure']	= TRUE;
 $config['cookie_httponly'] 	= TRUE;
 $config['cookie_samesite'] 	= 'Lax';
 
