@@ -347,28 +347,34 @@ class Aspanel extends CI_Controller {
 	    return $this->db->get()->row();
 	}
 
-	// Pencapaian revenue per project: dihitung 1x per project (bukan per baris
-	// payment) untuk project yang punya minimal 1 pembayaran Paid pada $year
-	// (atau kapan pun kalau $year null = all-time). Filter per-user pakai
-	// project.closing_user_idsession (user yang closing project tsb).
+	// Pencapaian revenue per project: tiap project dihitung SEKALI, dan
+	// diatribusikan ke tahun pembayaran Paid PERTAMANYA (bukan tiap tahun yang
+	// kebetulan punya pembayaran) — supaya project dengan cicilan yang
+	// menyeberang tahun (mis. DP 2025, pelunasan 2026) tidak ke-hitung penuh
+	// di dua tahun sekaligus (tahun-ini + tahun-lalu jadi melebihi all-time).
+	// Filter per-user pakai project.closing_user_idsession.
 	private function getProjectAchievement($user_id = null, $year = null)
 	{
 	    $sql = "SELECT COALESCE(SUM(project.value), 0) AS value
 	            FROM project
-	            WHERE project.id_session IN (
-	                SELECT DISTINCT payment.id_session
+	            JOIN (
+	                SELECT id_session, YEAR(MIN(date)) AS achieved_year
 	                FROM payment
-	                WHERE payment.status = 'Paid'";
+	                WHERE status = 'Paid'
+	                GROUP BY id_session
+	            ) achieved ON achieved.id_session = project.id_session";
+	    $conditions = [];
 	    $params = [];
 	    if ($year !== null) {
-	        $sql .= " AND YEAR(payment.date) = ?";
+	        $conditions[] = "achieved.achieved_year = ?";
 	        $params[] = $year;
 	    }
-	    $sql .= "
-	            )";
 	    if ($user_id !== null) {
-	        $sql .= " AND project.closing_user_idsession = ?";
+	        $conditions[] = "project.closing_user_idsession = ?";
 	        $params[] = $user_id;
+	    }
+	    if ($conditions) {
+	        $sql .= " WHERE " . implode(' AND ', $conditions);
 	    }
 
 	    return $this->db->query($sql, $params)->row();
