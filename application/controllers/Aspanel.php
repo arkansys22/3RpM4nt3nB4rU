@@ -836,18 +836,22 @@ class Aspanel extends CI_Controller {
 	    $filter_by_user = in_array($level, ['4', '9']);
 	    $user_id = $filter_by_user ? $this->session->id_session : null;
 	 
-	    // ====== TARGET BULAN INI (VARCHAR YYYY-MM) ======
+	    // ====== TARGET & PENCAPAIAN BULAN INI ======
+	    // Ini kuota pribadi tiap user (semua level, termasuk developer/admin,
+	    // punya baris target sendiri di targetsales) — jadi SELALU pakai
+	    // id_session user yang login, tidak ikut aturan global/per-user di
+	    // atas (yang cuma berlaku untuk metrik tahun ini/tahun lalu/keseluruhan).
+	    $own_user_id = $this->session->id_session;
+
 	    $bulan_ini = date('Y-m');
 	    $this->db->select_sum('targetsales_nominal')
-	        ->where('targetsales_periode', $bulan_ini);
-	    if ($user_id != null) {
-	        $this->db->where('user_id_session', $user_id);
-	    }
+	        ->where('targetsales_periode', $bulan_ini)
+	        ->where('user_id_session', $own_user_id);
 	    $target = $this->db->get('targetsales')->row();
 	    $target_nominal = (int) ($target->targetsales_nominal ?? 0);
-	 
+
 	    // Revenue bulan ini
-	    $estimasi_revenue_bulan_ini = $this->getEstimasiRevenue($user_id);
+	    $estimasi_revenue_bulan_ini = $this->getEstimasiRevenue($own_user_id);
 	    $estimasi = $estimasi_revenue_bulan_ini->total ?? 0;
 	 
 	    $estimasi_komisi_bulan_ini = $estimasi * 2.5 / 100;
