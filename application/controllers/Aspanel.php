@@ -319,7 +319,7 @@ class Aspanel extends CI_Controller {
 	    if ($user_id != null) {
 	        $this->db->where('project.closing_user_idsession', $user_id);
 	    }
-	 
+
 	    // Pembayaran Kesatu (DP) harus LUNAS dan dibayar di bulan yang sedang berjalan
 	    $this->db->where("
 	        EXISTS(
@@ -345,6 +345,33 @@ class Aspanel extends CI_Controller {
 	    ", NULL, FALSE);
 	 
 	    return $this->db->get()->row();
+	}
+
+	// Pencapaian revenue per project: dihitung 1x per project (bukan per baris
+	// payment) untuk project yang punya minimal 1 pembayaran Paid pada $year
+	// (atau kapan pun kalau $year null = all-time). Filter per-user pakai
+	// project.closing_user_idsession (user yang closing project tsb).
+	private function getProjectAchievement($user_id = null, $year = null)
+	{
+	    $sql = "SELECT COALESCE(SUM(project.value), 0) AS value
+	            FROM project
+	            WHERE project.id_session IN (
+	                SELECT DISTINCT payment.id_session
+	                FROM payment
+	                WHERE payment.status = 'Paid'";
+	    $params = [];
+	    if ($year !== null) {
+	        $sql .= " AND YEAR(payment.date) = ?";
+	        $params[] = $year;
+	    }
+	    $sql .= "
+	            )";
+	    if ($user_id !== null) {
+	        $sql .= " AND project.closing_user_idsession = ?";
+	        $params[] = $user_id;
+	    }
+
+	    return $this->db->query($sql, $params)->row();
 	}
 
 	public function logout()
@@ -852,39 +879,14 @@ class Aspanel extends CI_Controller {
 	 
 	    $total_net_revenue = $total_revenue_all->total_paid - $total_project_acc->nominal_transaksi;
 	 
-	    // ====== ESTIMASI REVENUE TAHUN INI ======
+	    // ====== ESTIMASI REVENUE TAHUN INI, TAHUN LALU, ALL TIME ======
+	    // Dihitung per-project (bukan per-baris payment) supaya project dengan
+	    // beberapa pembayaran Paid (DP + pelunasan, dst) tidak ke-double-count.
 	    $tahun_ini = date('Y');
-	    $this->db->select_sum('project.value', 'value')
-	        ->join('project', 'project.id_session = payment.id_session')
-	        ->where('YEAR(payment.date)', $tahun_ini)
-	        ->where('payment.status', 'Paid');
-	    if ($user_id != null) {
-	        $this->db->join('user', 'user.id_session = project.closing_user_idsession')
-	            ->where('user.id_session', $user_id);
-	    }
-	    $estimasi_revenue_tahun_ini = $this->db->get('payment')->row();
-	 
-	    // ====== ESTIMASI REVENUE TAHUN LALU ======
 	    $tahun_lalu = date('Y') - 1;
-	    $this->db->select_sum('project.value', 'value')
-	        ->join('project', 'project.id_session = payment.id_session')
-	        ->where('YEAR(payment.date)', $tahun_lalu)
-	        ->where('payment.status', 'Paid');
-	    if ($user_id != null) {
-	        $this->db->join('user', 'user.id_session = project.closing_user_idsession')
-	            ->where('user.id_session', $user_id);
-	    }
-	    $estimasi_revenue_tahun_lalu = $this->db->get('payment')->row();
-	 
-	    // ====== ESTIMASI REVENUE ALL TIME ======
-	    $this->db->select_sum('project.value', 'value')
-	        ->join('project', 'project.id_session = payment.id_session')
-	        ->where('payment.status', 'Paid');
-	    if ($user_id != null) {
-	        $this->db->join('user', 'user.id_session = project.closing_user_idsession')
-	            ->where('user.id_session', $user_id);
-	    }
-	    $estimasi_revenue_all_time = $this->db->get('payment')->row();
+	    $estimasi_revenue_tahun_ini = $this->getProjectAchievement($user_id, $tahun_ini);
+	    $estimasi_revenue_tahun_lalu = $this->getProjectAchievement($user_id, $tahun_lalu);
+	    $estimasi_revenue_all_time = $this->getProjectAchievement($user_id, null);
 	 
 	    $estimasi_komisi_total = ($estimasi_revenue_all_time->value ?? 0) * 2.5 / 100;
 	 
