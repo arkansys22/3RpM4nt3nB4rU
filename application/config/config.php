@@ -421,8 +421,13 @@ $config['sess_regenerate_destroy'] = FALSE;
 $config['cookie_prefix']	= '';
 $config['cookie_domain']	= '';
 $config['cookie_path']		= '/';
-// Production confirmed HTTPS (2026-07-20) — safe to require Secure cookies.
-$config['cookie_secure']	= TRUE;
+// Derived from the actual request instead of hardcoded TRUE: production
+// (confirmed HTTPS 2026-07-20) gets Secure cookies, while local/staging
+// dev over plain HTTP still works — CI3 silently drops the CSRF cookie
+// (and thus every POST, e.g. login) when cookie_secure=TRUE but the
+// request isn't HTTPS. is_https() is defined in system/core/Common.php,
+// which is always loaded before config.php runs.
+$config['cookie_secure']	= is_https();
 $config['cookie_httponly'] 	= TRUE;
 $config['cookie_samesite'] 	= 'Lax';
 
