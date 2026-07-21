@@ -829,18 +829,12 @@ class Aspanel extends CI_Controller {
 	    $date_start_of_last_month = date('Y-m-01', strtotime('first day of last month')); // Start of last month
 	    $date_end_of_last_month = date('Y-m-t', strtotime('last month')); // End of last month
 	 
-	    // ====== TENTUKAN APAKAH DATA DIFILTER PER-USER ATAU GLOBAL ======
-	    // Level 4 (Staff Admin) & 9 (Sales Marketing) => lihat data milik sendiri
-	    // Level 1 (Developer), 2 (Admin), 3 (Accounting) => lihat data GLOBAL/keseluruhan
-	    $level = $this->session->level;
-	    $filter_by_user = in_array($level, ['4', '9']);
-	    $user_id = $filter_by_user ? $this->session->id_session : null;
-	 
-	    // ====== TARGET & PENCAPAIAN BULAN INI ======
-	    // Ini kuota pribadi tiap user (semua level, termasuk developer/admin,
-	    // punya baris target sendiri di targetsales) — jadi SELALU pakai
-	    // id_session user yang login, tidak ikut aturan global/per-user di
-	    // atas (yang cuma berlaku untuk metrik tahun ini/tahun lalu/keseluruhan).
+	    // Semua metrik pencapaian (target, bulan ini, tahun ini, tahun lalu,
+	    // all-time, komisi) adalah kuota/capaian PRIBADI tiap user yang login
+	    // — termasuk developer/admin, yang juga punya baris target & project
+	    // closing sendiri. Tidak ada mode "global" di widget ini; total
+	    // company-wide (total_revenue_all dkk di bawah) memang sengaja selalu
+	    // dihitung terpisah tanpa filter user.
 	    $own_user_id = $this->session->id_session;
 
 	    $bulan_ini = date('Y-m');
@@ -894,9 +888,9 @@ class Aspanel extends CI_Controller {
 	    // beberapa pembayaran Paid (DP + pelunasan, dst) tidak ke-double-count.
 	    $tahun_ini = date('Y');
 	    $tahun_lalu = date('Y') - 1;
-	    $estimasi_revenue_tahun_ini = $this->getProjectAchievement($user_id, $tahun_ini);
-	    $estimasi_revenue_tahun_lalu = $this->getProjectAchievement($user_id, $tahun_lalu);
-	    $estimasi_revenue_all_time = $this->getProjectAchievement($user_id, null);
+	    $estimasi_revenue_tahun_ini = $this->getProjectAchievement($own_user_id, $tahun_ini);
+	    $estimasi_revenue_tahun_lalu = $this->getProjectAchievement($own_user_id, $tahun_lalu);
+	    $estimasi_revenue_all_time = $this->getProjectAchievement($own_user_id, null);
 	 
 	    $estimasi_komisi_total = ($estimasi_revenue_all_time->value ?? 0) * 2.5 / 100;
 	 
