@@ -288,10 +288,12 @@ dengan Fase 1 agent:
   `application/logs/` tidak dapat diakses web.
 - **`.git/` ikut ter-deploy** → jika ada di webroot, blokir akses `/.git/` via
   `.htaccess` (`RedirectMatch 404 /\.git`) agar source + history tak bisa diunduh.
-- **Logika otorisasi duplikat** — pengecekan `level` 1–7 di-copy-paste di hampir
-  tiap method controller (contoh: `application/controllers/Crud_project.php`). Bukan
-  celah langsung, tapi rawan bug & sulit dipelihara. **Refactor ini masuk Fase 4
-  (opsional, terakhir).**
+- **Logika otorisasi duplikat** — pengecekan `level` **1–12** (koreksi: bukan 1–7)
+  di-copy-paste di ~90-100 method di 16 controller (bukan cuma
+  `Crud_project.php`). Bukan celah langsung, tapi rawan bug & sulit dipelihara.
+  **Refactor ini masuk Fase 4 (opsional, terakhir) — lihat catatan status di
+  bawah, di-skip setelah investigasi menunjukkan risikonya lebih tinggi dari
+  perkiraan.**
 
 ---
 
@@ -336,9 +338,47 @@ Bagian ini **sudah benar**; jangan mengubahnya jadi lebih lemah saat menambal ya
 - [ ] SEC-05: cek lebar kolom password → terapkan pola migrasi-saat-login → test
       login user lama & baru.
 
-### Fase 4 — Agent: refactor (opsional, terakhir)
-- [ ] SEC-11 (authz): sentralisasi pengecekan `level` (mis. base controller /
-      hook / method helper) untuk mengurangi duplikasi.
+### Fase 4 — Agent: refactor (opsional, terakhir) — **DI-SKIP**
+- [x] SEC-11 (authz): investigasi selesai, refactor **tidak dikerjakan**.
+      Lihat "Status Fase 4" di bawah untuk alasan dan temuan tambahan.
+
+---
+
+## Status Fase 4 (2026-07-21) — di-skip, tidak direfactor
+
+Investigasi sebelum eksekusi menunjukkan pola ini **tidak seragam** dan
+sentralisasi mekanis berisiko mengubah siapa-boleh-akses-apa secara diam-diam:
+
+- **Skala nyata**: ~409 titik pemanggilan 12 fungsi `cek_session_akses_*`, di
+  ~90-100 method, 16 controller file (bukan cuma satu-dua contoh).
+- **Bug otorisasi yang sudah ada, bukan cuma duplikasi**: beberapa method
+  mengizinkan beberapa level di kondisi luar (`level=='1' OR level=='4'`
+  dst.) tapi di dalamnya cuma manggil helper untuk SATU level tertentu
+  (mis. selalu `cek_session_akses_developer`, khusus level 1) — ditemukan di
+  `Crud_user.php` (`delete`, `recycle_bin`, `permanent_delete`) dan
+  `Crud_finance_operational.php` (`lihat`, `edit`, `edit2`, `delete`,
+  `permanent_delete`). Refactor otomatis akan mempertahankan atau
+  memperbaiki bug ini tanpa sengaja — dua-duanya butuh keputusan
+  kasus-per-kasus, bukan cocok untuk mechanical find-replace.
+- **Bentuk tidak konsisten**: sebagian besar if/elseif+helper, tapi ada juga
+  guard-clause+switch dan cek `session->level` langsung tanpa helper sama
+  sekali (`Crud_clients.php::edit/update/delete`).
+- **Beberapa method beda level dapat data/view yang beda pula** (bukan cuma
+  beda gerbang akses), mis. `Crud_user::edit()` merender 3 view berbeda
+  tergantung level — bukan checkbox on/off yang bisa disatukan.
+- **Temuan baru, di luar cakupan SEC-11**: `Aspanel.php` memanggil fungsi
+  `cek_session_akses(...)`, `cek_session_akses_admin(...)`,
+  `cek_session_akses_level_3/4/5(...)` di beberapa method (`profil`,
+  `user_update`, `user_storage_bin`, `user_delete`, `identitaswebsite`,
+  `logactivity`) — nama-nama ini **tidak terdefinisi di manapun** di
+  codebase. Kalau branch itu ke-trigger di produksi, PHP akan fatal error
+  "Call to undefined function". Ini bug korektnes tersendiri, bukan bagian
+  refactor duplikasi — perlu investigasi/fix terpisah.
+
+**Keputusan (dikonfirmasi manusia, 2026-07-21):** skip refactor Fase 4.
+Fase 1–3 (semua temuan CRITICAL/HIGH/MEDIUM yang sesungguhnya) sudah selesai
+dan diverifikasi. Bug `Aspanel.php` di atas belum diperbaiki — perlu
+ditindaklanjuti sebagai item terpisah kalau/ketika mau dikerjakan.
 
 ---
 
@@ -366,8 +406,9 @@ AGENT — Fase 2 (hati-hati)
 AGENT — Fase 3 (hati-hati)
   [ ] Migrasi hashing password saat login (SEC-05)
 
-AGENT — Fase 4 (opsional)
-  [ ] Refactor logika otorisasi (SEC-11)
+AGENT — Fase 4 (opsional) — DI-SKIP, lihat "Status Fase 4"
+  [x] Investigasi selesai; refactor tidak dikerjakan (risiko > manfaat)
+  [ ] TODO terpisah: fix Aspanel.php manggil fungsi tak terdefinisi
 ```
 
 ---
