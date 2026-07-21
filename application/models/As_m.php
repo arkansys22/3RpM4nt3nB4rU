@@ -47,8 +47,8 @@ class As_m extends CI_Model {
     return false;
    }
   }
-  public function cek_login($username,$password,$table){
-      return $this->db->query("SELECT * FROM $table where username='".$this->db->escape_str($username)."' AND password='".$this->db->escape_str($password)."' ");
+  public function get_user_by_username($username, $table){
+      return $this->db->query("SELECT * FROM $table WHERE username = ?", array($username));
   }
   public function view($table){
       return $this->db->get($table);

@@ -42,13 +42,23 @@ class User extends CI_Controller
       }
 
       $username = $this->input->post('username', true);
-      $password = sha1($this->input->post('password', true));
+      $input_password = $this->input->post('password', true);
 
-      $cek = $this->As_m->cek_login($username, $password, 'user');
+      $cek = $this->As_m->get_user_by_username($username, 'user');
+      $row = ($cek->num_rows() > 0) ? $cek->row_array() : null;
 
-      if ($cek->num_rows() > 0) {
+      $password_ok = $row && (
+          password_verify($input_password, $row['password'])
+          || $row['password'] === sha1($input_password)
+      );
 
-          $row = $cek->row_array();
+      if ($password_ok) {
+
+          // Legacy sha1 hash matched — transparently upgrade it to bcrypt.
+          if (strlen($row['password']) !== 60) {
+              $this->db->where('id_user', $row['id_user'])
+                       ->update('user', ['password' => password_hash($input_password, PASSWORD_DEFAULT)]);
+          }
 
           // ✅ FIX PALING PENTING → TAMBAH 'login'
           $this->session->set_userdata([
@@ -99,7 +109,7 @@ class User extends CI_Controller
           {
             $username = $this->input->post('username');
             $email = $this->input->post('email');            
-            $password = sha1($this->input->post('password'));
+            $password = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
             $cek = $this->Crud_m->cek_register($username,$email,'user');
               $total = $cek->num_rows();
             if ($total > 0)
@@ -110,7 +120,7 @@ class User extends CI_Controller
                 $saltid   = md5($email);
                 $aktivasi   = 0;
                 $data = array('username'=>$this->db->escape_str($this->input->post('username')),
-                                'password'=>sha1($this->input->post('password')),
+                                'password'=>password_hash($this->input->post('password'), PASSWORD_DEFAULT),
                                 'email'=>$this->db->escape_str($this->input->post('email')),
                                 'user_status'=> $aktivasi,
                                 'user_post_hari'=>hari_ini(date('w')),

@@ -38,11 +38,22 @@ class Client extends CI_Controller
 
       $modul = 'Login';
       $username = $this->input->post('username');
-      $password = sha1($this->input->post('password'));
-      $cek = $this->As_m->cek_login($username, $password, 'user'); // Change table to 'user'
-      $row = $cek->row_array();
-      $total = $cek->num_rows();
-      if ($total > 0) {
+      $input_password = $this->input->post('password');
+      $cek = $this->As_m->get_user_by_username($username, 'user'); // Change table to 'user'
+      $row = ($cek->num_rows() > 0) ? $cek->row_array() : null;
+
+      $password_ok = $row && (
+          password_verify($input_password, $row['password'])
+          || $row['password'] === sha1($input_password)
+      );
+
+      if ($password_ok) {
+
+          // Legacy sha1 hash matched — transparently upgrade it to bcrypt.
+          if (strlen($row['password']) !== 60) {
+              $this->db->where('id_user', $row['id_user'])
+                       ->update('user', ['password' => password_hash($input_password, PASSWORD_DEFAULT)]);
+          }
         $this->session->set_userdata(
           array(
             'username' => $row['username'],

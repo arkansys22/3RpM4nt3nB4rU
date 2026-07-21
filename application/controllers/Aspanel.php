@@ -447,7 +447,7 @@ class Aspanel extends CI_Controller {
 																$data = array(
 																'email'=>$this->db->escape_str($this->input->post('email')),
 																'nama'=>$this->input->post('nama'),
-																'password'=>sha1($this->input->post('password')),
+																'password'=>password_hash($this->input->post('password'), PASSWORD_DEFAULT),
 																'user_update_hari'=>hari_ini(date('w')),
 																'user_update_tanggal'=>date('Y-m-d'),
 																'user_update_jam'=>date('H:i:s'));
@@ -458,7 +458,7 @@ class Aspanel extends CI_Controller {
 																'user_gambar'=>$hasil22['file_name'],
 																'email'=>$this->db->escape_str($this->input->post('email')),
 																'nama'=>$this->input->post('nama'),
-																'password'=>sha1($this->input->post('password')),
+																'password'=>password_hash($this->input->post('password'), PASSWORD_DEFAULT),
 																'user_update_hari'=>hari_ini(date('w')),
 																'user_update_tanggal'=>date('Y-m-d'),
 																'user_update_jam'=>date('H:i:s'));
@@ -556,7 +556,7 @@ class Aspanel extends CI_Controller {
 																	$data = array(
 																	'email'=>$this->db->escape_str($this->input->post('email')),
 																	'nama'=>$this->input->post('nama'),
-																	'password'=>sha1($this->input->post('password')),
+																	'password'=>password_hash($this->input->post('password'), PASSWORD_DEFAULT),
 																	'level'=>$this->input->post('level'),
 																	'user_status'=>$this->input->post('user_status'),
 																	'user_update_hari'=>hari_ini(date('w')),
@@ -569,7 +569,7 @@ class Aspanel extends CI_Controller {
 																	'user_gambar'=>$hasil22['file_name'],
 																	'email'=>$this->db->escape_str($this->input->post('email')),
 																	'nama'=>$this->input->post('nama'),
-																	'password'=>sha1($this->input->post('password')),
+																	'password'=>password_hash($this->input->post('password'), PASSWORD_DEFAULT),
 																	'level'=>$this->input->post('level'),
 																	'user_status'=>$this->input->post('user_status'),
 																	'user_update_hari'=>hari_ini(date('w')),

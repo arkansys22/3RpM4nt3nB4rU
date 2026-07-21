@@ -67,7 +67,7 @@ class crud_user extends CI_Controller {
             'username'  => $this->input->post('username'),
             'nama'  => $this->input->post('nama'),
             'email'        => $this->input->post('email'),            
-            'password'    => sha1($this->input->post('password')),
+            'password'    => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
             'level'    => $this->input->post('level'),
             'user_stat' => 'Publish',
             'user_login_status' => 'Offline',
@@ -217,7 +217,7 @@ class crud_user extends CI_Controller {
             'crews_idsession'        => $this->input->post('crewid'),
             'client_idsession'        => $this->input->post('clientid'),
             'partner_idsession'        => $this->input->post('partnerid'),
-            'password'    => sha1($this->input->post('password'))       
+            'password'    => password_hash($this->input->post('password'), PASSWORD_DEFAULT)       
             );
 
         }
@@ -268,7 +268,7 @@ class crud_user extends CI_Controller {
         );
 
         if ($this->input->post('password') != '') {
-            $user_data['password'] = sha1($this->input->post('password'));
+            $user_data['password'] = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
         }
 
         $this->Users2_model->update_users($id_session, $user_data);
