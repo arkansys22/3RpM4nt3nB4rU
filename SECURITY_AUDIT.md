@@ -12,6 +12,7 @@
 | **Status** | Legacy, sedang berjalan di **produksi** |
 | **Tanggal audit** | 2026-07-20 |
 | **Sumber** | Audit statik atas source (belum ada pengujian dinamis / pentest) |
+| **Status branch** | ✅ **MERGED ke `main`** (2026-07-22) — Fase 1–3 selesai, Fase 4 di-skip (lihat "Status Fase 4"). Pekerjaan lanjutan di `main` sudah di luar cakupan dokumen ini, lihat `PROGRESS.md`. |
 
 ---
 
