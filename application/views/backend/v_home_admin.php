@@ -111,7 +111,7 @@
 								<?php else: ?>
 								<?php foreach ($top_sales_ranking as $i => $rank): ?>
 								<div class="flex items-center justify-between gap-1">
-									<p class="text-sm font-medium">#<?= $i + 1 ?> <?= $rank->nama ?></p>
+									<p class="text-sm font-medium">#<?= $i + 1 ?> <a href="<?= site_url('sales-achievement/' . $rank->user_id_session) ?>" class="hover:underline hover:text-primary"><?= $rank->nama ?></a></p>
 									<p class="text-sm font-medium">Rp <?= number_format($rank->total_pencapaian, 0, ',', '.') ?></p>
 								</div>
 								<?php endforeach; ?>

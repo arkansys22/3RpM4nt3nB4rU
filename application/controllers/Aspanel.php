@@ -360,7 +360,7 @@ class Aspanel extends CI_Controller {
 	{
 	    $periode_escaped = $this->db->escape($periode);
 
-	    $this->db->select('user.nama AS nama, SUM(project.value) AS total_pencapaian', FALSE);
+	    $this->db->select('user.id_session AS user_id_session, user.nama AS nama, SUM(project.value) AS total_pencapaian', FALSE);
 	    $this->db->from('project');
 	    $this->db->join('user', 'user.id_session = project.closing_user_idsession');
 
@@ -391,6 +391,48 @@ class Aspanel extends CI_Controller {
 	    $this->db->limit(5);
 
 	    return $this->db->get()->result();
+	}
+
+	// Pencapaian satu user, dipecah per bulan, untuk semua bulan yang
+	// tercatat di database (bukan cuma bulan berjalan) — syarat "achieved"
+	// sama dengan get_top_sales_ranking/getEstimasiRevenue.
+	private function get_sales_achievement_per_month($user_id_session)
+	{
+	    $sql = "SELECT DATE_FORMAT(p1.date, '%Y-%m') AS periode, SUM(project.value) AS total
+	            FROM project
+	            JOIN payment p1 ON p1.id_session = project.id_session
+	                AND p1.metodep LIKE 'Pembayaran Kesatu%'
+	                AND p1.status = 'Paid'
+	            WHERE project.closing_user_idsession = ?
+	            AND EXISTS (
+	                SELECT 1 FROM payment p2
+	                WHERE p2.id_session = project.id_session
+	                AND p2.metodep LIKE 'Pembayaran Kedua%'
+	                AND p2.status = 'Paid'
+	                AND DATE_FORMAT(p2.date, '%Y-%m') = DATE_FORMAT(p1.date, '%Y-%m')
+	            )
+	            GROUP BY periode
+	            ORDER BY periode DESC";
+
+	    return $this->db->query($sql, [$user_id_session])->result();
+	}
+
+	public function sales_achievement($user_id_session)
+	{
+	    if (!in_array($this->session->level, ['1', '2', '3', '4', '9'])) {
+	        redirect(base_url());
+	        return;
+	    }
+
+	    $user = $this->db->get_where('user', ['id_session' => $user_id_session])->row();
+	    if (!$user) {
+	        redirect(base_url('panel'));
+	        return;
+	    }
+
+	    $data['sales_user'] = $user;
+	    $data['achievement_per_month'] = $this->get_sales_achievement_per_month($user_id_session);
+	    $this->load->view('backend/v_sales_achievement', $data);
 	}
 
 	// Pencapaian revenue per project: tiap project dihitung SEKALI, dan

@@ -252,6 +252,8 @@ $route['revenue/lebih_lengkap/detail/(:num)/(:num)'] = 'Aspanel/revenue_lebih_le
 $route['expense/lebih_lengkap'] = 'Aspanel/expense_lebih_lengkap';
 $route['expense/lebih_lengkap/detail/(:num)/(:num)'] = 'Aspanel/expense_lebih_lengkap_detail/$1/$2';
 
+$route['sales-achievement/(:any)'] = 'Aspanel/sales_achievement/$1';
+
 $route['crew-role'] = 'Crud_crewrole/index'; // Menampilkan daftar role
 $route['crew-role/create'] = 'Crud_crewrole/create'; // Menampilkan form tambah role
 $route['crew-role/store'] = 'Crud_crewrole/store'; // Menyimpan data role baru
