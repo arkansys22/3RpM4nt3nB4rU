@@ -100,6 +100,29 @@
 							<div class="flex items-center justify-between">
 								<div class="flex items-center gap-2.5">
 									<h4 class="text-xl font-bold">
+										Top 5 Sales Bulan Ini
+									</h4>
+								</div>
+							</div>
+
+							<div class="mt-5.5 flex flex-col gap-1.5">
+								<?php if (empty($top_sales_ranking)): ?>
+								<p class="text-sm font-medium">Belum ada pencapaian bulan ini</p>
+								<?php else: ?>
+								<?php foreach ($top_sales_ranking as $i => $rank): ?>
+								<div class="flex items-center justify-between gap-1">
+									<p class="text-sm font-medium">#<?= $i + 1 ?> <?= $rank->nama ?></p>
+									<p class="text-sm font-medium">Rp <?= number_format($rank->total_pencapaian, 0, ',', '.') ?></p>
+								</div>
+								<?php endforeach; ?>
+								<?php endif; ?>
+							</div>
+	                    </div>
+
+	                    <div class="swiper-slide border-r border-stroke px-10 last:border-r-0 dark:border-strokedark">
+							<div class="flex items-center justify-between">
+								<div class="flex items-center gap-2.5">
+									<h4 class="text-xl font-bold">
 										Estimasi Revenue Bulan Ini
 									</h4>
 								</div>

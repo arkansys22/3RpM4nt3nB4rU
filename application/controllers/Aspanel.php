@@ -43,6 +43,7 @@ class Aspanel extends CI_Controller {
 				$data['client_tahun_lalu'] = $this->Clients_model->get_clients_by_year(date('Y', strtotime('last year'))); // Client tahun lalu
 				$data['client_tahun_depan'] = $this->Clients_model->get_clients_by_year(date('Y', strtotime('next year'))); // Client tahun depan
 				$data['total_client'] = $this->Clients_model->get_total_clients(); // Total client
+				$data['top_sales_ranking'] = $this->get_top_sales_ranking($month_now); // Top 5 pencapaian sales bulan ini
 
 				
 				// Revenue bulan ini
@@ -105,6 +106,7 @@ class Aspanel extends CI_Controller {
 				$data['client_tahun_lalu'] = $this->Clients_model->get_clients_by_year(date('Y', strtotime('last year'))); // Client tahun lalu
 				$data['client_tahun_depan'] = $this->Clients_model->get_clients_by_year(date('Y', strtotime('next year'))); // Client tahun depan
 				$data['total_client'] = $this->Clients_model->get_total_clients(); // Total client
+				$data['top_sales_ranking'] = $this->get_top_sales_ranking($month_now); // Top 5 pencapaian sales bulan ini
 				
 				// Revenue bulan ini
 				$data['revenue_bulan_ini'] = $this->db->select_sum('total_paid')
@@ -149,6 +151,7 @@ class Aspanel extends CI_Controller {
 				$data['client_tahun_lalu'] = $this->Clients_model->get_clients_by_year(date('Y', strtotime('last year'))); // Client tahun lalu
 				$data['client_tahun_depan'] = $this->Clients_model->get_clients_by_year(date('Y', strtotime('next year'))); // Client tahun depan
 				$data['total_client'] = $this->Clients_model->get_total_clients(); // Total client
+				$data['top_sales_ranking'] = $this->get_top_sales_ranking($month_now); // Top 5 pencapaian sales bulan ini
 				
 				// Revenue bulan ini
 				$data['revenue_bulan_ini'] = $this->db->select_sum('total_paid')
@@ -195,6 +198,7 @@ class Aspanel extends CI_Controller {
 				$data['client_tahun_lalu'] = $this->Clients_model->get_clients_by_year(date('Y', strtotime('last year'))); // Client tahun lalu
 				$data['client_tahun_depan'] = $this->Clients_model->get_clients_by_year(date('Y', strtotime('next year'))); // Client tahun depan
 				$data['total_client'] = $this->Clients_model->get_total_clients(); // Total client
+				$data['top_sales_ranking'] = $this->get_top_sales_ranking($month_now); // Top 5 pencapaian sales bulan ini
 				
 				
 				// Estimasi Revenue bulan ini
@@ -233,6 +237,7 @@ class Aspanel extends CI_Controller {
 				$data['client_tahun_lalu'] = $this->Clients_model->get_clients_by_year(date('Y', strtotime('last year'))); // Client tahun lalu
 				$data['client_tahun_depan'] = $this->Clients_model->get_clients_by_year(date('Y', strtotime('next year'))); // Client tahun depan
 				$data['total_client'] = $this->Clients_model->get_total_clients(); // Total client
+				$data['top_sales_ranking'] = $this->get_top_sales_ranking($month_now); // Top 5 pencapaian sales bulan ini
 				
 				
 				// Estimasi Revenue bulan ini
@@ -345,6 +350,47 @@ class Aspanel extends CI_Controller {
 	    ", NULL, FALSE);
 	 
 	    return $this->db->get()->row();
+	}
+
+	// Top 5 user dengan pencapaian penjualan tertinggi bulan tsb — pakai
+	// syarat "achieved" yang sama dengan getEstimasiRevenue (Pembayaran
+	// Kesatu & Kedua sama-sama Paid di bulan itu) supaya angkanya konsisten
+	// dengan widget "Pencapaian" pribadi tiap user di halaman yang sama.
+	private function get_top_sales_ranking($periode)
+	{
+	    $periode_escaped = $this->db->escape($periode);
+
+	    $this->db->select('user.nama AS nama, SUM(project.value) AS total_pencapaian', FALSE);
+	    $this->db->from('project');
+	    $this->db->join('user', 'user.id_session = project.closing_user_idsession');
+
+	    $this->db->where("
+	        EXISTS(
+	            SELECT 1
+	            FROM payment p1
+	            WHERE p1.id_session = project.id_session
+	            AND p1.metodep LIKE 'Pembayaran Kesatu%'
+	            AND p1.status = 'Paid'
+	            AND DATE_FORMAT(p1.date, '%Y-%m') = $periode_escaped
+	        )
+	    ", NULL, FALSE);
+
+	    $this->db->where("
+	        EXISTS(
+	            SELECT 1
+	            FROM payment p2
+	            WHERE p2.id_session = project.id_session
+	            AND p2.metodep LIKE 'Pembayaran Kedua%'
+	            AND p2.status = 'Paid'
+	            AND DATE_FORMAT(p2.date, '%Y-%m') = $periode_escaped
+	        )
+	    ", NULL, FALSE);
+
+	    $this->db->group_by('project.closing_user_idsession, user.nama');
+	    $this->db->order_by('total_pencapaian', 'DESC');
+	    $this->db->limit(5);
+
+	    return $this->db->get()->result();
 	}
 
 	// Pencapaian revenue per project: tiap project dihitung SEKALI, dan
