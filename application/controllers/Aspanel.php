@@ -477,6 +477,27 @@ class Aspanel extends CI_Controller {
 	    $this->load->view('backend/v_sales_achievement_detail', $data);
 	}
 
+	// Top 5 sales untuk bulan mana pun (bukan cuma bulan berjalan) — dipakai
+	// oleh link "Lihat Bulan Lainnya" di home. Reuse get_top_sales_ranking
+	// yang sama dengan yang dipakai widget di home.
+	public function sales_ranking($periode = null)
+	{
+	    if (!in_array($this->session->level, ['1', '2', '3', '4', '9'])) {
+	        redirect(base_url());
+	        return;
+	    }
+
+	    if ($periode === null) {
+	        $periode = date('Y-m');
+	    }
+
+	    $data['periode'] = $periode;
+	    $data['periode_sebelumnya'] = date('Y-m', strtotime($periode . '-01 -1 month'));
+	    $data['periode_berikutnya'] = date('Y-m', strtotime($periode . '-01 +1 month'));
+	    $data['top_sales_ranking'] = $this->get_top_sales_ranking($periode);
+	    $this->load->view('backend/v_sales_ranking', $data);
+	}
+
 	// Pencapaian revenue per project: tiap project dihitung SEKALI, dan
 	// diatribusikan ke tahun pembayaran Paid PERTAMANYA (bukan tiap tahun yang
 	// kebetulan punya pembayaran) — supaya project dengan cicilan yang

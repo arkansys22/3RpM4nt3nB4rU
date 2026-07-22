@@ -116,6 +116,15 @@
 								</div>
 								<?php endforeach; ?>
 								<?php endif; ?>
+								<div class="flex items-center justify-between gap-1">
+									<p class="text-sm font-medium">
+										<a href="<?= site_url('sales-ranking') ?>">
+											<span class="text-sm font-medium text-primary">
+												Lihat Bulan Lainnya >>
+											</span>
+										</a>
+									</p>
+								</div>
 							</div>
 	                    </div>
 
