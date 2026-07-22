@@ -10,13 +10,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <style>
-      /* Pakai kotak search bawaan template (.datatable-search), bukan yang
-         auto-di-generate DataTables — supaya cuma ada satu kotak search. */
-      .dataTables_filter {
-        display: none !important;
-      }
-    </style>
 </head>
 <body
     x-data="{ page: 'operational', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
@@ -130,7 +123,7 @@
               <!-- ====== Data Table Two Start --><br><br>
               <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                 <div class="data-table-common data-table-two max-w-full overflow-x-auto">
-                  <table class="table w-full table-auto" id="dataTableTwo">
+                  <table class="table w-full table-auto" id="operationalTable">
                     <thead>
                       <tr>
                       <th>
@@ -351,7 +344,7 @@
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
   <script type="text/javascript">
   $(function () {
-      var table = $("#dataTableTwo").DataTable({
+      $("#operationalTable").DataTable({
         "paging": true,
         "lengthChange": false,
         "searching": true,
@@ -359,14 +352,6 @@
         "info": true,
         "autoWidth": true,
 
-      });
-
-      // Kotak search bawaan template (dibuat oleh bundle.js, bukan bagian
-      // dari markup ini) dipakai buat nge-drive search DataTable, supaya
-      // cuma ada satu kotak search yang kelihatan. Delegated listener
-      // karena elemennya baru muncul setelah bundle.js jalan.
-      $(document).on('input', '.datatable-search input', function () {
-          table.search(this.value).draw();
       });
   });
 </script>
