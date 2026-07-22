@@ -51,8 +51,8 @@
                         <th scope="col" class="px-6 py-4 text-gray-700 dark:text-gray-300">Nama Project</th>
                         <th scope="col" class="px-6 py-4 text-gray-700 dark:text-gray-300">Client</th>
                         <th scope="col" class="px-6 py-4 text-gray-700 dark:text-gray-300">Nilai Project</th>
-                        <th scope="col" class="px-6 py-4 text-gray-700 dark:text-gray-300">Invoice Kesatu</th>
-                        <th scope="col" class="px-6 py-4 text-gray-700 dark:text-gray-300">Invoice Kedua</th>
+                        <th scope="col" class="px-6 py-4 text-gray-700 dark:text-gray-300">Kwitansi Kesatu</th>
+                        <th scope="col" class="px-6 py-4 text-gray-700 dark:text-gray-300">Kwitansi Kedua</th>
                         <th scope="col" class="px-6 py-4 text-gray-700 dark:text-gray-300">Aksi</th>
                       </tr>
                     </thead>
