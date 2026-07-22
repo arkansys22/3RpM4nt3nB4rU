@@ -325,7 +325,8 @@ class Aspanel extends CI_Controller {
 	        $this->db->where('project.closing_user_idsession', $user_id);
 	    }
 
-	    // Pembayaran Kesatu (DP) harus LUNAS dan dibayar di bulan yang sedang berjalan
+	    // Pembayaran Kesatu (DP) harus LUNAS (tanggal berapa pun) - bulan
+	    // "achieved" project ditentukan oleh Pembayaran Kedua, bukan Kesatu.
 	    $this->db->where("
 	        EXISTS(
 	            SELECT 1
@@ -333,11 +334,10 @@ class Aspanel extends CI_Controller {
 	            WHERE p1.id_session = project.id_session
 	            AND p1.metodep LIKE 'Pembayaran Kesatu%'
 	            AND p1.status = 'Paid'
-	            AND DATE_FORMAT(p1.date, '%Y-%m') = $periode_escaped
 	        )
 	    ", NULL, FALSE);
-	 
-	    // Pembayaran Kedua harus LUNAS dan dibayar di bulan yang sedang berjalan
+
+	    // Pembayaran Kedua (pelunasan) yang menentukan bulan pencapaian
 	    $this->db->where("
 	        EXISTS(
 	            SELECT 1
@@ -348,14 +348,15 @@ class Aspanel extends CI_Controller {
 	            AND DATE_FORMAT(p2.date, '%Y-%m') = $periode_escaped
 	        )
 	    ", NULL, FALSE);
-	 
+
 	    return $this->db->get()->row();
 	}
 
 	// Top 5 user dengan pencapaian penjualan tertinggi bulan tsb — pakai
 	// syarat "achieved" yang sama dengan getEstimasiRevenue (Pembayaran
-	// Kesatu & Kedua sama-sama Paid di bulan itu) supaya angkanya konsisten
-	// dengan widget "Pencapaian" pribadi tiap user di halaman yang sama.
+	// Kedua yang menentukan bulan, Kesatu cukup Paid tanggal berapa pun)
+	// supaya angkanya konsisten dengan widget "Pencapaian" pribadi tiap
+	// user di halaman yang sama.
 	private function get_top_sales_ranking($periode)
 	{
 	    $periode_escaped = $this->db->escape($periode);
@@ -371,7 +372,6 @@ class Aspanel extends CI_Controller {
 	            WHERE p1.id_session = project.id_session
 	            AND p1.metodep LIKE 'Pembayaran Kesatu%'
 	            AND p1.status = 'Paid'
-	            AND DATE_FORMAT(p1.date, '%Y-%m') = $periode_escaped
 	        )
 	    ", NULL, FALSE);
 
@@ -398,18 +398,17 @@ class Aspanel extends CI_Controller {
 	// sama dengan get_top_sales_ranking/getEstimasiRevenue.
 	private function get_sales_achievement_per_month($user_id_session)
 	{
-	    $sql = "SELECT DATE_FORMAT(p1.date, '%Y-%m') AS periode, SUM(project.value) AS total
+	    $sql = "SELECT DATE_FORMAT(p2.date, '%Y-%m') AS periode, SUM(project.value) AS total
 	            FROM project
-	            JOIN payment p1 ON p1.id_session = project.id_session
-	                AND p1.metodep LIKE 'Pembayaran Kesatu%'
-	                AND p1.status = 'Paid'
-	            WHERE project.closing_user_idsession = ?
-	            AND EXISTS (
-	                SELECT 1 FROM payment p2
-	                WHERE p2.id_session = project.id_session
+	            JOIN payment p2 ON p2.id_session = project.id_session
 	                AND p2.metodep LIKE 'Pembayaran Kedua%'
 	                AND p2.status = 'Paid'
-	                AND DATE_FORMAT(p2.date, '%Y-%m') = DATE_FORMAT(p1.date, '%Y-%m')
+	            WHERE project.closing_user_idsession = ?
+	            AND EXISTS (
+	                SELECT 1 FROM payment p1
+	                WHERE p1.id_session = project.id_session
+	                AND p1.metodep LIKE 'Pembayaran Kesatu%'
+	                AND p1.status = 'Paid'
 	            )
 	            GROUP BY periode
 	            ORDER BY periode DESC";
@@ -444,18 +443,17 @@ class Aspanel extends CI_Controller {
 	                   p1.transactions_id AS kesatu_transaction_id, p1.date AS kesatu_date,
 	                   p2.transactions_id AS kedua_transaction_id, p2.date AS kedua_date
 	            FROM project
-	            JOIN payment p1 ON p1.id_session = project.id_session
-	                AND p1.metodep LIKE 'Pembayaran Kesatu%'
-	                AND p1.status = 'Paid'
-	                AND DATE_FORMAT(p1.date, '%Y-%m') = ?
 	            JOIN payment p2 ON p2.id_session = project.id_session
 	                AND p2.metodep LIKE 'Pembayaran Kedua%'
 	                AND p2.status = 'Paid'
 	                AND DATE_FORMAT(p2.date, '%Y-%m') = ?
+	            JOIN payment p1 ON p1.id_session = project.id_session
+	                AND p1.metodep LIKE 'Pembayaran Kesatu%'
+	                AND p1.status = 'Paid'
 	            WHERE project.closing_user_idsession = ?
 	            ORDER BY project.event_date DESC";
 
-	    return $this->db->query($sql, [$periode, $periode, $user_id_session])->result();
+	    return $this->db->query($sql, [$periode, $user_id_session])->result();
 	}
 
 	public function sales_achievement_detail($user_id_session, $periode)
