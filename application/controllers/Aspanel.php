@@ -435,6 +435,48 @@ class Aspanel extends CI_Controller {
 	    $this->load->view('backend/v_sales_achievement', $data);
 	}
 
+	// Project (dengan info kedua transaksinya) yang menyusun pencapaian
+	// satu user di satu periode — syarat sama dengan get_sales_achievement_per_month.
+	private function get_sales_achievement_projects($user_id_session, $periode)
+	{
+	    $sql = "SELECT project.id_session, project.project_name, project.client_name,
+	                   project.event_date, project.value,
+	                   p1.transactions_id AS kesatu_transaction_id, p1.date AS kesatu_date,
+	                   p2.transactions_id AS kedua_transaction_id, p2.date AS kedua_date
+	            FROM project
+	            JOIN payment p1 ON p1.id_session = project.id_session
+	                AND p1.metodep LIKE 'Pembayaran Kesatu%'
+	                AND p1.status = 'Paid'
+	                AND DATE_FORMAT(p1.date, '%Y-%m') = ?
+	            JOIN payment p2 ON p2.id_session = project.id_session
+	                AND p2.metodep LIKE 'Pembayaran Kedua%'
+	                AND p2.status = 'Paid'
+	                AND DATE_FORMAT(p2.date, '%Y-%m') = ?
+	            WHERE project.closing_user_idsession = ?
+	            ORDER BY project.event_date DESC";
+
+	    return $this->db->query($sql, [$periode, $periode, $user_id_session])->result();
+	}
+
+	public function sales_achievement_detail($user_id_session, $periode)
+	{
+	    if (!in_array($this->session->level, ['1', '2', '3', '4', '9'])) {
+	        redirect(base_url());
+	        return;
+	    }
+
+	    $user = $this->db->get_where('user', ['id_session' => $user_id_session])->row();
+	    if (!$user) {
+	        redirect(base_url('panel'));
+	        return;
+	    }
+
+	    $data['sales_user'] = $user;
+	    $data['periode'] = $periode;
+	    $data['achievement_projects'] = $this->get_sales_achievement_projects($user_id_session, $periode);
+	    $this->load->view('backend/v_sales_achievement_detail', $data);
+	}
+
 	// Pencapaian revenue per project: tiap project dihitung SEKALI, dan
 	// diatribusikan ke tahun pembayaran Paid PERTAMANYA (bukan tiap tahun yang
 	// kebetulan punya pembayaran) — supaya project dengan cicilan yang

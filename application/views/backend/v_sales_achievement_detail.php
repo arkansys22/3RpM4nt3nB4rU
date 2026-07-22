@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pencapaian Sales - <?= $sales_user->nama ?></title>
+    <title>Detail Pencapaian - <?= $sales_user->nama ?> - <?= date('F Y', strtotime($periode . '-01')) ?></title>
     <link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
     <link href="<?php echo base_url()?>assets/backend/style.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -35,9 +35,9 @@
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
                 <div class="flex justify-between items-center mb-4">
-                <h1 class="text-2xl font-bold">Pencapaian Sales - <?= $sales_user->nama ?></h1>
+                <h1 class="text-2xl font-bold">Detail Pencapaian - <?= $sales_user->nama ?> - <?= date('F Y', strtotime($periode . '-01')) ?></h1>
                 <!-- Tombol Kembali -->
-                <a href="<?= site_url('panel') ?>" class="flex items-center gap-2 bg-blue-500 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none">
+                <a href="<?= site_url('sales-achievement/' . $sales_user->id_session) ?>" class="flex items-center gap-2 bg-blue-500 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
                   </svg>
@@ -48,27 +48,45 @@
                   <table class="min-w-full text-left text-sm whitespace-nowrap bg-white dark:bg-neutral-800">
                     <thead class="uppercase tracking-wider border-b-2 border-gray-200 dark:border-neutral-600 bg-gray-100 dark:bg-neutral-700">
                       <tr>
-                        <th scope="col" class="px-6 py-4 text-gray-700 dark:text-gray-300">Periode</th>
-                        <th scope="col" class="px-6 py-4 text-gray-700 dark:text-gray-300">Pencapaian</th>
+                        <th scope="col" class="px-6 py-4 text-gray-700 dark:text-gray-300">Nama Project</th>
+                        <th scope="col" class="px-6 py-4 text-gray-700 dark:text-gray-300">Client</th>
+                        <th scope="col" class="px-6 py-4 text-gray-700 dark:text-gray-300">Nilai Project</th>
+                        <th scope="col" class="px-6 py-4 text-gray-700 dark:text-gray-300">Invoice Kesatu</th>
+                        <th scope="col" class="px-6 py-4 text-gray-700 dark:text-gray-300">Invoice Kedua</th>
+                        <th scope="col" class="px-6 py-4 text-gray-700 dark:text-gray-300">Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <?php if (empty($achievement_per_month)): ?>
+                      <?php if (empty($achievement_projects)): ?>
                         <tr class="border-b border-gray-200 dark:border-neutral-600">
-                          <td colspan="2" class="px-6 py-4 text-gray-700 dark:text-gray-400 text-center">
-                            Belum ada pencapaian tercatat untuk sales ini.
+                          <td colspan="6" class="px-6 py-4 text-gray-700 dark:text-gray-400 text-center">
+                            Tidak ada project untuk periode ini.
                           </td>
                         </tr>
                       <?php else: ?>
-                        <?php foreach ($achievement_per_month as $row): ?>
+                        <?php foreach ($achievement_projects as $p): ?>
                           <tr class="border-b border-gray-200 dark:border-neutral-600">
                             <th scope="row" class="px-6 py-4 text-gray-900 dark:text-gray-200">
-                              <a href="<?= site_url('sales-achievement/' . $sales_user->id_session . '/detail/' . $row->periode) ?>" class="text-blue-500 hover:underline">
-                                <?= date('F Y', strtotime($row->periode . '-01')) ?>
-                              </a>
+                              <?= $p->project_name ?>
                             </th>
                             <td class="px-6 py-4 text-gray-700 dark:text-gray-400">
-                              Rp <?= number_format($row->total, 0, ',', '.') ?>
+                              <?= $p->client_name ?>
+                            </td>
+                            <td class="px-6 py-4 text-gray-700 dark:text-gray-400">
+                              Rp <?= number_format($p->value, 0, ',', '.') ?>
+                            </td>
+                            <td class="px-6 py-4 text-gray-700 dark:text-gray-400">
+                              <?= $p->kesatu_transaction_id ?><br>
+                              <span class="text-xs"><?= tgl_indo($p->kesatu_date) ?></span>
+                            </td>
+                            <td class="px-6 py-4 text-gray-700 dark:text-gray-400">
+                              <?= $p->kedua_transaction_id ?><br>
+                              <span class="text-xs"><?= tgl_indo($p->kedua_date) ?></span>
+                            </td>
+                            <td class="px-6 py-4">
+                              <a href="<?= site_url('project/lihat/' . $p->id_session) ?>" class="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600">
+                                Lihat
+                              </a>
                             </td>
                           </tr>
                         <?php endforeach; ?>
