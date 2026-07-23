@@ -496,6 +496,374 @@ class Aspanel extends CI_Controller {
 	    $this->load->view('backend/v_sales_ranking', $data);
 	}
 
+	// Halaman absensi kehadiran: absen masuk/keluar hari ini + riwayat
+	// kehadiran satu bulan (default bulan berjalan, bisa browse bulan lain).
+	public function absensi($periode = null)
+	{
+	    if (!in_array($this->session->level, ['1', '2', '3', '4', '9'])) {
+	        redirect(base_url('panel'));
+	        return;
+	    }
+
+	    if ($periode === null) {
+	        $periode = date('Y-m');
+	    }
+
+	    $user_id_session = $this->session->id_session;
+	    $today = date('Y-m-d');
+
+	    $data['periode'] = $periode;
+	    $data['periode_sebelumnya'] = date('Y-m', strtotime($periode . '-01 -1 month'));
+	    $data['periode_berikutnya'] = date('Y-m', strtotime($periode . '-01 +1 month'));
+	    $data['jam_masuk_ketentuan'] = $this->jam_masuk_ketentuan_absensi();
+	    $data['bisa_atur_absensi'] = in_array($this->session->level, ['1', '2']);
+	    $data['absen_hari_ini'] = $this->db->get_where('user_absensi', [
+	        'user_id_session' => $user_id_session,
+	        'tanggal' => $today,
+	    ])->row();
+	    $data['riwayat_absensi'] = $this->db
+	        ->where('user_id_session', $user_id_session)
+	        ->where("DATE_FORMAT(tanggal, '%Y-%m') =", $periode)
+	        ->order_by('tanggal', 'DESC')
+	        ->get('user_absensi')
+	        ->result();
+
+	    $this->load->view('backend/v_absensi', $data);
+	}
+
+	// Jam masuk ketentuan (parameter keterlambatan) diatur lewat
+	// /absensi-pengaturan. Singleton row (id=1) — kalau belum pernah
+	// diset, fallback ke 08:00:00.
+	private function jam_masuk_ketentuan_absensi()
+	{
+	    $pengaturan = $this->db->get_where('pengaturan_absensi', ['id' => 1])->row();
+	    return $pengaturan ? $pengaturan->jam_masuk : '08:00:00';
+	}
+
+	// Keterangan otomatis: kalau jam_masuk melewati jam masuk ketentuan,
+	// hasilkan "Terlambat X menit". Kalau tepat waktu, kosong (biar tabel
+	// tidak penuh tulisan "Tepat waktu" di setiap baris).
+	private function hitung_keterangan_absensi($jam_masuk, $jam_masuk_ketentuan)
+	{
+	    $selisih_detik = strtotime($jam_masuk) - strtotime($jam_masuk_ketentuan);
+	    if ($selisih_detik <= 0) {
+	        return null;
+	    }
+
+	    $selisih_menit = (int) round($selisih_detik / 60);
+	    return 'Terlambat ' . $selisih_menit . ' menit';
+	}
+
+	public function absensi_pengaturan()
+	{
+	    if (!in_array($this->session->level, ['1', '2'])) {
+	        redirect(base_url('panel'));
+	        return;
+	    }
+
+	    $data['jam_masuk_ketentuan'] = $this->jam_masuk_ketentuan_absensi();
+	    $this->load->view('backend/v_absensi_pengaturan', $data);
+	}
+
+	public function absensi_pengaturan_update()
+	{
+	    if (!in_array($this->session->level, ['1', '2'])) {
+	        redirect(base_url('panel'));
+	        return;
+	    }
+
+	    $jam_masuk = $this->input->post('jam_masuk');
+	    if (!preg_match('/^([01]\d|2[0-3]):[0-5]\d$/', (string) $jam_masuk)) {
+	        $this->session->set_flashdata('error', 'Format jam masuk tidak valid.');
+	        redirect(base_url('absensi-pengaturan'));
+	        return;
+	    }
+
+	    $data = [
+	        'jam_masuk' => $jam_masuk . ':00',
+	        'updated_at' => date('Y-m-d H:i:s'),
+	        'updated_by' => $this->session->id_session,
+	    ];
+
+	    if ($this->db->get_where('pengaturan_absensi', ['id' => 1])->row()) {
+	        $this->db->where('id', 1)->update('pengaturan_absensi', $data);
+	    } else {
+	        $data['id'] = 1;
+	        $this->db->insert('pengaturan_absensi', $data);
+	    }
+
+	    $this->session->set_flashdata('success', 'Pengaturan jam masuk berhasil disimpan.');
+	    redirect(base_url('absensi-pengaturan'));
+	}
+
+	// Rekap absensi semua user untuk satu bulan (developer/administrator
+	// saja) — cuma user yang punya minimal 1 catatan absen di bulan itu
+	// yang muncul, bisa browse ke bulan sebelum/sesudahnya.
+	public function absensi_rekap($periode = null)
+	{
+	    if (!in_array($this->session->level, ['1', '2'])) {
+	        redirect(base_url('panel'));
+	        return;
+	    }
+
+	    if ($periode === null) {
+	        $periode = date('Y-m');
+	    }
+
+	    $data['periode'] = $periode;
+	    $data['periode_sebelumnya'] = date('Y-m', strtotime($periode . '-01 -1 month'));
+	    $data['periode_berikutnya'] = date('Y-m', strtotime($periode . '-01 +1 month'));
+	    $data['rekap_absensi'] = $this->get_rekap_absensi_bulanan($periode);
+
+	    $this->load->view('backend/v_absensi_rekap', $data);
+	}
+
+	private function get_rekap_absensi_bulanan($periode)
+	{
+	    $sql = "SELECT user.id_session, user.nama,
+	                   SUM(CASE WHEN ua.status = 'Hadir' THEN 1 ELSE 0 END) AS total_hadir,
+	                   SUM(CASE WHEN ua.status = 'Sakit' THEN 1 ELSE 0 END) AS total_sakit,
+	                   SUM(CASE WHEN ua.status = 'Izin' THEN 1 ELSE 0 END) AS total_izin,
+	                   SUM(CASE WHEN ua.status = 'Hadir' AND ua.keterangan IS NOT NULL AND ua.keterangan != '' THEN 1 ELSE 0 END) AS total_terlambat
+	            FROM user_absensi ua
+	            JOIN user ON user.id_session = ua.user_id_session
+	            WHERE DATE_FORMAT(ua.tanggal, '%Y-%m') = ?
+	            GROUP BY ua.user_id_session, user.nama
+	            ORDER BY user.nama ASC";
+
+	    return $this->db->query($sql, [$periode])->result();
+	}
+
+	// Detail harian satu user untuk satu bulan, dilihat dari rekap — reuse
+	// tampilan tabel yang sama dengan riwayat pribadi di halaman /absensi.
+	public function absensi_rekap_detail($periode, $user_id_session)
+	{
+	    if (!in_array($this->session->level, ['1', '2'])) {
+	        redirect(base_url('panel'));
+	        return;
+	    }
+
+	    $user = $this->db->get_where('user', ['id_session' => $user_id_session])->row();
+	    if (!$user) {
+	        redirect(base_url('absensi-rekap'));
+	        return;
+	    }
+
+	    $data['absensi_user'] = $user;
+	    $data['periode'] = $periode;
+	    $data['riwayat_absensi'] = $this->db
+	        ->where('user_id_session', $user_id_session)
+	        ->where("DATE_FORMAT(tanggal, '%Y-%m') =", $periode)
+	        ->order_by('tanggal', 'DESC')
+	        ->get('user_absensi')
+	        ->result();
+
+	    $this->load->view('backend/v_absensi_rekap_detail', $data);
+	}
+
+	public function absensi_masuk()
+	{
+	    if (!in_array($this->session->level, ['1', '2', '3', '4', '9'])) {
+	        redirect(base_url('panel'));
+	        return;
+	    }
+
+	    list($lat, $lng, $error) = $this->validasi_foto_lokasi_absensi();
+	    if ($error) {
+	        $this->session->set_flashdata('error', $error);
+	        redirect(base_url('absensi'));
+	        return;
+	    }
+
+	    $user_id_session = $this->session->id_session;
+	    $today = date('Y-m-d');
+
+	    $existing = $this->db->get_where('user_absensi', [
+	        'user_id_session' => $user_id_session,
+	        'tanggal' => $today,
+	    ])->row();
+
+	    if (!$existing) {
+	        $filename = $this->simpan_foto_absensi($this->input->post('foto'), $user_id_session, 'masuk');
+	        if (!$filename) {
+	            $this->session->set_flashdata('error', 'Absen masuk gagal: foto tidak valid.');
+	            redirect(base_url('absensi'));
+	            return;
+	        }
+
+	        $jam_masuk = date('H:i:s');
+	        $jam_masuk_ketentuan = $this->jam_masuk_ketentuan_absensi();
+	        $keterangan = $this->hitung_keterangan_absensi($jam_masuk, $jam_masuk_ketentuan);
+
+	        $this->db->insert('user_absensi', [
+	            'user_id_session' => $user_id_session,
+	            'tanggal' => $today,
+	            'status' => 'Hadir',
+	            'jam_masuk' => $jam_masuk,
+	            'jam_masuk_ketentuan' => $jam_masuk_ketentuan,
+	            'foto_masuk' => $filename,
+	            'lat_masuk' => $lat,
+	            'lng_masuk' => $lng,
+	            'alamat_masuk' => $this->ambil_alamat_absensi_post(),
+	            'keterangan' => $keterangan,
+	        ]);
+	        $this->session->set_flashdata('success', $keterangan
+	            ? 'Absen masuk berhasil dicatat (' . $keterangan . ').'
+	            : 'Absen masuk berhasil dicatat.');
+	    }
+
+	    redirect(base_url('absensi'));
+	}
+
+	public function absensi_keluar()
+	{
+	    if (!in_array($this->session->level, ['1', '2', '3', '4', '9'])) {
+	        redirect(base_url('panel'));
+	        return;
+	    }
+
+	    list($lat, $lng, $error) = $this->validasi_foto_lokasi_absensi();
+	    if ($error) {
+	        $this->session->set_flashdata('error', $error);
+	        redirect(base_url('absensi'));
+	        return;
+	    }
+
+	    $user_id_session = $this->session->id_session;
+	    $today = date('Y-m-d');
+
+	    $existing = $this->db->get_where('user_absensi', [
+	        'user_id_session' => $user_id_session,
+	        'tanggal' => $today,
+	    ])->row();
+
+	    if ($existing && !empty($existing->jam_masuk) && empty($existing->jam_keluar)) {
+	        $filename = $this->simpan_foto_absensi($this->input->post('foto'), $user_id_session, 'keluar');
+	        if (!$filename) {
+	            $this->session->set_flashdata('error', 'Absen keluar gagal: foto tidak valid.');
+	            redirect(base_url('absensi'));
+	            return;
+	        }
+
+	        $this->db->where('id', $existing->id)
+	            ->update('user_absensi', [
+	                'jam_keluar' => date('H:i:s'),
+	                'foto_keluar' => $filename,
+	                'lat_keluar' => $lat,
+	                'lng_keluar' => $lng,
+	                'alamat_keluar' => $this->ambil_alamat_absensi_post(),
+	            ]);
+	        $this->session->set_flashdata('success', 'Absen keluar berhasil dicatat.');
+	    }
+
+	    redirect(base_url('absensi'));
+	}
+
+	// Catat tidak masuk (Sakit/Izin) untuk hari ini — beda dengan absen
+	// masuk/keluar, tidak butuh foto/lokasi (user memang tidak di tempat),
+	// cuma status + keterangan manual yang wajib diisi.
+	public function absensi_izin()
+	{
+	    if (!in_array($this->session->level, ['1', '2', '3', '4', '9'])) {
+	        redirect(base_url('panel'));
+	        return;
+	    }
+
+	    $status = $this->input->post('status');
+	    $keterangan = trim((string) $this->input->post('keterangan'));
+
+	    if (!in_array($status, ['Sakit', 'Izin'], true)) {
+	        $this->session->set_flashdata('error', 'Status tidak valid.');
+	        redirect(base_url('absensi'));
+	        return;
+	    }
+	    if ($keterangan === '') {
+	        $this->session->set_flashdata('error', 'Keterangan wajib diisi.');
+	        redirect(base_url('absensi'));
+	        return;
+	    }
+
+	    $user_id_session = $this->session->id_session;
+	    $today = date('Y-m-d');
+
+	    $existing = $this->db->get_where('user_absensi', [
+	        'user_id_session' => $user_id_session,
+	        'tanggal' => $today,
+	    ])->row();
+
+	    if ($existing) {
+	        $this->session->set_flashdata('error', 'Sudah ada catatan absensi untuk hari ini.');
+	        redirect(base_url('absensi'));
+	        return;
+	    }
+
+	    $this->db->insert('user_absensi', [
+	        'user_id_session' => $user_id_session,
+	        'tanggal' => $today,
+	        'status' => $status,
+	        'keterangan' => substr($keterangan, 0, 255),
+	    ]);
+
+	    $this->session->set_flashdata('success', $status . ' berhasil dicatat.');
+	    redirect(base_url('absensi'));
+	}
+
+	// Absen masuk/keluar wajib menyertakan foto live (diambil langsung dari
+	// kamera, bukan upload galeri) beserta titik koordinat lokasi saat foto
+	// diambil. Validasi kelengkapan & format koordinat di sini; validasi &
+	// penyimpanan foto ada di simpan_foto_absensi().
+	private function validasi_foto_lokasi_absensi()
+	{
+	    $foto = $this->input->post('foto');
+	    $lat = $this->input->post('lat');
+	    $lng = $this->input->post('lng');
+
+	    if (empty($foto) || $lat === null || $lat === '' || $lng === null || $lng === '') {
+	        return [null, null, 'Foto live dan lokasi wajib diambil sebelum absen.'];
+	    }
+
+	    if (!is_numeric($lat) || !is_numeric($lng)) {
+	        return [null, null, 'Titik koordinat lokasi tidak valid.'];
+	    }
+
+	    return [(float) $lat, (float) $lng, null];
+	}
+
+	// Nama kecamatan/kabupaten hasil reverse-geocode di browser (best-effort,
+	// lewat layanan pihak ketiga yang bisa saja gagal/lambat) — opsional,
+	// beda dengan foto/koordinat yang wajib ada.
+	private function ambil_alamat_absensi_post()
+	{
+	    $alamat = trim((string) $this->input->post('alamat'));
+	    return $alamat !== '' ? substr($alamat, 0, 255) : null;
+	}
+
+	// Decode foto base64 (data URI hasil capture kamera) dan simpan ke
+	// ./uploads/absensi/. Nama file di-generate sendiri (bukan dari input
+	// user) supaya tidak ada celah path traversal.
+	private function simpan_foto_absensi($base64_image, $user_id_session, $tipe)
+	{
+	    if (!preg_match('/^data:image\/(jpeg|jpg|png);base64,/', $base64_image, $matches)) {
+	        return false;
+	    }
+
+	    $data = base64_decode(substr($base64_image, strpos($base64_image, ',') + 1), true);
+	    if ($data === false || strlen($data) === 0) {
+	        return false;
+	    }
+
+	    $upload_path = './uploads/absensi/';
+	    if (!is_dir($upload_path)) {
+	        mkdir($upload_path, 0777, true);
+	    }
+
+	    $ext = $matches[1] === 'png' ? 'png' : 'jpg';
+	    $filename = 'absensi_' . $tipe . '_' . md5($user_id_session . microtime()) . '.' . $ext;
+	    file_put_contents($upload_path . $filename, $data);
+
+	    return $filename;
+	}
+
 	// Pencapaian revenue per project: tiap project dihitung SEKALI, dan
 	// diatribusikan ke tahun pembayaran Paid PERTAMANYA (bukan tiap tahun yang
 	// kebetulan punya pembayaran) — supaya project dengan cicilan yang

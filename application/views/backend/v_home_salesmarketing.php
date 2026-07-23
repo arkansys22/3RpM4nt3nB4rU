@@ -262,9 +262,14 @@
 								</button>
 							</a>
 						<?php endif; ?>
-						<button class="w-40 h-40 bg-[#ed126b] text-white font-semibold rounded-none hover:bg-pink-800 focus:outline-none">
-							Button 2
-						</button>
+						<a href="<?= base_url('absensi') ?>">
+							<button class="w-40 h-40 bg-[#ed126b] text-white font-semibold rounded-none hover:bg-pink-800 focus:outline-none flex flex-col items-center justify-center">
+								<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mb-2">
+									<path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2m6-2a10 10 0 1 1-20 0 10 10 0 0 1 20 0Z" />
+								</svg>
+								Absensi
+							</button>
+						</a>
 						<!-- <button class="w-40 h-40 bg-[#ed126b] text-white font-semibold rounded-none hover:bg-pink-800 focus:outline-none">
 							Button 3
 						</button>

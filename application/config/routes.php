@@ -53,6 +53,15 @@ $route['finance-operational/update2/(:any)'] = 'crud_finance_operational/update2
 $route['finance-operational/permanent_delete/(:any)'] = 'crud_finance_operational/permanent_delete/$1'; // Hapus permanen user
 
 
+$route['rekap-gaji/assign/(:any)'] = 'Crud_kategori_gaji/assign/$1'; // Assign kategori gaji ke satu user
+$route['rekap-gaji/kategori/edit/(:any)'] = 'Crud_kategori_gaji/kategori_edit/$1';
+$route['rekap-gaji/kategori/update/(:any)'] = 'Crud_kategori_gaji/kategori_update/$1';
+$route['rekap-gaji/kategori/delete/(:any)'] = 'Crud_kategori_gaji/kategori_delete/$1';
+$route['rekap-gaji/kategori/store'] = 'Crud_kategori_gaji/kategori_store';
+$route['rekap-gaji/kategori'] = 'Crud_kategori_gaji/kategori';
+$route['rekap-gaji'] = 'Crud_kategori_gaji/rekap';
+
+
 
 $route['project'] = 'crud_project/index'; // Menampilkan daftar project
 $route['project/create'] = 'crud_project/create'; // Menampilkan form tambah project
@@ -257,6 +266,19 @@ $route['sales-achievement/(:any)'] = 'Aspanel/sales_achievement/$1';
 
 $route['sales-ranking/(:any)'] = 'Aspanel/sales_ranking/$1';
 $route['sales-ranking'] = 'Aspanel/sales_ranking';
+
+$route['absensi/masuk'] = 'Aspanel/absensi_masuk';
+$route['absensi/keluar'] = 'Aspanel/absensi_keluar';
+$route['absensi/izin'] = 'Aspanel/absensi_izin';
+$route['absensi/(:any)'] = 'Aspanel/absensi/$1';
+$route['absensi'] = 'Aspanel/absensi';
+
+$route['absensi-pengaturan/update'] = 'Aspanel/absensi_pengaturan_update';
+$route['absensi-pengaturan'] = 'Aspanel/absensi_pengaturan';
+
+$route['absensi-rekap/(:any)/detail/(:any)'] = 'Aspanel/absensi_rekap_detail/$1/$2';
+$route['absensi-rekap/(:any)'] = 'Aspanel/absensi_rekap/$1';
+$route['absensi-rekap'] = 'Aspanel/absensi_rekap';
 
 $route['crew-role'] = 'Crud_crewrole/index'; // Menampilkan daftar role
 $route['crew-role/create'] = 'Crud_crewrole/create'; // Menampilkan form tambah role
