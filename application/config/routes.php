@@ -59,6 +59,7 @@ $route['rekap-gaji/kategori/update/(:any)'] = 'Crud_kategori_gaji/kategori_updat
 $route['rekap-gaji/kategori/delete/(:any)'] = 'Crud_kategori_gaji/kategori_delete/$1';
 $route['rekap-gaji/kategori/store'] = 'Crud_kategori_gaji/kategori_store';
 $route['rekap-gaji/kategori'] = 'Crud_kategori_gaji/kategori';
+$route['rekap-gaji/(:any)/(:any)'] = 'Crud_kategori_gaji/rekap/$1/$2'; // Rekap 1 user + periode bulan (harus di taruh sebelum route 1 segmen karena :any greedy)
 $route['rekap-gaji/(:any)'] = 'Crud_kategori_gaji/rekap/$1'; // Rekap 1 user terpilih (harus di taruh setelah route rekap-gaji/* yang lebih spesifik)
 $route['rekap-gaji'] = 'Crud_kategori_gaji/rekap';
 
@@ -280,6 +281,9 @@ $route['absensi-pengaturan'] = 'Aspanel/absensi_pengaturan';
 $route['absensi-rekap/(:any)/detail/(:any)'] = 'Aspanel/absensi_rekap_detail/$1/$2';
 $route['absensi-rekap/(:any)'] = 'Aspanel/absensi_rekap/$1';
 $route['absensi-rekap'] = 'Aspanel/absensi_rekap';
+
+$route['gaji-saya/(:any)'] = 'Aspanel/gaji_saya/$1';
+$route['gaji-saya'] = 'Aspanel/gaji_saya';
 
 $route['crew-role'] = 'Crud_crewrole/index'; // Menampilkan daftar role
 $route['crew-role/create'] = 'Crud_crewrole/create'; // Menampilkan form tambah role
