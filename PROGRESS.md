@@ -363,6 +363,86 @@
   total sama sekali, judul tab browser & heading jadi "Setting Salary",
   dan sidebar Fin & Acc ikut berubah.
 
+### Fitur Baru: Detail Gaji Peruser per Periode Bulan (Perhitungan Otomatis)
+
+- Halaman Setting Salary sekarang bisa browse per **periode bulan**
+  (navigasi prev/next + month picker, sama pola dengan `absensi-rekap` /
+  `sales-ranking`) — URL jadi `/rekap-gaji/<id_session>/<periode>`. Route
+  baru `rekap-gaji/(:any)/(:any)` ditaruh SEBELUM route 1-segmen
+  (`rekap-gaji/(:any)`) karena `:any` di CI3 itu greedy (`.+`, bisa nyaplok
+  slash) — kalau kebalik, url 2 segmen bakal ke-capture semua jadi 1
+  parameter.
+- Setelah nama **dan** periode dipilih, tiap kategori salary yang
+  di-assign ke user itu **dihitung jadi nominal aktual bulan itu**
+  (`Crud_kategori_gaji::hitung_detail_gaji()`), bukan cuma nominal
+  kategori mentah:
+  - **Bulanan** — flat, nominal kategori apa adanya.
+  - **Harian** — nominal x jumlah hari berstatus `Hadir` di `user_absensi`
+    bulan itu.
+  - **Project** — nominal x jumlah project berbeda yang `event_date`-nya
+    jatuh di bulan itu, dari jadwal crew (`crew_projects` JOIN `project`
+    JOIN `user.crews_idsession` — pola sama persis dengan yang sudah
+    dipakai di dashboard staff untuk daftar event mereka).
+  - **Persentase** — persen x total pencapaian sales (closing) user itu di
+    bulan itu, pakai definisi "achieved" yang **sama persis** dengan
+    `Aspanel::getEstimasiRevenue()` (Pembayaran Kesatu Paid tanggal
+    berapa pun + Pembayaran Kedua Paid DI BULAN itu) — supaya angka
+    komisi konsisten dengan pencapaian yang sudah ditampilkan di
+    dashboard & sales-ranking, bukan aturan baru yang beda sendiri.
+  - Tiap baris menampilkan cara hitungnya juga (mis. "3 hari hadir x
+    Rp 100.000"), plus baris **Total** — kali ini penjumlahan masuk akal
+    karena semua kategori sudah dikonversi jadi Rupiah aktual bulan itu
+    (beda dengan kartu total lama yang dihapus, yang menjumlah satuan
+    berbeda-beda mentah-mentah).
+- Form "Atur Kategori Salary" (assign/multi-select) tetap ada di bawah
+  detail, sekarang bawa `periode` sebagai hidden field supaya setelah
+  Simpan tetap di bulan yang sama (bukan balik ke bulan berjalan).
+- Sudah dites end-to-end dengan kombinasi data asli + data uji: dhawy
+  (data crew_projects & sales asli, ditambah 3 baris absensi Hadir buatan
+  di Juni 2026) di-assign 4 kategori test (satu per satuan) →
+  Bulanan Rp 3.000.000, Harian "3 hari hadir x Rp 100.000" = Rp 300.000,
+  Project "5 project x Rp 200.000" = Rp 1.000.000 (dicocokkan manual ke
+  query crew_projects), Persentase "5% x Rp 135.630.000 pencapaian" =
+  Rp 6.781.500 (dicocokkan manual ke query achieved sales), Total
+  Rp 11.081.500 — semua angka tepat. Ganti ke periode Mei 2026 juga
+  dites, angkanya ikut berubah benar (0 hari hadir, 3 project, pencapaian
+  beda). Data uji (4 kategori TEST + 3 baris absensi) dihapus total tanpa
+  menyentuh kategori/assignment asli yang sudah dibuat user sendiri
+  (13 kategori & 11 assignment real, dicek masih utuh setelah cleanup).
+- **Belum ada di database produksi** — fitur ini tidak butuh migrasi baru
+  (semua tabel yang dipakai sudah ada), tapi tetap bergantung pada tabel
+  `kategori_gaji` & `user_kategori_gaji` dari `db/kategori_gaji.sql` yang
+  juga belum dijalankan di server.
+
+### Fitur Baru: Rekap Gaji Saya (Self-Service, Tombol di Home)
+
+- Tombol baru **"Rekap Gaji"** di halaman home, persis di samping tombol
+  "Absensi" (3 view: `v_home.php`, `v_home_admin.php`,
+  `v_home_salesmarketing.php` — role level 1/2/3/4/9, akses sama dengan
+  Absensi). Link ke `/gaji-saya`.
+  Bedanya dengan "Setting Salary" (admin Fin & Acc, bisa pilih SIAPA saja
+  & UBAH kategori): halaman ini cuma buat staff **lihat rincian gaji
+  dirinya sendiri** — tidak ada dropdown pilih nama (selalu user yang
+  login), dan tidak ada form ubah kategori (view-only).
+- Ada navigasi bulan sendiri (prev/next + month picker) di
+  `/gaji-saya/<periode>`, pola sama seperti halaman-halaman rekap lain.
+  Kalau belum ada kategori yang di-assign admin, tampil pesan "Anda belum
+  memiliki kategori salary. Hubungi Finance/Admin."
+- **Refactor**: logika hitung (`hitung_detail_gaji`, dan private
+  `hitung_pencapaian_sales`) yang sebelumnya cuma ada di
+  `Crud_kategori_gaji` dipindah ke model baru `Gaji_model.php`, dipakai
+  bareng oleh `Crud_kategori_gaji` (Setting Salary) dan `Aspanel`
+  (Rekap Gaji Saya) — supaya rumus gajinya dijamin konsisten di kedua
+  tempat, tidak ada 2 salinan logic yang bisa beda sendiri-sendiri.
+- Sudah dites end-to-end pakai data ASLI dhawy (3 kategori yang sudah
+  di-assign sendiri sebelumnya: Sales 2,5%, Admin Harian Rp 80.000, Crew
+  WO Project Manajer Rp 550.000) — hasil di halaman Rekap Gaji Saya untuk
+  Juni 2026 (Total Rp 6.140.750) **persis sama** dengan hasil di halaman
+  Setting Salary admin untuk user & bulan yang sama, membuktikan refactor
+  ke `Gaji_model` konsisten. Juga dites: tombol muncul di home, user tanpa
+  kategori menampilkan pesan kosong yang benar. Tidak ada data test yang
+  perlu dibersihkan (semua verifikasi pakai data baca-saja).
+
 ### Bug Fix: Project Hilang dari Pencapaian Bulanan
 
 - Root cause: syarat "achieved" lama mewajibkan Pembayaran Kesatu **dan**

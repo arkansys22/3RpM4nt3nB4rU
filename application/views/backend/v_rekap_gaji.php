@@ -65,7 +65,7 @@
                 <div class="mb-5">
                   <label class="mb-2 block text-sm text-gray-700 dark:text-gray-200">Pilih Nama</label>
                   <select
-                    onchange="if (this.value) { window.location.href = '<?= site_url('rekap-gaji/') ?>' + this.value; }"
+                    onchange="if (this.value) { window.location.href = '<?= site_url('rekap-gaji/') ?>' + this.value + '/<?= $periode ?>'; }"
                     class="w-full sm:w-96 rounded-md border border-stroke dark:border-strokedark px-3 py-2 dark:bg-boxdark dark:text-white"
                   >
                     <option value="">- Pilih nama user -</option>
@@ -79,10 +79,31 @@
 
                 <?php if (empty($user_terpilih)): ?>
                   <div class="p-6 text-center text-sm text-gray-700 dark:text-gray-400 bg-white dark:bg-neutral-700 rounded-lg shadow-md">
-                    Pilih nama dulu di atas untuk melihat & atur kategori salary-nya.
+                    Pilih nama dulu di atas untuk melihat & atur detail salary-nya.
                   </div>
                 <?php else: ?>
                   <?php $id_terpilih = array_map(function ($k) { return (int) $k->id; }, $user_terpilih->kategori_list); ?>
+
+                  <!-- Navigasi bulan -->
+                  <div class="flex items-center justify-between mb-4 gap-3">
+                    <a href="<?= site_url('rekap-gaji/' . $user_terpilih->id_session . '/' . $periode_sebelumnya) ?>" class="bg-gray-200 dark:bg-neutral-700 text-gray-700 dark:text-gray-200 px-3 sm:px-4 py-2 rounded-md hover:bg-gray-300 dark:hover:bg-neutral-600 text-sm whitespace-nowrap">
+                      &laquo; <span class="hidden sm:inline"><?= date('F Y', strtotime($periode_sebelumnya . '-01')) ?></span>
+                    </a>
+
+                    <form method="get" onsubmit="return false;">
+                      <input
+                        type="month"
+                        value="<?= $periode ?>"
+                        class="border border-stroke dark:border-strokedark rounded-md px-3 py-2 dark:bg-boxdark dark:text-white"
+                        onchange="window.location.href = '<?= site_url('rekap-gaji/' . $user_terpilih->id_session . '/') ?>' + this.value"
+                      >
+                    </form>
+
+                    <a href="<?= site_url('rekap-gaji/' . $user_terpilih->id_session . '/' . $periode_berikutnya) ?>" class="bg-gray-200 dark:bg-neutral-700 text-gray-700 dark:text-gray-200 px-3 sm:px-4 py-2 rounded-md hover:bg-gray-300 dark:hover:bg-neutral-600 text-sm whitespace-nowrap">
+                      <span class="hidden sm:inline"><?= date('F Y', strtotime($periode_berikutnya . '-01')) ?></span> &raquo;
+                    </a>
+                  </div>
+
                   <div class="p-4 sm:p-5 rounded-lg bg-white dark:bg-neutral-800 shadow-md">
                     <div class="flex items-center justify-between mb-3">
                       <span class="font-semibold text-lg text-gray-900 dark:text-gray-200"><?= $user_terpilih->nama ?></span>
@@ -90,18 +111,46 @@
                     </div>
 
                     <div class="mb-4">
-                      <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Kategori Salary Saat Ini</p>
-                      <?php if (empty($user_terpilih->kategori_list)): ?>
-                        <p class="text-sm text-gray-400">- Belum ada kategori -</p>
+                      <p class="text-xs text-gray-500 dark:text-gray-400 mb-2">Detail Salary - <?= date('F Y', strtotime($periode . '-01')) ?></p>
+                      <?php if (empty($detail_gaji)): ?>
+                        <p class="text-sm text-gray-400">- Belum ada kategori salary yang di-assign -</p>
                       <?php else: ?>
-                        <?php foreach ($user_terpilih->kategori_list as $k): ?>
-                          <p class="text-sm text-gray-700 dark:text-gray-300"><?= $k->nama_kategori ?>: <span class="font-medium"><?= format_nominal_salary($k->nominal_gaji, $k->satuan_gaji) ?></span></p>
-                        <?php endforeach; ?>
+                        <div class="overflow-x-auto">
+                          <table class="min-w-full text-left text-sm">
+                            <thead class="text-xs uppercase text-gray-500 dark:text-gray-400 border-b border-gray-200 dark:border-neutral-600">
+                              <tr>
+                                <th class="py-2 pr-3">Kategori</th>
+                                <th class="py-2 pr-3">Perhitungan</th>
+                                <th class="py-2 text-right">Jumlah</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <?php foreach ($detail_gaji as $d): ?>
+                                <tr class="border-b border-gray-100 dark:border-neutral-700">
+                                  <td class="py-2 pr-3 text-gray-800 dark:text-gray-200">
+                                    <?= $d['nama_kategori'] ?>
+                                    <span class="block text-xs text-gray-400"><?= $d['satuan_gaji'] ?></span>
+                                  </td>
+                                  <td class="py-2 pr-3 text-gray-500 dark:text-gray-400"><?= $d['keterangan'] ?></td>
+                                  <td class="py-2 text-right font-medium text-gray-800 dark:text-gray-200 whitespace-nowrap">Rp <?= number_format($d['jumlah'], 0, ',', '.') ?></td>
+                                </tr>
+                              <?php endforeach; ?>
+                              <tr>
+                                <td colspan="2" class="py-2 pr-3 font-semibold text-gray-800 dark:text-gray-200">Total</td>
+                                <td class="py-2 text-right font-semibold text-gray-800 dark:text-gray-200 whitespace-nowrap">Rp <?= number_format($total_gaji_periode, 0, ',', '.') ?></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
                       <?php endif; ?>
                     </div>
 
+                    <hr class="border-gray-200 dark:border-neutral-600 mb-4">
+
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mb-2">Atur Kategori Salary</p>
                     <form method="post" action="<?= site_url('rekap-gaji/assign/' . $user_terpilih->id_session) ?>">
                       <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>">
+                      <input type="hidden" name="periode" value="<?= $periode ?>">
                       <select name="kategori_gaji_id[]" multiple size="6" class="w-full sm:w-96 border border-stroke dark:border-strokedark rounded-md px-3 py-2 dark:bg-boxdark dark:text-white text-sm mb-1">
                         <?php foreach ($daftar_kategori as $k): ?>
                           <option value="<?= $k->id ?>" <?= in_array((int) $k->id, $id_terpilih, true) ? 'selected' : '' ?>>

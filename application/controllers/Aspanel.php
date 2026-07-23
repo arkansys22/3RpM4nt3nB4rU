@@ -10,6 +10,7 @@ class Aspanel extends CI_Controller {
 		$this->load->model('project_model');
 		$this->load->model('Payment_model');
 		$this->load->model('finance_project_model');
+		$this->load->model('Gaji_model');
 		date_default_timezone_set('Asia/Jakarta');
 	}
 	public function index()
@@ -659,6 +660,42 @@ class Aspanel extends CI_Controller {
 	        ->result();
 
 	    $this->load->view('backend/v_absensi_rekap_detail', $data);
+	}
+
+	// Rekap Gaji Saya: self-service, tombol di home di samping Absensi.
+	// Beda dengan Setting Salary (admin Fin & Acc yang assign kategori ke
+	// user), di sini staff cuma LIHAT rincian gaji dia sendiri bulan ini —
+	// tidak bisa ubah kategori/assignment-nya sendiri. Akses & role sama
+	// dengan tombol Absensi.
+	public function gaji_saya($periode = null)
+	{
+	    if (!in_array($this->session->level, ['1', '2', '3', '4', '9'])) {
+	        redirect(base_url('panel'));
+	        return;
+	    }
+
+	    if ($periode === null) {
+	        $periode = date('Y-m');
+	    }
+
+	    $user_id_session = $this->session->id_session;
+	    $kategori_list = $this->Gaji_model->get_kategori_user($user_id_session);
+
+	    $detail_gaji = [];
+	    $total_gaji_periode = 0;
+	    foreach ($kategori_list as $k) {
+	        $detail = $this->Gaji_model->hitung_detail_gaji($user_id_session, $k, $periode);
+	        $detail_gaji[] = $detail;
+	        $total_gaji_periode += $detail['jumlah'];
+	    }
+
+	    $data['periode'] = $periode;
+	    $data['periode_sebelumnya'] = date('Y-m', strtotime($periode . '-01 -1 month'));
+	    $data['periode_berikutnya'] = date('Y-m', strtotime($periode . '-01 +1 month'));
+	    $data['detail_gaji'] = $detail_gaji;
+	    $data['total_gaji_periode'] = $total_gaji_periode;
+
+	    $this->load->view('backend/v_gaji_saya', $data);
 	}
 
 	public function absensi_masuk()

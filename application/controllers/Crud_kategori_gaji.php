@@ -3,6 +3,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Crud_kategori_gaji extends CI_Controller {
 
+	function __construct()
+	{
+	    parent::__construct();
+	    $this->load->model('Gaji_model');
+	}
+
 	// Fitur ini ada di sub menu Fin & Acc, jadi akses levelnya sama dengan
 	// menu itu di sidebar: developer, administrator, staff accounting.
 	private function cek_akses()
@@ -14,12 +20,24 @@ class Crud_kategori_gaji extends CI_Controller {
 	}
 
 	// Setting Salary: nama harus dipilih dulu dari dropdown baru data user itu
-	// muncul (bukan langsung nampilin semua user sekaligus). Tiap user bisa
-	// punya LEBIH DARI SATU kategori salary sekaligus (mis. gaji pokok
-	// bulanan + komisi persentase) lewat tabel penghubung user_kategori_gaji.
-	public function rekap($user_id_session = null)
+	// muncul (bukan langsung nampilin semua user sekaligus), bisa browse per
+	// periode bulan juga. Tiap user bisa punya LEBIH DARI SATU kategori
+	// salary sekaligus (mis. gaji pokok bulanan + komisi persentase) lewat
+	// tabel penghubung user_kategori_gaji. Kalau user sudah dipilih, tiap
+	// kategorinya dihitung jadi nominal aktual bulan itu:
+	// - Bulanan: nominalnya sendiri, flat.
+	// - Harian: nominal x jumlah hari Hadir di absensi bulan itu.
+	// - Project: nominal x jumlah project yang event_date-nya di bulan itu
+	//   (dari jadwal crew_projects, sama seperti dashboard staff).
+	// - Persentase: persen x total pencapaian sales (closing) bulan itu,
+	//   pakai aturan "achieved" yang sama dengan Aspanel::getEstimasiRevenue().
+	public function rekap($user_id_session = null, $periode = null)
 	{
 	    $this->cek_akses();
+
+	    if ($periode === null) {
+	        $periode = date('Y-m');
+	    }
 
 	    $sql = "SELECT user.id_session, user.nama, user.level, user_level.user_level_nama
 	            FROM user
@@ -48,8 +66,23 @@ class Crud_kategori_gaji extends CI_Controller {
 	        }
 	    }
 
+	    $detail_gaji = [];
+	    $total_gaji_periode = 0;
+	    if ($user_terpilih !== null) {
+	        foreach ($user_terpilih->kategori_list as $k) {
+	            $detail = $this->Gaji_model->hitung_detail_gaji($user_terpilih->id_session, $k, $periode);
+	            $detail_gaji[] = $detail;
+	            $total_gaji_periode += $detail['jumlah'];
+	        }
+	    }
+
 	    $data['daftar_user'] = $users;
 	    $data['user_terpilih'] = $user_terpilih;
+	    $data['periode'] = $periode;
+	    $data['periode_sebelumnya'] = date('Y-m', strtotime($periode . '-01 -1 month'));
+	    $data['periode_berikutnya'] = date('Y-m', strtotime($periode . '-01 +1 month'));
+	    $data['detail_gaji'] = $detail_gaji;
+	    $data['total_gaji_periode'] = $total_gaji_periode;
 	    $data['daftar_kategori'] = $this->db->order_by('nama_kategori', 'ASC')->get('kategori_gaji')->result();
 
 	    $this->load->view('backend/v_rekap_gaji', $data);
@@ -65,6 +98,7 @@ class Crud_kategori_gaji extends CI_Controller {
 
 	    $kategori_ids = $this->input->post('kategori_gaji_id');
 	    $kategori_ids = is_array($kategori_ids) ? array_unique(array_map('intval', $kategori_ids)) : [];
+	    $periode = $this->input->post('periode');
 
 	    $this->db->where('user_id_session', $user_id_session)->delete('user_kategori_gaji');
 
@@ -77,7 +111,8 @@ class Crud_kategori_gaji extends CI_Controller {
 	    }
 
 	    $this->session->set_flashdata('success', 'Kategori salary berhasil diperbarui.');
-	    redirect(base_url('rekap-gaji/' . $user_id_session));
+	    $tujuan = $user_id_session . (!empty($periode) ? '/' . $periode : '');
+	    redirect(base_url('rekap-gaji/' . $tujuan));
 	}
 
 	public function kategori()
