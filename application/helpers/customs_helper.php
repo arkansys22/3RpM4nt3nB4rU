@@ -203,6 +203,16 @@ function getBulan($bln){
             }
         }
 
+function format_nominal_salary($nominal, $satuan)
+{
+    if ($satuan === 'Persentase') {
+        $angka = rtrim(rtrim(number_format((float) $nominal, 2, ',', '.'), '0'), ',');
+        return $angka . '%';
+    }
+
+    return 'Rp ' . number_format((float) $nominal, 0, ',', '.') . ' / ' . strtolower($satuan);
+}
+
 if (!function_exists('terbilang')) {
     function terbilang($angka, $isFinal = true) {
         $angka = abs($angka);

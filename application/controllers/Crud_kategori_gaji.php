@@ -13,45 +13,71 @@ class Crud_kategori_gaji extends CI_Controller {
 	    }
 	}
 
-	// Rekap gaji: semua user staff internal (bukan client/guest/partner),
-	// nama kategori + nominal gajinya kalau sudah di-assign.
-	public function rekap()
+	// Setting Salary: nama harus dipilih dulu dari dropdown baru data user itu
+	// muncul (bukan langsung nampilin semua user sekaligus). Tiap user bisa
+	// punya LEBIH DARI SATU kategori salary sekaligus (mis. gaji pokok
+	// bulanan + komisi persentase) lewat tabel penghubung user_kategori_gaji.
+	public function rekap($user_id_session = null)
 	{
 	    $this->cek_akses();
 
-	    $sql = "SELECT user.id_session, user.nama, user.level, user_level.user_level_nama,
-	                   user.kategori_gaji_id, kategori_gaji.nama_kategori, kategori_gaji.nominal_gaji
+	    $sql = "SELECT user.id_session, user.nama, user.level, user_level.user_level_nama
 	            FROM user
 	            JOIN user_level ON user_level.user_level_id = user.level
-	            LEFT JOIN kategori_gaji ON kategori_gaji.id = user.kategori_gaji_id
 	            WHERE user.level IN ('1','2','3','4','7','9')
 	            AND user.user_stat = 'Publish'
 	            ORDER BY user.nama ASC";
+	    $users = $this->db->query($sql)->result();
 
-	    $data['rekap_gaji'] = $this->db->query($sql)->result();
-	    $data['total_gaji'] = 0;
-	    foreach ($data['rekap_gaji'] as $r) {
-	        $data['total_gaji'] += (float) $r->nominal_gaji;
+	    $sql_assign = "SELECT ukg.user_id_session, kategori_gaji.id, kategori_gaji.nama_kategori,
+	                          kategori_gaji.satuan_gaji, kategori_gaji.nominal_gaji
+	                   FROM user_kategori_gaji ukg
+	                   JOIN kategori_gaji ON kategori_gaji.id = ukg.kategori_gaji_id";
+	    $assignments = $this->db->query($sql_assign)->result();
+
+	    $kategori_per_user = [];
+	    foreach ($assignments as $a) {
+	        $kategori_per_user[$a->user_id_session][] = $a;
 	    }
+
+	    $user_terpilih = null;
+	    foreach ($users as $u) {
+	        $u->kategori_list = $kategori_per_user[$u->id_session] ?? [];
+	        if ($user_id_session !== null && $u->id_session === $user_id_session) {
+	            $user_terpilih = $u;
+	        }
+	    }
+
+	    $data['daftar_user'] = $users;
+	    $data['user_terpilih'] = $user_terpilih;
 	    $data['daftar_kategori'] = $this->db->order_by('nama_kategori', 'ASC')->get('kategori_gaji')->result();
 
 	    $this->load->view('backend/v_rekap_gaji', $data);
 	}
 
-	// Assign / ganti kategori gaji satu user, dipanggil dari dropdown inline
-	// di halaman rekap.
+	// Assign kategori salary satu user — bisa pilih lebih dari satu lewat
+	// multi-select, dipanggil dari halaman rekap. Strategi: hapus semua
+	// assignment lama user ini, lalu insert ulang sesuai pilihan terbaru
+	// (lebih simpel & aman daripada diff manual).
 	public function assign($user_id_session)
 	{
 	    $this->cek_akses();
 
-	    $kategori_gaji_id = $this->input->post('kategori_gaji_id');
-	    $kategori_gaji_id = ($kategori_gaji_id === '' || $kategori_gaji_id === null) ? null : (int) $kategori_gaji_id;
+	    $kategori_ids = $this->input->post('kategori_gaji_id');
+	    $kategori_ids = is_array($kategori_ids) ? array_unique(array_map('intval', $kategori_ids)) : [];
 
-	    $this->db->where('id_session', $user_id_session)
-	        ->update('user', ['kategori_gaji_id' => $kategori_gaji_id]);
+	    $this->db->where('user_id_session', $user_id_session)->delete('user_kategori_gaji');
 
-	    $this->session->set_flashdata('success', 'Kategori gaji berhasil diperbarui.');
-	    redirect(base_url('rekap-gaji'));
+	    if (!empty($kategori_ids)) {
+	        $rows = [];
+	        foreach ($kategori_ids as $kategori_id) {
+	            $rows[] = ['user_id_session' => $user_id_session, 'kategori_gaji_id' => $kategori_id];
+	        }
+	        $this->db->insert_batch('user_kategori_gaji', $rows);
+	    }
+
+	    $this->session->set_flashdata('success', 'Kategori salary berhasil diperbarui.');
+	    redirect(base_url('rekap-gaji/' . $user_id_session));
 	}
 
 	public function kategori()
@@ -66,7 +92,7 @@ class Crud_kategori_gaji extends CI_Controller {
 	{
 	    $this->cek_akses();
 
-	    list($nama_kategori, $nominal_gaji, $error) = $this->validasi_kategori_gaji_post();
+	    list($nama_kategori, $satuan_gaji, $nominal_gaji, $error) = $this->validasi_kategori_gaji_post();
 	    if ($error) {
 	        $this->session->set_flashdata('error', $error);
 	        redirect(base_url('rekap-gaji/kategori'));
@@ -75,10 +101,11 @@ class Crud_kategori_gaji extends CI_Controller {
 
 	    $this->db->insert('kategori_gaji', [
 	        'nama_kategori' => $nama_kategori,
+	        'satuan_gaji' => $satuan_gaji,
 	        'nominal_gaji' => $nominal_gaji,
 	    ]);
 
-	    $this->session->set_flashdata('success', 'Kategori gaji berhasil ditambahkan.');
+	    $this->session->set_flashdata('success', 'Kategori salary berhasil ditambahkan.');
 	    redirect(base_url('rekap-gaji/kategori'));
 	}
 
@@ -100,7 +127,7 @@ class Crud_kategori_gaji extends CI_Controller {
 	{
 	    $this->cek_akses();
 
-	    list($nama_kategori, $nominal_gaji, $error) = $this->validasi_kategori_gaji_post();
+	    list($nama_kategori, $satuan_gaji, $nominal_gaji, $error) = $this->validasi_kategori_gaji_post();
 	    if ($error) {
 	        $this->session->set_flashdata('error', $error);
 	        redirect(base_url('rekap-gaji/kategori/edit/' . $id));
@@ -109,10 +136,11 @@ class Crud_kategori_gaji extends CI_Controller {
 
 	    $this->db->where('id', $id)->update('kategori_gaji', [
 	        'nama_kategori' => $nama_kategori,
+	        'satuan_gaji' => $satuan_gaji,
 	        'nominal_gaji' => $nominal_gaji,
 	    ]);
 
-	    $this->session->set_flashdata('success', 'Kategori gaji berhasil diperbarui.');
+	    $this->session->set_flashdata('success', 'Kategori salary berhasil diperbarui.');
 	    redirect(base_url('rekap-gaji/kategori'));
 	}
 
@@ -120,27 +148,35 @@ class Crud_kategori_gaji extends CI_Controller {
 	{
 	    $this->cek_akses();
 
-	    // Lepas assignment user yang masih pakai kategori ini dulu, supaya
-	    // tidak ada kategori_gaji_id yatim nunjuk ke baris yang dihapus.
-	    $this->db->where('kategori_gaji_id', $id)->update('user', ['kategori_gaji_id' => null]);
+	    // Lepas semua assignment user yang masih pakai kategori ini dulu,
+	    // supaya tidak ada baris user_kategori_gaji yatim nunjuk ke
+	    // kategori yang dihapus.
+	    $this->db->where('kategori_gaji_id', $id)->delete('user_kategori_gaji');
 	    $this->db->where('id', $id)->delete('kategori_gaji');
 
-	    $this->session->set_flashdata('success', 'Kategori gaji berhasil dihapus.');
+	    $this->session->set_flashdata('success', 'Kategori salary berhasil dihapus.');
 	    redirect(base_url('rekap-gaji/kategori'));
 	}
 
 	private function validasi_kategori_gaji_post()
 	{
 	    $nama_kategori = trim((string) $this->input->post('nama_kategori'));
+	    $satuan_gaji = $this->input->post('satuan_gaji');
 	    $nominal_gaji = $this->input->post('nominal_gaji');
 
 	    if ($nama_kategori === '') {
-	        return [null, null, 'Nama kategori wajib diisi.'];
+	        return [null, null, null, 'Nama kategori wajib diisi.'];
+	    }
+	    if (!in_array($satuan_gaji, ['Harian', 'Bulanan', 'Project', 'Persentase'], true)) {
+	        return [null, null, null, 'Satuan salary tidak valid.'];
 	    }
 	    if (!is_numeric($nominal_gaji) || (float) $nominal_gaji < 0) {
-	        return [null, null, 'Nominal gaji tidak valid.'];
+	        return [null, null, null, 'Nominal salary tidak valid.'];
+	    }
+	    if ($satuan_gaji === 'Persentase' && (float) $nominal_gaji > 100) {
+	        return [null, null, null, 'Nominal persentase tidak boleh lebih dari 100.'];
 	    }
 
-	    return [substr($nama_kategori, 0, 100), (float) $nominal_gaji, null];
+	    return [substr($nama_kategori, 0, 100), $satuan_gaji, (float) $nominal_gaji, null];
 	}
 }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kategori Gaji</title>
+    <title>Kategori Salary</title>
     <link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
     <link href="<?php echo base_url()?>assets/backend/style.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -35,7 +35,7 @@
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
                 <div class="flex justify-between items-center mb-4">
-                <h1 class="text-2xl font-bold">Kategori Gaji</h1>
+                <h1 class="text-2xl font-bold">Kategori Salary</h1>
                 <a href="<?= site_url('rekap-gaji') ?>" class="flex items-center gap-2 bg-blue-500 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
@@ -80,15 +80,25 @@
                         >
                       </div>
                       <div class="mb-4">
-                        <label class="mb-2 block text-sm text-gray-700 dark:text-gray-200">Nominal Gaji</label>
+                        <label class="mb-2 block text-sm text-gray-700 dark:text-gray-200">Satuan Salary</label>
+                        <select name="satuan_gaji" required class="w-full sm:w-60 rounded-md border border-stroke dark:border-strokedark px-3 py-2 dark:bg-boxdark dark:text-white">
+                          <?php foreach (['Harian', 'Bulanan', 'Project', 'Persentase'] as $satuan): ?>
+                            <option value="<?= $satuan ?>" <?= ($sedang_edit && $kategori->satuan_gaji === $satuan) ? 'selected' : '' ?>>
+                              <?= $satuan ?>
+                            </option>
+                          <?php endforeach; ?>
+                        </select>
+                      </div>
+                      <div class="mb-4">
+                        <label class="mb-2 block text-sm text-gray-700 dark:text-gray-200">Nominal Salary</label>
                         <input
                           type="number"
                           name="nominal_gaji"
                           required
                           min="0"
-                          step="1000"
+                          step="any"
                           value="<?= $sedang_edit ? $kategori->nominal_gaji : '' ?>"
-                          placeholder="Contoh: 3000000"
+                          placeholder="Contoh: 3000000 (atau 2.5 untuk persentase)"
                           class="w-full sm:w-60 rounded-md border border-stroke dark:border-strokedark px-3 py-2 dark:bg-boxdark dark:text-white"
                         >
                       </div>
@@ -115,15 +125,16 @@
                     <thead class="uppercase tracking-wider border-b-2 border-gray-200 dark:border-neutral-600 bg-gray-100 dark:bg-neutral-700">
                       <tr>
                         <th scope="col" class="px-6 py-4 text-gray-700 dark:text-gray-300">Nama Kategori</th>
-                        <th scope="col" class="px-6 py-4 text-gray-700 dark:text-gray-300">Nominal Gaji</th>
+                        <th scope="col" class="px-6 py-4 text-gray-700 dark:text-gray-300">Satuan</th>
+                        <th scope="col" class="px-6 py-4 text-gray-700 dark:text-gray-300">Nominal Salary</th>
                         <th scope="col" class="px-6 py-4 text-gray-700 dark:text-gray-300">Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
                       <?php if (empty($daftar_kategori)): ?>
                         <tr class="border-b border-gray-200 dark:border-neutral-600">
-                          <td colspan="3" class="px-6 py-4 text-gray-700 dark:text-gray-400 text-center">
-                            Belum ada kategori gaji.
+                          <td colspan="4" class="px-6 py-4 text-gray-700 dark:text-gray-400 text-center">
+                            Belum ada kategori salary.
                           </td>
                         </tr>
                       <?php else: ?>
@@ -133,7 +144,10 @@
                               <?= $k->nama_kategori ?>
                             </th>
                             <td class="px-6 py-4 text-gray-700 dark:text-gray-400">
-                              Rp <?= number_format($k->nominal_gaji, 0, ',', '.') ?>
+                              <?= $k->satuan_gaji ?>
+                            </td>
+                            <td class="px-6 py-4 text-gray-700 dark:text-gray-400">
+                              <?= format_nominal_salary($k->nominal_gaji, $k->satuan_gaji) ?>
                             </td>
                             <td class="px-6 py-4">
                               <a href="<?= site_url('rekap-gaji/kategori/edit/' . $k->id) ?>" class="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600">

@@ -59,6 +59,7 @@ $route['rekap-gaji/kategori/update/(:any)'] = 'Crud_kategori_gaji/kategori_updat
 $route['rekap-gaji/kategori/delete/(:any)'] = 'Crud_kategori_gaji/kategori_delete/$1';
 $route['rekap-gaji/kategori/store'] = 'Crud_kategori_gaji/kategori_store';
 $route['rekap-gaji/kategori'] = 'Crud_kategori_gaji/kategori';
+$route['rekap-gaji/(:any)'] = 'Crud_kategori_gaji/rekap/$1'; // Rekap 1 user terpilih (harus di taruh setelah route rekap-gaji/* yang lebih spesifik)
 $route['rekap-gaji'] = 'Crud_kategori_gaji/rekap';
 
 

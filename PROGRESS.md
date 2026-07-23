@@ -238,6 +238,131 @@
   (tabel baru `kategori_gaji` + `ALTER TABLE user ADD COLUMN
   kategori_gaji_id`), belum dijalankan di server.
 
+#### Update: Satuan Gaji (Harian/Bulanan/Project)
+
+- Tiap kategori sekarang wajib pilih **satuan gaji**: `Harian`, `Bulanan`,
+  atau `Project` (kolom `satuan_gaji` ENUM di `kategori_gaji`). Nominal
+  ditampilkan dengan suffix satuannya, mis. "Rp 250.000 / harian".
+- Total di halaman Rekap Gaji dipecah jadi **3 total terpisah** (Total
+  Gaji Bulanan, Harian, Project) — sengaja tidak dijumlah gabung jadi satu
+  angka karena satuannya beda-beda (gaji bulanan + rate harian + ongkos
+  project tidak bisa dijumlah langsung jadi angka yang berarti).
+- Sudah dites: 3 kategori dibuat (satu per satuan), di-assign ke user
+  berbeda, total per satuan di halaman rekap cocok (mis. Bulanan
+  Rp 3.200.000, Harian Rp 250.000, terpisah — tidak tercampur). Data test
+  sudah dibersihkan.
+
+#### Update: Satuan Persentase + Rename "Rekap Gaji" → "Rekap Salary"
+
+- Tambah satuan ke-4: **Persentase** (mis. komisi sales 2.5%). Nominal
+  untuk satuan ini boleh desimal (input step diubah dari kelipatan 1000
+  jadi bebas) dan divalidasi tidak boleh lebih dari 100. Ditampilkan
+  sebagai "2,5%" (bukan "Rp"), lewat helper baru
+  `format_nominal_salary()` di `customs_helper.php` (dipakai di halaman
+  Rekap Salary & Kategori Salary supaya format konsisten).
+- Total per satuan di Rekap Salary sekarang ada 4: Bulanan, Harian,
+  Project, **Persentase** (dijumlah terpisah, bukan digabung ke Rupiah —
+  jumlah persentase & jumlah Rupiah tidak sepadan).
+- Semua teks tampilan yang sebelumnya "Gaji" diganti jadi "Salary": judul
+  halaman ("Rekap Salary", "Kategori Salary"), link sidebar, label form
+  ("Satuan Salary", "Nominal Salary"), header tabel, dan pesan
+  flashdata. **Nama tabel/kolom/route DB tidak diubah** (`kategori_gaji`,
+  `nominal_gaji`, `satuan_gaji`, URL `/rekap-gaji`) — itu detail
+  implementasi, bukan "judul" yang diminta diganti, dan mengubahnya butuh
+  migrasi rename yang tidak diminta.
+- Sudah dites: validasi >100% ditolak, kategori persentase 2.5% dibuat &
+  ditampilkan sebagai "2,5%", total Persentase di rekap menjumlah benar
+  terpisah dari Rupiah, dan judul/label di semua halaman + sidebar sudah
+  "Salary" bukan "Gaji" lagi. Data test sudah dibersihkan.
+
+#### Update: Satu User Bisa Pilih Lebih dari Satu Kategori Salary
+
+- Sebelumnya tiap user cuma bisa punya 1 kategori (kolom tunggal
+  `user.kategori_gaji_id`). Sekarang **many-to-many** lewat tabel
+  penghubung baru `user_kategori_gaji` — satu user bisa dapat gaji pokok
+  bulanan + komisi persentase + tunjangan harian sekaligus, dst. Kolom
+  `user.kategori_gaji_id` dihapus (belum pernah dipakai di produksi,
+  jadi aman diganti tanpa migrasi tambahan).
+- Di halaman Rekap Salary, kolom "Kategori Salary" sekarang pakai
+  `<select multiple>` (Ctrl/Cmd+klik untuk pilih beberapa) + tombol
+  Simpan sendiri (tidak auto-submit seperti dropdown tunggal sebelumnya,
+  karena multi-select butuh pilihan final dulu baru di-submit). Kolom
+  "Nominal Salary" menampilkan tiap kategori yang di-assign sebagai baris
+  terpisah (mis. "Gaji Pokok: Rp 3.000.000 / bulanan" +
+  "Komisi Sales: 2,5%").
+- Simpan pakai strategi hapus-lalu-insert-ulang semua assignment user itu
+  tiap kali submit (`Crud_kategori_gaji::assign()`) — lebih sederhana &
+  aman daripada diff manual, dan otomatis mendukung deselect (pilih
+  kosong = lepas semua kategori user itu).
+- Total per satuan di halaman rekap tetap dihitung dari SEMUA baris
+  assignment yang aktif (bukan per-user), jadi otomatis benar walau satu
+  user punya beberapa kategori sekaligus.
+- Sudah dites end-to-end: assign 3 kategori sekaligus ke satu user (baris
+  di `user_kategori_gaji` sesuai), lepas satu kategori (submit ulang
+  dengan 2 pilihan → baris ketiga hilang dari DB, total per satuan ikut
+  turun), dan hapus kategori yang sedang di-assign ke user → assignment-nya
+  ikut terhapus otomatis (tidak ada baris yatim). Data test sudah
+  dibersihkan.
+
+#### Update: Tampilan Mobile Rekap Salary Dirapikan
+
+- User melaporkan (dengan screenshot) tampilan `/rekap-gaji` berantakan di
+  layar HP — header/tombol numpuk, dan tabel lebar jadi harus di-scroll
+  horizontal yang canggung untuk kolom kategori (multi-select) + nominal.
+- Header di-rombak jadi stack vertikal di mobile (`flex-col` → `sm:flex-row`),
+  tombol "Kelola Kategori" teksnya dipendekin biar muat.
+  Total per satuan diubah dari 4 baris teks polos jadi grid kartu kecil
+  2 kolom (rapi di HP, 4 kolom di layar lebih besar).
+- Tabel (yang berisi multi-select + tombol Simpan per baris — susah dibaca
+  kalau di-scroll horizontal sempit) diganti jadi **kartu per user** khusus
+  di layar mobile (`sm:hidden`), sementara tabel biasa tetap dipakai untuk
+  tablet/desktop (`hidden sm:block`) — pola "responsive table jadi card"
+  yang umum dipakai, bukan sekadar bikin tabelnya bisa di-scroll.
+- Sudah dites di viewport 375px (HP) dan 1280px (desktop): kartu mobile
+  menampilkan nama+role, daftar kategori yang sudah di-assign, multi-select
+  full-width, dan tombol Simpan full-width — tabel desktop tetap seperti
+  sebelumnya. Data uji visual dibersihkan tanpa menyentuh kategori/assignment
+  yang sudah dibuat user sendiri di database (dicek dulu sebelum hapus).
+
+#### Update: Nama Harus Dipilih Dulu Baru Data User Muncul
+
+- Diganti dari "tampilkan semua user sekaligus" (list panjang, salah satu
+  penyebab tampilan mobile berantakan sebelumnya) jadi **dropdown "Pilih
+  Nama" dulu** — data kategori/assign satu user baru muncul setelah
+  namanya dipilih. Otomatis lebih rapi di mobile juga karena tidak ada
+  lagi daftar panjang kartu/tabel semua user yang harus di-scroll.
+- Routing: `/rekap-gaji` (belum ada nama dipilih → cuma dropdown + pesan
+  "pilih nama dulu") dan `/rekap-gaji/<id_session>` (data 1 user itu
+  muncul, dropdown otomatis ke-set ke nama itu). Route baru
+  `rekap-gaji/(:any)` ditaruh SETELAH route `rekap-gaji/kategori*` dan
+  `rekap-gaji/assign/*` yang lebih spesifik (kalau kebalik, `:any` yang
+  greedy bakal nyaplok "kategori"/"assign" duluan).
+- Total per satuan (Bulanan/Harian/Project/Persentase) di atas tetap
+  ringkasan SELURUH user (bukan cuma yang lagi dipilih) — supaya tetap ada
+  gambaran umum meski sedang fokus ke satu orang.
+- Setelah klik Simpan di form assign, redirect balik ke halaman user yang
+  sama (`/rekap-gaji/<id_session>`), bukan ke halaman dropdown kosong —
+  jadi tidak perlu pilih ulang nama tiap habis simpan.
+- Sudah dites: halaman dasar cuma nampilin dropdown (tidak ada data user
+  manapun bocor ke tampilan), pilih 1 nama → cuma data orang itu yang
+  muncul, submit assign tetap di halaman orang itu, dan route
+  `/rekap-gaji/kategori` & `/rekap-gaji/kategori/edit/<id>` dicek masih
+  jalan normal (tidak ke-shadow oleh route baru). Data test dibersihkan.
+
+#### Update: Hapus 4 Kartu Total, Rename "Rekap Salary" → "Setting Salary"
+
+- 4 kartu ringkasan total per satuan (Salary Bulanan/Harian/Project/
+  Persentase) di atas dropdown **dihapus** — bukan cuma disembunyikan,
+  perhitungannya di controller (`rekap()`) juga dibuang karena sudah tidak
+  dipakai di mana pun lagi.
+- Judul halaman diganti dari "Rekap Salary" jadi **"Setting Salary"**
+  (`<title>`, `<h1>`), dan link di sub menu Fin & Acc sidebar ikut diganti
+  jadi "Setting Salary". URL/route tetap `/rekap-gaji` (tidak diminta
+  ganti URL, cuma teks yang tampil).
+- Sudah dites: halaman langsung ke pesan "pilih nama dulu" tanpa kartu
+  total sama sekali, judul tab browser & heading jadi "Setting Salary",
+  dan sidebar Fin & Acc ikut berubah.
+
 ### Bug Fix: Project Hilang dari Pencapaian Bulanan
 
 - Root cause: syarat "achieved" lama mewajibkan Pembayaran Kesatu **dan**
