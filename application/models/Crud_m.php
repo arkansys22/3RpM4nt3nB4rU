@@ -286,11 +286,24 @@ class Crud_m extends CI_model{
   }
 
 
-  public function view_where_potensial_clients_deal($table,$order,$ordering)
-  {   
+  public function view_where_potensial_clients_deal($table,$order,$ordering,$keep_id_session = null)
+  {
       $today = date('Y-m-d');
+
+      // Klien potensial yang sudah dipakai bikin project (ada di tabel project) tidak
+      // ditampilkan lagi, supaya tidak bisa dipilih dobel. Kecuali $keep_id_session:
+      // dipakai halaman edit supaya klien yang sudah terpasang di project itu sendiri
+      // tetap muncul di dropdown-nya, walaupun sudah lewat tanggalnya / sudah "dipakai".
+      $this->db->group_start();
       $this->db->where_in('status','Deal');
-       $this->db->where('event_date >=', $today);
+      $this->db->where('event_date >=', $today);
+      $this->db->where("id_session NOT IN (SELECT potensial_clients_id_session FROM project WHERE potensial_clients_id_session != '')", NULL, FALSE);
+      $this->db->group_end();
+
+      if (!empty($keep_id_session)) {
+          $this->db->or_where('id_session', $keep_id_session);
+      }
+
       $this->db->order_by($order,$ordering);
       $query = $this->db->get($table);
       return $query->result_array();
