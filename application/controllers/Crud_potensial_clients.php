@@ -1160,6 +1160,13 @@ class crud_potensial_clients extends CI_Controller {
     public function download_proposal($id){
 
         $pc = $this->db->get_where('potensial_clients',['id_session'=>$id])->row();
+
+        if (empty($pc->promo)) {
+            $this->session->set_flashdata('error', 'Silakan isi Setting Diskon terlebih dahulu sebelum mencetak penawaran.');
+            redirect('potensial-clients/lihat/'.$id);
+            return;
+        }
+
         $penawaran = $this->db->get_where('penawaran_klien',['penawaran_klien_potensial_idsession'=>$id])->result();
 
         $data = [
@@ -1256,6 +1263,13 @@ class crud_potensial_clients extends CI_Controller {
 
     public function update_penawaran($id_session)
     {
+        $qty = $this->input->post('qty');
+        if (empty($qty) || (int) $qty < 1) {
+            $this->session->set_flashdata('error', 'Silakan isi Quantity terlebih dahulu.');
+            redirect('potensial-clients/lihat/'.$id_session);
+            return;
+        }
+
         $data = [
             'penawaran_klien_potensial_idsession' => $id_session,
             'penawaran_klien_pricelist_kategori'      => $this->input->post('kategori'),

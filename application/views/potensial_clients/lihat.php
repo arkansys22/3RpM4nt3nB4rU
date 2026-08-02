@@ -48,16 +48,22 @@
         <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
           <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
-                <div class="flex justify-between items-center mb-4">
+                <?php if ($this->session->flashdata('error')): ?>
+                  <div class="mb-4 p-3 rounded-md bg-red-100 text-red-700 text-sm"><?= $this->session->flashdata('error') ?></div>
+                <?php endif; ?>
+                <?php if ($this->session->flashdata('Success')): ?>
+                  <div class="mb-4 p-3 rounded-md bg-green-100 text-green-700 text-sm"><?= $this->session->flashdata('Success') ?></div>
+                <?php endif; ?>
+                <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between mb-4">
                 <h1 class="text-2xl font-bold">Lihat Potensial Klien <?= $pc->status ?></h1>
                 <div
                   x-data="{openDropDown: false}"
-                  class="relative inline-block"
+                  class="relative w-full md:w-auto"
                 >
                   <a
                   href="#"
                   @click.prevent="openDropDown = !openDropDown"
-                  class="inline-flex items-center gap-2.5 rounded-md bg-primary px-5.5 py-3 font-medium text-white hover:bg-opacity-95"
+                  class="flex md:inline-flex items-center justify-between md:justify-center gap-2.5 rounded-md bg-primary px-5.5 py-3 font-medium text-white hover:bg-opacity-95 w-full md:w-auto"
                   >
                   Menu
                   <svg
@@ -84,7 +90,7 @@
                   <div
                   x-show="openDropDown"
                   @click.outside="openDropDown = false"
-                  class="absolute left-0 top-full z-40 mt-2 w-full rounded-md border border-stroke bg-white py-3 shadow-card dark:border-strokedark dark:bg-boxdark"
+                  class="absolute right-0 top-full z-40 mt-2 w-full md:w-48 rounded-md border border-stroke bg-white py-3 shadow-card dark:border-strokedark dark:bg-boxdark"
                   >
                   <ul class="flex flex-col">
                     <li>
@@ -166,15 +172,16 @@
               </form>
               </div>
 
-              <button onclick="openModal()"
-                class="px-4 py-2 bg-primary text-white rounded-md shadow">
-                Tambah Penawaran Produk 
-              </button>
-              <button onclick="openModals()"
-                class="px-4 py-2 bg-primary text-white rounded-md shadow">
-                Setting Diskon 
-              </button>
-              <br><br>
+              <div class="flex flex-col gap-2 md:flex-row mb-4">
+                <button onclick="openModal()"
+                  class="w-full md:w-auto px-4 py-2 bg-primary text-white rounded-md shadow">
+                  Tambah Penawaran Produk
+                </button>
+                <button onclick="openModals()"
+                  class="w-full md:w-auto px-4 py-2 bg-primary text-white rounded-md shadow">
+                  Setting Diskon
+                </button>
+              </div>
 
               <?php if ($pc->promo === 'default'){?>
                 <span>Format Promo Diskon : Default</span>
@@ -300,10 +307,10 @@
 
                         <!-- Sub Total selalu tampil -->
                         <div class="flex justify-between items-center text-sm md:text-base">
-                          <span class="font-medium !text-black dark:!text-white">
+                          <span class="font-medium text-black dark:text-white">
                             Sub Total
                           </span>
-                          <span class="font-semibold !text-black dark:!text-white text-right">
+                          <span class="font-semibold text-black dark:text-white text-right">
                             Rp <?= number_format($subTotal, 0, ',', '.') ?>
                           </span>
                         </div>
@@ -311,10 +318,10 @@
                         <!-- Promo hanya muncul kalau bukan "tidak" -->
                         <?php if ($promoType !== 'tidak' && $promoNominal > 0): ?>
                         <div class="flex justify-between items-center text-sm md:text-base">
-                          <span class="font-medium !text-black dark:!text-white">
+                          <span class="font-medium text-black dark:text-white">
                             Promo Diskon (-)
                           </span>
-                          <span class="font-semibold !text-black dark:!text-white text-right">
+                          <span class="font-semibold text-black dark:text-white text-right">
                             Rp <?= number_format($promoNominal, 0, ',', '.') ?>
                           </span>
                         </div>
@@ -322,7 +329,7 @@
 
                         <!-- Total -->
                         <div class="border-t border-stroke dark:border-strokedark pt-4 flex justify-between items-center">
-                          <span class="font-bold !text-black dark:!text-white text-base md:text-lg">
+                          <span class="font-bold text-black dark:text-white text-base md:text-lg">
                             Total
                           </span>
 
@@ -335,7 +342,7 @@
 
                       <div class="mt-6 flex justify-end">
                         <button
-                          onclick="window.location.href='<?= base_url('potensial-clients/download_proposal/'.$pc->id_session) ?>'"
+                          onclick="cetakPenawaran()"
                           class="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 font-medium text-white hover:bg-opacity-90 transition"
                         >
                           Cetak Penawaran
@@ -484,10 +491,10 @@
 
               <!-- Overlay -->
               <div id="modal"
-                class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
+                class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 overflow-y-auto py-8">
 
                 <!-- Modal Box -->
-                <div class="bg-white w-full max-w-md rounded-lg shadow-lg p-6 relative">
+                <div class="bg-white w-full max-w-md rounded-lg shadow-lg p-6 relative max-h-[85vh] overflow-y-auto">
 
                   <!-- Close Button -->
                   <button onclick="closeModal()"
@@ -499,7 +506,7 @@
                   <h2 class="text-lg font-semibold mb-4">Rencana Vendor</h2>
 
                   <!-- Form -->
-                  <form action="<?= site_url('potensial-clients/update_penawaran/'.$pc->id_session) ?>" method="post">
+                  <form id="formPenawaran" action="<?= site_url('potensial-clients/update_penawaran/'.$pc->id_session) ?>" method="post">
                   <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>">
 
                     <div class="mb-4">
@@ -536,11 +543,12 @@
                     </div>
                     <div class="mb-4">
                       <label class="block text-sm font-medium mb-1">Detail</label>
-                      <input type="text" id="detail" name="detail" class="w-full rounded border px-3 py-2" readonly>
+                      <textarea id="detail" name="detail" rows="1" readonly
+                        class="w-full rounded border px-3 py-2 resize-none overflow-hidden"></textarea>
                     </div>
                     <div class="mb-4">
                       <label class="block text-sm font-medium mb-1">Quantity</label>
-                       <input type="number" id="qty" name="qty" class="w-full rounded border px-3 py-2">
+                       <input type="number" id="qty" name="qty" min="1" required class="w-full rounded border px-3 py-2">
                     </div>
                     <div class="flex justify-end gap-2">
                       <button type="button" onclick="closeModal()"
@@ -595,6 +603,12 @@
         document.getElementById('modal').classList.add('hidden');
         document.getElementById('modal').classList.remove('flex');
       }
+
+      function resizeDetailTextarea() {
+        var el = document.getElementById('detail');
+        el.style.height = 'auto';
+        el.style.height = el.scrollHeight + 'px';
+      }
     </script>
 
     <script>
@@ -606,6 +620,25 @@
       function closeModals() {
         document.getElementById('modaldiskon').classList.add('hidden');
         document.getElementById('modaldiskon').classList.remove('flex');
+      }
+
+      document.getElementById('formPenawaran').addEventListener('submit', function (e) {
+        var qty = document.getElementById('qty').value;
+        if (!qty || parseInt(qty, 10) < 1) {
+          e.preventDefault();
+          alert('Silakan isi Quantity terlebih dahulu.');
+          document.getElementById('qty').focus();
+        }
+      });
+
+      function cetakPenawaran() {
+        var promoSudahDiset = <?= (!empty($pc->promo)) ? 'true' : 'false' ?>;
+        if (!promoSudahDiset) {
+          alert('Silakan isi Setting Diskon terlebih dahulu sebelum mencetak penawaran.');
+          openModals();
+          return;
+        }
+        window.location.href = '<?= base_url('potensial-clients/download_proposal/'.$pc->id_session) ?>';
       }
     </script>
     <script>
@@ -688,6 +721,7 @@
             $('#harga_promo').val('');
             $('#maks_diskon').val('');
             $('#detail').val('');
+            resizeDetailTextarea();
             return;
         }
 
@@ -708,6 +742,7 @@
                 $('#harga_promo').val(data.harga_promo || '');
                 $('#maks_diskon').val(data.maks_diskon || '');
                 $('#detail').val(data.deskripsi || '');
+                resizeDetailTextarea();
 
             },
             error: function(xhr) {
