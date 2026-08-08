@@ -93,7 +93,7 @@
             <div class="flex flex-wrap items-center md:justify-between justify-center">
               <div class="w-full md:w-4/12 px-4">
                 <div class="text-sm text-gray-900 font-semibold py-1">
-                  Copyright © 2025 Mantenbaru Organizer
+                  Copyright © 2025 Mantenbaru Organizers
                 </div>
               </div>
             </div>
