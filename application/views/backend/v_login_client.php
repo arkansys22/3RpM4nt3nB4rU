@@ -19,7 +19,7 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/gh/creativetimofficial/tailwind-starter-kit/compiled-tailwind.min.css"
     />
-    <title>Client Login Mantenbaru Organizer</title>
+    <title>Bride Login Mantenbaru Organizer</title>
   </head>
   <body class="text-gray-800 antialiased">
     <main>
