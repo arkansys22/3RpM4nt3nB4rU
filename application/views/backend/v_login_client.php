@@ -84,7 +84,7 @@
             <div class="flex flex-wrap items-center md:justify-between justify-center">
               <div class="w-full md:w-4/12 px-4">
                 <div class="text-sm text-gray-900 font-semibold py-1">
-                  Copyright © 2025 Mantenbaru Organizer
+                  Copyright © 2025 Mantenbaru Organizers
                 </div>
               </div>
             </div>
@@ -105,5 +105,15 @@
       usernameInput.addEventListener('input', () => changeTextColor(usernameInput));
       passwordInput.addEventListener('input', () => changeTextColor(passwordInput));
     });
+
+      function toggleLoginPassword(btn) {
+      const input = btn.parentElement.querySelector('input[name="password"]');
+      const eyeOpen = btn.querySelector('.eye-open');
+      const eyeClosed = btn.querySelector('.eye-closed');
+      const showing = input.type === 'text';
+      input.type = showing ? 'password' : 'text';
+      eyeOpen.classList.toggle('hidden', !showing);
+      eyeClosed.classList.toggle('hidden', showing);
+    }
   </script>
 </html>
