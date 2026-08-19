@@ -101,6 +101,8 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                     <?php if (!empty($clients->list_photo)) : ?>
                     <li><a href="<?= $clients->list_photo ?>" target="_blank" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">List Foto</a></li>
                     <?php endif; ?>
+                  <li><a href="<?= site_url('clients/buku-tamu/'. $clients->id_session) ?>" target="_blank" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Buku Tamu</a></li>
+                  <li><a href="<?= site_url('clients/nama-janur/'. $clients->id_session) ?>" target="_blank" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Nama Janur</a></li>
                   <li><a href="<?= site_url('clients/c_lihat/'. $clients->id_session) ?>" target="_blank" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Lihat Profile</a></li>
                   <li><a href="https://wa.me/<?= $clients->phone?>?text=Halo Kami dari Mantenbaru Organizer!%0A%0AKami%20ingin%20membagikan%20data%20profil%20pengantin%20yang%20sudah%20kami%20buat.%20Silakan%20klik%20link%20di%20bawah%20ini%20untuk%20melihat%20dan%20mengedit%20data%20sesuai%20kebutuhan%20acara%20kakak.%0A%0A<?= site_url('clients/c_lihat/'. $clients->id_session) ?>%0A%0AUntuk%20username%20dan%20password%20akan%20kami%20kirimkan%20di%20pesan%20berikutnya." target="_blank" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Share Profile</a></li>
                     <li>

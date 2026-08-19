@@ -259,6 +259,40 @@ class Crud_clients extends CI_Controller {
             }
     }
 
+    public function buku_tamu($id_session) {
+
+        if (!in_array($this->session->level, ['1', '2', '4'])) {
+            redirect(base_url());
+            return;
+        }
+
+        $data['clients'] = $this->Clients_model->get_client_by_session($id_session);
+
+        if (!$data['clients']) {
+            show_error('Client not found.', 404);
+            return;
+        }
+
+        $this->load->view('clients/buku_tamu', $data);
+    }
+
+    public function nama_janur($id_session) {
+
+        if (!in_array($this->session->level, ['1', '2', '4'])) {
+            redirect(base_url());
+            return;
+        }
+
+        $data['clients'] = $this->Clients_model->get_client_by_session($id_session);
+
+        if (!$data['clients']) {
+            show_error('Client not found.', 404);
+            return;
+        }
+
+        $this->load->view('clients/nama_janur', $data);
+    }
+
     public function edit($id_session) {
         // Cek session login terlebih dahulu
         if (!$this->session->userdata('id_session') || !$this->session->userdata('level')) {

@@ -128,6 +128,8 @@ $route['clients/recycle_bin'] = 'crud_clients/recycle_bin'; // Halaman recycle b
 $route['clients/restore/(:any)'] = 'crud_clients/restore/$1'; // Restore clients
 $route['clients/permanent_delete/(:any)'] = 'crud_clients/permanent_delete/$1'; // Hapus permanen clients
 $route['clients/lihat/(:any)'] = 'crud_clients/lihat/$1'; // Menampilkan lihat clients
+$route['clients/buku-tamu/(:any)'] = 'crud_clients/buku_tamu/$1'; // Menampilkan desain layout buku tamu (depan/isi/belakang)
+$route['clients/nama-janur/(:any)'] = 'crud_clients/nama_janur/$1'; // Menampilkan desain layout nama janur
 
 $route['clients/c_edit/(:any)'] = 'crud_clients/c_edit/$1'; // Halaman edit clients berdasarkan id_session
 $route['clients/c_update/(:any)'] = 'crud_clients/c_update/$1'; // Proses update data clients
