@@ -148,6 +148,24 @@ $route['crews/delete_permanent/(:any)'] = 'Crud_crews/delete_permanent/$1'; // M
 $route['crews/lihat/(:any)'] = 'Crud_crews/lihat/$1'; // Menampilkan lihat Crew
 
 
+$route['susunan-acara'] = 'Crud_susunan_acara/index'; // Daftar kategori acara pernikahan (Akad Nikah, Resepsi, dst)
+$route['susunan-acara/lihat/(:any)'] = 'Crud_susunan_acara/lihat/$1'; // Detail kegiatan di satu kategori
+$route['susunan-acara/presentasi/(:any)'] = 'Crud_susunan_acara/presentasi/$1'; // Mode presentasi (slide) untuk satu kategori
+$route['susunan-acara/kategori'] = 'Crud_susunan_acara/kategori'; // Kelola kategori acara (Akad Nikah, Resepsi, dst)
+$route['susunan-acara/kategori/store'] = 'Crud_susunan_acara/kategori_store';
+$route['susunan-acara/kategori/update/(:any)'] = 'Crud_susunan_acara/kategori_update/$1';
+$route['susunan-acara/kategori/delete/(:any)'] = 'Crud_susunan_acara/kategori_delete/$1';
+$route['susunan-acara/kategori/move-up/(:any)'] = 'Crud_susunan_acara/kategori_move_up/$1';
+$route['susunan-acara/kategori/move-down/(:any)'] = 'Crud_susunan_acara/kategori_move_down/$1';
+$route['susunan-acara/create/(:any)'] = 'Crud_susunan_acara/create/$1'; // Tambah kegiatan langsung di kategori tertentu
+$route['susunan-acara/create'] = 'Crud_susunan_acara/create';
+$route['susunan-acara/store'] = 'Crud_susunan_acara/store';
+$route['susunan-acara/edit/(:any)'] = 'Crud_susunan_acara/edit/$1';
+$route['susunan-acara/update/(:any)'] = 'Crud_susunan_acara/update/$1';
+$route['susunan-acara/delete/(:any)'] = 'Crud_susunan_acara/delete/$1';
+$route['susunan-acara/move-up/(:any)'] = 'Crud_susunan_acara/move_up/$1';
+$route['susunan-acara/move-down/(:any)'] = 'Crud_susunan_acara/move_down/$1';
+
 $route['coa'] = 'Crud_coa/index'; // Menampilkan daftar crews yang masih aktif
 $route['coa/create'] = 'Crud_coa/create'; // Menampilkan halaman tambah crews
 $route['coa/store'] = 'Crud_coa/store'; // Menyimpan data crews yang baru dibuat

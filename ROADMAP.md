@@ -7,12 +7,8 @@ Rencana & pekerjaan yang masih tertunda untuk ERP Mantenbaru. Ini dokumen "ke de
 ## 🔴 Blocker aktif — perlu ditindaklanjuti sebelum fitur baru dipakai beneran
 
 - [x] ~~Route `/gaji-saya` & `/rekap-gaji/<user>/<periode>` belum ke-commit~~ — sudah di-commit (`2e1c97d`). Pastikan sudah di-push & di-pull ke server produksi.
-- [ ] **Jalankan migrasi database di server produksi** — belum satupun dari ini pernah dijalankan di luar DB lokal (`db_erpmaid`):
-  - `db/user_absensi.sql` — tabel absensi kehadiran (wajib untuk tombol Absensi & Rekap Absensi jalan)
-  - `db/pengaturan_absensi.sql` — pengaturan jam masuk ketentuan
-  - `db/kategori_gaji.sql` — tabel `kategori_gaji` + `user_kategori_gaji` (wajib untuk Setting Salary & Rekap Gaji Saya jalan)
-
-  Tanpa ini, mengklik tombol Absensi/Rekap Gaji di server akan error "table doesn't exist", bukan 404 lagi.
+- [x] ~~Migrasi `user_absensi.sql`, `pengaturan_absensi.sql`, `kategori_gaji.sql`~~ — sudah dijalankan di server produksi (dikonfirmasi 2026-08-19).
+- [ ] **Jalankan migrasi `db/susunan_acara.sql` di server produksi** — bikin tabel `susunan_acara_kategori` + `susunan_acara`, wajib untuk fitur "Susunan Acara" (kategori acara, kegiatan, mode presentasi) yang baru dibangun. Belum pernah dijalankan di luar DB lokal (`db_erpmaid`). Tanpa ini, menu Susunan Acara di server akan error "table doesn't exist".
 
 ## 🟠 Sudah di-flag, belum dikerjakan
 
