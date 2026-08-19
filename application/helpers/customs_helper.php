@@ -186,19 +186,19 @@ function getBulan($bln){
                     return "Jul";
                     break;
                 case 8:
-                    return "Agu";
+                    return "Agustus";
                     break;
                 case 9:
-                    return "Sep";
+                    return "September";
                     break;
                 case 10:
-                    return "Okt";
+                    return "Oktober";
                     break;
                 case 11:
-                    return "Nov";
+                    return "November";
                     break;
                 case 12:
-                    return "Des";
+                    return "Desember";
                     break;
             }
         }
