@@ -1,16 +1,20 @@
-<?php $isEdit = !empty($item); ?>
+<?php
+  $isEdit = !empty($item);
+  $acaraKe = $acara_ke ?? 1;
+  $acaraUrlPrefix = $acaraKe == 2 ? 'acara2/' : '';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $isEdit ? 'Edit Kegiatan' : 'Tambah Kegiatan' ?> | Susunan Acara</title>
+    <title><?= $isEdit ? 'Edit Kegiatan' : 'Tambah Kegiatan' ?> | Susunan Acara <?= $acaraKe ?> — <?= htmlspecialchars($clients->client_name) ?></title>
     <link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
     <link href="<?php echo base_url()?>assets/backend/style.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body
-    x-data="{ page: 'susunan_acara', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-data="{ page: 'clients', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
     x-init="
          darkMode = JSON.parse(localStorage.getItem('darkMode'));
          $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
@@ -37,8 +41,8 @@
             <div class="col-span-12 lg:col-span-8 lg:col-start-3 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
 
               <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between mb-4">
-                <h1 class="text-2xl font-bold"><?= $isEdit ? 'Edit Kegiatan' : 'Tambah Kegiatan' ?></h1>
-                <a href="<?= site_url('susunan-acara') ?>"
+                <h1 class="text-2xl font-bold"><?= $isEdit ? 'Edit Kegiatan' : 'Tambah Kegiatan' ?> (Acara <?= $acaraKe ?>) — <?= htmlspecialchars($clients->client_name) ?></h1>
+                <a href="<?= site_url('clients/susunan-acara/' . $acaraUrlPrefix . $clients->id_session) ?>"
                   class="w-full md:w-auto text-center px-4 py-2 border rounded-md font-medium hover:bg-whiter dark:hover:bg-meta-4">
                   &larr; Kembali
                 </a>
@@ -48,22 +52,13 @@
                 <div class="mb-4 p-3 rounded-md bg-red-100 text-red-700 text-sm"><?= $this->session->flashdata('error') ?></div>
               <?php endif; ?>
 
-              <form action="<?= $isEdit ? site_url('susunan-acara/update/' . $item->id_session) : site_url('susunan-acara/store') ?>"
+              <form action="<?= $isEdit ? site_url('clients/susunan-acara/update/' . $item->id_session) : site_url('clients/susunan-acara/store') ?>"
                 method="post" enctype="multipart/form-data">
                 <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>">
-
-                <div class="mb-4">
-                  <label class="block mb-2 font-medium">Kategori</label>
-                  <select name="kategori_id_session" required
-                    class="w-full rounded-lg border border-gray-400 bg-transparent py-2 px-4 outline-none focus:border-primary dark:border-gray-600 dark:bg-form-input">
-                    <option value="">-- Pilih Kategori --</option>
-                    <?php foreach ($kategori_list as $kat): ?>
-                    <option value="<?= $kat->id_session ?>" <?= ($selected_kategori == $kat->id_session) ? 'selected' : '' ?>>
-                      <?= htmlspecialchars($kat->nama_kategori) ?>
-                    </option>
-                    <?php endforeach; ?>
-                  </select>
-                </div>
+                <?php if (!$isEdit): ?>
+                <input type="hidden" name="client_id_session" value="<?= $clients->id_session ?>">
+                <input type="hidden" name="acara_ke" value="<?= $acaraKe ?>">
+                <?php endif; ?>
 
                 <div class="mb-4">
                   <label class="block mb-2 font-medium">Nama Kegiatan</label>
@@ -71,9 +66,7 @@
                   <?php $variabel_grouped = []; foreach ($variabel_list as $v) { $variabel_grouped[$v['group']][] = $v; } ?>
                   <div class="mb-2 p-3 rounded-lg border border-dashed border-gray-400 dark:border-gray-600 max-h-64 overflow-y-auto">
                     <p class="text-xs text-body dark:text-bodydark mb-2">
-                      Klik untuk sisipkan placeholder (mis. jubir, penghulu, saksi, nama bapak/ibu CPW-CPP) ke posisi kursor.
-                      Placeholder ini otomatis terisi data klien yang sesuai saat kegiatan ini disalin ke
-                      Susunan Acara milik klien tertentu (lihat clients/lihat/&lt;klien&gt; &rarr; Menu &rarr; Susunan Acara).
+                      Klik untuk sisipkan data klien ini secara otomatis (mis. jubir, penghulu, saksi, nama bapak/ibu CPW-CPP) ke posisi kursor:
                     </p>
                     <?php foreach ($variabel_grouped as $groupName => $items): ?>
                     <p class="text-xs font-semibold text-black dark:text-white mt-3 mb-1"><?= htmlspecialchars($groupName) ?></p>
@@ -88,8 +81,13 @@
                     <?php endforeach; ?>
                   </div>
 
-                  <textarea name="nama_kegiatan" id="nama_kegiatan_input" required rows="4"
+                  <textarea name="nama_kegiatan" id="nama_kegiatan_input" required rows="4" oninput="updateKegiatanPreview()"
                     class="w-full rounded-lg border border-gray-400 bg-transparent py-2 px-4 outline-none focus:border-primary dark:border-gray-600 dark:bg-form-input"><?= $isEdit ? htmlspecialchars($item->nama_kegiatan) : set_value('nama_kegiatan') ?></textarea>
+
+                  <div class="mt-2 p-3 rounded-lg bg-whiter dark:bg-meta-4">
+                    <p class="text-xs font-medium text-body dark:text-bodydark mb-1">Pratinjau untuk <?= htmlspecialchars($clients->client_name) ?>:</p>
+                    <p id="nama_kegiatan_preview" class="text-sm text-black dark:text-white whitespace-pre-line"></p>
+                  </div>
                 </div>
 
                 <div class="mb-4">
@@ -111,7 +109,7 @@
                   <label class="block mb-2 font-medium">Foto Ilustrasi</label>
                   <?php if ($isEdit && !empty($item->foto)): ?>
                   <div class="mb-2">
-                    <img src="<?= base_url('assets/uploads/susunan_acara/' . $item->foto) ?>" alt="" class="w-32 h-32 object-cover rounded-md border border-stroke dark:border-strokedark">
+                    <img src="<?= base_url('assets/uploads/client_susunan_acara/' . $item->foto) ?>" alt="" class="w-32 h-32 object-cover rounded-md border border-stroke dark:border-strokedark">
                   </div>
                   <?php endif; ?>
                   <input type="file" name="foto" accept=".jpg,.jpeg,.png,.webp" <?= $isEdit ? '' : 'required' ?>
@@ -123,7 +121,7 @@
                   <button type="submit" class="px-4 py-2 bg-primary text-white rounded-md font-medium hover:bg-opacity-90">
                     Simpan
                   </button>
-                  <a href="<?= site_url('susunan-acara') ?>" class="px-4 py-2 border rounded-md font-medium hover:bg-whiter dark:hover:bg-meta-4">
+                  <a href="<?= site_url('clients/susunan-acara/' . $acaraUrlPrefix . $clients->id_session) ?>" class="px-4 py-2 border rounded-md font-medium hover:bg-whiter dark:hover:bg-meta-4">
                     Batal
                   </a>
                 </div>
@@ -139,6 +137,8 @@
   </div>
   <script src="<?php echo base_url()?>assets/backend/bundle.js"></script>
   <script>
+    var KEGIATAN_VARIABEL_VALUES = <?= json_encode($variabel_values, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP) ?>;
+
     function insertVariable(token) {
       var el = document.getElementById('nama_kegiatan_input');
       var start = el.selectionStart || 0;
@@ -147,7 +147,21 @@
       el.value = el.value.substring(0, start) + insert + el.value.substring(end);
       el.focus();
       el.selectionStart = el.selectionEnd = start + insert.length;
+      updateKegiatanPreview();
     }
+
+    function updateKegiatanPreview() {
+      var el = document.getElementById('nama_kegiatan_input');
+      var preview = document.getElementById('nama_kegiatan_preview');
+      var text = el.value;
+      Object.keys(KEGIATAN_VARIABEL_VALUES).forEach(function (token) {
+        var value = KEGIATAN_VARIABEL_VALUES[token] || '(kosong)';
+        text = text.split('{{' + token + '}}').join(value);
+      });
+      preview.textContent = text || '(Nama Kegiatan masih kosong)';
+    }
+
+    document.addEventListener('DOMContentLoaded', updateKegiatanPreview);
   </script>
 </body>
 </html>

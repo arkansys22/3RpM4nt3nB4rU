@@ -7,6 +7,7 @@ class Crud_clients extends CI_Controller {
         $this->load->model('Clients_model');
         $this->load->model('Vendor_model');
         $this->load->model('Agenda_model');
+        $this->load->model('Susunan_acara_model');
         $this->load->helper('url');
     }
 
@@ -232,12 +233,16 @@ class Crud_clients extends CI_Controller {
             cek_session_akses_developer('clients',$this->session->id_session);
             $data['clients'] = $this->Clients_model->get_client_by_session($id_session);
             $data['logactivity'] = $this->Clients_model->get_logactivity_by_session($id_session);
+            $data['kategori_acara'] = !empty($data['clients']->kategori_acara_id_session) ? $this->Susunan_acara_model->get_kategori_by_session($data['clients']->kategori_acara_id_session) : null;
+            $data['kategori_acara_2'] = !empty($data['clients']->kategori_acara_2_id_session) ? $this->Susunan_acara_model->get_kategori_by_session($data['clients']->kategori_acara_2_id_session) : null;
             $this->load->view('clients/lihat', $data);
 
         }else if($this->session->level=='2'){
             cek_session_akses_administrator('clients',$this->session->id_session);
             $data['clients'] = $this->Clients_model->get_client_by_session($id_session);
             $data['logactivity'] = $this->Clients_model->get_logactivity_by_session($id_session);
+            $data['kategori_acara'] = !empty($data['clients']->kategori_acara_id_session) ? $this->Susunan_acara_model->get_kategori_by_session($data['clients']->kategori_acara_id_session) : null;
+            $data['kategori_acara_2'] = !empty($data['clients']->kategori_acara_2_id_session) ? $this->Susunan_acara_model->get_kategori_by_session($data['clients']->kategori_acara_2_id_session) : null;
             $this->load->view('clients/lihat', $data);
 
         }else if($this->session->level=='3'){
@@ -248,6 +253,8 @@ class Crud_clients extends CI_Controller {
             cek_session_akses_staff_admin('clients',$this->session->id_session);
             $data['clients'] = $this->Clients_model->get_client_by_session($id_session);
             $data['logactivity'] = $this->Clients_model->get_logactivity_by_session($id_session);
+            $data['kategori_acara'] = !empty($data['clients']->kategori_acara_id_session) ? $this->Susunan_acara_model->get_kategori_by_session($data['clients']->kategori_acara_id_session) : null;
+            $data['kategori_acara_2'] = !empty($data['clients']->kategori_acara_2_id_session) ? $this->Susunan_acara_model->get_kategori_by_session($data['clients']->kategori_acara_2_id_session) : null;
             $this->load->view('clients/lihat', $data);
 
         }else if($this->session->level=='5'){
@@ -323,6 +330,7 @@ class Crud_clients extends CI_Controller {
         }
 
         $data['clients'] = $this->Clients_model->get_client_by_session($id_session);
+        $data['kategori_acara_list'] = $this->Susunan_acara_model->get_kategori_all();
         $this->load->view('clients/edit', $data);
     }
 
@@ -357,6 +365,10 @@ class Crud_clients extends CI_Controller {
             'client_name'                   => $this->input->post('client_name'),
             'email'                         => $this->input->post('email'),
             'phone'                         => $this->input->post('phone'),
+            'kategori_acara_id_session'     => $this->input->post('kategori_acara_id_session'),
+            'waktu_acara_mulai'             => $this->input->post('waktu_acara_mulai'),
+            'kategori_acara_2_id_session'   => $this->input->post('kategori_acara_2_id_session'),
+            'waktu_acara_2_mulai'           => $this->input->post('waktu_acara_2_mulai'),
             'wedding_ceremony'              => $this->input->post('wedding_ceremony'),
             'reception_afterward'           => $this->input->post('reception_afterward'),
             'list_photo'                    => $this->input->post('list_photo'),
@@ -441,6 +453,20 @@ class Crud_clients extends CI_Controller {
             $data['m_bride_mreplacementcname'] = null;
         } else {
             $data['m_bride_mothercname'] = null;
+        }
+
+        // Kolom nullable, kosongkan jadi NULL supaya tidak error saat disimpan (khususnya kolom TIME)
+        if (empty($data['kategori_acara_id_session'])) {
+            $data['kategori_acara_id_session'] = null;
+        }
+        if (empty($data['waktu_acara_mulai'])) {
+            $data['waktu_acara_mulai'] = null;
+        }
+        if (empty($data['kategori_acara_2_id_session'])) {
+            $data['kategori_acara_2_id_session'] = null;
+        }
+        if (empty($data['waktu_acara_2_mulai'])) {
+            $data['waktu_acara_2_mulai'] = null;
         }
 
         $this->Clients_model->update_client($id_session, $data);

@@ -461,6 +461,162 @@
 
 ---
 
+## 2026-08-02 — 2026-08-03
+
+### Perbaikan Halaman Potensial Klien (Lihat)
+
+- **Dropdown "Pilih Dari Klien Potensial" di `/project/create`**: sekarang
+  mengecualikan klien yang `id_session`-nya sudah terpasang ke sebuah
+  `project` (sudah pernah dipakai bikin project), supaya tidak bisa
+  dipilih dobel. Halaman `project/edit` tetap menampilkan klien yang
+  sudah terpasang ke project itu sendiri (lewat parameter `keep_id_session`
+  di `Crud_m::view_where_potensial_clients_deal()`), jadi tidak hilang
+  dari dropdown edit-nya sendiri.
+- **Notifikasi wajib isi Setting Diskon sebelum Cetak Penawaran** — cek di
+  sisi client (JS, buka otomatis modal Setting Diskon) & server
+  (`Crud_potensial_clients::download_proposal()`, redirect + flash error
+  kalau `promo` masih kosong).
+- **Notifikasi wajib isi Quantity sebelum simpan penawaran produk** — field
+  `required min="1"` + validasi JS on-submit + validasi server di
+  `update_penawaran()`.
+- **Fix dark mode**: teks Sub Total/Promo Diskon/Total tidak ikut berubah
+  warna pas toggle dark mode. Root cause: pakai class `!text-black
+  dark:!text-white` (kombinasi `!important` + `dark:`) yang tidak ada di
+  `style.css` precompiled, jadi harus digenerate live oleh script CDN
+  Tailwind — dan versi live itu pakai strategi `prefers-color-scheme` OS,
+  bukan toggle manual aplikasi. Fix: pakai class biasa (`text-black
+  dark:text-white`, tanpa `!`) yang sudah ada di `style.css` dan memang
+  benar mengikuti toggle `.dark` di `<body>`.
+- **Rapikan layout mobile/tablet**: tombol Menu & 2 tombol aksi (Tambah
+  Penawaran Produk, Setting Diskon) dibikin full-width & bertumpuk di
+  layar sempit, sejajar horizontal lagi di layar besar. Dropdown Edit/
+  Kembali sempat melebar sampai keluar batas card di desktop (anchor
+  `left-0` padahal tombolnya di ujung kanan) — dibetulkan jadi `right-0`.
+- **Modal "Tambah Penawaran Produk"**: overlay & kotak modal sekarang bisa
+  discroll (`max-h-[85vh] overflow-y-auto`) supaya tidak "mentok"/terpotong
+  di layar pendek. Field Detail diganti dari `<input>` jadi `<textarea>`
+  yang tingginya auto-menyesuaikan panjang teks (`resizeDetailTextarea()`).
+
+### Fitur Baru: Show/Hide Password di Halaman Login
+
+- Ikon mata ditambahkan di field Password `v_login.php` (`/login`) & 
+  `v_login_client.php` (`/client/login`) — toggle `type="password"` ↔
+  `type="text"` murni di sisi client, tidak mengubah logic login sama
+  sekali.
+
+---
+
+## 2026-08-08
+
+### Debugging: Fitur Baru Tidak Muncul di Server Produksi
+
+Beberapa fitur (potensial klien, notif diskon/qty, dark mode, layout
+mobile, login password toggle) sempat dilaporkan "tidak ada" di
+`maid.mantenbaru.com` walau sudah di-push dari GitHub Desktop. Ternyata
+ada 2 penyebab terpisah yang ketemu berurutan:
+
+1. **Working branch lokal sempat pindah ke `security-hardening`** (branch
+   lama, sebelum fitur-fitur sesi ini ada) tanpa disadari — sempat
+   menimbulkan kebingungan waktu ngecek file lokal. Dibetulkan balik ke
+   `main`.
+2. **Root cause sebenarnya**: deploy Git di Hostinger hPanel (bukan
+   cPanel — repo `arkansys22/3RpM4nt3nB4rU`, branch `main`, deploy ke
+   `public_html` langsung) melaporkan "sukses" di UI-nya, tapi log
+   deploy yang sebenarnya menunjukkan `git pull` di server **gagal
+   total** sejak commit yang menambahkan 3 file font `dompdf`
+   (`DejaVuSans{,-Bold,-Oblique}.ufm.php`) — file itu sudah ada di server
+   sebagai untracked file (kemungkinan pernah di-upload manual), jadi
+   `git pull` menolak menimpanya (`untracked working tree files would be
+   overwritten by merge`) dan membatalkan seluruh proses. Karena 1
+   pull yang gagal ini, **semua commit setelahnya ikut tidak pernah
+   ter-deploy**, bukan cuma yang menambahkan file font itu.
+   **Fix**: hapus 3 file konflik itu via File Manager Hostinger, deploy
+   ulang — langsung "menyusul" semua commit yang ketahan sekaligus.
+   Dicatat di memory (`hostinger-git-deploy-gotcha.md`) sebagai playbook
+   diagnosa untuk kejadian serupa ke depan: selalu cek GitHub dulu →
+   cek branch lokal & Hostinger → **buka log deploy, jangan percaya
+   cuma status "sukses"**.
+
+---
+
+## 2026-08-19
+
+### Fitur Baru: Buku Tamu & Nama Janur (Clients)
+
+- Halaman baru di `Clients → Lihat → Menu` untuk preview desain cetak
+  **Buku Tamu** (3 tampilan: depan/isi/belakang, `clients/buku-tamu/<id>`)
+  dan **Nama Janur** (1 lembar, `clients/nama-janur/<id>`), diambil dari
+  file template PNG resolusi cetak asli (Buku Tamu 3508×2481px / A4
+  landscape 300dpi, Nama Janur 4961×3508px / A3 landscape 300dpi) yang
+  **tidak pernah di-resize** — cuma ditampilkan responsif di layar lewat
+  `<svg viewBox>` yang scale proporsional.
+- Nama, tanggal, dan lokasi acara diambil otomatis dari data `clients`
+  (`client_name` dipecah jadi 2 bagian buat format "Nama1 & Nama2",
+  `wedding_date` diformat pakai helper `hari()`/`tgl_indo()`, `location`
+  langsung).
+- User awalnya kirim template yang masih ada teks contoh ("Rizki &
+  Lutfia") — di-mask dulu pakai kotak warna senada background sebelum
+  ditimpa teks baru; belakangan user upload ulang versi **polos** (tanpa
+  teks), jadi kode mask-nya disederhanakan (tidak perlu lagi).
+- Tombol **Download PNG** di tiap tampilan — generate ulang gambar
+  dasarnya + teks di atas **canvas resolusi asli** (bukan screenshot
+  layar), lalu didownload sebagai file PNG. Teks otomatis mengecil
+  (`textLength`/`ctx.measureText` + scale) kalau nama/lokasinya panjang,
+  supaya tidak pernah meluber keluar kotak desainnya — sudah dites pakai
+  nama sangat panjang.
+- Font nama pakai Google Font script "Alex Brush" warna gradasi emas
+  (dihitung dari sampel warna asli di gambar template), tanggal/lokasi
+  pakai font serif tebal warna pink brand (`#ed126b`).
+- Beberapa iterasi penyesuaian posisi/ukuran/alignment sesuai feedback
+  visual (font diperbesar, "&" dibuat aksen berbeda ukuran & posisi,
+  badge lokasi di Nama Janur dibikin lebar dinamis mengikuti panjang
+  teks lokasi & di-center ke tengah halaman, dll).
+
+### Fitur Baru: Susunan Acara (Kategori → Kegiatan → Presentasi)
+
+- Menu baru independen (tidak terikat client tertentu) untuk menyusun
+  rangkaian acara pernikahan. Alurnya 2 tingkat:
+  1. **Kategori** (`/susunan-acara`) — index cuma menampilkan daftar
+     kategori acara (mis. Akad Nikah, Resepsi) + jumlah kegiatan per
+     kategori. Kelola kategori (tambah/edit/hapus/reorder naik-turun) di
+     halaman terpisah `/susunan-acara/kategori`.
+  2. **Kegiatan** (`/susunan-acara/lihat/<kategori_id_session>`) — detail
+     satu kategori: tombol "+ Tambah Kegiatan", dan daftar kegiatan
+     (nama kegiatan, durasi, vendor/PJ, foto ilustrasi) dengan reorder
+     naik-turun **di dalam kategori itu saja** (bukan urutan global).
+- Tabel baru: `susunan_acara_kategori` & `susunan_acara` (migrasi
+  `db/susunan_acara.sql`, **belum dijalankan di produksi**). Kolom
+  `nama_kegiatan` dibuat `TEXT` (bukan `VARCHAR`) supaya bisa menampung
+  teks panjang/multi-baris — input-nya pakai `<textarea>`, ditampilkan
+  pakai `nl2br()`.
+- Foto ilustrasi diupload ke `assets/uploads/susunan_acara/`; hapus
+  kegiatan atau kategori (cascade) ikut membersihkan file fisiknya.
+- **Fitur Presentasi** — tombol "Presentasi" di tiap kategori (index &
+  halaman detail) membuka halaman full-screen mode-gelap tanpa
+  sidebar/header (`/susunan-acara/presentasi/<kategori_id_session>`):
+  slide judul kategori, lalu 1 slide per kegiatan (nama, durasi,
+  vendor/PJ, foto besar), navigasi tombol + keyboard (←/→/spasi/Esc),
+  dibangun murni client-side pakai Alpine.js (`x-data`, data kegiatan
+  dikirim sekali lewat `json_encode`).
+  - **Bug sempat ketemu**: halaman presentasi kebuka tapi kosong/rusak.
+    Root cause: data `json_encode()` (yang selalu pakai tanda kutip
+    ganda) disisipkan langsung ke atribut HTML `x-data="..."` yang JUGA
+    dibatasi tanda kutip ganda — tabrakan, HTML-nya rusak dari tanda
+    kutip pertama. Fix: bungkus dengan
+    `htmlspecialchars(json_encode(...), ENT_QUOTES, 'UTF-8')`. Sudah
+    dites ulang pakai data sengaja berisi tanda kutip ganda, apostrof,
+    dan teks 2 baris — semua tampil benar setelah fix.
+
+### Perbaikan Kecil: Format Bulan Indonesia
+
+- Helper `getBulan()` (dipakai `tgl_indo()`, dipakai luas di seluruh
+  app) — singkatan bulan Agustus-Desember (`Agu`, `Sep`, `Okt`, `Nov`,
+  `Des`) diganti jadi nama penuh (`Agustus`, `September`, `Oktober`,
+  `November`, `Desember`). Jan-Jul sengaja tidak diubah (tidak diminta).
+  Berlaku otomatis di semua halaman yang pakai `tgl_indo()`.
+
+---
+
 ## Catatan Insiden (untuk konteks, bukan tindak lanjut)
 
 - Sempat salah restore password test di DB lokal (`db_erpmaid`) beberapa
@@ -470,15 +626,28 @@
   ke `main` (karena PR sudah kamu merge via GitHub/GitHub Desktop di
   tengah sesi) — beberapa commit fitur akhirnya masuk langsung ke `main`.
   Dikonfirmasi ke kamu dan disetujui untuk lanjut kerja di `main`.
+- Deploy Hostinger sempat gagal diam-diam berhari-hari (lihat bagian
+  2026-08-08 di atas) — UI hPanel menampilkan "sukses" padahal
+  `git pull`-nya di server gagal total. Pelajaran: jangan percaya status
+  "sukses" itu, selalu cek log deploy aktualnya.
 
 ---
 
 ## Next Steps
 
-- [ ] **Jalankan migrasi `db/user_absensi.sql`, `db/pengaturan_absensi.sql`,
-      dan `db/kategori_gaji.sql` di database produksi** sebelum fitur
-      Absensi & Rekap Gaji dipakai di server (tabel-tabelnya belum ada di
-      produksi).
+- [x] ~~Jalankan migrasi `user_absensi.sql`, `pengaturan_absensi.sql`,
+      `kategori_gaji.sql` di produksi~~ — dikonfirmasi sudah jalan di
+      server (2026-08-19).
+- [ ] **Jalankan migrasi `db/susunan_acara.sql` di database produksi**
+      (bikin tabel `susunan_acara_kategori` & `susunan_acara`) — belum
+      dijalankan di luar DB lokal. Tanpa ini menu Susunan Acara di server
+      akan error "table doesn't exist". Cara jalanin: phpMyAdmin di
+      hPanel → Import file itu (atau paste ke tab SQL) → jalankan.
+- [ ] **Setelah migrasi di atas jalan, pastikan kode terbarunya juga
+      sudah ke-deploy** (push GitHub Desktop → klik Deploy di Hostinger
+      hPanel → **cek log deploy-nya, bukan cuma status "sukses"**, lihat
+      catatan insiden 2026-08-08) — baru fitur Buku Tamu, Nama Janur, dan
+      Susunan Acara bisa dites di server online.
 - [ ] **PR manual security (belum dikerjakan, ditunda atas permintaan kamu):**
       rotate password DB produksi, set `CI_ENV=production` di server,
       opsional scrub password lama dari git history. Lihat

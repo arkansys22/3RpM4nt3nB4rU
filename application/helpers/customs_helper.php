@@ -296,4 +296,138 @@ if (!function_exists('terbilang')) {
       return trim("{$city}, {$country}", ', ');
   }
 
+/**
+ * Daftar variabel yang bisa disisipkan ke "Nama Kegiatan" di Susunan Acara per klien
+ * (clients/susunan-acara/...), format tokennya {{token}}. Dipakai untuk render tombol
+ * pilihan variabel di form tambah/edit kegiatan -- lihat juga susunan_acara_variabel_values()
+ * dan render_susunan_acara_text().
+ */
+function susunan_acara_variabel_list()
+{
+    return [
+        // Data Mempelai
+        ['group' => 'Data Mempelai', 'token' => 'cpw_nama',            'label' => 'Nama Lengkap CPW'],
+        ['group' => 'Data Mempelai', 'token' => 'cpw_panggilan',       'label' => 'Nama Panggilan CPW'],
+        ['group' => 'Data Mempelai', 'token' => 'cpw_bapak',           'label' => 'Nama Bapak CPW'],
+        ['group' => 'Data Mempelai', 'token' => 'cpw_bapak_panggilan', 'label' => 'Panggilan Bapak CPW'],
+        ['group' => 'Data Mempelai', 'token' => 'cpw_ibu',             'label' => 'Nama Ibu CPW'],
+        ['group' => 'Data Mempelai', 'token' => 'cpw_ibu_panggilan',   'label' => 'Panggilan Ibu CPW'],
+        ['group' => 'Data Mempelai', 'token' => 'cpp_nama',            'label' => 'Nama Lengkap CPP'],
+        ['group' => 'Data Mempelai', 'token' => 'cpp_panggilan',       'label' => 'Nama Panggilan CPP'],
+        ['group' => 'Data Mempelai', 'token' => 'cpp_bapak',           'label' => 'Nama Bapak CPP'],
+        ['group' => 'Data Mempelai', 'token' => 'cpp_bapak_panggilan', 'label' => 'Panggilan Bapak CPP'],
+        ['group' => 'Data Mempelai', 'token' => 'cpp_ibu',             'label' => 'Nama Ibu CPP'],
+        ['group' => 'Data Mempelai', 'token' => 'cpp_ibu_panggilan',   'label' => 'Panggilan Ibu CPP'],
+
+        // Acara
+        ['group' => 'Acara', 'token' => 'nama_klien',         'label' => 'Nama Klien'],
+        ['group' => 'Acara', 'token' => 'tanggal_pernikahan', 'label' => 'Tanggal Pernikahan'],
+        ['group' => 'Acara', 'token' => 'lokasi_acara',       'label' => 'Lokasi Acara'],
+        ['group' => 'Acara', 'token' => 'mahar',              'label' => 'Mahar'],
+        ['group' => 'Acara', 'token' => 'seserahan',          'label' => 'Simbolis Seserahan'],
+        ['group' => 'Acara', 'token' => 'izin_ke',            'label' => 'Permohonan Izin Dilakukan ke'],
+
+        // Petugas & Koordinator (umum, dipakai di akad maupun resepsi/pemberkatan)
+        ['group' => 'Petugas & Koordinator', 'token' => 'koordinator_wanita', 'label' => 'Koordinator Keluarga Wanita'],
+        ['group' => 'Petugas & Koordinator', 'token' => 'koordinator_pria',   'label' => 'Koordinator Keluarga Pria'],
+        ['group' => 'Petugas & Koordinator', 'token' => 'jubir_wanita',       'label' => 'Jubir Keluarga Wanita'],
+        ['group' => 'Petugas & Koordinator', 'token' => 'jubir_pria',         'label' => 'Jubir Keluarga Pria'],
+        ['group' => 'Petugas & Koordinator', 'token' => 'penghulu',           'label' => 'Penghulu'],
+        ['group' => 'Petugas & Koordinator', 'token' => 'wali',               'label' => 'Wali'],
+        ['group' => 'Petugas & Koordinator', 'token' => 'saksi_wanita',       'label' => 'Saksi Pengantin Wanita'],
+        ['group' => 'Petugas & Koordinator', 'token' => 'saksi_pria',         'label' => 'Saksi Pengantin Pria'],
+        ['group' => 'Petugas & Koordinator', 'token' => 'qori',               'label' => 'Qori/Qoriah'],
+        ['group' => 'Petugas & Koordinator', 'token' => 'nasihat_pernikahan', 'label' => 'Nasihat Pernikahan'],
+        ['group' => 'Petugas & Koordinator', 'token' => 'pengapit',           'label' => 'Pengapit Pengantin Wanita'],
+        ['group' => 'Petugas & Koordinator', 'token' => 'pembawa_melati',     'label' => 'Pembawa Kalung Melati'],
+        ['group' => 'Petugas & Koordinator', 'token' => 'pembawa_mahar',      'label' => 'Pembawa Mas Kawin/Mahar'],
+        ['group' => 'Petugas & Koordinator', 'token' => 'pembawa_cincin',     'label' => 'Pembawa Cincin Kawin'],
+
+        // Petugas & Koordinator (khusus Pemberkatan/non-Muslim)
+        ['group' => 'Petugas & Koordinator (Pemberkatan)', 'token' => 'pendeta',              'label' => 'Pendeta'],
+        ['group' => 'Petugas & Koordinator (Pemberkatan)', 'token' => 'gereja',                'label' => 'Gereja'],
+        ['group' => 'Petugas & Koordinator (Pemberkatan)', 'token' => 'pemimpin_doa',          'label' => 'Pemimpin Doa'],
+        ['group' => 'Petugas & Koordinator (Pemberkatan)', 'token' => 'sambutan_pernikahan',   'label' => 'Sambutan Pernikahan'],
+    ];
+}
+
+/**
+ * Nilai aktual tiap token untuk SATU klien. Untuk bapak/ibu, kalau kolom pengganti
+ * (freplacementname/mreplacementname, dst) terisi -- artinya orang tuanya sudah tiada dan
+ * diwakilkan orang lain -- dipakai nama pengganti itu, bukan nama aslinya. Ini nyamain
+ * logika yang sudah ada di clients/edit.php (toggleReplacementFields).
+ */
+function susunan_acara_variabel_values($clients)
+{
+    $cpwBapakNama      = !empty($clients->f_bride_freplacementname) ? $clients->f_bride_freplacementname : ($clients->f_bride_fathername ?? '');
+    $cpwBapakPanggilan = !empty($clients->f_bride_freplacementcname) ? $clients->f_bride_freplacementcname : ($clients->f_bride_fathercname ?? '');
+    $cpwIbuNama        = !empty($clients->f_bride_mreplacementname) ? $clients->f_bride_mreplacementname : ($clients->f_bride_mothername ?? '');
+    $cpwIbuPanggilan   = !empty($clients->f_bride_mreplacementcname) ? $clients->f_bride_mreplacementcname : ($clients->f_bride_mothercname ?? '');
+
+    $cppBapakNama      = !empty($clients->m_bride_freplacementname) ? $clients->m_bride_freplacementname : ($clients->m_bride_fathername ?? '');
+    $cppBapakPanggilan = !empty($clients->m_bride_freplacementcname) ? $clients->m_bride_freplacementcname : ($clients->m_bride_fathercname ?? '');
+    $cppIbuNama        = !empty($clients->m_bride_mreplacementname) ? $clients->m_bride_mreplacementname : ($clients->m_bride_mothername ?? '');
+    $cppIbuPanggilan   = !empty($clients->m_bride_mreplacementcname) ? $clients->m_bride_mreplacementcname : ($clients->m_bride_mothercname ?? '');
+
+    return [
+        'cpw_nama'            => $clients->f_bride_fname ?? '',
+        'cpw_panggilan'       => $clients->f_bride_cname ?? '',
+        'cpw_bapak'           => $cpwBapakNama,
+        'cpw_bapak_panggilan' => $cpwBapakPanggilan,
+        'cpw_ibu'             => $cpwIbuNama,
+        'cpw_ibu_panggilan'   => $cpwIbuPanggilan,
+        'cpp_nama'            => $clients->m_bride_fname ?? '',
+        'cpp_panggilan'       => $clients->m_bride_cname ?? '',
+        'cpp_bapak'           => $cppBapakNama,
+        'cpp_bapak_panggilan' => $cppBapakPanggilan,
+        'cpp_ibu'             => $cppIbuNama,
+        'cpp_ibu_panggilan'   => $cppIbuPanggilan,
+        'nama_klien'          => $clients->client_name ?? '',
+        'tanggal_pernikahan'  => !empty($clients->wedding_date) ? trim(hari($clients->wedding_date) . ', ' . tgl_indo($clients->wedding_date)) : '',
+        'lokasi_acara'        => $clients->location ?? '',
+        'mahar'               => $clients->mahr ?? '',
+        'seserahan'           => $clients->handover ?? '',
+        'izin_ke'             => $clients->pmizin ?? '',
+
+        'koordinator_wanita'  => $clients->female_coor ?? '',
+        'koordinator_pria'    => $clients->male_coor ?? '',
+        'jubir_wanita'        => $clients->f_spokesman ?? '',
+        'jubir_pria'          => $clients->m_spokesman ?? '',
+        'penghulu'            => $clients->wedding_officiant ?? '',
+        'wali'                => $clients->guardian ?? '',
+        'saksi_wanita'        => $clients->f_witness ?? '',
+        'saksi_pria'          => $clients->m_witness ?? '',
+        'qori'                => $clients->qori ?? '',
+        'nasihat_pernikahan'  => $clients->advice_doa ?? '',
+        'pengapit'            => $clients->clamp ?? '',
+        'pembawa_melati'      => $clients->jasmine_carrier ?? '',
+        'pembawa_mahar'       => $clients->mahr_carrier ?? '',
+        'pembawa_cincin'      => $clients->ring_carrier ?? '',
+
+        'pendeta'             => $clients->pastor ?? '',
+        'gereja'              => $clients->church ?? '',
+        'pemimpin_doa'        => $clients->prayer ?? '',
+        'sambutan_pernikahan' => $clients->wedding_speech ?? '',
+    ];
+}
+
+/**
+ * Ganti semua token {{token}} di $text jadi nilai aktualnya untuk $clients. Dipakai HANYA
+ * saat menampilkan (daftar kegiatan & mode presentasi) -- nama_kegiatan yang tersimpan di
+ * DB tetap berupa template mentah (dengan token-nya), supaya tetap bisa diedit ulang.
+ */
+function render_susunan_acara_text($text, $clients)
+{
+    $values = susunan_acara_variabel_values($clients);
+
+    $search = [];
+    $replace = [];
+    foreach ($values as $token => $value) {
+        $search[] = '{{' . $token . '}}';
+        $replace[] = $value;
+    }
+
+    return str_replace($search, $replace, $text);
+}
+
 }

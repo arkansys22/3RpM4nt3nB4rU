@@ -131,6 +131,33 @@ $route['clients/lihat/(:any)'] = 'crud_clients/lihat/$1'; // Menampilkan lihat c
 $route['clients/buku-tamu/(:any)'] = 'crud_clients/buku_tamu/$1'; // Menampilkan desain layout buku tamu (depan/isi/belakang)
 $route['clients/nama-janur/(:any)'] = 'crud_clients/nama_janur/$1'; // Menampilkan desain layout nama janur
 
+// Susunan Acara per klien -- datanya awalnya di-copy dari fitur Susunan Acara umum
+// (lihat blok $route['susunan-acara...'] di bawah), lalu diedit terpisah di sini.
+// Satu klien bisa punya sampai 2 acara (Kategori Acara 1 & 2 di clients/edit) -- makanya
+// tiap aksi punya varian "/acara2/" yang HARUS diletakkan di atas varian polos (acara 1)-nya,
+// dan rute literal (create/store/edit/dst) HARUS di atas rute wildcard clients/susunan-acara/(:any)
+// paling akhir -- kalau tidak, rute yang lebih pendek/wildcard akan menelan duluan.
+$route['clients/susunan-acara/create/acara2/(:any)'] = 'Crud_client_susunan_acara/create/$1/2';
+$route['clients/susunan-acara/create/(:any)'] = 'Crud_client_susunan_acara/create/$1';
+$route['clients/susunan-acara/store'] = 'Crud_client_susunan_acara/store';
+$route['clients/susunan-acara/edit/(:any)'] = 'Crud_client_susunan_acara/edit/$1';
+$route['clients/susunan-acara/update/(:any)'] = 'Crud_client_susunan_acara/update/$1';
+$route['clients/susunan-acara/delete/(:any)'] = 'Crud_client_susunan_acara/delete/$1';
+$route['clients/susunan-acara/move-up/(:any)'] = 'Crud_client_susunan_acara/move_up/$1';
+$route['clients/susunan-acara/move-down/(:any)'] = 'Crud_client_susunan_acara/move_down/$1';
+$route['clients/susunan-acara/import/acara2/(:any)'] = 'Crud_client_susunan_acara/import/$1/2';
+$route['clients/susunan-acara/import/(:any)'] = 'Crud_client_susunan_acara/import/$1';
+$route['clients/susunan-acara/presentasi/acara2/(:any)'] = 'Crud_client_susunan_acara/presentasi/$1/2';
+$route['clients/susunan-acara/presentasi/(:any)'] = 'Crud_client_susunan_acara/presentasi/$1';
+$route['clients/susunan-acara/pdf-update/acara2/(:any)'] = 'Crud_client_susunan_acara/update_pdf/$1/2'; // Tombol "Update PDF" Acara 2 -- simpan file, tanpa tampilkan
+$route['clients/susunan-acara/pdf-update/(:any)'] = 'Crud_client_susunan_acara/update_pdf/$1'; // Tombol "Update PDF" Acara 1 -- simpan file, tanpa tampilkan
+$route['clients/susunan-acara/pdf-preview/acara2/(:any)'] = 'Crud_client_susunan_acara/preview_pdf_page/$1/2'; // Tombol "Preview" Acara 2 -- viewer PDF.js
+$route['clients/susunan-acara/pdf-preview/(:any)'] = 'Crud_client_susunan_acara/preview_pdf_page/$1'; // Tombol "Preview" Acara 1 -- viewer PDF.js
+$route['clients/susunan-acara/pdf/acara2/(:any)'] = 'Crud_client_susunan_acara/preview_pdf/$1/2'; // Preview PDF Acara 2
+$route['clients/susunan-acara/pdf/(:any)'] = 'Crud_client_susunan_acara/preview_pdf/$1'; // Preview PDF A4 (tabel, tanpa foto)
+$route['clients/susunan-acara/acara2/(:any)'] = 'Crud_client_susunan_acara/index/$1/2'; // Halaman daftar kegiatan Acara 2
+$route['clients/susunan-acara/(:any)'] = 'Crud_client_susunan_acara/index/$1'; // Halaman daftar kegiatan milik satu klien (Acara 1)
+
 $route['clients/c_edit/(:any)'] = 'crud_clients/c_edit/$1'; // Halaman edit clients berdasarkan id_session
 $route['clients/c_update/(:any)'] = 'crud_clients/c_update/$1'; // Proses update data clients
 $route['clients/c_lihat/(:any)'] = 'crud_clients/c_lihat/$1'; // Menampilkan lihat clients

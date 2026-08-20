@@ -154,6 +154,7 @@ class Crud_susunan_acara extends CI_Controller {
         $data['item'] = null;
         $data['kategori_list'] = $this->Susunan_acara_model->get_kategori_all();
         $data['selected_kategori'] = $kategori_id_session;
+        $data['variabel_list'] = susunan_acara_variabel_list();
 
         if (empty($data['kategori_list'])) {
             $this->session->set_flashdata('error', 'Buat kategori acara dulu (mis. Akad Nikah, Resepsi) sebelum menambah kegiatan.');
@@ -210,6 +211,7 @@ class Crud_susunan_acara extends CI_Controller {
 
         $data['kategori_list'] = $this->Susunan_acara_model->get_kategori_all();
         $data['selected_kategori'] = $data['item']->kategori_id_session;
+        $data['variabel_list'] = susunan_acara_variabel_list();
 
         $this->load->view('backend/v_susunan_acara_form', $data);
     }

@@ -241,6 +241,36 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
               <label class="block mb-2">Lokasi Acara</label>
               <input type="text" name="location" value="<?= $clients->location ?>" placeholder="Lokasi Acara" class="w-full px-4 py-2 border rounded mb-4" readonly>
 
+              <label class="block mb-2">Kategori Acara 1</label>
+              <select name="kategori_acara_id_session" class="w-full px-4 py-2 border rounded mb-4">
+                <option value="">Pilih Kategori Acara</option>
+                <?php foreach ($kategori_acara_list as $kategori) : ?>
+                  <option value="<?= $kategori->id_session ?>" <?= $clients->kategori_acara_id_session == $kategori->id_session ? 'selected' : '' ?>><?= htmlspecialchars($kategori->nama_kategori) ?></option>
+                <?php endforeach; ?>
+              </select>
+
+              <label class="block mb-2">Jam Pertama Acara</label>
+              <input type="time" name="waktu_acara_mulai" value="<?= $clients->waktu_acara_mulai ? substr($clients->waktu_acara_mulai, 0, 5) : '' ?>" class="w-full px-4 py-2 border rounded mb-4">
+
+              <?php $adaAcaraKedua = !empty($clients->kategori_acara_2_id_session) || !empty($clients->waktu_acara_2_mulai); ?>
+              <label class="inline-flex items-center gap-2 mb-4">
+                <input type="checkbox" id="acaraKeduaCheckbox" onclick="toggleAcaraKedua(this.checked)" <?= $adaAcaraKedua ? 'checked' : '' ?>>
+                <span>Ada Acara Kedua?</span>
+              </label>
+
+              <div id="acaraKeduaFields" class="<?= $adaAcaraKedua ? '' : 'hidden' ?>">
+                <label class="block mb-2">Kategori Acara 2</label>
+                <select name="kategori_acara_2_id_session" class="w-full px-4 py-2 border rounded mb-4">
+                  <option value="">Pilih Kategori Acara</option>
+                  <?php foreach ($kategori_acara_list as $kategori) : ?>
+                    <option value="<?= $kategori->id_session ?>" <?= $clients->kategori_acara_2_id_session == $kategori->id_session ? 'selected' : '' ?>><?= htmlspecialchars($kategori->nama_kategori) ?></option>
+                  <?php endforeach; ?>
+                </select>
+
+                <label class="block mb-2">Jam Kedua Acara</label>
+                <input type="time" name="waktu_acara_2_mulai" value="<?= $clients->waktu_acara_2_mulai ? substr($clients->waktu_acara_2_mulai, 0, 5) : '' ?>" class="w-full px-4 py-2 border rounded mb-4">
+              </div>
+
               <label class="block mb-2">Maps</label>
               <input type="text" name="maps" value="<?= $clients->maps ?>" placeholder="Maps" class="w-full px-4 py-2 border rounded mb-4">
 
@@ -355,6 +385,10 @@ function toggleReplacementFields(type, show) {
         document.getElementById(type).classList.toggle("hidden", !show);
         document.getElementById(type + '-original').classList.toggle("hidden", show);
     }
+}
+
+function toggleAcaraKedua(show) {
+    document.getElementById('acaraKeduaFields').classList.toggle('hidden', !show);
 }
 </script>
 </body>
