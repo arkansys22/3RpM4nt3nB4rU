@@ -182,6 +182,7 @@ $route['susunan-acara/kategori'] = 'Crud_susunan_acara/kategori'; // Kelola kate
 $route['susunan-acara/kategori/store'] = 'Crud_susunan_acara/kategori_store';
 $route['susunan-acara/kategori/update/(:any)'] = 'Crud_susunan_acara/kategori_update/$1';
 $route['susunan-acara/kategori/delete/(:any)'] = 'Crud_susunan_acara/kategori_delete/$1';
+$route['susunan-acara/kategori/duplicate/(:any)'] = 'Crud_susunan_acara/kategori_duplicate/$1'; // Duplikat kategori + semua kegiatan di dalamnya
 $route['susunan-acara/kategori/move-up/(:any)'] = 'Crud_susunan_acara/kategori_move_up/$1';
 $route['susunan-acara/kategori/move-down/(:any)'] = 'Crud_susunan_acara/kategori_move_down/$1';
 $route['susunan-acara/create/(:any)'] = 'Crud_susunan_acara/create/$1'; // Tambah kegiatan langsung di kategori tertentu

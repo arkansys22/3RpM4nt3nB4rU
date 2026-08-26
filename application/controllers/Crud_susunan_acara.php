@@ -131,6 +131,67 @@ class Crud_susunan_acara extends CI_Controller {
         redirect('susunan-acara/kategori');
     }
 
+    /**
+     * Duplikat satu kategori beserta SEMUA kegiatan di dalamnya (termasuk foto)
+     * jadi kategori baru terpisah. Mempermudah bikin kategori acara yang mirip
+     * dengan kategori yang sudah ada (mis. "Resepsi Siang" dari "Resepsi") tanpa
+     * input ulang satu-satu dari nol.
+     */
+    public function kategori_duplicate($id_session)
+    {
+        $this->cek_akses();
+
+        $source = $this->Susunan_acara_model->get_kategori_by_session($id_session);
+        if (!$source) {
+            $this->session->set_flashdata('error', 'Kategori yang mau diduplikat tidak ditemukan.');
+            redirect('susunan-acara/kategori');
+            return;
+        }
+
+        $newKategoriId = hash('sha256', bin2hex(random_bytes(16)));
+        $this->Susunan_acara_model->insert_kategori([
+            'id_session'    => $newKategoriId,
+            'nama_kategori' => $source->nama_kategori . ' (Salinan)',
+            'urutan'        => $this->Susunan_acara_model->get_kategori_next_urutan(),
+            'created_by'    => $this->session->id_session,
+            'created_at'    => date('Y-m-d H:i:s'),
+        ]);
+
+        $kegiatanList = $this->Susunan_acara_model->get_kegiatan_by_kategori($id_session);
+        $basePath = FCPATH . 'assets/uploads/susunan_acara';
+
+        $urutan = 1;
+        foreach ($kegiatanList as $k) {
+            $fotoBaru = null;
+            if (!empty($k->foto)) {
+                $srcPath = $basePath . '/' . $k->foto;
+                if (is_file($srcPath)) {
+                    if (!is_dir($basePath)) {
+                        mkdir($basePath, 0777, true);
+                    }
+                    $ext = pathinfo($k->foto, PATHINFO_EXTENSION);
+                    $fotoBaru = 'susunan_acara_' . md5(uniqid('', true)) . ($ext ? '.' . $ext : '');
+                    copy($srcPath, $basePath . '/' . $fotoBaru);
+                }
+            }
+
+            $this->Susunan_acara_model->insert([
+                'id_session'          => hash('sha256', bin2hex(random_bytes(16))),
+                'kategori_id_session' => $newKategoriId,
+                'nama_kegiatan'       => $k->nama_kegiatan,
+                'durasi'              => $k->durasi,
+                'vendor_pj'           => $k->vendor_pj,
+                'foto'                => $fotoBaru,
+                'urutan'              => $urutan++,
+                'created_by'          => $this->session->id_session,
+                'created_at'          => date('Y-m-d H:i:s'),
+            ]);
+        }
+
+        $this->session->set_flashdata('Success', 'Kategori "' . htmlspecialchars($source->nama_kategori) . '" berhasil diduplikat jadi "' . htmlspecialchars($source->nama_kategori) . ' (Salinan)" beserta ' . count($kegiatanList) . ' kegiatan di dalamnya. Silakan sesuaikan nama kategori & isi kegiatannya.');
+        redirect('susunan-acara/lihat/' . $newKategoriId);
+    }
+
     public function kategori_move_up($id_session)
     {
         $this->cek_akses();

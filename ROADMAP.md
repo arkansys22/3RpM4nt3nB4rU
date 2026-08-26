@@ -8,7 +8,13 @@ Rencana & pekerjaan yang masih tertunda untuk ERP Mantenbaru. Ini dokumen "ke de
 
 - [x] ~~Route `/gaji-saya` & `/rekap-gaji/<user>/<periode>` belum ke-commit~~ — sudah di-commit (`2e1c97d`). Pastikan sudah di-push & di-pull ke server produksi.
 - [x] ~~Migrasi `user_absensi.sql`, `pengaturan_absensi.sql`, `kategori_gaji.sql`~~ — sudah dijalankan di server produksi (dikonfirmasi 2026-08-19).
-- [ ] **Jalankan migrasi `db/susunan_acara.sql` di server produksi** — bikin tabel `susunan_acara_kategori` + `susunan_acara`, wajib untuk fitur "Susunan Acara" (kategori acara, kegiatan, mode presentasi) yang baru dibangun. Belum pernah dijalankan di luar DB lokal (`db_erpmaid`). Tanpa ini, menu Susunan Acara di server akan error "table doesn't exist".
+- [ ] **Jalankan 5 migrasi fitur Susunan Acara (per klien) di server produksi** — dikonfirmasi masih pending 2026-08-20 lewat error nyata di `maid.mantenbaru.com`: `Unknown column 'acara_ke' in 'WHERE'` saat buka `clients/susunan-acara/<id>`. Jalankan **urut sesuai daftar ini** (yang belakangan tergantung kolom/tabel dari yang sebelumnya) lewat phpMyAdmin Hostinger:
+  1. `db/susunan_acara.sql` — tabel `susunan_acara_kategori` + `susunan_acara` (data umum/template).
+  2. `db/clients_add_kategori_acara_waktu.sql` — kolom `kategori_acara_id_session` + `waktu_acara_mulai` di `clients`.
+  3. `db/client_susunan_acara.sql` — tabel `client_susunan_acara` (susunan acara per klien, hasil salin dari data umum).
+  4. `db/clients_add_kategori_acara_2.sql` — kolom `kategori_acara_2_id_session` + `waktu_acara_2_mulai` di `clients` (buat "Acara 2").
+  5. `db/client_susunan_acara_add_acara_ke.sql` — kolom `acara_ke` di `client_susunan_acara` (pemisah Acara 1 vs Acara 2) — **ini yang persis lagi error di produksi sekarang**.
+  Tanpa ini, seluruh menu Susunan Acara (termasuk Kategori Acara 1/2 di clients/edit, halaman daftar kegiatan, presentasi, Update/Preview PDF) error database di server.
 
 ## 🟠 Sudah di-flag, belum dikerjakan
 

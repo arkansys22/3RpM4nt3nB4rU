@@ -77,6 +77,9 @@
                       <a href="<?= site_url('susunan-acara/kategori/move-up/' . $kat->id_session) ?>" class="px-3 py-1.5 border rounded-md text-sm <?= $i === 0 ? 'opacity-40 pointer-events-none' : 'hover:bg-whiter dark:hover:bg-meta-4' ?>">&uarr;</a>
                       <a href="<?= site_url('susunan-acara/kategori/move-down/' . $kat->id_session) ?>" class="px-3 py-1.5 border rounded-md text-sm <?= $i === $total - 1 ? 'opacity-40 pointer-events-none' : 'hover:bg-whiter dark:hover:bg-meta-4' ?>">&darr;</a>
                       <button type="button" @click="editing = true" class="px-3 py-1.5 border rounded-md text-sm hover:bg-whiter dark:hover:bg-meta-4">Edit</button>
+                      <a href="<?= site_url('susunan-acara/kategori/duplicate/' . $kat->id_session) ?>"
+                        onclick="return confirm('Duplikat kategori \'<?= htmlspecialchars(addslashes($kat->nama_kategori)) ?>\' beserta semua kegiatan di dalamnya jadi kategori baru?')"
+                        class="px-3 py-1.5 border rounded-md text-sm hover:bg-whiter dark:hover:bg-meta-4">Duplikat</a>
                       <a href="<?= site_url('susunan-acara/kategori/delete/' . $kat->id_session) ?>"
                         onclick="return confirm('Hapus kategori ini beserta SEMUA kegiatan di dalamnya?')"
                         class="px-3 py-1.5 border border-red-300 text-red-600 rounded-md text-sm">Hapus</a>
