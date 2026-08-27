@@ -354,6 +354,10 @@
         "info": true,
         "autoWidth": true,
         "responsive": true,
+        // Kolom Date (index 0) diurutkan turun (data terbaru dulu) saat halaman
+        // dibuka -- tanpa ini DataTables default-nya urut naik dari kolom
+        // pertama, jadi kelihatan ASC walau query PHP-nya sudah DESC.
+        "order": [[0, "desc"]],
 
       });
   });

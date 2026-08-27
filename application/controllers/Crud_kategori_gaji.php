@@ -74,6 +74,14 @@ class Crud_kategori_gaji extends CI_Controller {
 	            $detail_gaji[] = $detail;
 	            $total_gaji_periode += $detail['jumlah'];
 	        }
+
+	        // Transaksi gaji nyata dari Finance Operational (kategori 6201.01)
+	        // yang staff_id_session-nya user ini -- sama seperti di gaji-saya,
+	        // supaya Fin & Acc lihat angka yang persis sama dengan staffnya.
+	        foreach ($this->Gaji_model->get_detail_gaji_operational($user_terpilih->id_session, $periode) as $detail) {
+	            $detail_gaji[] = $detail;
+	            $total_gaji_periode += $detail['jumlah'];
+	        }
 	    }
 
 	    $data['daftar_user'] = $users;

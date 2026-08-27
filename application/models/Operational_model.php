@@ -64,7 +64,7 @@ class Operational_model extends CI_Model {
     var $table = 'operational_acc';
     var $column_order = array(null, 'nama_transaksi','tanggal_transaksi','nominal_transaksi'); // kolom yg bisa diurutkan
     var $column_search = array('nama_transaksi','tanggal_transaksi','kategori');      // kolom yg bisa dicari
-    var $order = array('tanggal_transaksi' => 'DESC'); // default order 
+    var $order = array('tanggal_transaksi' => 'DESC'); // default order
     private function _get_datatables_query() {
         $this->db->from($this->table);
 

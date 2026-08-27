@@ -48,15 +48,27 @@
                 <input type="text"  value="<?= number_format($pc->nominal_transaksi ?? 0, 0, ',', '.') ?>"  class="w-full px-4 py-2 border rounded mb-4" oninput="formatNumber(this)" name="nominal_transaksi"  required>
                 
                 <label class="block mb-2">Kategori</label>
-                <select name="kategori" class="w-full px-4 py-2 border rounded mb-4" required> 
+                <select name="kategori" id="kategoriSelect" onchange="toggleStaffGaji(this.value)" class="w-full px-4 py-2 border rounded mb-4" required>
                       <?php foreach ($kategori as $p) {
                             if ($pc->kategori == $p['nomer_kategori']){
                               echo"<option selected='selected' value='$p[nomer_kategori]'>$p[nomer_kategori] - $p[nama_kategori]</option> ";
                             }else{
                               echo"<option value='$p[nomer_kategori]'>$p[nomer_kategori] - $p[nama_kategori]</option>";
                          }
-                      } ?>                    
+                      } ?>
                 </select>
+
+                <!-- Cuma muncul kalau Kategori = 6201.01 (Biaya Gaji, Lembur & THR) -- transaksi
+                     pembayaran gaji perlu dikaitkan ke satu user crew supaya jelas ini gaji siapa. -->
+                <div id="staffGajiField" class="hidden">
+                    <label class="block mb-2">Staff</label>
+                    <select name="staff_id_session" class="w-full px-4 py-2 border rounded mb-4">
+                        <option value="">- Pilih Staff -</option>
+                        <?php foreach ($crew_list as $c): ?>
+                        <option value="<?= $c->id_session ?>" <?= (isset($pc->staff_id_session) && $pc->staff_id_session === $c->id_session) ? 'selected' : '' ?>><?= htmlspecialchars($c->nama) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
 
                 <label class="block mb-2">Periode</label>
                 <select name="periode" class="w-full px-4 py-2 border rounded mb-4" required> 
@@ -98,6 +110,13 @@
         value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Tambah titik setiap 3 digit
         input.value = value;
     }
+
+    // Field "Staff" cuma relevan buat kategori 6201.01 (Biaya Gaji, Lembur & THR).
+    function toggleStaffGaji(kategoriValue) {
+        var field = document.getElementById('staffGajiField');
+        field.classList.toggle('hidden', kategoriValue !== '6201.01');
+    }
+    toggleStaffGaji(document.getElementById('kategoriSelect').value);
   </script>
 </body>
 </html>

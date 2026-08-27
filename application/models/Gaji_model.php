@@ -7,13 +7,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 // tempat.
 class Gaji_model extends CI_Model {
 
+    // Kategori operational_kategori untuk "Biaya Gaji, Lembur & THR" -- ini
+    // yang dipakai finance-operational/create buat menampilkan pilihan Staff
+    // (lihat Crud_finance_operational), jadi transaksi di kategori ini sudah
+    // terkait ke satu user lewat operational_acc.staff_id_session.
+    const KATEGORI_OPERASIONAL_GAJI = '6201.01';
+
     // Hitung nominal aktual satu kategori untuk satu user di satu bulan.
     // - Bulanan: nominalnya sendiri, flat.
     // - Harian: nominal x jumlah hari Hadir di absensi bulan itu.
-    // - Project: nominal x jumlah project yang event_date-nya di bulan itu
-    //   (dari jadwal crew_projects, sama seperti dashboard staff).
+    // - Project: BUKAN nominal_gaji x jumlah project lagi, tapi dijumlah dari
+    //   fee crew NYATA yang dicatat di Finance Project (project_acc, form
+    //   "Tambah Crew") buat user ini di bulan itu -- supaya angkanya sesuai
+    //   yang benar-benar tercatat, bukan estimasi tarif flat.
     // - Persentase: persen x total pencapaian sales (closing) bulan itu,
     //   pakai aturan "achieved" yang sama dengan Aspanel::getEstimasiRevenue().
+    // Catatan: ini cuma buat kategori yang di-assign lewat Setting Salary
+    // (user_kategori_gaji). Transaksi gaji nyata dari Finance Operational
+    // (kategori 6201.01) dipakai TERPISAH, lihat get_detail_gaji_operational().
     public function hitung_detail_gaji($user_id_session, $kategori, $periode)
     {
         $nominal = (float) $kategori->nominal_gaji;
@@ -42,15 +53,12 @@ class Gaji_model extends CI_Model {
         }
 
         if ($kategori->satuan_gaji === 'Project') {
-            $sql = "SELECT COUNT(DISTINCT project.id_session) AS total
-                    FROM crew_projects
-                    JOIN project ON project.id_session = crew_projects.project_id
-                    JOIN user ON user.crews_idsession = crew_projects.crew_id
-                    WHERE user.id_session = ?
-                    AND DATE_FORMAT(project.event_date, '%Y-%m') = ?";
-            $jumlah_project = (int) $this->db->query($sql, [$user_id_session, $periode])->row()->total;
-            $detail['jumlah'] = $jumlah_project * $nominal;
-            $detail['keterangan'] = $jumlah_project . ' project x Rp ' . number_format($nominal, 0, ',', '.');
+            $fee_crew = $this->hitung_fee_crew($user_id_session, $periode);
+            $detail['nama_kategori'] = 'Crew WO';
+            $detail['jumlah'] = $fee_crew->total;
+            $detail['keterangan'] = $fee_crew->jumlah_project > 0
+                ? 'Total fee crew dari ' . $fee_crew->jumlah_project . ' project bulan ini'
+                : 'Belum ada fee crew tercatat di Finance Project bulan ini';
             return $detail;
         }
 
@@ -62,6 +70,66 @@ class Gaji_model extends CI_Model {
         }
 
         return $detail;
+    }
+
+    // Transaksi gaji NYATA yang sudah dicatat di Finance Operational
+    // (operational_acc, kategori 6201.01) buat satu user di satu bulan --
+    // independen dari kategori_gaji/Setting Salary, jadi tetap muncul di
+    // laporan meski user itu belum punya kategori salary apa pun di-assign.
+    // Satu baris per transaksi (bisa lebih dari satu dalam sebulan, mis.
+    // gaji pokok + lembur dicatat terpisah), sudah dalam format yang sama
+    // dengan hitung_detail_gaji() supaya bisa langsung digabung ke
+    // $detail_gaji di controller.
+    public function get_detail_gaji_operational($user_id_session, $periode)
+    {
+        $this->db->select('nama_transaksi, tanggal_transaksi, nominal_transaksi');
+        $this->db->from('operational_acc');
+        $this->db->where('kategori', self::KATEGORI_OPERASIONAL_GAJI);
+        $this->db->where('staff_id_session', $user_id_session);
+        $this->db->where("DATE_FORMAT(tanggal_transaksi, '%Y-%m') =", $periode);
+        $this->db->order_by('tanggal_transaksi', 'ASC');
+        $rows = $this->db->get()->result();
+
+        $detail_list = [];
+        foreach ($rows as $row) {
+            $nominal = (float) $row->nominal_transaksi;
+            $detail_list[] = [
+                'nama_kategori' => $row->nama_transaksi,
+                'satuan_gaji' => 'Bulanan',
+                'nominal_gaji' => $nominal,
+                'keterangan' => 'Tercatat ' . date('d M Y', strtotime($row->tanggal_transaksi)),
+                'jumlah' => $nominal,
+            ];
+        }
+
+        return $detail_list;
+    }
+
+    // Total fee crew NYATA yang sudah dicatat di Finance Project (project_acc,
+    // dari form "Tambah Crew" -- lihat Crud_finance_project::store2()) buat
+    // satu user di satu bulan. Transaksi crew disimpan dengan project_acc.detail
+    // = crews.id_session pemilihnya (BUKAN teks bebas), jadi di-JOIN ke
+    // user.crews_idsession buat tahu itu punya siapa.
+    //
+    // PENTING: banyak user yang belum punya data crew nyata punya
+    // crews_idsession berisi placeholder '-' atau string kosong (bukan NULL).
+    // Transaksi non-crew (detail-nya teks bebas) yang kebetulan juga '-'/kosong
+    // bisa ke-JOIN ke SEMUA user placeholder itu sekaligus kalau tidak
+    // di-exclude eksplisit di sini -- makanya ada guard NOT IN ('-', '').
+    private function hitung_fee_crew($user_id_session, $periode)
+    {
+        $this->db->select('COALESCE(SUM(pa.nominal_transaksi),0) AS total, COUNT(DISTINCT pa.project_id_session) AS jumlah_project');
+        $this->db->from('project_acc pa');
+        $this->db->join('user u', 'u.crews_idsession = pa.detail', 'inner');
+        $this->db->where('u.id_session', $user_id_session);
+        $this->db->where("pa.detail NOT IN ('-','')", NULL, FALSE);
+        $this->db->where("DATE_FORMAT(pa.tanggal_transaksi, '%Y-%m') =", $periode);
+
+        $row = $this->db->get()->row();
+        $row->total = (float) $row->total;
+        $row->jumlah_project = (int) $row->jumlah_project;
+
+        return $row;
     }
 
     // Total pencapaian sales (closing) satu user di satu bulan — project

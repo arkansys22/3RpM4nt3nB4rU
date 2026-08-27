@@ -60,6 +60,16 @@ class Users2_model extends CI_Model {
         return $this->db->delete('user');
     }
 
+    // User dengan level Developer(1), Administrator(2), Staff Admin(4), Staff
+    // Sales(9) -- dipakai buat dropdown "Staff" di finance-operational/create
+    // saat kategori transaksi = gaji (6201.01).
+    public function get_all_staff_gaji_user() {
+        $this->db->where_in('level', ['1', '2', '4', '9']);
+        $this->db->where('user_stat', 'Publish');
+        $this->db->order_by('nama', 'ASC');
+        return $this->db->get('user')->result();
+    }
+
     public function get_crew_by_id_session($crews_idsession) {
         $this->db->select("*, TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) AS age");
         $this->db->from("crews");

@@ -80,11 +80,13 @@ class crud_finance_operational extends CI_Controller {
             cek_session_akses_developer('user',$this->session->id_session);
             $data['kategori'] = $this->Operational_model->view_ordering('operational_kategori','nomer_kategori','asc');
             $data['periode'] = $this->Operational_model->view_ordering('operational_acc_periode','operational_acc_periode_id','asc');
+            $data['crew_list'] = $this->Users2_model->get_all_staff_gaji_user();
             $this->load->view('operational/create', $data);
 
         }else if($this->session->level=='4'){
             cek_session_akses_staff_admin('user',$this->session->id_session);
             $data['kategori'] = $this->Operational_model->view_ordering('operational_kategori','nomer_kategori','asc');
+            $data['crew_list'] = $this->Users2_model->get_all_staff_gaji_user();
             $this->load->view('operational/create', $data);
 
         }else{
@@ -117,18 +119,23 @@ class crud_finance_operational extends CI_Controller {
         $kategori = $this->input->post('kategori');
         $nama_transaksi =  $this->input->post('nama_transaksi');
         $tanggal = $this->input->post('tgl_transaksi');
+        // Kategori 6201.01 = "Biaya Gaji, Lembur & THR" -- form menampilkan pilihan
+        // Staff (crew) buat kategori ini, jadi transaksinya bisa dikaitkan ke user.
+        // Kategori lain tidak menampilkan input ini, jadi post-nya kosong -> null.
+        $staff_id_session = $this->input->post('staff_id_session');
 
         $data = array(
             'id_session'    => $id_session2,
             'nama_transaksi'  => $nama_transaksi,
             'tanggal_transaksi'  => $tanggal,
             'nominal_transaksi'        => $nominal,
-            'kategori'    => $kategori,     
-            'periode'    => $this->input->post('periode'),         
+            'kategori'    => $kategori,
+            'staff_id_session' => ($kategori === '6201.01' && !empty($staff_id_session)) ? $staff_id_session : null,
+            'periode'    => $this->input->post('periode'),
             'create_by'     => $this->session->id_session,
             'create_date'   => $date_create
         );
-    
+
         // Insert ke tabel projects
         $this->Operational_model->insert($data);
 
@@ -190,14 +197,16 @@ class crud_finance_operational extends CI_Controller {
             $data['kategori'] = $this->Crud_m->view_ordering('operational_kategori','nomer_kategori','asc');
             $data['periode'] = $this->Crud_m->view_ordering('operational_acc_periode','operational_acc_periode_id','asc');
             $data['pc'] = $this->Operational_model->get_operational_by_session($id_session);
+            $data['crew_list'] = $this->Users2_model->get_all_staff_gaji_user();
             $this->load->view('operational/edit', $data);
-            
+
         }else if($this->session->level=='4'){
             cek_session_akses_staff_admin('user',$this->session->id_session);
             $data['level'] = $this->Crud_m->view_ordering('user_level','user_level_id','asc');
             $data['crews'] = $this->Crud_m->view_ordering('crews','id','asc');
             $data['clients'] = $this->Crud_m->view_ordering('clients','id','asc');
             $data['pc'] = $this->Users2_model->get_users_by_session($id_session);
+            $data['crew_list'] = $this->Users2_model->get_all_staff_gaji_user();
             $this->load->view('operational/edit', $data);
 
         }else{
@@ -212,14 +221,16 @@ class crud_finance_operational extends CI_Controller {
             $data['kategori'] = $this->Crud_m->view_ordering('operational_kategori','nomer_kategori','asc');
             $data['periode'] = $this->Crud_m->view_ordering('operational_acc_periode','operational_acc_periode_id','asc');
             $data['pc'] = $this->Operational_model->get_operational_by_session($id_session);
+            $data['crew_list'] = $this->Users2_model->get_all_staff_gaji_user();
             $this->load->view('operational/edit2', $data);
-            
+
         }else if($this->session->level=='4'){
             cek_session_akses_staff_admin('user',$this->session->id_session);
             $data['level'] = $this->Crud_m->view_ordering('user_level','user_level_id','asc');
             $data['crews'] = $this->Crud_m->view_ordering('crews','id','asc');
             $data['clients'] = $this->Crud_m->view_ordering('clients','id','asc');
             $data['pc'] = $this->Users2_model->get_users_by_session($id_session);
+            $data['crew_list'] = $this->Users2_model->get_all_staff_gaji_user();
             $this->load->view('operational/edit2', $data);
 
         }else{
@@ -250,15 +261,17 @@ class crud_finance_operational extends CI_Controller {
         $kategori = $this->input->post('kategori');
         $nama_transaksi =  $this->input->post('nama_transaksi');
         $tanggal = $this->input->post('tanggal_transaksi');
-        
+        $staff_id_session = $this->input->post('staff_id_session');
+
         $data = array(
             'nama_transaksi'  => $nama_transaksi,
             'tanggal_transaksi'  => $tanggal,
-            'nominal_transaksi'        =>  $nominal, 
-            'kategori'    => $kategori, 
-            'periode'    => $this->input->post('periode')                        
+            'nominal_transaksi'        =>  $nominal,
+            'kategori'    => $kategori,
+            'staff_id_session' => ($kategori === '6201.01' && !empty($staff_id_session)) ? $staff_id_session : null,
+            'periode'    => $this->input->post('periode')
             );
-         
+
         $this->Operational_model->update_operational($id_session, $data);
 
         $status = 'Edit Finance Operational';
@@ -321,13 +334,15 @@ class crud_finance_operational extends CI_Controller {
         $kategori = $this->input->post('kategori');
         $nama_transaksi =  $this->input->post('nama_transaksi');
         $tanggal = $this->input->post('tanggal_transaksi');
-        
+        $staff_id_session = $this->input->post('staff_id_session');
+
         $data = array(
             'nama_transaksi'  => $nama_transaksi,
             'tanggal_transaksi'  => $tanggal,
-            'nominal_transaksi'        => $nominal, 
-            'kategori'    => $kategori, 
-            'periode'    => $this->input->post('periode')                        
+            'nominal_transaksi'        => $nominal,
+            'kategori'    => $kategori,
+            'staff_id_session' => ($kategori === '6201.01' && !empty($staff_id_session)) ? $staff_id_session : null,
+            'periode'    => $this->input->post('periode')
             );
          
         $this->Operational_model->update_operational($id_session, $data);

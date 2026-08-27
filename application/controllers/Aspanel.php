@@ -684,7 +684,20 @@ class Aspanel extends CI_Controller {
 	    $detail_gaji = [];
 	    $total_gaji_periode = 0;
 	    foreach ($kategori_list as $k) {
+	        // Kategori Harian (mis. absensi) tidak ditampilkan lagi di laporan
+	        // Rekap Gaji Saya -- diminta dihilangkan dari sini.
+	        if ($k->satuan_gaji === 'Harian') {
+	            continue;
+	        }
 	        $detail = $this->Gaji_model->hitung_detail_gaji($user_id_session, $k, $periode);
+	        $detail_gaji[] = $detail;
+	        $total_gaji_periode += $detail['jumlah'];
+	    }
+
+	    // Transaksi gaji nyata dari Finance Operational (kategori 6201.01)
+	    // yang staff_id_session-nya user ini -- muncul di laporan meski user
+	    // belum punya kategori salary apa pun di-assign lewat Setting Salary.
+	    foreach ($this->Gaji_model->get_detail_gaji_operational($user_id_session, $periode) as $detail) {
 	        $detail_gaji[] = $detail;
 	        $total_gaji_periode += $detail['jumlah'];
 	    }
