@@ -6,8 +6,10 @@ class CrewProjects_model extends CI_Model {
     }
 
     public function get_all_crews() {
-        return $this->db->get_where('crews', ['status' => 'active'])->result();
-    }    
+        // Cuma crew yang belum di-soft-delete DAN keaktifannya "Aktif" yang
+        // boleh dipilih buat di-assign ke project baru.
+        return $this->db->get_where('crews', ['status' => 'active', 'keaktifan' => 'Aktif'])->result();
+    }
 
     public function add_crew_to_project($data) {
         // Insert the project_id, crew_id, and role into the crew_projects table

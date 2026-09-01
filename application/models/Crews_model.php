@@ -8,7 +8,18 @@ class crews_model extends CI_Model {
     public function get_all_crews() {
         $this->db->select("*, TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) AS age");
         $this->db->from("crews");
-        $this->db->where("status", "active"); // Hanya ambil data crew yang aktif
+        $this->db->where("status", "active"); // Bukan yang di-soft-delete
+        $this->db->where("keaktifan", "Aktif"); // Cuma yang masih aktif kerja
+        return $this->db->get()->result();
+    }
+
+    // Crew yang keaktifannya "Non Aktif" tapi belum di-soft-delete -- beda
+    // dari get_deleted() (itu buat recycle bin/soft-delete).
+    public function get_non_aktif() {
+        $this->db->select("*, TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) AS age");
+        $this->db->from("crews");
+        $this->db->where("status", "active");
+        $this->db->where("keaktifan", "Non Aktif");
         return $this->db->get()->result();
     }
 

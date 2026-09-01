@@ -52,13 +52,23 @@
                       </button>
                     </a>
                   </div>
-                  <a href="<?= site_url('crews/recycle_bin') ?>">
-                    <button class="bg-red-500 text-white p-3 rounded-md hover:bg-red-700 focus:outline-none">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-2 14H7L5 7M12 4v-2m4 2h-8m5 2l1-1m3 1l-1-1m0 0h6l-1 2m-7-5h2m6 5H5"></path>
-                      </svg>
-                    </button>
-                  </a>
+                  <div class="flex space-x-2">
+                    <a href="<?= site_url('crews/non-aktif') ?>">
+                      <button class="bg-yellow-500 text-white p-3 rounded-md hover:bg-yellow-600 focus:outline-none" title="Crew Non Aktif">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M18 9.75 21.75 13.5m0 0L18 17.25m3.75-3.75H15" />
+                        </svg>
+                      </button>
+                    </a>
+                    <a href="<?= site_url('crews/recycle_bin') ?>">
+                      <button class="bg-red-500 text-white p-3 rounded-md hover:bg-red-700 focus:outline-none" title="Recycle Bin">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-2 14H7L5 7M12 4v-2m4 2h-8m5 2l1-1m3 1l-1-1m0 0h6l-1 2m-7-5h2m6 5H5"></path>
+                        </svg>
+                      </button>
+                    </a>
+                  </div>
                 </div>
 
               <!-- ====== Data Table Two Start --><br>

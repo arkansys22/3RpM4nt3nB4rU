@@ -68,6 +68,12 @@
                 <label class="block mb-2">Tanggal Bergabung</label>
                 <input type="date" name="joining_date" value="<?= $crews->joining_date ?>" class="w-full px-4 py-2 border rounded mb-4" required>
 
+                <label class="block mb-2">Status Keaktifan</label>
+                <select name="keaktifan" class="w-full px-4 py-2 border rounded mb-4" required>
+                    <option value="Aktif" <?= ($crews->keaktifan == 'Aktif') ? 'selected' : '' ?>>Aktif</option>
+                    <option value="Non Aktif" <?= ($crews->keaktifan == 'Non Aktif') ? 'selected' : '' ?>>Non Aktif</option>
+                </select>
+
                 <div class="flex flex-col sm:flex-row justify-end">
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded w-full hover:bg-blue-600 sm:w-24 mb-2 sm:mb-0 text-center">Update</button>
                 <a href="<?= site_url('crews/lihat/'.$crews->id_session) ?>" class="sm:ml-2 bg-gray-500 text-white px-4 py-2 rounded w-full hover:bg-gray-600 sm:w-24 text-center">Batal</a>

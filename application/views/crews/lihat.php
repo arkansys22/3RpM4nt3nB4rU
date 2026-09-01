@@ -106,6 +106,12 @@
                 <label class="block mb-2"><strong>Tanggal Lahir : </strong><?= tgl_indo($crews->birth_date) ?></label>
                 <label class="block mb-2"><strong>Umur : </strong><?= $crews->age ?> Tahun</label>
                 <label class="block mb-2"><strong>Bergabung : </strong><?= hari($crews->joining_date) ?>, <?= tgl_indo($crews->joining_date) ?></label>
+                <label class="block mb-2">
+                  <strong>Status Keaktifan : </strong>
+                  <span class="inline-flex rounded-full px-3 py-1 text-sm font-medium <?= $crews->keaktifan == 'Aktif' ? 'bg-success bg-opacity-10 text-success' : 'bg-danger bg-opacity-10 text-danger' ?>">
+                    <?= $crews->keaktifan ?>
+                  </span>
+                </label>
                 <!-- <br>
                 <a href="<?= site_url('crews/edit/'. $crews->id_session) ?>" class="ml-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 inline-block text-center w-auto">Edit</a>
                 <a href="javascript:history.back()" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 inline-block text-center w-auto">Kembali</a> -->

@@ -40,6 +40,36 @@ class Crud_crews extends CI_Controller {
             }
     }
 
+    public function non_aktif() {
+
+        if ($this->session->level=='1'){
+            cek_session_akses_developer('crews',$this->session->id_session);
+            $data['crews'] = $this->crews_model->get_non_aktif();
+            $this->load->view('crews/non_aktif', $data);
+
+        }else if($this->session->level=='2'){
+            cek_session_akses_administrator('crews',$this->session->id_session);
+            $data['crews'] = $this->crews_model->get_non_aktif();
+            $this->load->view('crews/non_aktif', $data);
+
+        }else if($this->session->level=='3'){
+            cek_session_akses_staff_accounting('crews',$this->session->id_session);
+            redirect(base_url());
+
+        }else if($this->session->level=='4'){
+            cek_session_akses_staff_admin('crews',$this->session->id_session);
+            $data['crews'] = $this->crews_model->get_non_aktif();
+            $this->load->view('crews/non_aktif', $data);
+
+        }else if($this->session->level=='5'){
+            cek_session_akses_client('crews',$this->session->id_session);
+            redirect(base_url());
+
+        }else{
+            redirect(base_url());
+            }
+    }
+
     public function recycle_bin() {
 
         if ($this->session->level=='1'){
@@ -130,7 +160,8 @@ class Crud_crews extends CI_Controller {
             'birth_date'  => $this->input->post('birth_date'),
             'joining_date'=> $this->input->post('joining_date'),
             'created_at'  => $created_at,
-            'status'      => 'active'
+            'status'      => 'active',
+            'keaktifan'   => 'Aktif'
         ];
         $this->crews_model->insert($data);
 
@@ -247,6 +278,7 @@ class Crud_crews extends CI_Controller {
             'address'     => $this->input->post('address'),
             'birth_date'  => $this->input->post('birth_date'),
             'joining_date'=> $this->input->post('joining_date'),
+            'keaktifan'   => $this->input->post('keaktifan'),
         ];
 
         $this->crews_model->update($id_session, $data);

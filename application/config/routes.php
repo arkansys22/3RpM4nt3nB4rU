@@ -168,6 +168,7 @@ $route['crews/create'] = 'Crud_crews/create'; // Menampilkan halaman tambah crew
 $route['crews/store'] = 'Crud_crews/store'; // Menyimpan data crews yang baru dibuat
 $route['crews/edit/(:any)'] = 'Crud_crews/edit/$1'; // Menampilkan halaman edit crews berdasarkan id_session
 $route['crews/update/(:any)'] = 'Crud_crews/update/$1'; // Mengupdate data crews berdasarkan id_session
+$route['crews/non-aktif'] = 'Crud_crews/non_aktif'; // Menampilkan daftar crews yang keaktifannya "Non Aktif" (bukan soft-delete)
 $route['crews/recycle_bin'] = 'Crud_crews/recycle_bin'; // Menampilkan daftar crews yang telah dihapus (soft delete)
 $route['crews/soft_delete/(:any)'] = 'Crud_crews/soft_delete/$1'; // Menghapus data crews (soft delete, ubah status jadi 'delete')
 $route['crews/restore/(:any)'] = 'Crud_crews/restore/$1'; // Mengembalikan data crews dari Recycle Bin ke daftar aktif
