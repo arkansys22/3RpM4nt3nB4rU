@@ -162,6 +162,30 @@ function time_ago($datetime)
     return $years . ' tahun lalu';
 }
 
+// Status online satu user, dipakai di halaman-halaman daftar user (user/index,
+// recycle bin, dst). "Online" HANYA kalau `user_login_status` masih 'online'
+// DAN `last_activity`-nya dalam $threshold_menit terakhir -- bukan cuma
+// percaya ke `user_login_status` sendirian, karena kolom itu di-set 'online'
+// sekali waktu login dan TIDAK otomatis balik ke 'offline' kalau user cuma
+// nutup browser tanpa Logout (lihat User::logout() & hooks Track_online).
+// Kalau tidak online, tampilkan kapan terakhir online (relatif, pakai
+// time_ago()), atau "Belum pernah login" kalau last_activity masih kosong.
+function status_online($user_login_status, $last_activity, $threshold_menit = 5)
+{
+    if (!empty($last_activity) && $user_login_status === 'online') {
+        $selisih_menit = (time() - strtotime($last_activity)) / 60;
+        if ($selisih_menit <= $threshold_menit) {
+            return ['is_online' => true, 'label' => 'Online'];
+        }
+    }
+
+    if (empty($last_activity)) {
+        return ['is_online' => false, 'label' => 'Belum pernah login'];
+    }
+
+    return ['is_online' => false, 'label' => 'Terakhir online ' . time_ago($last_activity)];
+}
+
 function getBulan($bln){
             switch ($bln){
                 case 1:

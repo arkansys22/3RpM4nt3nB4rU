@@ -8,6 +8,17 @@ class User extends CI_Controller
     date_default_timezone_set('Asia/Jakarta');
   }
   public function logout(){
+    $id_session = $this->session->userdata('id_session');
+    if (!empty($id_session)) {
+        // Tandai offline eksplisit + catat waktunya sebagai "terakhir online"
+        // buat user yang benar-benar klik Logout (bukan cuma nutup browser).
+        $this->db->where('id_session', $id_session);
+        $this->db->update('user', [
+            'user_login_status' => 'offline',
+            'last_activity' => date('Y-m-d H:i:s'),
+        ]);
+    }
+
     $this->session->sess_destroy();
     redirect(base_url('login'));
   }
@@ -73,7 +84,10 @@ class User extends CI_Controller
 
           // 🔹 Update status user
           $this->db->where('id_session', $row['id_session']);
-          $this->db->update('user', ['user_login_status' => 'online']);
+          $this->db->update('user', [
+              'user_login_status' => 'online',
+              'last_activity' => date('Y-m-d H:i:s'),
+          ]);
 
           // 🔹 Log activity
           $ip = $this->input->ip_address();

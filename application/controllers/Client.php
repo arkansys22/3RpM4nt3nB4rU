@@ -11,6 +11,19 @@ class Client extends CI_Controller
 
   public function logout()
   {
+    // 'id_session' di session ini isinya client_idsession (buat routing
+    // clients/c_lihat/<id>), BUKAN id_session asli baris `user`-nya -- jadi
+    // buat update status online, pakai 'auth_id_session' yang disimpan
+    // terpisah waktu login() (lihat komentar di sana).
+    $auth_id_session = $this->session->userdata('auth_id_session');
+    if (!empty($auth_id_session)) {
+        $this->db->where('id_session', $auth_id_session);
+        $this->db->update('user', [
+            'user_login_status' => 'offline',
+            'last_activity' => date('Y-m-d H:i:s'),
+        ]);
+    }
+
     $this->session->sess_destroy();
     redirect(base_url('client/login'));
   }
@@ -59,14 +72,24 @@ class Client extends CI_Controller
             'username' => $row['username'],
             'level' => $row['level'],
             'id_user' => $row['id_user'],
-            'id_session' => $row['client_idsession'] // Use client_idsession
+            'id_session' => $row['client_idsession'], // Use client_idsession (buat routing clients/c_lihat/<id>)
+            'auth_id_session' => $row['id_session'], // id_session ASLI baris user ini -- dipakai buat status online
           )
         );
 
         $this->session->set_flashdata('user_loggedin', 'Selamat Anda Berhasil Login');
-        $id = array('id_session' => $this->session->userdata('id_session'));
-        $data = array('user_login_status' => 'online');
-        $this->db->update('user', $data, $id); // Change table to 'user'
+
+        // FIX: sebelumnya WHERE-nya salah pakai client_idsession (nilai
+        // session 'id_session' di atas) -- itu bukan primary identifier
+        // baris `user`, dan ternyata bisa SAMA di lebih dari satu akun user
+        // (ditemukan 2 akun beda pakai client_idsession yang sama), jadi
+        // update status online bisa tidak match sama sekali atau salah
+        // kena baris lain. Sekarang pakai id_session ASLI baris ini.
+        $this->db->where('id_session', $row['id_session']);
+        $this->db->update('user', [
+            'user_login_status' => 'online',
+            'last_activity' => date('Y-m-d H:i:s'),
+        ]);
 
         $ip = $this->input->ip_address();
         $location = get_location_from_ip($ip);

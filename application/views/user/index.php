@@ -251,7 +251,13 @@
                         <td><?= $p->username ?></td>
                         <?php $level= $this->Crud_m->view_where('user_level', array('user_level_id'=> $p->level))->row(); ?>
                         <td><?= $level->user_level_nama ?></td>
-                        <td><?= $p->user_login_status ?></td>                
+                        <?php $online = status_online($p->user_login_status, $p->last_activity); ?>
+                        <td>
+                          <span class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium <?= $online['is_online'] ? 'bg-success bg-opacity-10 text-success' : 'bg-gray-200 text-gray-600 dark:bg-meta-4 dark:text-gray-300' ?>">
+                            <span class="h-2 w-2 rounded-full <?= $online['is_online'] ? 'bg-success' : 'bg-gray-400' ?>"></span>
+                            <?= $online['label'] ?>
+                          </span>
+                        </td>
                         <td>
                         <div class="flex flex-col items-start gap-2 w-max">
                           <a href="<?= site_url('user/lihat/'. $p->id_session) ?>" class="inline-flex justify-center bg-yellow-500 text-white px-2 py-1 rounded-md hover:bg-yellow-600 text-center w-full">Lihat</a>
