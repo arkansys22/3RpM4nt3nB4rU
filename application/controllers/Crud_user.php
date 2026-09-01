@@ -12,17 +12,46 @@ class crud_user extends CI_Controller {
     public function index() {
         if ($this->session->level=='1'){
             cek_session_akses_developer('user',$this->session->id_session);
-            $data['users'] = $this->Users2_model->get_all_user();
+            $data['users'] = $this->urutkan_status_online($this->Users2_model->get_all_user());
             $this->load->view('user/index', $data);
 
         }else if ($this->session->level=='4'){
             cek_session_akses_staff_admin('user',$this->session->id_session);
-            $data['users'] = $this->Users2_model->get_all_user_admin();
+            $data['users'] = $this->urutkan_status_online($this->Users2_model->get_all_user_admin());
             $this->load->view('user/index', $data);
 
         }else{
                 redirect(base_url());
                 }
+    }
+
+    // Urutkan daftar user berdasarkan status online-nya: Online dulu, lalu
+    // yang "Terakhir Online" (dari aktivitas paling baru), baru yang "Belum
+    // Pernah Login" paling akhir. Pakai status_online() yang sama dipakai
+    // buat nampilin badge di view (customs_helper.php), biar urutan & label
+    // yang ditampilkan selalu konsisten.
+    private function urutkan_status_online($users) {
+        usort($users, function ($a, $b) {
+            $priority = function ($u) {
+                $status = status_online($u->user_login_status, $u->last_activity);
+                if ($status['is_online']) return 0;      // Online
+                if (!empty($u->last_activity)) return 1; // Terakhir Online
+                return 2;                                 // Belum Pernah Login
+            };
+
+            $pa = $priority($a);
+            $pb = $priority($b);
+            if ($pa !== $pb) {
+                return $pa <=> $pb;
+            }
+
+            // Dalam grup yang sama, aktivitas paling baru duluan.
+            $ta = !empty($a->last_activity) ? strtotime($a->last_activity) : 0;
+            $tb = !empty($b->last_activity) ? strtotime($b->last_activity) : 0;
+            return $tb <=> $ta;
+        });
+
+        return $users;
     }
 
 
