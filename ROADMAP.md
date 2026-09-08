@@ -15,6 +15,12 @@ Rencana & pekerjaan yang masih tertunda untuk ERP Mantenbaru. Ini dokumen "ke de
   4. `db/clients_add_kategori_acara_2.sql` — kolom `kategori_acara_2_id_session` + `waktu_acara_2_mulai` di `clients` (buat "Acara 2").
   5. `db/client_susunan_acara_add_acara_ke.sql` — kolom `acara_ke` di `client_susunan_acara` (pemisah Acara 1 vs Acara 2) — **ini yang persis lagi error di produksi sekarang**.
   Tanpa ini, seluruh menu Susunan Acara (termasuk Kategori Acara 1/2 di clients/edit, halaman daftar kegiatan, presentasi, Update/Preview PDF) error database di server.
+- [ ] **Jalankan migrasi `db/vendor_checklist_form.sql` di server produksi** (dibuat 2026-09-02) — fitur "Ceklist & TTD" di project/lihat untuk vendor Dekorasi/Catering, belum pernah dijalankan di `maid.mantenbaru.com`, cuma di lokal. Tanpa ini, tombol "Ceklist & TTD" error database di server. Folder `assets/uploads/vendor_checklist/` (tempat file tanda tangan PNG disimpan) dibuat otomatis oleh kode saat form pertama kali disimpan, tidak perlu dibuat manual.
+- [ ] **Jalankan 3 migrasi fitur "List Peralatan Event" di server produksi** (dibuat 2026-09-08) — belum pernah dijalankan di `maid.mantenbaru.com`, cuma di lokal. Jalankan urut:
+  1. `db/peralatan_event_kategori.sql` — tabel kategori (WO, Fotobooth) + seed 2 kategori awal itu.
+  2. `db/peralatan_event.sql` — template global daftar barang (per kategori).
+  3. `db/client_peralatan_event.sql` — daftar barang per project (hasil salin dari template, per kategori).
+  Tanpa ini, menu "Template Peralatan Event" & tombol "List Peralatan Event" di project/lihat error database di server.
 
 ## 🟠 Sudah di-flag, belum dikerjakan
 

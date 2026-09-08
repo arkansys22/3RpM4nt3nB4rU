@@ -271,6 +271,51 @@ $route['naskah/list_vendor/pdf/(:any)'] = 'crud_vendor/generate_pdf/$1';
 
 $route['vendor/create/(:any)'] = 'crud_vendor/create/$1'; // Create vendor form based on session_id
 $route['vendor/store'] = 'crud_vendor/store'; // Store vendor data based on session_id
+$route['vendor/lihat/(:any)/(:any)'] = 'crud_vendor/lihat/$1/$2'; // Detail satu vendor (dari tombol "Lihat Detail" di project/lihat)
+
+// ===== Ceklist & Tanda Tangan serah terima vendor Dekorasi/Catering =====
+$route['vendor-checklist/buka/(:any)/(:any)'] = 'Crud_vendor_checklist/buka/$1/$2'; // Router: ke lihat kalau sudah ada, ke create kalau belum
+$route['vendor-checklist/create/(:any)/(:any)'] = 'Crud_vendor_checklist/create/$1/$2';
+$route['vendor-checklist/store'] = 'Crud_vendor_checklist/store';
+$route['vendor-checklist/edit/(:any)'] = 'Crud_vendor_checklist/edit/$1';
+$route['vendor-checklist/update/(:any)'] = 'Crud_vendor_checklist/update/$1';
+$route['vendor-checklist/lihat/(:any)'] = 'Crud_vendor_checklist/lihat/$1';
+
+// ===== Template global "List Peralatan Event" =====
+// PENTING: rute literal kategori/* HARUS di atas peralatan-event/(:any)
+// KALAU ada wildcard generik ditambahkan nanti -- saat ini belum ada,
+// tapi urutan berikut sudah aman buat itu.
+$route['peralatan-event/kategori'] = 'Crud_peralatan_event/kategori';
+$route['peralatan-event/kategori/store'] = 'Crud_peralatan_event/kategori_store';
+$route['peralatan-event/kategori/update/(:any)'] = 'Crud_peralatan_event/kategori_update/$1';
+$route['peralatan-event/kategori/delete/(:any)'] = 'Crud_peralatan_event/kategori_delete/$1';
+$route['peralatan-event/kategori/move-up/(:any)'] = 'Crud_peralatan_event/kategori_move_up/$1';
+$route['peralatan-event/kategori/move-down/(:any)'] = 'Crud_peralatan_event/kategori_move_down/$1';
+$route['peralatan-event'] = 'Crud_peralatan_event/index';
+$route['peralatan-event/store'] = 'Crud_peralatan_event/store';
+$route['peralatan-event/update/(:any)'] = 'Crud_peralatan_event/update/$1';
+$route['peralatan-event/delete/(:any)'] = 'Crud_peralatan_event/delete/$1';
+$route['peralatan-event/move-up/(:any)'] = 'Crud_peralatan_event/move_up/$1';
+$route['peralatan-event/move-down/(:any)'] = 'Crud_peralatan_event/move_down/$1';
+
+// ===== List Peralatan Event per project =====
+// PENTING: rute literal (salin/store/update/dst) HARUS di atas
+// peralatan-event-project/(:any) -- itu wildcard generik yang bisa
+// "nyaplok" nama aksi literal kalau ditaruh duluan (lihat catatan :any di
+// CLAUDE.md).
+// Salin WAJIB pakai kategori (lihat Crud_client_peralatan_event::salin())
+// -- tidak ada lagi versi tanpa kategori, karena "salin semua kategori
+// sekaligus" sudah tidak didukung (diminta cuma tarik sesuai kategori aktif).
+$route['peralatan-event-project/salin/(:any)/(:any)'] = 'Crud_client_peralatan_event/salin/$1/$2';
+$route['peralatan-event-project/store'] = 'Crud_client_peralatan_event/store';
+$route['peralatan-event-project/update/(:any)'] = 'Crud_client_peralatan_event/update/$1';
+$route['peralatan-event-project/delete/(:any)'] = 'Crud_client_peralatan_event/delete/$1';
+$route['peralatan-event-project/move-up/(:any)'] = 'Crud_client_peralatan_event/move_up/$1';
+$route['peralatan-event-project/move-down/(:any)'] = 'Crud_client_peralatan_event/move_down/$1';
+$route['peralatan-event-project/cetak/(:any)/(:any)'] = 'Crud_client_peralatan_event/cetak/$1/$2'; // Cetak difilter satu kategori (WO/Fotobooth) -- HARUS sebelum cetak/(:any) & (:any)/(:any) di bawah
+$route['peralatan-event-project/cetak/(:any)'] = 'Crud_client_peralatan_event/cetak/$1';
+$route['peralatan-event-project/(:any)/(:any)'] = 'Crud_client_peralatan_event/index/$1/$2'; // Halaman daftar, difilter satu kategori -- HARUS sebelum (:any) polos di bawah
+$route['peralatan-event-project/(:any)'] = 'Crud_client_peralatan_event/index/$1'; // Halaman daftar item milik satu project (semua kategori)
 $route['vendor/edit/(:any)/(:any)'] = 'crud_vendor/edit/$1/$2';
 $route['vendor/update/(:any)/(:any)'] = 'crud_vendor/update/$1/$2';
 $route['vendor/delete/(:any)/(:any)'] = 'crud_vendor/delete/$1/$2';

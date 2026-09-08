@@ -91,6 +91,14 @@
                 </li>
                 <li>
                 <a
+                  href="<?= site_url('peralatan-event-project/' . $project->id_session) ?>"
+                  class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
+                >
+                  List Peralatan Event
+                </a>
+                </li>
+                <li>
+                <a
                   href="<?= site_url('project') ?>"
                   class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
                 >
@@ -260,8 +268,22 @@
             </p>
           </div>
           <div class="flex gap-2">
+            <!-- Tombol Lihat Detail -->
+            <a href="<?= site_url('vendor/lihat/' . $vendor->id_session . '/' . $vendor->vendor_id) ?>"
+               class="bg-yellow-500 text-white text-sm px-2 py-1 rounded-md hover:bg-yellow-600">
+               Lihat Detail
+            </a>
+
+            <?php if (in_array($vendor->type, ['Dekorasi', 'Catering'])): ?>
+            <!-- Tombol Ceklist & TTD (khusus vendor Dekorasi/Catering) -->
+            <a href="<?= site_url('vendor-checklist/buka/' . $vendor->id_session . '/' . $vendor->vendor_id) ?>"
+               class="bg-purple-500 text-white text-sm px-2 py-1 rounded-md hover:bg-purple-600">
+               Ceklist &amp; TTD
+            </a>
+            <?php endif; ?>
+
             <!-- Tombol Edit -->
-            <a href="<?= site_url('vendor/edit/' . $vendor->id_session . '/' . $vendor->vendor_id) ?>" 
+            <a href="<?= site_url('vendor/edit/' . $vendor->id_session . '/' . $vendor->vendor_id) ?>"
                class="bg-green-500 text-white text-sm px-2 py-1 rounded-md hover:bg-green-600">
                Edit
             </a>

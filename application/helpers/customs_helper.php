@@ -118,6 +118,26 @@ function hari($date){
     return $namahari;
 }
 
+// Format tanggal gaya Indonesia lengkap dengan nama hari, mis. "Selasa, 8
+// September 2026" -- dipakai buat tanggal acara di form/dokumen cetak.
+// Beda dari tgl_indo() (yang formatnya "8 Sep 2026 00:00:00", cocok buat
+// timestamp log activity, bukan tanggal acara).
+function format_tanggal_acara($tanggal)
+{
+    if (empty($tanggal)) {
+        return '-';
+    }
+
+    $bulan_lengkap = [
+        1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April',
+        5 => 'Mei', 6 => 'Juni', 7 => 'Juli', 8 => 'Agustus',
+        9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember',
+    ];
+
+    $timestamp = strtotime($tanggal);
+    return hari($tanggal) . ', ' . date('j', $timestamp) . ' ' . $bulan_lengkap[(int) date('n', $timestamp)] . ' ' . date('Y', $timestamp);
+}
+
 function tgl_indo($tgl){
         $tanggal = substr($tgl,8,2);
         $bulan = getBulan(substr($tgl,5,2));
@@ -184,6 +204,35 @@ function status_online($user_login_status, $last_activity, $threshold_menit = 5)
     }
 
     return ['is_online' => false, 'label' => 'Terakhir online ' . time_ago($last_activity)];
+}
+
+// Daftar item ceklist default buat form serah terima vendor Dekorasi &
+// Catering (lihat Crud_vendor_checklist) -- cuma titik awal, staff WO tetap
+// bisa tambah/hapus/edit item pas ngisi form-nya sendiri.
+function default_checklist_vendor($type)
+{
+    $templates = [
+        'Dekorasi' => [
+            'Backdrop pelaminan terpasang sesuai desain yang disepakati',
+            'Rangkaian bunga & dekorasi lengkap',
+            'Lighting/pencahayaan dekorasi berfungsi baik',
+            'Meja & kursi tamu sudah tertata',
+            'Photo booth / area foto sudah siap',
+            'Karpet/red carpet terpasang rapi',
+            'Area dekorasi bersih dari sisa material/sampah',
+        ],
+        'Catering' => [
+            'Menu makanan sesuai pesanan',
+            'Jumlah porsi sesuai jumlah tamu yang dipesan',
+            'Meja prasmanan tertata rapi',
+            'Peralatan makan (piring, sendok, gelas) lengkap',
+            'Petugas catering/waiter hadir sesuai kesepakatan',
+            'Makanan disajikan dalam kondisi hangat/segar',
+            'Area catering bersih setelah acara selesai',
+        ],
+    ];
+
+    return $templates[$type] ?? [];
 }
 
 function getBulan($bln){

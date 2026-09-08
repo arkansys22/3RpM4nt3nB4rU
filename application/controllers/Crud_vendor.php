@@ -107,6 +107,17 @@ class Crud_vendor extends CI_Controller {
         redirect('project/lihat/' . $id_session);
     }
 
+    public function lihat($id_session, $vendor_id) {
+        $data['vendors'] = $this->Vendor_model->get_vendor_by_id_and_vendor_id($id_session, $vendor_id);
+        if (!$data['vendors']) {
+            show_error('Vendor tidak ditemukan.', 404);
+            return;
+        }
+
+        $data['project'] = $this->project_model->get_project_by_session($id_session);
+        $this->load->view('vendor/lihat', $data);
+    }
+
     public function edit($id_session, $vendor_id) {
         $data['vendors'] = $this->Vendor_model->get_vendor_by_id_and_vendor_id($id_session, $vendor_id);
         $data['project'] = $this->project_model->get_project_by_session($id_session);

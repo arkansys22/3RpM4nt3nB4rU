@@ -441,6 +441,21 @@
 		</a>
 	</li>
 <?php } ?>
+<?php if($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='4'){ ?>
+	<li>
+		<a
+			class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
+			href="<?= base_url('peralatan-event'); ?>"
+			@click="selected = 'peralatan_event'"
+			:class="{ 'bg-graydark dark:bg-meta-4': (selected === 'peralatan_event') }"
+		>
+			<svg class="fill-current" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path fill-rule="evenodd" clip-rule="evenodd" d="M9 2a1 1 0 0 0-1 1v1H6a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V3a1 1 0 1 0-2 0v1H10V3a1 1 0 0 0-1-1ZM6 9h12v10H6V9Zm2 3h2v2H8v-2Zm4 0h2v2h-2v-2Z" fill=""/>
+			</svg>
+			Template Peralatan Event
+		</a>
+	</li>
+<?php } ?>
 						<?php  if($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3'){ ?>
 					    	 <!-- Menu Item clients -->
 					        
