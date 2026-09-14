@@ -528,6 +528,34 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 							<div class="row">
 								<div class="col-lg-12 d-flex align-self-center">
 									<div class="about-content">
+                  <?php if (($clients->jubir_pria_naskah ?? 'Akad') === 'Ngunduh Mantu'): ?>
+                  <h4 class="text-xl font-bold text-center mb-4">Sambutan Ngunduh Mantu dari Pihak Pengantin Pria</h4>
+</br></br>
+        <p class="text-lg">Bissmillahirrahmaanirrahim.</p>
+        <p class="text-lg">Assalamualaikum warahmatullahi wabarakatuh.</p>
+        <p class="indent text-lg text-justify">Puji syukur kehadirat Allah SWT, pada hari yang berbahagia ini kita dapat
+        berkumpul merayakan pernikahan putra-putri kami tercinta <strong><?= $clients->m_bride_fname; ?></strong> dan
+        <strong><?= $clients->f_bride_fname; ?></strong> yang telah dilangsungkan akad nikahnya pada hari
+        <strong><?= format_tanggal_acara($clients->wedding_date); ?> di <?= $clients->location; ?></strong>. Kami atas nama
+        keluarga besar <strong>Bapak <?= $clients->m_bride_fathername; ?></strong> dan
+        <strong>Ibu <?= $clients->m_bride_mothername; ?></strong> mengucapkan selamat datang dan terima kasih yang
+        sebesar-besarnya kepada seluruh keluarga besar <strong>Bapak <?= $clients->f_bride_fathername; ?></strong> dan
+        <strong>Ibu <?= $clients->f_bride_mothername; ?></strong> beserta rombongan atas kedatangan dan restunya.</p>
+        <p class="indent text-lg text-justify">Semoga pernikahan ini menjadi awal dari kehidupan baru yang penuh berkah,
+        cinta, dan kebahagiaan hingga akhir hayat mereka berdua. Semoga Allah SWT menjadikan rumah tangga mereka
+        keluarga yang sakinah, mawaddah, warahmah, keluarga yang diidam-idamkan oleh kedua mempelai, dijauhkan dari
+        segala cobaan, dan mereka mampu menghadapi segala cobaan juga tantangan.</p>
+        <p class="indent text-lg text-justify">Sebagai penutup, izinkan kami membacakan sedikit pantun untuk mengiringi
+        kebahagiaan kita hari ini.</p>
+        <p class="text-lg" style="font-style: italic;">
+            Mentari pagi bersinar cerah<br>
+            Burung berkicau sambut mentari<br>
+            Dua hati kini telah berserah<br>
+            Semoga langgeng hingga akhir nanti
+        </p>
+        <p class="text-lg">Burung Irian burung cindrawasih, cukup sekian dan terima kasih,</p>
+        <p class="text-lg">Wassalamu'alaikum Warahmatullahi Wabarakatuh.</p>
+                  <?php else: ?>
                   <h4 class="text-xl font-bold text-center mb-4">Penyerahan Calon Pengantin Pria (Jubir CPP)</h4>
 </br></br>
         <p class="text-lg">Bismillahirrohmanirrohim,</p>
@@ -565,7 +593,8 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
         berkenan, saya memohon maaf yang sebesar besarnya dan berharap semoga penyerahan ini
         kiranya dapat diterima dengan penuh keikhlasan, demikian dan terima kasih.</p>
         <p class="text-lg">Billahi taufik wal hidayah wassalamu-alaikum Wr.Wb.</p>
-										<a href="<?= site_url('naskah/jubir_cpp/pdf/'. $clients->id_session) ?>" class="mybtn mybtn-bg"> <span><i class="fas fa-download"></i>Download </span> </a>								
+                  <?php endif; ?>
+										<a href="<?= site_url('naskah/jubir_cpp/pdf/'. $clients->id_session) ?>" class="mybtn mybtn-bg"> <span><i class="fas fa-download"></i>Download </span> </a>
 										
 									</div>
 									
@@ -581,6 +610,42 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 							<div class="row">
 								<div class="col-lg-12 d-flex align-self-center">
 									<div class="about-content">
+                  <?php if (($clients->jubir_pria_naskah ?? 'Akad') === 'Ngunduh Mantu'): ?>
+                  <h4 class="text-xl font-bold text-center mb-4">Sambutan Ngunduh Mantu dari Pihak Pengantin Wanita</h4>
+</br>
+        <p class="text-lg">Assalamu'alaikum Warahmatullahi Wabarakatuh.</p>
+        <p class="text-lg">Sejahtera untuk kita semua yang hadir.</p>
+        <p class="indent text-lg text-justify">Pertama marilah kita panjatkan puji syukur kehadirat Alloh SWT. Tuhan Yang
+        Maha Kuasa, karena atas kuasaNYA kita masih diberikan keberkahan, kesehatan sehingga pada hari ini kita bisa
+        melaksanakan resepsi pernikahan ini.</p>
+        <p class="indent text-lg text-justify">Saya mewakili keluarga mempelai wanita ingin mengucapkan terima kasih
+        kepada semua yang telah datang untuk merayakan pernikahan ananda <strong><?= $clients->m_bride_fname; ?></strong>
+        dan <strong><?= $clients->f_bride_fname; ?></strong> yang telah dilangsungkan akad nikahnya pada hari
+        <strong><?= format_tanggal_acara($clients->wedding_date); ?> di <?= $clients->location; ?></strong>.</p>
+        <p class="indent text-lg text-justify">Kami ingin memberikan sedikit wejangan kepada kedua mempelai, dalam
+        perjalanan rumah tangga, ada kalanya kalian akan menghadapi tantangan, dan cobaan itu sesuatu yang sangat wajar.
+        Kenapa? Yang namanya dua pikiran, dua prinsip yang berbeda tentu masing-masing akan mempertahankan argumennya.
+        Namun untuk menghadapi semua itu yang dibutuhkan adalah kejujuran satu sama lain, tidak lagi menyimpan rahasia
+        untuk keluarga, karena baik buruknya keluarga itu yang kalian berdua yang menjalani. Untuk itu kejujuran adalah
+        modal yang sangat penting untuk dijaga.</p>
+        <p class="indent text-lg text-justify">Yang kedua kuncinya adalah saling mendukung dan berkomunikasi dengan
+        baik, apapun yang akan dilakukan, dilaksanakan sebaiknya dikomunikasikan berdua, sehingga keputusan dan
+        hasilnya adalah merupakan keputusan bersama dan baik buruknya hasil keputusan itu merupakan kesepakatan
+        sebelum bertindak.</p>
+        <p class="indent text-lg text-justify">Yang ketiga jangan pernah lupa untuk saling menghormati dan selalu
+        menghargai perbedaan. Nah ini modal yang harus dijaga adalah menghargai pendapat satu sama lain, tidak boleh
+        menang sendiri, atau egois.</p>
+        <p class="indent text-lg text-justify">Jika tiga hal ini mampu untuk dijalani insyaallah dengan bekal
+        kedewasaan kalian berpikir, berperilaku dewasa, pasti kalian bisa menghadapi segala tantangan, cobaan di masa
+        yang akan datang. Kami mendoakan agar kehidupan kalian selalu sejahtera dan dipenuhi dengan cinta, Aamiin.</p>
+        <p class="text-lg" style="font-style: italic;">
+            Menanam padi di tengah sawah<br>
+            Disiram hujan tumbuh subur<br>
+            Rumah tangga jangan banyak amarah<br>
+            Saling mengerti, saling maklum
+        </p>
+        <p class="text-lg">Wassalamu'alaikum Warahmatullahi Wabarakatuh.</p>
+                  <?php else: ?>
                   <h4 class="text-xl font-bold text-center mb-4">Penerimaan Calon Pengantin Pria (Jubir CPW)</h4>
 </br></br>
         <p class="text-lg">Bismillahirrohmanirrohim,</p>
@@ -601,6 +666,7 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
         Allah SWT. Aamiin....</p>
         <p class="indent text-lg text-justify">Itulah yang dapat kami sampaikan, kami akhiri, Billahi taufik wal hidayah</p>
         <p class="text-lg">Wassalamu’alaikum. Wr.Wb</p>
+                  <?php endif; ?>
 
 										<a href="<?= site_url('naskah/jubir_cpw/pdf/'. $clients->id_session) ?>" class="mybtn mybtn-bg"> <span><i class="fas fa-download"></i>Download </span> </a>								
 										
@@ -611,6 +677,7 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 						</div>
 					</div>
 				</div>
+				<?php if (($clients->jubir_pria_naskah ?? 'Akad') !== 'Ngunduh Mantu'): ?>
 				<div class="row">
 						<div class="col-lg-12">
 						<h3>Izin Nikah</h3>
@@ -665,6 +732,7 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 							</div>
 						</div>
 					</div>
+				<?php endif; ?>
 				<div class="row">
 					<div class="col-lg-12">
 					<h3>Ucapan Terima Kasih Pengantin Ke Tamu Resepsi</h3>

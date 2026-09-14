@@ -305,10 +305,22 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
               
               <label class="block mb-2">Jubir Keluarga Wanita</label>
               <input type="text" name="f_spokesman" value="<?= $clients->f_spokesman ?>" placeholder="Jubir Keluarga Wanita" class="w-full px-4 py-2 border rounded mb-4">
-              
+
               <label class="block mb-2">Jubir Keluarga Pria</label>
-              <input type="text" name="m_spokesman" value="<?= $clients->m_spokesman ?>" placeholder="Jubir Keluarga Pria" class="w-full px-4 py-2 border rounded mb-4">
-              
+              <input type="text" name="m_spokesman" id="m_spokesman" value="<?= $clients->m_spokesman ?>" placeholder="Jubir Keluarga Pria" class="w-full px-4 py-2 border rounded mb-4" oninput="toggleJubirPriaNaskah()">
+
+              <!-- Cuma relevan kalau Jubir Keluarga Pria diisi (bukan "-") -- lihat toggleJubirPriaNaskah().
+                   Satu pilihan ini berlaku buat naskah Jubir Pria MAUPUN Wanita sekaligus -- kalau
+                   "Ngunduh Mantu" dipilih, naskah "Sambutan Ngunduh Mantu" versi Pria dan Wanita
+                   berdua ditampilkan (lihat Jubir_cpp.php, Jubir_cpw.php, clients/c_lihat.php). -->
+              <div id="jubir_pria_naskah_wrap" class="hidden">
+                <label class="block mb-2">Naskah Jubir (Pria &amp; Wanita)</label>
+                <select name="jubir_pria_naskah" class="w-full px-4 py-2 border rounded mb-4">
+                  <option value="Akad" <?= ($clients->jubir_pria_naskah ?? 'Akad') === 'Ngunduh Mantu' ? '' : 'selected' ?>>Text Jubir Akad</option>
+                  <option value="Ngunduh Mantu" <?= ($clients->jubir_pria_naskah ?? 'Akad') === 'Ngunduh Mantu' ? 'selected' : '' ?>>Text Jubir Ngunduh Mantu</option>
+                </select>
+              </div>
+
               <label class="block mb-2">Penghulu</label>
               <input type="text" name="wedding_officiant" value="<?= $clients->wedding_officiant ?>" placeholder="Bapak A S.Ag (KUA Bogor)" class="w-full px-4 py-2 border rounded mb-4">
               
@@ -390,6 +402,16 @@ function toggleReplacementFields(type, show) {
 function toggleAcaraKedua(show) {
     document.getElementById('acaraKeduaFields').classList.toggle('hidden', !show);
 }
+
+// Pilihan naskah (Akad / Ngunduh Mantu) -- satu parameter ini berlaku buat
+// naskah Jubir Pria & Wanita berdua sekaligus -- cuma ditampilkan kalau
+// Jubir Keluarga Pria diisi beneran (bukan dibiarkan default "-").
+function toggleJubirPriaNaskah() {
+    var isi = (document.getElementById('m_spokesman').value || '').trim();
+    var ada_jubir = isi !== '' && isi !== '-';
+    document.getElementById('jubir_pria_naskah_wrap').classList.toggle('hidden', !ada_jubir);
+}
+document.addEventListener('DOMContentLoaded', toggleJubirPriaNaskah);
 </script>
 </body>
 </html>

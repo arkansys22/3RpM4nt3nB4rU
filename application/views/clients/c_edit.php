@@ -363,7 +363,19 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                     </div>
                     <div class="flex-1">
                         <label class="block mb-2" style="color: #000;">Jubir Keluarga Pria</label>
-                        <input type="text" name="m_spokesman" value="<?= $clients->m_spokesman ?>" placeholder="Jubir Keluarga Pria" class="w-full px-4 py-2 border rounded" style="color: #000;">
+                        <input type="text" name="m_spokesman" id="m_spokesman" value="<?= $clients->m_spokesman ?>" placeholder="Jubir Keluarga Pria" class="w-full px-4 py-2 border rounded" style="color: #000;" oninput="toggleJubirPriaNaskah()">
+                    </div>
+                </div>
+
+                <!-- Cuma relevan kalau Jubir Keluarga Pria diisi (bukan "-") -- lihat toggleJubirPriaNaskah().
+                     Satu pilihan ini berlaku buat naskah Jubir Pria MAUPUN Wanita sekaligus. -->
+                <div class="flex flex-col md:flex-row gap-4 mb-4 hidden" id="jubir_pria_naskah_wrap">
+                    <div class="flex-1">
+                        <label class="block mb-2" style="color: #000;">Naskah Jubir (Pria &amp; Wanita)</label>
+                        <select name="jubir_pria_naskah" class="w-full px-4 py-2 border rounded" style="color: #000;">
+                            <option value="Akad" <?= ($clients->jubir_pria_naskah ?? 'Akad') === 'Ngunduh Mantu' ? '' : 'selected' ?>>Text Jubir Akad</option>
+                            <option value="Ngunduh Mantu" <?= ($clients->jubir_pria_naskah ?? 'Akad') === 'Ngunduh Mantu' ? 'selected' : '' ?>>Text Jubir Ngunduh Mantu</option>
+                        </select>
                     </div>
                 </div>
 
@@ -522,6 +534,16 @@ function toggleReplacementFieldsibu(type, show) {
         document.getElementById(type + '-original').classList.toggle("hidden", show);
     }
 }
+
+// Pilihan naskah (Akad / Ngunduh Mantu) -- satu parameter ini berlaku buat
+// naskah Jubir Pria & Wanita berdua sekaligus -- cuma ditampilkan kalau
+// Jubir Keluarga Pria diisi beneran (bukan dibiarkan default "-").
+function toggleJubirPriaNaskah() {
+    var isi = (document.getElementById('m_spokesman').value || '').trim();
+    var ada_jubir = isi !== '' && isi !== '-';
+    document.getElementById('jubir_pria_naskah_wrap').classList.toggle('hidden', !ada_jubir);
+}
+document.addEventListener('DOMContentLoaded', toggleJubirPriaNaskah);
 </script>
 </body>
 </html>
