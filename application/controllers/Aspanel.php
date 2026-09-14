@@ -921,31 +921,58 @@ class Aspanel extends CI_Controller {
 	// menyeberang tahun (mis. DP 2025, pelunasan 2026) tidak ke-hitung penuh
 	// di dua tahun sekaligus (tahun-ini + tahun-lalu jadi melebihi all-time).
 	// Filter per-user pakai project.closing_user_idsession.
+	// Dipakai widget "Pencapaian Revenue" (Tahun Ini/Tahun Lalu/Keseluruhan)
+	// -- syarat "achieved" HARUS sama dengan getEstimasiRevenue/
+	// get_top_sales_ranking/get_sales_achievement_per_month: Pembayaran
+	// Kesatu (DP) Paid tanggal berapa pun, DAN Pembayaran Kedua (pelunasan)
+	// Paid -- tahunnya ditentukan dari tanggal Kedua, bukan dari
+	// MIN(tanggal paid) sembarang payment seperti versi lama (itu sebabnya
+	// angkanya dulu tidak sinkron dengan widget lain di dashboard yang
+	// sama-sama pakai closing_user_idsession).
 	private function getProjectAchievement($user_id = null, $year = null)
 	{
-	    $sql = "SELECT COALESCE(SUM(project.value), 0) AS value
-	            FROM project
-	            JOIN (
-	                SELECT id_session, YEAR(MIN(date)) AS achieved_year
-	                FROM payment
-	                WHERE status = 'Paid'
-	                GROUP BY id_session
-	            ) achieved ON achieved.id_session = project.id_session";
-	    $conditions = [];
-	    $params = [];
-	    if ($year !== null) {
-	        $conditions[] = "achieved.achieved_year = ?";
-	        $params[] = $year;
-	    }
+	    $this->db->select('COALESCE(SUM(project.value), 0) AS value', FALSE);
+	    $this->db->from('project');
+
 	    if ($user_id !== null) {
-	        $conditions[] = "project.closing_user_idsession = ?";
-	        $params[] = $user_id;
-	    }
-	    if ($conditions) {
-	        $sql .= " WHERE " . implode(' AND ', $conditions);
+	        $this->db->where('project.closing_user_idsession', $user_id);
 	    }
 
-	    return $this->db->query($sql, $params)->row();
+	    $this->db->where("
+	        EXISTS(
+	            SELECT 1
+	            FROM payment p1
+	            WHERE p1.id_session = project.id_session
+	            AND p1.metodep LIKE 'Pembayaran Kesatu%'
+	            AND p1.status = 'Paid'
+	        )
+	    ", NULL, FALSE);
+
+	    if ($year !== null) {
+	        $year_int = (int) $year;
+	        $this->db->where("
+	            EXISTS(
+	                SELECT 1
+	                FROM payment p2
+	                WHERE p2.id_session = project.id_session
+	                AND p2.metodep LIKE 'Pembayaran Kedua%'
+	                AND p2.status = 'Paid'
+	                AND YEAR(p2.date) = $year_int
+	            )
+	        ", NULL, FALSE);
+	    } else {
+	        $this->db->where("
+	            EXISTS(
+	                SELECT 1
+	                FROM payment p2
+	                WHERE p2.id_session = project.id_session
+	                AND p2.metodep LIKE 'Pembayaran Kedua%'
+	                AND p2.status = 'Paid'
+	            )
+	        ", NULL, FALSE);
+	    }
+
+	    return $this->db->get()->row();
 	}
 
 	public function logout()

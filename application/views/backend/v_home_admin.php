@@ -194,19 +194,15 @@
 									<p class="text-sm font-medium">Komisi Total</p>
 										<p id="estimasi_komisi_total" class="text-sm font-medium">Rp 0</p>
 								</div>
-								<!-- asdasdsadas -->
-								<?php  if($this->session->level=='1' OR $this->session->level=='2'){ ?>
 								<div class="flex items-center justify-between gap-1">
 									<p class="text-sm font-medium">
-										<a href="<?= base_url('expense/lebih_lengkap') ?>">
+										<a href="<?= site_url('sales-achievement/' . $this->session->id_session) ?>">
 				                        <span class="text-sm font-medium text-primary">
 				                          Lebih Lengkap >>
 				                        </span>
-				                    </a>				                      
+				                    </a>
 									</p>
 								</div>
-								<?php }else{ ?>
-								<?php }?>
 
 							</div>
 
