@@ -64,14 +64,9 @@
                   <div id="partner-details" class="hidden">
                     <label class="block mb-2"><strong>Detail</strong></label>
                     <textarea name="partner_detail" rows="20" cols="100%" id="partner_detail" class="w-full px-4 py-2 border rounded mb-4"></textarea>
-                    <label class="block mb-2"><strong>Photo/Concept 1</strong></label>
-                    <input type="file" name="partner_photo2" id="partner_photo1" class="w-full px-4 py-2 border rounded mb-4 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-                    <label class="block mb-2"><strong>Photo/Concept 2</strong></label>
-                    <input type="file" name="partner_photo3" id="partner_photo2" class="w-full px-4 py-2 border rounded mb-4 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-                    <label class="block mb-2"><strong>Photo/Concept 3</strong></label>
-                    <input type="file" name="partner_photo4" id="partner_photo3" class="w-full px-4 py-2 border rounded mb-4 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-                    <label class="block mb-2"><strong>Photo/Concept 4</strong></label>
-                    <input type="file" name="partner_photo5" id="partner_photo4" class="w-full px-4 py-2 border rounded mb-4 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                    <label class="block mb-2"><strong>Foto/Konsep</strong></label>
+                    <input type="file" name="partner_gallery_photos[]" multiple accept="image/png,image/jpeg" class="w-full px-4 py-2 border rounded mb-1 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                    <p class="text-xs text-gray-500 mb-4">Bisa pilih beberapa foto sekaligus, jumlahnya tidak dibatasi.</p>
                   </div>
                 </div>
 
@@ -111,17 +106,9 @@
                   <label class="block mb-2"><strong>Logo/Photo Close up</strong></label>
                   <input type="file" name="photo1" id="photo1" class="w-full px-4 py-2 border rounded mb-4 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
 
-                  <label class="block mb-2"><strong>Photo/Concept 1</strong></label>
-                  <input type="file" name="photo2" id="photo2" class="w-full px-4 py-2 border rounded mb-4 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-
-                  <label class="block mb-2"><strong>Photo/Concept 2</strong></label>
-                  <input type="file" name="photo3" id="photo3" class="w-full px-4 py-2 border rounded mb-4 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-
-                  <label class="block mb-2"><strong>Photo/Concept 3</strong></label>
-                  <input type="file" name="photo4" id="photo4" class="w-full px-4 py-2 border rounded mb-4 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-
-                  <label class="block mb-2"><strong>Photo/Concept 4</strong></label>
-                  <input type="file" name="photo5" id="photo5" class="w-full px-4 py-2 border rounded mb-4 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                  <label class="block mb-2"><strong>Foto/Konsep</strong></label>
+                  <input type="file" name="gallery_photos[]" multiple accept="image/png,image/jpeg" class="w-full px-4 py-2 border rounded mb-1 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                  <p class="text-xs text-gray-500 mb-4">Bisa pilih beberapa foto sekaligus, jumlahnya tidak dibatasi.</p>
                 </div>
 
                 <div class="flex flex-col sm:flex-row justify-end">

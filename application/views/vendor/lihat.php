@@ -72,14 +72,17 @@
               </div>
 
               <?php
-                $photos = array_filter([$vendors->photo1, $vendors->photo2, $vendors->photo3, $vendors->photo4, $vendors->photo5]);
+                // photo1 = cover/logo (kolom tersendiri), sisanya galeri
+                // dengan jumlah bebas dari tabel vendor_photos.
+                $semua_foto = $vendors->photo1 ? [$vendors->photo1] : [];
+                foreach ($photos as $photo) { $semua_foto[] = $photo->file_name; }
               ?>
-              <?php if (!empty($photos)): ?>
+              <?php if (!empty($semua_foto)): ?>
               <h2 class="text-lg font-bold mb-3">Foto / Konsep</h2>
               <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
-                <?php foreach ($photos as $i => $photo): ?>
-                <a href="<?= base_url('uploads/' . $photo) ?>" target="_blank">
-                  <img src="<?= base_url('uploads/' . $photo) ?>" alt="Foto <?= $i + 1 ?>" class="w-full h-32 object-cover rounded-md border border-stroke dark:border-strokedark">
+                <?php foreach ($semua_foto as $i => $foto): ?>
+                <a href="<?= base_url('uploads/' . $foto) ?>" target="_blank">
+                  <img src="<?= base_url('uploads/' . $foto) ?>" alt="Foto <?= $i + 1 ?>" class="w-full h-32 object-cover rounded-md border border-stroke dark:border-strokedark">
                 </a>
                 <?php endforeach; ?>
               </div>

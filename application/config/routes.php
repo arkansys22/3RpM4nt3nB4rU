@@ -272,6 +272,7 @@ $route['naskah/list_vendor/pdf/(:any)'] = 'crud_vendor/generate_pdf/$1';
 $route['vendor/create/(:any)'] = 'crud_vendor/create/$1'; // Create vendor form based on session_id
 $route['vendor/store'] = 'crud_vendor/store'; // Store vendor data based on session_id
 $route['vendor/lihat/(:any)/(:any)'] = 'crud_vendor/lihat/$1/$2'; // Detail satu vendor (dari tombol "Lihat Detail" di project/lihat)
+$route['vendor/delete-photo/(:any)/(:any)/(:any)'] = 'crud_vendor/delete_photo/$1/$2/$3'; // Hapus satu foto galeri (dari vendor/edit)
 
 // ===== Ceklist & Tanda Tangan serah terima vendor Dekorasi/Catering =====
 $route['vendor-checklist/buka/(:any)/(:any)'] = 'Crud_vendor_checklist/buka/$1/$2'; // Router: ke lihat kalau sudah ada, ke create kalau belum

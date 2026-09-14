@@ -30,11 +30,15 @@ switch ($vendor->type) {
     
 }
 
-// Periksa apakah foto tersedia
-$photo2 = !empty($vendor->photo2) ? base_url("uploads/{$vendor->photo2}") : base_url("uploads/default.jpg");
-$photo3 = !empty($vendor->photo3) ? base_url("uploads/{$vendor->photo3}") : base_url("uploads/default.jpg");
-$photo4 = !empty($vendor->photo4) ? base_url("uploads/{$vendor->photo4}") : base_url("uploads/default.jpg");
-$photo5 = !empty($vendor->photo5) ? base_url("uploads/{$vendor->photo5}") : base_url("uploads/default.jpg");
+// Galeri foto/konsep (jumlah bebas, dari tabel vendor_photos) -- $photos
+// dikirim controller (Crud_clients::c_concept()), tapi jaga-jaga file ini
+// juga mengambil sendiri kalau suatu saat dipanggil tanpa lewat controller.
+if (!isset($photos)) {
+    $photos = $this->db->where('id_session', $id_session)
+        ->where('vendor_id', $vendor_id)
+        ->order_by('urutan', 'asc')
+        ->get('vendor_photos')->result();
+}
 ?>
 
 <div class="container ajax-container">
@@ -48,18 +52,9 @@ $photo5 = !empty($vendor->photo5) ? base_url("uploads/{$vendor->photo5}") : base
     <div class="row">
         <div class="col-md-6">
             <div class="owl-carousel owl-theme single-slideshow" data-autoplay="true" data-loop="true" data-nav="true" data-items="1">
-                <?php if (!empty($vendor->photo2)): ?>
-                    <div class="item"> <img class="img-fluid" alt="" src="<?= base_url("uploads/{$vendor->photo2}") ?>"> </div>
-                <?php endif; ?>
-                <?php if (!empty($vendor->photo3)): ?>
-                    <div class="item"> <img class="img-fluid" alt="" src="<?= base_url("uploads/{$vendor->photo3}") ?>"> </div>
-                <?php endif; ?>
-                <?php if (!empty($vendor->photo4)): ?>
-                    <div class="item"> <img class="img-fluid" alt="" src="<?= base_url("uploads/{$vendor->photo4}") ?>"> </div>
-                <?php endif; ?>
-                <?php if (!empty($vendor->photo5)): ?>
-                    <div class="item"> <img class="img-fluid" alt="" src="<?= base_url("uploads/{$vendor->photo5}") ?>"> </div>
-                <?php endif; ?>
+                <?php foreach ($photos as $photo): ?>
+                    <div class="item"> <img class="img-fluid" alt="" src="<?= base_url("uploads/{$photo->file_name}") ?>"> </div>
+                <?php endforeach; ?>
             </div>
         </div>
         <div class="col-md-6">

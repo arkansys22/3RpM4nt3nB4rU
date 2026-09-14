@@ -51,13 +51,12 @@ class Crud_vendor extends CI_Controller {
             'phone'         => $this->input->post('phone'),
             'detail'        => $this->input->post('detail'),
             'photo1'        => $this->upload_photo('photo1'),
-            'photo2'        => $this->upload_photo('photo2'),
-            'photo3'        => $this->upload_photo('photo3'),
-            'photo4'        => $this->upload_photo('photo4'),
-            'photo5'        => $this->upload_photo('photo5'),
         ];
 
-        if ($this->input->post('vendor_status') === 'partner') {
+        $is_partner = $this->input->post('vendor_status') === 'partner';
+        $gallery_field = $is_partner ? 'partner_gallery_photos' : 'gallery_photos';
+
+        if ($is_partner) {
             $partner = $this->db->get_where('partner', ['id' => $this->input->post('partner_id')])->row();
             if ($partner) {
                 $data['vendor_id'] = $partner->id_session;
@@ -68,14 +67,11 @@ class Crud_vendor extends CI_Controller {
                 $data['phone'] = $partner->phone;
                 $data['photo1'] = $partner->logo;
                 $data['detail'] = $this->input->post('partner_detail');
-                $data['photo2'] = $this->upload_photo('partner_photo2');
-                $data['photo3'] = $this->upload_photo('partner_photo3');
-                $data['photo4'] = $this->upload_photo('partner_photo4');
-                $data['photo5'] = $this->upload_photo('partner_photo5');
             }
         }
 
         $this->Vendor_model->insert_vendor($data);
+        $this->simpan_galeri_baru($id_session, $data['vendor_id'], $gallery_field);
 
         $type = $this->input->post('type');
 
@@ -115,6 +111,7 @@ class Crud_vendor extends CI_Controller {
         }
 
         $data['project'] = $this->project_model->get_project_by_session($id_session);
+        $data['photos'] = $this->Vendor_model->get_photos($id_session, $vendor_id);
         $this->load->view('vendor/lihat', $data);
     }
 
@@ -122,11 +119,26 @@ class Crud_vendor extends CI_Controller {
         $data['vendors'] = $this->Vendor_model->get_vendor_by_id_and_vendor_id($id_session, $vendor_id);
         $data['project'] = $this->project_model->get_project_by_session($id_session);
         $data['partners'] = $this->db->get('partner')->result(); // Fetch list of partners
+        $data['photos'] = $this->Vendor_model->get_photos($id_session, $vendor_id);
 
         // Check if vendor_id exists in the partner table
         $data['is_partner'] = $this->db->where('id_session', $vendor_id)->count_all_results('partner') > 0;
 
         $this->load->view('vendor/edit', $data);
+    }
+
+    // Hapus satu foto galeri dari tombol "Hapus" di vendor/edit -- dicek
+    // dulu foto itu benar milik vendor (id_session+vendor_id) di URL,
+    // supaya tidak bisa hapus foto vendor lain lewat id sembarangan.
+    public function delete_photo($photo_id, $id_session, $vendor_id) {
+        $photo = $this->Vendor_model->get_photo_by_id($photo_id);
+        if ($photo && $photo->id_session === $id_session && $photo->vendor_id === $vendor_id) {
+            $this->Vendor_model->delete_photo($photo_id);
+            @unlink('./uploads/' . $photo->file_name);
+            $this->session->set_flashdata('Success', 'Foto berhasil dihapus.');
+        }
+
+        redirect('vendor/edit/' . $id_session . '/' . $vendor_id);
     }
     
     public function update($id_session, $vendor_id) {
@@ -165,6 +177,8 @@ class Crud_vendor extends CI_Controller {
             $partner_match = null;
         }
 
+        $gallery_field = $partner_match ? 'partner_gallery_photos' : 'gallery_photos';
+
         if ($partner_match) {
 
             $data['vendor_id']     = $partner_match->id_session;
@@ -179,11 +193,6 @@ class Crud_vendor extends CI_Controller {
 
             $data['detail'] = $this->input->post('partner_detail') ?: $existing_vendor->detail;
 
-            $data['photo2'] = $this->upload_photo('partner_photo2') ?: $existing_vendor->photo2;
-            $data['photo3'] = $this->upload_photo('partner_photo3') ?: $existing_vendor->photo3;
-            $data['photo4'] = $this->upload_photo('partner_photo4') ?: $existing_vendor->photo4;
-            $data['photo5'] = $this->upload_photo('partner_photo5') ?: $existing_vendor->photo5;
-
         } else {
 
             // vendor biasa
@@ -195,13 +204,22 @@ class Crud_vendor extends CI_Controller {
             $data['detail']        = $this->input->post('detail') ?: $existing_vendor->detail;
 
             $data['photo1'] = $this->upload_photo('photo1') ?: $existing_vendor->photo1;
-            $data['photo2'] = $this->upload_photo('photo2') ?: $existing_vendor->photo2;
-            $data['photo3'] = $this->upload_photo('photo3') ?: $existing_vendor->photo3;
-            $data['photo4'] = $this->upload_photo('photo4') ?: $existing_vendor->photo4;
-            $data['photo5'] = $this->upload_photo('photo5') ?: $existing_vendor->photo5;
         }
 
         $this->Vendor_model->update_vendor($id_session, $vendor_id, $data);
+
+        // Kalau vendor_id berubah (ganti ke partner lain), galeri foto lama
+        // (masih tersimpan di bawah vendor_id LAMA) ikut dipindah supaya
+        // tidak "hilang" -- baru setelah itu foto baru yang diupload di
+        // form ini disimpan di bawah vendor_id yang berlaku sekarang.
+        // (Hapus foto satuan ditangani terpisah lewat delete_photo(), bukan
+        // di sini -- lihat tombol "Hapus" per foto di vendor/edit.)
+        $vendor_id_sekarang = $data['vendor_id'] ?? $vendor_id;
+        if ($vendor_id_sekarang !== $vendor_id) {
+            $this->Vendor_model->pindahkan_vendor_id_photos($id_session, $vendor_id, $vendor_id_sekarang);
+        }
+
+        $this->simpan_galeri_baru($id_session, $vendor_id_sekarang, $gallery_field);
 
         $new_type = $this->input->post('type'); // Ambil type baru
         if ($old_type === $new_type) {
@@ -336,6 +354,64 @@ class Crud_vendor extends CI_Controller {
             return $upload_data['file_name'];
         } else {
             return null;
+        }
+    }
+
+    // Upload_photo() (dan library upload CI3 di baliknya) cuma mengerti
+    // $_FILES dalam bentuk satu file per field. Field ini dikirim dari
+    // <input type="file" name="..[]" multiple> sehingga $_FILES-nya
+    // berbentuk array per-atribut (name[], tmp_name[], dst) -- di sini
+    // di-"pecah" balik jadi satu-satu supaya bisa dipakai ulang lewat
+    // upload_photo(), tanpa duplikasi logic validasi/konfigurasi upload.
+    private function upload_multi_photo($field_name) {
+        $files = [];
+
+        if (empty($_FILES[$field_name]) || empty($_FILES[$field_name]['name'][0])) {
+            return $files;
+        }
+
+        $sumber = $_FILES[$field_name];
+        $jumlah = count($sumber['name']);
+
+        for ($i = 0; $i < $jumlah; $i++) {
+            if ($sumber['error'][$i] !== UPLOAD_ERR_OK) {
+                continue;
+            }
+
+            $_FILES['satu_galeri_upload'] = [
+                'name'     => $sumber['name'][$i],
+                'type'     => $sumber['type'][$i],
+                'tmp_name' => $sumber['tmp_name'][$i],
+                'error'    => $sumber['error'][$i],
+                'size'     => $sumber['size'][$i],
+            ];
+
+            $nama_file = $this->upload_photo('satu_galeri_upload');
+            if ($nama_file) {
+                $files[] = $nama_file;
+            }
+        }
+
+        return $files;
+    }
+
+    // Simpan semua foto baru yang diupload lewat input multi-file
+    // ($field_name) sebagai baris baru di galeri vendor, lanjut dari
+    // urutan terakhir yang sudah ada.
+    private function simpan_galeri_baru($id_session, $vendor_id, $field_name) {
+        $file_baru = $this->upload_multi_photo($field_name);
+        if (empty($file_baru)) {
+            return;
+        }
+
+        $urutan = $this->Vendor_model->get_photos_next_urutan($id_session, $vendor_id);
+        foreach ($file_baru as $nama_file) {
+            $this->Vendor_model->insert_photo([
+                'id_session' => $id_session,
+                'vendor_id' => $vendor_id,
+                'file_name' => $nama_file,
+                'urutan' => $urutan++,
+            ]);
         }
     }
 }

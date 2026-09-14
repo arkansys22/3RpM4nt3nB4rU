@@ -61,26 +61,22 @@
                     <div id="partner-details">
                         <label class="block mb-2"><strong>Detail</strong></label>
                         <textarea name="partner_detail" id="partner_detail" rows="20" cols="100%" class="w-full px-4 py-2 border rounded mb-4"><?= $vendors->detail ?></textarea>
-                        <label class="block mb-2"><strong>Photo/Concept 1</strong></label>
-                        <?php if ($vendors->photo2): ?>
-                          <img src="<?= base_url('uploads/' . $vendors->photo2) ?>" alt="Photo 2" class="mb-2 rounded border block w-full">
+
+                        <label class="block mb-2"><strong>Foto/Konsep</strong></label>
+                        <?php if (!empty($photos)): ?>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-3">
+                          <?php foreach ($photos as $photo): ?>
+                          <div class="relative">
+                            <img src="<?= base_url('uploads/' . $photo->file_name) ?>" alt="Foto" class="w-full h-28 object-cover rounded border">
+                            <a href="<?= site_url('vendor/delete-photo/' . $photo->id . '/' . $vendors->id_session . '/' . $vendors->vendor_id) ?>"
+                              onclick="return confirm('Hapus foto ini?')"
+                              class="absolute top-1 right-1 bg-red-600 text-white text-xs w-6 h-6 rounded-full flex items-center justify-center hover:bg-red-700">&times;</a>
+                          </div>
+                          <?php endforeach; ?>
+                        </div>
                         <?php endif; ?>
-                        <input type="file" name="partner_photo2" id="partner_photo1" class="w-full px-4 py-2 border rounded mb-4">
-                        <label class="block mb-2"><strong>Photo/Concept 2</strong></label>
-                        <?php if ($vendors->photo3): ?>
-                          <img src="<?= base_url('uploads/' . $vendors->photo3) ?>" alt="Photo 3" class="mb-2 rounded border block w-full">
-                        <?php endif; ?>
-                        <input type="file" name="partner_photo3" id="partner_photo2" class="w-full px-4 py-2 border rounded mb-4">
-                        <label class="block mb-2"><strong>Photo/Concept 3</strong></label>
-                        <?php if ($vendors->photo4): ?>
-                          <img src="<?= base_url('uploads/' . $vendors->photo4) ?>" alt="Photo 4" class="mb-2 rounded border block w-full">
-                        <?php endif; ?>
-                        <input type="file" name="partner_photo4" id="partner_photo3" class="w-full px-4 py-2 border rounded mb-4">
-                        <label class="block mb-2"><strong>Photo/Concept 4</strong></label>
-                        <?php if ($vendors->photo5): ?>
-                          <img src="<?= base_url('uploads/' . $vendors->photo5) ?>" alt="Photo 5" class="mb-2 rounded border block w-full">
-                        <?php endif; ?>
-                        <input type="file" name="partner_photo5" id="partner_photo4" class="w-full px-4 py-2 border rounded mb-4">
+                        <input type="file" name="partner_gallery_photos[]" multiple accept="image/png,image/jpeg" class="w-full px-4 py-2 border rounded mb-4">
+                        <p class="text-xs text-gray-500 -mt-3 mb-4">Bisa pilih beberapa foto sekaligus, jumlahnya tidak dibatasi.</p>
                     </div>
                 </div>
 
@@ -119,26 +115,22 @@
                       <img src="<?= base_url('uploads/' . $vendors->photo1) ?>" alt="Photo 1" class="mb-2 rounded border block w-full">
                     <?php endif; ?>
                     <input type="file" name="photo1" class="w-full px-4 py-2 border rounded mb-4 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-                    <label class="block mb-2"><strong>Photo/Concept 1</strong></label>
-                    <?php if ($vendors->photo2): ?>
-                      <img src="<?= base_url('uploads/' . $vendors->photo2) ?>" alt="Photo 2" class="mb-2 rounded border block w-full">
+
+                    <label class="block mb-2"><strong>Foto/Konsep</strong></label>
+                    <?php if (!empty($photos)): ?>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-3">
+                      <?php foreach ($photos as $photo): ?>
+                      <div class="relative">
+                        <img src="<?= base_url('uploads/' . $photo->file_name) ?>" alt="Foto" class="w-full h-28 object-cover rounded border">
+                        <a href="<?= site_url('vendor/delete-photo/' . $photo->id . '/' . $vendors->id_session . '/' . $vendors->vendor_id) ?>"
+                          onclick="return confirm('Hapus foto ini?')"
+                          class="absolute top-1 right-1 bg-red-600 text-white text-xs w-6 h-6 rounded-full flex items-center justify-center hover:bg-red-700">&times;</a>
+                      </div>
+                      <?php endforeach; ?>
+                    </div>
                     <?php endif; ?>
-                    <input type="file" name="photo2" class="w-full px-4 py-2 border rounded mb-4 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-                    <label class="block mb-2"><strong>Photo/Concept 2</strong></label>
-                    <?php if ($vendors->photo3): ?>
-                      <img src="<?= base_url('uploads/' . $vendors->photo3) ?>" alt="Photo 3" class="mb-2 rounded border block w-full">
-                    <?php endif; ?>
-                    <input type="file" name="photo3" class="w-full px-4 py-2 border rounded mb-4 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-                    <label class="block mb-2"><strong>Photo/Concept 3</strong></label>
-                    <?php if ($vendors->photo4): ?>
-                      <img src="<?= base_url('uploads/' . $vendors->photo4) ?>" alt="Photo 4" class="mb-2 rounded border block w-full">
-                    <?php endif; ?>
-                    <input type="file" name="photo4" class="w-full px-4 py-2 border rounded mb-4 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-                    <label class="block mb-2"><strong>Photo/Concept 4</strong></label>
-                    <?php if ($vendors->photo5): ?>
-                      <img src="<?= base_url('uploads/' . $vendors->photo5) ?>" alt="Photo 5" class="mb-2 rounded border block w-full">
-                    <?php endif; ?>
-                    <input type="file" name="photo5" class="w-full px-4 py-2 border rounded mb-4 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                    <input type="file" name="gallery_photos[]" multiple accept="image/png,image/jpeg" class="w-full px-4 py-2 border rounded mb-1 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                    <p class="text-xs text-gray-500 mb-4">Bisa pilih beberapa foto sekaligus, jumlahnya tidak dibatasi.</p>
                 </div>
 
                 <div class="flex flex-col sm:flex-row justify-end">

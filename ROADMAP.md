@@ -21,6 +21,7 @@ Rencana & pekerjaan yang masih tertunda untuk ERP Mantenbaru. Ini dokumen "ke de
   2. `db/peralatan_event.sql` — template global daftar barang (per kategori).
   3. `db/client_peralatan_event.sql` — daftar barang per project (hasil salin dari template, per kategori).
   Tanpa ini, menu "Template Peralatan Event" & tombol "List Peralatan Event" di project/lihat error database di server.
+- [ ] **Jalankan migrasi `db/vendor_photos.sql` di server produksi** (dibuat 2026-09-15) — galeri foto vendor dengan jumlah bebas (menggantikan kolom `photo2`..`photo5` yang dulu dibatasi maksimal 4 foto tambahan). File SQL ini juga memindahkan (migrasi) data foto lama dari kolom `photo2`..`photo5` ke tabel baru `vendor_photos` secara otomatis lewat `INSERT...SELECT` — kolom lama SENGAJA tidak dihapus (dibiarkan, sudah tidak dipakai kode) buat jaga-jaga rollback. Tanpa migrasi ini, upload/lihat/hapus foto vendor (di `vendor/edit`, `vendor/lihat`, dan halaman client `clients/c_concept`) error database di server.
 
 ## 🟠 Sudah di-flag, belum dikerjakan
 
