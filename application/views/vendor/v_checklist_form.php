@@ -68,6 +68,10 @@ $action_url = $is_edit ? site_url('vendor-checklist/update/' . $form->id_session
                 <div id="checklistRows" class="space-y-2 mb-3">
                   <?php foreach ($checklist_items as $item): ?>
                   <div class="checklist-row flex items-center gap-2">
+                    <div class="flex flex-col flex-shrink-0">
+                      <button type="button" onclick="pindahAtas(this)" class="px-1 leading-none hover:text-primary" title="Naik">&uarr;</button>
+                      <button type="button" onclick="pindahBawah(this)" class="px-1 leading-none hover:text-primary" title="Turun">&darr;</button>
+                    </div>
                     <input type="checkbox" class="chk-checked h-7 w-7 flex-shrink-0" <?= !empty($item['checked']) ? 'checked' : '' ?>>
                     <input type="text" class="chk-label flex-1 rounded-lg border border-gray-400 bg-transparent py-2 px-3 outline-none focus:border-primary dark:border-gray-600 dark:bg-form-input" value="<?= htmlspecialchars($item['label']) ?>">
                     <button type="button" onclick="this.closest('.checklist-row').remove()" class="text-red-600 hover:underline text-sm flex-shrink-0">Hapus</button>
@@ -81,13 +85,7 @@ $action_url = $is_edit ? site_url('vendor-checklist/update/' . $form->id_session
                 <textarea name="catatan" rows="3" placeholder="Catatan tambahan (opsional)"
                   class="w-full rounded-lg border border-gray-400 bg-transparent py-2 px-4 outline-none focus:border-primary dark:border-gray-600 dark:bg-form-input mb-6"><?= $is_edit ? htmlspecialchars($form->catatan ?? '') : '' ?></textarea>
 
-                <!-- Status -->
-                <label class="block mb-2">Status</label>
-                <select name="status" class="w-full rounded-lg border border-gray-400 bg-transparent py-2 px-4 outline-none focus:border-primary dark:border-gray-600 dark:bg-form-input mb-6">
-                  <option value="Draft" <?= (!$is_edit || $form->status === 'Draft') ? 'selected' : '' ?>>Draft</option>
-                  <option value="Selesai" <?= ($is_edit && $form->status === 'Selesai') ? 'selected' : '' ?>>Selesai</option>
-                </select>
-                <p class="text-xs text-body dark:text-bodydark -mt-4 mb-6">
+                <p class="text-xs text-body dark:text-bodydark mb-6">
                   Tanda tangan serah terima (Petugas WO, Vendor, Customer) dilakukan manual di kertas hasil cetak, bukan di sistem ini.
                 </p>
 
@@ -111,10 +109,34 @@ $action_url = $is_edit ? site_url('vendor-checklist/update/' . $form->id_session
         var wrap = document.createElement('div');
         wrap.className = 'checklist-row flex items-center gap-2';
         wrap.innerHTML =
+            '<div class="flex flex-col flex-shrink-0">' +
+                '<button type="button" onclick="pindahAtas(this)" class="px-1 leading-none hover:text-primary" title="Naik">&uarr;</button>' +
+                '<button type="button" onclick="pindahBawah(this)" class="px-1 leading-none hover:text-primary" title="Turun">&darr;</button>' +
+            '</div>' +
             '<input type="checkbox" class="chk-checked h-7 w-7 flex-shrink-0">' +
             '<input type="text" class="chk-label flex-1 rounded-lg border border-gray-400 bg-transparent py-2 px-3 outline-none focus:border-primary dark:border-gray-600 dark:bg-form-input" placeholder="Item ceklist baru">' +
             '<button type="button" onclick="this.closest(\'.checklist-row\').remove()" class="text-red-600 hover:underline text-sm flex-shrink-0">Hapus</button>';
         document.getElementById('checklistRows').appendChild(wrap);
+    }
+
+    // Naik/turun cuma menukar posisi elemen DOM-nya (urutan array yang
+    // dikirim ke server ikut mengikuti urutan baris ini -- lihat
+    // sebelumSubmit()) -- tidak perlu urutan/id di server karena checklist
+    // disimpan sebagai satu JSON array, bukan baris per baris di DB.
+    function pindahAtas(btn) {
+        var row = btn.closest('.checklist-row');
+        var prev = row.previousElementSibling;
+        if (prev) {
+            row.parentNode.insertBefore(row, prev);
+        }
+    }
+
+    function pindahBawah(btn) {
+        var row = btn.closest('.checklist-row');
+        var next = row.nextElementSibling;
+        if (next) {
+            row.parentNode.insertBefore(next, row);
+        }
     }
 
     function sebelumSubmit() {

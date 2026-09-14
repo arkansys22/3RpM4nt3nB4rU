@@ -171,8 +171,9 @@ class Crud_vendor_checklist extends CI_Controller {
     }
 
     // Logika bareng buat store() & update(): parse checklist JSON dari
-    // form, catatan, dan status (Draft/Selesai di-set manual oleh staff --
-    // tidak ada tanda tangan digital yang menentukan status otomatis).
+    // form dan catatan. Fitur status (Draft/Selesai) sudah dihilangkan dari
+    // UI -- kolom `status` masih ada di tabel (default 'Draft') tapi tidak
+    // dipakai lagi, jadi tidak perlu di-set manual di sini.
     private function kumpulkan_data_form()
     {
         $checklist_raw = json_decode($this->input->post('checklist_items'), true);
@@ -190,7 +191,6 @@ class Crud_vendor_checklist extends CI_Controller {
         return [
             'checklist_items' => json_encode($checklist_items),
             'catatan' => trim((string) $this->input->post('catatan')),
-            'status' => $this->input->post('status') === 'Selesai' ? 'Selesai' : 'Draft',
         ];
     }
 }

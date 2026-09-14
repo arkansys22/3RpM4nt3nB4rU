@@ -83,9 +83,6 @@
               </p>
               <p class="mb-4">
                 Vendor <strong><?= htmlspecialchars($form->vendor_type) ?></strong>: <?= htmlspecialchars($form->vendor_nama) ?>
-                <span class="ml-2 inline-flex rounded-full px-3 py-1 text-xs font-medium <?= $form->status === 'Selesai' ? 'bg-success bg-opacity-10 text-success' : 'bg-yellow-500 bg-opacity-10 text-yellow-600' ?>">
-                  <?= $form->status ?>
-                </span>
               </p>
 
               <h2 class="text-lg font-bold mb-2">Ceklist</h2>
@@ -104,7 +101,7 @@
 
               <?php if (!empty($form->catatan)): ?>
               <h2 class="text-lg font-bold mb-2">Catatan</h2>
-              <p class="whitespace-pre-line text-body dark:text-bodydark border border-stroke dark:border-strokedark rounded-md p-3 mb-6"><?= nl2br(htmlspecialchars($form->catatan)) ?></p>
+              <p class="whitespace-pre-line text-body dark:text-bodydark border border-stroke dark:border-strokedark rounded-md p-3 mb-6"><?= htmlspecialchars($form->catatan) ?></p>
               <?php endif; ?>
 
               <div class="print-signature">

@@ -105,7 +105,7 @@ class Crud_peralatan_event extends CI_Controller {
     {
         $this->cek_akses();
 
-        if (!$this->validasi_post()) {
+        if (!$this->validasi_post(true)) {
             redirect('peralatan-event');
             return;
         }
@@ -131,7 +131,7 @@ class Crud_peralatan_event extends CI_Controller {
     {
         $this->cek_akses();
 
-        if (!$this->validasi_post()) {
+        if (!$this->validasi_post(false)) {
             redirect('peralatan-event');
             return;
         }
@@ -168,10 +168,17 @@ class Crud_peralatan_event extends CI_Controller {
         redirect('peralatan-event');
     }
 
-    private function validasi_post()
+    // $wajib_kategori = true buat store() (kategori dipilih waktu bikin
+    // baru), false buat update() (form edit tidak mengirim kategori --
+    // kategori item sudah tetap, tidak berubah -- kalau tetap diwajibkan
+    // di sini, update() SELALU gagal validasi termasuk pas cuma ganti
+    // centang "Tebal").
+    private function validasi_post($wajib_kategori)
     {
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('kategori_id_session', 'Kategori', 'required|trim');
+        if ($wajib_kategori) {
+            $this->form_validation->set_rules('kategori_id_session', 'Kategori', 'required|trim');
+        }
         $this->form_validation->set_rules('nama_barang', 'Nama Barang', 'required|trim');
 
         if (!$this->form_validation->run()) {
