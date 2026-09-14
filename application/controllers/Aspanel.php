@@ -11,6 +11,7 @@ class Aspanel extends CI_Controller {
 		$this->load->model('Payment_model');
 		$this->load->model('finance_project_model');
 		$this->load->model('Gaji_model');
+		$this->load->model('Agenda_model');
 		date_default_timezone_set('Asia/Jakarta');
 	}
 	public function index()
@@ -1614,18 +1615,39 @@ class Aspanel extends CI_Controller {
 	    }
 
 	    $projects = $this->project_model->get_events_by_month($month);
+	    $agenda_items = $this->Agenda_model->get_agenda_items_by_month($month);
 
 	    $per_tanggal = [];
+
+	    // Hari H (tanggal acara project) -- ditandai tipe 'Hari H' supaya
+	    // kebedakan dari milestone agenda lain di tanggal yang sama.
 	    foreach ($projects as $p) {
 	        $tanggal = date('Y-m-d', strtotime($p->event_date));
 	        if (!isset($per_tanggal[$tanggal])) {
 	            $per_tanggal[$tanggal] = [];
 	        }
 	        $per_tanggal[$tanggal][] = [
+	            'tipe' => 'Hari H',
 	            'id_session' => $p->id_session,
 	            'client_name' => $p->client_name,
 	            'project_name' => $p->project_name,
 	            'location' => $p->location,
+	        ];
+	    }
+
+	    // Milestone agenda per project (Fitting, Test Food, Final Fitting,
+	    // Technical Meeting, dst) -- lihat Agenda_model::$kolom_agenda.
+	    foreach ($agenda_items as $a) {
+	        $tanggal = date('Y-m-d', strtotime($a->tanggal));
+	        if (!isset($per_tanggal[$tanggal])) {
+	            $per_tanggal[$tanggal] = [];
+	        }
+	        $per_tanggal[$tanggal][] = [
+	            'tipe' => $a->tipe,
+	            'id_session' => $a->id_session,
+	            'client_name' => $a->client_name,
+	            'project_name' => $a->project_name,
+	            'location' => null,
 	        ];
 	    }
 

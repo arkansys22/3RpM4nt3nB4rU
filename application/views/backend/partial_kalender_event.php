@@ -96,7 +96,7 @@
             if (info) {
                 var badge = document.createElement('div');
                 badge.className = 'mt-1 text-[11px] font-semibold text-primary text-center leading-tight';
-                badge.textContent = info.jumlah + ' event';
+                badge.textContent = info.jumlah + ' agenda';
                 sel.appendChild(badge);
 
                 sel.addEventListener('click', (function (tanggalStr, info) {
@@ -111,7 +111,7 @@
     window.bukaModalKalender = function (tanggalStr, info) {
         var d = new Date(tanggalStr + 'T00:00:00');
         var judul = d.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-        document.querySelector('#kalenderModalTitle').textContent = judul + ' (' + info.jumlah + ' event)';
+        document.querySelector('#kalenderModalTitle').textContent = judul + ' (' + info.jumlah + ' agenda)';
 
         var body = document.querySelector('#kalenderModalBody');
         body.innerHTML = '';
@@ -121,8 +121,14 @@
             item.href = '<?= base_url('project/lihat/') ?>' + encodeURIComponent(p.id_session);
             item.className = 'block rounded-md border border-stroke dark:border-strokedark p-3 hover:bg-whiter dark:hover:bg-meta-4';
 
+            var tipe = document.createElement('span');
+            tipe.className = 'inline-block text-[10px] font-semibold uppercase tracking-wide ' +
+                (p.tipe === 'Hari H' ? 'text-danger' : 'text-primary');
+            tipe.textContent = p.tipe || 'Hari H';
+            item.appendChild(tipe);
+
             var nama = document.createElement('p');
-            nama.className = 'font-medium text-black dark:text-white';
+            nama.className = 'font-medium text-black dark:text-white mt-0.5';
             nama.textContent = p.client_name || p.project_name || '-';
             item.appendChild(nama);
 

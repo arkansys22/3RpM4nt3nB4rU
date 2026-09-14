@@ -34,6 +34,50 @@ class Agenda_model extends CI_Model {
         return $this->db->get()->result();
     }
     
+    // Semua milestone agenda (Fitting, Test Food, Final Fitting, Technical
+    // Meeting, dst) dari SEMUA project yang jatuh di bulan tertentu --
+    // dipakai kalender event di dashboard. wedding_day sengaja tidak
+    // disertakan di sini karena tanggalnya sama dengan project.event_date,
+    // yang sudah muncul tersendiri sebagai "Hari H" (lihat
+    // Aspanel::get_calendar_events()) -- kalau ikut disertakan di sini akan
+    // dobel di tanggal yang sama.
+    private $kolom_agenda = [
+        'brainstorming' => 'Brainstorming',
+        'fiting' => 'Fitting',
+        'testfood' => 'Test Food',
+        'final_fiting' => 'Final Fitting',
+        'technical_meeting' => 'Technical Meeting',
+        'final_revision' => 'Final Revisi',
+        'loading_decoration' => 'Loading Dekorasi',
+        'honeymoon' => 'Honeymoon',
+    ];
+
+    public function get_agenda_items_by_month($month)
+    {
+        $items = [];
+
+        foreach ($this->kolom_agenda as $kolom => $label) {
+            $this->db->select("agenda.id_session, agenda.$kolom as tanggal, project.client_name, project.project_name");
+            $this->db->from('agenda');
+            $this->db->join('project', 'project.id_session = agenda.id_session');
+            $this->db->where("DATE_FORMAT(agenda.$kolom, '%Y-%m') =", $month);
+            $this->db->where('project.status', 'create');
+            $rows = $this->db->get()->result();
+
+            foreach ($rows as $row) {
+                $items[] = (object) [
+                    'tanggal' => $row->tanggal,
+                    'tipe' => $label,
+                    'id_session' => $row->id_session,
+                    'client_name' => $row->client_name,
+                    'project_name' => $row->project_name,
+                ];
+            }
+        }
+
+        return $items;
+    }
+
     public function get_agenda_by_id($id_session)
 {
     $this->db->select('
