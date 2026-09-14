@@ -363,6 +363,8 @@
 	            </div>
 	            <!-- ====== Data Stats End -->
 
+				<?php $this->load->view('backend/partial_kalender_event') ?>
+
 				<div class="col-span-12">
 					<div class="flex flex-wrap justify-center gap-4">
 						<?php if (isset($tampilkan_button_event) && $tampilkan_button_event): ?>

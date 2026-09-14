@@ -1586,14 +1586,61 @@ class Aspanel extends CI_Controller {
 
 	public function get_expense_data()
 	{
-	      
+
 	    $total_expense = $this->db->select_sum('nominal_transaksi')
 	        ->get('operational_acc')
 	        ->row();
 
 	    echo json_encode([
 	        'total_expense' => $total_expense->nominal_transaksi ?? 0
-	        
+
+	    ]);
+	}
+
+	// AJAX buat widget "Kalender Event" di dashboard -- dipanggil ulang tiap
+	// ganti bulan (lihat backend/partial_kalender_event.php). Cuma role
+	// internal (bukan client/vendor/crew) yang boleh akses, karena hasilnya
+	// menampilkan SEMUA project, bukan cuma milik user yang login.
+	public function get_calendar_events()
+	{
+	    if (!in_array($this->session->level, ['1', '2', '3', '4', '9'])) {
+	        show_error('Akses ditolak.', 403);
+	        return;
+	    }
+
+	    $month = $this->input->get('month');
+	    if (!$month || !preg_match('/^\d{4}-\d{2}$/', $month)) {
+	        $month = date('Y-m');
+	    }
+
+	    $projects = $this->project_model->get_events_by_month($month);
+
+	    $per_tanggal = [];
+	    foreach ($projects as $p) {
+	        $tanggal = date('Y-m-d', strtotime($p->event_date));
+	        if (!isset($per_tanggal[$tanggal])) {
+	            $per_tanggal[$tanggal] = [];
+	        }
+	        $per_tanggal[$tanggal][] = [
+	            'id_session' => $p->id_session,
+	            'client_name' => $p->client_name,
+	            'project_name' => $p->project_name,
+	            'location' => $p->location,
+	        ];
+	    }
+
+	    $events = [];
+	    foreach ($per_tanggal as $tanggal => $list) {
+	        $events[] = [
+	            'tanggal' => $tanggal,
+	            'jumlah' => count($list),
+	            'projects' => $list,
+	        ];
+	    }
+
+	    echo json_encode([
+	        'month' => $month,
+	        'events' => $events,
 	    ]);
 	}
 	

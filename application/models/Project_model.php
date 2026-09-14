@@ -106,6 +106,18 @@ class project_model extends CI_Model {
         return $query->row();
     }
 
+    // Semua project (yang belum dihapus) dengan event_date jatuh di bulan
+    // tertentu -- dipakai kalender event bulanan di dashboard.
+    public function get_events_by_month($month)
+    {
+        $this->db->select('id_session, project_name, client_name, location, event_date');
+        $this->db->from('project');
+        $this->db->where('status', 'create');
+        $this->db->where('DATE_FORMAT(event_date, "%Y-%m") =', $month);
+        $this->db->order_by('event_date', 'asc');
+        return $this->db->get()->result();
+    }
+
     public function get_total_revenue_all()
     {
         $this->db->select('SUM(value) as total_revenue');
