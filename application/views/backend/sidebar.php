@@ -149,7 +149,7 @@
 					        </li>
 					       <?php } ?>
 					        <!-- Menu Item potensial clients -->
-					       <?php  if($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='4'){ ?>
+					       <?php  if($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='4' OR $this->session->level=='9'){ ?>
 							<!-- Menu Item project -->
 					        <li>
 					            <a
@@ -186,6 +186,11 @@
 							             Project
 					            </a>					            
 					        </li>
+					<?php } ?>
+
+					<!-- Stock/User/Crew/Partner: BUKAN buat Staff Sales (level 9) -- makanya
+					     dipisah dari blok Project di atas, bukan ikut kondisi yang sama. -->
+					<?php  if($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='4'){ ?>
 
 					         <!-- Menu Item clients -->
 					        <!-- <li>

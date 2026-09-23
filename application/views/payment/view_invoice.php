@@ -586,12 +586,8 @@
                 
                     
                     <p>
-                        <?php if(($potensial->promo ?? 'tidak') === 'tidak'){ ?>
-                            <div><i>Harga dapat berubah sewaktu-waktu jika belum melakukan pembayaran pertama untuk kunci harga.</i>
-                            </div><br>                                
-                        <?php }else{ ?>     
-                            <div><i>Harga dapat berubah sewaktu-waktu jika belum melakukan pembayaran pertama untuk kunci harga. Bonus dan Cashback berlaku hanya sampai H+5 setelah invoice ini diberikan. Dan besaran bonus dan cashback setiap harinya berkurang Rp 200.000. Jadi segera lakukan pembayaran pertama dan amankan bonus dan cashbacknya.</i></div><br>
-                        <?php }?>
+                        <div><i>Harga dapat berubah sewaktu-waktu jika belum melakukan pembayaran pertama untuk kunci harga.</i>
+                        </div><br>
                     </p>
 
                 </div>

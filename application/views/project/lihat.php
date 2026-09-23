@@ -36,6 +36,7 @@
         <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
             <div class="flex justify-between items-center mb-4">
             <h1 class="text-2xl font-bold">Lihat Project</h1>
+            <?php if ($this->session->level != '9'): ?>
             <div
               x-data="{openDropDown: false}"
               class="relative inline-block"
@@ -108,6 +109,7 @@
               </ul>
               </div>
             </div>
+            <?php endif; ?>
             </div>
           <form action="<?= site_url('project/update/'.$project->id_session) ?>" method="post" class="bg-white dark:bg-boxdark p-6 shadow-md rounded">
           <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>">
@@ -228,10 +230,12 @@
             <?php endif; ?>
 
             <!-- Add Crew Button -->
-            <a href="<?= site_url('crewproject/createlist/' . $project->id_session) ?>" 
+            <?php if ($this->session->level != '9'): ?>
+            <a href="<?= site_url('crewproject/createlist/' . $project->id_session) ?>"
              class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
              Tambah Crew
             </a>
+            <?php endif; ?>
           </div>
 
     <h2 class="text-lg font-bold mb-2">Vendor</h2>
@@ -282,6 +286,7 @@
             </a>
             <?php endif; ?>
 
+            <?php if ($this->session->level != '9'): ?>
             <!-- Tombol Edit -->
             <a href="<?= site_url('vendor/edit/' . $vendor->id_session . '/' . $vendor->vendor_id) ?>"
                class="bg-green-500 text-white text-sm px-2 py-1 rounded-md hover:bg-green-600">
@@ -289,11 +294,12 @@
             </a>
 
             <!-- Tombol Hapus -->
-            <a href="<?= site_url('vendor/delete/' . $vendor->id_session . '/' . $vendor->vendor_id) ?>" 
+            <a href="<?= site_url('vendor/delete/' . $vendor->id_session . '/' . $vendor->vendor_id) ?>"
                onclick="return confirm('Apakah Anda yakin ingin menghapus vendor ini?')"
                class="bg-red-500 text-white text-sm px-2 py-1 rounded-md hover:bg-red-600">
                Hapus
             </a>
+            <?php endif; ?>
           </div>
         </div>
       <?php endforeach; ?>
@@ -302,10 +308,12 @@
     <?php endif; ?>
 
     <!-- Tombol Tambah Vendor -->
-    <a href="<?= site_url('vendor/create/' . $project->id_session) ?>" 
+    <?php if ($this->session->level != '9'): ?>
+    <a href="<?= site_url('vendor/create/' . $project->id_session) ?>"
        class="mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center w-auto">
        Tambah Vendor
     </a>
+    <?php endif; ?>
   </div>
 
   <h2 class="text-lg font-bold mb-2">Agenda</h2>
@@ -349,12 +357,14 @@
         </div>
         <?php endforeach; ?>
 
+        <?php if ($this->session->level != '9'): ?>
         <div class="mt-4 flex gap-2">
             <a href="<?= site_url('agenda/edit/' . $project->id_session) ?>"
                class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-700">
                Edit Agenda
             </a>
         </div>
+        <?php endif; ?>
 
     <?php else: ?>
 
@@ -428,6 +438,7 @@
                   </a>
                 <?php endif; ?>
 
+                <?php if ($this->session->level != '9'): ?>
                 <a href="<?= site_url(
                     'payment/' .
                     (
@@ -442,13 +453,14 @@
                     Update
                 </a>
 
-                <a href="<?= site_url('payment/delete/' . $project->id_session . '/' . $trans->payment_id_session) ?>" 
+                <a href="<?= site_url('payment/delete/' . $project->id_session . '/' . $trans->payment_id_session) ?>"
                    onclick="return confirm(
                    'Apakah Anda yakin ingin menghapus transaksi ini?\n\nJika transaksi ini adalah pembayaran PAID, maka sisa invoice akan otomatis diperbarui.'
                    )"
                    class="bg-red-500 text-white text-sm px-2 py-1 rounded-md hover:bg-red-600">
                    Hapus
                 </a>
+                <?php endif; ?>
               </div>
             </div>
           </div>
@@ -457,21 +469,23 @@
     <?php endif; ?>
 
     <!-- Tombol selalu tampil -->
+    <?php if ($this->session->level != '9'): ?>
     <div class="flex gap-2 mt-4 flex-wrap">
 
-      <a href="<?= site_url('payment/createinv/' . $project->id_session) ?>" 
+      <a href="<?= site_url('payment/createinv/' . $project->id_session) ?>"
          class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 inline-block text-center">
          Tambah Invoice
       </a>
 
       <?php if (!empty($has_invoice)): ?>
-        <a href="<?= site_url('payment/createkwt/' . $project->id_session) ?>" 
+        <a href="<?= site_url('payment/createkwt/' . $project->id_session) ?>"
            class="bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-700 inline-block text-center">
            Tambah Kwitansi
         </a>
       <?php endif; ?>
 
     </div>
+    <?php endif; ?>
 
   </div>
 

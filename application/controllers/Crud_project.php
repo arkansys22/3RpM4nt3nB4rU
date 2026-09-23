@@ -48,6 +48,11 @@ class Crud_project extends CI_Controller {
             $data['project'] = $this->project_model->get_all_project();
             $this->load->view('project/index', $data);
 
+        }else if($this->session->level=='9'){
+            cek_session_akses_staff_sales('project',$this->session->id_session);
+            $data['project'] = $this->project_model->get_all_project();
+            $this->load->view('project/index', $data);
+
         }else{
             redirect(base_url());
             }
@@ -158,6 +163,8 @@ class Crud_project extends CI_Controller {
             cek_session_akses_administrator('project', $this->session->id_session);
         } else if ($this->session->level == '4') {
             cek_session_akses_staff_admin('project', $this->session->id_session);
+        } else if ($this->session->level == '9') {
+            cek_session_akses_staff_sales('project', $this->session->id_session);
         } else {
             redirect(base_url());
             return;
