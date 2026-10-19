@@ -41,16 +41,19 @@ class Crud_vendor extends CI_Controller {
         $id_session = $this->input->post('id_session');
         $vendor_id = hash('sha256', bin2hex(random_bytes(16)));
 
+        // Status 'Belum Diketahui': hanya jenis vendor yang disimpan, data lain dikosongkan
+        $belum_diketahui = $this->input->post('vendor_status') === 'belum_diketahui';
+
         $data = [
             'id_session'    => $id_session,
             'vendor_id'     => $vendor_id,
-            'vendor'        => $this->input->post('vendor'),
+            'vendor'        => $belum_diketahui ? '' : $this->input->post('vendor'),
             'type'          => $this->input->post('type'),
-            'social_media'  => $this->input->post('social_media'),
-            'contact_name'  => $this->input->post('contact_name'),
-            'phone'         => $this->input->post('phone'),
-            'detail'        => $this->input->post('detail'),
-            'photo1'        => $this->upload_photo('photo1'),
+            'social_media'  => $belum_diketahui ? '' : $this->input->post('social_media'),
+            'contact_name'  => $belum_diketahui ? '' : $this->input->post('contact_name'),
+            'phone'         => $belum_diketahui ? '' : $this->input->post('phone'),
+            'detail'        => $belum_diketahui ? '' : $this->input->post('detail'),
+            'photo1'        => $belum_diketahui ? '' : $this->upload_photo('photo1'),
         ];
 
         $is_partner = $this->input->post('vendor_status') === 'partner';
@@ -71,7 +74,9 @@ class Crud_vendor extends CI_Controller {
         }
 
         $this->Vendor_model->insert_vendor($data);
-        $this->simpan_galeri_baru($id_session, $data['vendor_id'], $gallery_field);
+        if (!$belum_diketahui) {
+            $this->simpan_galeri_baru($id_session, $data['vendor_id'], $gallery_field);
+        }
 
         $type = $this->input->post('type');
 
@@ -81,7 +86,7 @@ class Crud_vendor extends CI_Controller {
             $type = $partner->type; // Ambil type dari tabel partner
             }
         }
-        $status = 'Tambah Vendor ' . $type;
+        $status = 'Tambah Vendor ' . ($belum_diketahui ? 'Belum Diketahui' : $type);
         $ip = $this->input->ip_address();
         $location = get_location_from_ip($ip);
         $ip_with_location = $ip . "<br>(" . $location . ")";
@@ -168,6 +173,13 @@ class Crud_vendor extends CI_Controller {
 
         $partner_id = $this->input->post('partner_id');
 
+        // Status hanya dikirim form saat nama vendor masih kosong
+        $vendor_status = $this->input->post('vendor_status');
+        $belum_diketahui = $vendor_status === 'belum_diketahui';
+        if ($vendor_status === 'non_partner' || $belum_diketahui) {
+            $partner_id = null; // bukan partner, abaikan pilihan partner
+        }
+
         if (!empty($partner_id)) {
             $partner_match = $this->db
                 ->where('id_session', $partner_id)
@@ -192,6 +204,17 @@ class Crud_vendor extends CI_Controller {
                                         : $existing_vendor->photo1;
 
             $data['detail'] = $this->input->post('partner_detail') ?: $existing_vendor->detail;
+
+        } else if ($belum_diketahui) {
+
+            // Belum diketahui: hanya jenis yang disimpan
+            $data['vendor']        = '';
+            $data['type']          = $this->input->post('type');
+            $data['social_media']  = '';
+            $data['contact_name']  = '';
+            $data['phone']         = '';
+            $data['detail']        = '';
+            $data['photo1']        = '';
 
         } else {
 
@@ -219,7 +242,9 @@ class Crud_vendor extends CI_Controller {
             $this->Vendor_model->pindahkan_vendor_id_photos($id_session, $vendor_id, $vendor_id_sekarang);
         }
 
-        $this->simpan_galeri_baru($id_session, $vendor_id_sekarang, $gallery_field);
+        if (!$belum_diketahui) {
+            $this->simpan_galeri_baru($id_session, $vendor_id_sekarang, $gallery_field);
+        }
 
         $new_type = $this->input->post('type'); // Ambil type baru
         if ($old_type === $new_type) {

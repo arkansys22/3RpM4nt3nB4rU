@@ -163,7 +163,7 @@ class Crud_payment extends CI_Controller {
             'kategori2'      => $kategori2,
             'potensial_clients_id_session'      => $this->input->post('typeinvoice'),
             'total_paid'      => 0, // Set total_paid to 0
-            'detail'          => json_encode($this->input->post('detail')),
+            'detail'          => json_encode($this->detail_custom_dari_post()),
             'date'            => $tanggal,
             'metodep'        => $this->input->post('metodep'),
             'due_date'        => $this->input->post('due_date'),
@@ -427,6 +427,24 @@ class Crud_payment extends CI_Controller {
         $this->load->view('payment/editkwt', $data);
     }
 
+    // Detail pembayaran Custom pada invoice: tiap item berisi nominal (angka
+    // tanpa titik) + teks custom. Item kosong dibuang. Data lama berupa teks
+    // biasa tetap diterima apa adanya.
+    private function detail_custom_dari_post() {
+        $hasil = [];
+        foreach ((array) $this->input->post('detail') as $item) {
+            if (is_array($item)) {
+                $nominal = preg_replace('/\D/', '', (string) ($item['nominal'] ?? ''));
+                $teks = trim((string) ($item['teks'] ?? ''));
+                if ($nominal !== '' || $teks !== '') {
+                    $hasil[] = ['nominal' => $nominal, 'teks' => $teks];
+                }
+            } elseif (trim((string) $item) !== '') {
+                $hasil[] = trim((string) $item);
+            }
+        }
+        return $hasil;
+    }
     public function update($id_session, $payment_id_session) {
 
 
@@ -457,7 +475,7 @@ class Crud_payment extends CI_Controller {
         $data = [
             'potensial_clients_id_session'      => $this->input->post('typeinvoice'),
             'total_bill'    => $total_bill,
-            'detail'        => json_encode($this->input->post('detail')),
+            'detail'        => json_encode($this->detail_custom_dari_post()),
             'date'          => $tanggal,
             'nama_transaksi'          => $nama_transaksi,
             'kategori'      => $kategori,

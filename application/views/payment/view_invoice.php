@@ -570,8 +570,8 @@
                         if (is_array($paymentDetails)) {
                             echo '<ul class="list-disc pl-5">';
 
-                            foreach ($paymentDetails as $item) {
-                                echo '<li>' . htmlspecialchars($item) . '</li>';
+                            foreach ($paymentDetails as $idx => $item) {
+                                echo '<li>' . format_detail_pembayaran_custom($item, $idx) . '</li>';
                             }
 
                             echo '</ul>';

@@ -16,7 +16,8 @@
         stickyMenu: false, 
         sidebarToggle: false, 
         scrollTop: false, 
-        isPartner: <?= $is_partner ? 'true' : 'false' ?> 
+        // Vendor yang namanya masih kosong boleh pilih status lagi (seperti Tambah Vendor)
+        mode: '<?= $vendors->vendor === '' ? 'belum_diketahui' : ($is_partner ? 'partner' : 'non_partner') ?>'
     }"
     x-init="
         darkMode = JSON.parse(localStorage.getItem('darkMode'));
@@ -48,8 +49,27 @@
               <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>">
                 <input type="hidden" name="id_session" value="<?= $vendors->id_session ?>">
 
+                <?php if ($vendors->vendor === ''): ?>
+                <label class="block mb-2"><strong>Status Vendor</strong></label>
+                <div class="mb-4">
+                  <label class="inline-flex items-center">
+                    <input type="radio" name="vendor_status" value="non_partner" class="form-radio" x-model="mode">
+                    <span class="ml-2">Non-Partner</span>
+                  </label>
+                  <label class="inline-flex items-center ml-4">
+                    <input type="radio" name="vendor_status" value="partner" class="form-radio" x-model="mode">
+                    <span class="ml-2">Partner</span>
+                  </label>
+                  <label class="inline-flex items-center ml-4">
+                    <input type="radio" name="vendor_status" value="belum_diketahui" class="form-radio" x-model="mode">
+                    <span class="ml-2">Belum Diketahui</span>
+                  </label>
+                </div>
+                <p x-show="mode === 'belum_diketahui'" class="mb-4 text-sm text-gray-500">Pilih jenis vendor saja. Data lainnya disimpan kosong dan bisa dilengkapi nanti.</p>
+                <?php endif; ?>
+
                 <!-- Partner Section -->
-                <div x-show="isPartner" id="partner-section">
+                <div x-show="mode === 'partner'" id="partner-section">
                     <label class="block mb-2"><strong>Nama Partner</strong></label>
                     <select name="partner_id" id="partner_id" class="w-full px-4 py-2 border rounded mb-4" onchange="fetchPartnerData()">
                         <option value="">Pilih Partner</option>
@@ -81,11 +101,14 @@
                 </div>
 
                 <!-- Non-Partner Section -->
-                <div x-show="!isPartner" id="non-partner-section">
+                <div x-show="mode !== 'partner'" id="non-partner-section">
+                    <div x-show="mode !== 'belum_diketahui'">
                     <label class="block mb-2"><strong>Nama Vendor</strong></label>
                     <input type="text" name="vendor" id="vendor" value="<?= $vendors->vendor ?>" class="w-full px-4 py-2 border rounded mb-4">
+                    </div>
                     <label class="block mb-2"><strong>Type:</strong></label>
                     <select name="type" id="type" class="w-full px-4 py-2 border rounded mb-4">
+                        <option value="" <?= $vendors->type == '' ? 'selected' : '' ?>>-</option>
                         <option value="Venue" <?= $vendors->type == 'Venue' ? 'selected' : '' ?>>Venue</option>
                         <option value="MC Akad" <?= $vendors->type == 'MC Akad' ? 'selected' : '' ?>>MC Akad</option>
                         <option value="MC Pemberkatan" <?= $vendors->type == 'MC Pemberkatan' ? 'selected' : '' ?>>MC Pemberkatan</option>
@@ -102,6 +125,7 @@
                         <option value="Entertainment" <?= $vendors->type == 'Entertainment' ? 'selected' : '' ?>>Entertainment</option>
                         <option value="Pendukung Pernikahan Lainnya" <?= $vendors->type == 'Pendukung Pernikahan Lainnya' ? 'selected' : '' ?>>Pendukung Pernikahan Lainnya</option>
                     </select>
+                    <div x-show="mode !== 'belum_diketahui'">
                     <label class="block mb-2"><strong>Social Media:</strong></label>
                     <input type="text" name="social_media" id="social_media" value="<?= $vendors->social_media ?>" class="w-full px-4 py-2 border rounded mb-4">
                     <label class="block mb-2"><strong>Contact Name:</strong></label>
@@ -131,6 +155,7 @@
                     <?php endif; ?>
                     <input type="file" name="gallery_photos[]" multiple accept="image/png,image/jpeg" class="w-full px-4 py-2 border rounded mb-1 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                     <p class="text-xs text-gray-500 mb-4">Bisa pilih beberapa foto sekaligus, jumlahnya tidak dibatasi.</p>
+                    </div>
                 </div>
 
                 <div class="flex flex-col sm:flex-row justify-end">

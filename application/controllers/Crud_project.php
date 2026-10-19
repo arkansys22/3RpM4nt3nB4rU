@@ -185,6 +185,8 @@ class Crud_project extends CI_Controller {
         $data['clients'] = $this->Clients_model->get_client_by_session($id_session);
         $data['logactivity'] = $this->project_model->get_logactivity_by_session($id_session);
 
+        $data['perubahan_proposal'] = $this->perubahan_dari_proposal($data['project']);
+
         // TAMBAHAN AGENDA
         $data['agenda'] = $this->db
         ->where('id_session', $id_session)
@@ -193,6 +195,36 @@ class Crud_project extends CI_Controller {
         $this->load->view('project/lihat', $data);
     }
 
+    // Bandingkan data project dengan proposal penawarannya (klien potensial +
+    // penawaran_klien). Kembalikan daftar bidang yang sudah beda, supaya
+    // project/lihat bisa mengingatkan untuk meng-edit project. Kosong kalau
+    // project tidak terhubung ke proposal atau semuanya sudah sama.
+    private function perubahan_dari_proposal($project) {
+        if (!$project || empty($project->potensial_clients_id_session)) {
+            return [];
+        }
+        $this->load->model('Potensial_model');
+        $pc = $this->db->get_where('potensial_clients', ['id_session' => $project->potensial_clients_id_session])->row();
+        if (!$pc) {
+            return [];
+        }
+
+        $beda = [];
+        if (trim($pc->pc_name) !== trim($project->client_name)) {
+            $beda[] = ['label' => 'Nama Client', 'project' => $project->client_name, 'proposal' => $pc->pc_name];
+        }
+        if ($pc->event_date !== $project->event_date) {
+            $beda[] = ['label' => 'Tanggal Pernikahan', 'project' => tgl_indo($project->event_date), 'proposal' => tgl_indo($pc->event_date)];
+        }
+        if (trim($pc->location) !== trim($project->location)) {
+            $beda[] = ['label' => 'Lokasi', 'project' => $project->location, 'proposal' => $pc->location];
+        }
+        $total = $this->Potensial_model->hitung_total_penawaran($project->potensial_clients_id_session);
+        if ($total !== (int) $project->value) {
+            $beda[] = ['label' => 'Nilai Project', 'project' => 'Rp ' . number_format($project->value, 0, ',', '.'), 'proposal' => 'Rp ' . number_format($total, 0, ',', '.')];
+        }
+        return $beda;
+    }
     public function crew_lihat($id_session) {
         if ($this->session->level == '1') {
             cek_session_akses_developer('project', $this->session->id_session);
@@ -599,64 +631,10 @@ class Crud_project extends CI_Controller {
 
 
     public function get_total_penawaran(){
-        $id_session = $this->input->post('id_session');
-
-        // 1. Ambil data promo
-        $this->db->select('promo, promo_value');
-        $this->db->from('potensial_clients');
-        $this->db->where('id_session', $id_session);
-        $pc = $this->db->get()->row();
-
-        $promo_type  = $pc->promo ?? 'tidak';
-        $promo_value = $pc->promo_value ?? 0;
-
-        // 2. Hitung berdasarkan tipe promo
-        if ($promo_type == 'tidak') {
-
-            // ❗ Tanpa diskon
-            $this->db->select('
-                SUM(penawaran_klien_hargapromo * penawaran_klien_qty) AS total
-            ');
-
-        } elseif ($promo_type == 'default') {
-
-            // ❗ Pakai diskon per item
-            $this->db->select('
-                SUM(
-                    (penawaran_klien_hargapromo * penawaran_klien_qty)
-                    - COALESCE(penawaran_klien_diskon, 0)
-                ) AS total
-            ');
-
-        } elseif ($promo_type == 'custom') {
-
-            // ❗ Pakai promo global
-            $this->db->select('
-                SUM(penawaran_klien_hargapromo * penawaran_klien_qty) AS subtotal
-            ');
-
-        }
-
-        $this->db->from('penawaran_klien');
-        $this->db->where('penawaran_klien_potensial_idsession', $id_session);
-        $result = $this->db->get()->row();
-
-        // 3. Final total
-        if ($promo_type == 'custom') {
-            $subtotal = $result->subtotal ?? 0;
-            $total = $subtotal - $promo_value;
-        } else {
-            $total = $result->total ?? 0;
-        }
-
-        // 4. Hindari minus
-        if ($total < 0) {
-            $total = 0;
-        }
-
+        $this->load->model('Potensial_model');
         echo json_encode([
-            'total' => $total
+            'total' => $this->Potensial_model->hitung_total_penawaran($this->input->post('id_session'))
         ]);
     }
-    
+
 }

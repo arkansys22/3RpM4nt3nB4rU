@@ -49,6 +49,10 @@
                     <input type="radio" name="vendor_status" value="partner" class="form-radio" onclick="togglePartner(true)">
                     <span class="ml-2">Partner</span>
                   </label>
+                  <label class="inline-flex items-center ml-4">
+                    <input type="radio" name="vendor_status" value="belum_diketahui" class="form-radio" onclick="togglePartner(false, true)">
+                    <span class="ml-2">Belum Diketahui</span>
+                  </label>
                 </div>
 
                 <!-- Partner Section -->
@@ -71,10 +75,14 @@
                 </div>
 
                 <!-- Non-Partner Section -->
+                <p id="belum-diketahui-info" class="hidden mb-4 text-sm text-gray-500">Pilih jenis vendor saja. Data lainnya disimpan kosong dan bisa dilengkapi nanti lewat tombol Edit.</p>
+
                 <div id="non-partner-section">
+                  <div class="np-extra">
                   <label class="block mb-2"><strong>Nama Vendor</strong></label>
                   <input type="text" name="vendor" id="vendor" class="w-full px-4 py-2 border rounded mb-4">
 
+                  </div>
                   <label class="block mb-2"><strong>Jenis</strong></label>
                   <select name="type" id="type" class="w-full px-4 py-2 border rounded mb-4">
                       <option value="">-</option>
@@ -91,6 +99,7 @@
                       <option value="Entertainment">Entertainment</option>
                   </select>
 
+                  <div class="np-extra">
                   <label class="block mb-2"><strong>Sosial Media</strong></label>
                   <input type="text" name="social_media" id="social_media" class="w-full px-4 py-2 border rounded mb-4">
 
@@ -109,6 +118,7 @@
                   <label class="block mb-2"><strong>Foto/Konsep</strong></label>
                   <input type="file" name="gallery_photos[]" multiple accept="image/png,image/jpeg" class="w-full px-4 py-2 border rounded mb-1 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                   <p class="text-xs text-gray-500 mb-4">Bisa pilih beberapa foto sekaligus, jumlahnya tidak dibatasi.</p>
+                  </div>
                 </div>
 
                 <div class="flex flex-col sm:flex-row justify-end">
@@ -127,13 +137,23 @@
 
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
   <script>
-    function togglePartner(isPartner) {
+    function togglePartner(isPartner, belumDiketahui) {
       const partnerSection = document.getElementById('partner-section');
       const nonPartnerSection = document.getElementById('non-partner-section');
       const partnerDetails = document.getElementById('partner-details');
 
       partnerSection.classList.toggle('hidden', !isPartner);
       nonPartnerSection.classList.toggle('hidden', isPartner);
+      // Belum diketahui: hanya input Jenis yang tampil
+      document.querySelectorAll('#non-partner-section .np-extra').forEach(el => el.classList.toggle('hidden', !!belumDiketahui));
+      document.getElementById('belum-diketahui-info').classList.toggle('hidden', !belumDiketahui);
+
+      // Belum diketahui: kosongkan semua isian supaya tersimpan kosong
+      if (belumDiketahui) {
+        document.querySelectorAll('#partner-section input[type=file], #partner-section textarea, #partner-section select, #non-partner-section .np-extra input, #non-partner-section .np-extra textarea').forEach(field => {
+          field.value = '';
+        });
+      }
 
       // Ensure all fields are enabled before submission
       const allFields = document.querySelectorAll('#partner-section input, #partner-section textarea, #non-partner-section input, #non-partner-section textarea');

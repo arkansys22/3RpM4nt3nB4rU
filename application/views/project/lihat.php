@@ -34,6 +34,21 @@
       <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
         <div class="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-9">
         <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
+            <?php if (!empty($perubahan_proposal)): ?>
+            <div class="mb-4 rounded-md border border-warning bg-warning bg-opacity-10 px-4 py-3 text-sm">
+              <p class="font-semibold text-warning">Proposal penawaran project ini sudah berubah.</p>
+              <p class="mb-2">Data project belum sama dengan proposal terbaru<?= $this->session->level != '9' ? ', silakan edit project supaya ikut diperbarui' : ', mohon minta admin meng-edit project' ?>:</p>
+              <ul class="mb-3 list-disc pl-5">
+                <?php foreach ($perubahan_proposal as $b): ?>
+                  <li><strong><?= $b['label'] ?></strong>: <?= htmlspecialchars($b['project']) ?> &rarr; <strong><?= htmlspecialchars($b['proposal']) ?></strong></li>
+                <?php endforeach; ?>
+              </ul>
+              <?php if ($this->session->level != '9'): ?>
+              <a href="<?= site_url('project/edit/' . $project->id_session) ?>" class="inline-block rounded-md bg-warning px-3 py-1.5 font-medium text-white hover:bg-opacity-90">Edit Project</a>
+              <?php endif; ?>
+            </div>
+            <?php endif; ?>
+
             <div class="flex justify-between items-center mb-4">
             <h1 class="text-2xl font-bold">Lihat Project</h1>
             <?php if ($this->session->level != '9'): ?>
@@ -267,8 +282,13 @@
         <div class="mb-2 flex items-center justify-between <?= $index === count($vendors) - 1 ? '' : 'border-b pb-2' ?>">
           <div>
             <p class='font-medium'>
-              <strong><?= htmlspecialchars($vendor->type) ?>:</strong> 
+              <?php if ($vendor->vendor === ''): ?>
+              <strong><?= $vendor->type !== '' ? htmlspecialchars($vendor->type) . ':' : '' ?></strong>
+              <span class="text-gray-500">Vendor belum diketahui</span>
+              <?php else: ?>
+              <strong><?= htmlspecialchars($vendor->type) ?>:</strong>
               <?= htmlspecialchars($vendor->vendor) ?>
+              <?php endif; ?>
             </p>
           </div>
           <div class="flex gap-2">

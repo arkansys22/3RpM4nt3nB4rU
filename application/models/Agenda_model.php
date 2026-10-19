@@ -52,6 +52,12 @@ class Agenda_model extends CI_Model {
         'honeymoon' => 'Honeymoon',
     ];
 
+    // Daftar milestone agenda (kolom => label), dipakai juga oleh To Do List dashboard.
+    public function daftar_kolom()
+    {
+        return $this->kolom_agenda;
+    }
+
     public function get_agenda_items_by_month($month)
     {
         $items = [];

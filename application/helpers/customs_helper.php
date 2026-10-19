@@ -503,4 +503,26 @@ function render_susunan_acara_text($text, $clients)
     return str_replace($search, $replace, $text);
 }
 
+
+// Teks satu item detail pembayaran Custom pada invoice. Item baru berbentuk
+// ['nominal' => '5000000', 'teks' => '...'] (urutan menentukan "pertama",
+// "kedua", dst); item lama berupa teks biasa. Hasilnya HTML yang sudah di-escape
+// (teks custom ditebalkan), jadi langsung di-echo tanpa htmlspecialchars lagi.
+if (!function_exists('format_detail_pembayaran_custom')) {
+    function format_detail_pembayaran_custom($item, $index) {
+        if (!is_array($item)) {
+            return htmlspecialchars((string) $item);
+        }
+        $urutan = ['pertama', 'kedua', 'ketiga', 'keempat', 'kelima', 'keenam', 'ketujuh', 'kedelapan', 'kesembilan', 'kesepuluh'];
+        $nomor = $urutan[$index] ?? ('ke-' . ($index + 1));
+        $teks = 'Pembayaran ' . $nomor;
+        if (trim($item['teks'] ?? '') !== '') {
+            $teks .= ' <b>' . htmlspecialchars(trim($item['teks'])) . '</b>';
+        }
+        if (($item['nominal'] ?? '') !== '') {
+            $teks .= ' sebesar Rp ' . number_format((int) $item['nominal'], 0, ',', '.');
+        }
+        return $teks;
+    }
+}
 }

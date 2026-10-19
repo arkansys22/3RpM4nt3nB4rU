@@ -122,6 +122,30 @@ class potensial_model extends CI_Model {
         return $this->db->get_where('penawaran_klien', ['penawaran_klien_potensial_idsession' => $id_session])->result();
     }
 
+    // Total nilai proposal penawaran (setelah promo/diskon). Dipakai bersama
+    // oleh form project (AJAX get_total_penawaran) dan pengecekan perubahan
+    // proposal di project/lihat, supaya rumusnya tidak bisa beda.
+    public function hitung_total_penawaran($id_session) {
+        $pc = $this->db->select('promo, promo_value')->get_where('potensial_clients', ['id_session' => $id_session])->row();
+        $promo_type  = $pc->promo ?? 'tidak';
+        $promo_value = $pc->promo_value ?? 0;
+
+        if ($promo_type == 'default') {
+            // diskon per item
+            $this->db->select('SUM((penawaran_klien_hargapromo * penawaran_klien_qty) - COALESCE(penawaran_klien_diskon, 0)) AS total', false);
+        } else {
+            // tanpa promo, atau promo global (dikurangi setelah subtotal)
+            $this->db->select('SUM(penawaran_klien_hargapromo * penawaran_klien_qty) AS total', false);
+        }
+        $row = $this->db->get_where('penawaran_klien', ['penawaran_klien_potensial_idsession' => $id_session])->row();
+        $total = (int) ($row->total ?? 0);
+
+        if ($promo_type == 'custom') {
+            $total -= (int) $promo_value;
+        }
+        return max(0, $total);
+    }
+
     public function update_potensial_clients($id_session, $data) {
         $this->db->where('id_session', $id_session);
         return $this->db->update('potensial_clients', $data);

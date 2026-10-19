@@ -162,33 +162,41 @@
                         }
                         ?>
 
-                        <?php foreach ($details as $index => $detail): ?>
-                        <div class="detail-item flex gap-2 items-start">
-
-                            <input
-                                type="text"
-                                name="detail[]"
-                                value="<?= htmlspecialchars($detail) ?>"
-                                class="detail-input flex-1 px-4 py-2 border rounded-lg"
-                                placeholder="Contoh: Pembayaran pertama DP 20% maksimal H+7"
-                            >
-
-                            <button
-                                type="button"
-                                class="remove-detail bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg <?= $index == 0 ? 'hidden' : '' ?>">
-                                Hapus
-                            </button>
-
+                        <?php foreach ($details as $index => $detail):
+                            // data lama berupa teks biasa; data baru berupa [nominal, teks]
+                            $nom = is_array($detail) ? ($detail['nominal'] ?? '') : '';
+                            $txt = is_array($detail) ? ($detail['teks'] ?? '') : $detail;
+                            $nom = ($nom === '' ? '' : number_format((int) $nom, 0, ',', '.'));
+                        ?>
+                        <div class="detail-item">
+                            <label class="detail-label block mb-1 text-sm font-semibold">Pembayaran Pertama</label>
+                            <div class="flex flex-col sm:flex-row gap-2 items-start">
+                                <div class="flex w-full sm:w-56 flex-shrink-0 items-center rounded-lg border">
+                                    <span class="pl-3 text-sm">Rp</span>
+                                    <input type="text" inputmode="numeric" autocomplete="off"
+                                        name="detail[0][nominal]" value="<?= htmlspecialchars($nom) ?>"
+                                        class="detail-input detail-nominal w-full bg-transparent px-2 py-2 outline-none"
+                                        placeholder="0">
+                                </div>
+                                <input type="text" name="detail[0][teks]" value="<?= htmlspecialchars($txt) ?>"
+                                    class="detail-input detail-teks w-full flex-1 rounded-lg border px-4 py-2"
+                                    placeholder="Teks custom, contoh: DP maksimal H+7">
+                                <button type="button"
+                                    class="remove-detail bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg hidden">
+                                    Hapus
+                                </button>
+                            </div>
                         </div>
                         <?php endforeach; ?>
 
                     </div>
 
+                    <!-- Muncul setelah pembayaran terakhir diisi -->
                     <button
                         type="button"
                         id="add-detail-btn"
-                        class="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">
-                        + Tambah Detail
+                        class="hidden mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">
+                        + Tambah Pembayaran
                     </button>
 
                 </div>
@@ -306,7 +314,7 @@
                 .querySelectorAll('.detail-input')
                 .forEach(input => {
 
-                    input.required = isCustom;
+                    input.required = isCustom && input.classList.contains('detail-nominal');
 
                     if (!isCustom) {
                         input.value = '';
@@ -319,54 +327,81 @@
             toggleDetailSection
         );
 
-        // tambah detail
-        addButton.addEventListener(
-            'click',
-            function () {
+        // ===== Detail pembayaran custom: tiap pembayaran = nominal (titik ribuan) + teks custom =====
+        const urutan = ['Pertama', 'Kedua', 'Ketiga', 'Keempat', 'Kelima', 'Keenam', 'Ketujuh', 'Kedelapan', 'Kesembilan', 'Kesepuluh'];
 
-                const wrapper =
-                    document.createElement('div');
+        function detailItems() {
+            return detailSection.querySelectorAll('.detail-item');
+        }
 
-                wrapper.className =
-                    'detail-item flex gap-2 items-start';
+        // Format angka dengan titik ribuan (1.000.000)
+        function formatRibuan(input) {
+            const digits = input.value.replace(/\D/g, '');
+            input.value = digits.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
 
-                wrapper.innerHTML = `
-                    <input
-                        type="text"
-                        name="detail[]"
-                        class="detail-input flex-1 px-4 py-2 border rounded-lg"
-                        placeholder="Masukkan detail pembayaran"
-                        required
-                    >
+        // Nomori ulang label & nama field, tombol Hapus hanya di item terakhir (selain yang pertama),
+        // dan tombol tambah baru muncul kalau nominal pembayaran terakhir sudah diisi.
+        function refreshDetail() {
+            const list = detailItems();
+            list.forEach(function (item, i) {
+                item.querySelector('.detail-label').textContent =
+                    'Pembayaran ' + (urutan[i] || ('ke-' + (i + 1)));
+                item.querySelector('.detail-nominal').name = 'detail[' + i + '][nominal]';
+                item.querySelector('.detail-teks').name = 'detail[' + i + '][teks]';
+                item.querySelector('.remove-detail')
+                    .classList.toggle('hidden', !(i > 0 && i === list.length - 1));
+            });
+            const terakhir = list[list.length - 1].querySelector('.detail-nominal');
+            addButton.classList.toggle('hidden', terakhir.value.trim() === '');
+        }
 
-                    <button
-                        type="button"
+        addButton.addEventListener('click', function () {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'detail-item';
+            wrapper.innerHTML = `
+                <label class="detail-label block mb-1 text-sm font-semibold"></label>
+                <div class="flex flex-col sm:flex-row gap-2 items-start">
+                    <div class="flex w-full sm:w-56 flex-shrink-0 items-center rounded-lg border">
+                        <span class="pl-3 text-sm">Rp</span>
+                        <input type="text" inputmode="numeric" autocomplete="off"
+                            class="detail-input detail-nominal w-full bg-transparent px-2 py-2 outline-none"
+                            placeholder="0" required>
+                    </div>
+                    <input type="text"
+                        class="detail-input detail-teks w-full flex-1 rounded-lg border px-4 py-2"
+                        placeholder="Teks custom, contoh: DP maksimal H+7">
+                    <button type="button"
                         class="remove-detail bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg">
                         Hapus
                     </button>
-                `;
+                </div>
+            `;
+            detailSection.appendChild(wrapper);
+            refreshDetail();
+            wrapper.querySelector('.detail-nominal').focus();
+        });
 
-                detailSection.appendChild(wrapper);
+        detailSection.addEventListener('input', function (e) {
+            if (e.target.classList.contains('detail-nominal')) {
+                formatRibuan(e.target);
             }
-        );
+            refreshDetail();
+        });
 
-        // hapus detail
-        document.addEventListener(
-            'click',
-            function (e) {
-
-                if (
-                    e.target.classList.contains(
-                        'remove-detail'
-                    )
-                ) {
-                    e.target
-                        .closest('.detail-item')
-                        .remove();
-                }
+        detailSection.addEventListener('click', function (e) {
+            if (e.target.classList.contains('remove-detail')) {
+                e.target.closest('.detail-item').remove();
+                refreshDetail();
             }
-        );
+        });
 
+        // Ganti metode: sisakan satu item (nilainya sudah dikosongkan kalau bukan Custom)
+        metodeSelect.addEventListener('change', function () {
+            const list = detailItems();
+            for (let i = list.length - 1; i > 0; i--) { list[i].remove(); }
+            refreshDetail();
+        });
         // init
         toggleDetailSection();
     });

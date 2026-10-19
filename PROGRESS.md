@@ -617,6 +617,107 @@ ada 2 penyebab terpisah yang ketemu berurutan:
 
 ---
 
+## 2026-10-17 — 2026-10-18
+
+> Semua perubahan di bagian ini **belum di-commit** (working tree, 14 file
+> diubah + 2 file baru) dan **belum ada migrasi DB baru**. Review lewat
+> `git diff` / `git status`. Dites lewat HTML yang dirender server pakai
+> akun test sementara di `db_erpmaid` (sudah dihapus); klik tombol/JS
+> interaktif belum dites manual di browser — mohon dicoba sekali.
+
+### Vendor: status "Belum Diketahui" (tambah & edit vendor di project)
+
+- `vendor/create`: pilihan status ke-3 **Belum Diketahui** (selain
+  Non-Partner / Partner). Kalau dipilih, hanya input **Jenis** yang
+  tampil; nama, sosmed, kontak, HP, detail, dan foto disembunyikan &
+  dikosongkan. Server juga memaksa kosong (`Crud_vendor::store`), foto
+  tidak diproses, log aktivitas "Tambah Vendor Belum Diketahui".
+- `vendor/edit`: kalau **nama vendor masih kosong**, muncul 3 pilihan
+  status yang sama (default Belum Diketahui) + opsi Jenis `-`.
+  `Crud_vendor::update` baca `vendor_status`; Non-Partner / Belum
+  Diketahui mengabaikan `partner_id`. Vendor yang sudah bernama tampil
+  seperti biasa (tanpa pilihan status).
+- `project/lihat`: vendor tanpa nama tampil "Vendor belum diketahui".
+- File: `Crud_vendor.php`, `views/vendor/{create,edit}.php`,
+  `views/project/lihat.php`.
+
+### Dashboard: kartu To Do List (baru)
+
+- Partial `backend/partial_todo_list.php` (di atas Kalender Event, di
+  `v_home.php` & `v_home_admin.php`), level 1/2/3/4/9. Model baru
+  `Todo_model.php`. Hanya project **aktif & tanggal acara belum lewat**.
+  4 kategori, tiap kategori collapse/expand (`<details>`, default
+  tertutup, scroll di dalam max-h 20rem; kategori kosong = pesan hijau):
+  1. **Vendor belum diketahui / belum ada** — project tanpa vendor sama
+     sekali, atau punya vendor bernama kosong.
+  2. **Data pengantin belum lengkap** — 10 isian inti (nama lengkap,
+     panggilan, anak ke, ayah, ibu untuk CPW & CPP; "anak ke" 0 = kosong).
+     Daftar ada di `Todo_model::$kolom_pengantin`.
+  3. **Crew event masih kosong** — tidak ada baris di `crew_projects`.
+  4. **Agenda belum terisi** — 8 milestone dari
+     `Agenda_model::daftar_kolom()` (tanggal kosong / `0000-00-00`).
+     **Honeymoon ikut dihitung** — bisa bikin hampir semua project
+     tertandai; keluarkan kalau dirasa noise.
+- Catatan teknis: di view, `$this` = loader, jadi model diambil lewat
+  `get_instance()` (sempat error `Call to a member function ... on null`).
+- Vendor yang namanya sudah kosong *sebelum* fitur ini (data lama) ikut
+  terhitung sebagai "belum diketahui".
+
+### Project: notif perubahan proposal penawaran
+
+- `Crud_project::lihat` memanggil `perubahan_dari_proposal()`:
+  bandingkan project vs proposal (`potensial_clients` + `penawaran_klien`)
+  untuk **nama client, tanggal pernikahan, lokasi, nilai project**. Kalau
+  beda → banner kuning di `project/lihat` (daftar "project → proposal")
+  + tombol Edit Project (Staff Sales hanya lihat pesan). Form Edit
+  Project sudah otomatis menarik data proposal, jadi cukup klik Update.
+- Rumus total proposal dipindah ke
+  `Potensial_model::hitung_total_penawaran()` (dipakai bersama
+  `Crud_project::get_total_penawaran` dan banner) — perilaku lama tidak
+  berubah. Perubahan di item proposal lain (paket/qty) hanya terdeteksi
+  lewat selisih nilai total.
+
+### Invoice
+
+- `payment/createinv`: "Nama Invoice" terisi otomatis
+  `Invoice <pc_name proposal>` (fallback nama client project), bisa
+  diubah. Berlaku untuk "Dari Proposal" maupun "Penambahan" (nama bisa
+  kembar kalau lebih dari satu invoice per project — **perlu keputusan**
+  apakah Penambahan diberi nama beda).
+- Detail pembayaran **Custom** (createinv & editinv): input per
+  pembayaran berlabel Pertama/Kedua/…/ke-N; tombol "+ Tambah Pembayaran"
+  baru muncul setelah nominal pembayaran terakhir diisi; Hapus hanya di
+  item terakhir; ganti metode → reset ke satu item.
+- Tiap pembayaran = **nominal** (format titik ribuan, prefix Rp, wajib)
+  + **teks custom** (opsional). Disimpan di `payment.detail` sebagai
+  JSON `[{"nominal":"5000000","teks":"..."}]` lewat
+  `Crud_payment::detail_custom_dari_post()` (dipakai `store` & `update`;
+  item kosong dibuang). Data lama (array teks) tetap terbaca; di edit
+  muncul sebagai teks custom dengan nominal kosong.
+- `view_invoice`: tiap item ditulis
+  `Pembayaran <urutan> **<teks custom>** sebesar Rp <nominal>` lewat
+  helper baru `format_detail_pembayaran_custom()` (`customs_helper.php`,
+  hasil HTML ter-escape; teks custom di-bold). Jangan menulis ulang
+  "Pembayaran pertama" di teks custom (jadi dobel).
+- Kwitansi (`createkwt`/`editkwt`/`view_kwitansi`) memakai `detail`
+  dengan format lain dan **tidak diubah**.
+
+### Yang perlu direview / diputuskan
+
+- [ ] Coba manual di browser: tombol/JS di vendor create & edit, invoice
+      create & edit (tambah/hapus pembayaran), collapse To Do List.
+- [ ] Honeymoon dihitung di "Agenda belum terisi"? Isian inti pengantin
+      sudah pas?
+- [ ] Nama invoice untuk "Penambahan".
+- [ ] Hanya UI yang disembunyikan untuk Staff Sales (level 9); beberapa
+      controller (`Crud_vendor`, `Crud_agenda`, aksi payment) belum
+      dikunci per level — tawaran hardening masih terbuka.
+- [ ] Catatan lingkungan: app lokal memakai DB **`db_erpmaid`** (SetEnv
+      di httpd.conf), bukan `db_erp`. Sempat salah uji ke `db_erp` —
+      semua data uji sudah dikembalikan.
+
+---
+
 ## Catatan Insiden (untuk konteks, bukan tindak lanjut)
 
 - Sempat salah restore password test di DB lokal (`db_erpmaid`) beberapa
