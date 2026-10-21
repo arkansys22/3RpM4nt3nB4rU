@@ -52,6 +52,53 @@
                             </a>
                         </div>
 
+                        <?php if ($this->session->flashdata('Success')): ?>
+                            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4"><?= $this->session->flashdata('Success') ?></div>
+                        <?php endif; ?>
+                        <?php if ($this->session->flashdata('Error')): ?>
+                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4"><?= htmlspecialchars($this->session->flashdata('Error')) ?></div>
+                        <?php endif; ?>
+
+                        <!-- ====== Kelola Jenis / Kategori Partner ===== -->
+                        <details id="kelola-jenis" class="mb-4 rounded-md border border-stroke dark:border-strokedark" <?= ($this->session->flashdata('Success') || $this->session->flashdata('Error')) ? 'open' : '' ?>>
+                            <summary class="flex cursor-pointer select-none items-center justify-between px-4 py-3 font-semibold">
+                                <span>Kelola Jenis Partner <span class="font-normal text-body dark:text-bodydark">(<?= count($jenis_list) ?> jenis)</span></span>
+                                <span class="text-sm font-normal text-primary">Tambah / edit</span>
+                            </summary>
+                            <div class="px-4 pb-4">
+                                <form action="<?= site_url('partner/jenis/store') ?>" method="post" class="mb-4 flex flex-col gap-2 sm:flex-row">
+                                    <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>">
+                                    <input type="text" name="nama" required maxlength="255" placeholder="Nama jenis baru, contoh: Souvenir"
+                                           class="w-full flex-1 rounded border px-4 py-2">
+                                    <button type="submit" class="rounded bg-green-500 px-4 py-2 text-white hover:bg-green-600">+ Tambah Jenis</button>
+                                </form>
+
+                                <div class="divide-y divide-stroke dark:divide-strokedark">
+                                    <?php foreach ($jenis_list as $j): ?>
+                                        <?php if ($j->id === null) { continue; } ?>
+                                        <div class="flex flex-col gap-2 py-2 sm:flex-row sm:items-center">
+                                            <form action="<?= site_url('partner/jenis/update/' . $j->id) ?>" method="post" class="flex flex-1 gap-2">
+                                                <input type="hidden" name="<?= $this->security->get_csrf_token_name() ?>" value="<?= $this->security->get_csrf_hash() ?>">
+                                                <input type="text" name="nama" required maxlength="255" value="<?= htmlspecialchars($j->nama) ?>"
+                                                       class="w-full flex-1 rounded border px-3 py-1.5">
+                                                <button type="submit" class="rounded bg-blue-500 px-3 py-1.5 text-sm text-white hover:bg-blue-600">Simpan</button>
+                                            </form>
+                                            <div class="flex items-center gap-2">
+                                                <span class="rounded-full bg-gray-200 px-3 py-1 text-xs font-medium text-gray-600"><?= (int) $j->jumlah ?> partner</span>
+                                                <?php if ((int) $j->jumlah === 0): ?>
+                                                    <a href="<?= site_url('partner/jenis/delete/' . $j->id) ?>" onclick="return confirm('Hapus jenis ini?')"
+                                                       class="rounded bg-red-500 px-3 py-1.5 text-sm text-white hover:bg-red-600">Hapus</a>
+                                                <?php else: ?>
+                                                    <span class="px-3 py-1.5 text-xs text-gray-400" title="Masih dipakai partner">Dipakai</span>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                                <p class="mt-3 text-xs text-gray-500">Mengubah nama jenis ikut mengubah jenis di semua partner (dan vendor project yang memakai partner itu). Jenis yang masih dipakai tidak bisa dihapus.</p>
+                            </div>
+                        </details>
+
                         <!-- ====== Data Table Two Start ===== --><br>
                         <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                             <div class="data-table-common data-table-two max-w-full overflow-x-auto">

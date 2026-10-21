@@ -15,12 +15,14 @@ class Crud_partner extends CI_Controller {
             cek_session_akses_developer('partner',$this->session->id_session);
             $data['partner'] = $this->Partner_model->get_all_partner();
             $data['jumlah_project'] = $this->Partner_model->get_jumlah_project_per_partner();
+            $data['jenis_list'] = $this->Partner_model->get_jenis_list();
             $this->load->view('partner/index', $data);
     
         }else if($this->session->level=='2'){
             cek_session_akses_administrator('partner',$this->session->id_session);
             $data['partner'] = $this->Partner_model->get_all_partner();
             $data['jumlah_project'] = $this->Partner_model->get_jumlah_project_per_partner();
+            $data['jenis_list'] = $this->Partner_model->get_jenis_list();
             $this->load->view('partner/index', $data);
     
         }else if($this->session->level=='3'){
@@ -32,6 +34,7 @@ class Crud_partner extends CI_Controller {
             cek_session_akses_staff_admin('partner',$this->session->id_session);
             $data['partner'] = $this->Partner_model->get_all_partner();
             $data['jumlah_project'] = $this->Partner_model->get_jumlah_project_per_partner();
+            $data['jenis_list'] = $this->Partner_model->get_jenis_list();
             $this->load->view('partner/index', $data);
     
         }else if($this->session->level=='5'){
@@ -458,5 +461,38 @@ class Crud_partner extends CI_Controller {
         } else {
             return 'Unknown';
         }
+    }
+
+    // ===== Kelola jenis partner (form di halaman Daftar Partner) =====
+
+    private function akses_jenis() {
+        if (!in_array($this->session->level, ['1', '2', '4'])) {
+            redirect(base_url());
+            exit;
+        }
+    }
+
+    private function hasil_jenis($hasil, $pesan_sukses) {
+        if ($hasil === true) {
+            $this->session->set_flashdata('Success', $pesan_sukses);
+        } else {
+            $this->session->set_flashdata('Error', $hasil);
+        }
+        redirect('partner#kelola-jenis');
+    }
+
+    public function jenis_store() {
+        $this->akses_jenis();
+        $this->hasil_jenis($this->Partner_model->tambah_jenis($this->input->post('nama')), 'Jenis partner berhasil ditambahkan.');
+    }
+
+    public function jenis_update($id) {
+        $this->akses_jenis();
+        $this->hasil_jenis($this->Partner_model->ubah_jenis($id, $this->input->post('nama')), 'Jenis partner berhasil diubah.');
+    }
+
+    public function jenis_delete($id) {
+        $this->akses_jenis();
+        $this->hasil_jenis($this->Partner_model->hapus_jenis($id), 'Jenis partner berhasil dihapus.');
     }
 }

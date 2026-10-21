@@ -702,6 +702,26 @@ ada 2 penyebab terpisah yang ketemu berurutan:
 - Kwitansi (`createkwt`/`editkwt`/`view_kwitansi`) memakai `detail`
   dengan format lain dan **tidak diubah**.
 
+### Partner (2026-10-20 — 2026-10-21)
+
+- `partner/lihat`: kartu "Project yang Menggunakan Partner Ini" (project
+  aktif yang vendor-nya memakai partner itu), tab **Akan Datang** (default,
+  terdekat dulu) / **Sudah Lewat** / **Semua**; tombol Lihat → `vendor/lihat`;
+  di tab Akan Datang ada **Bagikan WhatsApp** (nomor partner → 62…, pesan:
+  nama project, tanggal, lokasi, Detail **vendor**, dipotong 1.200 karakter).
+  `partner/index`: kolom **Jumlah Project**. (`Partner_model`
+  `get_jumlah_project_per_partner` / `get_project_pengguna`.)
+- `project/index` (Daftar Project): tab Akan Datang (default, tanggal
+  terdekat) / Sudah Lewat / Semua + penanda "N hari lagi / Sudah lewat N hari".
+- **Kelola Jenis Partner** (panel di `partner/index`): tambah / ubah nama /
+  hapus (hanya jika tak terpakai). Tabel baru **`partner_jenis`** —
+  **migrasi `db/partner_jenis.sql` WAJIB dijalankan di produksi** (aman
+  diulang; isi awal dari daftar lama + jenis yang sudah terpakai). Sebelum
+  migrasi, form partner memakai daftar bawaan dan panel kelola tidak
+  menampilkan daftar. Ubah nama jenis ikut mengubah `partner.type` dan
+  `vendor.type` (vendor yang menarik dari partner itu). Dropdown
+  `partner/create` & `partner/edit` kini membaca tabel ini.
+
 ### Yang perlu direview / diputuskan
 
 - [ ] Coba manual di browser: tombol/JS di vendor create & edit, invoice

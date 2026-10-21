@@ -44,23 +44,9 @@
                             <label class="block mb-2">Jenis</label>
                             <select name="type" class="w-full px-4 py-2 border rounded mb-4">
                                 <option value="">-</option>
-                                <option value="Venue">Venue</option>
-                                <option value="MC Akad">MC Akad</option>
-                                <option value="MC Pemberkatan">MC Pemberkatan</option>
-                                <option value="MC Resepsi">MC Resepsi</option>
-                                <option value="MC Adat Sunda">MC Adat Sunda</option>
-                                <option value="MC Adat Jawa">MC Adat Jawa</option>
-                                <option value="Wedding Organizer">Wedding Organizer</option>
-                                <option value="MUA">MUA</option>
-                                <option value="Attire">Attire</option>
-                                <option value="Perlengkapan Catering">Perlengkapan Catering</option>
-                                <option value="Penyewaan Peralatan">Penyewaan Peralatan</option>
-                                <option value="Catering">Catering</option>
-                                <option value="Dokumentasi">Dokumentasi</option>
-                                <option value="Dekorasi">Dekorasi</option>
-                                <option value="Entertainment">Entertainment</option>
-                                <option value="Pendukung Pernikahan Lainnya">Pendukung Pernikahan Lainnya</option>
-
+                                <?php foreach (get_instance()->Partner_model->get_jenis_list() as $j): ?>
+                                    <option value="<?= htmlspecialchars($j->nama) ?>"><?= htmlspecialchars($j->nama) ?></option>
+                                <?php endforeach; ?>
                             </select>
 
                             <label class="block mb-2">Social Media</label>

@@ -116,4 +116,95 @@ class Partner_model extends CI_Model {
             ->order_by('p.event_date', 'desc')
             ->get()->result();
     }
+
+    // ===== Jenis / kategori partner (tabel partner_jenis) =====
+
+    // Daftar bawaan dipakai kalau tabel partner_jenis belum dimigrasi
+    // (db/partner_jenis.sql), supaya form partner tidak error di server.
+    private $jenis_bawaan = [
+        'Venue', 'MC Akad', 'MC Pemberkatan', 'MC Resepsi', 'MC Adat Sunda', 'MC Adat Jawa',
+        'Wedding Organizer', 'MUA', 'Attire', 'Perlengkapan Catering', 'Penyewaan Peralatan',
+        'Catering', 'Dokumentasi', 'Dekorasi', 'Entertainment', 'Pendukung Pernikahan Lainnya',
+    ];
+
+    public function jenis_tersedia() {
+        return $this->db->table_exists('partner_jenis');
+    }
+
+    // Semua jenis + jumlah partner (belum dihapus) yang memakainya.
+    public function get_jenis_list() {
+        if (!$this->jenis_tersedia()) {
+            $hasil = [];
+            foreach ($this->jenis_bawaan as $nama) {
+                $hasil[] = (object) ['id' => null, 'nama' => $nama, 'jumlah' => 0];
+            }
+            return $hasil;
+        }
+        return $this->db
+            ->select('j.id, j.nama, COUNT(p.id) AS jumlah', false)
+            ->from('partner_jenis j')
+            ->join('partner p', "p.type = j.nama AND p.status <> 'deleted'", 'left', false)
+            ->group_by('j.id, j.nama')
+            ->order_by('j.nama', 'asc')
+            ->get()->result();
+    }
+
+    // Kembalikan string pesan error, atau true kalau berhasil.
+    public function tambah_jenis($nama) {
+        $nama = trim(preg_replace('/\s+/', ' ', (string) $nama));
+        if ($nama === '') {
+            return 'Nama jenis tidak boleh kosong.';
+        }
+        if (!$this->jenis_tersedia()) {
+            return 'Tabel partner_jenis belum dibuat. Jalankan db/partner_jenis.sql dulu.';
+        }
+        if ($this->db->where('nama', $nama)->count_all_results('partner_jenis') > 0) {
+            return 'Jenis "' . $nama . '" sudah ada.';
+        }
+        $this->db->insert('partner_jenis', ['nama' => $nama]);
+        return true;
+    }
+
+    // Ganti nama jenis; partner yang memakai jenis lama ikut berubah, begitu
+    // juga vendor.type di project yang menarik data dari partner itu.
+    public function ubah_jenis($id, $nama_baru) {
+        $nama_baru = trim(preg_replace('/\s+/', ' ', (string) $nama_baru));
+        $jenis = $this->db->get_where('partner_jenis', ['id' => $id])->row();
+        if (!$jenis) {
+            return 'Jenis tidak ditemukan.';
+        }
+        if ($nama_baru === '') {
+            return 'Nama jenis tidak boleh kosong.';
+        }
+        if ($nama_baru === $jenis->nama) {
+            return true;
+        }
+        $dobel = $this->db->where('nama', $nama_baru)->where('id <>', $id)->count_all_results('partner_jenis');
+        if ($dobel > 0) {
+            return 'Jenis "' . $nama_baru . '" sudah ada.';
+        }
+
+        $this->db->trans_start();
+        $this->db->where('id', $id)->update('partner_jenis', ['nama' => $nama_baru]);
+        $this->db->where('type', $jenis->nama)->update('partner', ['type' => $nama_baru]);
+        $this->db->query(
+            'UPDATE vendor SET type = ? WHERE type = ? AND vendor_id IN (SELECT id_session FROM partner WHERE type = ?)',
+            [$nama_baru, $jenis->nama, $nama_baru]
+        );
+        $this->db->trans_complete();
+        return $this->db->trans_status() ? true : 'Gagal mengubah jenis.';
+    }
+
+    // Hanya boleh kalau tidak ada partner (termasuk yang di recycle bin) yang memakainya.
+    public function hapus_jenis($id) {
+        $jenis = $this->db->get_where('partner_jenis', ['id' => $id])->row();
+        if (!$jenis) {
+            return 'Jenis tidak ditemukan.';
+        }
+        if ($this->db->where('type', $jenis->nama)->count_all_results('partner') > 0) {
+            return 'Jenis "' . $jenis->nama . '" masih dipakai partner, tidak bisa dihapus.';
+        }
+        $this->db->delete('partner_jenis', ['id' => $id]);
+        return true;
+    }
 }
