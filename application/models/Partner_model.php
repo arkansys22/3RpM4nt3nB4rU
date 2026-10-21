@@ -81,4 +81,39 @@ class Partner_model extends CI_Model {
             'user' => $user
         ];
     }
+
+    // Jumlah project aktif yang memakai tiap partner (vendor.vendor_id =
+    // partner.id_session). Satu project dihitung sekali walau memakai
+    // partner yang sama lebih dari satu kali. Hasil: [id_session partner => jumlah].
+    public function get_jumlah_project_per_partner() {
+        $rows = $this->db
+            ->select('v.vendor_id, COUNT(DISTINCT p.id_session) AS jumlah', false)
+            ->from('vendor v')
+            ->join('project p', 'p.id_session = v.id_session')
+            ->join('partner pt', 'pt.id_session = v.vendor_id')
+            ->where('p.status', 'create')
+            ->group_by('v.vendor_id')
+            ->get()->result();
+
+        $hasil = [];
+        foreach ($rows as $r) {
+            $hasil[$r->vendor_id] = (int) $r->jumlah;
+        }
+        return $hasil;
+    }
+
+    // Daftar project aktif yang memakai satu partner, terbaru dulu. ->detail
+    // adalah isian Detail vendor (pekerjaan partner di project itu), bukan
+    // detail project.
+    public function get_project_pengguna($partner_id_session) {
+        return $this->db
+            ->select('p.id_session, p.project_name, p.client_name, p.event_date, p.location, MAX(v.detail) AS detail', false)
+            ->from('vendor v')
+            ->join('project p', 'p.id_session = v.id_session')
+            ->where('v.vendor_id', $partner_id_session)
+            ->where('p.status', 'create')
+            ->group_by('p.id_session, p.project_name, p.client_name, p.event_date, p.location')
+            ->order_by('p.event_date', 'desc')
+            ->get()->result();
+    }
 }

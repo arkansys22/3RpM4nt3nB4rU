@@ -143,6 +143,7 @@
                                                     </div>
                                                 </div>
                                             </th>
+                                            <th>Jumlah Project</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -154,6 +155,13 @@
                                                 <td><?= $partner->social_media ?></td>
                                                 <td><?= $partner->contact_name ?></td>
                                                 <td><a href="https://wa.me/<?= $partner->phone ?>"><?= $partner->phone ?></a></td>
+                                                <?php $jml = $jumlah_project[$partner->id_session] ?? 0; ?>
+                                                <td>
+                                                    <a href="<?= base_url('partner/lihat/' . $partner->id_session) ?>#project-pengguna"
+                                                       class="inline-flex rounded-full px-3 py-1 text-sm font-medium <?= $jml > 0 ? 'bg-primary bg-opacity-10 text-primary' : 'bg-gray-200 text-gray-500' ?>">
+                                                        <?= $jml ?> project
+                                                    </a>
+                                                </td>
                                                 <td>
                                                     <div class="flex flex-col items-start gap-2 w-max">
                                                         <a href="<?= base_url('partner/lihat/' . $partner->id_session) ?>" class="inline-flex justify-center bg-yellow-500 text-white px-2 py-1 rounded-md hover:bg-yellow-600 text-center w-full">Lihat</a>

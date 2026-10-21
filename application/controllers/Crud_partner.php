@@ -14,11 +14,13 @@ class Crud_partner extends CI_Controller {
         if ($this->session->level=='1'){
             cek_session_akses_developer('partner',$this->session->id_session);
             $data['partner'] = $this->Partner_model->get_all_partner();
+            $data['jumlah_project'] = $this->Partner_model->get_jumlah_project_per_partner();
             $this->load->view('partner/index', $data);
     
         }else if($this->session->level=='2'){
             cek_session_akses_administrator('partner',$this->session->id_session);
             $data['partner'] = $this->Partner_model->get_all_partner();
+            $data['jumlah_project'] = $this->Partner_model->get_jumlah_project_per_partner();
             $this->load->view('partner/index', $data);
     
         }else if($this->session->level=='3'){
@@ -29,6 +31,7 @@ class Crud_partner extends CI_Controller {
         }else if($this->session->level=='4'){
             cek_session_akses_staff_admin('partner',$this->session->id_session);
             $data['partner'] = $this->Partner_model->get_all_partner();
+            $data['jumlah_project'] = $this->Partner_model->get_jumlah_project_per_partner();
             $this->load->view('partner/index', $data);
     
         }else if($this->session->level=='5'){
@@ -147,12 +150,14 @@ class Crud_partner extends CI_Controller {
             cek_session_akses_developer('partner',$this->session->id_session);
             $data['partner'] = $this->Partner_model->get_partner_by_id($id_session);
             $data['logactivity'] = $this->Partner_model->get_logactivity_by_session($id_session);
+            $data['projects'] = $this->Partner_model->get_project_pengguna($id_session);
             $this->load->view('partner/lihat', $data);
     
         }else if($this->session->level=='2'){
             cek_session_akses_administrator('partner',$this->session->id_session);
             $data['partner'] = $this->Partner_model->get_partner_by_id($id_session);
             $data['logactivity'] = $this->Partner_model->get_logactivity_by_session($id_session);
+            $data['projects'] = $this->Partner_model->get_project_pengguna($id_session);
             $this->load->view('partner/lihat', $data);
 
         }else if($this->session->level=='3'){
@@ -163,6 +168,7 @@ class Crud_partner extends CI_Controller {
             cek_session_akses_staff_admin('partner',$this->session->id_session);
             $data['partner'] = $this->Partner_model->get_partner_by_id($id_session);
             $data['logactivity'] = $this->Partner_model->get_logactivity_by_session($id_session);
+            $data['projects'] = $this->Partner_model->get_project_pengguna($id_session);
             $this->load->view('partner/lihat', $data);
 
         }else if($this->session->level=='5'){
