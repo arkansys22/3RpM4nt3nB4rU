@@ -722,6 +722,38 @@ ada 2 penyebab terpisah yang ketemu berurutan:
   `vendor.type` (vendor yang menarik dari partner itu). Dropdown
   `partner/create` & `partner/edit` kini membaca tabel ini.
 
+### List Tamu per project (2026-10-21)
+
+- `clients/lihat` → Menu → **List Tamu** (`clients/tamu/<id_session>`, level
+  1/2/4). Tabel baru **`client_tamu`** — **migrasi `db/client_tamu.sql`
+  WAJIB dijalankan di produksi**. Fitur: tambah satu tamu, edit (`?edit=id`),
+  hapus (POST), cari. (Fitur "tambah banyak sekaligus" sempat ada lalu dihapus atas permintaan.) Kolom
+  sengaja ringkas: **honorifics + nama + kategori** (kolom undangan-dari / kategori / jumlah
+  orang / no HP sempat ada lalu dihapus atas permintaan). Kode:
+  `Crud_client_tamu`, `Client_tamu_model`, `views/clients/tamu.php`.
+  Kolom kini: **honorifics, nama, kategori (teks bebas, mis. perusahaan/grup)** (kolom catatan dihapus, diganti kategori)
+  (kategori ditambah lagi karena format PDF cetak memakainya).
+  **Cetak PDF** (`clients/tamu/pdf/<id>?judul_acara=&judul_daftar=`, Dompdf A4
+  portrait, dibuka inline di tab baru): header judul acara + nama klien,
+  lokasi + tanggal, judul daftar, tabel No / Honorific / Nama Tamu / Kategori /
+  Keterangan (kotak centang Hadir & Sudah Foto). View: `views/clients/pdf_tamu.php`.
+  Baris kosong bernomor (untuk tulisan tangan): data dipenuhkan sampai halaman
+  terakhirnya penuh lalu ditambah **satu halaman kosong lagi** (`$baris_halaman_1`=23,
+  `$baris_halaman_lanjutan`=27 di `pdf_tamu.php`; kapasitas nyata halaman 1 = 24,
+  halaman lanjutan = 27, dipilih sedikit di bawahnya agar aman). Contoh: 0 tamu →
+  2 halaman, 24 tamu → 3 halaman, 51 tamu → 4 halaman.
+  **Huruf Mandarin**: Dompdf hanya punya font latin, jadi ditambahkan font
+  **Noto Sans SC** (SIL OFL, ~17,7 MB, variable TTF dari google/fonts) di
+  `application/third_party/dompdf/lib/fonts/` (`noto-sans-sc-normal_*.ttf/.ufm`
+  + `dompdf_font_family_cache.php` yang mendaftarkannya — **ketiga file ini
+  harus ikut di-commit/deploy**, baru muncul sebagai file untracked). View PDF
+  membungkus huruf CJK dengan `<span class="cjk">` (Dompdf tidak ganti font per
+  huruf). `Pdf::createPDF_P()` dapat parameter ke-4 `$subset_font`; List Tamu
+  memakainya (PDF ~10 KB, tanpa itu 11 MB). PDF lain tidak berubah. Huruf
+  Mandarin tampil agak tipis (bobot default variable font) dan tidak bisa
+  dibold.
+  Belum ada: export CSV/cetak, status hadir/RSVP, tampilan untuk klien (c_lihat).
+
 ### Yang perlu direview / diputuskan
 
 - [ ] Coba manual di browser: tombol/JS di vendor create & edit, invoice

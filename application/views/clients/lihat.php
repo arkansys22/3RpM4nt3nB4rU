@@ -103,6 +103,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                     <?php endif; ?>
                   <li><a href="<?= site_url('clients/buku-tamu/'. $clients->id_session) ?>" target="_blank" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Buku Tamu</a></li>
                   <li><a href="<?= site_url('clients/nama-janur/'. $clients->id_session) ?>" target="_blank" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Nama Janur</a></li>
+                  <li><a href="<?= site_url('clients/tamu/'. $clients->id_session) ?>" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">List Tamu</a></li>
                   <li><a href="<?= site_url('clients/susunan-acara/'. $clients->id_session) ?>" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Susunan Acara 1</a></li>
                   <?php if (!empty($clients->kategori_acara_2_id_session) || !empty($clients->waktu_acara_2_mulai)) : ?>
                   <li><a href="<?= site_url('clients/susunan-acara/acara2/'. $clients->id_session) ?>" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Susunan Acara 2</a></li>

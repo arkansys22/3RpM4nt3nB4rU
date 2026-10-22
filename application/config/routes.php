@@ -130,6 +130,12 @@ $route['clients/permanent_delete/(:any)'] = 'crud_clients/permanent_delete/$1'; 
 $route['clients/lihat/(:any)'] = 'crud_clients/lihat/$1'; // Menampilkan lihat clients
 $route['clients/buku-tamu/(:any)'] = 'crud_clients/buku_tamu/$1'; // Menampilkan desain layout buku tamu (depan/isi/belakang)
 $route['clients/nama-janur/(:any)'] = 'crud_clients/nama_janur/$1'; // Menampilkan desain layout nama janur
+// List tamu per klien -- rute literal (store/pdf/delete) HARUS di atas wildcard clients/tamu/(:any)
+$route['clients/tamu/store'] = 'Crud_client_tamu/store';
+$route['clients/tamu/pdf/(:any)'] = 'Crud_client_tamu/pdf/$1';
+$route['clients/tamu/delete/(:num)'] = 'Crud_client_tamu/delete/$1';
+$route['clients/tamu/(:any)'] = 'Crud_client_tamu/index/$1'; // Halaman list tamu satu klien
+
 
 // Susunan Acara per klien -- datanya awalnya di-copy dari fitur Susunan Acara umum
 // (lihat blok $route['susunan-acara...'] di bawah), lalu diedit terpisah di sini.
