@@ -525,4 +525,54 @@ if (!function_exists('format_detail_pembayaran_custom')) {
         return $teks;
     }
 }
+
+// Waktu agenda (kolom *_waktu di tabel agenda) untuk ditampilkan di samping tanggal,
+// mis. " • 10.00 WIB". Kosong kalau waktunya belum diisi.
+if (!function_exists('format_waktu_agenda')) {
+    function format_waktu_agenda($waktu) {
+        $waktu = trim((string) $waktu);
+        if ($waktu === '') {
+            return '';
+        }
+        $ts = strtotime($waktu);
+        return $ts === false ? '' : ' &bull; ' . date('H.i', $ts) . ' WIB';
+    }
+}
+
+// Lokasi agenda (kolom *_lokasi & *_lokasi_url) sebagai HTML ter-escape: nama lokasi yang
+// bisa diklik kalau ada URL (hanya http/https). Kosong kalau keduanya kosong.
+if (!function_exists('format_lokasi_agenda')) {
+    function format_lokasi_agenda($nama, $url) {
+        $nama = trim((string) $nama);
+        $url = trim((string) $url);
+        if (!preg_match('#^https?://#i', $url)) {
+            $url = '';
+        }
+        if ($nama === '' && $url === '') {
+            return '';
+        }
+        if ($url === '') {
+            return htmlspecialchars($nama);
+        }
+        $label = $nama !== '' ? $nama : 'Lihat lokasi';
+        return '<a href="' . htmlspecialchars($url) . '" target="_blank" rel="noopener" class="text-primary underline">' . htmlspecialchars($label) . '</a>';
+    }
+}
+
+// Tanggal agenda dianggap terisi kalau tidak kosong dan bukan "0000-00-00" (nilai yang
+// tersimpan kalau input tanggal dikosongkan di Edit Agenda).
+if (!function_exists('agenda_tanggal_terisi')) {
+    function agenda_tanggal_terisi($tanggal) {
+        $tanggal = trim((string) $tanggal);
+        return $tanggal !== '' && strpos($tanggal, '0000-00-00') !== 0;
+    }
+}
+
+// URL lokasi agenda yang aman dipakai di href: hanya http/https, selain itu string kosong.
+if (!function_exists('url_lokasi_valid')) {
+    function url_lokasi_valid($url) {
+        $url = trim((string) $url);
+        return preg_match('#^https?://#i', $url) ? $url : '';
+    }
+}
 }

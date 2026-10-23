@@ -737,6 +737,14 @@ ada 2 penyebab terpisah yang ketemu berurutan:
   portrait, dibuka inline di tab baru): header judul acara + nama klien,
   lokasi + tanggal, judul daftar, tabel No / Honorific / Nama Tamu / Kategori /
   Keterangan (kotak centang Hadir & Sudah Foto). View: `views/clients/pdf_tamu.php`.
+  **Halaman klien** (`clients/c_lihat` → Wedding Texts): tombol "List Tamu/Foto"
+  (cabang Islam & Kristen) sekarang membuka PDF list tamu ini
+  (`clients/c_tamu_pdf/<id_session>` → `Crud_client_tamu::pdf_klien`, **tanpa login**
+  seperti `c_lihat` & `naskah/data_pengantin/pdf`; id_session panjang jadi "kunci"-nya;
+  judul bawaan "ACARA RESEPSI NIKAH" / "List Tamu"). Tombol hanya muncul kalau
+  sudah ada minimal 1 tamu. Sebelumnya tombol ini membuka link `clients.list_photo`
+  (Google Drive) — link itu tidak lagi dipakai di c_lihat; tombol "List Foto"
+  di `clients/lihat` (staff) bagian bawah masih memakainya.
   Baris kosong bernomor (untuk tulisan tangan): data dipenuhkan sampai halaman
   terakhirnya penuh lalu ditambah **satu halaman kosong lagi** (`$baris_halaman_1`=23,
   `$baris_halaman_lanjutan`=27 di `pdf_tamu.php`; kapasitas nyata halaman 1 = 24,
@@ -753,6 +761,42 @@ ada 2 penyebab terpisah yang ketemu berurutan:
   Mandarin tampil agak tipis (bobot default variable font) dan tidak bisa
   dibold.
   Belum ada: export CSV/cetak, status hadir/RSVP, tampilan untuk klien (c_lihat).
+
+### Waktu (jam) di Agenda (2026-10-23)
+
+- `agenda/edit` (dan `agenda/create`): tiap agenda **Brainstorming, Fiting, Test Food,
+  Final Fiting, Technical Meeting, Loading Decoration** dapat input **Waktu** di samping
+  Tanggal. Kolom baru `<agenda>_waktu` (TIME NULL) di tabel `agenda` —
+  **migrasi `db/agenda_add_waktu.sql` WAJIB dijalankan di produksi** (sekali saja, tidak
+  aman diulang). Kosong / format salah → NULL (`Crud_agenda::waktu_atau_null`).
+- Ditampilkan sebagai " • 10.00 WIB" (helper `format_waktu_agenda()`): `project/lihat`
+  (daftar agenda), `clients/c_lihat` (Brainstorming, Technical Meeting, Loading), dan
+  di judul item pada modal Kalender Event dashboard (`Agenda_model` + `Aspanel`).
+- **Nama Lokasi + URL Lokasi** untuk 5 agenda (Brainstorming, Fiting, Test Food, Final
+  Fiting, Technical Meeting; Loading **tidak**): kolom `<agenda>_lokasi` (varchar 255) &
+  `<agenda>_lokasi_url` (varchar 500) — **migrasi `db/agenda_add_lokasi.sql` WAJIB
+  dijalankan di produksi** (setelah `agenda_add_waktu.sql`, sekali saja). URL tanpa skema
+  ditambah `https://`; `javascript:`/`data:`/dll ditolak (`Crud_agenda::url_atau_null`).
+  Tampil di `project/lihat` ("Lokasi: <link>"), `c_lihat` (Brainstorming & Technical
+  Meeting, ikon pin), dan modal Kalender Event (nama lokasi + "Buka peta"). Helper
+  `format_lokasi_agenda()`.
+- **Menyesuaikan halaman lain dengan fitur agenda baru**:
+  - `clients/c_lihat` (Wedding Agenda): ditambah kartu **Fitting, Test Food, Final Fitting**
+    (urutan kini: Brainstorming, Fitting, Test Food, Final Fitting, Technical Meeting, Final
+    Revisi, Loading, Wedding Day, Honeymoon) lengkap dengan waktu + lokasi. Gambar kartu baru
+    memakai ulang `agenda1.jpg` (belum ada ilustrasi khusus). Lokasi tiap kartu (5 agenda)
+    ditampilkan **di bawah judul kartu**: ikon pin + nama lokasi (tebal) dan tautan
+    "Lihat lokasi di peta →" ke URL-nya (hanya http/https, helper `url_lokasi_valid()`);
+    URL tanpa nama → tertulis "Lokasi". Tanggal `0000-00-00` kini tampil
+    "Tanggal belum ditentukan" (sebelumnya "Senin, 00 0000") lewat helper
+    `agenda_tanggal_terisi()`.
+  - Menu **Agenda** (`agenda/index`): kolom diganti jadi Nama Client, Brainstorming, Fiting,
+    Test Food, Final Fiting, Technical Meeting, Final Revision, Loading Decoration, Wedding
+    Day, Honeymoon, Aksi; tiap sel menampilkan tanggal + waktu + lokasi (link). Query
+    `Agenda_model::get_agenda_by_project` ditambah kolom baru.
+- Final Revision / Wedding Day / Honeymoon sengaja tidak diberi waktu (tidak diminta).
+- Sempat error: `NULL as waktu` di `Agenda_model` ter-escape CI → kalender 500; diperbaiki
+  dengan `select(..., false)`.
 
 ### Yang perlu direview / diputuskan
 

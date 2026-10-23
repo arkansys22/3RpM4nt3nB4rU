@@ -98,9 +98,6 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                     <li><a href="<?= $clients->reception_afterward ?>" target="_blank" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Susunan Resepsi</a></li>
                     <?php endif; ?>
 
-                    <?php if (!empty($clients->list_photo)) : ?>
-                    <li><a href="<?= $clients->list_photo ?>" target="_blank" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">List Foto</a></li>
-                    <?php endif; ?>
                   <li><a href="<?= site_url('clients/buku-tamu/'. $clients->id_session) ?>" target="_blank" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Buku Tamu</a></li>
                   <li><a href="<?= site_url('clients/nama-janur/'. $clients->id_session) ?>" target="_blank" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">Nama Janur</a></li>
                   <li><a href="<?= site_url('clients/tamu/'. $clients->id_session) ?>" class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary">List Tamu</a></li>

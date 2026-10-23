@@ -40,25 +40,134 @@
                 <input type="hidden" name="id_session" value="<?= $project->id_session ?>">
 
                 <label class="block mb-2" for="brainstorming">Brainstorming</label>
-                <input type="date" id="brainstorming" name="brainstorming" class="w-full px-4 py-2 border rounded mb-4">
+                <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 mb-4">
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">Tanggal</span>
+                    <input type="date" id="brainstorming" name="brainstorming" class="w-full px-4 py-2 border rounded">
+                  </div>
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">Waktu</span>
+                    <input type="time" id="brainstorming_waktu" name="brainstorming_waktu" class="w-full px-4 py-2 border rounded">
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 mb-4 -mt-2">
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">Nama Lokasi</span>
+                    <input type="text" id="brainstorming_lokasi" name="brainstorming_lokasi" maxlength="255" placeholder="Contoh: Kafe Rasa Nusantara" class="w-full px-4 py-2 border rounded">
+                  </div>
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">URL Lokasi</span>
+                    <input type="text" id="brainstorming_lokasi_url" name="brainstorming_lokasi_url" maxlength="500" placeholder="Link Google Maps" class="w-full px-4 py-2 border rounded">
+                  </div>
+                </div>
 
                 <label class="block mb-2" for="brainstorming">Fiting</label>
-                <input type="date" id="fiting" name="fiting" class="w-full px-4 py-2 border rounded mb-4">
+                <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 mb-4">
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">Tanggal</span>
+                    <input type="date" id="fiting" name="fiting" class="w-full px-4 py-2 border rounded">
+                  </div>
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">Waktu</span>
+                    <input type="time" id="fiting_waktu" name="fiting_waktu" class="w-full px-4 py-2 border rounded">
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 mb-4 -mt-2">
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">Nama Lokasi</span>
+                    <input type="text" id="fiting_lokasi" name="fiting_lokasi" maxlength="255" placeholder="Contoh: Kafe Rasa Nusantara" class="w-full px-4 py-2 border rounded">
+                  </div>
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">URL Lokasi</span>
+                    <input type="text" id="fiting_lokasi_url" name="fiting_lokasi_url" maxlength="500" placeholder="Link Google Maps" class="w-full px-4 py-2 border rounded">
+                  </div>
+                </div>
 
                 <label class="block mb-2" for="brainstorming">Test Food</label>
-                <input type="date" id="testfood" name="testfood" class="w-full px-4 py-2 border rounded mb-4">
+                <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 mb-4">
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">Tanggal</span>
+                    <input type="date" id="testfood" name="testfood" class="w-full px-4 py-2 border rounded">
+                  </div>
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">Waktu</span>
+                    <input type="time" id="testfood_waktu" name="testfood_waktu" class="w-full px-4 py-2 border rounded">
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 mb-4 -mt-2">
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">Nama Lokasi</span>
+                    <input type="text" id="testfood_lokasi" name="testfood_lokasi" maxlength="255" placeholder="Contoh: Kafe Rasa Nusantara" class="w-full px-4 py-2 border rounded">
+                  </div>
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">URL Lokasi</span>
+                    <input type="text" id="testfood_lokasi_url" name="testfood_lokasi_url" maxlength="500" placeholder="Link Google Maps" class="w-full px-4 py-2 border rounded">
+                  </div>
+                </div>
 
                 <label class="block mb-2" for="brainstorming">Final Fiting</label>
-                <input type="date" id="final_fiting" name="final_fiting" class="w-full px-4 py-2 border rounded mb-4">
+                <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 mb-4">
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">Tanggal</span>
+                    <input type="date" id="final_fiting" name="final_fiting" class="w-full px-4 py-2 border rounded">
+                  </div>
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">Waktu</span>
+                    <input type="time" id="final_fiting_waktu" name="final_fiting_waktu" class="w-full px-4 py-2 border rounded">
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 mb-4 -mt-2">
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">Nama Lokasi</span>
+                    <input type="text" id="final_fiting_lokasi" name="final_fiting_lokasi" maxlength="255" placeholder="Contoh: Kafe Rasa Nusantara" class="w-full px-4 py-2 border rounded">
+                  </div>
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">URL Lokasi</span>
+                    <input type="text" id="final_fiting_lokasi_url" name="final_fiting_lokasi_url" maxlength="500" placeholder="Link Google Maps" class="w-full px-4 py-2 border rounded">
+                  </div>
+                </div>
 
                 <label class="block mb-2" for="technical_meeting">Technical Meeting</label>
-                <input type="date" id="technical_meeting" name="technical_meeting" class="w-full px-4 py-2 border rounded mb-4">
+                <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 mb-4">
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">Tanggal</span>
+                    <input type="date" id="technical_meeting" name="technical_meeting" class="w-full px-4 py-2 border rounded">
+                  </div>
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">Waktu</span>
+                    <input type="time" id="technical_meeting_waktu" name="technical_meeting_waktu" class="w-full px-4 py-2 border rounded">
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 mb-4 -mt-2">
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">Nama Lokasi</span>
+                    <input type="text" id="technical_meeting_lokasi" name="technical_meeting_lokasi" maxlength="255" placeholder="Contoh: Kafe Rasa Nusantara" class="w-full px-4 py-2 border rounded">
+                  </div>
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">URL Lokasi</span>
+                    <input type="text" id="technical_meeting_lokasi_url" name="technical_meeting_lokasi_url" maxlength="500" placeholder="Link Google Maps" class="w-full px-4 py-2 border rounded">
+                  </div>
+                </div>
 
                 <label class="block mb-2" for="final_revision">Final Revision</label>
                 <input type="date" id="final_revision" name="final_revision" class="w-full px-4 py-2 border rounded mb-4">
 
                 <label class="block mb-2" for="loading_decoration">Loading Decoration</label>
-                <input type="date" id="loading_decoration" name="loading_decoration" class="w-full px-4 py-2 border rounded mb-4">
+                <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 mb-4">
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">Tanggal</span>
+                    <input type="date" id="loading_decoration" name="loading_decoration" class="w-full px-4 py-2 border rounded">
+                  </div>
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">Waktu</span>
+                    <input type="time" id="loading_decoration_waktu" name="loading_decoration_waktu" class="w-full px-4 py-2 border rounded">
+                  </div>
+                </div>
 
                 <label class="block mb-2" for="wedding_day">Wedding Day</label>
                 <input type="date" id="wedding_day" name="wedding_day" class="w-full px-4 py-2 border rounded mb-4">
@@ -68,7 +177,7 @@
 
                 <div class="flex flex-col sm:flex-row justify-end">
                   <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded w-full hover:bg-green-600 sm:w-24 mb-2 sm:mb-0 text-center">Simpan</button>
-                  <a href="<?= site_url('agenda') ?>" class="sm:ml-2 bg-gray-500 text-white px-4 py-2 rounded w-full hover:bg-gray-600 sm:w-24 text-center">Batal</a>
+                  <a href="<?= site_url('project/lihat/' . $project->id_session) ?>" class="sm:ml-2 bg-gray-500 text-white px-4 py-2 rounded w-full hover:bg-gray-600 sm:w-24 text-center">Batal</a>
                 </div>
               </form>
             </div>

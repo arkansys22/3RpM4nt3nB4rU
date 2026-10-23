@@ -102,19 +102,33 @@ class Crud_client_tamu extends CI_Controller {
         $this->kembali($tamu->client_id_session, 'Success', 'Tamu "' . $tamu->nama . '" dihapus.');
     }
 
-    // Cetak PDF list tamu (dibuka inline di tab baru, bisa dicetak/diunduh dari viewer).
+    // Cetak PDF list tamu untuk staff (dibuka inline di tab baru, bisa dicetak/diunduh).
     // Judul acara & judul daftar diambil dari query string (?judul_acara=&judul_daftar=).
     public function pdf($client_id_session)
     {
         $this->cek_akses();
         $client = $this->get_client_or_404($client_id_session);
+        $this->kirim_pdf(
+            $client,
+            trim((string) $this->input->get('judul_acara')),
+            trim((string) $this->input->get('judul_daftar'))
+        );
+    }
 
-        $judul_acara = trim((string) $this->input->get('judul_acara'));
-        $judul_daftar = trim((string) $this->input->get('judul_daftar'));
+    // PDF list tamu untuk halaman klien (clients/c_lihat -> tombol "List Tamu/Foto").
+    // Sama seperti halaman c_lihat dan naskah/data_pengantin/pdf, tanpa login: id_session
+    // klien yang panjang menjadi "kunci"-nya. Memakai judul bawaan.
+    public function pdf_klien($client_id_session)
+    {
+        $client = $this->get_client_or_404($client_id_session);
+        $this->kirim_pdf($client, '', '');
+    }
 
+    private function kirim_pdf($client, $judul_acara, $judul_daftar)
+    {
         $data = [
             'clients' => $client,
-            'tamu' => $this->Client_tamu_model->get_by_client($client_id_session),
+            'tamu' => $this->Client_tamu_model->get_by_client($client->id_session),
             'judul_acara' => $judul_acara !== '' ? $judul_acara : 'ACARA RESEPSI NIKAH',
             'judul_daftar' => $judul_daftar !== '' ? $judul_daftar : 'List Tamu',
         ];

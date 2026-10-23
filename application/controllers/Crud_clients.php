@@ -687,6 +687,8 @@ class Crud_clients extends CI_Controller {
         $data['vendors'] = $this->Vendor_model->get_vendor_by_id($id_session);
         $data['agenda'] = $this->Agenda_model->get_agenda_by_session($id_session);
         $data['logactivity'] = $this->Clients_model->get_logactivity_by_session($id_session);
+        $this->load->model('Client_tamu_model');
+        $data['jumlah_tamu'] = count($this->Client_tamu_model->get_by_client($id_session));
 
         if (empty($data['clients']) && empty($data['vendors']) && empty($data['agenda']) && empty($data['logactivity'])) {
             $this->load->view('404');

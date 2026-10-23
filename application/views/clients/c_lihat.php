@@ -477,8 +477,8 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 												<span><i class="fas fa-download"></i>Susunan Panitia</span> 
 											</a>
 										<?php endif; ?>
-										<?php if (!empty($clients->list_photo)) : ?>
-											<a href="<?= $clients->list_photo ?>" target="_blank" class="mybtn mybtn-bg"> 
+										<?php if (!empty($jumlah_tamu)) : ?>
+											<a href="<?= site_url('clients/c_tamu_pdf/'. $clients->id_session) ?>" target="_blank" class="mybtn mybtn-bg"> 
 												<span><i class="fas fa-download"></i>List Tamu/Foto</span> 
 											</a>
 										<?php endif; ?>
@@ -501,8 +501,8 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 												<span><i class="fas fa-download"></i>Susunan Panitia</span> 
 											</a>
 										<?php endif; ?>
-										<?php if (!empty($clients->list_photo)) : ?>
-											<a href="<?= $clients->list_photo ?>" target="_blank" class="mybtn mybtn-bg"> 
+										<?php if (!empty($jumlah_tamu)) : ?>
+											<a href="<?= site_url('clients/c_tamu_pdf/'. $clients->id_session) ?>" target="_blank" class="mybtn mybtn-bg"> 
 												<span><i class="fas fa-download"></i>List Tamu/Foto</span> 
 											</a>
 										<?php endif; ?>
@@ -871,15 +871,102 @@ Kami berdoa agar kasih Tuhan senantiasa menyertai setiap langkah hidup kita, dan
 									<div class="blog-details">
 										<ul class="post-meta-one">
 											<li>
-												<p><i class="fa fa-clock-o"></i><?= !empty($agenda->brainstorming) ? hari($agenda->brainstorming) . ', ' . tgl_indo($agenda->brainstorming) : 'Tanggal belum ditentukan' ?></p>
+												<p><i class="fa fa-clock-o"></i><?= agenda_tanggal_terisi($agenda->brainstorming ?? null) ? hari($agenda->brainstorming) . ', ' . tgl_indo($agenda->brainstorming) . format_waktu_agenda($agenda->brainstorming_waktu ?? null) : 'Tanggal belum ditentukan' ?></p>
 											</li>
 										</ul>
 
 										<div class="blog-title">
 											Brainstorming Concept
 										</div>
+										<?php $lokNama = trim((string) ($agenda->brainstorming_lokasi ?? '')); $lokUrl = url_lokasi_valid($agenda->brainstorming_lokasi_url ?? null); ?>
+										<?php if ($lokNama !== '' || $lokUrl !== ''): ?>
+										<p class="text agenda-lokasi" style="margin-bottom:6px;"><i class="fa fa-map-marker"></i> <strong><?= htmlspecialchars($lokNama !== '' ? $lokNama : 'Lokasi') ?></strong>
+											<?php if ($lokUrl !== ''): ?><br><a href="<?= htmlspecialchars($lokUrl) ?>" target="_blank" rel="noopener" style="text-decoration:underline;">Lihat lokasi di peta &rarr;</a><?php endif; ?>
+										</p>
+										<?php endif; ?>
 										<p class="text">
 											Penyusunan konsep pernikahan mulai dari souvenir, undangan pernikahan, susunan acara, dekorasi dan lain lain.
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-4 col-md-6">
+								<div class="blog-box">
+									<div class="blog-images">
+										<img src="<?php echo base_url()?>assets/frontend/assets/images/fitingpengantin.jfif" class="img-fluid" alt="">
+									</div>
+									<div class="blog-details">
+										<ul class="post-meta-one">
+											<li>
+												<p><i class="fa fa-clock-o"></i><?= agenda_tanggal_terisi($agenda->fiting ?? null) ? hari($agenda->fiting) . ', ' . tgl_indo($agenda->fiting) . format_waktu_agenda($agenda->fiting_waktu ?? null) : 'Tanggal belum ditentukan' ?></p>
+											</li>
+										</ul>
+
+										<div class="blog-title">
+											Fitting
+										</div>
+										<?php $lokNama = trim((string) ($agenda->fiting_lokasi ?? '')); $lokUrl = url_lokasi_valid($agenda->fiting_lokasi_url ?? null); ?>
+										<?php if ($lokNama !== '' || $lokUrl !== ''): ?>
+										<p class="text agenda-lokasi" style="margin-bottom:6px;"><i class="fa fa-map-marker"></i> <strong><?= htmlspecialchars($lokNama !== '' ? $lokNama : 'Lokasi') ?></strong>
+											<?php if ($lokUrl !== ''): ?><br><a href="<?= htmlspecialchars($lokUrl) ?>" target="_blank" rel="noopener" style="text-decoration:underline;">Lihat lokasi di peta &rarr;</a><?php endif; ?>
+										</p>
+										<?php endif; ?>
+										<p class="text">
+											Pengepasan busana pengantin untuk memastikan ukuran dan model pakaian sudah sesuai.
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-4 col-md-6">
+								<div class="blog-box">
+									<div class="blog-images">
+										<img src="<?php echo base_url()?>assets/frontend/assets/images/testfoodcatering.jfif" class="img-fluid" alt="">
+									</div>
+									<div class="blog-details">
+										<ul class="post-meta-one">
+											<li>
+												<p><i class="fa fa-clock-o"></i><?= agenda_tanggal_terisi($agenda->testfood ?? null) ? hari($agenda->testfood) . ', ' . tgl_indo($agenda->testfood) . format_waktu_agenda($agenda->testfood_waktu ?? null) : 'Tanggal belum ditentukan' ?></p>
+											</li>
+										</ul>
+
+										<div class="blog-title">
+											Test Food
+										</div>
+										<?php $lokNama = trim((string) ($agenda->testfood_lokasi ?? '')); $lokUrl = url_lokasi_valid($agenda->testfood_lokasi_url ?? null); ?>
+										<?php if ($lokNama !== '' || $lokUrl !== ''): ?>
+										<p class="text agenda-lokasi" style="margin-bottom:6px;"><i class="fa fa-map-marker"></i> <strong><?= htmlspecialchars($lokNama !== '' ? $lokNama : 'Lokasi') ?></strong>
+											<?php if ($lokUrl !== ''): ?><br><a href="<?= htmlspecialchars($lokUrl) ?>" target="_blank" rel="noopener" style="text-decoration:underline;">Lihat lokasi di peta &rarr;</a><?php endif; ?>
+										</p>
+										<?php endif; ?>
+										<p class="text">
+											Mencicipi menu catering untuk memastikan rasa dan sajian sesuai dengan yang diinginkan.
+										</p>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-4 col-md-6">
+								<div class="blog-box">
+									<div class="blog-images">
+										<img src="<?php echo base_url()?>assets/frontend/assets/images/finalfiting.jfif" class="img-fluid" alt="">
+									</div>
+									<div class="blog-details">
+										<ul class="post-meta-one">
+											<li>
+												<p><i class="fa fa-clock-o"></i><?= agenda_tanggal_terisi($agenda->final_fiting ?? null) ? hari($agenda->final_fiting) . ', ' . tgl_indo($agenda->final_fiting) . format_waktu_agenda($agenda->final_fiting_waktu ?? null) : 'Tanggal belum ditentukan' ?></p>
+											</li>
+										</ul>
+
+										<div class="blog-title">
+											Final Fitting
+										</div>
+										<?php $lokNama = trim((string) ($agenda->final_fiting_lokasi ?? '')); $lokUrl = url_lokasi_valid($agenda->final_fiting_lokasi_url ?? null); ?>
+										<?php if ($lokNama !== '' || $lokUrl !== ''): ?>
+										<p class="text agenda-lokasi" style="margin-bottom:6px;"><i class="fa fa-map-marker"></i> <strong><?= htmlspecialchars($lokNama !== '' ? $lokNama : 'Lokasi') ?></strong>
+											<?php if ($lokUrl !== ''): ?><br><a href="<?= htmlspecialchars($lokUrl) ?>" target="_blank" rel="noopener" style="text-decoration:underline;">Lihat lokasi di peta &rarr;</a><?php endif; ?>
+										</p>
+										<?php endif; ?>
+										<p class="text">
+											Pengepasan akhir busana pengantin sebelum hari pernikahan untuk memastikan semuanya sempurna.
 										</p>
 									</div>
 								</div>
@@ -892,13 +979,19 @@ Kami berdoa agar kasih Tuhan senantiasa menyertai setiap langkah hidup kita, dan
 									<div class="blog-details">
 										<ul class="post-meta-one">
 											<li>
-												<p><i class="fa fa-clock-o"></i><?= !empty($agenda->technical_meeting) ? hari($agenda->technical_meeting) . ', ' . tgl_indo($agenda->technical_meeting) : 'Tanggal belum ditentukan' ?></p>
+												<p><i class="fa fa-clock-o"></i><?= agenda_tanggal_terisi($agenda->technical_meeting ?? null) ? hari($agenda->technical_meeting) . ', ' . tgl_indo($agenda->technical_meeting) . format_waktu_agenda($agenda->technical_meeting_waktu ?? null) : 'Tanggal belum ditentukan' ?></p>
 											</li>
 										</ul>
 
 										<div class="blog-title">
 											Technical Meeting
 										</div>
+										<?php $lokNama = trim((string) ($agenda->technical_meeting_lokasi ?? '')); $lokUrl = url_lokasi_valid($agenda->technical_meeting_lokasi_url ?? null); ?>
+										<?php if ($lokNama !== '' || $lokUrl !== ''): ?>
+										<p class="text agenda-lokasi" style="margin-bottom:6px;"><i class="fa fa-map-marker"></i> <strong><?= htmlspecialchars($lokNama !== '' ? $lokNama : 'Lokasi') ?></strong>
+											<?php if ($lokUrl !== ''): ?><br><a href="<?= htmlspecialchars($lokUrl) ?>" target="_blank" rel="noopener" style="text-decoration:underline;">Lihat lokasi di peta &rarr;</a><?php endif; ?>
+										</p>
+										<?php endif; ?>
 										<p class="text">
 											Pertemuan dengan para vendor pernikahan sebagai tujuan untuk memastikan berjalan sesuai yang direncanakan.
 										</p>
@@ -913,7 +1006,7 @@ Kami berdoa agar kasih Tuhan senantiasa menyertai setiap langkah hidup kita, dan
 									<div class="blog-details">
 										<ul class="post-meta-one">
 											<li>
-												<p><i class="fa fa-clock-o"></i><?= !empty($agenda->final_revision) ? hari($agenda->final_revision) . ', ' . tgl_indo($agenda->final_revision) : 'Tanggal belum ditentukan' ?></p>
+												<p><i class="fa fa-clock-o"></i><?= agenda_tanggal_terisi($agenda->final_revision ?? null) ? hari($agenda->final_revision) . ', ' . tgl_indo($agenda->final_revision) : 'Tanggal belum ditentukan' ?></p>
 											</li>
 										</ul>
 
@@ -934,7 +1027,7 @@ Kami berdoa agar kasih Tuhan senantiasa menyertai setiap langkah hidup kita, dan
 									<div class="blog-details">
 										<ul class="post-meta-one">
 											<li>
-												<p><i class="fa fa-clock-o"></i><?= !empty($agenda->loading_decoration) ? hari($agenda->loading_decoration) . ', ' . tgl_indo($agenda->loading_decoration) : 'Tanggal belum ditentukan' ?></p>
+												<p><i class="fa fa-clock-o"></i><?= agenda_tanggal_terisi($agenda->loading_decoration ?? null) ? hari($agenda->loading_decoration) . ', ' . tgl_indo($agenda->loading_decoration) . format_waktu_agenda($agenda->loading_decoration_waktu ?? null) : 'Tanggal belum ditentukan' ?></p>
 											</li>
 										</ul>
 
@@ -955,7 +1048,7 @@ Kami berdoa agar kasih Tuhan senantiasa menyertai setiap langkah hidup kita, dan
 									<div class="blog-details">
 										<ul class="post-meta-one">
 											<li>
-												<p><i class="fa fa-clock-o"></i><?= !empty($agenda->wedding_day) ? hari($agenda->wedding_day) . ', ' . tgl_indo($agenda->wedding_day) : 'Tanggal belum ditentukan' ?></p>
+												<p><i class="fa fa-clock-o"></i><?= agenda_tanggal_terisi($agenda->wedding_day ?? null) ? hari($agenda->wedding_day) . ', ' . tgl_indo($agenda->wedding_day) : 'Tanggal belum ditentukan' ?></p>
 											</li>
 										</ul>
 
@@ -976,7 +1069,7 @@ Kami berdoa agar kasih Tuhan senantiasa menyertai setiap langkah hidup kita, dan
 									<div class="blog-details">
 										<ul class="post-meta-one">
 											<li>
-												<p><i class="fa fa-clock-o"></i><?= !empty($agenda->honeymoon) ? hari($agenda->honeymoon) . ', ' . tgl_indo($agenda->honeymoon) : 'Tanggal belum ditentukan' ?></p>
+												<p><i class="fa fa-clock-o"></i><?= agenda_tanggal_terisi($agenda->honeymoon ?? null) ? hari($agenda->honeymoon) . ', ' . tgl_indo($agenda->honeymoon) : 'Tanggal belum ditentukan' ?></p>
 											</li>
 										</ul>
 

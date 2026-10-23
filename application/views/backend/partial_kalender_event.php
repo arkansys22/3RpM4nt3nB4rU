@@ -124,7 +124,7 @@
             var tipe = document.createElement('span');
             tipe.className = 'inline-block text-[10px] font-semibold uppercase tracking-wide ' +
                 (p.tipe === 'Hari H' ? 'text-danger' : 'text-primary');
-            tipe.textContent = p.tipe || 'Hari H';
+            tipe.textContent = (p.tipe || 'Hari H') + (p.waktu ? ' \u2022 ' + p.waktu.replace(':', '.') + ' WIB' : '');
             item.appendChild(tipe);
 
             var nama = document.createElement('p');
@@ -137,6 +137,17 @@
                 lokasi.className = 'text-xs text-body dark:text-bodydark mt-1';
                 lokasi.textContent = p.location;
                 item.appendChild(lokasi);
+            }
+            if (p.location_url) {
+                var peta = document.createElement('span');
+                peta.className = 'inline-block text-xs text-primary underline mt-1 cursor-pointer';
+                peta.textContent = 'Buka peta';
+                peta.addEventListener('click', function (ev) {
+                    ev.preventDefault();
+                    ev.stopPropagation();
+                    window.open(p.location_url, '_blank', 'noopener');
+                });
+                item.appendChild(peta);
             }
 
             body.appendChild(item);

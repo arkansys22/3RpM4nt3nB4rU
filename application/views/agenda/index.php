@@ -58,278 +58,28 @@
                   <table class="table w-full table-auto" id="dataTableTwo">
                     <thead>
                       <tr>
-                      <th>
-                          <div class="flex items-center justify-between gap-1.5">
-                            <p>Nama Client</p>
-                            <div class="inline-flex flex-col space-y-[2px]">
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path d="M5 0L0 5H10L5 0Z" fill="" />
-                                </svg>
-                              </span>
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
-                                    fill=""
-                                  />
-                                </svg>
-                              </span>
-                            </div>
-                          </div>
-                        </th>
+                      <?php
+                      // Kolom tabel agenda; urutannya sama dengan urutan agenda di Edit Agenda
+                      $kolom_agenda = ['Nama Client', 'Brainstorming', 'Fiting', 'Test Food', 'Final Fiting', 'Technical Meeting', 'Final Revision', 'Loading Decoration', 'Wedding Day', 'Honeymoon', 'Aksi'];
+                      foreach ($kolom_agenda as $judul_kolom): ?>
                         <th>
                           <div class="flex items-center justify-between gap-1.5">
-                            <p>Brainstorming</p>
+                            <p><?= $judul_kolom ?></p>
                             <div class="inline-flex flex-col space-y-[2px]">
                               <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
+                                <svg class="fill-current" width="10" height="5" viewBox="0 0 10 5" fill="none" xmlns="http://www.w3.org/2000/svg">
                                   <path d="M5 0L0 5H10L5 0Z" fill="" />
                                 </svg>
                               </span>
                               <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
-                                    fill=""
-                                  />
+                                <svg class="fill-current" width="10" height="5" viewBox="0 0 10 5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z" fill="" />
                                 </svg>
                               </span>
                             </div>
                           </div>
                         </th>
-                        <th>
-                          <div class="flex items-center justify-between gap-1.5">
-                            <p>Technical Meeting</p>
-                            <div class="inline-flex flex-col space-y-[2px]">
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path d="M5 0L0 5H10L5 0Z" fill="" />
-                                </svg>
-                              </span>
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
-                                    fill=""
-                                  />
-                                </svg>
-                              </span>
-                            </div>
-                          </div>
-                        </th>
-                        <th>
-                          <div class="flex items-center justify-between gap-1.5">
-                            <p>Final Revision</p>
-                            <div class="inline-flex flex-col space-y-[2px]">
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path d="M5 0L0 5H10L5 0Z" fill="" />
-                                </svg>
-                              </span>
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
-                                    fill=""
-                                  />
-                                </svg>
-                              </span>
-                            </div>
-                          </div>
-                        </th>
-                        <th>
-                          <div class="flex items-center justify-between gap-1.5">
-                            <p>Loading Decoration</p>
-                            <div class="inline-flex flex-col space-y-[2px]">
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path d="M5 0L0 5H10L5 0Z" fill="" />
-                                </svg>
-                              </span>
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
-                                    fill=""
-                                  />
-                                </svg>
-                              </span>
-                            </div>
-                          </div>
-                        </th>
-                        <th>
-                          <div class="flex items-center justify-between gap-1.5">
-                            <p>Wedding Day</p>
-                            <div class="inline-flex flex-col space-y-[2px]">
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path d="M5 0L0 5H10L5 0Z" fill="" />
-                                </svg>
-                              </span>
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
-                                    fill=""
-                                  />
-                                </svg>
-                              </span>
-                            </div>
-                          </div>
-                        </th>
-                        <th>
-                          <div class="flex items-center justify-between gap-1.5">
-                            <p>Honeymoon</p>
-                            <div class="inline-flex flex-col space-y-[2px]">
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path d="M5 0L0 5H10L5 0Z" fill="" />
-                                </svg>
-                              </span>
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
-                                    fill=""
-                                  />
-                                </svg>
-                              </span>
-                            </div>
-                          </div>
-                        </th>
-                        <th>
-                          <div class="flex items-center justify-between gap-1.5">
-                            <p>Aksi</p>
-                            <div class="inline-flex flex-col space-y-[2px]">
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path d="M5 0L0 5H10L5 0Z" fill="" />
-                                </svg>
-                              </span>
-                              <span class="inline-block">
-                                <svg
-                                  class="fill-current"
-                                  width="10"
-                                  height="5"
-                                  viewBox="0 0 10 5"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M5 5L10 0L-4.37114e-07 8.74228e-07L5 5Z"
-                                    fill=""
-                                  />
-                                </svg>
-                              </span>
-                            </div>
-                          </div>
-                        </th>
+                      <?php endforeach; ?>
                       </tr>
                     </thead>
                     <tbody>
@@ -337,15 +87,30 @@
     <?php foreach ($agenda as $a) : ?>
         <tr>
             <td><?= $a->client_name ?></td> <!-- Diambil dari tabel project -->
-            <td><?= tgl_indo($a->brainstorming ?? '-') ?></td> <!-- Dari tabel agenda -->
-            <td><?= tgl_indo($a->technical_meeting ?? '-') ?></td>
-            <td><?= tgl_indo($a->final_revision ?? '-') ?></td>
-            <td><?= tgl_indo($a->loading_decoration ?? '-') ?></td>
-            <td><?= tgl_indo($a->wedding_day ?? '-') ?></td>
-            <td><?= tgl_indo($a->honeymoon ?? '-') ?></td>
+            <?php
+            // Sel agenda: tanggal + waktu (+ lokasi untuk 5 agenda). Tanggal kosong / 0000-00-00 -> "-"
+            $sel_agenda = function ($kolom) use ($a) {
+                $tgl = $a->$kolom ?? null;
+                if (!agenda_tanggal_terisi($tgl)) {
+                    return '-';
+                }
+                $html = htmlspecialchars(tgl_indo($tgl)) . format_waktu_agenda($a->{$kolom . '_waktu'} ?? null);
+                $lok = format_lokasi_agenda($a->{$kolom . '_lokasi'} ?? null, $a->{$kolom . '_lokasi_url'} ?? null);
+                return $lok !== '' ? $html . '<br><span class="text-xs">' . $lok . '</span>' : $html;
+            };
+            ?>
+            <td><?= $sel_agenda('brainstorming') ?></td>
+            <td><?= $sel_agenda('fiting') ?></td>
+            <td><?= $sel_agenda('testfood') ?></td>
+            <td><?= $sel_agenda('final_fiting') ?></td>
+            <td><?= $sel_agenda('technical_meeting') ?></td>
+            <td><?= $sel_agenda('final_revision') ?></td>
+            <td><?= $sel_agenda('loading_decoration') ?></td>
+            <td><?= $sel_agenda('wedding_day') ?></td>
+            <td><?= $sel_agenda('honeymoon') ?></td>
             <td>
                 <div class="flex flex-col items-start gap-2 w-max">
-                    <?php if (!empty($a->brainstorming) || !empty($a->technical_meeting) || !empty($a->final_revision) || !empty($a->loading_decoration) || !empty($a->wedding_day) || !empty($a->honeymoon)) : ?>
+                    <?php if (agenda_tanggal_terisi($a->brainstorming ?? null) || agenda_tanggal_terisi($a->fiting ?? null) || agenda_tanggal_terisi($a->testfood ?? null) || agenda_tanggal_terisi($a->final_fiting ?? null) || agenda_tanggal_terisi($a->technical_meeting ?? null) || agenda_tanggal_terisi($a->final_revision ?? null) || agenda_tanggal_terisi($a->loading_decoration ?? null) || agenda_tanggal_terisi($a->wedding_day ?? null) || agenda_tanggal_terisi($a->honeymoon ?? null)) : ?>
                         <!-- Jika ada data, tampilkan tombol Edit & Hapus -->
                         <a href="<?= site_url('agenda/edit/'.$a->id_session) ?>" class="inline-flex justify-center bg-yellow-500 text-white px-2 py-1 rounded-md hover:bg-yellow-600 text-center w-full">Edit</a>
                         <a href="<?= site_url('agenda/delete_permanent/'.$a->id_session) ?>" class="inline-flex justify-center bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 min-w-full text-center" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
@@ -359,7 +124,7 @@
     <?php endforeach; ?>
 <?php else : ?>
     <tr>
-        <td colspan="7" class="text-center">Belum ada agenda untuk client ini.</td>
+        <td colspan="10" class="text-center">Belum ada agenda untuk client ini.</td>
         <td>
             <a href="<?= site_url('agenda/create/'.$id_session) ?>" class="inline-flex justify-center bg-yellow-500 text-white px-2 py-1 rounded-md hover:bg-yellow-600 text-center w-full">Tambah</a>
         </td>

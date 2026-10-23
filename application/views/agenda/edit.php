@@ -40,25 +40,134 @@
                 <input type="hidden" name="id_session" value="<?= $agenda->id_session ?>">
 
                 <label class="block mb-2">Brainstorming</label>
-                <input type="date" id="brainstorming" name="brainstorming" value="<?= $agenda->brainstorming ?>" class="w-full px-4 py-2 border rounded mb-4">
+                <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 mb-4">
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">Tanggal</span>
+                    <input type="date" id="brainstorming" name="brainstorming" value="<?= $agenda->brainstorming ?>" class="w-full px-4 py-2 border rounded">
+                  </div>
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">Waktu</span>
+                    <input type="time" id="brainstorming_waktu" name="brainstorming_waktu" value="<?= !empty($agenda->brainstorming_waktu) ? substr($agenda->brainstorming_waktu, 0, 5) : '' ?>" class="w-full px-4 py-2 border rounded">
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 mb-4 -mt-2">
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">Nama Lokasi</span>
+                    <input type="text" id="brainstorming_lokasi" name="brainstorming_lokasi" maxlength="255" placeholder="Contoh: Kafe Rasa Nusantara" value="<?= htmlspecialchars($agenda->brainstorming_lokasi ?? '') ?>" class="w-full px-4 py-2 border rounded">
+                  </div>
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">URL Lokasi</span>
+                    <input type="text" id="brainstorming_lokasi_url" name="brainstorming_lokasi_url" maxlength="500" placeholder="Link Google Maps" value="<?= htmlspecialchars($agenda->brainstorming_lokasi_url ?? '') ?>" class="w-full px-4 py-2 border rounded">
+                  </div>
+                </div>
 
                 <label class="block mb-2">Fiting</label>
-                <input type="date" id="fiting" name="fiting" value="<?= $agenda->fiting ?>" class="w-full px-4 py-2 border rounded mb-4">
+                <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 mb-4">
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">Tanggal</span>
+                    <input type="date" id="fiting" name="fiting" value="<?= $agenda->fiting ?>" class="w-full px-4 py-2 border rounded">
+                  </div>
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">Waktu</span>
+                    <input type="time" id="fiting_waktu" name="fiting_waktu" value="<?= !empty($agenda->fiting_waktu) ? substr($agenda->fiting_waktu, 0, 5) : '' ?>" class="w-full px-4 py-2 border rounded">
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 mb-4 -mt-2">
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">Nama Lokasi</span>
+                    <input type="text" id="fiting_lokasi" name="fiting_lokasi" maxlength="255" placeholder="Contoh: Kafe Rasa Nusantara" value="<?= htmlspecialchars($agenda->fiting_lokasi ?? '') ?>" class="w-full px-4 py-2 border rounded">
+                  </div>
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">URL Lokasi</span>
+                    <input type="text" id="fiting_lokasi_url" name="fiting_lokasi_url" maxlength="500" placeholder="Link Google Maps" value="<?= htmlspecialchars($agenda->fiting_lokasi_url ?? '') ?>" class="w-full px-4 py-2 border rounded">
+                  </div>
+                </div>
 
                 <label class="block mb-2">Test Food</label>
-                <input type="date" id="testfood" name="testfood" value="<?= $agenda->testfood ?>" class="w-full px-4 py-2 border rounded mb-4">
+                <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 mb-4">
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">Tanggal</span>
+                    <input type="date" id="testfood" name="testfood" value="<?= $agenda->testfood ?>" class="w-full px-4 py-2 border rounded">
+                  </div>
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">Waktu</span>
+                    <input type="time" id="testfood_waktu" name="testfood_waktu" value="<?= !empty($agenda->testfood_waktu) ? substr($agenda->testfood_waktu, 0, 5) : '' ?>" class="w-full px-4 py-2 border rounded">
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 mb-4 -mt-2">
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">Nama Lokasi</span>
+                    <input type="text" id="testfood_lokasi" name="testfood_lokasi" maxlength="255" placeholder="Contoh: Kafe Rasa Nusantara" value="<?= htmlspecialchars($agenda->testfood_lokasi ?? '') ?>" class="w-full px-4 py-2 border rounded">
+                  </div>
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">URL Lokasi</span>
+                    <input type="text" id="testfood_lokasi_url" name="testfood_lokasi_url" maxlength="500" placeholder="Link Google Maps" value="<?= htmlspecialchars($agenda->testfood_lokasi_url ?? '') ?>" class="w-full px-4 py-2 border rounded">
+                  </div>
+                </div>
 
                 <label class="block mb-2">Final Fiting</label>
-                <input type="date" id="final_fiting" name="final_fiting" value="<?= $agenda->final_fiting ?>" class="w-full px-4 py-2 border rounded mb-4">
+                <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 mb-4">
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">Tanggal</span>
+                    <input type="date" id="final_fiting" name="final_fiting" value="<?= $agenda->final_fiting ?>" class="w-full px-4 py-2 border rounded">
+                  </div>
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">Waktu</span>
+                    <input type="time" id="final_fiting_waktu" name="final_fiting_waktu" value="<?= !empty($agenda->final_fiting_waktu) ? substr($agenda->final_fiting_waktu, 0, 5) : '' ?>" class="w-full px-4 py-2 border rounded">
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 mb-4 -mt-2">
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">Nama Lokasi</span>
+                    <input type="text" id="final_fiting_lokasi" name="final_fiting_lokasi" maxlength="255" placeholder="Contoh: Kafe Rasa Nusantara" value="<?= htmlspecialchars($agenda->final_fiting_lokasi ?? '') ?>" class="w-full px-4 py-2 border rounded">
+                  </div>
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">URL Lokasi</span>
+                    <input type="text" id="final_fiting_lokasi_url" name="final_fiting_lokasi_url" maxlength="500" placeholder="Link Google Maps" value="<?= htmlspecialchars($agenda->final_fiting_lokasi_url ?? '') ?>" class="w-full px-4 py-2 border rounded">
+                  </div>
+                </div>
 
                 <label class="block mb-2">Technical Meeting</label>
-                <input type="date" id="technical_meeting" name="technical_meeting" value="<?= $agenda->technical_meeting ?>" class="w-full px-4 py-2 border rounded mb-4">
+                <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 mb-4">
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">Tanggal</span>
+                    <input type="date" id="technical_meeting" name="technical_meeting" value="<?= $agenda->technical_meeting ?>" class="w-full px-4 py-2 border rounded">
+                  </div>
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">Waktu</span>
+                    <input type="time" id="technical_meeting_waktu" name="technical_meeting_waktu" value="<?= !empty($agenda->technical_meeting_waktu) ? substr($agenda->technical_meeting_waktu, 0, 5) : '' ?>" class="w-full px-4 py-2 border rounded">
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 mb-4 -mt-2">
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">Nama Lokasi</span>
+                    <input type="text" id="technical_meeting_lokasi" name="technical_meeting_lokasi" maxlength="255" placeholder="Contoh: Kafe Rasa Nusantara" value="<?= htmlspecialchars($agenda->technical_meeting_lokasi ?? '') ?>" class="w-full px-4 py-2 border rounded">
+                  </div>
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">URL Lokasi</span>
+                    <input type="text" id="technical_meeting_lokasi_url" name="technical_meeting_lokasi_url" maxlength="500" placeholder="Link Google Maps" value="<?= htmlspecialchars($agenda->technical_meeting_lokasi_url ?? '') ?>" class="w-full px-4 py-2 border rounded">
+                  </div>
+                </div>
 
                 <label class="block mb-2">Final Revision</label>
                 <input type="date" id="final_revision" name="final_revision" value="<?= $agenda->final_revision ?>" class="w-full px-4 py-2 border rounded mb-4">
 
                 <label class="block mb-2">Loading Decoration</label>
-                <input type="date" id="loading_decoration" name="loading_decoration" value="<?= $agenda->loading_decoration ?>" class="w-full px-4 py-2 border rounded mb-4">
+                <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 mb-4">
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">Tanggal</span>
+                    <input type="date" id="loading_decoration" name="loading_decoration" value="<?= $agenda->loading_decoration ?>" class="w-full px-4 py-2 border rounded">
+                  </div>
+                  <div>
+                    <span class="block mb-1 text-xs text-gray-500">Waktu</span>
+                    <input type="time" id="loading_decoration_waktu" name="loading_decoration_waktu" value="<?= !empty($agenda->loading_decoration_waktu) ? substr($agenda->loading_decoration_waktu, 0, 5) : '' ?>" class="w-full px-4 py-2 border rounded">
+                  </div>
+                </div>
 
                 <label class="block mb-2">Wedding Day</label>
                 <input type="date" id="wedding_day" name="wedding_day" value="<?= $agenda->wedding_day ?>" class="w-full px-4 py-2 border rounded mb-4">

@@ -1671,10 +1671,12 @@ class Aspanel extends CI_Controller {
 	        }
 	        $per_tanggal[$tanggal][] = [
 	            'tipe' => $a->tipe,
+	            'waktu' => !empty($a->waktu) ? substr($a->waktu, 0, 5) : null,
 	            'id_session' => $a->id_session,
 	            'client_name' => $a->client_name,
 	            'project_name' => $a->project_name,
-	            'location' => null,
+	            'location' => !empty($a->lokasi) ? $a->lokasi : null,
+	            'location_url' => (!empty($a->lokasi_url) && preg_match('#^https?://#i', $a->lokasi_url)) ? $a->lokasi_url : null,
 	        ];
 	    }
 

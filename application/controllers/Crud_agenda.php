@@ -73,12 +73,28 @@ class Crud_agenda extends CI_Controller {
     $data = array(
         'id_session' => $id_session,
         'brainstorming' => $this->input->post('brainstorming'),
+        'brainstorming_waktu' => $this->waktu_atau_null($this->input->post('brainstorming_waktu')),
+        'brainstorming_lokasi' => $this->teks_atau_null($this->input->post('brainstorming_lokasi'), 255),
+        'brainstorming_lokasi_url' => $this->url_atau_null($this->input->post('brainstorming_lokasi_url')),
         'fiting' => $this->input->post('fiting'),
+        'fiting_waktu' => $this->waktu_atau_null($this->input->post('fiting_waktu')),
+        'fiting_lokasi' => $this->teks_atau_null($this->input->post('fiting_lokasi'), 255),
+        'fiting_lokasi_url' => $this->url_atau_null($this->input->post('fiting_lokasi_url')),
         'testfood' => $this->input->post('testfood'),
+        'testfood_waktu' => $this->waktu_atau_null($this->input->post('testfood_waktu')),
+        'testfood_lokasi' => $this->teks_atau_null($this->input->post('testfood_lokasi'), 255),
+        'testfood_lokasi_url' => $this->url_atau_null($this->input->post('testfood_lokasi_url')),
         'final_fiting' => $this->input->post('final_fiting'),
+        'final_fiting_waktu' => $this->waktu_atau_null($this->input->post('final_fiting_waktu')),
+        'final_fiting_lokasi' => $this->teks_atau_null($this->input->post('final_fiting_lokasi'), 255),
+        'final_fiting_lokasi_url' => $this->url_atau_null($this->input->post('final_fiting_lokasi_url')),
         'technical_meeting' => $this->input->post('technical_meeting'),
+        'technical_meeting_waktu' => $this->waktu_atau_null($this->input->post('technical_meeting_waktu')),
+        'technical_meeting_lokasi' => $this->teks_atau_null($this->input->post('technical_meeting_lokasi'), 255),
+        'technical_meeting_lokasi_url' => $this->url_atau_null($this->input->post('technical_meeting_lokasi_url')),
         'final_revision' => $this->input->post('final_revision'),
         'loading_decoration' => $this->input->post('loading_decoration'),
+        'loading_decoration_waktu' => $this->waktu_atau_null($this->input->post('loading_decoration_waktu')),
         'wedding_day' => $this->input->post('wedding_day'),
         'honeymoon' => $this->input->post('honeymoon'),
     );
@@ -131,12 +147,28 @@ public function update($id_session){
     }
     $data = array(
         'brainstorming' => $this->input->post('brainstorming'),
+        'brainstorming_waktu' => $this->waktu_atau_null($this->input->post('brainstorming_waktu')),
+        'brainstorming_lokasi' => $this->teks_atau_null($this->input->post('brainstorming_lokasi'), 255),
+        'brainstorming_lokasi_url' => $this->url_atau_null($this->input->post('brainstorming_lokasi_url')),
         'technical_meeting' => $this->input->post('technical_meeting'),
+        'technical_meeting_waktu' => $this->waktu_atau_null($this->input->post('technical_meeting_waktu')),
+        'technical_meeting_lokasi' => $this->teks_atau_null($this->input->post('technical_meeting_lokasi'), 255),
+        'technical_meeting_lokasi_url' => $this->url_atau_null($this->input->post('technical_meeting_lokasi_url')),
         'final_revision' => $this->input->post('final_revision'),
         'fiting' => $this->input->post('fiting'),
+        'fiting_waktu' => $this->waktu_atau_null($this->input->post('fiting_waktu')),
+        'fiting_lokasi' => $this->teks_atau_null($this->input->post('fiting_lokasi'), 255),
+        'fiting_lokasi_url' => $this->url_atau_null($this->input->post('fiting_lokasi_url')),
         'testfood' => $this->input->post('testfood'),
+        'testfood_waktu' => $this->waktu_atau_null($this->input->post('testfood_waktu')),
+        'testfood_lokasi' => $this->teks_atau_null($this->input->post('testfood_lokasi'), 255),
+        'testfood_lokasi_url' => $this->url_atau_null($this->input->post('testfood_lokasi_url')),
         'final_fiting' => $this->input->post('final_fiting'),
+        'final_fiting_waktu' => $this->waktu_atau_null($this->input->post('final_fiting_waktu')),
+        'final_fiting_lokasi' => $this->teks_atau_null($this->input->post('final_fiting_lokasi'), 255),
+        'final_fiting_lokasi_url' => $this->url_atau_null($this->input->post('final_fiting_lokasi_url')),
         'loading_decoration' => $this->input->post('loading_decoration'),
+        'loading_decoration_waktu' => $this->waktu_atau_null($this->input->post('loading_decoration_waktu')),
         'wedding_day' => $this->input->post('wedding_day'),
         'honeymoon' => $this->input->post('honeymoon'),
     );
@@ -206,4 +238,33 @@ public function update($id_session){
         redirect('agenda');
     }
 
+
+    // Waktu dari <input type="time"> ("HH:MM"); kosong / tidak valid -> NULL.
+    private function waktu_atau_null($nilai)
+    {
+        $nilai = trim((string) $nilai);
+        return preg_match('/^\d{2}:\d{2}(:\d{2})?$/', $nilai) ? $nilai : null;
+    }
+
+    private function teks_atau_null($nilai, $maks)
+    {
+        $nilai = mb_substr(trim((string) $nilai), 0, $maks);
+        return $nilai === '' ? null : $nilai;
+    }
+
+    // URL lokasi: tanpa skema ditambah https://; hanya http/https yang diterima.
+    private function url_atau_null($nilai)
+    {
+        $nilai = trim((string) $nilai);
+        if ($nilai === '') {
+            return null;
+        }
+        if (preg_match('#^(javascript|data|vbscript|file):#i', $nilai)) {
+            return null;
+        }
+        if (!preg_match('#^[a-z][a-z0-9+.-]*://#i', $nilai)) {
+            $nilai = 'https://' . $nilai;
+        }
+        return preg_match('#^https?://#i', $nilai) ? mb_substr($nilai, 0, 500) : null;
+    }
 }

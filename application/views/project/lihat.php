@@ -354,6 +354,23 @@
             'Wedding Day'        => $agenda->wedding_day ?? null,
             'Honeymoon'          => $agenda->honeymoon ?? null,
         ];
+        // Waktu (jam) hanya ada untuk 6 agenda ini
+        $agendaWaktu = [
+            'Brainstroming'      => $agenda->brainstorming_waktu ?? null,
+            'Fiting'             => $agenda->fiting_waktu ?? null,
+            'Test Food'          => $agenda->testfood_waktu ?? null,
+            'Final Fiting'       => $agenda->final_fiting_waktu ?? null,
+            'Technical Meeting'  => $agenda->technical_meeting_waktu ?? null,
+            'Loading'            => $agenda->loading_decoration_waktu ?? null,
+        ];
+        // Nama + URL lokasi hanya ada untuk 5 agenda ini
+        $agendaLokasi = [
+            'Brainstroming'      => [$agenda->brainstorming_lokasi ?? null, $agenda->brainstorming_lokasi_url ?? null],
+            'Fiting'             => [$agenda->fiting_lokasi ?? null, $agenda->fiting_lokasi_url ?? null],
+            'Test Food'          => [$agenda->testfood_lokasi ?? null, $agenda->testfood_lokasi_url ?? null],
+            'Final Fiting'       => [$agenda->final_fiting_lokasi ?? null, $agenda->final_fiting_lokasi_url ?? null],
+            'Technical Meeting'  => [$agenda->technical_meeting_lokasi ?? null, $agenda->technical_meeting_lokasi_url ?? null],
+        ];
         ?>
 
         <?php foreach ($agendaList as $namaAgenda => $tanggal): ?>
@@ -365,7 +382,9 @@
 
                     <?php if (!empty($tanggal)): ?>
                         <?= hari($tanggal) ?>,
-                        <?= tgl_indo($tanggal) ?>
+                        <?= tgl_indo($tanggal) ?><?= format_waktu_agenda($agendaWaktu[$namaAgenda] ?? null) ?>
+                        <?php [$lokNama, $lokUrl] = $agendaLokasi[$namaAgenda] ?? [null, null]; $lokHtml = format_lokasi_agenda($lokNama, $lokUrl); ?>
+                        <?php if ($lokHtml !== ''): ?><br><span class="text-sm">Lokasi: <?= $lokHtml ?></span><?php endif; ?>
                     <?php else: ?>
                         <span class="text-red-500">
                             Belum dijadwalkan
