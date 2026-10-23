@@ -930,7 +930,7 @@ Kami berdoa agar kasih Tuhan senantiasa menyertai setiap langkah hidup kita, dan
 										</ul>
 
 										<div class="blog-title">
-											Test Food
+											Test Foods
 										</div>
 										<?php $lokNama = trim((string) ($agenda->testfood_lokasi ?? '')); $lokUrl = url_lokasi_valid($agenda->testfood_lokasi_url ?? null); ?>
 										<?php if ($lokNama !== '' || $lokUrl !== ''): ?>
