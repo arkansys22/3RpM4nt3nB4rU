@@ -1011,7 +1011,7 @@ Kami berdoa agar kasih Tuhan senantiasa menyertai setiap langkah hidup kita, dan
 										</ul>
 
 										<div class="blog-title">
-											Final Revisi
+											Final Revisisss
 										</div>
 										<p class="text">
 											Batas akhir finalisasi konsep pernikahan untuk memastikan segala keperluan pernikahan telah sesuai.
