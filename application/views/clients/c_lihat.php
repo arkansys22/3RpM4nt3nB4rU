@@ -930,7 +930,7 @@ Kami berdoa agar kasih Tuhan senantiasa menyertai setiap langkah hidup kita, dan
 										</ul>
 
 										<div class="blog-title">
-											Test Foods
+											Test Food
 										</div>
 										<?php $lokNama = trim((string) ($agenda->testfood_lokasi ?? '')); $lokUrl = url_lokasi_valid($agenda->testfood_lokasi_url ?? null); ?>
 										<?php if ($lokNama !== '' || $lokUrl !== ''): ?>
@@ -1011,7 +1011,7 @@ Kami berdoa agar kasih Tuhan senantiasa menyertai setiap langkah hidup kita, dan
 										</ul>
 
 										<div class="blog-title">
-											Final Revisisss
+											Final Revisi
 										</div>
 										<p class="text">
 											Batas akhir finalisasi konsep pernikahan untuk memastikan segala keperluan pernikahan telah sesuai.
