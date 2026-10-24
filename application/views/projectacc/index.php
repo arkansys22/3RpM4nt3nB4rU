@@ -31,6 +31,47 @@
             <div class="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5">
               <h1 class="text-2xl font-bold mb-4">Finance Project</h1>
 
+              <?php
+              // Kategori berdasarkan tanggal acara: akan datang (hari ini termasuk) vs sudah lewat
+              $hari_ini = date('Y-m-d');
+              $jumlah_lewat = 0;
+              foreach ($project as $p) {
+                  if ($p->event_date < $hari_ini) { $jumlah_lewat++; }
+              }
+              $jumlah_semua = count($project);
+              $jumlah_mendatang = $jumlah_semua - $jumlah_lewat;
+
+              $kategori = $this->input->get('kategori');
+              // Default: Akan Datang
+              if (!in_array($kategori, ['akan_datang', 'sudah_lewat', 'semua'], true)) {
+                  $kategori = 'akan_datang';
+              }
+              if ($kategori !== 'semua') {
+                  $project = array_values(array_filter($project, function ($p) use ($kategori, $hari_ini) {
+                      return $kategori === 'sudah_lewat' ? $p->event_date < $hari_ini : $p->event_date >= $hari_ini;
+                  }));
+              }
+              // Akan Datang: tanggal pernikahan terdekat di paling atas
+              if ($kategori === 'akan_datang') {
+                  usort($project, function ($a, $b) {
+                      return strcmp($a->event_date, $b->event_date);
+                  });
+              }
+              $tab_kategori = [
+                  'akan_datang' => ['Akan Datang', $jumlah_mendatang],
+                  'sudah_lewat' => ['Sudah Lewat', $jumlah_lewat],
+                  'semua'       => ['Semua Project', $jumlah_semua],
+              ];
+              ?>
+              <div class="flex flex-wrap gap-2 mb-4">
+                <?php foreach ($tab_kategori as $kunci => $tab): ?>
+                  <a href="<?= site_url('finance-project') . '?kategori=' . $kunci ?>"
+                     class="inline-flex items-center gap-2 rounded-md border px-4 py-2 text-sm font-medium <?= $kategori === $kunci ? 'border-primary bg-primary text-white' : 'border-stroke hover:bg-whiter dark:border-strokedark dark:hover:bg-meta-4' ?>">
+                    <?= $tab[0] ?>
+                    <span class="rounded-full px-2 py-0.5 text-xs <?= $kategori === $kunci ? 'bg-white bg-opacity-20' : 'bg-gray-200 text-gray-600' ?>"><?= $tab[1] ?></span>
+                  </a>
+                <?php endforeach; ?>
+              </div>
               <!-- ====== Data Table Two Start --><br>
               <div class="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                 <div class="data-table-common data-table-two max-w-full overflow-x-auto">

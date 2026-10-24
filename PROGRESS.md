@@ -877,6 +877,13 @@ ada 2 penyebab terpisah yang ketemu berurutan:
 
 ---
 
+## 2026-10-24 — Sortir Finance Project
+
+- `views/projectacc/index.php` (menu Finance Project): tab **Akan Datang / Sudah Lewat / Semua Project** berdasarkan `event_date` (hari ini = Akan Datang), via `?kategori=`; default Akan Datang, tanggal terdekat di atas. Pola sama dengan `project/index`. Tanpa perubahan DB.
+- `views/operational/index.php` (Operational Finance): sortir **bulanan** via `?periode=YYYY-MM` (default bulan ini; tombol Sebelumnya/Berikutnya, pemilih bulan, Bulan Ini, Semua Bulan) + total nominal periode. Tanpa perubahan DB.
+
+---
+
 ## Catatan Insiden (untuk konteks, bukan tindak lanjut)
 
 - Sempat salah restore password test di DB lokal (`db_erpmaid`) beberapa
