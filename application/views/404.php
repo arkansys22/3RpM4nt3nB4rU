@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
+    <link rel="icon" href="<?= favicon_url() ?>" type="image/x-icon">
     <style>
         /* CSS code */
         body {

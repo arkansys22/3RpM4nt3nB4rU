@@ -12,7 +12,7 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lihat Client</title>
-    <link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
+    <link rel="icon" href="<?= favicon_url() ?>" type="image/x-icon">
     <link href="<?php echo base_url()?>assets/backend/style.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -307,11 +307,11 @@ $islam = strtolower($religion) === 'islam'; // Cek apakah agama Islam
                           if (!$company) {
                               $company = $this->Crud_m->view_where('user', array('id_session' => $p->log_activity_user_id))->row();
                           }
-                          $level = $this->Crud_m->view_where('user_level', array('user_level_id' => $company->level))->row();
+                          $level = $company ? $this->Crud_m->view_where('user_level', array('user_level_id' => $company->level))->row() : null; // user pembuat log bisa sudah dihapus
                         ?>
                           <td class="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
-                            <h5 class="font-medium"><?= $company->username ?></h5>
-                            <p class="text-sm"><?= $level->user_level_nama ?></p>
+                            <h5 class="font-medium"><?= $company ? htmlspecialchars($company->username) : '-' ?></h5>
+                            <p class="text-sm"><?= $level ? htmlspecialchars($level->user_level_nama) : '-' ?></p>
                           </td>
                         <?php endif; ?>
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">

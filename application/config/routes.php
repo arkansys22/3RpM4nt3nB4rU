@@ -409,4 +409,10 @@ $route['partner/lihat/(:any)'] = 'Crud_partner/lihat/$1';
 $route['partner/restore/(:any)'] = 'Crud_partner/restore/$1';
 $route['partner/recycle_bin'] = 'Crud_partner/recycle_bin';
 
+// Pengaturan umum website (nama, logo, favicon, WhatsApp, alamat website)
+$route['pengaturan-website'] = 'Crud_pengaturan_website/index';
+$route['pengaturan-website/update'] = 'Crud_pengaturan_website/update';
+$route['pengaturan-website/rekening/simpan'] = 'Crud_pengaturan_website/rekening_simpan';
+$route['pengaturan-website/rekening/hapus/(:num)'] = 'Crud_pengaturan_website/rekening_hapus/$1';
+
 $route['petacrawl\.xml'] = "petacrawl";

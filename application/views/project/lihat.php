@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lihat Project</title>
-    <link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
+    <link rel="icon" href="<?= favicon_url() ?>" type="image/x-icon">
     <link href="<?php echo base_url()?>assets/backend/style.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -444,16 +444,16 @@
                 <strong>Transaksi ID:</strong> <?= htmlspecialchars($trans->transactions_id) ?><br>
 
                
-                <?php if (strpos($trans->transactions_id, 'IMB') === 0): ?>
+                <?php if (adalah_transaksi_invoice($trans->transactions_id)): ?>
              
-                <?php elseif (strpos($trans->transactions_id, 'MBP') === 0 || strpos($trans->transactions_id, 'MBP1') === 0): ?>
+                <?php elseif (adalah_transaksi_kwitansi($trans->transactions_id)): ?>
                   Kwitansi <?=$trans->metodep ?><br>
                 <?php endif; ?>
 
                 <strong>Total Tagihan:</strong>
-                <?php if (strpos($trans->transactions_id, 'IMB') === 0): ?>
+                <?php if (adalah_transaksi_invoice($trans->transactions_id)): ?>
                   Rp <?= number_format($trans->total_bill, 0, ',', '.') ?><br>
-                <?php elseif (strpos($trans->transactions_id, 'MBP') === 0 || strpos($trans->transactions_id, 'MBP1') === 0): ?>
+                <?php elseif (adalah_transaksi_kwitansi($trans->transactions_id)): ?>
                   Rp <?= number_format($trans->total_paid, 0, ',', '.') ?><br>
                 <?php endif; ?>
 
@@ -465,12 +465,12 @@
               </p>
 
               <div class="flex gap-2 mt-2">
-                <?php if (strpos($trans->transactions_id, 'IMB') === 0): ?>
+                <?php if (adalah_transaksi_invoice($trans->transactions_id)): ?>
                   <a href="<?= site_url('payment/view_invoice/' . $project->id_session . '/' . $trans->payment_id_session) ?>" 
                      class="bg-blue-500 text-white text-sm px-2 py-1 rounded-md hover:bg-blue-600">
                      Lihat Invoice
                   </a>
-                <?php elseif (strpos($trans->transactions_id, 'MBP') === 0 || strpos($trans->transactions_id, 'MBP1') === 0): ?>
+                <?php elseif (adalah_transaksi_kwitansi($trans->transactions_id)): ?>
                   <a href="<?= site_url('payment/view_kwitansi/' . $project->id_session . '/' . $trans->payment_id_session) ?>" 
                      class="bg-blue-500 text-white text-sm px-2 py-1 rounded-md hover:bg-blue-600">
                      Lihat Kwitansi
@@ -481,7 +481,7 @@
                 <a href="<?= site_url(
                     'payment/' .
                     (
-                        strpos($trans->transactions_id, 'IMB') === 0
+                        adalah_transaksi_invoice($trans->transactions_id)
                         ? 'edit'
                         : 'edit2'
                     ) .
@@ -574,11 +574,12 @@
                           if (!$company) {
                               $company = $this->Crud_m->view_where('user', array('id_session' => $p->log_activity_user_id))->row();
                           }
-                          $level = $this->Crud_m->view_where('user_level', array('user_level_id' => $company->level))->row();
+                          // user pembuat log bisa saja sudah dihapus -> tampilkan "-" (bukan error)
+                          $level = $company ? $this->Crud_m->view_where('user_level', array('user_level_id' => $company->level))->row() : null;
                         ?>
                           <td class="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
-                            <h5 class="font-medium"><?= $company->username ?></h5>
-                            <p class="text-sm"><?= $level->user_level_nama ?></p>
+                            <h5 class="font-medium"><?= $company ? htmlspecialchars($company->username) : '-' ?></h5>
+                            <p class="text-sm"><?= $level ? htmlspecialchars($level->user_level_nama) : '-' ?></p>
                           </td>
                         <?php endif; ?>
                         <td class="border-b border-[#eee] px-4 py-5 dark:border-strokedark">

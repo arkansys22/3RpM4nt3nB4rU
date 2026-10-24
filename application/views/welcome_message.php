@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<meta charset="utf-8">
 	<title>Welcome to ERP Mantenbaru Organizer</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-	<link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
+	<link rel="icon" href="<?= favicon_url() ?>" type="image/x-icon">
 	<link href="<?php echo base_url()?>assets/backend/style.css" rel="stylesheet" type="text/css"/>
 	<script src="https://cdn.tailwindcss.com"></script>
 	<style>

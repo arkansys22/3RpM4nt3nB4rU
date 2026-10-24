@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lebih Lengkap - Clients</title>
-    <link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
+    <link rel="icon" href="<?= favicon_url() ?>" type="image/x-icon">
     <link href="<?php echo base_url()?>assets/backend/style.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -43,11 +43,25 @@
                   </svg>
                 </a>
                 </div>
+              <?php
+              // Data grafik: total client per tahun (urut naik) dan per bulan untuk tiap tahun
+              $total_per_tahun = array_map('array_sum', $clients_per_year);
+              ksort($total_per_tahun);
+              ?>
+              <?php if (!empty($total_per_tahun)): ?>
+              <div class="mb-8 rounded-lg border border-gray-200 bg-white p-4 shadow-md dark:border-neutral-600 dark:bg-neutral-800">
+                <h2 class="mb-3 text-xl font-semibold">Grafik Total Client per Tahun</h2>
+                <div class="relative h-64"><canvas id="chartTahun"></canvas></div>
+              </div>
+              <?php endif; ?>
               <?php foreach (array_reverse($clients_per_year, true) as $year => $months): ?>
                 <h2 class="text-xl font-semibold mb-3 flex justify-between">
                   <span><?= $year ?></span>
                   <span class="text-gray-500 dark:text-gray-400">Total Client: <?= array_sum($months) ?></span>
                 </h2>
+                <div class="mb-4 rounded-lg border border-gray-200 bg-white p-4 shadow-md dark:border-neutral-600 dark:bg-neutral-800">
+                  <div class="relative h-56"><canvas id="chartBulan<?= (int) $year ?>"></canvas></div>
+                </div>
                 <div class="overflow-x-auto bg-white dark:bg-neutral-700 rounded-lg shadow-md">
                   <table class="min-w-full text-left text-sm whitespace-nowrap bg-white dark:bg-neutral-800">
                     <thead class="uppercase tracking-wider border-b-2 border-gray-200 dark:border-neutral-600 bg-gray-100 dark:bg-neutral-700">
@@ -83,5 +97,52 @@
     <!-- ===== Content Area End ===== -->
   </div>
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script>
+    window.addEventListener('load', function () {
+      if (typeof Chart === 'undefined') { return; }
+      const gelap = document.body.classList.contains('dark');
+      const teks = gelap ? '#AEB7C0' : '#64748B';
+      const garis = gelap ? 'rgba(174,183,192,0.15)' : 'rgba(100,116,139,0.15)';
+      const warna = '#3C50E0';
+      const bulan = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+
+      function opsi(onKlik) {
+        return {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false }, tooltip: { callbacks: { label: function (c) { return c.parsed.y + ' client'; } } } },
+          scales: {
+            x: { ticks: { color: teks }, grid: { display: false } },
+            y: { beginAtZero: true, ticks: { color: teks, precision: 0 }, grid: { color: garis } }
+          },
+          onClick: onKlik,
+          onHover: function (e, el) { e.native.target.style.cursor = (onKlik && el.length) ? 'pointer' : 'default'; }
+        };
+      }
+      function bar(id, labels, data, onKlik) {
+        const el = document.getElementById(id);
+        if (!el) { return; }
+        new Chart(el, {
+          type: 'bar',
+          data: { labels: labels, datasets: [{ data: data, backgroundColor: warna, borderRadius: 4, maxBarThickness: 48 }] },
+          options: opsi(onKlik)
+        });
+      }
+
+      // Total per tahun
+      bar('chartTahun', <?= json_encode(array_map('strval', array_keys($total_per_tahun))) ?>, <?= json_encode(array_values($total_per_tahun)) ?>);
+
+      // Per bulan untuk tiap tahun; klik batang = buka daftar client bulan itu
+      <?php foreach ($clients_per_year as $year => $months):
+          $per_bulan = [];
+          for ($m = 1; $m <= 12; $m++) { $per_bulan[] = (int) ($months[$m] ?? 0); }
+      ?>
+      bar('chartBulan<?= (int) $year ?>', bulan, <?= json_encode($per_bulan) ?>, function (e, el) {
+        if (el.length) { window.location.href = '<?= base_url('client/lebih_lengkap/detail/' . (int) $year . '/') ?>' + (el[0].index + 1); }
+      });
+      <?php endforeach; ?>
+    });
+  </script>
 </body>
 </html>

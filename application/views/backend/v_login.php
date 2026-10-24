@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
-    <title>Login Pengguna | Mantenbaru Wedding Organizer</title>
+    <title>Login Pengguna | <?= htmlspecialchars(nama_website()) ?><?= stripos(nama_website(), 'Organizer') === false ? ' Wedding Organizer' : '' ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
+    <link rel="icon" href="<?= favicon_url() ?>" type="image/x-icon">
     <link href="<?php echo base_url()?>assets/backend/style.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -21,7 +21,7 @@
     <div class="flex h-screen items-center justify-center">
       <div class="w-full max-w-md p-6 bg-white/70 dark:bg-boxdark-2/70 rounded-lg shadow-md">
         <div class="text-center">
-          <img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-02.png') ?>" alt="Logo" style="width: 320px; margin: 0 auto;">
+          <img src="<?= logo_login_url() ?>" alt="Logo" style="width: 320px; margin: 0 auto;">
         </div>
         <br>
         <?php echo $this->session->flashdata('login_failed'); ?>

@@ -131,7 +131,7 @@ class Crud_payment extends CI_Controller {
         $total_bill = str_replace('.', '', $this->input->post('total_bill'));
         $kategori = $this->input->post('kategori');
         $kategori2 = $this->input->post('kategori2');
-        $transaction_id =  'IMB' . date('ymd', strtotime($this->input->post('date'))) . $this->input->post('number');
+        $transaction_id =  kode_invoice() . date('ymd', strtotime($this->input->post('date'))) . $this->input->post('number');
         $tanggal = $this->input->post('date');
         $payment_id_session = $id_session .$transaction_id;
 
@@ -232,7 +232,7 @@ class Crud_payment extends CI_Controller {
         $id_session = $this->input->post('id_session');
         $total_paid = str_replace('.', '', $this->input->post('total_paid'));
         $kategori = $this->input->post('kategori');        
-        $transaction_id = 'MBP' . date('ymd', strtotime($this->input->post('date'))) . $this->input->post('number');
+        $transaction_id = kode_kwitansi() . date('ymd', strtotime($this->input->post('date'))) . $this->input->post('number');
         $tanggal = $this->input->post('date');
         $payment_id_session = $id_session .$transaction_id;
         $metodep        = $this->input->post('metodep');
@@ -329,7 +329,7 @@ class Crud_payment extends CI_Controller {
             $data['kategori'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','110302');
             $data['kategori2'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','4000');
 
-            if (!$data['payment'] || strpos($data['payment']->transactions_id, 'IMB') !== 0) {
+            if (!$data['payment'] || !adalah_transaksi_invoice($data['payment']->transactions_id)) {
                 show_404(); // Pastikan hanya invoice yang dapat diedit
             }
             $this->load->view('payment/editinv', $data);
@@ -340,7 +340,7 @@ class Crud_payment extends CI_Controller {
             $data['project'] = $this->project_model->get_project_by_session($id_session);
             $data['kategori'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','110302');
             $data['kategori2'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','4000');
-            if (!$data['payment'] || strpos($data['payment']->transactions_id, 'IMB') !== 0) {
+            if (!$data['payment'] || !adalah_transaksi_invoice($data['payment']->transactions_id)) {
                 show_404(); // Pastikan hanya invoice yang dapat diedit
             }
             $this->load->view('payment/editinv', $data);
@@ -355,7 +355,7 @@ class Crud_payment extends CI_Controller {
             $data['project'] = $this->project_model->get_project_by_session($id_session);
             $data['kategori'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','110302');
             $data['kategori2'] = $this->project_model->view_ordering_payable('operational_kategori','nomer_kategori','asc','4000');
-            if (!$data['payment'] || strpos($data['payment']->transactions_id, 'IMB') !== 0) {
+            if (!$data['payment'] || !adalah_transaksi_invoice($data['payment']->transactions_id)) {
                 show_404(); // Pastikan hanya invoice yang dapat diedit
             }
             $this->load->view('payment/editinv', $data);
@@ -402,10 +402,7 @@ class Crud_payment extends CI_Controller {
         }
 
         // Pastikan hanya kwitansi (MBP / MBP1)
-        if (
-            strpos($data['payment']->transactions_id, 'MBP') !== 0 &&
-            strpos($data['payment']->transactions_id, 'MBP1') !== 0
-        ) {
+        if (!adalah_transaksi_kwitansi($data['payment']->transactions_id)) {
             show_404();
         }
 

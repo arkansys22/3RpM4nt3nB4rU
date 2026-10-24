@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
+    <link rel="icon" href="<?= favicon_url() ?>" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       rel="apple-touch-icon"
@@ -36,7 +36,7 @@
                 style="background-color: rgba(255, 255, 255, 0.8);"
               >
                 <div class="rounded-t mb-0 px-6 py-6">
-                    <img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-02.png') ?>" alt="Logo" style="width: 300px; margin: 0 auto;">
+                    <img src="<?= logo_login_url() ?>" alt="Logo" style="width: 300px; margin: 0 auto;">
                 </div>
                 <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
                   <form action="<?= base_url('client/login') ?>" method="post">

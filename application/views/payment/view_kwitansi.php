@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Kwitansi Pembayaran</title>
-    <link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
+    <link rel="icon" href="<?= favicon_url() ?>" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -44,7 +44,7 @@
 
     <div class="container max-w-4xl mx-auto bg-[#fae2d5] p-6">
         <div class="flex justify-between items-start">
-            <img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-02.png') ?>" alt="Logo" style="width: 220px; margin-left: -12px;">
+            <img src="<?= htmlspecialchars(logo_login_url()) ?>" alt="Logo" style="width: 220px; margin-left: -12px;">
             <div class="text-right">
                 <table class="table-auto mx-auto">
                     <tr>
@@ -58,12 +58,11 @@
         </div>
         <div class="flex flex-col sm:flex-row justify-between">
             <div class="flex flex-col items-baseline mb-2 sm:mb-0">
+                <?php foreach (baris_alamat_perusahaan() as $barisAlamat): ?>
                 <div class="flex items-baseline">
-                    <p class="text-xs p-0.5 mr-6">Teras Country Blok H No 38, Tonjong,</p>
+                    <p class="text-xs p-0.5 mr-6"><?= $barisAlamat ?></p>
                 </div>
-                <div class="flex items-baseline">
-                    <p class="text-xs p-0.5">Tajurhalang, Kab. Bogor</p>
-                </div>
+                <?php endforeach; ?>
             </div>
             
             <div class="flex items-baseline">
@@ -79,15 +78,22 @@
             </div>
         </div>
 
+        <?php
+        // Kontak perusahaan dari Pengaturan Website; yang kosong dilewati
+        $kontakKwitansi = [
+            'Telp/WA'   => teks_whatsapp(' / '),
+            'Web'       => htmlspecialchars(tampil_url_website(pengaturan_website('url'))),
+            'Instagram' => pengaturan_website('instagram') !== '' ? htmlspecialchars(handle_sosmed(pengaturan_website('instagram'))) : '',
+            'TikTok'    => pengaturan_website('tiktok') !== '' ? htmlspecialchars(handle_sosmed(pengaturan_website('tiktok'))) : '',
+        ];
+        foreach ($kontakKwitansi as $labelKontak => $isiKontak):
+            if ($isiKontak === '') { continue; }
+        ?>
         <div class="flex items-baseline">
-            <p class="text-xs p-0.5 mr-6">Telp/WA</p>
-            <p class="text-xs p-0.5">: 0812-9292-9396</p>
+            <p class="text-xs p-0.5" style="min-width: 4.5rem;"><?= $labelKontak ?></p>
+            <p class="text-xs p-0.5">: <?= $isiKontak ?></p>
         </div>
-        <div class="flex items-baseline">
-            <p class="text-xs p-0.5 mr-11">Web</p>
-            <p class="text-xs p-0.5">: www.mantenbaru.com</p>
-        </div>
-
+        <?php endforeach; ?>
         <div class="mt-6 flex justify-start">
             <table class="table-auto">
             <tr>

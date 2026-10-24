@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $fileName ?></title>
-    <link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
+    <link rel="icon" href="<?= favicon_url() ?>" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -155,7 +155,7 @@
 
         <!-- Watermark -->
         <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03]">
-            <img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-03.png') ?>"
+            <img src="<?= htmlspecialchars(url_gambar_pengaturan('logo', 'assets/backend/src/images/logo/logo mantenbaru merah-03.png')) ?>"
                 class="w-[420px]">
         </div>
 
@@ -163,21 +163,20 @@
         <div class="flex justify-between items-start border-b border-slate-200 pb-8 relative z-10">
 
             <div>
-                <img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-02.png') ?>"
+                <img src="<?= htmlspecialchars(logo_login_url()) ?>"
                     class="w-56 mb-3">
 
                 <h2 class="font-semibold text-slate-800 text-sm tracking-wide">
-                    MANTENBARU ORGANIZER
+                    <?= htmlspecialchars(mb_strtoupper(nama_website())) ?>
                 </h2>
 
+                <?php // alamat, WhatsApp, alamat website, Instagram & TikTok dari Pengaturan Website (yang kosong dilewati) ?>
                 <div class="text-sm text-slate-500 leading-6 mt-2">
-                    <p>Teras Country Blok H No 38, Tonjong</p>
-                    <p>Tajurhalang, Kabupaten Bogor</p>
-                    <p>0812-9292-9396</p>
-                    <p>www.mantenbaru.com</p>
+                    <?php foreach (baris_identitas_perusahaan() as $barisIdentitas): ?>
+                        <p><?= $barisIdentitas ?></p>
+                    <?php endforeach; ?>
                 </div>
             </div>
-
             <div class="text-right">
 
                 <h1 class="text-4xl font-bold text-slate-800 tracking-wide">
@@ -586,13 +585,29 @@
                     Informasi Pembayaran
                 </h4>
 
+                <?php $rekeningWebsite = daftar_rekening(); // diatur di Pengaturan Website ?>
                 <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 text-sm leading-7">
-                    <p class="font-semibold text-slate-700">
-                        PT Nadi Sukses Berkarya
+                <?php if (!empty($rekeningWebsite)): ?>
+                    <?php foreach ($rekeningWebsite as $iRek => $rek): ?>
+                    <div class="<?= $iRek > 0 ? 'mt-3 pt-3 border-t border-slate-200' : '' ?>">
+                        <?php if (trim($rek->atas_nama) !== ''): ?>
+                        <p class="font-semibold text-slate-700"><?= htmlspecialchars($rek->atas_nama) ?></p>
+                        <?php endif; ?>
+                        <p><?= htmlspecialchars($rek->nama_bank) ?></p>
+                        <p>No. Rek: <strong><?= htmlspecialchars($rek->nomor_rekening) ?></strong></p>
+                    </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <?php // Belum ada rekening di Pengaturan Website: catatan untuk admin (tidak ikut tercetak) ?>
+                    <p class="text-red-600 font-medium print:hidden">
+                        Catatan: nomor rekening belum ditambahkan.
+                        <?php if (in_array($this->session->level, ['1', '2'])): ?>
+                            Tambahkan di <a href="<?= site_url('pengaturan-website#rekening') ?>" class="underline">Pengaturan Website</a>.
+                        <?php else: ?>
+                            Hubungi admin untuk menambahkannya di Pengaturan Website.
+                        <?php endif; ?>
                     </p>
-
-                    <p>Bank Central Asia (BCA)</p>
-                    <p>No. Rek: <strong>167-2468421</strong></p>
+                <?php endif; ?>
                 </div>
             </div>
 

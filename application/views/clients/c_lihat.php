@@ -23,7 +23,7 @@ $vendors = $this->db->get_where('vendor', ['id_session' => $clients->id_session]
 	<title>Mantenbaru <?= $clients->m_bride_cname ?> dan <?= $clients->f_bride_cname ?></title>
 	<?php } ?>
 	<!-- favicon -->
-	<link rel="shortcut icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
+	<link rel="shortcut icon" href="<?= favicon_url() ?>" type="image/x-icon">
 	<!-- animate css -->
 	<link rel="stylesheet" href="<?php echo base_url()?>assets/frontend/assets/css/animate.css">
 	<!-- bootstrap -->

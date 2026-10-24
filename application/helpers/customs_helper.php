@@ -781,4 +781,202 @@ if (!function_exists('urutan_pembayaran_dibayar')) {
         return array_keys($hasil);
     }
 }
+
+// ===== Pengaturan umum website (tabel identitas, diatur di menu "Pengaturan Website") =====
+
+// Nilai satu kolom pengaturan website (nama_website, whatsapp, url, logo, mini_logo, favicon, ...);
+// tanpa argumen mengembalikan seluruh baris. Dibaca sekali per request.
+if (!function_exists('pengaturan_website')) {
+    function pengaturan_website($kolom = '', $default = '') {
+        static $baris = null;
+        if ($baris === null) {
+            $CI =& get_instance();
+            // Query mentah, BUKAN query builder: helper ini sering dipanggil di tengah penyusunan query lain
+            // (mis. sql_like_kode() sebagai argumen where()), dan get_where() akan ikut memakai & menghabiskan
+            // select/where yang sedang disusun di builder yang sama.
+            $baris = $CI->db->table_exists('identitas')
+                ? $CI->db->query('SELECT * FROM identitas WHERE id_identitas = 1')->row()
+                : false;
+        }
+        if ($kolom === '') {
+            return $baris ?: null;
+        }
+        $nilai = $baris ? trim((string) ($baris->$kolom ?? '')) : '';
+        return $nilai !== '' ? $nilai : $default;
+    }
+}
+
+// URL gambar hasil upload ("pengaturan/xxx.png" -> assets/uploads/...), atau gambar bawaan kalau
+// belum diupload / filenya hilang. Nilai lama di kolom (tanpa awalan "pengaturan/") diabaikan.
+if (!function_exists('url_gambar_pengaturan')) {
+    function url_gambar_pengaturan($kolom, $bawaan) {
+        $nilai = pengaturan_website($kolom);
+        if ($nilai !== '' && strpos($nilai, 'pengaturan/') === 0 && strpos($nilai, '..') === false
+            && is_file(FCPATH . 'assets/uploads/' . $nilai)) {
+            return base_url('assets/uploads/' . $nilai);
+        }
+        return base_url($bawaan);
+    }
+}
+
+if (!function_exists('favicon_url')) {
+    function favicon_url() { return url_gambar_pengaturan('favicon', 'assets/backend/mb.png'); }
+}
+if (!function_exists('logo_login_url')) {      // halaman login (latar terang)
+    function logo_login_url() { return url_gambar_pengaturan('logo', 'assets/backend/src/images/logo/logo mantenbaru merah-02.png'); }
+}
+if (!function_exists('logo_sidebar_url')) {    // sidebar & header (latar gelap)
+    function logo_sidebar_url() { return url_gambar_pengaturan('mini_logo', 'assets/backend/src/images/logomantenbaru.png'); }
+}
+if (!function_exists('nama_website')) {
+    function nama_website() { return pengaturan_website('nama_website', 'Mantenbaru'); }
+}
+
+// Daftar nomor rekening perusahaan (Pengaturan Website); array kosong kalau belum ada / tabel belum dimigrasi.
+if (!function_exists('daftar_rekening')) {
+    function daftar_rekening() {
+        static $daftar = null;
+        if ($daftar === null) {
+            $CI =& get_instance();
+            $daftar = $CI->db->table_exists('rekening_website')
+                ? $CI->db->order_by('urutan', 'asc')->order_by('id', 'asc')->get('rekening_website')->result()
+                : [];
+        }
+        return $daftar;
+    }
+}
+
+// ===== Kode awal nomor transaksi: invoice (bawaan IMB) & kwitansi (bawaan MBP) =====
+// Bisa diubah di Pengaturan Website. Dokumen lama tetap memakai kode lama, jadi pengenalan jenis
+// transaksi (invoice / kwitansi) selalu memakai SEMUA kode yang pernah dipakai (bawaan + riwayat + sekarang).
+
+if (!function_exists('kode_invoice')) {
+    function kode_invoice() { return pengaturan_website('kode_invoice', 'IMB'); }
+}
+if (!function_exists('kode_kwitansi')) {
+    function kode_kwitansi() { return pengaturan_website('kode_kwitansi', 'MBP'); }
+}
+
+// Semua kode yang dikenali: kode sekarang + bawaan + riwayat kode lama (unik, kode sekarang di depan).
+if (!function_exists('semua_kode_transaksi')) {
+    function semua_kode_transaksi($jenis) { // 'invoice' | 'kwitansi'
+        $sekarang = $jenis === 'invoice' ? kode_invoice() : kode_kwitansi();
+        $bawaan = $jenis === 'invoice' ? 'IMB' : 'MBP';
+        $riwayat = array_filter(array_map('trim', explode(',', pengaturan_website('kode_' . $jenis . '_riwayat', ''))));
+        return array_values(array_unique(array_merge([$sekarang, $bawaan], $riwayat)));
+    }
+}
+
+if (!function_exists('adalah_transaksi_invoice')) {
+    function adalah_transaksi_invoice($transactions_id) {
+        foreach (semua_kode_transaksi('invoice') as $k) {
+            if (strpos((string) $transactions_id, $k) === 0) { return true; }
+        }
+        return false;
+    }
+}
+if (!function_exists('adalah_transaksi_kwitansi')) {
+    function adalah_transaksi_kwitansi($transactions_id) {
+        foreach (semua_kode_transaksi('kwitansi') as $k) {
+            if (strpos((string) $transactions_id, $k) === 0) { return true; }
+        }
+        return false;
+    }
+}
+
+// Potongan SQL "(kolom LIKE 'awal<KODE>%' OR ...)" untuk semua kode sebuah jenis transaksi;
+// dipakai di query builder: ->where(sql_like_kode('payment_id_session', $id_session, 'invoice'), null, false)
+if (!function_exists('sql_like_kode')) {
+    function sql_like_kode($kolom, $awal, $jenis) {
+        $CI =& get_instance();
+        $bagian = [];
+        foreach (semua_kode_transaksi($jenis) as $k) {
+            $bagian[] = $kolom . " LIKE '" . $CI->db->escape_like_str($awal . $k) . "%' ESCAPE '!'";
+        }
+        return '(' . implode(' OR ', $bagian) . ')';
+    }
+}
+
+// Alamat website untuk ditampilkan: tanpa "https://" dan tanpa "/" di akhir. Kosong kalau tidak ada.
+if (!function_exists('tampil_url_website')) {
+    function tampil_url_website($url) {
+        $url = trim((string) $url);
+        return $url === '' ? '' : rtrim(preg_replace('#^https?://#i', '', $url), '/');
+    }
+}
+
+// "@username" dari link/handle sosial media (mis. https://www.instagram.com/mantenbaru/ -> @mantenbaru).
+if (!function_exists('handle_sosmed')) {
+    function handle_sosmed($url) {
+        $url = trim((string) $url);
+        if ($url === '') {
+            return '';
+        }
+        $path = trim((string) parse_url(preg_match('#^https?://#i', $url) ? $url : 'https://' . $url, PHP_URL_PATH), '/');
+        $user = $path === '' ? '' : ltrim(basename($path), '@');
+        return $user === '' ? tampil_url_website($url) : '@' . $user;
+    }
+}
+
+// Blok identitas perusahaan untuk dokumen (invoice dll): baris-baris teks dari Pengaturan Website
+// (alamat, nomor WhatsApp, alamat website, Instagram, TikTok). Isian yang kosong dilewati.
+// Mengembalikan array baris yang SUDAH di-escape.
+if (!function_exists('baris_identitas_perusahaan')) {
+    function baris_identitas_perusahaan() {
+        $baris = [];
+        foreach (preg_split('/\r\n|\r|\n/', (string) pengaturan_website('alamat')) as $a) {
+            if (trim($a) !== '') {
+                $baris[] = htmlspecialchars(trim($a));
+            }
+        }
+        if (teks_whatsapp() !== '') {
+            $baris[] = teks_whatsapp(' / ');
+        }
+        if (pengaturan_website('url') !== '') {
+            $baris[] = htmlspecialchars(tampil_url_website(pengaturan_website('url')));
+        }
+        if (pengaturan_website('instagram') !== '') {
+            $baris[] = 'Instagram: ' . htmlspecialchars(handle_sosmed(pengaturan_website('instagram')));
+        }
+        if (pengaturan_website('tiktok') !== '') {
+            $baris[] = 'TikTok: ' . htmlspecialchars(handle_sosmed(pengaturan_website('tiktok')));
+        }
+        return $baris;
+    }
+}
+
+// Baris alamat (dari Pengaturan Website, satu baris per baris teks), sudah di-escape.
+if (!function_exists('baris_alamat_perusahaan')) {
+    function baris_alamat_perusahaan() {
+        $hasil = [];
+        foreach (preg_split('/\r\n|\r|\n/', (string) pengaturan_website('alamat')) as $a) {
+            if (trim($a) !== '') {
+                $hasil[] = htmlspecialchars(trim($a));
+            }
+        }
+        return $hasil;
+    }
+}
+
+// Nomor WhatsApp dari Pengaturan Website: bisa lebih dari satu (satu per baris di kolom identitas.whatsapp;
+// pemisah lama koma / titik koma / "|" juga dikenali). Mengembalikan array nomor (unik, tanpa yang kosong).
+if (!function_exists('daftar_whatsapp')) {
+    function daftar_whatsapp() {
+        $nomor = [];
+        foreach (preg_split('/[\r\n,;|]+/', (string) pengaturan_website('whatsapp')) as $n) {
+            $n = trim($n);
+            if ($n !== '') {
+                $nomor[$n] = $n;
+            }
+        }
+        return array_values($nomor);
+    }
+}
+
+// Semua nomor WhatsApp dalam satu teks (sudah di-escape), dipisah $pemisah. Kosong kalau tidak ada.
+if (!function_exists('teks_whatsapp')) {
+    function teks_whatsapp($pemisah = ' / ') {
+        return implode($pemisah, array_map('htmlspecialchars', daftar_whatsapp()));
+    }
+}
 }

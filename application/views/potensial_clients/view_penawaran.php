@@ -8,7 +8,7 @@
 
 <title>Penawaran Potensial Clients</title>
 
-<link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png">
+<link rel="icon" href="<?= favicon_url() ?>">
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
 
 <style>
@@ -201,7 +201,7 @@ display:none;
 <body>
 
 
-<img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-03.png') ?>" class="watermark">
+<img src="<?= htmlspecialchars(url_gambar_pengaturan('logo', 'assets/backend/src/images/logo/logo mantenbaru merah-03.png')) ?>" class="watermark">
 
 
 <!-- HEADER -->
@@ -210,12 +210,10 @@ display:none;
 
 <div>
 
-<img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-02.png') ?>" width="200">
+<img src="<?= htmlspecialchars(logo_login_url()) ?>" width="200">
 
 <p class="text-xs">
-Teras Country Blok H No 38<br>
-Tajurhalang Bogor<br>
-WA : 0812-9292-9396
+<?= implode('<br>', baris_identitas_perusahaan()) ?>
 </p>
 
 </div>
@@ -240,7 +238,7 @@ Tanggal : <?= date('d-m-Y') ?>
 
 <div class="page text-center flex flex-col justify-center">
 
-<img src="<?= base_url('assets/backend/src/images/logo/logo mantenbaru merah-02.png') ?>" width="260" class="mx-auto">
+<img src="<?= htmlspecialchars(logo_login_url()) ?>" width="260" class="mx-auto">
 
 <h1 class="text-3xl font-bold mt-10">
 Proposal Penawaran Wedding Organizer
@@ -356,15 +354,26 @@ Pembayaran dilakukan dalam 5 tahap sesuai kesepakatan.
 
 <br>
 
+<?php $rekeningPenawaran = daftar_rekening(); // nomor rekening dari Pengaturan Website ?>
+<?php if (!empty($rekeningPenawaran)): ?>
 <h3 class="font-semibold">
 Transfer Pembayaran
 </h3>
 
-<p class="text-sm">
-Bank BCA<br>
-No Rek : 1672468421<br>
-a/n Nadi Sukses Berkarya PT
+<?php foreach ($rekeningPenawaran as $iRek => $rek): ?>
+<p class="text-sm<?= $iRek > 0 ? ' mt-2' : '' ?>">
+<?= htmlspecialchars($rek->nama_bank) ?><br>
+No Rek : <?= htmlspecialchars($rek->nomor_rekening) ?><br>
+<?php if (trim($rek->atas_nama) !== ''): ?>
+a/n <?= htmlspecialchars($rek->atas_nama) ?>
+<?php endif; ?>
 </p>
+<?php endforeach; ?>
+<?php else: ?>
+<p class="text-sm text-red-600 font-medium print:hidden">
+Catatan: nomor rekening belum ditambahkan di Pengaturan Website.
+</p>
+<?php endif; ?>
 
 </div>
 
@@ -392,7 +401,7 @@ Dengan melakukan pembayaran pertama, maka client dianggap telah menyetujui selur
 <br><br><br>
 
 <p class="font-semibold">
-Mantenbaru Organizer
+<?= htmlspecialchars(nama_website()) ?>
 </p>
 
 </div>
@@ -432,7 +441,7 @@ class="bg-red-600 hover:bg-red-700 text-white font-semibold px-10 py-3 rounded-l
 <div class="print-footer flex justify-between">
 
 <p>
-Mantenbaru Organizer
+<?= htmlspecialchars(nama_website()) ?>
 </p>
 
 <p class="page-number"></p>

@@ -41,7 +41,7 @@
 
 			      <!-- Logo Header -->
 			      <a class="block flex-shrink-0 lg:hidden" href="#"> 
-			        <img src="<?php echo base_url()?>assets/backend/src/images/logomantenbaru.png" alt="Logo" style="width:200px; height: 100%; "/>
+			        <img src="<?= logo_sidebar_url() ?>" alt="Logo" style="width:200px; height: 100%; "/>
 			      </a>
 			    </div>
 			    <div class="hidden sm:block">

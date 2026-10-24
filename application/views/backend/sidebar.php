@@ -7,7 +7,7 @@
 			<!-- SIDEBAR HEADER -->
 			<div class="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
 			    <a href="#"> <!-- Logo Header -->
-			      <img src="<?php echo base_url()?>assets/backend/src/images/logomantenbaru.png" alt="Logo" style="width:200px; height: 100%; "/>
+			      <img src="<?= logo_sidebar_url() ?>" alt="Logo" style="width:200px; height: 100%; "/>
 			    </a>
 
 			    <button
@@ -458,6 +458,21 @@
 				<path fill-rule="evenodd" clip-rule="evenodd" d="M9 2a1 1 0 0 0-1 1v1H6a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V3a1 1 0 1 0-2 0v1H10V3a1 1 0 0 0-1-1ZM6 9h12v10H6V9Zm2 3h2v2H8v-2Zm4 0h2v2h-2v-2Z" fill=""/>
 			</svg>
 			Template Peralatan Event
+		</a>
+	</li>
+<?php } ?>
+<?php if($this->session->level=='1' OR $this->session->level=='2'){ ?>
+	<li>
+		<a
+			class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
+			href="<?= base_url('pengaturan-website'); ?>"
+			@click="selected = 'pengaturan_website'"
+			:class="{ 'bg-graydark dark:bg-meta-4': (selected === 'pengaturan_website') }"
+		>
+			<svg class="fill-current" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M12 15.5A3.5 3.5 0 1 0 12 8.5a3.5 3.5 0 0 0 0 7Zm8.4-2.4c.04-.36.1-.72.1-1.1s-.06-.74-.1-1.1l2.1-1.65a.5.5 0 0 0 .12-.64l-2-3.46a.5.5 0 0 0-.61-.22l-2.49 1a7.3 7.3 0 0 0-1.9-1.1l-.38-2.65A.5.5 0 0 0 14.74 2h-4a.5.5 0 0 0-.5.42l-.38 2.65c-.69.28-1.33.65-1.9 1.1l-2.49-1a.5.5 0 0 0-.61.22l-2 3.46a.5.5 0 0 0 .12.64L4.1 10.9c-.04.36-.1.72-.1 1.1s.06.74.1 1.1l-2.1 1.65a.5.5 0 0 0-.12.64l2 3.46c.13.22.39.3.61.22l2.49-1c.57.45 1.21.82 1.9 1.1l.38 2.65c.04.24.25.42.5.42h4c.25 0 .46-.18.5-.42l.38-2.65c.69-.28 1.33-.65 1.9-1.1l2.49 1c.23.09.48 0 .61-.22l2-3.46a.5.5 0 0 0-.12-.64l-2.1-1.65Z" fill=""/>
+			</svg>
+			Pengaturan Website
 		</a>
 	</li>
 <?php } ?>

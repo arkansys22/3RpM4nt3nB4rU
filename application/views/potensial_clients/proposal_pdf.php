@@ -208,7 +208,7 @@ margin-top:10px;
 <body>
 
 <div class="watermark">
-<img src="<?= base_url('assets/frontend/assets/images/logomantenbaru-03.png') ?>">
+<img src="<?= htmlspecialchars(url_gambar_pengaturan('logo', 'assets/frontend/assets/images/logomantenbaru-03.png')) ?>">
 </div>
 
 <!-- HEADER -->
@@ -221,10 +221,17 @@ margin-top:10px;
 
 <td>
 <div class="logo">
-Mantenbaru Wedding Organizer
+<?= htmlspecialchars(nama_website()) ?>
 </div>
-<div class="sublogo">Teras Country Blok H No 38, Tonjong,Tajurhalang Bogor
-<br> Telp / WA : 0812-9292-9396 | 0812-1012-6196 | 0851-8996-1691<br>Web : www.mantenbaru.com | IG :mantebaru_organizer | Tiktok : mantenbaru_weddingbogor<br>
+<div class="sublogo"><?= implode('<br>', array_filter([
+    implode(', ', baris_alamat_perusahaan()),
+    teks_whatsapp() !== '' ? 'Telp / WA : ' . teks_whatsapp(' | ') : '',
+    implode(' | ', array_filter([
+        pengaturan_website('url') !== '' ? 'Web : ' . htmlspecialchars(tampil_url_website(pengaturan_website('url'))) : '',
+        pengaturan_website('instagram') !== '' ? 'IG : ' . htmlspecialchars(handle_sosmed(pengaturan_website('instagram'))) : '',
+        pengaturan_website('tiktok') !== '' ? 'Tiktok : ' . htmlspecialchars(handle_sosmed(pengaturan_website('tiktok'))) : '',
+    ])),
+])) ?>
 </div>
 </td>
 
@@ -248,7 +255,7 @@ Mantenbaru Wedding Organizer
 <tr>
 
 <td>
-Mantenbaru Wedding Organizer - Proposal Penawaran <?= $pc->pc_name ?> <?= $pc->location ?>
+<?= htmlspecialchars(nama_website()) ?> - Proposal Penawaran <?= $pc->pc_name ?> <?= $pc->location ?>
 </td>
 
 <td align="right">
@@ -511,18 +518,25 @@ Rp <?= number_format($p5,0,',','.') ?></li>
 
 </ul>
 
+<?php $rekeningProposal = daftar_rekening(); // nomor rekening dari Pengaturan Website; kosong -> kotak tidak ditampilkan ?>
+<?php if (!empty($rekeningProposal)): ?>
 <div class="payment-box">
 
 <div>Transfer Pembayaran :</div>
 
-<div class="bank">
-Bank BCA
+<?php foreach ($rekeningProposal as $iRek => $rek): ?>
+<div class="bank"<?= $iRek > 0 ? ' style="margin-top:10px;"' : '' ?>>
+<?= htmlspecialchars($rek->nama_bank) ?>
 </div>
 
-No Rek : 1672468421<br>
-a/n Nadi Sukses Berkarya PT
+No Rek : <?= htmlspecialchars($rek->nomor_rekening) ?><br>
+<?php if (trim($rek->atas_nama) !== ''): ?>
+a/n <?= htmlspecialchars($rek->atas_nama) ?>
+<?php endif; ?>
+<?php endforeach; ?>
 
 </div>
+<?php endif; ?>
 
 
 

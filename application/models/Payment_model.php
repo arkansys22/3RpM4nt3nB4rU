@@ -39,7 +39,7 @@ class Payment_model extends CI_Model {
     public function get_by_payment_id_session($id_session)
     {
         return $this->db
-            ->like('payment_id_session', $id_session . 'IMB', 'after')
+            ->where(sql_like_kode('payment_id_session', $id_session, 'invoice'), null, false)
             ->get('payment')
             ->result_array();
     }
@@ -69,7 +69,7 @@ class Payment_model extends CI_Model {
     public function has_invoice($id_session) {
         $this->db->select('transactions_id');
         $this->db->where('id_session', $id_session);
-        $this->db->like('transactions_id', 'IMB', 'after'); // Cari transactions_id yang diawali dengan 'IMB'
+        $this->db->where(sql_like_kode('transactions_id', '', 'invoice'), null, false); // transactions_id berawalan kode invoice (bawaan IMB)
         return $this->db->get('payment')->row(); // Kembalikan satu baris jika ada
     }
 
@@ -243,11 +243,7 @@ public function update_sisa_invoice($id_session)
     $invoice = $this->db
         ->select('*')
         ->from('accounting')
-        ->like(
-            'accounting_id_session',
-            $id_session . 'IMB',
-            'after'
-        )
+        ->where(sql_like_kode('accounting_id_session', $id_session, 'invoice'), null, false)
         ->like(
             'accounting_nomer_kategori',
             '110302',
@@ -272,11 +268,7 @@ public function update_sisa_invoice($id_session)
     $payment_invoice = $this->db
         ->select('total_bill')
         ->from('payment')
-        ->like(
-            'payment_id_session',
-            $id_session . 'IMB',
-            'after'
-        )
+        ->where(sql_like_kode('payment_id_session', $id_session, 'invoice'), null, false)
         ->limit(1)
         ->get()
         ->row();
@@ -300,11 +292,7 @@ public function update_sisa_invoice($id_session)
     $total_mbp = $this->db
         ->select_sum('total_paid')
         ->from('payment')
-        ->like(
-            'payment_id_session',
-            $id_session . 'MBP',
-            'after'
-        )
+        ->where(sql_like_kode('payment_id_session', $id_session, 'kwitansi'), null, false)
         ->where('status', 'Paid')
         ->get()
         ->row();
@@ -332,11 +320,7 @@ public function update_sisa_invoice($id_session)
     |--------------------------------------------------------------------------
     */
     $this->db
-        ->like(
-            'accounting_id_session',
-            $id_session . 'IMB',
-            'after'
-        )
+        ->where(sql_like_kode('accounting_id_session', $id_session, 'invoice'), null, false)
         ->like(
             'accounting_nomer_kategori',
             '110302',

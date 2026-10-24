@@ -9,7 +9,7 @@ $lokasi = $project->location ?? '-';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>List Peralatan Event — <?= htmlspecialchars($nama_pengantin) ?></title>
-    <link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
+    <link rel="icon" href="<?= favicon_url() ?>" type="image/x-icon">
     <style>
         @page { size: A4; margin: 15mm; }
         body {

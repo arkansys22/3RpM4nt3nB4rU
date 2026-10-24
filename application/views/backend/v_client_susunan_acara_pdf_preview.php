@@ -10,7 +10,7 @@ $downloadName = 'Susunan Acara' . ($acaraKe == 2 ? ' 2' : '') . ' - ' . $clients
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Preview PDF — <?= htmlspecialchars($clients->client_name) ?></title>
-    <link rel="icon" href="<?php echo base_url()?>assets/backend/mb.png" type="image/x-icon">
+    <link rel="icon" href="<?= favicon_url() ?>" type="image/x-icon">
     <style>
         html, body { margin: 0; font-family: Arial, sans-serif; background: #525659; }
         .toolbar {
