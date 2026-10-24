@@ -70,6 +70,17 @@
                     </select>
                 </div>
 
+                <!-- Cuma muncul kalau Kategori = 6100.02 (Biaya komisi) -- pilih user aktif penerima komisi. -->
+                <div id="komisiField" class="hidden">
+                    <label class="block mb-2">Penerima Komisi</label>
+                    <select name="komisi_id_session" class="w-full px-4 py-2 border rounded mb-4">
+                        <option value="">- Pilih User -</option>
+                        <?php foreach (($komisi_list ?? []) as $u): ?>
+                        <option value="<?= $u->id_session ?>" <?= (isset($pc->staff_id_session) && $pc->staff_id_session === $u->id_session) ? 'selected' : '' ?>><?= htmlspecialchars($u->nama) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
                 <label class="block mb-2">Periode</label>
                 <select name="periode" class="w-full px-4 py-2 border rounded mb-4" required> 
                       <option value="-">-</option>
@@ -108,6 +119,7 @@
     function toggleStaffGaji(kategoriValue) {
         var field = document.getElementById('staffGajiField');
         field.classList.toggle('hidden', kategoriValue !== '6201.01');
+        document.getElementById('komisiField').classList.toggle('hidden', kategoriValue !== '6100.02');
     }
     toggleStaffGaji(document.getElementById('kategoriSelect').value);
   </script>

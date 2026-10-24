@@ -13,6 +13,10 @@ class Gaji_model extends CI_Model {
     // terkait ke satu user lewat operational_acc.staff_id_session.
     const KATEGORI_OPERASIONAL_GAJI = '6201.01';
 
+    // Kategori "Biaya Komisi" -- di finance-operational/create dipilihkan Penerima Komisi
+    // (user aktif), disimpan di operational_acc.staff_id_session juga, dan ikut masuk rekap gaji.
+    const KATEGORI_OPERASIONAL_KOMISI = '6100.02';
+
     // Hitung nominal aktual satu kategori untuk satu user di satu bulan.
     // - Bulanan: nominalnya sendiri, flat.
     // - Harian: nominal x jumlah hari Hadir di absensi bulan itu.
@@ -24,7 +28,7 @@ class Gaji_model extends CI_Model {
     //   pakai aturan "achieved" yang sama dengan Aspanel::getEstimasiRevenue().
     // Catatan: ini cuma buat kategori yang di-assign lewat Setting Salary
     // (user_kategori_gaji). Transaksi gaji nyata dari Finance Operational
-    // (kategori 6201.01) dipakai TERPISAH, lihat get_detail_gaji_operational().
+    // (kategori 6201.01 gaji + 6100.02 komisi) dipakai TERPISAH, lihat get_detail_gaji_operational().
     public function hitung_detail_gaji($user_id_session, $kategori, $periode)
     {
         $nominal = (float) $kategori->nominal_gaji;
@@ -73,7 +77,7 @@ class Gaji_model extends CI_Model {
     }
 
     // Transaksi gaji NYATA yang sudah dicatat di Finance Operational
-    // (operational_acc, kategori 6201.01) buat satu user di satu bulan --
+    // (operational_acc, kategori 6201.01 gaji + 6100.02 komisi) buat satu user di satu bulan --
     // independen dari kategori_gaji/Setting Salary, jadi tetap muncul di
     // laporan meski user itu belum punya kategori salary apa pun di-assign.
     // Satu baris per transaksi (bisa lebih dari satu dalam sebulan, mis.
@@ -82,9 +86,9 @@ class Gaji_model extends CI_Model {
     // $detail_gaji di controller.
     public function get_detail_gaji_operational($user_id_session, $periode)
     {
-        $this->db->select('nama_transaksi, tanggal_transaksi, nominal_transaksi');
+        $this->db->select('kategori, nama_transaksi, tanggal_transaksi, nominal_transaksi');
         $this->db->from('operational_acc');
-        $this->db->where('kategori', self::KATEGORI_OPERASIONAL_GAJI);
+        $this->db->where_in('kategori', [self::KATEGORI_OPERASIONAL_GAJI, self::KATEGORI_OPERASIONAL_KOMISI]);
         $this->db->where('staff_id_session', $user_id_session);
         $this->db->where("DATE_FORMAT(tanggal_transaksi, '%Y-%m') =", $periode);
         $this->db->order_by('tanggal_transaksi', 'ASC');
@@ -93,9 +97,10 @@ class Gaji_model extends CI_Model {
         $detail_list = [];
         foreach ($rows as $row) {
             $nominal = (float) $row->nominal_transaksi;
+            $komisi = $row->kategori === self::KATEGORI_OPERASIONAL_KOMISI;
             $detail_list[] = [
-                'nama_kategori' => $row->nama_transaksi,
-                'satuan_gaji' => 'Bulanan',
+                'nama_kategori' => $komisi ? 'Komisi: ' . $row->nama_transaksi : $row->nama_transaksi,
+                'satuan_gaji' => $komisi ? 'Komisi' : 'Bulanan',
                 'nominal_gaji' => $nominal,
                 'keterangan' => 'Tercatat ' . date('d M Y', strtotime($row->tanggal_transaksi)),
                 'jumlah' => $nominal,
@@ -103,6 +108,30 @@ class Gaji_model extends CI_Model {
         }
 
         return $detail_list;
+    }
+
+    // Fee crew NYATA dari Finance Project (form "Tambah Crew") buat satu user di satu bulan, untuk user yang
+    // TIDAK punya kategori salary satuan Project -- supaya fee crew tetap masuk rekap gaji walau belum di-assign.
+    // Kalau user punya kategori Project, fee crew sudah dihitung lewat hitung_detail_gaji() (jangan dobel).
+    // Format baris sama dengan hitung_detail_gaji(); array kosong kalau tidak ada fee.
+    public function get_detail_fee_crew_tambahan($user_id_session, $kategori_list, $periode)
+    {
+        foreach ($kategori_list as $k) {
+            if ($k->satuan_gaji === 'Project') {
+                return [];
+            }
+        }
+        $fee = $this->hitung_fee_crew($user_id_session, $periode);
+        if ($fee->total <= 0) {
+            return [];
+        }
+        return [[
+            'nama_kategori' => 'Crew WO',
+            'satuan_gaji' => 'Project',
+            'nominal_gaji' => $fee->total,
+            'keterangan' => 'Total fee crew dari ' . $fee->jumlah_project . ' project bulan ini',
+            'jumlah' => $fee->total,
+        ]];
     }
 
     // Total fee crew NYATA yang sudah dicatat di Finance Project (project_acc,

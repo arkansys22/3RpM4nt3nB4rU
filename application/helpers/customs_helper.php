@@ -979,4 +979,18 @@ if (!function_exists('teks_whatsapp')) {
         return implode($pemisah, array_map('htmlspecialchars', daftar_whatsapp()));
     }
 }
+
+// Pegawai/penerima yang dikaitkan ke transaksi Operational Finance (kolom operational_acc.staff_id_session):
+// 6201.01 (Biaya Gaji, Lembur & THR) -> Staff; 6100.02 (Biaya komisi) -> Penerima Komisi; kategori lain -> null.
+if (!function_exists('staff_id_transaksi_operasional')) {
+    function staff_id_transaksi_operasional($kategori, $staff, $komisi) {
+        if ($kategori === '6201.01' && !empty($staff)) {
+            return $staff;
+        }
+        if ($kategori === '6100.02' && !empty($komisi)) {
+            return $komisi;
+        }
+        return null;
+    }
+}
 }

@@ -47,7 +47,13 @@
                 <input type="text" id="formattedNumber" class="w-full px-4 py-2 border rounded mb-4" oninput="formatNumber(this)" name="nominal" required>
 
                 <label class="block mb-2">Kategori</label>
-                <select name="kategori" id="kategoriSelect" onchange="toggleStaffGaji(this.value)" class="w-full px-4 py-2 border rounded mb-4" required>
+                <div id="kategoriBox" class="relative mb-4">
+                <button type="button" id="kategoriTombol" class="flex w-full items-center justify-between px-4 py-2 border rounded text-left"><span id="kategoriTeks">-</span><span class="ml-2 text-xs">&#9660;</span></button>
+                <div id="kategoriPanel" class="absolute left-0 right-0 z-50 mt-1 hidden rounded border bg-white shadow-lg dark:bg-boxdark">
+                    <input type="text" id="kategoriCari" placeholder="Cari kategori (kode atau nama)..." autocomplete="off" class="w-full px-4 py-2 border-b outline-none bg-transparent">
+                    <ul id="kategoriDaftar" class="max-h-60 overflow-y-auto"></ul>
+                </div>
+                <select name="kategori" id="kategoriSelect" onchange="toggleStaffGaji(this.value)" tabindex="-1" style="position:absolute;left:0;bottom:0;width:100%;height:1px;opacity:0;pointer-events:none;" required>
                         <option value="-">-</option>
                         <?php foreach ($kategori as $p) {
                               if (empty($kategori)){
@@ -59,6 +65,7 @@
                            }
                         } ?>
                 </select>
+                </div>
 
                 <!-- Cuma muncul kalau Kategori = 6201.01 (Biaya Gaji, Lembur & THR) -- transaksi
                      pembayaran gaji perlu dikaitkan ke satu user crew supaya jelas ini gaji siapa. -->
@@ -68,6 +75,17 @@
                         <option value="">- Pilih Staff -</option>
                         <?php foreach ($crew_list as $c): ?>
                         <option value="<?= $c->id_session ?>"><?= htmlspecialchars($c->nama) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <!-- Cuma muncul kalau Kategori = 6100.02 (Biaya komisi) -- pilih user aktif penerima komisi. -->
+                <div id="komisiField" class="hidden">
+                    <label class="block mb-2">Penerima Komisi</label>
+                    <select name="komisi_id_session" class="w-full px-4 py-2 border rounded mb-4">
+                        <option value="">- Pilih User -</option>
+                        <?php foreach (($komisi_list ?? []) as $u): ?>
+                        <option value="<?= $u->id_session ?>"><?= htmlspecialchars($u->nama) ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -111,10 +129,68 @@
     function toggleStaffGaji(kategoriValue) {
         var field = document.getElementById('staffGajiField');
         field.classList.toggle('hidden', kategoriValue !== '6201.01');
+        document.getElementById('komisiField').classList.toggle('hidden', kategoriValue !== '6100.02');
     }
     // Jalankan sekali di awal, buat jaga-jaga kalau browser restore nilai select
     // (mis. tombol back) tanpa memicu event "change".
     toggleStaffGaji(document.getElementById('kategoriSelect').value);
+
+    // Kategori dengan pencarian di dalam kotak pilihan: klik untuk membuka daftar, ketik untuk menyaring
+    (function () {
+        var select = document.getElementById('kategoriSelect');
+        var box = document.getElementById('kategoriBox');
+        var tombol = document.getElementById('kategoriTombol');
+        var teks = document.getElementById('kategoriTeks');
+        var panel = document.getElementById('kategoriPanel');
+        var cari = document.getElementById('kategoriCari');
+        var daftar = document.getElementById('kategoriDaftar');
+        var semua = Array.prototype.map.call(select.options, function (o) {
+            return { value: o.value, text: o.text };
+        });
+
+        function pilih(o) {
+            select.value = o.value;
+            teks.textContent = o.text;
+            tutup();
+            select.dispatchEvent(new Event('change'));
+        }
+        function render() {
+            var q = cari.value.trim().toLowerCase();
+            daftar.innerHTML = '';
+            var ada = false;
+            semua.forEach(function (o) {
+                if (q !== '' && o.text.toLowerCase().indexOf(q) === -1) { return; }
+                ada = true;
+                var li = document.createElement('li');
+                li.textContent = o.text;
+                li.className = 'cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-meta-4' + (o.value === select.value ? ' font-semibold' : '');
+                li.addEventListener('mousedown', function (e) { e.preventDefault(); pilih(o); });
+                daftar.appendChild(li);
+            });
+            if (!ada) {
+                var kosong = document.createElement('li');
+                kosong.textContent = 'Kategori tidak ditemukan';
+                kosong.className = 'px-4 py-2 text-gray-500';
+                daftar.appendChild(kosong);
+            }
+        }
+        function buka() { panel.classList.remove('hidden'); cari.value = ''; render(); cari.focus(); }
+        function tutup() { panel.classList.add('hidden'); }
+
+        teks.textContent = select.options[select.selectedIndex].text;
+        tombol.addEventListener('click', function () { panel.classList.contains('hidden') ? buka() : tutup(); });
+        cari.addEventListener('input', render);
+        cari.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') { tutup(); tombol.focus(); }
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                var q = cari.value.trim().toLowerCase();
+                var cocok = semua.filter(function (o) { return q === '' || o.text.toLowerCase().indexOf(q) !== -1; });
+                if (cocok.length) { pilih(cocok[0]); }
+            }
+        });
+        document.addEventListener('click', function (e) { if (!box.contains(e.target)) { tutup(); } });
+    })();
   </script>
 </body>
 </html>

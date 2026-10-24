@@ -881,6 +881,10 @@ ada 2 penyebab terpisah yang ketemu berurutan:
 
 - `views/projectacc/index.php` (menu Finance Project): tab **Akan Datang / Sudah Lewat / Semua Project** berdasarkan `event_date` (hari ini = Akan Datang), via `?kategori=`; default Akan Datang, tanggal terdekat di atas. Pola sama dengan `project/index`. Tanpa perubahan DB.
 - `views/operational/index.php` (Operational Finance): sortir **bulanan** via `?periode=YYYY-MM` (default bulan ini; tombol Sebelumnya/Berikutnya, pemilih bulan, Bulan Ini, Semua Bulan) + total nominal periode. Tanpa perubahan DB.
+- Operational Finance: tombol dropdown Periode dihapus; mobile: prioritas kolom responsive (Nama Transaksi paling akhir disembunyikan); `operational/create.php`: kotak cari kategori (filter kode/nama) di atas pilihan Kategori.
+- Operational Finance create/edit: kategori **6100.02 (Biaya komisi)** memunculkan dropdown *Penerima Komisi* (user aktif level 1,2,3,4,9; `Users2_model::get_all_user_aktif`). Disimpan di kolom yang sudah ada `operational_acc.staff_id_session` lewat helper `staff_id_transaksi_operasional()` (6201.01 -> Staff, 6100.02 -> Penerima Komisi). Komisi per user ikut masuk **rekap gaji** (`Gaji_model::get_detail_gaji_operational` kini mengambil 6201.01 + 6100.02; baris komisi berlabel "Komisi: <nama transaksi>", satuan "Komisi") -> tampil di Gaji Saya & Rekap Gaji dan ikut total. Tanpa perubahan DB.
+- Finance Project lihat (tab Faktual): link edit transaksi crew sekarang ke `edit2` (tombol berwarna ungu, beda dari transaksi biasa yang biru) walau nama tidak mengandung kata "crew" -- crew dikenali dari `project_acc.detail` = `crews.id_session` (selain nama berisi "crew" untuk data lama).
+- Rekap gaji: **fee crew per user** (Finance Project > Tambah Crew) kini selalu masuk Gaji Saya & Rekap Gaji, walau user belum punya kategori salary satuan Project (`Gaji_model::get_detail_fee_crew_tambahan`, baris "Crew WO"). Kalau user punya kategori Project, tidak dihitung dobel.
 
 ---
 

@@ -355,11 +355,18 @@
                           </td>                          
                           <td class="px-4 py-5"><?= tgl_indo($p->tanggal_transaksi) ?></td>
 
-                          <?php if (stripos($p->nama_transaksi, 'crew') !== false): ?>
+                          <?php
+                          // Transaksi crew: detail berisi id_session crew (dari form Tambah Crew) -> edit lewat edit2.
+                          // Nama berisi "crew" tetap dianggap crew (data lama).
+                          $adalah_crew = stripos($p->nama_transaksi, 'crew') !== false
+                              || (!in_array(trim((string) $p->detail), ['', '-'], true)
+                                  && $this->Crud_m->view_where('crews', ['id_session' => $p->detail])->num_rows() > 0);
+                          ?>
+                          <?php if ($adalah_crew): ?>
                           <td class="px-4 py-5">
                             <a href="<?= site_url('finance-project/edit2/' . $p->project_id_session . '/' . $p->id_session) ?>" 
-                               class="inline-flex items-center gap-1 bg-blue-100 text-blue-700 px-2 py-1 rounded hover:bg-blue-200"
-                               title="Klik untuk edit">
+                               class="inline-flex items-center gap-1 bg-purple-100 text-purple-700 px-2 py-1 rounded hover:bg-purple-200"
+                               title="Fee crew - klik untuk edit">
                                
                                <i class="fa fa-pen text-sm"></i>
                                <?= $p->nama_transaksi ?>

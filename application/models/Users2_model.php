@@ -70,6 +70,15 @@ class Users2_model extends CI_Model {
         return $this->db->get('user')->result();
     }
 
+    // User aktif (status Publish) level Developer(1), Administrator(2), Staff Accounting(3), Staff Admin(4), Staff Sales(9) -- dipakai buat dropdown
+    // "Penerima Komisi" di finance-operational saat kategori = Biaya komisi (6100.02).
+    public function get_all_user_aktif() {
+        $this->db->where('user_stat', 'Publish');
+        $this->db->where_in('level', ['1', '2', '3', '4', '9']);
+        $this->db->order_by('nama', 'ASC');
+        return $this->db->get('user')->result();
+    }
+
     public function get_crew_by_id_session($crews_idsession) {
         $this->db->select("*, TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) AS age");
         $this->db->from("crews");
