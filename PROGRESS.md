@@ -699,6 +699,58 @@ ada 2 penyebab terpisah yang ketemu berurutan:
   helper baru `format_detail_pembayaran_custom()` (`customs_helper.php`,
   hasil HTML ter-escape; teks custom di-bold). Jangan menulis ulang
   "Pembayaran pertama" di teks custom (jadi dobel).
+- **Edit Invoice, metode Default** (2026-10-24): muncul input teks **Pembayaran Pertama …
+  terakhir** (jumlah 2/4/5 mengikuti sisa hari ke tanggal acara, sama dengan jadwal
+  otomatis di invoice). Isi awal = teks hitungan otomatis (dari `payment.total_bill`);
+  hanya baris yang **diubah** yang disimpan, di `payment.detail` sebagai
+  `{"default":["","teks baru","",""],"jumlah":4}` (`Crud_payment::detail_dari_post`);
+  baris tak diubah tetap otomatis di `view_invoice`. Override diabaikan kalau `jumlah`
+  tidak sama dengan jumlah baris jadwal saat ini (jadwal bergeser mendekati tanggal acara).
+  Logika jadwal dipindah ke helper `jadwal_pembayaran_default()` +
+  `override_pembayaran_default()` (`customs_helper.php`), dipakai `view_invoice` & `editinv`.
+  Catatan: isi awal memakai `total_bill`, sedangkan invoice memakai grand total dari item
+  proposal — biasanya sama; kalau beda, nominal di input hanya perkiraan (tidak tersimpan
+  kalau tidak diubah). Tidak ada migrasi database.
+- **Pembayaran yang sudah dibayar disembunyikan di form kwitansi** (2026-10-24): di `createkwt` & `editkwt`, pilihan "Pembayaran ke" yang sudah punya kwitansi **Paid** tidak ditampilkan (edit: kwitansi itu sendiri tetap bisa memilih nilainya sendiri). Helper `urutan_pembayaran_dibayar()`. Project dengan >1 invoice: disaring per invoice setelah "Dari Invoice" dipilih (JS, juga menyembunyikan pembayaran yang sudah dibayar di dropdown "Pilih Pembayaran"); project <=1 invoice: langsung saat halaman dibuka.
+- **Posisi isian Custom disamakan dengan Default** (2026-10-24): di Tambah & Edit Invoice, baris metode Custom kini berurutan **keterangan (kiri, lebar) → nominal Rp (kanan) → Hapus**, sama dengan baris Default (sebelumnya nominal di kiri). Hanya urutan tampilan; nama field & data tersimpan tidak berubah. Setelah klik "+ Tambah Pembayaran" kursor masuk ke keterangan.
+- **"+ Tambah Pembayaran" di metode Default** (2026-10-24): di Tambah & Edit Invoice, di bawah
+  baris Default ada tombol untuk menambah pembayaran **tambahan** (keterangan + nominal Rp, bisa
+  dihapus). Disimpan di `payment.detail` kunci `"tambahan": [{"teks","nominal"}]` (bersama
+  `default`/`jumlah`); nomornya melanjutkan jadwal otomatis (jadwal 4 baris → tambahan pertama =
+  Pembayaran kelima). Tampil di `view_invoice` setelah baris Default (+ tanggal bayar dari kwitansi),
+  dan ikut di dropdown "Pilih Pembayaran" Tambah Kwitansi. Helper `tambahan_pembayaran_default()`,
+  `format_tambahan_pembayaran_default()`, `kata_urutan_pembayaran()`. Tanpa migrasi database.
+- **Tambah Kwitansi: pilih pembayaran dari invoice** (2026-10-24): di `payment/createkwt`, setelah
+  "Dari Invoice" dipilih muncul dropdown **Pilih Pembayaran** berisi pembayaran pertama … terakhir
+  invoice itu (Default: jadwal otomatis + teks/nominal yang diubah manual; Custom: detail nominal+teks;
+  invoice lama berupa teks → nominal diambil dari "Rp …" pertama), ditandai "(sudah dibayar)" kalau
+  sudah ada kwitansi Paid-nya. Memilih mengisi otomatis **Total Dibayar**, **Pembayaran ke**
+  (Kesatu/Kedua/…) (**Detail sengaja tidak diisi otomatis**, diisi manual atas permintaan). Data via AJAX
+  `Crud_payment/pilihan_pembayaran` (level 1/2/4); helper `grand_total_invoice()` (rumus sama dengan
+  `view_invoice`; invoice tanpa item mis. Penambahan memakai `total_bill`). Tanpa migrasi database.
+- **Nominal Default jadi input angka** (2026-10-24): tiap baris Default (Tambah & Edit Invoice)
+  kini dua isian — teks (tanpa "Rp …") + **nominal** (prefix Rp, titik ribuan, seperti Custom).
+  `jadwal_pembayaran_default()` sekarang mengembalikan `[['teks' => HTML, 'nominal' => int], …]`;
+  override di `payment.detail` jadi `{"default":[{"teks":"","nominal":""},…],"jumlah":N}` (hanya
+  bagian yang diubah terisi; bentuk lama berupa string tetap terbaca). Tampil di invoice lewat
+  `format_baris_pembayaran_default()`. Field form: `detail_default[]`, `detail_default_nominal[]`
+  + `*_asli[]`.
+- **Tambah Invoice (`payment/createinv`), metode Default** (2026-10-24): kini juga menampilkan
+  input teks Pembayaran Pertama … terakhir seperti di Edit. Teksnya diambil lewat AJAX
+  `Crud_payment/jadwal_default` (total + tanggal acara project; level 1/2/4) dan ikut
+  diperbarui saat Total berubah (input yang belum diubah user ikut hitungan baru). `store()`
+  memakai `detail_dari_post()` yang sama dengan `update()`. Catatan: invoice bertipe
+  **Penambahan** tidak punya item proposal, sehingga `view_invoice` menghitung grand total 0
+  dan nominal baris otomatis tampil "Rp 0" (perilaku lama) — isi/ubah teks barisnya manual.
+- **Tanggal bayar otomatis di invoice** (2026-10-24): `view_invoice` menambahkan
+  "— Dibayar pada <tanggal kwitansi>" (hijau) di belakang baris pembayaran yang sudah punya
+  kwitansi **Paid**. Pencocokan: urutan di kwitansi ("Pembayaran **Kesatu**/Kedua/… <Nama>") ↔
+  urutan baris pembayaran di invoice (Default maupun Custom); kwitansi dikaitkan ke invoice lewat
+  `payment.dariinvoice`, dan kwitansi lama yang `dariinvoice`-nya kosong ikut dihitung kalau
+  project hanya punya **satu** invoice. Murni dihitung saat tampil (tanpa migrasi / kolom baru):
+  helper `tanggal_bayar_per_pembayaran()` & `format_tanggal_dibayar()`. Kwitansi berstatus
+  Pending tidak memunculkan tanggal. Project dengan >1 invoice: kwitansi harus memilih
+  "Dari Invoice" agar tanggalnya muncul di invoice yang benar.
 - Kwitansi (`createkwt`/`editkwt`/`view_kwitansi`) memakai `detail`
   dengan format lain dan **tidak diubah**.
 

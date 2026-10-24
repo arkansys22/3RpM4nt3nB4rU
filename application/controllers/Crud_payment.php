@@ -163,7 +163,7 @@ class Crud_payment extends CI_Controller {
             'kategori2'      => $kategori2,
             'potensial_clients_id_session'      => $this->input->post('typeinvoice'),
             'total_paid'      => 0, // Set total_paid to 0
-            'detail'          => json_encode($this->detail_custom_dari_post()),
+            'detail'          => json_encode($this->detail_dari_post()),
             'date'            => $tanggal,
             'metodep'        => $this->input->post('metodep'),
             'due_date'        => $this->input->post('due_date'),
@@ -475,7 +475,7 @@ class Crud_payment extends CI_Controller {
         $data = [
             'potensial_clients_id_session'      => $this->input->post('typeinvoice'),
             'total_bill'    => $total_bill,
-            'detail'        => json_encode($this->detail_custom_dari_post()),
+            'detail'        => json_encode($this->detail_dari_post()),
             'date'          => $tanggal,
             'nama_transaksi'          => $nama_transaksi,
             'kategori'      => $kategori,
@@ -823,4 +823,126 @@ class Crud_payment extends CI_Controller {
         ]);
     }
 
+
+    // Isi kolom payment.detail saat edit invoice: metode Default -> teks pembayaran yang diubah
+    // manual (hanya baris yang berbeda dari teks otomatis), metode lain -> detail Custom.
+    private function detail_dari_post() {
+        if ($this->input->post('metodep') !== 'Default') {
+            return $this->detail_custom_dari_post();
+        }
+        $teks = (array) $this->input->post('detail_default');
+        $asli = (array) $this->input->post('detail_default_asli');
+        $nominal = (array) $this->input->post('detail_default_nominal');
+        $nominalAsli = (array) $this->input->post('detail_default_nominal_asli');
+        $override = [];
+        $ada = false;
+        foreach ($asli as $i => $a) {
+            $t = trim((string) ($teks[$i] ?? ''));
+            $n = preg_replace('/\D/', '', (string) ($nominal[$i] ?? ''));
+            $na = preg_replace('/\D/', '', (string) ($nominalAsli[$i] ?? ''));
+            $teksBerubah = $t !== '' && $t !== trim((string) $a);
+            $nominalBerubah = $n !== '' && $n !== $na;
+            // hanya simpan bagian yang diubah; "" = tetap otomatis
+            $override[] = ['teks' => $teksBerubah ? $t : '', 'nominal' => $nominalBerubah ? $n : ''];
+            if ($teksBerubah || $nominalBerubah) {
+                $ada = true;
+            }
+        }
+        // pembayaran tambahan (tombol + Tambah Pembayaran)
+        $tTeks = (array) $this->input->post('tambahan_teks');
+        $tNominal = (array) $this->input->post('tambahan_nominal');
+        $tambahan = [];
+        foreach ($tTeks as $k => $tt) {
+            $tt = trim((string) $tt);
+            $tn = preg_replace('/\D/', '', (string) ($tNominal[$k] ?? ''));
+            if ($tt !== '' || $tn !== '') {
+                $tambahan[] = ['teks' => $tt, 'nominal' => $tn];
+            }
+        }
+        if (!$ada && !$tambahan) {
+            return [];
+        }
+        $hasil = ['default' => $override, 'jumlah' => count($asli)];
+        if ($tambahan) {
+            $hasil['tambahan'] = $tambahan;
+        }
+        return $hasil;
+    }
+
+    // AJAX form Tambah Invoice: baris jadwal pembayaran metode Default (teks polos) untuk project
+    // + total tertentu. Jumlah baris mengikuti sisa hari ke tanggal acara project.
+    public function jadwal_default() {
+        if (!in_array($this->session->level, ['1', '2', '4'])) {
+            show_error('Akses ditolak.', 403);
+            return;
+        }
+        $project = $this->project_model->get_project_by_session($this->input->post('id_session'));
+        if (!$project) {
+            echo json_encode(['baris' => []]);
+            return;
+        }
+        $total = (int) preg_replace('/\D/', '', (string) $this->input->post('total'));
+        $baris = array_map(function ($b) {
+            return ['teks' => trim(html_entity_decode(strip_tags($b['teks']))), 'nominal' => (int) $b['nominal']];
+        }, jadwal_pembayaran_default($total, $project->event_date));
+        echo json_encode(['baris' => $baris]);
+    }
+
+    // AJAX form Tambah Kwitansi: daftar pembayaran (pertama, kedua, ...) dari sebuah invoice
+    // beserta nominalnya -- Default (jadwal otomatis + teks/nominal yang diubah manual) atau Custom.
+    public function pilihan_pembayaran() {
+        if (!in_array($this->session->level, ['1', '2', '4'])) {
+            show_error('Akses ditolak.', 403);
+            return;
+        }
+        $inv = $this->db->get_where('payment', ['payment_id_session' => $this->input->post('payment_id_session')])->row();
+        if (!$inv || !in_array($inv->metodep, ['Default', 'Custom'], true)) {
+            echo json_encode(['pilihan' => []]);
+            return;
+        }
+        $kata = ['pertama', 'kedua', 'ketiga', 'keempat', 'kelima', 'keenam', 'ketujuh', 'kedelapan'];
+        $nominalDariTeks = function ($t) {
+            return preg_match('/Rp\s*([\d.]+)/', (string) $t, $mm) ? (int) str_replace('.', '', $mm[1]) : 0;
+        };
+        $dibayar = tanggal_bayar_per_pembayaran($inv->payment_id_session, $inv->id_session);
+        $pilihan = [];
+
+        if ($inv->metodep === 'Default') {
+            $project = $this->project_model->get_project_by_session($inv->id_session);
+            $grand = grand_total_invoice($inv->potensial_clients_id_session, (int) $inv->total_bill);
+            $baris = $project ? jadwal_pembayaran_default($grand, $project->event_date) : [];
+            $ov = override_pembayaran_default($inv->detail, count($baris));
+            foreach ($baris as $i => $b) {
+                $o = $ov[$i] ?? null;
+                if (is_string($o) && trim($o) !== '') { // bentuk lama: baris penuh
+                    $label = trim($o);
+                    $nominal = $nominalDariTeks($o) ?: (int) $b['nominal'];
+                } else {
+                    $teks = is_array($o) && trim((string) ($o['teks'] ?? '')) !== '' ? trim($o['teks']) : trim(html_entity_decode(strip_tags($b['teks'])));
+                    $nom = is_array($o) ? preg_replace('/\D/', '', (string) ($o['nominal'] ?? '')) : '';
+                    $label = $teks;
+                    $nominal = $nom !== '' ? (int) $nom : (int) $b['nominal'];
+                }
+                $pilihan[] = ['urutan' => $i + 1, 'label' => $label, 'nominal' => $nominal, 'dibayar' => !empty($dibayar[$i + 1])];
+            }
+            foreach (tambahan_pembayaran_default($inv->detail) as $k => $t) {
+                $nomor = count($baris) + $k + 1;
+                $pilihan[] = ['urutan' => $nomor, 'label' => 'Pembayaran ' . kata_urutan_pembayaran($nomor) . ($t['teks'] !== '' ? ' ' . $t['teks'] : ''), 'nominal' => $t['nominal'], 'dibayar' => !empty($dibayar[$nomor])];
+            }
+        } else {
+            $detail = json_decode((string) $inv->detail, true);
+            foreach ((array) $detail as $i => $item) {
+                if (is_array($item)) {
+                    $nominal = (int) preg_replace('/\D/', '', (string) ($item['nominal'] ?? ''));
+                    $teks = trim((string) ($item['teks'] ?? ''));
+                    $label = 'Pembayaran ' . ($kata[$i] ?? ('ke-' . ($i + 1))) . ($teks !== '' ? ' ' . $teks : '');
+                } else {
+                    $label = trim((string) $item);
+                    $nominal = $nominalDariTeks($item);
+                }
+                $pilihan[] = ['urutan' => $i + 1, 'label' => $label, 'nominal' => $nominal, 'dibayar' => !empty($dibayar[$i + 1])];
+            }
+        }
+        echo json_encode(['pilihan' => $pilihan]);
+    }
 }

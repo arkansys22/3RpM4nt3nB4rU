@@ -575,4 +575,210 @@ if (!function_exists('url_lokasi_valid')) {
         return preg_match('#^https?://#i', $url) ? $url : '';
     }
 }
+
+// Jadwal pembayaran metode "Default" pada invoice: daftar baris pembayaran pertama sampai terakhir,
+// tiap baris ['teks' => HTML tanpa nominal, 'nominal' => int]. Jumlah baris tergantung sisa hari ke
+// tanggal acara (<30 hari: 2 baris, <60 hari: 4 baris, selain itu 5 baris). Dipakai view_invoice
+// dan form tambah/edit invoice.
+if (!function_exists('jadwal_pembayaran_default')) {
+    function jadwal_pembayaran_default($total, $event_date) {
+        $event = new DateTime($event_date);
+        $hari = (new DateTime())->diff($event)->days;
+
+        $p1 = 1000000;
+        $sisa = max(0, $total - $p1);
+        $b = (clone $event)->modify('-60 days');
+        $c = (clone $event)->modify('-30 days');
+        $d = (clone $event)->modify('-14 days');
+
+        $baris = [['teks' => 'Pembayaran pertama <b>kunci harga</b>', 'nominal' => $p1]];
+        if ($hari < 30) {
+            $baris[] = ['teks' => 'Pembayaran kedua <b>pelunasan</b>', 'nominal' => (int) round($sisa)];
+        } elseif ($hari < 60) {
+            $baris[] = ['teks' => 'Pembayaran kedua <b>kunci tanggal</b> sebesar 15% dari total biaya pada H+14 setelah pembayaran pertama', 'nominal' => (int) round($sisa * 0.15)];
+            $baris[] = ['teks' => 'Pembayaran ketiga sebesar 45% dari total biaya pada <b>H-30 acara (' . tgl_indo($c->format('Y-m-d')) . ')</b>', 'nominal' => (int) round($sisa * 0.45)];
+            $baris[] = ['teks' => 'Pembayaran keempat sebesar 40% dari total biaya pada <b>H-14 acara (' . tgl_indo($d->format('Y-m-d')) . ')</b>', 'nominal' => (int) round($sisa * 0.40)];
+        } else {
+            $baris[] = ['teks' => 'Pembayaran kedua <b>kunci tanggal</b> sebesar 15% dari total biaya pada H+14 setelah pembayaran pertama', 'nominal' => (int) round($sisa * 0.15)];
+            $baris[] = ['teks' => 'Pembayaran ketiga sebesar 35% dari total biaya pada <b>H-60 acara (' . tgl_indo($b->format('Y-m-d')) . ')</b>', 'nominal' => (int) round($sisa * 0.35)];
+            $baris[] = ['teks' => 'Pembayaran keempat sebesar 35% dari total biaya pada <b>H-30 acara (' . tgl_indo($c->format('Y-m-d')) . ')</b>', 'nominal' => (int) round($sisa * 0.35)];
+            $baris[] = ['teks' => 'Pembayaran kelima sebesar 15% dari total biaya pada <b>H-14 acara (' . tgl_indo($d->format('Y-m-d')) . ')</b>', 'nominal' => (int) round($sisa * 0.15)];
+        }
+        return $baris;
+    }
+}
+
+// Teks/nominal yang diubah manual untuk metode Default disimpan di payment.detail sebagai
+// {"default": [{"teks":"","nominal":""}, {"teks":"teks baru","nominal":"5000000"}, ...], "jumlah": N};
+// "" = pakai hitungan otomatis. (Bentuk lama: item berupa string = pengganti satu baris penuh.)
+// Hanya dipakai kalau "jumlah" sama dengan jumlah baris jadwal saat ini (jadwal bisa berubah
+// seiring mendekatnya tanggal acara).
+if (!function_exists('override_pembayaran_default')) {
+    function override_pembayaran_default($detail_json, $jumlah_baris) {
+        $d = json_decode((string) $detail_json, true);
+        if (is_array($d) && isset($d['default'], $d['jumlah']) && is_array($d['default']) && (int) $d['jumlah'] === (int) $jumlah_baris) {
+            return array_values($d['default']);
+        }
+        return [];
+    }
+}
+
+// HTML satu baris jadwal Default untuk invoice: teks + " Rp nominal", dengan override manual.
+if (!function_exists('format_baris_pembayaran_default')) {
+    function format_baris_pembayaran_default($baris, $override) {
+        if (is_string($override)) { // bentuk lama: pengganti satu baris penuh
+            return trim($override) !== '' ? htmlspecialchars(trim($override)) : null;
+        }
+        $teks = is_array($override) && trim((string) ($override['teks'] ?? '')) !== ''
+            ? htmlspecialchars(trim($override['teks'])) : $baris['teks'];
+        $nominal = is_array($override) && preg_replace('/\D/', '', (string) ($override['nominal'] ?? '')) !== ''
+            ? (int) preg_replace('/\D/', '', $override['nominal']) : (int) $baris['nominal'];
+        return $teks . ' Rp ' . number_format($nominal, 0, ',', '.');
+    }
+}
+// Tanggal pembayaran per urutan pembayaran pada sebuah invoice, diambil dari kwitansi yang
+// sudah dibayar: baris payment berstatus 'Paid' dengan metodep "Pembayaran <Kesatu|Kedua|...> <Nama>"
+// yang dariinvoice-nya = invoice ini. Kwitansi lama yang dariinvoice-nya kosong ikut dihitung
+// kalau project itu hanya punya SATU invoice (tidak ambigu). Hasil: [urutan (1,2,..) => [tanggal, ...]].
+if (!function_exists('tanggal_bayar_per_pembayaran')) {
+    function tanggal_bayar_per_pembayaran($payment_id_session, $id_session) {
+        $urutan = ['kesatu' => 1, 'kedua' => 2, 'ketiga' => 3, 'keempat' => 4, 'kelima' => 5,
+                   'keenam' => 6, 'ketujuh' => 7, 'kedelapan' => 8];
+        $CI =& get_instance();
+
+        $jumlah_invoice = $CI->db->where('id_session', $id_session)
+            ->where_in('metodep', ['Default', 'Custom'])
+            ->count_all_results('payment');
+
+        $CI->db->select('metodep, date')->where('status', 'Paid')->where('id_session', $id_session);
+        if ($jumlah_invoice === 1) {
+            $CI->db->group_start()
+                ->where('dariinvoice', $payment_id_session)
+                ->or_where('dariinvoice', '')
+                ->or_where('dariinvoice IS NULL', null, false)
+                ->group_end();
+        } else {
+            $CI->db->where('dariinvoice', $payment_id_session);
+        }
+        $rows = $CI->db->order_by('date', 'asc')->get('payment')->result();
+
+        $hasil = [];
+        foreach ($rows as $r) {
+            if (preg_match('/^Pembayaran\s+(\S+)/i', (string) $r->metodep, $m) && isset($urutan[strtolower($m[1])])
+                && !empty($r->date) && strpos($r->date, '0000-00-00') !== 0) {
+                $hasil[$urutan[strtolower($m[1])]][] = $r->date;
+            }
+        }
+        return $hasil;
+    }
+}
+// " — Dibayar 17 April 2026" untuk di belakang baris pembayaran; kosong kalau belum dibayar.
+if (!function_exists('format_tanggal_dibayar')) {
+    function format_tanggal_dibayar($tanggal_list) {
+        if (empty($tanggal_list)) {
+            return '';
+        }
+        $teks = [];
+        foreach (array_unique($tanggal_list) as $t) {
+            $teks[] = trim(tgl_indo($t));
+        }
+        return ' <span style="color:#16a34a;font-weight:600;">&mdash; Dibayar pada ' . htmlspecialchars(implode(', ', $teks)) . '</span>';
+    }
+}
+
+// Grand total sebuah invoice dari item proposalnya (sama dengan hitungan di view_invoice):
+// subtotal (harga promo jika ada x qty) dikurangi promo (custom = nilai promo, default = total
+// diskon item, tidak = 0). Kalau invoice tidak punya item (mis. "Penambahan"), dipakai $fallback.
+if (!function_exists('grand_total_invoice')) {
+    function grand_total_invoice($potensial_id_session, $fallback = 0) {
+        $CI =& get_instance();
+        $items = $CI->db->get_where('penawaran_klien', ['penawaran_klien_potensial_idsession' => $potensial_id_session])->result();
+        $sub = 0;
+        $diskonItem = 0;
+        foreach ($items as $p) {
+            $harga = (float) str_replace('.', '', $p->penawaran_klien_harga);
+            $hargaPromo = (float) str_replace('.', '', $p->penawaran_klien_hargapromo);
+            $hargaFinal = ($hargaPromo > 0) ? $hargaPromo : $harga;
+            $sub += $hargaFinal * (float) $p->penawaran_klien_qty;
+            $diskonItem += (float) str_replace('.', '', $p->penawaran_klien_diskon);
+        }
+        $pc = $CI->db->get_where('potensial_clients', ['id_session' => $potensial_id_session])->row();
+        $promo = 0;
+        if ($pc && ($pc->promo ?? 'tidak') == 'custom') {
+            $promo = (float) str_replace('.', '', $pc->promo_value ?? 0);
+        } elseif ($pc && ($pc->promo ?? 'tidak') == 'default') {
+            $promo = $diskonItem;
+        }
+        $grand = $sub - $promo;
+        return $grand > 0 ? (int) round($grand) : (int) $fallback;
+    }
+}
+
+// Pembayaran TAMBAHAN pada metode Default (tombol "+ Tambah Pembayaran"): disimpan di payment.detail
+// pada kunci "tambahan" = [{"teks":"...","nominal":"5000000"}, ...]. Nomornya melanjutkan jadwal otomatis
+// (jadwal 4 baris -> tambahan pertama = pembayaran kelima).
+if (!function_exists('tambahan_pembayaran_default')) {
+    function tambahan_pembayaran_default($detail_json) {
+        $d = json_decode((string) $detail_json, true);
+        $hasil = [];
+        if (is_array($d) && isset($d['tambahan']) && is_array($d['tambahan'])) {
+            foreach ($d['tambahan'] as $t) {
+                if (is_array($t)) {
+                    $hasil[] = ['teks' => trim((string) ($t['teks'] ?? '')), 'nominal' => (int) preg_replace('/\D/', '', (string) ($t['nominal'] ?? ''))];
+                }
+            }
+        }
+        return $hasil;
+    }
+}
+
+if (!function_exists('kata_urutan_pembayaran')) {
+    function kata_urutan_pembayaran($nomor) { // 1 => pertama
+        $kata = ['pertama', 'kedua', 'ketiga', 'keempat', 'kelima', 'keenam', 'ketujuh', 'kedelapan', 'kesembilan', 'kesepuluh'];
+        return $kata[$nomor - 1] ?? ('ke-' . $nomor);
+    }
+}
+
+// HTML satu baris pembayaran tambahan: "Pembayaran keenam <teks> Rp nominal".
+if (!function_exists('format_tambahan_pembayaran_default')) {
+    function format_tambahan_pembayaran_default($item, $nomor) {
+        $teks = trim((string) $item['teks']);
+        return 'Pembayaran ' . kata_urutan_pembayaran($nomor) . ($teks !== '' ? ' ' . htmlspecialchars($teks) : '')
+            . ' Rp ' . number_format((int) $item['nominal'], 0, ',', '.');
+    }
+}
+
+// Urutan pembayaran (1 = Kesatu, 2 = Kedua, ...) yang SUDAH dibayar lewat kwitansi berstatus Paid di
+// sebuah project; dipakai untuk menyembunyikan pilihan "Pembayaran ke" di form kwitansi.
+// $dariinvoice: batasi ke kwitansi milik invoice itu. Tanpa $dariinvoice, project yang punya lebih dari
+// satu invoice dianggap ambigu -> kosong (disaring per invoice setelah invoice dipilih).
+// $kecuali_id: id baris payment yang diabaikan (kwitansi yang sedang diedit).
+if (!function_exists('urutan_pembayaran_dibayar')) {
+    function urutan_pembayaran_dibayar($id_session, $dariinvoice = '', $kecuali_id = null) {
+        $urutan = ['kesatu' => 1, 'kedua' => 2, 'ketiga' => 3, 'keempat' => 4, 'kelima' => 5,
+                   'keenam' => 6, 'ketujuh' => 7, 'kedelapan' => 8];
+        $CI =& get_instance();
+        $jumlah_invoice = $CI->db->where('id_session', $id_session)->where_in('metodep', ['Default', 'Custom'])->count_all_results('payment');
+
+        $CI->db->select('metodep, dariinvoice')->where('id_session', $id_session)->where('status', 'Paid')->like('metodep', 'Pembayaran ', 'after');
+        if ($kecuali_id) {
+            $CI->db->where('id <>', (int) $kecuali_id);
+        }
+        $rows = $CI->db->get('payment')->result();
+
+        if ($dariinvoice === '' && $jumlah_invoice > 1) {
+            return [];
+        }
+        $hasil = [];
+        foreach ($rows as $r) {
+            if ($dariinvoice !== '' && $r->dariinvoice !== $dariinvoice && !($jumlah_invoice <= 1 && (string) $r->dariinvoice === '')) {
+                continue;
+            }
+            if (preg_match('/^Pembayaran\s+(\S+)/i', (string) $r->metodep, $m) && isset($urutan[strtolower($m[1])])) {
+                $hasil[$urutan[strtolower($m[1])]] = true;
+            }
+        }
+        return array_keys($hasil);
+    }
+}
 }

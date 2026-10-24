@@ -150,7 +150,9 @@
                         if (!empty($payment->detail)) {
                             $decoded = json_decode($payment->detail, true);
 
-                            if (is_array($decoded)) {
+                            if (is_array($decoded) && isset($decoded['default'])) {
+                                $details = []; // teks metode Default (lihat #default-wrapper), bukan detail Custom
+                            } elseif (is_array($decoded)) {
                                 $details = $decoded;
                             } else {
                                 $details = [$payment->detail];
@@ -171,6 +173,9 @@
                         <div class="detail-item">
                             <label class="detail-label block mb-1 text-sm font-semibold">Pembayaran Pertama</label>
                             <div class="flex flex-col sm:flex-row gap-2 items-start">
+                                <input type="text" name="detail[0][teks]" value="<?= htmlspecialchars($txt) ?>"
+                                    class="detail-input detail-teks w-full sm:flex-1 px-4 py-2 border rounded-lg"
+                                    placeholder="Teks custom, contoh: DP maksimal H+7">
                                 <div class="flex w-full sm:w-56 flex-shrink-0 items-center rounded-lg border">
                                     <span class="pl-3 text-sm">Rp</span>
                                     <input type="text" inputmode="numeric" autocomplete="off"
@@ -178,9 +183,6 @@
                                         class="detail-input detail-nominal w-full bg-transparent px-2 py-2 outline-none"
                                         placeholder="0">
                                 </div>
-                                <input type="text" name="detail[0][teks]" value="<?= htmlspecialchars($txt) ?>"
-                                    class="detail-input detail-teks w-full flex-1 rounded-lg border px-4 py-2"
-                                    placeholder="Teks custom, contoh: DP maksimal H+7">
                                 <button type="button"
                                     class="remove-detail bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg hidden">
                                     Hapus
@@ -199,6 +201,48 @@
                         + Tambah Pembayaran
                     </button>
 
+                </div>
+
+<?php
+                // Metode Default: input teks pembayaran pertama sampai terakhir. Isi awal = teks
+                // hitungan otomatis (atau teks yang pernah diubah); baris yang tidak diubah tetap
+                // otomatis di invoice. Jumlah baris mengikuti sisa hari ke tanggal acara.
+                $barisDefault = jadwal_pembayaran_default((int) $payment->total_bill, $project->event_date);
+                $overrideDefault = override_pembayaran_default($payment->detail, count($barisDefault));
+                $urutanDefault = ['Pertama', 'Kedua', 'Ketiga', 'Keempat', 'Kelima', 'Keenam'];
+                $tambahanAwal = tambahan_pembayaran_default($payment->detail);
+                ?>
+                <div id="default-wrapper" class="hidden">
+                    <label class="block mb-2 font-medium">Detail Pembayaran (Default)</label>
+                    <div class="space-y-3 mb-4">
+                        <?php foreach ($barisDefault as $i => $barisItem):
+                            $teksAsli = trim(html_entity_decode(strip_tags($barisItem['teks'])));
+                            $nominalAsli = (int) $barisItem['nominal'];
+                            $ov = $overrideDefault[$i] ?? null;
+                            if (is_string($ov)) { $ov = null; } // bentuk lama (baris penuh) tidak dipakai lagi di form
+                            $teksManual = is_array($ov) ? trim((string) ($ov['teks'] ?? '')) : '';
+                            $nominalManual = is_array($ov) ? preg_replace('/\D/', '', (string) ($ov['nominal'] ?? '')) : '';
+                            $nominalTampil = $nominalManual !== '' ? (int) $nominalManual : $nominalAsli;
+                        ?>
+                        <div>
+                            <label class="block mb-1 text-sm font-semibold">Pembayaran <?= $urutanDefault[$i] ?? ('ke-' . ($i + 1)) ?><?= $i === count($barisDefault) - 1 ? ' (terakhir)' : '' ?></label>
+                            <div class="flex flex-col sm:flex-row gap-2 items-start">
+                                <input type="text" name="detail_default[]" value="<?= htmlspecialchars($teksManual !== '' ? $teksManual : $teksAsli) ?>" class="w-full sm:flex-1 px-4 py-2 border rounded-lg">
+                                <div class="flex w-full sm:w-56 flex-shrink-0 items-center rounded-lg border">
+                                    <span class="pl-3 text-sm">Rp</span>
+                                    <input type="text" inputmode="numeric" autocomplete="off" name="detail_default_nominal[]" value="<?= number_format($nominalTampil, 0, ',', '.') ?>"
+                                           oninput="this.value = this.value.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.')"
+                                           class="w-full bg-transparent px-2 py-2 outline-none" placeholder="0">
+                                </div>
+                            </div>
+                            <input type="hidden" name="detail_default_asli[]" value="<?= htmlspecialchars($teksAsli) ?>">
+                            <input type="hidden" name="detail_default_nominal_asli[]" value="<?= $nominalAsli ?>">
+                        </div>
+                        <?php endforeach; ?>
+                        <div id="default-tambahan" class="space-y-3 mb-3" <?= isset($tambahanAwal) ? 'data-awal="' . htmlspecialchars(json_encode($tambahanAwal), ENT_QUOTES) . '"' : '' ?>></div>
+                        <button type="button" id="tambah-default-btn" class="mb-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">+ Tambah Pembayaran</button>
+<p class="text-xs text-gray-500">Teks bisa diubah. Baris yang tidak diubah tetap mengikuti hitungan otomatis di invoice.</p>
+                    </div>
                 </div>
 
                 <div class="flex flex-col sm:flex-row justify-end">
@@ -223,6 +267,7 @@
         const typeinvoice = document.getElementById('typeinvoice');
         const metodeSelect = document.getElementById('metodep');
         const detailWrapper = document.getElementById('detail-wrapper');
+        const defaultWrapper = document.getElementById('default-wrapper');
         const detailSection = document.getElementById('detail-section');
         const addButton = document.getElementById('add-detail-btn');
 
@@ -309,6 +354,7 @@
                 'hidden',
                 !isCustom
             );
+            defaultWrapper.classList.toggle('hidden', metodeSelect.value !== 'Default');
 
             document
                 .querySelectorAll('.detail-input')
@@ -362,15 +408,15 @@
             wrapper.innerHTML = `
                 <label class="detail-label block mb-1 text-sm font-semibold"></label>
                 <div class="flex flex-col sm:flex-row gap-2 items-start">
+                    <input type="text"
+                        class="detail-input detail-teks w-full sm:flex-1 px-4 py-2 border rounded-lg"
+                        placeholder="Teks custom, contoh: DP maksimal H+7">
                     <div class="flex w-full sm:w-56 flex-shrink-0 items-center rounded-lg border">
                         <span class="pl-3 text-sm">Rp</span>
                         <input type="text" inputmode="numeric" autocomplete="off"
                             class="detail-input detail-nominal w-full bg-transparent px-2 py-2 outline-none"
                             placeholder="0" required>
                     </div>
-                    <input type="text"
-                        class="detail-input detail-teks w-full flex-1 rounded-lg border px-4 py-2"
-                        placeholder="Teks custom, contoh: DP maksimal H+7">
                     <button type="button"
                         class="remove-detail bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg">
                         Hapus
@@ -379,7 +425,7 @@
             `;
             detailSection.appendChild(wrapper);
             refreshDetail();
-            wrapper.querySelector('.detail-nominal').focus();
+            wrapper.querySelector('.detail-teks').focus();
         });
 
         detailSection.addEventListener('input', function (e) {
@@ -406,5 +452,54 @@
         toggleDetailSection();
     });
     </script>
+<script>
+// "+ Tambah Pembayaran" pada metode Default: baris tambahan (teks + nominal) setelah jadwal otomatis.
+(function () {
+    const box = document.getElementById('default-tambahan');
+    const btn = document.getElementById('tambah-default-btn');
+    if (!box || !btn) { return; }
+    const kata = ['Pertama', 'Kedua', 'Ketiga', 'Keempat', 'Kelima', 'Keenam', 'Ketujuh', 'Kedelapan', 'Kesembilan', 'Kesepuluh'];
+    const ribuan = function (n) { return String(n).replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.'); };
+
+    function jumlahOtomatis() {
+        return document.querySelectorAll('input[name="detail_default[]"]').length;
+    }
+    function nomori() {
+        const mulai = jumlahOtomatis();
+        Array.prototype.forEach.call(box.children, function (row, i) {
+            const n = mulai + i;
+            row.querySelector('label').textContent = 'Pembayaran ' + (kata[n] || ('ke-' + (n + 1))) + ' (tambahan)';
+        });
+    }
+    window.nomoriTambahanDefault = nomori;
+
+    function tambah(teks, nominal) {
+        const row = document.createElement('div');
+        row.innerHTML =
+            '<label class="block mb-1 text-sm font-semibold"></label>' +
+            '<div class="flex flex-col sm:flex-row gap-2 items-start">' +
+              '<input type="text" name="tambahan_teks[]" placeholder="Keterangan pembayaran, contoh: Pembayaran tambahan dekorasi" class="w-full sm:flex-1 px-4 py-2 border rounded-lg">' +
+              '<div class="flex w-full sm:w-56 flex-shrink-0 items-center rounded-lg border"><span class="pl-3 text-sm">Rp</span>' +
+                '<input type="text" inputmode="numeric" autocomplete="off" name="tambahan_nominal[]" placeholder="0" class="w-full bg-transparent px-2 py-2 outline-none"></div>' +
+              '<button type="button" class="hapus-tambahan bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg">Hapus</button>' +
+            '</div>';
+        const t = row.querySelector('input[name="tambahan_teks[]"]');
+        const n = row.querySelector('input[name="tambahan_nominal[]"]');
+        t.value = teks || '';
+        n.value = nominal ? ribuan(nominal) : '';
+        n.addEventListener('input', function () { n.value = ribuan(n.value); });
+        row.querySelector('.hapus-tambahan').addEventListener('click', function () { row.remove(); nomori(); });
+        box.appendChild(row);
+        nomori();
+        return t;
+    }
+
+    btn.addEventListener('click', function () { tambah('', '').focus(); });
+
+    try {
+        JSON.parse(box.dataset.awal || '[]').forEach(function (t) { tambah(t.teks, t.nominal); });
+    } catch (e) { /* data awal rusak: abaikan */ }
+})();
+</script>
 </body>
 </html>

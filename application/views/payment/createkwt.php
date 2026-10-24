@@ -62,7 +62,15 @@
 
                 </select>
 
-                <label class="block mb-2">Total Dibayar</label>
+                <div id="pilihan-pembayaran-wrapper" class="hidden">
+                    <label class="block mb-2 font-medium">Pilih Pembayaran (dari invoice)</label>
+                    <select id="pilihan-pembayaran" class="w-full px-4 py-2 border rounded mb-1">
+                        <option value="">- Pilih pembayaran -</option>
+                    </select>
+                    <p class="text-xs text-gray-500 mb-4">Memilih pembayaran mengisi otomatis Total Dibayar dan "Pembayaran ke". Detail diisi manual.</p>
+                </div>
+
+<label class="block mb-2">Total Dibayar</label>
                 <input type="text" id="formattedNumber" oninput="formatNumber(this)" name="total_paid" step="0.01" class="w-full px-4 py-2 border rounded mb-4" required>
 
                 <label class="block mb-2">Tanggal</label>
@@ -97,7 +105,11 @@
                         'Kedelapan'
                     ];
 
-                    foreach ($pembayaranList as $item):
+                    // Pembayaran yang sudah dibayar (kwitansi Paid) tidak ditampilkan lagi
+                    $sudahDibayar = urutan_pembayaran_dibayar($project->id_session);
+
+                    foreach ($pembayaranList as $idx => $item):
+                        if (in_array($idx + 1, $sudahDibayar, true)) { continue; }
                         $value = "Pembayaran {$item} {$project->client_name}";
                     ?>
                         <option value="<?= $value ?>">
@@ -203,5 +215,75 @@
         toggleKategori();
     });
   </script>
+<script>
+// Pilih pembayaran dari invoice: isi otomatis Total Dibayar dan "Pembayaran ke" (Detail diisi manual).
+(function () {
+    const invoiceSelect = document.getElementById('dariinvoice');
+    const wrapper = document.getElementById('pilihan-pembayaran-wrapper');
+    const pilih = document.getElementById('pilihan-pembayaran');
+    const total = document.getElementById('formattedNumber');
+    const metodep = document.getElementById('metodep');
+    const ordinal = ['Kesatu', 'Kedua', 'Ketiga', 'Keempat', 'Kelima', 'Keenam', 'Ketujuh', 'Kedelapan'];
+    let data = [];
+
+    function ribuan(n) {
+        return String(n).replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    }
+    function rupiah(n) { return 'Rp ' + ribuan(n); }
+
+    function muat() {
+        data = [];
+        pilih.innerHTML = '<option value="">- Pilih pembayaran -</option>';
+        Array.prototype.forEach.call(metodep.options, function (o) { o.hidden = false; o.disabled = false; });
+        if (!invoiceSelect.value) { wrapper.classList.add('hidden'); return; }
+        fetch('<?= base_url('Crud_payment/pilihan_pembayaran') ?>', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'payment_id_session=' + encodeURIComponent(invoiceSelect.value)
+                + '&<?= $this->security->get_csrf_token_name() ?>=<?= $this->security->get_csrf_hash() ?>'
+        })
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+            data = d.pilihan || [];
+            // pembayaran yang sudah dibayar tidak ditampilkan (di dropdown ini maupun di "Pembayaran ke")
+            const dibayar = data.filter(function (p) { return p.dibayar; }).map(function (p) { return p.urutan; });
+            Array.prototype.forEach.call(metodep.options, function (o) {
+                const m = /^Pembayaran (\S+) /.exec(o.value);
+                const n = m ? ordinal.indexOf(m[1]) + 1 : 0;
+                const sembunyi = n > 0 && dibayar.indexOf(n) !== -1;
+                o.hidden = sembunyi; o.disabled = sembunyi;
+                if (sembunyi && metodep.value === o.value) { metodep.value = ''; }
+            });
+            data.forEach(function (p, i) {
+                if (p.dibayar) { return; }
+                const opt = document.createElement('option');
+                opt.value = i;
+                opt.textContent = p.label + (p.nominal ? ' — ' + rupiah(p.nominal) : '');
+                pilih.appendChild(opt);
+            });
+            wrapper.classList.toggle('hidden', pilih.options.length <= 1);
+        })
+        .catch(function (e) { console.error('Pilihan pembayaran:', e); });
+    }
+
+    pilih.addEventListener('change', function () {
+        const p = data[pilih.value];
+        if (!p) { return; }
+        // Total Dibayar
+        total.value = ribuan(p.nominal);
+        // Pembayaran ke
+        const nama = ordinal[p.urutan - 1];
+        if (nama) {
+            Array.prototype.forEach.call(metodep.options, function (o) {
+                if (o.value.indexOf('Pembayaran ' + nama + ' ') === 0) { metodep.value = o.value; }
+            });
+        }
+        // Detail sengaja TIDAK diisi otomatis -- diisi manual oleh user
+    });
+
+    invoiceSelect.addEventListener('change', muat);
+    muat();
+})();
+</script>
 </body>
 </html>

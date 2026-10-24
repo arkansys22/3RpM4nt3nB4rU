@@ -529,49 +529,37 @@
                 ?>
 
                 <?php if ($payment->metodep == 'Default') { ?>
-
+                    <?php
+                        // Tanggal bayar dari kwitansi yang sudah Paid, per urutan pembayaran
+                        $tglBayar = tanggal_bayar_per_pembayaran($payment->payment_id_session, $payment->id_session);
+                        // Baris jadwal otomatis; teks yang diubah manual di Edit Invoice menggantikan barisnya
+                        $barisDefault = jadwal_pembayaran_default($grandTotal, $project->event_date);
+                        $overrideDefault = override_pembayaran_default($payment->detail, count($barisDefault));
+                    ?>
                     <ul class="list-disc pl-5">
-                            <li>Pembayaran pertama <b>kunci harga</b> Rp <?= number_format($p1,0,',','.') ?></li>
-
-                            <?php if($days_to_event < 30){ ?>
-
-                            <li>Pembayaran kedua <b>pelunasan</b> Rp <?= number_format($p2,0,',','.') ?></li>
-
-                            <?php }elseif($days_to_event < 60){ ?>
-
-                            <li>Pembayaran kedua <b>kunci tanggal</b> sebesar 15% dari total biaya pada H+14 setelah pembayaran pertama Rp <?= number_format($p2,0,',','.') ?></li>
-
-                            <li>Pembayaran ketiga sebesar 45% dari total biaya pada <b>H-30 acara (<?= tgl_indo($c->format('Y-m-d')) ?>)</b>
-                            Rp <?= number_format($p3,0,',','.') ?></li>
-
-                            <li>Pembayaran keempat sebesar 40% dari total biaya pada <b>H-14 acara (<?= tgl_indo($d->format('Y-m-d')) ?>)</b>
-                            Rp <?= number_format($p4,0,',','.') ?></li>
-
-                            <?php }else{ ?>
-
-                            <li>Pembayaran kedua <b>kunci tanggal</b> sebesar 15% dari total biaya pada H+14 setelah pembayaran pertama
-                            Rp <?= number_format($p2,0,',','.') ?></li>
-
-                            <li>Pembayaran ketiga sebesar 35% dari total biaya pada <b>H-60 acara (<?= tgl_indo($b->format('Y-m-d')) ?>)</b>
-                            Rp <?= number_format($p3,0,',','.') ?></li>
-
-                            <li>Pembayaran keempat sebesar 35% dari total biaya pada <b>H-30 acara (<?= tgl_indo($c->format('Y-m-d')) ?>)</b>
-                            Rp <?= number_format($p4,0,',','.') ?></li>
-
-                            <li>Pembayaran kelima sebesar 15% dari total biaya pada <b>H-14 acara (<?= tgl_indo($d->format('Y-m-d')) ?>)</b>
-                            Rp <?= number_format($p5,0,',','.') ?></li>
-
-                            <?php } ?>
+                        <?php foreach ($barisDefault as $i => $barisItem): ?>
+                            <?php
+                                $barisTampil = format_baris_pembayaran_default($barisItem, $overrideDefault[$i] ?? null);
+                                if ($barisTampil === null) { // override bentuk lama kosong -> hitungan otomatis
+                                    $barisTampil = format_baris_pembayaran_default($barisItem, null);
+                                }
+                            ?>
+                            <li><?= $barisTampil ?><?= format_tanggal_dibayar($tglBayar[$i + 1] ?? []) ?></li>
+                        <?php endforeach; ?>
+                        <?php foreach (tambahan_pembayaran_default($payment->detail) as $k => $tambahan): $nomorTambahan = count($barisDefault) + $k + 1; ?>
+                            <li><?= format_tambahan_pembayaran_default($tambahan, $nomorTambahan) ?><?= format_tanggal_dibayar($tglBayar[$nomorTambahan] ?? []) ?></li>
+                        <?php endforeach; ?>
                     </ul>
                 <?php }else if ($payment->metodep == 'Custom') { ?>
                     <?php
                         $paymentDetails = json_decode($payment->detail, true);
+                        $tglBayar = tanggal_bayar_per_pembayaran($payment->payment_id_session, $payment->id_session);
 
                         if (is_array($paymentDetails)) {
                             echo '<ul class="list-disc pl-5">';
 
                             foreach ($paymentDetails as $idx => $item) {
-                                echo '<li>' . format_detail_pembayaran_custom($item, $idx) . '</li>';
+                                echo '<li>' . format_detail_pembayaran_custom($item, $idx) . format_tanggal_dibayar($tglBayar[$idx + 1] ?? []) . '</li>';
                             }
 
                             echo '</ul>';

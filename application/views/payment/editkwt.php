@@ -96,8 +96,12 @@
                         'Kedelapan'
                     ];
 
-                    foreach ($pembayaranList as $item):
+                    // Pembayaran yang sudah dibayar kwitansi LAIN tidak ditampilkan; pilihan kwitansi ini sendiri tetap ada
+                    $sudahDibayar = urutan_pembayaran_dibayar($project->id_session, (string) $payment->dariinvoice, $payment->id);
+
+                    foreach ($pembayaranList as $idx => $item):
                         $value = "Pembayaran {$item} {$project->client_name}";
+                        if (in_array($idx + 1, $sudahDibayar, true) && $payment->metodep != $value) { continue; }
                     ?>
                         <option value="<?= $value ?>" <?= ($payment->metodep == $value) ? 'selected' : '' ?>>
                             <?= $value ?>

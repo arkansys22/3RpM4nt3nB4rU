@@ -131,6 +131,9 @@
                         <div class="detail-item">
                             <label class="detail-label block mb-1 text-sm font-semibold">Pembayaran Pertama</label>
                             <div class="flex flex-col sm:flex-row gap-2 items-start">
+                                <input type="text" name="detail[0][teks]"
+                                    class="detail-input detail-teks w-full sm:flex-1 px-4 py-2 border rounded-lg"
+                                    placeholder="Teks custom, contoh: DP maksimal H+7">
                                 <div class="flex w-full sm:w-56 flex-shrink-0 items-center rounded-lg border">
                                     <span class="pl-3 text-sm">Rp</span>
                                     <input type="text" inputmode="numeric" autocomplete="off"
@@ -138,9 +141,6 @@
                                         class="detail-input detail-nominal w-full bg-transparent px-2 py-2 outline-none"
                                         placeholder="0">
                                 </div>
-                                <input type="text" name="detail[0][teks]"
-                                    class="detail-input detail-teks w-full flex-1 rounded-lg border px-4 py-2"
-                                    placeholder="Teks custom, contoh: DP maksimal H+7">
                                 <button type="button"
                                     class="remove-detail bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg hidden">
                                     Hapus
@@ -160,6 +160,16 @@
 
                 </div>
 
+
+                <!-- Metode Default: input teks pembayaran pertama sampai terakhir (diisi otomatis dari total + tanggal acara) -->
+                <div id="default-wrapper" class="hidden">
+                    <label class="block mb-2 font-medium">Detail Pembayaran (Default)</label>
+                    <div id="default-lines" class="space-y-3 mb-2"></div>
+                    <div id="default-tambahan" class="space-y-3 mb-3" <?= isset($tambahanAwal) ? 'data-awal="' . htmlspecialchars(json_encode($tambahanAwal), ENT_QUOTES) . '"' : '' ?>></div>
+                        <button type="button" id="tambah-default-btn" class="mb-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg">+ Tambah Pembayaran</button>
+
+                    <p class="text-xs text-gray-500 mb-4">Teks terisi otomatis dari total &amp; tanggal acara dan bisa diubah. Baris yang tidak diubah tetap mengikuti hitungan otomatis di invoice.</p>
+                </div>
 
                 <div class="flex flex-col sm:flex-row justify-end">
                   <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded w-full hover:bg-green-600 sm:w-24 mb-2 sm:mb-0 text-center">Simpan</button>
@@ -232,15 +242,15 @@
             wrapper.innerHTML = `
                 <label class="detail-label block mb-1 text-sm font-semibold"></label>
                 <div class="flex flex-col sm:flex-row gap-2 items-start">
+                    <input type="text"
+                        class="detail-input detail-teks w-full sm:flex-1 px-4 py-2 border rounded-lg"
+                        placeholder="Teks custom, contoh: DP maksimal H+7">
                     <div class="flex w-full sm:w-56 flex-shrink-0 items-center rounded-lg border">
                         <span class="pl-3 text-sm">Rp</span>
                         <input type="text" inputmode="numeric" autocomplete="off"
                             class="detail-input detail-nominal w-full bg-transparent px-2 py-2 outline-none"
                             placeholder="0" required>
                     </div>
-                    <input type="text"
-                        class="detail-input detail-teks w-full flex-1 rounded-lg border px-4 py-2"
-                        placeholder="Teks custom, contoh: DP maksimal H+7">
                     <button type="button"
                         class="remove-detail bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg">
                         Hapus
@@ -249,7 +259,7 @@
             `;
             detailSection.appendChild(wrapper);
             refreshDetail();
-            wrapper.querySelector('.detail-nominal').focus();
+            wrapper.querySelector('.detail-teks').focus();
         });
 
         detailSection.addEventListener('input', function (e) {
@@ -304,6 +314,7 @@ document.getElementById('typeinvoice').addEventListener('change', function () {
 
             // format ribuan Indonesia
             totalBillInput.value = total.toLocaleString('id-ID');
+            totalBillInput.dispatchEvent(new Event('input')); // perbarui jadwal pembayaran Default
 
         })
         .catch(error => {
@@ -346,6 +357,154 @@ document.addEventListener('DOMContentLoaded', function () {
 
     toggleDetailSection();
 });
+</script>
+<script>
+// Jadwal pembayaran metode Default: ambil teks dari server (total + tanggal acara project),
+// tampilkan sebagai input yang bisa diedit. Input yang belum diubah ikut diperbarui saat total berubah.
+(function () {
+    const metodeSelect = document.getElementById('metodep');
+    const totalInput = document.getElementById('total_bill');
+    const wrapper = document.getElementById('default-wrapper');
+    const lines = document.getElementById('default-lines');
+    const urutan = ['Pertama', 'Kedua', 'Ketiga', 'Keempat', 'Kelima', 'Keenam'];
+    let timer = null;
+
+    function ribuan(n) {
+        return String(n).replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    }
+
+    // baris = [{teks, nominal}, ...]; input yang belum diubah user ikut hitungan baru
+    function render(baris) {
+        // jumlah baris tetap selama tanggal acara sama; kalau berbeda, bangun ulang
+        if (lines.children.length !== baris.length) {
+            lines.innerHTML = '';
+            baris.forEach(function (b, i) {
+                const box = document.createElement('div');
+                const label = document.createElement('label');
+                label.className = 'block mb-1 text-sm font-semibold';
+                label.textContent = 'Pembayaran ' + (urutan[i] || ('ke-' + (i + 1))) + (i === baris.length - 1 ? ' (terakhir)' : '');
+
+                const row = document.createElement('div');
+                row.className = 'flex flex-col sm:flex-row gap-2 items-start';
+
+                const teks = document.createElement('input');
+                teks.type = 'text';
+                teks.name = 'detail_default[]';
+                teks.className = 'w-full sm:flex-1 px-4 py-2 border rounded-lg';
+
+                const nomWrap = document.createElement('div');
+                nomWrap.className = 'flex w-full sm:w-56 flex-shrink-0 items-center rounded-lg border';
+                const rp = document.createElement('span');
+                rp.className = 'pl-3 text-sm';
+                rp.textContent = 'Rp';
+                const nom = document.createElement('input');
+                nom.type = 'text';
+                nom.inputMode = 'numeric';
+                nom.autocomplete = 'off';
+                nom.name = 'detail_default_nominal[]';
+                nom.placeholder = '0';
+                nom.className = 'w-full bg-transparent px-2 py-2 outline-none';
+                nom.addEventListener('input', function () { nom.value = ribuan(nom.value); });
+                nomWrap.appendChild(rp); nomWrap.appendChild(nom);
+
+                const asliTeks = document.createElement('input');
+                asliTeks.type = 'hidden'; asliTeks.name = 'detail_default_asli[]';
+                const asliNom = document.createElement('input');
+                asliNom.type = 'hidden'; asliNom.name = 'detail_default_nominal_asli[]';
+
+                row.appendChild(teks); row.appendChild(nomWrap);
+                box.appendChild(label); box.appendChild(row); box.appendChild(asliTeks); box.appendChild(asliNom);
+                lines.appendChild(box);
+
+                teks.value = b.teks; teks.dataset.asli = b.teks; asliTeks.value = b.teks;
+                nom.value = ribuan(b.nominal); nom.dataset.asli = String(b.nominal); asliNom.value = b.nominal;
+            });
+            return;
+        }
+        baris.forEach(function (b, i) {
+            const box = lines.children[i];
+            const teks = box.querySelector('input[name="detail_default[]"]');
+            const nom = box.querySelector('input[name="detail_default_nominal[]"]');
+            const asliTeks = box.querySelector('input[name="detail_default_asli[]"]');
+            const asliNom = box.querySelector('input[name="detail_default_nominal_asli[]"]');
+            if (teks.value === teks.dataset.asli) { teks.value = b.teks; }
+            if (nom.value.replace(/\D/g, '') === nom.dataset.asli) { nom.value = ribuan(b.nominal); }
+            teks.dataset.asli = b.teks; asliTeks.value = b.teks;
+            nom.dataset.asli = String(b.nominal); asliNom.value = b.nominal;
+        });
+    }
+    function refresh() {
+        const isDefault = metodeSelect.value === 'Default';
+        wrapper.classList.toggle('hidden', !isDefault);
+        if (!isDefault) { return; }
+        const body = 'id_session=<?= $project->id_session ?>'
+            + '&total=' + encodeURIComponent(totalInput.value.replace(/\D/g, ''))
+            + '&<?= $this->security->get_csrf_token_name() ?>=<?= $this->security->get_csrf_hash() ?>';
+        fetch('<?= base_url('Crud_payment/jadwal_default') ?>', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: body
+        })
+        .then(function (r) { return r.json(); })
+        .then(function (d) { render(d.baris || []); if (window.nomoriTambahanDefault) { window.nomoriTambahanDefault(); } })
+        .catch(function (e) { console.error('Jadwal default:', e); });
+    }
+
+    function tunda() { clearTimeout(timer); timer = setTimeout(refresh, 300); }
+
+    metodeSelect.addEventListener('change', refresh);
+    totalInput.addEventListener('input', tunda);
+    refresh();
+})();
+</script>
+<script>
+// "+ Tambah Pembayaran" pada metode Default: baris tambahan (teks + nominal) setelah jadwal otomatis.
+(function () {
+    const box = document.getElementById('default-tambahan');
+    const btn = document.getElementById('tambah-default-btn');
+    if (!box || !btn) { return; }
+    const kata = ['Pertama', 'Kedua', 'Ketiga', 'Keempat', 'Kelima', 'Keenam', 'Ketujuh', 'Kedelapan', 'Kesembilan', 'Kesepuluh'];
+    const ribuan = function (n) { return String(n).replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.'); };
+
+    function jumlahOtomatis() {
+        return document.querySelectorAll('input[name="detail_default[]"]').length;
+    }
+    function nomori() {
+        const mulai = jumlahOtomatis();
+        Array.prototype.forEach.call(box.children, function (row, i) {
+            const n = mulai + i;
+            row.querySelector('label').textContent = 'Pembayaran ' + (kata[n] || ('ke-' + (n + 1))) + ' (tambahan)';
+        });
+    }
+    window.nomoriTambahanDefault = nomori;
+
+    function tambah(teks, nominal) {
+        const row = document.createElement('div');
+        row.innerHTML =
+            '<label class="block mb-1 text-sm font-semibold"></label>' +
+            '<div class="flex flex-col sm:flex-row gap-2 items-start">' +
+              '<input type="text" name="tambahan_teks[]" placeholder="Keterangan pembayaran, contoh: Pembayaran tambahan dekorasi" class="w-full sm:flex-1 px-4 py-2 border rounded-lg">' +
+              '<div class="flex w-full sm:w-56 flex-shrink-0 items-center rounded-lg border"><span class="pl-3 text-sm">Rp</span>' +
+                '<input type="text" inputmode="numeric" autocomplete="off" name="tambahan_nominal[]" placeholder="0" class="w-full bg-transparent px-2 py-2 outline-none"></div>' +
+              '<button type="button" class="hapus-tambahan bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg">Hapus</button>' +
+            '</div>';
+        const t = row.querySelector('input[name="tambahan_teks[]"]');
+        const n = row.querySelector('input[name="tambahan_nominal[]"]');
+        t.value = teks || '';
+        n.value = nominal ? ribuan(nominal) : '';
+        n.addEventListener('input', function () { n.value = ribuan(n.value); });
+        row.querySelector('.hapus-tambahan').addEventListener('click', function () { row.remove(); nomori(); });
+        box.appendChild(row);
+        nomori();
+        return t;
+    }
+
+    btn.addEventListener('click', function () { tambah('', '').focus(); });
+
+    try {
+        JSON.parse(box.dataset.awal || '[]').forEach(function (t) { tambah(t.teks, t.nominal); });
+    } catch (e) { /* data awal rusak: abaikan */ }
+})();
 </script>
 </body>
 </html>
