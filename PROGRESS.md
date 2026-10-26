@@ -886,6 +886,7 @@ ada 2 penyebab terpisah yang ketemu berurutan:
 - Finance Project lihat (tab Faktual): link edit transaksi crew sekarang ke `edit2` (tombol berwarna ungu, beda dari transaksi biasa yang biru) walau nama tidak mengandung kata "crew" -- crew dikenali dari `project_acc.detail` = `crews.id_session` (selain nama berisi "crew" untuk data lama).
 - Rekap gaji: **fee crew per user** (Finance Project > Tambah Crew) kini selalu masuk Gaji Saya & Rekap Gaji, walau user belum punya kategori salary satuan Project (`Gaji_model::get_detail_fee_crew_tambahan`, baris "Crew WO"). Kalau user punya kategori Project, tidak dihitung dobel.
 - `projectacc/create.php` (finance-project/create): pilihan Kategori kini punya pencarian di dalam kotaknya (sama seperti finance-operational/create). Juga dipasang di create_utang, edit_utang (edit3) dan edit; create_crew (create2) juga, tapi hanya menampilkan kategori kelas 6000 (kode berawalan 6); edit_crew (edit2) sama (kategori tersimpan di data lama tetap ditampilkan).
+- `user/edit.php` (user/edit/<id>): pilihan **Client ID** kini punya pencarian di dalam kotaknya (tampil saat level = Client). Kotak ikut ter-reset ke "-" kalau level diganti. Pilihan **Level** di halaman ini juga punya pencarian. `user/create`: pilihan **Level** juga punya pencarian. Belum di edit_staff.
 
 ---
 

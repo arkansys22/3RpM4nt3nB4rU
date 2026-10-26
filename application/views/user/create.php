@@ -50,7 +50,13 @@
                 <input type="password" name="password" class="w-full px-4 py-2 border rounded mb-4" required>
                
                 <label class="block mb-2">Level</label>
-                <select name="level" class="w-full px-4 py-2 border rounded mb-4" required> 
+                <div id="levelBox" class="relative mb-4">
+                <button type="button" id="levelTombol" class="flex w-full items-center justify-between px-4 py-2 border rounded text-left"><span id="levelTeks">- Pilih Level -</span><span class="ml-2 text-xs">&#9660;</span></button>
+                <div id="levelPanel" class="absolute left-0 right-0 z-50 mt-1 hidden rounded border bg-white shadow-lg dark:bg-boxdark">
+                    <input type="text" id="levelCari" placeholder="Cari level..." autocomplete="off" class="w-full px-4 py-2 border-b outline-none bg-transparent">
+                    <ul id="levelDaftar" class="max-h-60 overflow-y-auto"></ul>
+                </div>
+                <select name="level" id="levelSelect" tabindex="-1" style="position:absolute;left:0;bottom:0;width:100%;height:1px;opacity:0;pointer-events:none;" required>
                 <option value=""></option> 
                       <?php foreach ($level as $p) {
                             if ($rows['level'] == $p['user_level_id']){
@@ -60,6 +66,7 @@
                          }
                       } ?>                    
                 </select>
+                </div>
 
                 <div class="flex flex-col sm:flex-row justify-end">
                 <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded w-full hover:bg-green-600 sm:w-24 mb-2 sm:mb-0 text-center">Simpan</button>
@@ -75,5 +82,63 @@
     <!-- ===== Content Area End ===== -->
   </div>
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
+  <script>
+    // Level dengan pencarian di dalam kotak pilihan: klik untuk membuka daftar, ketik untuk menyaring
+    (function () {
+        var select = document.getElementById('levelSelect');
+        var box = document.getElementById('levelBox');
+        var tombol = document.getElementById('levelTombol');
+        var teks = document.getElementById('levelTeks');
+        var panel = document.getElementById('levelPanel');
+        var cari = document.getElementById('levelCari');
+        var daftar = document.getElementById('levelDaftar');
+        var semua = Array.prototype.map.call(select.options, function (o) {
+            return { value: o.value, text: o.text };
+        });
+
+        function pilih(o) {
+            select.value = o.value;
+            teks.textContent = o.text || '- Pilih Level -';
+            tutup();
+            select.dispatchEvent(new Event('change'));
+        }
+        function render() {
+            var q = cari.value.trim().toLowerCase();
+            daftar.innerHTML = '';
+            var ada = false;
+            semua.forEach(function (o) {
+                if (q !== '' && o.text.toLowerCase().indexOf(q) === -1) { return; }
+                ada = true;
+                var li = document.createElement('li');
+                li.textContent = o.text || '- Pilih Level -';
+                li.className = 'cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-meta-4' + (o.value === select.value ? ' font-semibold' : '');
+                li.addEventListener('mousedown', function (e) { e.preventDefault(); pilih(o); });
+                daftar.appendChild(li);
+            });
+            if (!ada) {
+                var kosong = document.createElement('li');
+                kosong.textContent = 'Level tidak ditemukan';
+                kosong.className = 'px-4 py-2 text-gray-500';
+                daftar.appendChild(kosong);
+            }
+        }
+        function buka() { panel.classList.remove('hidden'); cari.value = ''; render(); cari.focus(); }
+        function tutup() { panel.classList.add('hidden'); }
+
+        teks.textContent = select.options[select.selectedIndex].text || '- Pilih Level -';
+        tombol.addEventListener('click', function () { panel.classList.contains('hidden') ? buka() : tutup(); });
+        cari.addEventListener('input', render);
+        cari.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') { tutup(); tombol.focus(); }
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                var q = cari.value.trim().toLowerCase();
+                var cocok = semua.filter(function (o) { return q === '' || o.text.toLowerCase().indexOf(q) !== -1; });
+                if (cocok.length) { pilih(cocok[0]); }
+            }
+        });
+        document.addEventListener('click', function (e) { if (!box.contains(e.target)) { tutup(); } });
+    })();
+  </script>
 </body>
 </html>
