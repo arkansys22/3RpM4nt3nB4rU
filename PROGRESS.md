@@ -888,6 +888,8 @@ ada 2 penyebab terpisah yang ketemu berurutan:
 - `projectacc/create.php` (finance-project/create): pilihan Kategori kini punya pencarian di dalam kotaknya (sama seperti finance-operational/create). Juga dipasang di create_utang, edit_utang (edit3) dan edit; create_crew (create2) juga, tapi hanya menampilkan kategori kelas 6000 (kode berawalan 6); edit_crew (edit2) sama (kategori tersimpan di data lama tetap ditampilkan).
 - `user/edit.php` (user/edit/<id>): pilihan **Client ID** kini punya pencarian di dalam kotaknya (tampil saat level = Client). Kotak ikut ter-reset ke "-" kalau level diganti. Pilihan **Level** di halaman ini juga punya pencarian. `user/create`: pilihan **Level** juga punya pencarian. Belum di edit_staff.
 - `operational/edit.php` (finance-operational/edit): pilihan Kategori punya pencarian di dalam kotak dan hanya menampilkan kelas 6000 (kode berawalan 6); kategori tersimpan di data lama tetap tampil. (create belum difilter 6000.)
+- Dropdown **Staff** (kategori gaji 6201.01) di finance-operational create/edit kini juga memuat level Staff Accounting (3) dan Staff/Crew (7), selain 1,2,4,9 (`Users2_model::get_all_staff_gaji_user`).
+- finance-operational create & edit: kolom **Staff** (kategori gaji) juga punya pencarian di dalam kotak. Penerima Komisi belum.
 
 ---
 
