@@ -187,7 +187,9 @@
 					  </svg>
 					</div>
 				</div> -->
-	            <div class="data-stats-slider-outer relative col-span-12 rounded-sm border border-stroke bg-white py-10 shadow-default dark:border-strokedark dark:bg-boxdark">
+	            		            <?php $this->load->view('backend/partial_pendapatan_crew', ['pendapatan_tampilan' => 'kartu']) ?>
+
+<div class="data-stats-slider-outer relative col-span-12 rounded-sm border border-stroke bg-white py-10 shadow-default dark:border-strokedark dark:bg-boxdark">
 				  <!-- ===== Main Content Start ===== -->
 				  <main>
 				    <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">

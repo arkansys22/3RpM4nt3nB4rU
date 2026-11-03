@@ -209,6 +209,7 @@
 
 	                    </div>
 	                                      
+		                    <?php $this->load->view('backend/partial_pendapatan_crew', ['pendapatan_tampilan' => 'slide']) ?>
 	                  </div>
 	                </div>
 
@@ -245,6 +246,8 @@
 	                </div>
 	            </div>
 	            <!-- ====== Data Stats End -->
+
+				<?php $this->load->view('backend/partial_pendapatan_crew', ['pendapatan_tampilan' => 'dialog']) ?>
 
 				<?php $this->load->view('backend/partial_todo_list') ?>
 

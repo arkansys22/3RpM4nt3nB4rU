@@ -921,6 +921,21 @@ ada 2 penyebab terpisah yang ketemu berurutan:
 
 ---
 
+## 2026-11-03 — Kartu Pendapatan Crew di Dashboard Staff/Freelance
+
+- Dashboard Staff (level 7) dan level baru berinduk Staff (mis. Freelance) mendapat 3 kartu di atas kalender (`backend/v_home_staff.php`): **Total Pendapatan Semua Event**, **Pendapatan Bulan Ini**, **Potensi Event Selanjutnya**.
+- Kartu pertama diganti nama jadi **Total Semua Pendapatan** = **pendapatan gaji + pendapatan total event** (sampai akhir bulan ini). Pendapatan gaji = gaji & komisi NYATA yang dicatat di Finance Operational untuk user itu (`operational_acc` kategori 6201.01 + 6100.02, `staff_id_session`), semua bulan; kategori Setting Salary yang dihitung otomatis (Bulanan/Persentase/Harian) TIDAK ikut karena itu hak per bulan, bukan transaksi. Muncul juga untuk akun yang belum terhubung ke data crew. Popup "Lihat detail"-nya berisi ringkasan (Gaji / Event / Total), rincian gaji per transaksi (tanggal, keterangan, Gaji/Komisi, nominal), lalu rincian event + fee. Kartu **Pendapatan Bulan Ini** tetap hanya fee event.
+- **Total Pendapatan Semua Event** dan **Pendapatan Bulan Ini** juga punya tombol "Lihat detail" (popup `<dialog>` yang sama): rincian per event dengan kolom Fee (fee crew event itu dijumlahkan, bisa lebih dari satu transaksi) + baris Total yang sama dengan angka di kartu. Fee yang project-nya tidak ditemukan tampil dengan nama/job desc "-" dan tanpa tombol Lihat. Query: `Gaji_model::fee_crew_per_event()`.
+- **Potensi Event Selanjutnya** = jumlah event yang sudah dijadwalkan untuk crew itu (`crew_projects`, `event_date >= hari ini`, project tidak dihapus; event hari ini ikut). Tombol "Lihat detail" membuka popup (`<dialog>` bawaan browser, tanpa Alpine) berisi tanggal & lokasi, nama pengantin, job desc (beberapa peran di event yang sama digabung), dan tautan ke `project/crew_lihat`. Tanpa kolom fee/estimasi. (Versi awal menampilkan rupiah potensi; diganti jadi hitungan event.) Kartu yang sama tampil di tampilan `panel/staff` milik level lain yang juga crew.
+- Kartu + popup ada di partial `backend/partial_pendapatan_crew.php` (variabel `$pendapatan_tampilan`, SELALU diisi eksplisit saat load->view karena CI menyimpan variabel antar pemanggilan): `kartu` = tiga kartu + popup (dashboard **Staff**, tidak punya slider); `slide` = tiga `swiper-slide` bergaya "Pencapaian Revenue" (judul, baris label/nilai, tautan biru "Lihat Detail >>") yang di-load DI DALAM `.swiper-wrapper` tepat setelah slide Pencapaian Revenue di dashboard **Staff Admin** (`v_home_admin`) dan **Staff Sales** (`v_home_salesmarketing`); `dialog` = popup-popupnya, di-load di luar slider. `Aspanel::home()` menghitung `pendapatan_crew` untuk level 4, 7, 9 dan tampilan `panel/staff`. Level 1/2/3 di dashboard utamanya belum memakai ini.
+- Hitungan ada di `Gaji_model::get_ringkasan_pendapatan_crew()` (dipanggil dari `Aspanel::home()`), memakai sumber yang sama dengan "Crew WO" di Gaji Saya: fee crew nyata di `project_acc` (Finance Project, "Tambah Crew") yang `detail`-nya = `user.crews_idsession`.
+  - Fee dikelompokkan menurut **tanggal event** (`project.event_date`), bukan tanggal fee dicatat (fee event 28 Nov yang dicatat 29 Okt = pendapatan November; versi awal memakai tanggal catat sehingga bulan ini tampil Rp 0). Fee yang project-nya tidak ditemukan memakai tanggal catatnya. Gaji Saya tetap memakai tanggal catat.
+  - Total = fee semua event sampai akhir bulan ini (+ jumlah event). Bulan ini = fee event yang tanggalnya bulan ini.
+  - Akun dengan `crews_idsession` kosong/`-` menampilkan Rp 0 + "Akun belum terhubung ke data crew".
+- Tidak ada perubahan database. Diuji lokal dengan user sementara (level 7, level Freelance 13, tanpa crew) dan angka dicocokkan dengan SQL; data tes sudah dihapus.
+
+---
+
 ## Catatan Insiden (untuk konteks, bukan tindak lanjut)
 
 - Sempat salah restore password test di DB lokal (`db_erpmaid`) beberapa

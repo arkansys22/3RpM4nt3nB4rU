@@ -161,6 +161,131 @@ class Gaji_model extends CI_Model {
         return $row;
     }
 
+    // Ringkasan pendapatan fee crew NYATA (Finance Project, form "Tambah Crew") satu user, untuk kartu di dashboard
+    // staff/freelance. Sumber fee-nya sama dengan Crew WO di Gaji Saya (project_acc.detail = user.crews_idsession), tapi
+    // dikelompokkan menurut TANGGAL EVENT (project.event_date), bukan tanggal fee dicatat: fee event 28 Nov yang dicatat
+    // 29 Okt tetap pendapatan November. (Gaji Saya tetap memakai tanggal catat, karena itu kapan fee-nya dibayarkan.)
+    // Fee yang project-nya tidak ditemukan memakai tanggal catatnya.
+    // - total_semua  : TOTAL SEMUA PENDAPATAN sampai akhir bulan ini = total_gaji + total_event.
+    // - total_gaji / gaji_semua : gaji & komisi NYATA yang dicatat di Finance Operational (operational_acc kategori 6201.01 +
+    //                  6100.02, staff_id_session = user ini); gaji_semua = rincian per transaksi (terbaru dulu). Tidak
+    //                  tergantung akun terhubung ke data crew atau tidak.
+    // - total_event / event_semua : fee semua event sampai akhir bulan ini (termasuk bulan ini); event_semua = rincian per
+    //                  event (terbaru dulu), jumlah_event_semua = jumlah barisnya.
+    // - bulan_ini / event_bulan_ini : sama, untuk event yang tanggalnya di bulan ini (urut tanggal).
+    // - event_mendatang : event yang sudah dijadwalkan untuk crew ini (crew_projects, tanggal event >= hari ini, project
+    //                  tidak dihapus), urut tanggal; jumlahnya = jumlah_event_mendatang.
+    public function get_ringkasan_pendapatan_crew($user_id_session)
+    {
+        $r = (object) [
+            'ada_crew' => false,
+            'total_semua' => 0.0,
+            'total_gaji' => 0.0,
+            'jumlah_gaji' => 0,
+            'gaji_semua' => [],
+            'total_event' => 0.0,
+            'jumlah_event_semua' => 0,
+            'event_semua' => [],
+            'bulan_ini' => 0.0,
+            'jumlah_event_bulan_ini' => 0,
+            'event_bulan_ini' => [],
+            'jumlah_event_mendatang' => 0,
+            'event_mendatang' => [],
+        ];
+
+        $hari_ini = date('Y-m-d');
+        $akhir_bulan = date('Y-m-t');
+
+        // Gaji & komisi nyata (sama dengan get_detail_gaji_operational, tapi semua bulan sampai akhir bulan ini)
+        $gaji = $this->db->select('kategori, nama_transaksi, tanggal_transaksi, nominal_transaksi')
+            ->from('operational_acc')
+            ->where_in('kategori', [self::KATEGORI_OPERASIONAL_GAJI, self::KATEGORI_OPERASIONAL_KOMISI])
+            ->where('staff_id_session', $user_id_session)
+            ->where('tanggal_transaksi <=', $akhir_bulan)
+            ->order_by('tanggal_transaksi', 'DESC')
+            ->order_by('id', 'DESC')
+            ->get()->result();
+        foreach ($gaji as $g) {
+            $g->nominal = (float) $g->nominal_transaksi;
+            $g->jenis = $g->kategori === self::KATEGORI_OPERASIONAL_KOMISI ? 'Komisi' : 'Gaji';
+        }
+        $r->gaji_semua = $gaji;
+        $r->jumlah_gaji = count($gaji);
+        $r->total_gaji = array_sum(array_column($gaji, 'nominal'));
+        $r->total_semua = $r->total_gaji;
+
+        // crews_idsession kosong / '-' = akun belum terhubung ke data crew (lihat catatan di hitung_fee_crew)
+        $u = $this->db->select('crews_idsession')->get_where('user', ['id_session' => $user_id_session])->row();
+        $crew_id = $u ? trim((string) $u->crews_idsession) : '';
+        if ($crew_id === '' || $crew_id === '-') {
+            return $r;
+        }
+        $r->ada_crew = true;
+
+        $semua = $this->fee_crew_per_event($crew_id, null, $akhir_bulan);
+        $r->event_semua = array_reverse($semua);
+        $r->jumlah_event_semua = count($semua);
+        $r->total_event = array_sum(array_column($semua, 'fee'));
+        $r->total_semua = $r->total_gaji + $r->total_event;
+
+        $bulan = $this->fee_crew_per_event($crew_id, date('Y-m-01'), $akhir_bulan);
+        $r->event_bulan_ini = $bulan;
+        $r->jumlah_event_bulan_ini = count($bulan);
+        $r->bulan_ini = array_sum(array_column($bulan, 'fee'));
+
+        // Satu baris per event (crew bisa punya beberapa peran di event yang sama -> digabung)
+        $event = $this->db->query(
+            "SELECT p.id_session AS project_id, p.event_date, p.client_name, p.location,
+                    GROUP_CONCAT(DISTINCT cp.role ORDER BY cp.role SEPARATOR ', ') AS role
+             FROM crew_projects cp
+             JOIN project p ON p.id_session = cp.project_id
+             WHERE cp.crew_id = ? AND p.event_date >= ? AND (p.status IS NULL OR p.status <> 'delete')
+             GROUP BY p.id_session, p.event_date, p.client_name, p.location
+             ORDER BY p.event_date ASC",
+            [$crew_id, $hari_ini]
+        )->result();
+        $r->event_mendatang = $event;
+        $r->jumlah_event_mendatang = count($event);
+
+        return $r;
+    }
+
+    // Fee crew NYATA (project_acc.detail = crews_idsession) per event, untuk event yang tanggalnya di antara $dari dan
+    // $sampai (null = tanpa batas), urut tanggal event naik. Tanggal event = project.event_date; kalau project-nya tidak
+    // ditemukan, tanggal catat fee paling awal (client_name/location null). Fee satu event dijumlahkan (bisa lebih dari
+    // satu transaksi); 'role' = peran crew itu di event tersebut (crew_projects), kosong kalau tidak terdaftar.
+    private function fee_crew_per_event($crew_id, $dari, $sampai)
+    {
+        $sql = "SELECT pa.project_id_session AS project_id,
+                       COALESCE(p.event_date, MIN(pa.tanggal_transaksi)) AS tgl,
+                       p.client_name, p.location,
+                       SUM(pa.nominal_transaksi) AS fee,
+                       (SELECT GROUP_CONCAT(DISTINCT cp.role ORDER BY cp.role SEPARATOR ', ') FROM crew_projects cp
+                         WHERE cp.project_id = pa.project_id_session AND cp.crew_id = ?) AS role
+                FROM project_acc pa
+                LEFT JOIN project p ON p.id_session = pa.project_id_session
+                WHERE pa.detail = ?
+                GROUP BY pa.project_id_session, p.event_date, p.client_name, p.location
+                HAVING 1 = 1";
+        $param = [$crew_id, $crew_id];
+        if ($dari !== null) {
+            $sql .= ' AND tgl >= ?';
+            $param[] = $dari;
+        }
+        if ($sampai !== null) {
+            $sql .= ' AND tgl <= ?';
+            $param[] = $sampai;
+        }
+        $sql .= ' ORDER BY tgl ASC';
+
+        $rows = $this->db->query($sql, $param)->result();
+        foreach ($rows as $row) {
+            $row->event_date = $row->tgl;
+            $row->fee = (float) $row->fee;
+        }
+
+        return $rows;
+    }
     // Total pencapaian sales (closing) satu user di satu bulan — project
     // dihitung "achieved" kalau Pembayaran Kesatu sudah Paid (tanggal
     // berapa pun) dan Pembayaran Kedua Paid DI BULAN itu. Aturan sama
