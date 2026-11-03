@@ -209,6 +209,8 @@
 
 	                    </div>
 
+	                    <?php $this->load->view('backend/partial_pendapatan_crew', ['pendapatan_tampilan' => 'slide']) ?>
+
 	                    <div class="swiper-slide border-r border-stroke px-10 last:border-r-0 dark:border-strokedark">
 							<div class="flex items-center justify-between">
 								<div class="flex items-center gap-2.5">
@@ -358,6 +360,8 @@
 	                </div>
 	            </div>
 	            <!-- ====== Data Stats End -->
+
+				<?php $this->load->view('backend/partial_pendapatan_crew', ['pendapatan_tampilan' => 'dialog']) ?>
 
 				<?php $this->load->view('backend/partial_todo_list') ?>
 

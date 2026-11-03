@@ -31,9 +31,10 @@ class Aspanel extends CI_Controller {
 			$level = $this->session->userdata('level');
 			$data['tampilkan_button_event'] = false;
 
-			// Kartu pendapatan crew (partial_pendapatan_crew): dashboard Staff/Freelance (7), Staff Admin (4), Staff Sales (9),
-			// dan tampilan panel/staff milik level lain
-			if (in_array($level, ['4', '7', '9'], true) || $view === 'staff') {
+			// Kartu pendapatan crew (partial_pendapatan_crew): dashboard Developer (1), Administrator (2), Staff Admin (4),
+			// Staff/Freelance (7), Staff Sales (9), dan tampilan panel/staff milik level lain. Staff Accounting (3) memakai
+			// v_home yang sama tapi tidak dihitung, jadi partial-nya tidak tampil.
+			if (in_array($level, ['1', '2', '4', '7', '9'], true) || $view === 'staff') {
 				$data['pendapatan_crew'] = $this->Gaji_model->get_ringkasan_pendapatan_crew($this->session->userdata('id_session'));
 			}
 
