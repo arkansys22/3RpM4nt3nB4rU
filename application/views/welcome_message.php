@@ -11,7 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<script src="https://cdn.tailwindcss.com"></script>
 	<style>
 		body {
-			background-image: url('<?php echo base_url()?>assets/backend/welcome.png');
+			background-image: url('<?= htmlspecialchars(bg_beranda_url(), ENT_QUOTES) ?>');
 			background-size: cover;
 			background-position: center;
 			background-repeat: no-repeat;
@@ -19,7 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 		@media (max-width: 768px) {
 			body {
-				background-image: url('<?php echo base_url()?>assets/backend/welcomehp.png');
+				background-image: url('<?= htmlspecialchars(bg_beranda_hp_url(), ENT_QUOTES) ?>');
 			}
 		}
 	</style>
@@ -34,14 +34,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					</svg>
 					<span>Login</span>
 				</a>
-				<a href="https://wa.me/6281292929396?text=Halo%2C%20saya%20ingin%20menanyakan%20cara%20login%20ke%20Maid%20Mantenbaru." target="_blank" class="bg-[#25D366] hover:bg-green-600 text-white font-bold py-3 px-6 rounded text-xs flex items-center space-x-2">
+				<?php $wa_admin = nomor_wa_chat_admin() ?: '6281292929396'; // belum ada nomor di Pengaturan Website -> nomor lama ?>
+				<a href="https://wa.me/<?= $wa_admin ?>?text=<?= rawurlencode('Halo, saya ingin menanyakan cara login ke Maid ' . nama_website() . '.') ?>" target="_blank" class="bg-[#25D366] hover:bg-green-600 text-white font-bold py-3 px-6 rounded text-xs flex items-center space-x-2">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" class="w-5 h-5 transform scale-x-[-1]">
 						<path fill-rule="evenodd" d="M5.337 21.718a6.707 6.707 0 0 1-.533-.074.75.75 0 0 1-.44-1.223 3.73 3.73 0 0 0 .814-1.686c.023-.115-.022-.317-.254-.543C3.274 16.587 2.25 14.41 2.25 12c0-5.03 4.428-9 9.75-9s9.75 3.97 9.75 9c0 5.03-4.428 9-9.75 9-.833 0-1.643-.097-2.417-.279a6.721 6.721 0 0 1-4.246.997Z" clip-rule="evenodd" />
 					</svg>
 					<span>Chat Admin</span>
 				</a>
 			</div>
-			<p>Copyright © 2025 Mantenbaru Organizer</p>
+			<p><?= teks_footer_beranda() ?></p>
 		</footer>
 	</div>
 	</body>

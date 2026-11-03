@@ -41,7 +41,7 @@
 
 			      <!-- Logo Header -->
 			      <a class="block flex-shrink-0 lg:hidden" href="#"> 
-			        <img src="<?= logo_sidebar_url() ?>" alt="Logo" style="width:200px; height: 100%; "/>
+			        <img src="<?= logo_sidebar_url() ?>" alt="Logo" style="width:200px; height: 100%;<?= logo_sidebar_gaya() ?>"/>
 			      </a>
 			    </div>
 			    <div class="hidden sm:block">

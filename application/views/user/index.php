@@ -42,24 +42,24 @@
                 <div class="relative">
 
                   <!-- Tombol tambah potensial clients-->
-                  <a href="<?= site_url('user/create') ?>">
+                  <?php if (in_array($this->session->level, ['1', '4'], true)): ?><a href="<?= site_url('user/create') ?>">
                     <button class="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-700 focus:outline-none">                    
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m7-7H5"></path>
                         </svg>                    
                     </button>
-                  </a>
+                  </a><?php endif; ?>
                 </div>  
                 <div class="relative z-20">
 
                   <!-- Tombol batal potensial sampah-->
-                  <a href="<?= site_url('user/recycle_bin') ?>">
+                  <?php if (in_array($this->session->level, ['1', '4'], true)): ?><a href="<?= site_url('user/recycle_bin') ?>">
                     <button class="bg-red-500 text-white p-3 rounded-md hover:bg-red-700 focus:outline-none">                  
                       <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-2 14H7L5 7M12 4v-2m4 2h-8m5 2l1-1m3 1l-1-1m0 0h6l-1 2m-7-5h2m6 5H5"></path>
                       </svg>                    
                     </button>
-                  </a>     
+                  </a><?php endif; ?>     
                 </div> 
               </div>
 
@@ -261,7 +261,7 @@
                         <td>
                         <div class="flex flex-col items-start gap-2 w-max">
                           <a href="<?= site_url('user/lihat/'. $p->id_session) ?>" class="inline-flex justify-center bg-yellow-500 text-white px-2 py-1 rounded-md hover:bg-yellow-600 text-center w-full">Lihat</a>
-                          <a href="<?= site_url('user/delete/'.$p->id_session) ?>" class="inline-flex justify-center bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 min-w-full text-center" onclick="return confirm('Yakin ingin menghapus pengguna <?= $p->username ?> ?')">Hapus</a>
+                          <?php if (in_array($this->session->level, ['1', '4'], true)): ?><a href="<?= site_url('user/delete/'.$p->id_session) ?>" class="inline-flex justify-center bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 min-w-full text-center" onclick="return confirm('Yakin ingin menghapus pengguna <?= $p->username ?> ?')">Hapus</a><?php endif; ?>
                         </div>
                         </td>
                       </tr>

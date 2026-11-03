@@ -101,7 +101,7 @@
                     </li>
                     <li>
                       <a
-                      href="<?= site_url('user/edit/'. $pc->id_session . '?view_type=edit') ?>"
+                      href="<?= site_url(($pc->id_session == $this->session->id_session ? 'user/edit/' : 'user/editother/') . $pc->id_session . '?view_type=edit') ?>"
                       class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
                       >
                       Edit Pengguna
@@ -118,7 +118,7 @@
                     <?php elseif (in_array($this->session->userdata('level'), [2, 3, 4])): ?>
                     <li>
                       <a
-                      href="<?= site_url('user/edit/'. $pc->id_session . '?view_type=edit') ?>"
+                      href="<?= site_url(($pc->id_session == $this->session->id_session ? 'user/edit/' : 'user/editother/') . $pc->id_session . '?view_type=edit') ?>"
                       class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
                       >
                       Edit Pengguna

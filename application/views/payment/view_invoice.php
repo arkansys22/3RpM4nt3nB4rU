@@ -155,7 +155,7 @@
 
         <!-- Watermark -->
         <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03]">
-            <img src="<?= htmlspecialchars(url_gambar_pengaturan('logo', 'assets/backend/src/images/logo/logo mantenbaru merah-03.png')) ?>"
+            <img src="<?= htmlspecialchars(url_gambar_pengaturan('logo', 'assets/backend/logo-default.png')) ?>"
                 class="w-[420px]">
         </div>
 

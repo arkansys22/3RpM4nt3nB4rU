@@ -1061,7 +1061,7 @@ class Aspanel extends CI_Controller {
 																'user_update_hari'=>hari_ini(date('w')),
 																'user_update_tanggal'=>date('Y-m-d'),
 																'user_update_jam'=>date('H:i:s'));
-																$where = array('id_user' => $this->input->post('id_user'));
+																$where = array('id_user' => $this->session->userdata('id_user')); // akun sendiri saja, bukan id_user dari POST
 						    								$this->db->update('user',$data,$where);
 															}else if ($this->input->post('password')=='' ){
 																$data = array(
@@ -1071,7 +1071,7 @@ class Aspanel extends CI_Controller {
 																'user_update_hari'=>hari_ini(date('w')),
 																'user_update_tanggal'=>date('Y-m-d'),
 																'user_update_jam'=>date('H:i:s'));
-																$where = array('id_user' => $this->input->post('id_user'));
+																$where = array('id_user' => $this->session->userdata('id_user')); // akun sendiri saja, bukan id_user dari POST
 																$_image = $this->db->get_where('user',$where)->row();
 																$query = $this->db->update('user',$data,$where);
 																if($query){
@@ -1085,7 +1085,7 @@ class Aspanel extends CI_Controller {
 																'user_update_hari'=>hari_ini(date('w')),
 																'user_update_tanggal'=>date('Y-m-d'),
 																'user_update_jam'=>date('H:i:s'));
-																$where = array('id_user' => $this->input->post('id_user'));
+																$where = array('id_user' => $this->session->userdata('id_user')); // akun sendiri saja, bukan id_user dari POST
 						    								$this->db->update('user',$data,$where);
 															}else{
 															$data = array(
@@ -1096,7 +1096,7 @@ class Aspanel extends CI_Controller {
 																'user_update_hari'=>hari_ini(date('w')),
 																'user_update_tanggal'=>date('Y-m-d'),
 																'user_update_jam'=>date('H:i:s'));
-																$where = array('id_user' => $this->input->post('id_user'));
+																$where = array('id_user' => $this->session->userdata('id_user')); // akun sendiri saja, bukan id_user dari POST
 																$_image = $this->db->get_where('user',$where)->row();
 																$query = $this->db->update('user',$data,$where);
 																if($query){

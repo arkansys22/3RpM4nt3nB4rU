@@ -75,7 +75,7 @@
                   <ul class="flex flex-col">
                   <li>
                     <a
-                    href="<?= site_url('user/edit/'. $pc->id_session) ?>"
+                    href="<?= site_url(($pc->id_session == $this->session->id_session ? 'user/edit/' : 'user/editother/') . $pc->id_session) ?>"
                     class="flex px-5 py-2 font-medium hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
                     >
                     Edit

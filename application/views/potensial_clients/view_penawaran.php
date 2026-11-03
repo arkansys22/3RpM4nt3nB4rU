@@ -201,7 +201,7 @@ display:none;
 <body>
 
 
-<img src="<?= htmlspecialchars(url_gambar_pengaturan('logo', 'assets/backend/src/images/logo/logo mantenbaru merah-03.png')) ?>" class="watermark">
+<img src="<?= htmlspecialchars(url_gambar_pengaturan('logo', 'assets/backend/logo-default.png')) ?>" class="watermark">
 
 
 <!-- HEADER -->

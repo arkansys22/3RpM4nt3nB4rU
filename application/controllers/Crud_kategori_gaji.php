@@ -7,6 +7,7 @@ class Crud_kategori_gaji extends CI_Controller {
 	{
 	    parent::__construct();
 	    $this->load->model('Gaji_model');
+	    $this->load->model('Hak_akses_model');
 	}
 
 	// Fitur ini ada di sub menu Fin & Acc, jadi akses levelnya sama dengan
@@ -42,7 +43,7 @@ class Crud_kategori_gaji extends CI_Controller {
 	    $sql = "SELECT user.id_session, user.nama, user.level, user_level.user_level_nama
 	            FROM user
 	            JOIN user_level ON user_level.user_level_id = user.level
-	            WHERE user.level IN ('1','2','3','4','7','9')
+	            WHERE user.level IN ('" . implode("','", $this->Hak_akses_model->perluas_level(['1','2','3','4','7','9'])) . "')
 	            AND user.user_stat = 'Publish'
 	            ORDER BY user.nama ASC";
 	    $users = $this->db->query($sql)->result();

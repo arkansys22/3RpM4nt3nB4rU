@@ -9,7 +9,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       body {
-        background-image: url('<?php echo base_url()?>assets/backend/bglog.png');
+        background-image: url('<?= htmlspecialchars(bg_login_url('assets/backend/bglog.png'), ENT_QUOTES) ?>');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -66,7 +66,7 @@
 			<input type="submit" name="submit" value="Sign In" class="w-full cursor-pointer rounded-lg bg-[#ed126b] text-white py-2 px-4 font-medium hover:bg-opacity-90" />
 		  </div>
 		  <footer class="text-center mt-4 text-sm text-black">
-			Copyright © 2025 Mantenbaru Organizer
+			<?= teks_footer_beranda() ?>
 		  </footer>
 		  <!-- <div class="text-center">
 			<p class="font-medium">

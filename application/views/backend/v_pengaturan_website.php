@@ -101,7 +101,7 @@
                   <?php
                   $gambar = [
                       ['field' => 'logo',         'judul' => 'Logo (halaman login)',          'info' => 'Dipakai di halaman login (latar terang).',          'url' => logo_login_url(),   'kolom' => 'logo',      'latar' => 'bg-white',   'tinggi' => 'h-20'],
-                      ['field' => 'logo_sidebar', 'judul' => 'Logo Sidebar (latar gelap)',    'info' => 'Dipakai di sidebar dan header (latar gelap).',      'url' => logo_sidebar_url(), 'kolom' => 'mini_logo', 'latar' => 'bg-black',   'tinggi' => 'h-20'],
+                      ['field' => 'logo_sidebar', 'judul' => 'Logo Sidebar (latar gelap)',    'info' => 'Dipakai di sidebar dan header (latar gelap). Kalau kosong tapi Logo (halaman login) sudah diupload, logo itu dipakai dengan alas putih.',      'url' => url_gambar_pengaturan('mini_logo', 'assets/backend/logo-default-putih.png'), 'kolom' => 'mini_logo', 'latar' => 'bg-black',   'tinggi' => 'h-20'],
                       ['field' => 'favicon',      'judul' => 'Favicon',                       'info' => 'Ikon kecil di tab browser. Disarankan persegi (PNG).', 'url' => favicon_url(),     'kolom' => 'favicon',   'latar' => 'bg-gray-100', 'tinggi' => 'h-16'],
                   ];
                   foreach ($gambar as $g):
@@ -127,6 +127,50 @@
                   <?php endforeach; ?>
                 </div>
 
+                <div class="mt-6 rounded-md border border-stroke p-4 dark:border-strokedark">
+                  <p class="mb-1 font-medium">Halaman Awal (Homepage) &amp; Login</p>
+                  <p class="mb-3 text-xs text-gray-500">Tampilan halaman pertama website dan halaman login: gambar latar, teks footer (dipakai di kedua halaman), dan nomor tombol <strong>Chat Admin</strong>. Nomor tombol Chat Admin memakai <strong>nomor WhatsApp pertama</strong> di kolom Nomor WhatsApp di atas (format 08xx otomatis menjadi 628xx).</p>
+                  <?php if (!empty($beranda_ada)): ?>
+                  <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+                    <?php
+                    $latar = [
+                        ['field' => 'bg_beranda',    'judul' => 'Gambar Latar (Desktop)', 'info' => 'Dipakai di layar lebar. Disarankan landscape.', 'url' => bg_beranda_url()],
+                        ['field' => 'bg_beranda_hp', 'judul' => 'Gambar Latar (HP)',      'info' => 'Dipakai di layar HP. Kalau kosong, memakai latar desktop (bila sudah diupload).', 'url' => bg_beranda_hp_url()],
+                        ['field' => 'bg_login',      'judul' => 'Gambar Latar (Halaman Login)', 'info' => 'Dipakai di halaman login staff dan login client.', 'url' => bg_login_url('assets/backend/bglog.png')],
+                    ];
+                    foreach ($latar as $g):
+                        $custom = strpos(trim((string) ($pengaturan->{$g['field']} ?? '')), 'pengaturan/') === 0;
+                        $pakai_desktop = $g['field'] === 'bg_beranda_hp' && !$custom && strpos(trim((string) ($pengaturan->bg_beranda ?? '')), 'pengaturan/') === 0;
+                    ?>
+                    <div class="rounded-md border border-stroke p-4 dark:border-strokedark">
+                      <p class="mb-1 font-medium"><?= $g['judul'] ?></p>
+                      <p class="mb-3 text-xs text-gray-500"><?= $g['info'] ?></p>
+                      <div class="mb-3 flex items-center justify-center rounded bg-gray-100 p-3">
+                        <img src="<?= htmlspecialchars($g['url']) ?>" alt="<?= $g['judul'] ?>" class="h-40 max-w-full rounded object-contain">
+                      </div>
+                      <input type="file" name="<?= $g['field'] ?>" accept="image/png,image/jpeg,image/gif,image/webp" class="w-full text-sm text-gray-500 file:mr-3 file:rounded file:border-0 file:bg-blue-50 file:px-3 file:py-2 file:text-sm file:font-semibold file:text-blue-700 hover:file:bg-blue-100">
+                      <p class="mt-1 text-xs text-gray-500">PNG/JPG/GIF/WEBP, maks 5 MB.</p>
+                      <?php if ($custom): ?>
+                        <label class="mt-2 inline-flex items-center gap-2 text-sm">
+                          <input type="checkbox" name="hapus_<?= $g['field'] ?>" value="1"> Kembalikan ke bawaan
+                        </label>
+                      <?php elseif ($pakai_desktop): ?>
+                        <p class="mt-2 text-xs text-gray-500">Saat ini memakai gambar latar desktop.</p>
+                      <?php else: ?>
+                        <p class="mt-2 text-xs text-gray-500">Saat ini memakai tampilan bawaan.</p>
+                      <?php endif; ?>
+                    </div>
+                    <?php endforeach; ?>
+                  </div>
+                  <div class="mt-4">
+                    <label class="mb-2 block text-sm font-medium" for="teks_footer">Teks Footer</label>
+                    <input type="text" id="teks_footer" name="teks_footer" maxlength="200" placeholder="Copyright © {tahun} <?= htmlspecialchars(nama_website()) ?>" value="<?= htmlspecialchars((string) ($pengaturan->teks_footer ?? '')) ?>" class="w-full rounded border px-4 py-2">
+                    <p class="mt-1 text-xs text-gray-500">Kosongkan untuk memakai teks otomatis: <em>Copyright © tahun ini + Nama Website</em>. <code>{tahun}</code> diganti tahun berjalan.</p>
+                  </div>
+                  <?php else: ?>
+                  <p class="text-sm text-red-600">Kolom pengaturan homepage belum bisa dibuat di database (hak ALTER), jadi halaman awal tetap memakai tampilan bawaan.</p>
+                  <?php endif; ?>
+                </div>
                 <div class="mt-6 rounded-md border border-stroke p-4 dark:border-strokedark">
                   <p class="mb-1 font-medium">Kode Awal Nomor Transaksi</p>
                   <p class="mb-3 text-xs text-gray-500">3 huruf/angka di depan nomor invoice dan kwitansi, contoh: <code>IMB260417112</code> (kode + tanggal + nomor). Hanya berlaku untuk dokumen yang dibuat sesudah diubah; dokumen lama tetap memakai kode lamanya dan tetap dikenali.</p>

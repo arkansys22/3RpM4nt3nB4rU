@@ -67,6 +67,7 @@ class Client extends CI_Controller
               $this->db->where('id_user', $row['id_user'])
                        ->update('user', ['password' => password_hash($input_password, PASSWORD_DEFAULT)]);
           }
+        $this->session->unset_userdata('level_asli'); // jangan mewarisi pengaturan halaman login staff sebelumnya
         $this->session->set_userdata(
           array(
             'username' => $row['username'],

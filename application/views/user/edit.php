@@ -9,7 +9,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       document.addEventListener('DOMContentLoaded', function () {
-        const levelSelect = document.querySelector('select[name="level"]');
+        const levelSelect = document.getElementById('levelSelect');
         const clientIdField = document.getElementById('clientidField');
         const crewIdField = document.querySelector('select[name="crewid"]').closest('div');
         const partnerIdField = document.querySelector('select[name="partnerid"]').closest('div'); // Ensure Partner ID field is handled
@@ -88,6 +88,7 @@
                 <input type="password" name="password" placeholder="Ganti password isi disini, jika tidak abaikan" class="w-full px-4 py-2 border rounded mb-4w-full px-4 py-2 border rounded mb-4">
                 
                 <label class="block mb-2">Level</label>
+                <?php if (!empty($level_bisa_diubah)): ?>
                 <div id="levelBox" class="relative mb-4">
                 <button type="button" id="levelTombol" class="flex w-full items-center justify-between px-4 py-2 border rounded text-left"><span id="levelTeks">-</span><span class="ml-2 text-xs">&#9660;</span></button>
                 <div id="levelPanel" class="absolute left-0 right-0 z-50 mt-1 hidden rounded border bg-white shadow-lg dark:bg-boxdark">
@@ -101,9 +102,22 @@
                             }else{
                               echo"<option value='$p[user_level_id]'>$p[user_level_nama]</option>";
                         }
-                      } ?>                    
+                      } ?>
                 </select>
                 </div>
+                <?php else: ?>
+                <?php
+                $nama_level = 'Level ' . $pc->level;
+                foreach ($level as $p) {
+                    if ($pc->level == $p['user_level_id']) { $nama_level = $p['user_level_nama']; break; }
+                }
+                ?>
+                <?php $akun_sendiri = $this->session->id_session && (string) $pc->id_session === (string) $this->session->id_session; ?>
+                <input type="text" value="<?= htmlspecialchars($nama_level) ?>" readonly disabled title="Level tidak bisa diubah di sini" class="w-full px-4 py-2 border rounded mb-1 bg-gray-100 text-gray-500 cursor-not-allowed dark:bg-meta-4">
+                <p class="mb-4 text-xs text-gray-500"><?= $akun_sendiri ? 'Level akun sendiri tidak bisa diubah.' : 'Level tidak bisa diubah di halaman ini.' ?></p>
+                <?php /* hanya untuk script tampil/sembunyi Crews/Client/Partner ID; tanpa name, jadi tidak ikut terkirim */ ?>
+                <input type="hidden" id="levelSelect" value="<?= htmlspecialchars($pc->level) ?>">
+                <?php endif; ?>
 
                 <div>
                   <label class="block mb-2">Crews ID</label>
@@ -228,6 +242,7 @@
         document.addEventListener('click', function (e) { if (!box.contains(e.target)) { tutup(); } });
     })();
 
+    <?php if (!empty($level_bisa_diubah)): ?>
     // Level dengan pencarian di dalam kotak pilihan: klik untuk membuka daftar, ketik untuk menyaring
     (function () {
         var select = document.getElementById('levelSelect');
@@ -284,6 +299,7 @@
         });
         document.addEventListener('click', function (e) { if (!box.contains(e.target)) { tutup(); } });
     })();
+    <?php endif; ?>
   </script>
 </body>
 </html>

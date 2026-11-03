@@ -23,3 +23,11 @@ $hook['post_controller_constructor'][] = array(
     'filename' => 'Track_online.php',
     'filepath' => 'hooks',
 );
+
+// Hak Akses per Level: batasi halaman yang boleh dibuka level yang sudah diatur (lihat hooks/Hak_akses_guard.php)
+$hook['post_controller_constructor'][] = array(
+    'class'    => 'Hak_akses_guard',
+    'function' => 'periksa',
+    'filename' => 'Hak_akses_guard.php',
+    'filepath' => 'hooks',
+);

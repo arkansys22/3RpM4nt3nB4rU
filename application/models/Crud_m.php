@@ -268,9 +268,17 @@ class Crud_m extends CI_model{
       return $query->result_array();
   }
 
+  // Tambahkan level baru buatan Developer yang berinduk ke salah satu level di daftar (menu Hak Akses)
+  private function perluas_level_kustom($levels)
+  {
+      $CI =& get_instance();
+      $CI->load->model('Hak_akses_model');
+      return $CI->Hak_akses_model->perluas_level($levels);
+  }
+
   public function view_where_user_ordering($table,$order,$ordering)
-  {   
-      $this->db->where_in('level', [1,2,3,4,8]);
+  {
+      $this->db->where_in('level', $this->perluas_level_kustom([1,2,3,4,8]));
       $this->db->order_by($order,$ordering);
       $query = $this->db->get($table);
       return $query->result_array();
@@ -279,7 +287,7 @@ class Crud_m extends CI_model{
 
   public function view_where_user_orderingss($table,$order,$ordering)
   {   
-      $this->db->where_in('level', [1,2,3,4,9]);
+      $this->db->where_in('level', $this->perluas_level_kustom([1,2,3,4,9]));
       $this->db->order_by($order,$ordering);
       $query = $this->db->get($table);
       return $query->result_array();

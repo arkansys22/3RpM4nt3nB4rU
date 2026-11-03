@@ -55,6 +55,37 @@ class Pengaturan_model extends CI_Model {
         }
         return true;
     }
+    // Kolom pengaturan halaman awal & login: bg_beranda (latar desktop), bg_beranda_hp (latar HP),
+    // bg_login (latar halaman login), teks_footer. Ditambahkan otomatis di tabel identitas kalau belum ada; false = database tidak mengizinkan ALTER.
+    public function beranda_tersedia() {
+        $kolom = [
+            'bg_beranda' => ['type' => 'VARCHAR', 'constraint' => 200, 'null' => true],
+            'bg_beranda_hp' => ['type' => 'VARCHAR', 'constraint' => 200, 'null' => true],
+            'bg_login' => ['type' => 'VARCHAR', 'constraint' => 200, 'null' => true],
+            'teks_footer' => ['type' => 'VARCHAR', 'constraint' => 200, 'null' => true],
+        ];
+        $perlu = [];
+        foreach ($kolom as $nama => $def) {
+            if (!$this->db->field_exists($nama, 'identitas')) {
+                $perlu[$nama] = $def;
+            }
+        }
+        if ($perlu) {
+            try {
+                $this->load->dbforge();
+                $this->dbforge->add_column('identitas', $perlu);
+            } catch (Throwable $e) {
+                log_message('error', 'Gagal menambah kolom homepage di identitas: ' . $e->getMessage());
+            }
+            $this->db->data_cache = [];
+        }
+        foreach (array_keys($kolom) as $nama) {
+            if (!$this->db->field_exists($nama, 'identitas')) {
+                return false;
+            }
+        }
+        return true;
+    }
     public function get() {
         $row = $this->db->get_where('identitas', ['id_identitas' => self::ID])->row();
         if (!$row) {

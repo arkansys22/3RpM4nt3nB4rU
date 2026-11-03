@@ -26,7 +26,7 @@
       <section class="absolute w-full h-full">
         <div
           class="absolute top-0 w-full h-full bg-white bg-cover bg-center"
-          style="background-image: url(<?= base_url('assets/backend/src/images/logo/bgclogin.png') ?>); background-size: cover; background-repeat: no-repeat;"
+          style="background-image: url('<?= htmlspecialchars(bg_login_url('assets/backend/src/images/logo/bgclogin.png'), ENT_QUOTES) ?>'); background-size: cover; background-repeat: no-repeat;"
         ></div>
         <div class="container mx-auto px-4 h-full">
           <div class="flex content-center items-center justify-center h-full">
@@ -93,7 +93,7 @@
             <div class="flex flex-wrap items-center md:justify-between justify-center">
               <div class="w-full md:w-4/12 px-4">
                 <div class="text-sm text-gray-900 font-semibold py-1">
-                  Copyright © 2025 Mantenbaru Organizers
+                  <?= teks_footer_beranda() ?>
                 </div>
               </div>
             </div>

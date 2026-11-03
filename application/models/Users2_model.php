@@ -10,8 +10,18 @@ class Users2_model extends CI_Model {
     }
 
 
+    // Daftar user untuk Staff Admin: semua user aktif KECUALI Developer, Administrator, dan level baru yang berinduk keduanya
     public function get_all_user_admin() {
-        $this->db->where_in('level', [3,4,5,6,7,8]);
+        $this->load->model('Hak_akses_model');
+        $this->db->where_not_in('level', $this->Hak_akses_model->perluas_level(['1', '2']));
+        $this->db->order_by('level', 'ASC');
+        $this->db->where('user_stat', 'Publish');
+        return $this->db->get('user')->result();
+    }
+
+    // Daftar user untuk Administrator: semua user aktif kecuali Developer
+    public function get_all_user_non_developer() {
+        $this->db->where('level !=', '1');
         $this->db->order_by('level', 'ASC');
         $this->db->where('user_stat', 'Publish');
         return $this->db->get('user')->result();
@@ -64,7 +74,8 @@ class Users2_model extends CI_Model {
     // Staff/Crew(7), Staff Sales(9) -- dipakai buat dropdown "Staff" di finance-operational/create
     // saat kategori transaksi = gaji (6201.01).
     public function get_all_staff_gaji_user() {
-        $this->db->where_in('level', ['1', '2', '3', '4', '7', '9']);
+        $this->load->model('Hak_akses_model');
+        $this->db->where_in('level', $this->Hak_akses_model->perluas_level(['1', '2', '3', '4', '7', '9']));
         $this->db->where('user_stat', 'Publish');
         $this->db->order_by('nama', 'ASC');
         return $this->db->get('user')->result();
@@ -74,7 +85,8 @@ class Users2_model extends CI_Model {
     // "Penerima Komisi" di finance-operational saat kategori = Biaya komisi (6100.02).
     public function get_all_user_aktif() {
         $this->db->where('user_stat', 'Publish');
-        $this->db->where_in('level', ['1', '2', '3', '4', '9']);
+        $this->load->model('Hak_akses_model');
+        $this->db->where_in('level', $this->Hak_akses_model->perluas_level(['1', '2', '3', '4', '9']));
         $this->db->order_by('nama', 'ASC');
         return $this->db->get('user')->result();
     }

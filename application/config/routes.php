@@ -22,7 +22,8 @@ $route['user'] = 'crud_user/index'; // Menampilkan daftar user
 $route['user/lihat/(:any)'] = 'crud_user/lihat/$1'; // Menampilkan detail user
 $route['user/create'] = 'crud_user/create'; // Menampilkan form tambah user
 $route['user/store'] = 'crud_user/store'; // Menyimpan data user baru
-$route['user/edit/(:any)'] = 'crud_user/edit/$1'; // Menampilkan form edit user
+$route['user/edit/(:any)'] = 'crud_user/edit/$1'; // Form edit user (level TIDAK bisa diubah)
+$route['user/editother/(:any)'] = 'crud_user/editother/$1'; // Form edit user LAIN (level bisa diubah sesuai role)
 $route['user/edit_staff/(:any)'] = 'crud_user/edit/$1'; // Menampilkan form edit user
 $route['user/update/(:any)'] = 'crud_user/update/$1'; // Mengupdate user
 $route['user/update2/(:any)'] = 'crud_user/update2/$1'; // Mengupdate user
@@ -414,5 +415,13 @@ $route['pengaturan-website'] = 'Crud_pengaturan_website/index';
 $route['pengaturan-website/update'] = 'Crud_pengaturan_website/update';
 $route['pengaturan-website/rekening/simpan'] = 'Crud_pengaturan_website/rekening_simpan';
 $route['pengaturan-website/rekening/hapus/(:num)'] = 'Crud_pengaturan_website/rekening_hapus/$1';
+
+// Hak Akses per level user (halaman mana saja yang tampil / boleh dibuka tiap level)
+$route['hak-akses'] = 'Crud_hak_akses/index';
+$route['hak-akses/level/(:num)'] = 'Crud_hak_akses/level/$1';
+$route['hak-akses/simpan'] = 'Crud_hak_akses/simpan';
+$route['hak-akses/reset/(:num)'] = 'Crud_hak_akses/reset/$1';
+$route['hak-akses/level-baru'] = 'Crud_hak_akses/level_baru';
+$route['hak-akses/level-hapus/(:num)'] = 'Crud_hak_akses/level_hapus/$1';
 
 $route['petacrawl\.xml'] = "petacrawl";

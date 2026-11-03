@@ -7,7 +7,7 @@
 			<!-- SIDEBAR HEADER -->
 			<div class="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
 			    <a href="#"> <!-- Logo Header -->
-			      <img src="<?= logo_sidebar_url() ?>" alt="Logo" style="width:200px; height: 100%; "/>
+			      <img src="<?= logo_sidebar_url() ?>" alt="Logo" style="width:200px; height: 100%;<?= logo_sidebar_gaya() ?>"/>
 			    </a>
 
 			    <button
@@ -38,7 +38,8 @@
 			        	<h3 class="mb-4 ml-4 text-sm font-medium text-bodydark2">MENU</h3>
 				        <ul class="mb-6 flex flex-col gap-1.5">
 					        <!-- Menu Item Dashboard -->
-							<li>
+							<?php if (izin_menu('dashboard')): ?>
+<li>
 								<a
 									class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
 									href="<?= base_url('panel'); ?>"
@@ -73,11 +74,13 @@
 					              Dashboard
 					            </a>
 					        </li>
+<?php endif; ?>
 					        <!-- Menu Item Dashboard -->
 
-					    <?php  if($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='4' OR $this->session->level=='9'){ ?>
+					    <?php  if(sidebar_level_ok(['1','2','4','9'])){ ?>
 					        <!-- Menu Item potensial clients -->
-					        <li>
+					        <?php if (izin_menu('potensial_clients')): ?>
+<li>
 					            <a
 						              class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
 						              href="<?= base_url('potensial-clients'); ?>"
@@ -112,7 +115,9 @@
 							             Potensial Clients
 					            </a>					            
 					        </li>
-					        <li>
+<?php endif; ?>
+					        <?php if (izin_menu('daftar_harga')): ?>
+<li>
 					            <a
 						              class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
 						              href="<?= base_url('potensial-clients-pricelist'); ?>"
@@ -147,11 +152,13 @@
 							             Daftar Harga
 					            </a>					            
 					        </li>
+<?php endif; ?>
 					       <?php } ?>
 					        <!-- Menu Item potensial clients -->
-					       <?php  if($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='4' OR $this->session->level=='9'){ ?>
+					       <?php  if(sidebar_level_ok(['1','2','4','9'])){ ?>
 							<!-- Menu Item project -->
-					        <li>
+					        <?php if (izin_menu('project')): ?>
+<li>
 					            <a
 						              class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
 						              href="<?= base_url('project'); ?>"
@@ -186,11 +193,12 @@
 							             Project
 					            </a>					            
 					        </li>
+<?php endif; ?>
 					<?php } ?>
 
 					<!-- Stock/User/Crew/Partner: BUKAN buat Staff Sales (level 9) -- makanya
 					     dipisah dari blok Project di atas, bukan ikut kondisi yang sama. -->
-					<?php  if($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='4'){ ?>
+					<?php  if(sidebar_level_ok(['1','2','4'])){ ?>
 
 					         <!-- Menu Item clients -->
 					        <!-- <li>
@@ -230,7 +238,8 @@
 					        </li> -->
 					      
 							<!-- Menu Item Stock -->
-					        <li>
+					        <?php if (izin_menu('stock')): ?>
+<li>
 					            <a
 						              class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
 						              href="<?= base_url('supplies'); ?>"
@@ -265,10 +274,12 @@
 							             Stock
 					            </a>					            
 					        </li>
-					        <li>
+<?php endif; ?>
+					        <?php if (izin_menu('user')): ?>
+<li>
     <a
         class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
-        href="<?= ($this->session->level == '7') ? base_url('user/lihat/' . $this->session->id_session) : base_url('user'); ?>"
+        href="<?= (level_akun() === '7') ? base_url('user/lihat/' . $this->session->id_session) : base_url('user'); ?>"
         @click="selected = 'users'"
         :class="{ 'bg-graydark dark:bg-meta-4': (selected === 'users') }"
     >
@@ -300,7 +311,9 @@
         User
     </a>
 </li>
-					        <li>
+<?php endif; ?>
+					        <?php if (izin_menu('crews')): ?>
+<li>
 					            <a
 						              class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
 						              href="<?= base_url('crews'); ?>"
@@ -335,8 +348,10 @@
 							             Crew
 					            </a>					            
 					        </li>
+<?php endif; ?>
 							<!-- Menu Item Partner -->
-					        <li>
+					        <?php if (izin_menu('partner')): ?>
+<li>
 					            <a
 						              class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
 						              href="<?= base_url('partner'); ?>"
@@ -371,12 +386,14 @@
 							             Partner
 					            </a>					            
 					        </li>
+<?php endif; ?>
 					        <!-- Menu Item Partner -->
-					    <?php } elseif ($this->session->level == '7') { ?>
-	<li class="lg:hidden">
+					    <?php } elseif (level_akun() === '7') { ?>
+	<?php if (izin_menu('user')): ?>
+<li class="lg:hidden">
 		<a
 			class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
-			href="<?= ($this->session->level == '7') ? base_url('user/lihat/' . $this->session->id_session) : base_url('user'); ?>"
+			href="<?= (level_akun() === '7') ? base_url('user/lihat/' . $this->session->id_session) : base_url('user'); ?>"
 			@click="selected = 'users'"
 			:class="{ 'bg-graydark dark:bg-meta-4': (selected === 'users') }"
 		>
@@ -408,9 +425,11 @@
 			User
 		</a>
 	</li>
+<?php endif; ?>
 <?php } ?>
-<?php if($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='4'){ ?>
-	<li>
+<?php if(sidebar_level_ok(['1','2','4'])){ ?>
+	<?php if (izin_menu('susunan_acara')): ?>
+<li>
 		<a
 			class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
 			href="<?= base_url('susunan-acara'); ?>"
@@ -445,9 +464,11 @@
 			Susunan Acara
 		</a>
 	</li>
+<?php endif; ?>
 <?php } ?>
-<?php if($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='4'){ ?>
-	<li>
+<?php if(sidebar_level_ok(['1','2','4'])){ ?>
+	<?php if (izin_menu('peralatan_event')): ?>
+<li>
 		<a
 			class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
 			href="<?= base_url('peralatan-event'); ?>"
@@ -460,9 +481,11 @@
 			Template Peralatan Event
 		</a>
 	</li>
+<?php endif; ?>
 <?php } ?>
-<?php if($this->session->level=='1' OR $this->session->level=='2'){ ?>
-	<li>
+<?php if(sidebar_level_ok(['1','2'])){ ?>
+	<?php if (izin_menu('pengaturan_website')): ?>
+<li>
 		<a
 			class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
 			href="<?= base_url('pengaturan-website'); ?>"
@@ -475,14 +498,31 @@
 			Pengaturan Website
 		</a>
 	</li>
+<?php endif; ?>
 <?php } ?>
-						<?php  if($this->session->level=='1' OR $this->session->level=='2' OR $this->session->level=='3'){ ?>
+<?php if (in_array(level_akun(), ['1','2'], true) && izin_menu('hak_akses')){ ?>
+	<li>
+		<a
+			class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
+			href="<?= base_url('hak-akses'); ?>"
+			@click="selected = 'hak_akses'"
+			:class="{ 'bg-graydark dark:bg-meta-4': (selected === 'hak_akses') }"
+		>
+			<svg class="fill-current" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3Zm0 2.2 6 2.3V11c0 3.9-2.5 7.6-6 8.9C8.5 18.6 6 14.9 6 11V6.5l6-2.3Zm-1 4.3v4.2l-1.6-1.6L8 12.5l3.3 3.3a1 1 0 0 0 1.4 0L16 12.5l-1.4-1.4-1.6 1.6V8.5h-2Z" fill=""/>
+			</svg>
+			Hak Akses
+		</a>
+	</li>
+<?php } ?>
+						<?php  if(sidebar_level_ok(['1','2','3'])){ ?>
 					    	 <!-- Menu Item clients -->
 					        
 							
 					    
 					        <!-- Menu Item Settings -->
-							<li>
+							<?php if (izin_menu_salah_satu(['finance_project','finance_operational','coa','rekap_gaji'])): ?>
+<li>
 								<a
 									  class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
 									  href="#"
@@ -552,47 +592,59 @@
 					            <div 
 					            	class="translate transform overflow-hidden" :class="(selected === 'FinAcc') ? 'block' :'hidden'" >
 					              	<ul class="mb-5.5 mt-4 flex flex-col gap-2.5 pl-6">
-					              		<li>
+					              		<?php if (izin_menu('finance_project')): ?>
+<li>
 						                  <a
 						                    class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
 						                    href="<?= base_url('finance-project'); ?>"
 						                    :class="page === 'kanban' && '!text-white'"
 						                    >Project</a>
 						                </li>
-						                <li>
+<?php endif; ?>
+						                <?php if (izin_menu('finance_operational')): ?>
+<li>
 						                  <a
 						                    class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
 						                    href="<?= base_url('finance-operational'); ?>"
 						                    :class="page === 'kanban' && '!text-white'"
 						                    >Operational</a>
 						                </li>
-					              		<li>
+<?php endif; ?>
+					              		<?php if (izin_menu('coa')): ?>
+<li>
 						                  <a
 						                    class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
 						                    href="<?= base_url('coa'); ?>"
 						                    :class="page === 'kanban' && '!text-white'"
 						                    >Chart Of Account</a>
 						                </li>
-						                <li>
+<?php endif; ?>
+						                <?php if (menu_diizinkan() === null): ?>
+<li>
 						                  <a
 						                    class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
 						                    href="#"
 						                    :class="page === 'list' && '!text-white'"
 						                    >Finance</a>
 						                </li>
-						                <li>
+<?php endif; ?>
+						                <?php if (izin_menu('rekap_gaji')): ?>
+<li>
 						                  <a
 						                    class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
 						                    href="<?= base_url('rekap-gaji'); ?>"
 						                    :class="page === 'kanban' && '!text-white'"
 						                    >Setting Salary</a>
 						                </li>
+<?php endif; ?>
 					              	</ul>
 					            </div>
 					            <!-- Dropdown Menu End -->
 					        </li>
+<?php endif; ?>
 
-					        <li>
+					        <?php if (izin_menu_salah_satu(['sales_target'])): ?>
+<li>
 								<a
 									  class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
 									  href="#"
@@ -662,24 +714,29 @@
 					            <div 
 					            	class="translate transform overflow-hidden" :class="(selected === 'SalesMark') ? 'block' :'hidden'" >
 					              	<ul class="mb-5.5 mt-4 flex flex-col gap-2.5 pl-6">
-					              		<li>
+					              		<?php if (izin_menu('sales_target')): ?>
+<li>
 						                  <a
 						                    class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
 						                    href="<?= base_url('sales-setting-target'); ?>"
 						                    :class="page === 'kanban' && '!text-white'"
 						                    >Setting Target</a>
 						                </li>
-						                <li>
+<?php endif; ?>
+						                <?php if (menu_diizinkan() === null): ?>
+<li>
 						                  <a
 						                    class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
 						                    href="#"
 						                    :class="page === 'kanban' && '!text-white'"
 						                    >Statistik Sales</a>
 						                </li>
+<?php endif; ?>
 					              	</ul>
 					            </div>
 					            <!-- Dropdown Menu End -->
 					        </li>
+<?php endif; ?>
 
 					        <!-- Menu Item Settings -->
 						<?php }else{ ?>

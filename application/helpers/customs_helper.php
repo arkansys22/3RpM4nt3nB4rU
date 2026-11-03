@@ -823,10 +823,32 @@ if (!function_exists('favicon_url')) {
     function favicon_url() { return url_gambar_pengaturan('favicon', 'assets/backend/mb.png'); }
 }
 if (!function_exists('logo_login_url')) {      // halaman login (latar terang)
-    function logo_login_url() { return url_gambar_pengaturan('logo', 'assets/backend/src/images/logo/logo mantenbaru merah-02.png'); }
+    function logo_login_url() { return url_gambar_pengaturan('logo', 'assets/backend/logo-default.png'); }
 }
-if (!function_exists('logo_sidebar_url')) {    // sidebar & header (latar gelap)
-    function logo_sidebar_url() { return url_gambar_pengaturan('mini_logo', 'assets/backend/src/images/logomantenbaru.png'); }
+// Logo sidebar & header (latar gelap): Logo Sidebar upload; kalau belum ada tapi Logo (halaman login) sudah
+// diupload, logo itu dipakai (lihat logo_sidebar_gaya()); kalau tidak keduanya, logo bawaan netral (logo-default-putih.png).
+if (!function_exists('logo_sidebar_url')) {
+    function logo_sidebar_url() {
+        if (!logo_sidebar_pakai_logo_login()) {
+            return url_gambar_pengaturan('mini_logo', 'assets/backend/logo-default-putih.png');
+        }
+        return url_gambar_pengaturan('logo', 'assets/backend/logo-default-putih.png');
+    }
+}
+if (!function_exists('logo_sidebar_pakai_logo_login')) {
+    function logo_sidebar_pakai_logo_login() {
+        $cek = function ($kolom) {
+            $v = pengaturan_website($kolom);
+            return strpos($v, 'pengaturan/') === 0 && strpos($v, '..') === false && is_file(FCPATH . 'assets/uploads/' . $v);
+        };
+        return !$cek('mini_logo') && $cek('logo');
+    }
+}
+// Gaya tambahan untuk <img> logo sidebar: logo login (latar terang) diberi alas putih agar terbaca di sidebar gelap.
+if (!function_exists('logo_sidebar_gaya')) {
+    function logo_sidebar_gaya() {
+        return logo_sidebar_pakai_logo_login() ? ' background:#fff; padding:6px 10px; border-radius:8px; box-sizing:border-box; object-fit:contain;' : '';
+    }
 }
 if (!function_exists('nama_website')) {
     function nama_website() { return pengaturan_website('nama_website', 'Mantenbaru'); }
@@ -991,6 +1013,117 @@ if (!function_exists('staff_id_transaksi_operasional')) {
             return $komisi;
         }
         return null;
+    }
+}
+
+// ===== Halaman awal (homepage / welcome) dari Pengaturan Website =====
+
+// Latar halaman awal versi desktop; bawaan assets/backend/welcome.png.
+if (!function_exists('bg_beranda_url')) {
+    function bg_beranda_url() { return url_gambar_pengaturan('bg_beranda', 'assets/backend/welcome.png'); }
+}
+
+// Latar versi HP; kalau belum diupload memakai latar desktop yang sudah diupload, lalu bawaan welcomehp.png.
+if (!function_exists('bg_beranda_hp_url')) {
+    function bg_beranda_hp_url() {
+        foreach (['bg_beranda_hp', 'bg_beranda'] as $kolom) {
+            $nilai = pengaturan_website($kolom);
+            if (strpos($nilai, 'pengaturan/') === 0 && strpos($nilai, '..') === false && is_file(FCPATH . 'assets/uploads/' . $nilai)) {
+                return base_url('assets/uploads/' . $nilai);
+            }
+        }
+        return base_url('assets/backend/welcomehp.png');
+    }
+}
+
+// Latar halaman login (staff & client): gambar upload, atau gambar bawaan masing-masing halaman ($bawaan).
+if (!function_exists('bg_login_url')) {
+    function bg_login_url($bawaan) { return url_gambar_pengaturan('bg_login', $bawaan); }
+}
+
+// Teks footer homepage & halaman login (sudah di-escape). Kosong di pengaturan -> "Copyright © <tahun ini> <nama website>".
+// {tahun} di teks buatan sendiri diganti tahun berjalan.
+if (!function_exists('teks_footer_beranda')) {
+    function teks_footer_beranda() {
+        $teks = pengaturan_website('teks_footer');
+        if ($teks === '') {
+            $teks = 'Copyright © {tahun} ' . nama_website();
+        }
+        return htmlspecialchars(str_replace('{tahun}', date('Y'), $teks));
+    }
+}
+
+// Nomor WhatsApp untuk tombol "Chat Admin": nomor pertama di Pengaturan Website, format internasional
+// tanpa tanda (08xx -> 628xx). Kosong kalau belum diisi.
+if (!function_exists('nomor_wa_chat_admin')) {
+    function nomor_wa_chat_admin() {
+        $semua = daftar_whatsapp();
+        // "+62 (0)812.." -> buang nol dalam kurung (nol awal setelah kode negara)
+        $angka = $semua ? preg_replace('/\D+/', '', preg_replace('/\(\s*0\s*\)/', '', $semua[0])) : '';
+        if ($angka === '') {
+            return '';
+        }
+        if (strpos($angka, '00') === 0) {
+            $angka = substr($angka, 2);
+        }
+        if (strpos($angka, '0') === 0) {
+            $angka = '62' . substr($angka, 1);
+        } elseif (strpos($angka, '62') !== 0) {
+            $angka = '62' . $angka; // ditulis tanpa 0 / kode negara (mis. 812...)
+        }
+        return $angka;
+    }
+}
+
+// ===== Hak Akses per Level (lihat config/hak_akses.php, Hak_akses_model, hooks/Hak_akses_guard.php) =====
+
+// Menu yang boleh dilihat user yang sedang login: null = tidak dibatasi (level belum diatur / Developer),
+// array menu_key = hanya menu itu.
+if (!function_exists('menu_diizinkan')) {
+    function menu_diizinkan() {
+        $CI =& get_instance();
+        $id_session = $CI->session->userdata('id_session');
+        if (empty($id_session)) {
+            return null;
+        }
+        $debug = $CI->db->db_debug;
+        $CI->db->db_debug = false;
+        $CI->load->model('Hak_akses_model');
+        $menu = $CI->Hak_akses_model->menu_level($CI->session->userdata('level_asli') ?: $CI->session->userdata('level'));
+        $CI->db->db_debug = $debug;
+        return $menu;
+    }
+}
+
+// Level akun yang sebenarnya (bukan level efektif sementara dari Hak Akses, lihat libraries/Session/MY_Session.php)
+if (!function_exists('level_akun')) {
+    function level_akun() {
+        $CI =& get_instance();
+        return method_exists($CI->session, 'level_nyata') ? $CI->session->level_nyata() : (string) $CI->session->userdata('level');
+    }
+}
+
+// Syarat level untuk sebuah grup sidebar: level yang sudah diatur Hak Akses selalu lolos (isi grup disaring per menu lewat
+// izin_menu()); level yang belum diatur memakai syarat level bawaan.
+if (!function_exists('sidebar_level_ok')) {
+    function sidebar_level_ok(array $levels) {
+        return menu_diizinkan() !== null || in_array((string) level_akun(), $levels, true);
+    }
+}
+
+// Apakah menu $key boleh ditampilkan di sidebar untuk user ini?
+if (!function_exists('izin_menu')) {
+    function izin_menu($key) {
+        $menu = menu_diizinkan();
+        return $menu === null || in_array($key, $menu, true);
+    }
+}
+
+// Salah satu dari beberapa menu boleh (untuk grup menu berisi sub-menu).
+if (!function_exists('izin_menu_salah_satu')) {
+    function izin_menu_salah_satu(array $keys) {
+        $menu = menu_diizinkan();
+        return $menu === null || count(array_intersect($keys, $menu)) > 0;
     }
 }
 }

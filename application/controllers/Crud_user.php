@@ -9,10 +9,89 @@ class crud_user extends CI_Controller {
         $this->load->helper('url');
     }
 
+    // Level yang diposting harus ada di user_level (form lama / level yang baru dihapus tidak boleh dipasang ke user)
+    private function level_ada($level)
+    {
+        return $level !== null && $level !== '' && $this->db->query('SELECT 1 FROM user_level WHERE user_level_id = ?', [$level])->num_rows() > 0;
+    }
+
+    // Level akun yang sebenarnya dari sesi yang sedang login (level baru buatan Developer: id level barunya)
+    private function level_akun_sekarang()
+    {
+        return (string) ($this->session->userdata('level_asli') ?: $this->session->level);
+    }
+
+    // Apakah user yang sedang login boleh mengubah data user target?
+    //  - Developer      : semua user
+    //  - Administrator  : semua user kecuali Developer
+    //  - Staff Admin    : semua user kecuali Developer, Administrator, dan level baru yang berinduk keduanya
+    private function target_boleh($id_session)
+    {
+        $row = $this->Users2_model->get_users_by_session($id_session);
+        if (!$row) {
+            return false;
+        }
+        $lv = (string) $this->session->level;
+        if ($lv === '1') {
+            return true;
+        }
+        if ($lv === '2') {
+            return (string) $row->level !== '1';
+        }
+        if ($lv === '4') {
+            $this->load->model('Hak_akses_model');
+            return !in_array($this->Hak_akses_model->dasar_level($row->level), ['1', '2'], true);
+        }
+        return false;
+    }
+
+    // Level terendah yang boleh dipilih akun yang sedang login saat mengubah level user: null = semua level (Developer),
+    // 2 = Administrator (level 2-12), 3 = Staff Admin (level 3-12, bukan Developer/Administrator). false = tidak boleh ubah level.
+    // Level baru buatan Developer (id >= 13) hanya bisa diberikan Developer. Yang dihitung level ASLI akun (bukan level efektif
+    // sementara dari Hak Akses, dan bukan level baru yang berinduk Administrator/Staff Admin).
+    private function level_min_pilihan()
+    {
+        switch ($this->level_akun_sekarang()) {
+            case '1': return null;
+            case '2': return 2;
+            case '4': return 3;
+            default: return false;
+        }
+    }
+
+    // Apakah level user target boleh diubah oleh akun yang sedang login? Tidak pernah untuk akun sendiri. Developer: semua. Administrator & Staff Admin: hanya
+    // kalau level target sekarang berada di rentang yang boleh mereka pilih (target Developer/Administrator/level baru: tidak).
+    private function level_bisa_diubah($row)
+    {
+        if (!$row || ($this->session->id_session && (string) $row->id_session === (string) $this->session->id_session)) {
+            return false; // akun sendiri: level tidak bisa diubah
+        }
+        $min = $this->level_min_pilihan();
+        if ($min === null) {
+            return true;
+        }
+        return $min !== false && (int) $row->level >= $min && (int) $row->level <= 12;
+    }
+
+    // Pilihan level untuk form edit: Developer semua level, Administrator level 2-12, Staff Admin level 3-12
+    private function level_opsi()
+    {
+        $min = $this->level_min_pilihan();
+        if ($min === null) {
+            return $this->Crud_m->view_ordering('user_level', 'user_level_id', 'asc');
+        }
+        return $this->db->query('SELECT * FROM user_level WHERE user_level_id BETWEEN ? AND 12 ORDER BY user_level_id ASC', [(int) $min])->result_array();
+    }
+
     public function index() {
         if ($this->session->level=='1'){
             cek_session_akses_developer('user',$this->session->id_session);
             $data['users'] = $this->urutkan_status_online($this->Users2_model->get_all_user());
+            $this->load->view('user/index', $data);
+
+        }else if ($this->session->level=='2'){
+            cek_session_akses_administrator('user',$this->session->id_session);
+            $data['users'] = $this->urutkan_status_online($this->Users2_model->get_all_user_non_developer());
             $this->load->view('user/index', $data);
 
         }else if ($this->session->level=='4'){
@@ -72,6 +151,18 @@ class crud_user extends CI_Controller {
     }
 
     public function store() {
+        // Hanya Developer & Staff Admin; Staff Admin hanya boleh membuat level 3-8 (sama dengan pilihan di form)
+        if (!in_array($this->session->level, ['1', '4'], true)
+            || (!in_array($this->input->post('level'), ['3', '4', '5', '6', '7', '8'], true) && $this->session->level !== '1')) {
+            $this->session->set_flashdata('Error', 'Anda tidak berhak membuat pengguna dengan level tersebut.');
+            redirect('user');
+            return;
+        }
+        if (!$this->level_ada($this->input->post('level'))) {
+            $this->session->set_flashdata('Error', 'Level tidak ditemukan (mungkin sudah dihapus). Muat ulang halaman lalu pilih level lagi.');
+            redirect('user');
+            return;
+        }
         $id_session2 = sha1(uniqid());       
         
         if ($this->agent->is_browser()) // Agent untuk fitur di log activity
@@ -136,6 +227,12 @@ class crud_user extends CI_Controller {
             $this->load->view('user/lihat', $data);
 
 
+        }else if($this->session->level=='2'){
+            cek_session_akses_administrator('user',$this->session->id_session);
+            $data['pc'] = $this->Users2_model->get_users_by_session($id_session);
+            $data['logactivity'] = $this->Users2_model->get_logactivity_by_session($id_session);
+            $this->load->view('user/lihat', $data);
+
         }else if($this->session->level=='4'){
             cek_session_akses_staff_admin('user',$this->session->id_session);
             $data['pc'] = $this->Users2_model->get_users_by_session($id_session);
@@ -153,13 +250,29 @@ class crud_user extends CI_Controller {
                 }
     }
 
+    // user/edit/<id>: form edit user -- kolom Level TIDAK bisa diubah (dipakai untuk mengedit akun sendiri)
     public function edit($id_session) {
+        $this->form_edit($id_session, false);
+    }
+
+    // user/editother/<id>: form edit user LAIN -- kolom Level bisa diubah sesuai role (Developer / Administrator / Staff Admin,
+    // lihat level_bisa_diubah()). Untuk akun sendiri dialihkan ke user/edit.
+    public function editother($id_session) {
+        if ($this->session->id_session && (string) $id_session === (string) $this->session->id_session) {
+            redirect('user/edit/' . $id_session . '?view_type=edit');
+            return;
+        }
+        $this->form_edit($id_session, true);
+    }
+
+    private function form_edit($id_session, $boleh_ubah_level) {
         if ($this->session->level == '1') {
             cek_session_akses_developer('user', $this->session->id_session);
             $data['level'] = $this->Crud_m->view_ordering('user_level', 'user_level_id', 'asc');
             $data['clients'] = $this->Crud_m->view_ordering('clients', 'id', 'asc');
             $data['partner'] = $this->Crud_m->view_ordering('partner', 'id', 'asc'); // Fetch partner
             $data['pc'] = $this->Users2_model->get_users_by_session($id_session);
+            $data['level_bisa_diubah'] = $boleh_ubah_level && $this->level_bisa_diubah($data['pc']);
 
             $view_type = $this->input->get('view_type'); // Get 'view_type' from query string
             if ($view_type === 'edit_staff') {
@@ -172,12 +285,23 @@ class crud_user extends CI_Controller {
                 $data['crews'] = $this->Crud_m->view_ordering('crews', 'id', 'asc');
                 $this->load->view('user/edit', $data);
             }
-        } else if ($this->session->level == '4') {
-            cek_session_akses_staff_admin('user', $this->session->id_session);
-            $data['level'] = $this->Crud_m->view_ordering_admin('user_level', 'user_level_id', 'asc');
+        } else if ($this->session->level == '2' || $this->session->level == '4') {
+            if ($this->session->level == '2') {
+                cek_session_akses_administrator('user', $this->session->id_session);
+            } else {
+                cek_session_akses_staff_admin('user', $this->session->id_session);
+            }
+            if (!$this->target_boleh($id_session)) {
+                $this->session->set_flashdata('Error', 'Anda tidak berhak mengubah data pengguna ini.');
+                redirect('user');
+                return;
+            }
             $data['clients'] = $this->Crud_m->view_ordering('clients', 'id', 'asc');
             $data['partner'] = $this->Crud_m->view_ordering('partner', 'id', 'asc'); // Fetch partner
             $data['pc'] = $this->Users2_model->get_users_by_session($id_session);
+            // Level bisa diubah Developer/Administrator/Staff Admin dalam rentang masing-masing; selain itu kolom level hanya tampilan (butuh daftar lengkap untuk nama level)
+            $data['level_bisa_diubah'] = $boleh_ubah_level && $this->level_bisa_diubah($data['pc']);
+            $data['level'] = $data['level_bisa_diubah'] ? $this->level_opsi() : $this->Crud_m->view_ordering('user_level', 'user_level_id', 'asc');
 
             $view_type = $this->input->get('view_type');
             if ($view_type === 'edit_staff') {
@@ -210,6 +334,29 @@ class crud_user extends CI_Controller {
     }
 
     public function update($id_session) {
+        // Form lengkap untuk Developer, Administrator & Staff Admin (sama dengan halaman edit). Administrator tidak boleh mengubah
+        // Developer; Staff Admin tidak boleh mengubah Developer/Administrator. LEVEL user hanya bisa diubah Developer (semua level),
+        // Administrator (level 2-12) dan Staff Admin (level 3-12); nilai level dari POST diabaikan kalau tidak boleh.
+        if (!in_array($this->session->level, ['1', '2', '4'], true)
+            || ($this->session->level !== '1' && !$this->target_boleh($id_session))) {
+            $this->session->set_flashdata('Error', 'Anda tidak berhak mengubah data pengguna ini.');
+            redirect('user');
+            return;
+        }
+        $level_baru = null;
+        if ($this->level_bisa_diubah($this->Users2_model->get_users_by_session($id_session))) {
+            $kiriman = $this->input->post('level');
+            if ($kiriman !== null && $kiriman !== '') {
+                $level_sah = $this->level_ada($kiriman)
+                    && ($this->level_min_pilihan() === null || ((int) $kiriman >= $this->level_min_pilihan() && (int) $kiriman <= 12));
+                if (!$level_sah) {
+                    $this->session->set_flashdata('Error', 'Level tidak valid atau tidak boleh dipilih.');
+                    redirect('user/editother/' . $id_session);
+                    return;
+                }
+                $level_baru = (string) $kiriman;
+            }
+        }
 
         if ($this->agent->is_browser()) // Agent untuk fitur di log activity
             {
@@ -234,15 +381,13 @@ class crud_user extends CI_Controller {
             'crews_idsession'        => $this->input->post('crewid'),
             'client_idsession'        => $this->input->post('clientid'),
             'partner_idsession'        => $this->input->post('partnerid'),
-            'email'        => $this->input->post('email'),
-            'level'    => $this->input->post('level')       
+            'email'        => $this->input->post('email')
             );
         }else{
             $data = array(
             'username'  => $this->input->post('username'),
             'nama'  => $this->input->post('nama'),
             'email'        => $this->input->post('email'),
-            'level'    => $this->input->post('level'),
             'crews_idsession'        => $this->input->post('crewid'),
             'client_idsession'        => $this->input->post('clientid'),
             'partner_idsession'        => $this->input->post('partnerid'),
@@ -251,6 +396,9 @@ class crud_user extends CI_Controller {
 
         }
     
+        if ($level_baru !== null) {
+            $data['level'] = $level_baru;
+        }
         $this->Users2_model->update_users($id_session, $data);
 
         $status = 'Update Data Pengguna';
@@ -277,6 +425,16 @@ class crud_user extends CI_Controller {
     }
 
     public function update2($id_session) {
+        // Harus login; ubah akun sendiri (staff) atau, untuk Developer/Administrator/Staff Admin, akun lain (lihat target_boleh())
+        $sendiri = $this->session->id_session && $id_session === $this->session->id_session;
+        $boleh = $sendiri
+            || $this->session->level === '1'
+            || (in_array($this->session->level, ['2', '4'], true) && $this->target_boleh($id_session));
+        if (!$boleh) {
+            $this->session->set_flashdata('Error', 'Anda tidak berhak mengubah data pengguna ini.');
+            redirect('user');
+            return;
+        }
 
         if ($this->agent->is_browser()) {
             $agent = 'Desktop ' . $this->agent->browser() . ' ' . $this->agent->version();

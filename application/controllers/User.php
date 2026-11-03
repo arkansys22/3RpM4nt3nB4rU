@@ -71,11 +71,17 @@ class User extends CI_Controller
                        ->update('user', ['password' => password_hash($input_password, PASSWORD_DEFAULT)]);
           }
 
+          // Level baru buatan Developer (menu Hak Akses) meniru level dasarnya: session->level = level dasar supaya semua
+          // pengecekan level yang ada tetap berlaku; session->level_asli = id level aslinya (dipakai untuk pengaturan halaman).
+          $this->load->model('Hak_akses_model');
+          $level_dasar = $this->Hak_akses_model->dasar_level($row['level']);
+
           // ✅ FIX PALING PENTING → TAMBAH 'login'
           $this->session->set_userdata([
               'login'      => true, // ← INI YANG KAMU BUTUHKAN
               'username'   => $row['username'],
-              'level'      => $row['level'],
+              'level'      => $level_dasar,
+              'level_asli' => $row['level'],
               'id_user'    => $row['id_user'],
               'id_session' => $row['id_session']
           ]);

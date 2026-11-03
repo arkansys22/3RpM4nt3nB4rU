@@ -208,7 +208,7 @@ margin-top:10px;
 <body>
 
 <div class="watermark">
-<img src="<?= htmlspecialchars(url_gambar_pengaturan('logo', 'assets/frontend/assets/images/logomantenbaru-03.png')) ?>">
+<img src="<?= htmlspecialchars(url_gambar_pengaturan('logo', 'assets/backend/logo-default.png')) ?>">
 </div>
 
 <!-- HEADER -->

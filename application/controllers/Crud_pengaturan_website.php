@@ -28,6 +28,7 @@ class Crud_pengaturan_website extends CI_Controller {
     {
         $this->cek_akses();
         $data['tiktok_ada'] = $this->Pengaturan_model->tiktok_tersedia();
+        $data['beranda_ada'] = $this->Pengaturan_model->beranda_tersedia();
         $data['kode_ada'] = $this->Pengaturan_model->kode_transaksi_tersedia();
         $data['pengaturan'] = $this->Pengaturan_model->get();
         $data['rekening_ada'] = $this->Pengaturan_model->rekening_tersedia();
@@ -39,7 +40,7 @@ class Crud_pengaturan_website extends CI_Controller {
     }
 
     // Upload satu gambar; hasil: nama file ("pengaturan/xxx.png"), null kalau tidak ada upload, false kalau gagal.
-    private function upload_gambar($field)
+    private function upload_gambar($field, $maks_kb = 2048)
     {
         if (empty($_FILES[$field]['name'])) {
             return null;
@@ -51,7 +52,7 @@ class Crud_pengaturan_website extends CI_Controller {
         $this->upload->initialize([
             'upload_path'   => FCPATH . $this->folder,
             'allowed_types' => 'png|jpg|jpeg|gif|webp|ico',
-            'max_size'      => 2048,
+            'max_size'      => $maks_kb,
             'encrypt_name'  => true,
         ], true);
         if (!$this->upload->do_upload($field)) {
@@ -155,6 +156,26 @@ class Crud_pengaturan_website extends CI_Controller {
                 $this->hapus_file_lama($lama->$kolom);
                 $data[$kolom] = $hasil;
             }
+        }
+
+        // Halaman awal (homepage) & login: latar desktop, HP, login (maks 5 MB) dan teks footer
+        if ($this->Pengaturan_model->beranda_tersedia()) {
+            $lama = $this->Pengaturan_model->get(); // ambil ulang: kolom homepage mungkin baru dibuat
+            foreach (['bg_beranda' => 'latar desktop', 'bg_beranda_hp' => 'latar HP', 'bg_login' => 'latar login'] as $kolom => $label) {
+                if ($this->input->post('hapus_' . $kolom)) {
+                    $this->hapus_file_lama($lama->$kolom);
+                    $data[$kolom] = '';
+                    continue;
+                }
+                $hasil = $this->upload_gambar($kolom, 5120);
+                if ($hasil === false) {
+                    $galat[] = 'Gagal upload ' . $label . ': ' . strip_tags($this->upload->display_errors('', ''));
+                } elseif ($hasil !== null) {
+                    $this->hapus_file_lama($lama->$kolom);
+                    $data[$kolom] = $hasil;
+                }
+            }
+            $data['teks_footer'] = mb_substr(trim((string) $this->input->post('teks_footer')), 0, 200);
         }
 
         // Kode awal nomor invoice & kwitansi (3 karakter huruf/angka)
