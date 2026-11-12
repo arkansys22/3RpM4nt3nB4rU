@@ -275,8 +275,10 @@
       <h2 id="camera-modal-title" class="text-lg font-semibold mb-3 text-gray-800 dark:text-white"></h2>
       <p id="camera-status" class="text-sm text-gray-500 dark:text-gray-300 mb-2"></p>
 
-      <video id="camera-video" autoplay playsinline muted class="w-full rounded-md bg-black hidden"></video>
-      <canvas id="camera-canvas" class="w-full rounded-md hidden"></canvas>
+      <div class="flex justify-center">
+        <video id="camera-video" autoplay playsinline muted class="w-full rounded-md bg-black hidden"></video>
+        <canvas id="camera-canvas" class="w-full rounded-md hidden"></canvas>
+      </div>
 
       <div class="flex gap-3 mt-4">
         <button type="button" id="btn-ambil-foto" class="hidden flex-1 bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600">Ambil Foto</button>
@@ -314,16 +316,12 @@
     // jadi dianggap kamera depan. Teks overlay (waktu/alamat/koordinat) TIDAK ikut di-mirror, lihat ambilFotoAbsensi().
     var absensiMirror = true;
 
-    // Di HP kamera dibuat mode potret (rasio 3:4): kamera diminta potret, preview <video> memakai object-fit: cover dan
-    // hasil foto dipotong 3:4 dari tengah (persis area yang terlihat di preview). Di laptop/desktop tidak berubah.
-    var ABSENSI_RASIO_POTRET = 3 / 4;
-    var absensiPotret = false;
-
-    function absensiModeHp() {
-      return /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) ||
-        (window.matchMedia && window.matchMedia('(pointer: coarse)').matches && window.innerWidth < 1024);
+    // Foto TIDAK dipotong/di-zoom: preview dan hasil foto memakai frame kamera apa adanya. Kalau frame-nya potret (HP
+    // yang dipegang tegak), elemen diperkecil supaya tingginya maksimal 65% tinggi layar dan tombol tetap kelihatan.
+    // (Dulu sempat dipaksa 3:4 lewat constraint resolusi + crop; itu membuat gambar ter-zoom di HP.)
+    function absensiAturLebarPotret(el, lebar, tinggi) {
+      el.style.width = (lebar && tinggi && tinggi > lebar) ? 'min(100%, ' + (65 * lebar / tinggi).toFixed(2) + 'vh)' : '';
     }
-
     // Pecah baris overlay yang lebih lebar dari foto jadi beberapa baris (foto potret sempit, alamat bisa panjang)
     function absensiBungkusBaris(ctx, baris, lebarMaks) {
       var hasil = [];
@@ -406,14 +404,8 @@
       absensiMirror = true;
       video.style.transform = 'scaleX(-1)';
 
-      absensiPotret = absensiModeHp();
-      [video, canvas].forEach(function (el) {
-        // lebar dibatasi supaya tinggi potret (3:4) tidak melebihi 65% tinggi layar HP
-        el.style.width = absensiPotret ? 'min(100%, calc(65vh * 3 / 4))' : '';
-        el.style.marginLeft = el.style.marginRight = absensiPotret ? 'auto' : '';
-      });
-      video.style.aspectRatio = absensiPotret ? '3 / 4' : '';
-      video.style.objectFit = absensiPotret ? 'cover' : '';
+      absensiAturLebarPotret(video, 0, 0);
+      absensiAturLebarPotret(canvas, 0, 0);
       title.textContent = action === 'masuk' ? 'Absen Masuk' : 'Absen Keluar';
       status.textContent = 'Mengaktifkan kamera & mengambil lokasi...';
       video.classList.remove('hidden');
@@ -449,11 +441,12 @@
 
       video.onloadedmetadata = function () {
         video.play();
+        absensiAturLebarPotret(video, video.videoWidth, video.videoHeight);
         absensiKameraSiap = true;
         absensiCekSiapAmbilFoto();
       };
 
-      navigator.mediaDevices.getUserMedia({ video: absensiPotret ? { facingMode: 'user', width: { ideal: 720 }, height: { ideal: 960 } } : { facingMode: 'user' }, audio: false })
+      navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false })
         .then(function (stream) {
           absensiCameraStream = stream;
           var jalur = stream.getVideoTracks()[0];
@@ -493,30 +486,20 @@
         status.textContent = 'Kamera belum siap, tunggu sebentar lalu coba lagi.';
         return;
       }
-      // area sumber yang diambil: seluruh frame, atau (HP) potongan 3:4 dari tengah = yang terlihat di preview
-      var sx = 0, sy = 0, sw = video.videoWidth, sh = video.videoHeight;
-      if (absensiPotret) {
-        if (sw / sh > ABSENSI_RASIO_POTRET) {
-          sw = Math.round(sh * ABSENSI_RASIO_POTRET);
-          sx = Math.round((video.videoWidth - sw) / 2);
-        } else if (sw / sh < ABSENSI_RASIO_POTRET) {
-          sh = Math.round(sw / ABSENSI_RASIO_POTRET);
-          sy = Math.round((video.videoHeight - sh) / 2);
-        }
-      }
-      canvas.width = sw;
-      canvas.height = sh;
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
       var ctx = canvas.getContext('2d');
       if (absensiMirror) {
         // balik horizontal hanya untuk gambar kamera; overlay teks di bawah digambar setelah restore() supaya tidak terbalik
         ctx.save();
         ctx.translate(canvas.width, 0);
         ctx.scale(-1, 1);
-        ctx.drawImage(video, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
         ctx.restore();
       } else {
-        ctx.drawImage(video, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
       }
+      absensiAturLebarPotret(canvas, canvas.width, canvas.height);
       var waktu = new Date().toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'medium' });
       var baris = [waktu];
       if (absensiCurrentAlamat) {
