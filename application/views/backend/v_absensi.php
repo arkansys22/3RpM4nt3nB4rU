@@ -309,7 +309,40 @@
     var absensiLokasiSiap = false;
     var absensiKameraSiap = false;
 
-    // Cari nama kecamatan/kabupaten dari titik koordinat lewat reverse-geocode
+    // Preview & foto dibuat mirror (seperti cermin/selfie) supaya gerak kiri-kanan di layar searah dengan gerak
+    // pengguna. Kamera belakang ('environment') tidak di-mirror; webcam laptop biasanya tidak melaporkan facingMode,
+    // jadi dianggap kamera depan. Teks overlay (waktu/alamat/koordinat) TIDAK ikut di-mirror, lihat ambilFotoAbsensi().
+    var absensiMirror = true;
+
+    // Di HP kamera dibuat mode potret (rasio 3:4): kamera diminta potret, preview <video> memakai object-fit: cover dan
+    // hasil foto dipotong 3:4 dari tengah (persis area yang terlihat di preview). Di laptop/desktop tidak berubah.
+    var ABSENSI_RASIO_POTRET = 3 / 4;
+    var absensiPotret = false;
+
+    function absensiModeHp() {
+      return /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) ||
+        (window.matchMedia && window.matchMedia('(pointer: coarse)').matches && window.innerWidth < 1024);
+    }
+
+    // Pecah baris overlay yang lebih lebar dari foto jadi beberapa baris (foto potret sempit, alamat bisa panjang)
+    function absensiBungkusBaris(ctx, baris, lebarMaks) {
+      var hasil = [];
+      baris.forEach(function (teks) {
+        var kata = String(teks).split(' ');
+        var baru = '';
+        kata.forEach(function (k) {
+          var coba = baru ? baru + ' ' + k : k;
+          if (baru && ctx.measureText(coba).width > lebarMaks) {
+            hasil.push(baru);
+            baru = k;
+          } else {
+            baru = coba;
+          }
+        });
+        hasil.push(baru);
+      });
+      return hasil;
+    }    // Cari nama kecamatan/kabupaten dari titik koordinat lewat reverse-geocode
     // gratis (OpenStreetMap Nominatim, tanpa API key). Best-effort: dikasih
     // batas waktu sendiri supaya kalau layanannya lambat/down, absen tetap
     // bisa lanjut pakai koordinat mentah saja (tanpa nama daerah).
@@ -370,6 +403,17 @@
       var video = document.getElementById('camera-video');
       var canvas = document.getElementById('camera-canvas');
 
+      absensiMirror = true;
+      video.style.transform = 'scaleX(-1)';
+
+      absensiPotret = absensiModeHp();
+      [video, canvas].forEach(function (el) {
+        // lebar dibatasi supaya tinggi potret (3:4) tidak melebihi 65% tinggi layar HP
+        el.style.width = absensiPotret ? 'min(100%, calc(65vh * 3 / 4))' : '';
+        el.style.marginLeft = el.style.marginRight = absensiPotret ? 'auto' : '';
+      });
+      video.style.aspectRatio = absensiPotret ? '3 / 4' : '';
+      video.style.objectFit = absensiPotret ? 'cover' : '';
       title.textContent = action === 'masuk' ? 'Absen Masuk' : 'Absen Keluar';
       status.textContent = 'Mengaktifkan kamera & mengambil lokasi...';
       video.classList.remove('hidden');
@@ -409,11 +453,14 @@
         absensiCekSiapAmbilFoto();
       };
 
-      navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false })
+      navigator.mediaDevices.getUserMedia({ video: absensiPotret ? { facingMode: 'user', width: { ideal: 720 }, height: { ideal: 960 } } : { facingMode: 'user' }, audio: false })
         .then(function (stream) {
           absensiCameraStream = stream;
-          video.srcObject = stream;
-        })
+          var jalur = stream.getVideoTracks()[0];
+          var pengaturan = jalur && jalur.getSettings ? jalur.getSettings() : {};
+          absensiMirror = pengaturan.facingMode !== 'environment';
+          video.style.transform = absensiMirror ? 'scaleX(-1)' : 'none';
+          video.srcObject = stream;        })
         .catch(function () {
           status.textContent = 'Gagal mengakses kamera. Izinkan akses kamera lalu coba lagi.';
         });
@@ -446,11 +493,30 @@
         status.textContent = 'Kamera belum siap, tunggu sebentar lalu coba lagi.';
         return;
       }
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
+      // area sumber yang diambil: seluruh frame, atau (HP) potongan 3:4 dari tengah = yang terlihat di preview
+      var sx = 0, sy = 0, sw = video.videoWidth, sh = video.videoHeight;
+      if (absensiPotret) {
+        if (sw / sh > ABSENSI_RASIO_POTRET) {
+          sw = Math.round(sh * ABSENSI_RASIO_POTRET);
+          sx = Math.round((video.videoWidth - sw) / 2);
+        } else if (sw / sh < ABSENSI_RASIO_POTRET) {
+          sh = Math.round(sw / ABSENSI_RASIO_POTRET);
+          sy = Math.round((video.videoHeight - sh) / 2);
+        }
+      }
+      canvas.width = sw;
+      canvas.height = sh;
       var ctx = canvas.getContext('2d');
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
+      if (absensiMirror) {
+        // balik horizontal hanya untuk gambar kamera; overlay teks di bawah digambar setelah restore() supaya tidak terbalik
+        ctx.save();
+        ctx.translate(canvas.width, 0);
+        ctx.scale(-1, 1);
+        ctx.drawImage(video, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
+        ctx.restore();
+      } else {
+        ctx.drawImage(video, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
+      }
       var waktu = new Date().toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'medium' });
       var baris = [waktu];
       if (absensiCurrentAlamat) {
@@ -461,6 +527,8 @@
       var fontSize = Math.max(14, Math.round(canvas.width / 32));
       var lineHeight = fontSize + 6;
       var padding = 10;
+      ctx.font = fontSize + 'px sans-serif';
+      baris = absensiBungkusBaris(ctx, baris, canvas.width - padding * 2);
       var boxHeight = baris.length * lineHeight + padding * 2;
 
       ctx.fillStyle = 'rgba(0,0,0,0.55)';

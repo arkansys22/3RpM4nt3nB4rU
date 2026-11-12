@@ -936,6 +936,15 @@ ada 2 penyebab terpisah yang ketemu berurutan:
 
 ---
 
+## 2026-11-12 — Kamera Absensi Mirror
+
+- Modal kamera di `backend/v_absensi.php` (dipakai Absen Masuk DAN Absen Keluar) sekarang mirror seperti cermin/selfie: preview `<video>` diberi `scaleX(-1)` dan foto hasil capture digambar terbalik horizontal di canvas (`translate` + `scale(-1, 1)`). Teks overlay (waktu, alamat, koordinat) digambar SETELAH `restore()`, jadi tetap terbaca normal dan tidak ikut terbalik.
+- Kamera belakang tidak di-mirror: `track.getSettings().facingMode === 'environment'` -> preview normal. Webcam laptop biasanya tidak melaporkan `facingMode`, jadi dianggap kamera depan (mirror).
+- **Mode potret di HP** (`absensiModeHp()`: user agent Android/iPhone/iPad/Mobile, atau layar sentuh < 1024px): kamera diminta `720x960` ideal, preview `<video>` rasio 3:4 + `object-fit: cover` (lebar dibatasi supaya tinggi <= 65% tinggi layar), dan hasil foto dipotong 3:4 dari tengah (persis area yang terlihat di preview; stream landscape dipotong kiri-kanan, stream lebih tinggi dari 3:4 dipotong atas-bawah). Teks overlay dibungkus per kata (`absensiBungkusBaris`) supaya alamat panjang tidak terpotong di foto yang sempit. Laptop/desktop tidak berubah (rasio asli kamera). Server tidak membatasi rasio foto; thumbnail absensi memakai `object-cover` sehingga foto potret aman.
+- Diuji di browser dengan kamera tiruan (stream canvas kiri merah / kanan biru + geolocation palsu): hasil foto kiri biru / kanan merah (terbalik, benar), teks overlay mulai dari kiri; mode environment tidak terbalik. Belum diuji dengan kamera fisik/HP asli. Tombol Kirim sengaja tidak ditekan (tidak membuat data absensi).
+
+---
+
 ## Catatan Insiden (untuk konteks, bukan tindak lanjut)
 
 - Sempat salah restore password test di DB lokal (`db_erpmaid`) beberapa
