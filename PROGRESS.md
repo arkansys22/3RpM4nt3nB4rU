@@ -945,6 +945,17 @@ ada 2 penyebab terpisah yang ketemu berurutan:
 
 ---
 
+## 2026-11-12 — Menu Hutang (Fin & Acc)
+
+- Menu baru **Fin & Acc → Hutang** (`/hutang`) untuk pinjaman/utang umum perusahaan (bank, paylater, kartu kredit, pinjaman pribadi, utang usaha lain) — BUKAN utang ke vendor per event (itu tetap di Finance Project → Utang, akun `210102.xx`). Fitur: daftar + ringkasan (total sisa, jangka pendek/panjang, terlambat, jatuh tempo ≤ 7 hari), tambah/edit/hapus hutang, catat cicilan pembayaran, riwayat pembayaran, status Lunas/Belum Lunas/Terlambat.
+- **Pencatatan ke COA** (tabel `accounting`, single-entry): hutang baru = baris `+pokok`, pembayaran = baris `-nominal`, sehingga saldo akun = sisa hutang. Jangka Pendek -> akun **2000 Utang**; Jangka Panjang -> akun **2300 Hutang Jangka Panjang**. Edit hutang yang mengganti jangka memindahkan hutang + semua pembayarannya ke akun baru. Hapus hutang/pembayaran ikut menghapus barisnya di `accounting`. Catatan: akun 2000/2300 sudah punya baris lama (hasil input manual "bayar pinjaman/shopeepaylater" lewat Finance Operational, bernilai positif), jadi saldo COA = baris lama + sisa hutang dari menu ini.
+- Kode: `Crud_hutang`, `Hutang_model`, `backend/v_hutang.php`, `v_hutang_detail.php`, `partial_hutang_form.php`, `partial_hutang_script.php`; route `hutang/*` di `routes.php`; menu `hutang` di `config/hak_akses.php` (levels 1,2,3, grant 3) + sidebar. Aksi tulis semua POST + CSRF; nominal divalidasi (> 0, maks Rp 2 miliar karena kolom `int`), pembayaran tidak boleh melebihi sisa, pokok tidak boleh diedit di bawah total yang sudah dibayar.
+- **Migrasi wajib di production**: `db/2026-11-12_hutang.sql` (tabel `hutang`, `hutang_pembayaran`, dan menambah menu `hutang` ke level yang SUDAH punya pengaturan Hak Akses + menu `coa`, lewat tabel `hak_akses_level` — tabel yang dibaca aplikasi; `hak_akses_menu` itu desain lama yang tidak dipakai). Tanpa migrasi menu Hutang error "table doesn't exist". Level yang belum diatur otomatis dapat menu ini lewat hak dasar (Developer/Administrator/Staff Accounting); level lain bisa mencentang "Hutang" di halaman Hak Akses.
+- Perbaikan hasil review independen: pembayaran/edit pokok memakai transaksi + `SELECT ... FOR UPDATE` pada baris hutang dan mengecek ulang sisa di dalam transaksi (dua orang membayar bersamaan tidak bisa melebihi sisa); teks dipotong dengan `mb_substr` (aman untuk huruf non-ASCII) dan keterangan dibatasi 2000 karakter; kalau validasi gagal, isian form tidak hilang (flashdata `old`, form terbuka lagi).
+- Diuji lewat curl dengan user sementara level 3 dan 4: tambah/edit/bayar/hapus, semua validasi, CSRF (403), level 4 ditolak, XSS ter-escape, saldo COA 2000/2300 benar termasuk nominal negatif di halaman detail COA, 6 pembayaran bersamaan ke hutang dengan sisa 1x bayar -> hanya 1 yang masuk.
+
+---
+
 ## Catatan Insiden (untuk konteks, bukan tindak lanjut)
 
 - Sempat salah restore password test di DB lokal (`db_erpmaid`) beberapa

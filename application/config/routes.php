@@ -42,6 +42,15 @@ $route['sales-setting-target/update/(:any)'] = 'crud_sales_marketing/update/$1';
 $route['sales-setting-target/permanent_delete/(:any)'] = 'crud_sales_marketing/permanent_delete/$1'; // Hapus permanen user
 
 
+// Hutang (Fin & Acc): semua rute literal, tidak ada wildcard di segmen pertama
+$route['hutang'] = 'crud_hutang/index';
+$route['hutang/store'] = 'crud_hutang/store';
+$route['hutang/lihat/(:any)'] = 'crud_hutang/lihat/$1';
+$route['hutang/update/(:any)'] = 'crud_hutang/update/$1';
+$route['hutang/delete/(:any)'] = 'crud_hutang/delete/$1';
+$route['hutang/bayar/(:any)'] = 'crud_hutang/bayar/$1';
+$route['hutang/bayar_hapus/(:any)'] = 'crud_hutang/bayar_hapus/$1';
+
 $route['finance-operational'] = 'crud_finance_operational/index'; // Menampilkan daftar user
 $route['finance-operational/periode/(:any)'] = 'crud_finance_operational/periode/$1'; // Menampilkan detail user
 $route['finance-operational/lihat/(:any)'] = 'crud_finance_operational/lihat/$1'; // Menampilkan detail user

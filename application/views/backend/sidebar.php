@@ -521,7 +521,7 @@
 							
 					    
 					        <!-- Menu Item Settings -->
-							<?php if (izin_menu_salah_satu(['finance_project','finance_operational','coa','rekap_gaji'])): ?>
+							<?php if (izin_menu_salah_satu(['finance_project','finance_operational','hutang','coa','rekap_gaji'])): ?>
 <li>
 								<a
 									  class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
@@ -610,7 +610,16 @@
 						                    >Operational</a>
 						                </li>
 <?php endif; ?>
-					              		<?php if (izin_menu('coa')): ?>
+					              		<?php if (izin_menu('hutang')): ?>
+<li>
+						                  <a
+						                    class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
+						                    href="<?= base_url('hutang'); ?>"
+						                    :class="page === 'kanban' && '!text-white'"
+						                    >Hutang</a>
+						                </li>
+<?php endif; ?>
+						              		<?php if (izin_menu('coa')): ?>
 <li>
 						                  <a
 						                    class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
