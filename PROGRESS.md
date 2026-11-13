@@ -956,6 +956,17 @@ ada 2 penyebab terpisah yang ketemu berurutan:
 
 ---
 
+## 2026-11-13 — Menu Modal (Fin & Acc)
+
+- Menu baru **Fin & Acc → Modal** (`/modal`) untuk setoran modal pemilik/investor, saldo awal modal, dan penarikan modal/deviden. Ringkasan: Modal Bersih = setoran + saldo awal − penarikan.
+- **Pencatatan ke COA** (tabel `accounting`, satu baris per data, semua nominal positif di akunnya): Setoran Modal -> **3000 Modal**; Saldo Awal Modal -> **3100 Opening Balance Equity**; Penarikan Modal / Deviden -> **3200.02 Deviden**. Edit yang mengganti jenis memindahkan barisnya ke akun yang sesuai; hapus ikut menghapus barisnya di COA. Akun 320001 Retained Earning tidak dipakai (laba ditahan, bukan input manual).
+- Kode: `Crud_modal`, `Modal_model`, `backend/v_modal.php` (daftar + form tambah/edit dalam satu halaman); route `modal/*`; menu `modal` di `config/hak_akses.php` (levels 1,2,3, grant 3) + sidebar. Aksi tulis POST + CSRF, nominal > 0 dan maks Rp 2 miliar, tanggal divalidasi, isian form tidak hilang saat validasi gagal.
+- **Migrasi wajib di production**: `db/2026-11-13_modal.sql` (tabel `modal` + menu `modal` ke `hak_akses_level` untuk level yang sudah punya menu `coa`).
+- Diuji lewat curl (user sementara level 3 & 4): tiga jenis masuk ke akun yang benar, edit pindah akun, hapus sinkron ke COA, validasi, CSRF, level 4 ditolak, XSS, input UTF-8.
+- **Perbaikan halaman COA (`coa/index.php`)**: akun 3200.02 Deviden tidak tampil di daftar COA karena akun induknya (3200) tidak ada di `operational_kategori` — baris ber-parent disembunyikan JS (`collapseAll`/`initTree`), jadi anak tanpa induk tidak pernah kelihatan (saldo Rp 50 jt "Tarik balik modal" ikut tersembunyi). Sekarang akun yang induknya tidak ada diperlakukan sebagai akun tingkat atas. Dicek: 0 baris yatim lain di 101 akun.
+
+---
+
 ## Catatan Insiden (untuk konteks, bukan tindak lanjut)
 
 - Sempat salah restore password test di DB lokal (`db_erpmaid`) beberapa

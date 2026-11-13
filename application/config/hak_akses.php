@@ -61,6 +61,7 @@ $config['hak_akses_menu'] = [
     'finance_project' => ['label' => 'Finance - Project', 'group' => 'Fin & Acc', 'url' => 'finance-project', 'levels' => ['1','2','3'], 'grant' => '3', 'rules' => ['crud_finance_project::*']],
     'finance_operational' => ['label' => 'Finance - Operational', 'group' => 'Fin & Acc', 'url' => 'finance-operational', 'levels' => ['1','2','3'], 'grant' => '3', 'rules' => ['crud_finance_operational::*']],
     'hutang' => ['label' => 'Hutang', 'group' => 'Fin & Acc', 'url' => 'hutang', 'levels' => ['1','2','3'], 'grant' => '3', 'rules' => ['crud_hutang::*']],
+    'modal' => ['label' => 'Modal', 'group' => 'Fin & Acc', 'url' => 'modal', 'levels' => ['1','2','3'], 'grant' => '3', 'rules' => ['crud_modal::*']],
     'coa' => ['label' => 'Chart Of Account', 'group' => 'Fin & Acc', 'url' => 'coa', 'levels' => ['1','2','3'], 'grant' => '3', 'rules' => ['crud_coa::*']],
     'rekap_gaji' => ['label' => 'Setting Salary / Rekap Gaji', 'group' => 'Fin & Acc', 'url' => 'rekap-gaji', 'levels' => ['1','2','3'], 'grant' => '3', 'rules' => ['crud_kategori_gaji::*']],
 
