@@ -58,7 +58,7 @@ class Crud_modal extends CI_Controller
         $old = $this->session->flashdata('old');
         $data['old'] = $old ? true : false;
         $data['nilai'] = $old ? (object) array_merge($sedang_edit ? (array) $sedang_edit : [], $old) : $sedang_edit;
-        $data['akun'] = Modal_model::AKUN;
+        $data['akun'] = $this->Modal_model->peta_akun();
         $this->load->view('backend/v_modal', $data);
     }
 
@@ -151,7 +151,8 @@ class Crud_modal extends CI_Controller
         $nominal = $this->angka($this->input->post('nominal'));
         $tanggal = $this->tanggal_valid($this->input->post('tanggal'));
 
-        if (!isset(Modal_model::AKUN[$jenis])) {
+        $peta = $this->Modal_model->peta_akun();
+        if (!isset($peta[$jenis])) {
             return [null, 'Jenis modal tidak valid.'];
         }
         if ($penanam === '') {
@@ -170,7 +171,7 @@ class Crud_modal extends CI_Controller
         return [[
             'jenis' => $jenis,
             'penanam' => mb_substr($penanam, 0, 255, 'UTF-8'),
-            'kategori' => Modal_model::AKUN[$jenis],
+            'kategori' => $peta[$jenis],
             'nominal' => $nominal,
             'tanggal' => $tanggal,
             'keterangan' => mb_substr(trim((string) $this->input->post('keterangan')), 0, 2000, 'UTF-8'),

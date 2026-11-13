@@ -8,7 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | seperti akun lain di sistem ini):
 |   Setoran Modal            -> akun 3000    Modal
 |   Saldo Awal Modal         -> akun 3100    Opening Balance Equity
-|   Penarikan Modal / Deviden -> akun 3200.02 Deviden (pengurang modal)
+|   Penarikan Modal / Deviden -> akun 320002 Deviden (pengurang modal; kode lama 3200.02 dipakai bila 320002 belum ada di COA)
 | accounting_id_session = id_session baris modal, jadi edit & hapus menyinkronkan barisnya.
 */
 class Modal_model extends CI_Model
@@ -20,6 +20,18 @@ class Modal_model extends CI_Model
         'Penarikan Modal / Deviden' => '3200.02',
     ];
     const PENGURANG = 'Penarikan Modal / Deviden';
+
+    // Peta jenis => akun. Kode akun Deviden mengikuti COA yang berlaku: 320002 (kode sekarang) kalau ada, kalau tidak 3200.02 (kode lama).
+    public function peta_akun()
+    {
+        $akun = self::AKUN;
+        $ada = $this->db->where_in('nomer_kategori', ['320002', '3200.02'])->get('operational_kategori')->result();
+        $kode = array_map(function ($r) { return (string) $r->nomer_kategori; }, $ada);
+        if (in_array('320002', $kode, true)) {
+            $akun[self::PENGURANG] = '320002';
+        }
+        return $akun;
+    }
 
     public function get_semua()
     {

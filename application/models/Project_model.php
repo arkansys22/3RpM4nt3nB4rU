@@ -151,26 +151,26 @@ class project_model extends CI_Model {
     }
 
 
-   public function insert_accounting($id_session, $data_accounting) {
+    // Satu baris accounting per id_session: ubah baris yang sudah ada, kalau belum ada baru insert.
+    // (Dulu memakai ON DUPLICATE KEY UPDATE, padahal tabel accounting tidak punya unique key selain accounting_id,
+    // sehingga setiap edit menambah baris baru dan biaya terhitung ganda di COA.)
+    public function insert_accounting($id_session, $data_accounting) {
 
-        $sql = "
-            INSERT INTO accounting 
-            (accounting_id_session, accounting_nomer_kategori, accounting_nominal, accounting_tanggal, accounting_nama_transaksi)
-            VALUES (?, ?, ?, ?, ?)
-            ON DUPLICATE KEY UPDATE
-                accounting_nomer_kategori = VALUES(accounting_nomer_kategori),
-                accounting_nominal = VALUES(accounting_nominal),
-                accounting_nama_transaksi = VALUES(accounting_nama_transaksi),
-                accounting_tanggal = VALUES(accounting_tanggal)
-        ";
+        $baris = [
+            'accounting_nomer_kategori' => $data_accounting['accounting_nomer_kategori'],
+            'accounting_nominal' => $data_accounting['accounting_nominal'],
+            'accounting_tanggal' => $data_accounting['accounting_tanggal'],
+            'accounting_nama_transaksi' => $data_accounting['accounting_nama_transaksi'],
+        ];
 
-        return $this->db->query($sql, [
-            $id_session, // <-- pakai parameter ini
-            $data_accounting['accounting_nomer_kategori'],
-            $data_accounting['accounting_nominal'],
-            $data_accounting['accounting_tanggal'],
-            $data_accounting['accounting_nama_transaksi']
-        ]);
+        $ada = $this->db->get_where('accounting', ['accounting_id_session' => $id_session])->row();
+        if ($ada) {
+            $this->db->where('accounting_id_session', $id_session)->update('accounting', $baris);
+            return true;
+        }
+
+        $baris['accounting_id_session'] = $id_session;
+        return $this->db->insert('accounting', $baris);
     }
 
    

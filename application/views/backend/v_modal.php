@@ -76,7 +76,7 @@
                   <p class="text-xl font-bold"><?= $rp($ringkas['saldo_awal']) ?></p>
                 </div>
                 <div class="rounded-lg border border-stroke dark:border-strokedark p-4">
-                  <p class="text-sm text-gray-500 dark:text-gray-400">Penarikan / Deviden <span class="text-xs">(COA 3200.02)</span></p>
+                  <p class="text-sm text-gray-500 dark:text-gray-400">Penarikan / Deviden <span class="text-xs">(COA <?= htmlspecialchars($akun[Modal_model::PENGURANG]) ?>)</span></p>
                   <p class="text-xl font-bold text-red-600"><?= $rp($ringkas['penarikan']) ?></p>
                 </div>
               </div>
@@ -186,7 +186,7 @@
 
     // Petunjuk akun COA mengikuti pilihan jenis
     var AKUN_MODAL = <?= json_encode($akun, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
-    var NAMA_AKUN = { '3000': 'Modal', '3100': 'Opening Balance Equity', '3200.02': 'Deviden' };
+    var NAMA_AKUN = { '3000': 'Modal', '3100': 'Opening Balance Equity', '3200.02': 'Deviden', '320002': 'Deviden' };
     var selJenis = document.getElementById('modal-jenis');
     function perbaruiAkunModal() {
       var no = AKUN_MODAL[selJenis.value];
