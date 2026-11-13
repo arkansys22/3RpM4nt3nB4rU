@@ -51,6 +51,10 @@ $route['hutang/delete/(:any)'] = 'crud_hutang/delete/$1';
 $route['hutang/bayar/(:any)'] = 'crud_hutang/bayar/$1';
 $route['hutang/bayar_hapus/(:any)'] = 'crud_hutang/bayar_hapus/$1';
 
+// Laporan Keuangan (Fin & Acc): rute literal
+$route['laporan-keuangan/export'] = 'crud_laporan_keuangan/export';
+$route['laporan-keuangan'] = 'crud_laporan_keuangan/index';
+
 // Modal (Fin & Acc): semua rute literal
 $route['modal'] = 'crud_modal/index';
 $route['modal/store'] = 'crud_modal/store';

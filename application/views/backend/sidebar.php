@@ -521,7 +521,7 @@
 							
 					    
 					        <!-- Menu Item Settings -->
-							<?php if (izin_menu_salah_satu(['finance_project','finance_operational','hutang','modal','coa','rekap_gaji'])): ?>
+							<?php if (izin_menu_salah_satu(['finance_project','finance_operational','hutang','modal','laporan_keuangan','coa','rekap_gaji'])): ?>
 <li>
 								<a
 									  class="group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4"
@@ -626,6 +626,15 @@
 						                    href="<?= base_url('modal'); ?>"
 						                    :class="page === 'kanban' && '!text-white'"
 						                    >Modal</a>
+						                </li>
+<?php endif; ?>
+						              		<?php if (izin_menu('laporan_keuangan')): ?>
+<li>
+						                  <a
+						                    class="group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white"
+						                    href="<?= base_url('laporan-keuangan'); ?>"
+						                    :class="page === 'kanban' && '!text-white'"
+						                    >Laporan Keuangan</a>
 						                </li>
 <?php endif; ?>
 						              		<?php if (izin_menu('coa')): ?>
