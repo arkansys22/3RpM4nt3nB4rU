@@ -137,6 +137,12 @@
                         $parent = '';
                         if (strpos($c->nomer_kategori, '.') !== false) {
                             $parent = substr($c->nomer_kategori, 0, strrpos($c->nomer_kategori, '.'));
+                            // Akun yang induknya tidak ada di daftar (mis. 3200.02 Deviden tanpa akun 3200) dianggap tingkat atas;
+                            // kalau tidak, barisnya ikut disembunyikan JS (baris ber-parent) dan tidak pernah tampil.
+                            if (!in_array($parent, $all_ids, true)) {
+                                $parent = '';
+                                $level = 0;
+                            }
                         }
                     ?>
                     <tr data-parent="<?= $parent ?>" data-id="<?= $c->nomer_kategori ?>" class="coa-row transition">
