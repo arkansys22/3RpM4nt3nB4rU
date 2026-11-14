@@ -70,7 +70,12 @@ if (!function_exists('lk_bulan')) {
 if (!function_exists('lk_h')) {
     function lk_h($s)
     {
-        return htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8');
+        $s = (string) $s;
+        // Ekspor Excel: teks yang diawali = + - @ (atau tab/CR) bisa dibaca Excel sebagai RUMUS; awali tanda petik supaya jadi teks biasa
+        if (lk_mode_excel() && $s !== '' && strpos("=+-@\t\r", $s[0]) !== false) {
+            $s = "'" . $s;
+        }
+        return htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
     }
 }
 
