@@ -52,6 +52,8 @@ $route['hutang/bayar/(:any)'] = 'crud_hutang/bayar/$1';
 $route['hutang/bayar_hapus/(:any)'] = 'crud_hutang/bayar_hapus/$1';
 
 // Laporan Keuangan (Fin & Acc): rute literal
+$route['laporan-keuangan/detail/(:any)'] = 'crud_laporan_keuangan/detail/$1';   // rincian asal angka (AJAX)
+$route['laporan-keuangan/transaksi'] = 'crud_laporan_keuangan/transaksi';           // daftar transaksi (AJAX)
 $route['laporan-keuangan/export'] = 'crud_laporan_keuangan/export';
 $route['laporan-keuangan'] = 'crud_laporan_keuangan/index';
 

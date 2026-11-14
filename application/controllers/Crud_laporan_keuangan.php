@@ -49,6 +49,115 @@ class Crud_laporan_keuangan extends CI_Controller
         $this->load->view('backend/v_laporan_keuangan_excel', $data);
     }
 
+    // ---------------------------------------------------------------- rincian sumber angka (dimuat lewat AJAX ke jendela "Lihat detail")
+
+    const RINCIAN = ['pendapatan', 'laba_kotor', 'laba_bersih', 'uang_masuk', 'kas', 'piutang', 'liabilitas', 'ekuitas'];
+
+    // Potongan HTML (tanpa kerangka halaman) yang menjelaskan dari mana sebuah angka di Ringkasan berasal
+    public function detail($kunci = null)
+    {
+        $this->cek_akses();
+        if (!in_array($kunci, self::RINCIAN, true)) {
+            $this->output->set_status_header(404)->set_output('Rincian tidak dikenal.');
+            return;
+        }
+        $m = $this->Laporan_keuangan_model;
+        list($dari, $sampai) = $this->baca_periode();
+        $data = ['kunci' => $kunci, 'dari' => $dari, 'sampai' => $sampai];
+
+        $agg_p = $m->agregat($m->saldo_akun($dari, $sampai));       // hanya periode
+        $agg_k = $m->agregat($m->saldo_akun(null, $sampai));        // kumulatif sampai tanggal akhir
+
+        if ($kunci === 'pendapatan') {
+            $trx = $m->transaksi_rinci($dari, $sampai, function ($k, $j) { return $j === 'pendapatan'; });
+            $data['akun'] = $m->per_akun($trx);
+            $data['project'] = $m->per_project($trx);
+            $data['n'] = count($trx);
+            $data['total'] = array_sum(array_column($data['akun'], 'jumlah'));
+        } elseif ($kunci === 'laba_kotor' || $kunci === 'laba_bersih') {
+            $data['lr'] = $m->laba_rugi($agg_p);
+        } elseif ($kunci === 'uang_masuk') {
+            $trx = $m->transaksi_rinci($dari, $sampai, function ($k, $j) { return $j === 'kas' || $j === 'pendapatan_lain'; });
+            $data['akun'] = $m->per_akun($trx);
+            $data['project'] = $m->per_project($trx);
+            $data['n'] = count($trx);
+            $data['total'] = array_sum(array_column($data['akun'], 'jumlah'));
+            $data['pending'] = $m->kwitansi_pending($dari, $sampai);
+        } elseif ($kunci === 'kas') {
+            $lr = $m->laba_rugi($agg_k);
+            $j = function ($k) use ($agg_k) { return $agg_k['jenis'][$k] ?? 0; };
+            // [label, tanda, jumlah (positif), kunci jenis untuk "lihat transaksi"]
+            $data['baris'] = [
+                ['Uang masuk dari klien (kwitansi Paid, akun Kas & Bank 1000.xx)', 1, $j('kas'), 'kas'],
+                ['Pendapatan di luar usaha (7100)', 1, $j('pendapatan_lain'), 'pendapatan_lain'],
+                ['Setoran modal (3000)', 1, $j('modal'), 'modal'],
+                ['Saldo awal modal (3100)', 1, $j('saldo_awal'), 'saldo_awal'],
+                ['Pinjaman diterima dikurangi cicilan (akun 2000 / 2300)', 1, $j('liabilitas'), 'liabilitas'],
+                ['Harga pokok pendapatan (5xxx)', -1, $lr['hpp']['total'], 'hpp'],
+                ['Biaya operasional event (6205 / 6207)', -1, $lr['event']['total'], 'beban:event'],
+                ['Beban pemasaran (6100)', -1, $lr['pemasaran']['total'], 'beban:pemasaran'],
+                ['Gaji & tunjangan (6201)', -1, $lr['gaji']['total'], 'beban:gaji'],
+                ['Beban umum & administrasi (6200 / 6203)', -1, $lr['umum']['total'], 'beban:umum'],
+                ['Beban di luar usaha (7200)', -1, $lr['lain_beban']['total'], 'beban_lain'],
+                ['Uang muka & piutang lain (1100.xx)', -1, $j('piutang_lain'), 'piutang_lain'],
+                ['Biaya dibayar dimuka (1300 - 1600)', -1, $j('dimuka'), 'dimuka'],
+                ['Pembelian aset tetap (17xx)', -1, $j('aset_tetap'), 'aset_tetap'],
+                ['Penarikan modal / deviden (3200)', -1, $j('deviden'), 'deviden'],
+            ];
+            $data['total'] = $m->kas_dari($agg_k);
+        } elseif ($kunci === 'piutang') {
+            $data['piutang'] = $m->piutang_rinci($sampai);
+            $data['piutang_coa'] = $agg_k['jenis']['piutang_usaha'] ?? 0;
+        } elseif ($kunci === 'liabilitas') {
+            $akun = [];
+            foreach ($agg_k['akun']['liabilitas'] ?? [] as $kode => $a) {
+                $akun[$kode] = ['kode' => $kode, 'nama' => $a['nama'], 'jumlah' => $a['jumlah'], 'n' => null];
+            }
+            $data['akun'] = $akun;
+            $data['total'] = array_sum(array_column($akun, 'jumlah'));
+            $data['hutang'] = $m->hutang_rinci();
+        } elseif ($kunci === 'ekuitas') {
+            $lr = $m->laba_rugi($agg_k);
+            $j = function ($k) use ($agg_k) { return $agg_k['jenis'][$k] ?? 0; };
+            $data['modal'] = $j('modal');
+            $data['saldo_awal'] = $j('saldo_awal');
+            $data['deviden'] = $j('deviden');
+            $data['lr'] = $lr;
+            $data['total'] = $j('modal') + $j('saldo_awal') + $lr['laba_bersih'] - $j('deviden');
+        }
+
+        $this->output->set_content_type('text/html', 'UTF-8');
+        $this->load->view('backend/laporan/v_lk_detail', $data);
+    }
+
+    // Daftar transaksi COA asal sebuah angka: satu akun (?kode=1000.02) atau satu jenis (?jenis=beban:event); ?kum=1 = dari awal sampai tanggal akhir
+    public function transaksi()
+    {
+        $this->cek_akses();
+        list($dari, $sampai) = $this->baca_periode();
+        $kum = $this->input->get('kum') === '1';
+        $kode = $this->input->get('kode');
+        $jenis_req = $this->input->get('jenis');
+        $kode = is_string($kode) && preg_match('/^[0-9A-Za-z.]{1,20}$/', $kode) ? $kode : '';
+        $jenis_req = is_string($jenis_req) && preg_match('/^[a-z_]{1,30}(:[a-z]{1,20})?$/', $jenis_req) ? $jenis_req : '';
+        if ($kode === '' && $jenis_req === '') {
+            $this->output->set_status_header(400)->set_output('Permintaan tidak lengkap.');
+            return;
+        }
+
+        $cocok = function ($k, $j, $s) use ($kode, $jenis_req) {
+            if ($kode !== '') {
+                return $k === $kode;
+            }
+            $bagian = explode(':', $jenis_req, 2);
+            return $j === $bagian[0] && (!isset($bagian[1]) || $s === $bagian[1]);
+        };
+        $trx = $this->Laporan_keuangan_model->transaksi_rinci($kum ? null : $dari, $sampai, $cocok);
+        $this->output->set_content_type('text/html', 'UTF-8');
+        $this->load->view('backend/laporan/v_lk_transaksi', [
+            'trx' => $trx, 'kum' => $kum, 'dari' => $dari, 'sampai' => $sampai, 'maks' => 500,
+        ]);
+    }
     // ---------------------------------------------------------------- periode
 
     private function tanggal_valid($tgl)

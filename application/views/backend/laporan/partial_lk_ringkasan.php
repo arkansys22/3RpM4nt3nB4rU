@@ -6,12 +6,16 @@ $pb = $d['pembanding'];
 $n = $d['neraca_akhir'];
 $q = $d['kualitas'];
 
-$kartu = function ($judul, $nilai, $sub = '', $warna = '') {
+$kartu = function ($judul, $nilai, $sub = '', $warna = '', $kunci = '') use ($excel) {
     echo '<div class="rounded-lg border border-stroke dark:border-strokedark p-4">';
     echo '<p class="text-sm text-gray-500 dark:text-gray-400">' . lk_h($judul) . '</p>';
     echo '<p class="text-xl font-bold ' . $warna . '">' . $nilai . '</p>';
     if ($sub !== '') {
         echo '<p class="text-xs text-gray-500 dark:text-gray-400 mt-1">' . $sub . '</p>';
+    }
+    if ($kunci !== '' && !$excel) {
+        // membuka jendela rincian asal angka (lihat skrip di v_laporan_keuangan.php)
+        echo '<button type="button" data-lk-detail="' . $kunci . '" class="no-print mt-2 text-xs font-medium text-blue-600 hover:underline">Lihat detail &rsaquo;</button>';
     }
     echo '</div>';
 };
@@ -59,14 +63,14 @@ $data_kurang = ($pct_biaya !== null && $pct_biaya < 99.5) || ($pct_inv !== null 
 
 <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-4">
   <?php
-  $kartu('Pendapatan', lk_rp_penuh($k['pendapatan']), $naik($k['pertumbuhan']));
-  $kartu('Laba Kotor', lk_rp_penuh($k['laba_kotor']), $k['margin_kotor'] !== null ? 'Margin ' . lk_pct($k['margin_kotor']) : '', $k['laba_kotor'] < 0 ? 'text-red-600' : '');
-  $kartu($k['laba_bersih'] >= 0 ? 'Laba Bersih' : 'Rugi Bersih', lk_rp_penuh($k['laba_bersih']), $k['margin_bersih'] !== null ? 'Margin ' . lk_pct($k['margin_bersih']) : '', $k['laba_bersih'] < 0 ? 'text-red-600' : 'text-green-600');
-  $kartu('Uang Masuk (Pelanggan)', lk_rp_penuh($k['penerimaan']), 'Kas bersih operasi ' . lk_rp_penuh($k['kas_operasi']), '');
-  $kartu('Estimasi Kas & Bank (perhitungan)', lk_rp_penuh($k['kas_akhir']), 'Per ' . lk_tgl($d['sampai']), $k['kas_akhir'] < 0 ? 'text-red-600' : '');
-  $kartu('Piutang Usaha', lk_rp_penuh($k['piutang']), $k['dso'] !== null ? number_format($k['dso'], 0, ',', '.') . ' hari penjualan belum tertagih' : '');
-  $kartu('Liabilitas (akun COA)', lk_rp_penuh($k['liabilitas']), 'Hutang jangka panjang ' . lk_rp_penuh($n['liab_panjang']) . ($k['selisih'] != 0 ? ' &middot; belum termasuk selisih rekonsiliasi ' . lk_rp_penuh(abs($k['selisih'])) : ''));
-  $kartu('Ekuitas', lk_rp_penuh($k['ekuitas']), 'Modal disetor ' . lk_rp_penuh($n['ekuitas']['modal']['jumlah']), $k['ekuitas'] < 0 ? 'text-red-600' : '');
+  $kartu('Pendapatan', lk_rp_penuh($k['pendapatan']), $naik($k['pertumbuhan']), '', 'pendapatan');
+  $kartu('Laba Kotor', lk_rp_penuh($k['laba_kotor']), $k['margin_kotor'] !== null ? 'Margin ' . lk_pct($k['margin_kotor']) : '', $k['laba_kotor'] < 0 ? 'text-red-600' : '', 'laba_kotor');
+  $kartu($k['laba_bersih'] >= 0 ? 'Laba Bersih' : 'Rugi Bersih', lk_rp_penuh($k['laba_bersih']), $k['margin_bersih'] !== null ? 'Margin ' . lk_pct($k['margin_bersih']) : '', $k['laba_bersih'] < 0 ? 'text-red-600' : 'text-green-600', 'laba_bersih');
+  $kartu('Uang Masuk (Pelanggan)', lk_rp_penuh($k['penerimaan']), 'Kas bersih operasi ' . lk_rp_penuh($k['kas_operasi']), '', 'uang_masuk');
+  $kartu('Estimasi Kas & Bank (perhitungan)', lk_rp_penuh($k['kas_akhir']), 'Per ' . lk_tgl($d['sampai']), $k['kas_akhir'] < 0 ? 'text-red-600' : '', 'kas');
+  $kartu('Piutang Usaha', lk_rp_penuh($k['piutang']), $k['dso'] !== null ? number_format($k['dso'], 0, ',', '.') . ' hari penjualan belum tertagih' : '', '', 'piutang');
+  $kartu('Liabilitas (akun COA)', lk_rp_penuh($k['liabilitas']), 'Hutang jangka panjang ' . lk_rp_penuh($n['liab_panjang']) . ($k['selisih'] != 0 ? ' &middot; belum termasuk selisih rekonsiliasi ' . lk_rp_penuh(abs($k['selisih'])) : ''), '', 'liabilitas');
+  $kartu('Ekuitas', lk_rp_penuh($k['ekuitas']), 'Modal disetor ' . lk_rp_penuh($n['ekuitas']['modal']['jumlah']), $k['ekuitas'] < 0 ? 'text-red-600' : '', 'ekuitas');
   ?>
 </div>
 

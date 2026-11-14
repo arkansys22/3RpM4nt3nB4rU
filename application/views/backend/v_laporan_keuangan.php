@@ -146,6 +146,14 @@ $input = 'rounded-md border border-stroke dark:border-strokedark px-3 py-2 dark:
     </div>
   </div>
 
+  <!-- Jendela rincian asal angka (diisi lewat fetch dari laporan-keuangan/detail & /transaksi) -->
+  <dialog id="lk-dialog" class="no-print rounded-lg p-0 w-[95vw] max-w-5xl bg-white text-gray-800 backdrop:bg-black/50">
+    <div class="flex items-center justify-between gap-3 border-b border-gray-200 px-5 py-3 bg-white">
+      <span class="text-sm font-semibold text-gray-600">Rincian asal angka</span>
+      <button type="button" id="lk-dialog-tutup" class="text-gray-500 hover:text-gray-800 text-xl leading-none" aria-label="Tutup">&times;</button>
+    </div>
+    <div id="lk-dialog-isi" class="p-5 overflow-y-auto" style="max-height:78vh"></div>
+  </dialog>
   <script defer src="<?php echo base_url()?>assets/backend/bundle.js"></script>
   <?php if (in_array('ringkasan', $tampil, true)): ?>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
@@ -183,6 +191,51 @@ $input = 'rounded-md border border-stroke dark:border-strokedark px-3 py-2 dark:
     </script>
   <?php endif; ?>
   <script>
+    // ===== Lihat detail: asal angka di kartu Ringkasan =====
+    (function () {
+      var dlg = document.getElementById('lk-dialog');
+      var isi = document.getElementById('lk-dialog-isi');
+      if (!dlg || !isi) { return; }
+      var URL_DETAIL = <?= json_encode(site_url('laporan-keuangan/detail') . '/', JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
+      var URL_TRX = <?= json_encode(site_url('laporan-keuangan/transaksi'), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
+      var QS = <?= json_encode(http_build_query(['dari' => $dari, 'sampai' => $sampai, 'banding' => $banding]), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
+
+      // ambil potongan HTML dari server; hasilnya harus berpenanda data-lk-fragmen (kalau tidak, mis. sesi habis -> halaman login)
+      function ambil(url, tujuan, pesanGagal) {
+        return fetch(url, { credentials: 'same-origin', headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+          .then(function (r) { return r.text().then(function (t) { return { ok: r.ok, teks: t }; }); })
+          .then(function (h) {
+            if (h.ok && h.teks.indexOf('data-lk-fragmen') !== -1) { tujuan.innerHTML = h.teks; return true; }
+            tujuan.innerHTML = '<p class="text-sm text-red-600">' + pesanGagal + ' Klik lagi untuk mencoba ulang.</p>';
+            return false;
+          })
+          .catch(function () { tujuan.innerHTML = '<p class="text-sm text-red-600">' + pesanGagal + ' Klik lagi untuk mencoba ulang.</p>'; return false; });
+      }
+
+      document.addEventListener('click', function (e) {
+        var b = e.target.closest ? e.target.closest('[data-lk-detail]') : null;
+        if (b) {
+          isi.innerHTML = '<p class="text-sm text-gray-500">Memuat rincian...</p>';
+          if (!dlg.open) { dlg.showModal(); }
+          ambil(URL_DETAIL + encodeURIComponent(b.getAttribute('data-lk-detail')) + '?' + QS, isi, 'Gagal memuat rincian. Muat ulang halaman (sesi mungkin berakhir).');
+          return;
+        }
+        var t = e.target.closest ? e.target.closest('[data-lk-trx]') : null;
+        if (t) {
+          var baris = t.closest('tr').nextElementSibling;
+          if (!baris || !baris.classList.contains('lk-trx-baris')) { return; }
+          var kotak = baris.querySelector('.lk-trx-isi');
+          if (!baris.classList.contains('hidden')) { baris.classList.add('hidden'); return; } // klik lagi = tutup
+          baris.classList.remove('hidden');
+          if (!kotak.getAttribute('data-dimuat')) {
+            ambil(URL_TRX + '?' + t.getAttribute('data-lk-trx'), kotak, 'Gagal memuat transaksi.').then(function (berhasil) { if (berhasil) { kotak.setAttribute('data-dimuat', '1'); } });
+          }
+        }
+      });
+      document.getElementById('lk-dialog-tutup').addEventListener('click', function () { dlg.close(); });
+      dlg.addEventListener('click', function (e) { if (e.target === dlg) { dlg.close(); } }); // klik latar gelap = tutup
+    })();
+
     // Cetak selalu terang (tanpa mode gelap) lalu kembalikan
     var _lkGelap = false;
     window.addEventListener('beforeprint', function () { _lkGelap = document.body.classList.contains('dark'); document.body.classList.remove('dark'); });

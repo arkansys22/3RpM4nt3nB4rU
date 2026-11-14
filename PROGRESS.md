@@ -992,6 +992,14 @@ ada 2 penyebab terpisah yang ketemu berurutan:
 
 ---
 
+## 2026-11-14 — Laporan Keuangan: "Lihat detail" (asal angka)
+
+- Tiap kartu di tab Ringkasan (Pendapatan, Laba Kotor, Laba Bersih, Uang Masuk, Estimasi Kas & Bank, Piutang Usaha, Liabilitas, Ekuitas) punya tombol **Lihat detail** yang membuka jendela (`<dialog>`) berisi rincian dari mana angka itu berasal: per akun COA, per project/klien, rumus (mis. 15 komponen kas), piutang per project (invoice − kwitansi Paid), liabilitas + rincian menu Hutang, komponen ekuitas. Di tiap akun ada **lihat transaksi** (dimuat saat diklik) yang menampilkan transaksi COA aslinya beserta **sumber**-nya (Invoice, Kwitansi, Finance Project, Finance Operational, Menu Modal, Menu Hutang, Cicilan Hutang, Utang vendor, Input langsung COA) dan project/klien terkait.
+- Teknis: `Crud_laporan_keuangan::detail($kunci)` dan `::transaksi()` (GET, potongan HTML, dimuat lewat `fetch()`; akses level 1/2/3 seperti halaman induk; parameter divalidasi: kunci whitelist, kode/jenis regex); `Laporan_keuangan_model::transaksi_rinci()` (semua join 1:1 dengan `COLLATE`, tanpa GROUP BY; tabel modal/hutang dicek `table_exists`), `per_akun()`, `per_project()`, `piutang_rinci()`, `kwitansi_pending()`, `hutang_rinci()`; view `backend/laporan/v_lk_detail.php` & `v_lk_transaksi.php`; rute `laporan-keuangan/detail/(:any)` dan `laporan-keuangan/transaksi`. Daftar transaksi dibatasi 500 baris terbaru (total di header tetap seluruhnya).
+- Diuji: total tiap rincian cocok persis dengan kartunya (8 kartu) dan total transaksi per akun/jenis cocok dengan total akun; level 4 & tanpa login ditolak, parameter aneh 400, kunci tak dikenal 404; jalan di browser sungguhan (buka, buka-tutup transaksi, ganti kartu) tanpa error konsol. Tidak ada migrasi database.
+
+---
+
 ## Catatan Insiden (untuk konteks, bukan tindak lanjut)
 
 - Sempat salah restore password test di DB lokal (`db_erpmaid`) beberapa

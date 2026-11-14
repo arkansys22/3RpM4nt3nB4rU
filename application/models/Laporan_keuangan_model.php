@@ -611,4 +611,156 @@ class Laporan_keuangan_model extends CI_Model
         $r = $this->db->query("SELECT MIN(accounting_tanggal) AS mn FROM accounting WHERE accounting_nomer_kategori <> ''")->row();
         return $r && $r->mn ? $r->mn : date('Y-m-d');
     }
+
+    // ------------------------------------------------------------------ Rincian sumber angka (drill-down)
+
+    // Transaksi COA (yang ikut laporan) beserta SUMBER-nya: invoice, kwitansi, Finance Project, Finance Operational, menu Modal, menu Hutang, dst,
+    // dan project/klien terkait. $dari/$sampai null = tanpa batas. Satu baris accounting = satu hasil (semua join 1:1, dijaga di PHP).
+    // $cocok: closure(kode, jenis, sub) -> bool untuk menyaring akun/jenis tertentu.
+    public function transaksi_rinci($dari, $sampai, $cocok = null)
+    {
+        $c = function ($kiri, $kanan) { return "{$kiri} COLLATE utf8mb4_unicode_ci = {$kanan} COLLATE utf8mb4_unicode_ci"; };
+        $punya_hutang = $this->db->table_exists('hutang');
+        $punya_modal = $this->db->table_exists('modal');
+
+        $sumber = "CASE WHEN p.id IS NOT NULL THEN (CASE WHEN p.total_bill > 0 THEN 'Invoice' ELSE 'Kwitansi' END)
+                        WHEN pa.id IS NOT NULL THEN 'Finance Project'
+                        WHEN pu.id IS NOT NULL THEN 'Utang vendor (Finance Project)'
+                        WHEN oa.id IS NOT NULL THEN 'Finance Operational'"
+            . ($punya_modal ? " WHEN m.id IS NOT NULL THEN 'Menu Modal'" : '')
+            . ($punya_hutang ? " WHEN h.id IS NOT NULL THEN 'Menu Hutang' WHEN hp.id IS NOT NULL THEN 'Cicilan Hutang'" : '')
+            . " ELSE 'Input langsung COA' END";
+
+        $sql = "SELECT a.accounting_id AS id, a.accounting_tanggal AS tanggal, a.accounting_nomer_kategori AS kode,
+                       a.accounting_nominal AS nominal, a.accounting_nama_transaksi AS nama, {$sumber} AS sumber,
+                       COALESCE(pr1.project_name, pr2.project_name, pr3.project_name) AS project,
+                       COALESCE(pr1.client_name, pr2.client_name, pr3.client_name) AS klien,
+                       p.transactions_id AS no_dokumen, p.status AS status_bayar
+                FROM accounting a
+                LEFT JOIN payment p ON " . $c('p.payment_id_session', 'a.accounting_id_session') . "
+                LEFT JOIN project pr1 ON " . $c('pr1.id_session', 'p.id_session') . "
+                LEFT JOIN project_acc pa ON " . $c('pa.id_session', 'a.accounting_id_session') . "
+                LEFT JOIN project pr2 ON " . $c('pr2.id_session', 'pa.project_id_session') . "
+                LEFT JOIN project_acc_utang pu ON " . $c('pu.id_session', 'a.accounting_id_session') . "
+                LEFT JOIN project pr3 ON " . $c('pr3.id_session', 'pu.project_id_session') . "
+                LEFT JOIN operational_acc oa ON " . $c('oa.id_session', 'a.accounting_id_session')
+                . ($punya_modal ? "\n                LEFT JOIN modal m ON " . $c('m.id_session', 'a.accounting_id_session') : '')
+                . ($punya_hutang ? "\n                LEFT JOIN hutang h ON " . $c('h.id_session', 'a.accounting_id_session')
+                    . "\n                LEFT JOIN hutang_pembayaran hp ON " . $c('hp.id_session', 'a.accounting_id_session') : '') . "
+                WHERE " . $this->kondisi_dasar('a');
+        $bind = [];
+        if ($dari !== null) {
+            $sql .= ' AND a.accounting_tanggal >= ?';
+            $bind[] = $dari;
+        }
+        if ($sampai !== null) {
+            $sql .= ' AND a.accounting_tanggal <= ?';
+            $bind[] = $sampai;
+        }
+        $sql .= ' ORDER BY a.accounting_tanggal DESC, a.accounting_id DESC';
+
+        $hasil = [];
+        $sudah = [];
+        foreach ($this->db->query($sql, $bind)->result() as $r) {
+            if (isset($sudah[$r->id])) {
+                continue; // jaga-jaga bila suatu join ternyata ganda
+            }
+            $sudah[$r->id] = true;
+            list($jenis, $sub) = self::klasifikasi($r->kode);
+            if ($cocok !== null && !$cocok($r->kode, $jenis, $sub)) {
+                continue;
+            }
+            $r->jenis = $jenis;
+            $r->sub = $sub;
+            $r->nominal = (float) $r->nominal;
+            $r->nama_akun = $this->nama_akun($r->kode) ?: 'Akun ' . $r->kode;
+            $hasil[] = $r;
+        }
+        return $hasil;
+    }
+
+    // Ringkas daftar transaksi per akun: [kode => ['kode','nama','jumlah','n']] urut kode
+    public function per_akun($transaksi)
+    {
+        $a = [];
+        foreach ($transaksi as $t) {
+            if (!isset($a[$t->kode])) {
+                $a[$t->kode] = ['kode' => $t->kode, 'nama' => $t->nama_akun, 'jumlah' => 0, 'n' => 0];
+            }
+            $a[$t->kode]['jumlah'] += $t->nominal;
+            $a[$t->kode]['n']++;
+        }
+        ksort($a, SORT_NATURAL);
+        return $a;
+    }
+
+    // Ringkas per project/klien (transaksi tanpa project dikelompokkan "Tanpa project"), terbesar dulu
+    public function per_project($transaksi)
+    {
+        $a = [];
+        foreach ($transaksi as $t) {
+            $kunci = $t->project !== null && $t->project !== '' ? $t->project : '(tanpa project / input langsung)';
+            if (!isset($a[$kunci])) {
+                $a[$kunci] = ['project' => $kunci, 'klien' => (string) $t->klien, 'jumlah' => 0, 'n' => 0];
+            }
+            $a[$kunci]['jumlah'] += $t->nominal;
+            $a[$kunci]['n']++;
+        }
+        uasort($a, function ($x, $y) { return $y['jumlah'] <=> $x['jumlah']; });
+        return array_values($a);
+    }
+
+    // Piutang per project pada tanggal tertentu (sama rumusnya dengan piutang_hitung): invoice berakun COA - kwitansi Paid.
+    // return ['baris' => [...hanya yang masih ada sisa...], 'total' => float, 'lunas_n' => jumlah project yang sudah lunas]
+    public function piutang_rinci($tgl)
+    {
+        $rows = $this->db->query(
+            "SELECT t.id_session, pr.project_name, pr.client_name, pr.event_date, t.tgl_invoice, t.no_invoice, t.tagihan,
+                    COALESCE(k.dibayar, 0) AS dibayar, k.terakhir_bayar,
+                    GREATEST(t.tagihan - COALESCE(k.dibayar, 0), 0) AS sisa
+             FROM (SELECT id_session, MIN(`date`) AS tgl_invoice, GROUP_CONCAT(transactions_id SEPARATOR ', ') AS no_invoice, SUM(total_bill) AS tagihan
+                   FROM payment WHERE total_bill > 0 AND kategori <> '' AND `date` <= ? GROUP BY id_session) t
+             LEFT JOIN (SELECT id_session, SUM(total_paid) AS dibayar, MAX(`date`) AS terakhir_bayar
+                        FROM payment WHERE total_bill = 0 AND status = 'Paid' AND `date` <= ? GROUP BY id_session) k ON k.id_session = t.id_session
+             LEFT JOIN project pr ON pr.id_session COLLATE utf8mb4_unicode_ci = t.id_session COLLATE utf8mb4_unicode_ci
+             ORDER BY sisa DESC, t.tgl_invoice ASC",
+            [$tgl, $tgl]
+        )->result();
+        $baris = [];
+        $total = 0;
+        $lunas = 0;
+        foreach ($rows as $r) {
+            if ((float) $r->sisa > 0) {
+                $baris[] = $r;
+                $total += (float) $r->sisa;
+            } else {
+                $lunas++;
+            }
+        }
+        return ['baris' => $baris, 'total' => $total, 'lunas_n' => $lunas];
+    }
+
+    // Kwitansi yang masih Pending (belum diterima) pada rentang: tidak dihitung sebagai uang masuk
+    public function kwitansi_pending($dari, $sampai)
+    {
+        $r = $this->db->query(
+            "SELECT COUNT(*) AS n, COALESCE(SUM(total_paid), 0) AS nilai FROM payment
+             WHERE total_bill = 0 AND status = 'Pending' AND `date` >= ? AND `date` <= ?",
+            [$dari, $sampai]
+        )->row();
+        return ['n' => (int) $r->n, 'nilai' => (float) $r->nilai];
+    }
+
+    // Daftar hutang dari menu Hutang (pokok, dibayar, sisa). [] bila tabel belum ada
+    public function hutang_rinci()
+    {
+        if (!$this->db->table_exists('hutang')) {
+            return [];
+        }
+        return $this->db->query(
+            "SELECT h.nama_hutang, h.kreditur, h.jangka, h.kategori, h.nominal_pokok, h.tanggal_hutang, h.tanggal_jatuh_tempo,
+                    COALESCE((SELECT SUM(p.nominal_bayar) FROM hutang_pembayaran p WHERE p.hutang_id_session = h.id_session), 0) AS dibayar
+             FROM hutang h ORDER BY h.tanggal_hutang DESC"
+        )->result();
+    }
 }
