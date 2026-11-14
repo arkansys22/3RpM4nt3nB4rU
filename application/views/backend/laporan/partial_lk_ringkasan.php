@@ -15,7 +15,7 @@ $kartu = function ($judul, $nilai, $sub = '', $warna = '', $kunci = '') use ($ex
     }
     if ($kunci !== '' && !$excel) {
         // membuka jendela rincian asal angka (lihat skrip di v_laporan_keuangan.php)
-        echo '<button type="button" data-lk-detail="' . $kunci . '" class="no-print mt-2 text-xs font-medium text-blue-600 hover:underline">Lihat detail &rsaquo;</button>';
+        echo '<button type="button" data-lk-detail="' . $kunci . '" aria-label="Lihat detail ' . lk_h($judul) . '" class="no-print mt-2 text-xs font-medium text-blue-600 hover:underline">Lihat detail &rsaquo;</button>';
     }
     echo '</div>';
 };

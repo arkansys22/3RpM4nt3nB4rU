@@ -147,9 +147,9 @@ $input = 'rounded-md border border-stroke dark:border-strokedark px-3 py-2 dark:
   </div>
 
   <!-- Jendela rincian asal angka (diisi lewat fetch dari laporan-keuangan/detail & /transaksi) -->
-  <dialog id="lk-dialog" class="no-print rounded-lg p-0 w-[95vw] max-w-5xl bg-white text-gray-800 backdrop:bg-black/50">
+  <dialog id="lk-dialog" aria-labelledby="lk-dialog-judul" class="no-print rounded-lg p-0 w-[95vw] max-w-5xl bg-white text-gray-800 backdrop:bg-black/50">
     <div class="flex items-center justify-between gap-3 border-b border-gray-200 px-5 py-3 bg-white">
-      <span class="text-sm font-semibold text-gray-600">Rincian asal angka</span>
+      <span id="lk-dialog-judul" class="text-sm font-semibold text-gray-600">Rincian asal angka</span>
       <button type="button" id="lk-dialog-tutup" class="text-gray-500 hover:text-gray-800 text-xl leading-none" aria-label="Tutup">&times;</button>
     </div>
     <div id="lk-dialog-isi" class="p-5 overflow-y-auto" style="max-height:78vh"></div>
@@ -200,18 +200,27 @@ $input = 'rounded-md border border-stroke dark:border-strokedark px-3 py-2 dark:
       var URL_TRX = <?= json_encode(site_url('laporan-keuangan/transaksi'), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
       var QS = <?= json_encode(http_build_query(['dari' => $dari, 'sampai' => $sampai, 'banding' => $banding]), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
 
+      // Respons lama tidak boleh menimpa respons yang lebih baru pada jendela yang sama (mis. klik kartu A, tutup, klik kartu B)
+      var urutan = 0;
+
       // ambil potongan HTML dari server; hasilnya harus berpenanda data-lk-fragmen (kalau tidak, mis. sesi habis -> halaman login)
       function ambil(url, tujuan, pesanGagal) {
+        var saya = (tujuan === isi) ? ++urutan : null;
+        var basi = function () { return saya !== null && saya !== urutan; };
+        var gagal = function (status) {
+          var pesan = status === 403 ? 'Anda tidak punya akses ke data ini.' : (status === 401 ? 'Sesi berakhir. Silakan login ulang.' : pesanGagal);
+          tujuan.innerHTML = '<p class="text-sm text-red-600">' + pesan + ' Klik lagi untuk mencoba ulang.</p>';
+          return false;
+        };
         return fetch(url, { credentials: 'same-origin', headers: { 'X-Requested-With': 'XMLHttpRequest' } })
-          .then(function (r) { return r.text().then(function (t) { return { ok: r.ok, teks: t }; }); })
+          .then(function (r) { return r.text().then(function (t) { return { ok: r.ok, status: r.status, teks: t }; }); })
           .then(function (h) {
+            if (basi()) { return false; }
             if (h.ok && h.teks.indexOf('data-lk-fragmen') !== -1) { tujuan.innerHTML = h.teks; return true; }
-            tujuan.innerHTML = '<p class="text-sm text-red-600">' + pesanGagal + ' Klik lagi untuk mencoba ulang.</p>';
-            return false;
+            return gagal(h.status);
           })
-          .catch(function () { tujuan.innerHTML = '<p class="text-sm text-red-600">' + pesanGagal + ' Klik lagi untuk mencoba ulang.</p>'; return false; });
+          .catch(function () { return basi() ? false : gagal(0); });
       }
-
       document.addEventListener('click', function (e) {
         var b = e.target.closest ? e.target.closest('[data-lk-detail]') : null;
         if (b) {

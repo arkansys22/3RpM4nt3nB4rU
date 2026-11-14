@@ -633,6 +633,7 @@ class Laporan_keuangan_model extends CI_Model
 
         $sql = "SELECT a.accounting_id AS id, a.accounting_tanggal AS tanggal, a.accounting_nomer_kategori AS kode,
                        a.accounting_nominal AS nominal, a.accounting_nama_transaksi AS nama, {$sumber} AS sumber,
+                       COALESCE(pr1.id_session, pr2.id_session, pr3.id_session) AS project_id,
                        COALESCE(pr1.project_name, pr2.project_name, pr3.project_name) AS project,
                        COALESCE(pr1.client_name, pr2.client_name, pr3.client_name) AS klien,
                        p.transactions_id AS no_dokumen, p.status AS status_bayar
@@ -699,9 +700,13 @@ class Laporan_keuangan_model extends CI_Model
     {
         $a = [];
         foreach ($transaksi as $t) {
-            $kunci = $t->project !== null && $t->project !== '' ? $t->project : '(tanpa project / input langsung)';
+            // dikelompokkan menurut id project (bukan nama) supaya dua project bernama sama tidak tergabung
+            $kunci = (string) $t->project_id !== '' ? $t->project_id : '__tanpa__';
             if (!isset($a[$kunci])) {
-                $a[$kunci] = ['project' => $kunci, 'klien' => (string) $t->klien, 'jumlah' => 0, 'n' => 0];
+                $a[$kunci] = [
+                    'project' => ($t->project !== null && $t->project !== '') ? $t->project : '(tanpa project / input langsung)',
+                    'klien' => (string) $t->klien, 'jumlah' => 0, 'n' => 0,
+                ];
             }
             $a[$kunci]['jumlah'] += $t->nominal;
             $a[$kunci]['n']++;
@@ -751,16 +756,18 @@ class Laporan_keuangan_model extends CI_Model
         return ['n' => (int) $r->n, 'nilai' => (float) $r->nilai];
     }
 
-    // Daftar hutang dari menu Hutang (pokok, dibayar, sisa). [] bila tabel belum ada
-    public function hutang_rinci()
+    // Daftar hutang dari menu Hutang per tanggal laporan (pokok, cicilan sampai tanggal itu). [] bila tabel belum ada
+    public function hutang_rinci($sampai)
     {
         if (!$this->db->table_exists('hutang')) {
             return [];
         }
         return $this->db->query(
             "SELECT h.nama_hutang, h.kreditur, h.jangka, h.kategori, h.nominal_pokok, h.tanggal_hutang, h.tanggal_jatuh_tempo,
-                    COALESCE((SELECT SUM(p.nominal_bayar) FROM hutang_pembayaran p WHERE p.hutang_id_session = h.id_session), 0) AS dibayar
-             FROM hutang h ORDER BY h.tanggal_hutang DESC"
+                    COALESCE((SELECT SUM(p.nominal_bayar) FROM hutang_pembayaran p
+                              WHERE p.hutang_id_session = h.id_session AND p.tanggal_bayar <= ?), 0) AS dibayar
+             FROM hutang h WHERE h.tanggal_hutang <= ? ORDER BY h.tanggal_hutang DESC",
+            [$sampai, $sampai]
         )->result();
     }
 }

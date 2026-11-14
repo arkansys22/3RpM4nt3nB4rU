@@ -51,7 +51,7 @@ $tabel_project = function ($project, $batas = 25) use ($rp) {
 };
 
 // bagian "seksi laba rugi": judul + akun + subtotal
-$seksi_lr = function ($sec, $minus = false) use ($lihat, $baris_trx, $rp, $qs_periode) {
+$seksi_lr = function ($sec, $minus = false, $kum = false) use ($lihat, $baris_trx, $rp, $qs_periode) {
     $h = '<tr class="bg-gray-100"><td colspan="3" class="px-3 py-2 font-semibold">' . ($minus ? '&minus; ' : '') . lk_h($sec['label']) . '</td></tr>';
     if (!$sec['akun']) {
         $h .= '<tr class="border-t border-gray-200"><td colspan="3" class="px-3 py-2 pl-6 text-gray-400 italic">Tidak ada transaksi</td></tr>';
@@ -59,7 +59,7 @@ $seksi_lr = function ($sec, $minus = false) use ($lihat, $baris_trx, $rp, $qs_pe
     foreach ($sec['akun'] as $a) {
         $h .= '<tr class="border-t border-gray-200"><td class="px-3 py-2 pl-6"><span class="text-gray-400 mr-2">' . lk_h($a['kode']) . '</span>' . lk_h($a['nama']) . '</td>'
             . '<td class="px-3 py-2 text-right whitespace-nowrap">' . $rp($a['jumlah']) . '</td>'
-            . '<td class="px-3 py-2 text-right">' . $lihat('kode=' . $a['kode'] . '&kum=0&' . $qs_periode) . '</td></tr>' . $baris_trx(3);
+            . '<td class="px-3 py-2 text-right">' . $lihat('kode=' . $a['kode'] . '&kum=' . ($kum ? '1' : '0') . '&' . $qs_periode) . '</td></tr>' . $baris_trx(3);
     }
     return $h . '<tr class="border-t border-gray-300 font-semibold bg-gray-50"><td class="px-3 py-2">Total ' . lk_h($sec['label']) . '</td><td class="px-3 py-2 text-right whitespace-nowrap">' . $rp($sec['total']) . '</td><td></td></tr>';
 };
@@ -71,7 +71,7 @@ $baris_total = function ($label, $nilai, $besar = false) use ($rp) {
   <h2 class="text-lg font-bold mb-1"><?= lk_h($judul) ?></h2>
   <p class="text-xs text-gray-500 mb-3">
     <?= in_array($kunci, ['kas', 'piutang', 'liabilitas', 'ekuitas'], true) ? 'Posisi per ' . lk_tgl($sampai) : 'Periode ' . lk_tgl($dari) . ' s/d ' . lk_tgl($sampai) ?>
-    &middot; klik &quot;lihat transaksi&quot; untuk melihat transaksi aslinya
+    <?php if ($kunci !== 'piutang'): ?>&middot; klik &quot;lihat transaksi&quot; untuk melihat transaksi aslinya<?php else: ?>&middot; dihitung dari tabel invoice dan kwitansi per project<?php endif; ?>
   </p>
 
 <?php if ($kunci === 'pendapatan'): ?>
@@ -209,12 +209,25 @@ $baris_total = function ($label, $nilai, $besar = false) use ($rp) {
     <?= $saldo_awal != 0 ? $baris_trx(3) : '' ?>
     <tr class="border-t border-gray-200"><td class="px-3 py-2"><span class="inline-block w-5 font-bold <?= $lr['laba_bersih'] >= 0 ? 'text-green-600' : 'text-red-600' ?>">+</span>Laba (rugi) kumulatif sejak awal
         <div class="text-xs text-gray-400 pl-5">pendapatan <?= $rp($lr['total_pendapatan'] + $lr['lain_pendapatan']['total']) ?> &minus; seluruh biaya <?= $rp($lr['total_beban']) ?></div></td>
-      <td class="px-3 py-2 text-right whitespace-nowrap <?= $lr['laba_bersih'] < 0 ? 'text-red-600' : '' ?>"><?= $rp($lr['laba_bersih']) ?></td><td class="px-3 py-2 text-right"><?= $lihat('jenis=pendapatan&kum=1&' . $qs_periode, 'transaksi pendapatan') ?></td></tr>
-    <?= $baris_trx(3) ?>
+      <td class="px-3 py-2 text-right whitespace-nowrap <?= $lr['laba_bersih'] < 0 ? 'text-red-600' : '' ?>"><?= $rp($lr['laba_bersih']) ?></td><td class="px-3 py-2 text-right"></td></tr>
+    <tr class="border-t border-gray-200"><td colspan="3" class="p-0">
+      <details class="px-3 py-2"><summary class="cursor-pointer text-xs text-blue-600">Lihat rincian laba kumulatif per akun (sejak awal pencatatan)</summary>
+        <div class="overflow-x-auto rounded border border-gray-200 mt-2"><table class="min-w-full text-sm"><tbody>
+          <?= $seksi_lr($lr['pendapatan'], false, true) ?>
+          <?= $seksi_lr($lr['hpp'], true, true) ?>
+          <?= $seksi_lr($lr['event'], true, true) ?>
+          <?= $seksi_lr($lr['pemasaran'], true, true) ?>
+          <?= $seksi_lr($lr['gaji'], true, true) ?>
+          <?= $seksi_lr($lr['umum'], true, true) ?>
+          <?= $seksi_lr($lr['lain_pendapatan'], false, true) ?>
+          <?= $seksi_lr($lr['lain_beban'], true, true) ?>
+          <?= $baris_total('LABA (RUGI) KUMULATIF', $lr['laba_bersih'], true) ?>
+        </tbody></table></div>
+      </details></td></tr>
     <tr class="border-t border-gray-200"><td class="px-3 py-2"><span class="inline-block w-5 font-bold text-red-600">&minus;</span>Penarikan modal / deviden (akun 320002 / 3200.xx)</td><td class="px-3 py-2 text-right whitespace-nowrap"><?= $rp($deviden) ?></td><td class="px-3 py-2 text-right"><?= $deviden != 0 ? $lihat('jenis=deviden&kum=1&' . $qs_periode) : '' ?></td></tr>
     <?= $deviden != 0 ? $baris_trx(3) : '' ?>
     <?= $baris_total('EKUITAS', $total, true) ?>
   </tbody></table></div>
-  <p class="text-xs text-gray-500">Laba kumulatif dirinci per akun di kartu Laba Bersih (untuk periode terpilih) dan tab Laba Rugi.</p>
+  <p class="text-xs text-gray-500">Laba kumulatif dihitung sejak awal pencatatan sampai tanggal akhir; kartu Laba Bersih hanya untuk periode terpilih.</p>
 <?php endif; ?>
 </div>

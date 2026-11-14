@@ -115,7 +115,7 @@ class Crud_laporan_keuangan extends CI_Controller
             }
             $data['akun'] = $akun;
             $data['total'] = array_sum(array_column($akun, 'jumlah'));
-            $data['hutang'] = $m->hutang_rinci();
+            $data['hutang'] = $m->hutang_rinci($sampai);
         } elseif ($kunci === 'ekuitas') {
             $lr = $m->laba_rugi($agg_k);
             $j = function ($k) use ($agg_k) { return $agg_k['jenis'][$k] ?? 0; };
