@@ -89,3 +89,6 @@ GitHub.sublime-settings
 
 # End of https://www.toptal.com/developers/gitignore/api/sublimetext,codeigniter,visualstudiocode
 application/config/database.php
+
+# Kredensial DB per lingkungan (dibuat manual di server/lokal; jangan di-commit)
+application/config/database.local.php

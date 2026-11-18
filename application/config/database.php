@@ -97,3 +97,10 @@ $db['default'] = array(
 	'failover' => array(),
 	'save_queries' => TRUE
 );
+
+// Override per lingkungan: kalau file database.local.php ada (TIDAK ikut git, lihat .gitignore), isinya menimpa pengaturan di atas.
+// Isi file itu cukup potongan seperti: <?php $db['default']['hostname'] = 'localhost'; $db['default']['username'] = '...'; ...
+// Contoh: database.local.php.example. Dengan begitu git pull/Deploy tidak pernah menimpa kredensial di server.
+if (is_file(__DIR__ . '/database.local.php')) {
+	include __DIR__ . '/database.local.php';
+}

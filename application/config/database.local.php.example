@@ -1,0 +1,10 @@
+<?php
+// Salin file ini menjadi database.local.php (di folder yang sama), lalu isi kredensial lingkungan ini.
+// database.local.php tidak ikut git, jadi aman dari git pull / Deploy. JANGAN simpan password di file .example ini.
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+$db['default']['hostname'] = 'localhost';
+$db['default']['username'] = 'ISI_USER_DB';
+$db['default']['password'] = 'ISI_PASSWORD_DB';
+$db['default']['database'] = 'ISI_NAMA_DB';
+// Lokal XAMPP biasanya: username 'root', password '' dan database 'db_erpmaid'.
